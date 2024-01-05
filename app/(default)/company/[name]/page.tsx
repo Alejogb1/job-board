@@ -34,8 +34,8 @@ export default function CompanyProfile() {
                     </section>
                     <div className="styles-main flex flex-row space-between items-start">
                         <div className="w-full">
-                            <div className="component-header">
-                                <div className="mx-8 pt-2 border-b px-2 pt-10">
+                            <div className="component-header pt-10">
+                                <div className="mx-8 pt-2 border-b px-2 ">
                                     <nav className='m-0 flex align-end justify-start flex-row min-w-0 min-h-unset w-full pt-unset'>
                                         <a href="" className='leading-5 pb-1'>
                                             <div className="flex flex-row items-center text-xs">
