@@ -23,9 +23,10 @@ export default function DefaultLayout({
   return (
     <>      
       <main className="grow">
-
-        {children}
-
+        <div className="bg-white min-h-screen h-full box-inherit">
+          <Header/>
+          {children}
+        </div>
       </main>
     </>
   )

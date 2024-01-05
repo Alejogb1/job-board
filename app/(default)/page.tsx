@@ -7,6 +7,7 @@ import PressLogos from '@/components/press-logos'
 import Sidebar from '@/components/sidebar'
 import PostsList from './posts-list'
 import Testimonials from '@/components/testimonials'
+import Header from '@/components/ui/header'
 
 export default function Home() {
   return (

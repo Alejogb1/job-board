@@ -100,8 +100,8 @@ export default async function SinglePost({ params }: {
                   </div>
 
                   <div className="text-center">
-                    <a className="text-sm text-indigo-500 font-medium hover:underline" href="#0">
-                      Visit Website
+                    <a className="text-sm text-indigo-500 font-medium hover:underline" href={`/company/${post.name.toLowerCase()}`}>
+                      View Company Profile
                     </a>
                   </div>
                 </div>
