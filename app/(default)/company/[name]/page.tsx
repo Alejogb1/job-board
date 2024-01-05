@@ -284,6 +284,167 @@ export default function CompanyProfile() {
                                                                     </div>
                                                             </div>
                                             </div>
+                                            <div className="styles-component flex border-b border-gray-200 py-2 border-w-3/4">
+                                                    <div className="sm:flex items-center space-y-3 sm:space-y-0 sm:space-x-5">
+                                                            <div className="grow lg:flex items-center justify-between space-y-5 lg:space-x-2 lg:space-y-0"/>
+                                                                    <div>
+                                                                        <div className="flex datas-start space-x-2">
+                                                                            <div className="text-sm text-gray-500 font-semibold mb-1">Operations</div>
+                                                                        </div>
+                                                                        <div className="mb-2">
+                                                                                <a className="text-lg text-gray-800 font-bold" href="/posts/1">Software Engineer Backend</a>   
+                                                                        </div>
+                                                                        <div className="-m-1">
+                                                                            <a className="text-xs text-gray-500 font-medium inline-flex px-2 py-0.5 hover:text-gray-600 rounded-md m-1 whitespace-nowrap transition duration-150 ease-in-out bg-gray-100" href="#0">Full Time</a>
+                                                                            <a className="text-xs text-gray-500 font-medium inline-flex px-2 py-0.5 hover:text-gray-600 rounded-md m-1 whitespace-nowrap transition duration-150 ease-in-out bg-gray-100" href="#0">🌎 Remote</a>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div className="min-w-[60px] flex items-center lg:justify-end space-x-1 lg:space-x-0">
+                                                                        <div className="lg:hidden group-hover:lg:block">
+                                                                            <a className="btn-sm py-1.5 px-3 text-white bg-indigo-500 hover:bg-indigo-600 group shadow-sm" href="/posts/1">Apply Now <span className="tracking-normal text-indigo-200 group-hover:translate-x-0.5 transition-transform duration-150 ease-in-out ml-1">-&gt;</span></a>
+                                                                        </div>
+                                                                        <div className="group-hover:lg:hidden text-sm italic text-gray-500">2h</div>
+                                                                    </div>
+                                                            </div>
+                                            </div>
+                                            <div className="styles-component flex border-b border-gray-200 py-2 border-w-3/4">
+                                                    <div className="sm:flex items-center space-y-3 sm:space-y-0 sm:space-x-5">
+                                                            <div className="grow lg:flex items-center justify-between space-y-5 lg:space-x-2 lg:space-y-0"/>
+                                                                    <div>
+                                                                        <div className="flex datas-start space-x-2">
+                                                                            <div className="text-sm text-gray-500 font-semibold mb-1">Operations</div>
+                                                                        </div>
+                                                                        <div className="mb-2">
+                                                                                <a className="text-lg text-gray-800 font-bold" href="/posts/1">Software Engineer Backend</a>   
+                                                                        </div>
+                                                                        <div className="-m-1">
+                                                                            <a className="text-xs text-gray-500 font-medium inline-flex px-2 py-0.5 hover:text-gray-600 rounded-md m-1 whitespace-nowrap transition duration-150 ease-in-out bg-gray-100" href="#0">Full Time</a>
+                                                                            <a className="text-xs text-gray-500 font-medium inline-flex px-2 py-0.5 hover:text-gray-600 rounded-md m-1 whitespace-nowrap transition duration-150 ease-in-out bg-gray-100" href="#0">🌎 Remote</a>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div className="min-w-[60px] flex items-center lg:justify-end space-x-1 lg:space-x-0">
+                                                                        <div className="lg:hidden group-hover:lg:block">
+                                                                            <a className="btn-sm py-1.5 px-3 text-white bg-indigo-500 hover:bg-indigo-600 group shadow-sm" href="/posts/1">Apply Now <span className="tracking-normal text-indigo-200 group-hover:translate-x-0.5 transition-transform duration-150 ease-in-out ml-1">-&gt;</span></a>
+                                                                        </div>
+                                                                        <div className="group-hover:lg:hidden text-sm italic text-gray-500">2h</div>
+                                                                    </div>
+                                                            </div>
+                                            </div>
+                                            <div className="styles-component flex border-b border-gray-200 py-2 border-w-3/4">
+                                                    <div className="sm:flex items-center space-y-3 sm:space-y-0 sm:space-x-5">
+                                                            <div className="grow lg:flex items-center justify-between space-y-5 lg:space-x-2 lg:space-y-0"/>
+                                                                    <div>
+                                                                        <div className="flex datas-start space-x-2">
+                                                                            <div className="text-sm text-gray-500 font-semibold mb-1">Operations</div>
+                                                                        </div>
+                                                                        <div className="mb-2">
+                                                                                <a className="text-lg text-gray-800 font-bold" href="/posts/1">Software Engineer Backend</a>   
+                                                                        </div>
+                                                                        <div className="-m-1">
+                                                                            <a className="text-xs text-gray-500 font-medium inline-flex px-2 py-0.5 hover:text-gray-600 rounded-md m-1 whitespace-nowrap transition duration-150 ease-in-out bg-gray-100" href="#0">Full Time</a>
+                                                                            <a className="text-xs text-gray-500 font-medium inline-flex px-2 py-0.5 hover:text-gray-600 rounded-md m-1 whitespace-nowrap transition duration-150 ease-in-out bg-gray-100" href="#0">🌎 Remote</a>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div className="min-w-[60px] flex items-center lg:justify-end space-x-1 lg:space-x-0">
+                                                                        <div className="lg:hidden group-hover:lg:block">
+                                                                            <a className="btn-sm py-1.5 px-3 text-white bg-indigo-500 hover:bg-indigo-600 group shadow-sm" href="/posts/1">Apply Now <span className="tracking-normal text-indigo-200 group-hover:translate-x-0.5 transition-transform duration-150 ease-in-out ml-1">-&gt;</span></a>
+                                                                        </div>
+                                                                        <div className="group-hover:lg:hidden text-sm italic text-gray-500">2h</div>
+                                                                    </div>
+                                                            </div>
+                                            </div>
+                                            <div className="styles-component flex border-b border-gray-200 py-2 border-w-3/4">
+                                                    <div className="sm:flex items-center space-y-3 sm:space-y-0 sm:space-x-5">
+                                                            <div className="grow lg:flex items-center justify-between space-y-5 lg:space-x-2 lg:space-y-0"/>
+                                                                    <div>
+                                                                        <div className="flex datas-start space-x-2">
+                                                                            <div className="text-sm text-gray-500 font-semibold mb-1">Operations</div>
+                                                                        </div>
+                                                                        <div className="mb-2">
+                                                                                <a className="text-lg text-gray-800 font-bold" href="/posts/1">Software Engineer Backend</a>   
+                                                                        </div>
+                                                                        <div className="-m-1">
+                                                                            <a className="text-xs text-gray-500 font-medium inline-flex px-2 py-0.5 hover:text-gray-600 rounded-md m-1 whitespace-nowrap transition duration-150 ease-in-out bg-gray-100" href="#0">Full Time</a>
+                                                                            <a className="text-xs text-gray-500 font-medium inline-flex px-2 py-0.5 hover:text-gray-600 rounded-md m-1 whitespace-nowrap transition duration-150 ease-in-out bg-gray-100" href="#0">🌎 Remote</a>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div className="min-w-[60px] flex items-center lg:justify-end space-x-1 lg:space-x-0">
+                                                                        <div className="lg:hidden group-hover:lg:block">
+                                                                            <a className="btn-sm py-1.5 px-3 text-white bg-indigo-500 hover:bg-indigo-600 group shadow-sm" href="/posts/1">Apply Now <span className="tracking-normal text-indigo-200 group-hover:translate-x-0.5 transition-transform duration-150 ease-in-out ml-1">-&gt;</span></a>
+                                                                        </div>
+                                                                        <div className="group-hover:lg:hidden text-sm italic text-gray-500">2h</div>
+                                                                    </div>
+                                                            </div>
+                                            </div>
+                                            <div className="styles-component flex border-b border-gray-200 py-2 border-w-3/4">
+                                                    <div className="sm:flex items-center space-y-3 sm:space-y-0 sm:space-x-5">
+                                                            <div className="grow lg:flex items-center justify-between space-y-5 lg:space-x-2 lg:space-y-0"/>
+                                                                    <div>
+                                                                        <div className="flex datas-start space-x-2">
+                                                                            <div className="text-sm text-gray-500 font-semibold mb-1">Operations</div>
+                                                                        </div>
+                                                                        <div className="mb-2">
+                                                                                <a className="text-lg text-gray-800 font-bold" href="/posts/1">Software Engineer Backend</a>   
+                                                                        </div>
+                                                                        <div className="-m-1">
+                                                                            <a className="text-xs text-gray-500 font-medium inline-flex px-2 py-0.5 hover:text-gray-600 rounded-md m-1 whitespace-nowrap transition duration-150 ease-in-out bg-gray-100" href="#0">Full Time</a>
+                                                                            <a className="text-xs text-gray-500 font-medium inline-flex px-2 py-0.5 hover:text-gray-600 rounded-md m-1 whitespace-nowrap transition duration-150 ease-in-out bg-gray-100" href="#0">🌎 Remote</a>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div className="min-w-[60px] flex items-center lg:justify-end space-x-1 lg:space-x-0">
+                                                                        <div className="lg:hidden group-hover:lg:block">
+                                                                            <a className="btn-sm py-1.5 px-3 text-white bg-indigo-500 hover:bg-indigo-600 group shadow-sm" href="/posts/1">Apply Now <span className="tracking-normal text-indigo-200 group-hover:translate-x-0.5 transition-transform duration-150 ease-in-out ml-1">-&gt;</span></a>
+                                                                        </div>
+                                                                        <div className="group-hover:lg:hidden text-sm italic text-gray-500">2h</div>
+                                                                    </div>
+                                                            </div>
+                                            </div>
+                                            <div className="styles-component flex border-b border-gray-200 py-2 border-w-3/4">
+                                                    <div className="sm:flex items-center space-y-3 sm:space-y-0 sm:space-x-5">
+                                                            <div className="grow lg:flex items-center justify-between space-y-5 lg:space-x-2 lg:space-y-0"/>
+                                                                    <div>
+                                                                        <div className="flex datas-start space-x-2">
+                                                                            <div className="text-sm text-gray-500 font-semibold mb-1">Operations</div>
+                                                                        </div>
+                                                                        <div className="mb-2">
+                                                                                <a className="text-lg text-gray-800 font-bold" href="/posts/1">Software Engineer Backend</a>   
+                                                                        </div>
+                                                                        <div className="-m-1">
+                                                                            <a className="text-xs text-gray-500 font-medium inline-flex px-2 py-0.5 hover:text-gray-600 rounded-md m-1 whitespace-nowrap transition duration-150 ease-in-out bg-gray-100" href="#0">Full Time</a>
+                                                                            <a className="text-xs text-gray-500 font-medium inline-flex px-2 py-0.5 hover:text-gray-600 rounded-md m-1 whitespace-nowrap transition duration-150 ease-in-out bg-gray-100" href="#0">🌎 Remote</a>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div className="min-w-[60px] flex items-center lg:justify-end space-x-1 lg:space-x-0">
+                                                                        <div className="lg:hidden group-hover:lg:block">
+                                                                            <a className="btn-sm py-1.5 px-3 text-white bg-indigo-500 hover:bg-indigo-600 group shadow-sm" href="/posts/1">Apply Now <span className="tracking-normal text-indigo-200 group-hover:translate-x-0.5 transition-transform duration-150 ease-in-out ml-1">-&gt;</span></a>
+                                                                        </div>
+                                                                        <div className="group-hover:lg:hidden text-sm italic text-gray-500">2h</div>
+                                                                    </div>
+                                                            </div>
+                                            </div>
+                                            <div className="styles-component flex border-b border-gray-200 py-2 border-w-3/4">
+                                                    <div className="sm:flex items-center space-y-3 sm:space-y-0 sm:space-x-5">
+                                                            <div className="grow lg:flex items-center justify-between space-y-5 lg:space-x-2 lg:space-y-0"/>
+                                                                    <div>
+                                                                        <div className="flex datas-start space-x-2">
+                                                                            <div className="text-sm text-gray-500 font-semibold mb-1">Operations</div>
+                                                                        </div>
+                                                                        <div className="mb-2">
+                                                                                <a className="text-lg text-gray-800 font-bold" href="/posts/1">Software Engineer Backend</a>   
+                                                                        </div>
+                                                                        <div className="-m-1">
+                                                                            <a className="text-xs text-gray-500 font-medium inline-flex px-2 py-0.5 hover:text-gray-600 rounded-md m-1 whitespace-nowrap transition duration-150 ease-in-out bg-gray-100" href="#0">Full Time</a>
+                                                                            <a className="text-xs text-gray-500 font-medium inline-flex px-2 py-0.5 hover:text-gray-600 rounded-md m-1 whitespace-nowrap transition duration-150 ease-in-out bg-gray-100" href="#0">🌎 Remote</a>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div className="min-w-[60px] flex items-center lg:justify-end space-x-1 lg:space-x-0">
+                                                                        <div className="lg:hidden group-hover:lg:block">
+                                                                            <a className="btn-sm py-1.5 px-3 text-white bg-indigo-500 hover:bg-indigo-600 group shadow-sm" href="/posts/1">Apply Now <span className="tracking-normal text-indigo-200 group-hover:translate-x-0.5 transition-transform duration-150 ease-in-out ml-1">-&gt;</span></a>
+                                                                        </div>
+                                                                        <div className="group-hover:lg:hidden text-sm italic text-gray-500">2h</div>
+                                                                    </div>
+                                                            </div>
+                                            </div>
                                         </div>  
                                     </div>
                                 </section>
