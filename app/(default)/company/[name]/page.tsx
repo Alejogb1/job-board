@@ -92,31 +92,25 @@ export default function CompanyProfile() {
                                                                 <li>
                                                                 <label className="flex items-center">
                                                                     <input type="checkbox" className="form-checkbox" />
-                                                                    <span className="text-xs text-gray-600 ml-2">Full-time</span>
+                                                                    <span className="text-xs text-gray-600 ml-2">Designer</span>
                                                                 </label>
                                                                 </li>
                                                                 <li>
                                                                 <label className="flex items-center">
                                                                     <input type="checkbox" className="form-checkbox" />
-                                                                    <span className="text-xs text-gray-600 ml-2">Part-time</span>
+                                                                    <span className="text-xs text-gray-600 ml-2">Engineering</span>
                                                                 </label>
                                                                 </li>
                                                                 <li>
                                                                 <label className="flex items-center">
                                                                     <input type="checkbox" className="form-checkbox" />
-                                                                    <span className="text-xs text-gray-600 ml-2">Intership</span>
+                                                                    <span className="text-xs text-gray-600 ml-2">Other</span>
                                                                 </label>
                                                                 </li>
                                                                 <li>
                                                                 <label className="flex items-center">
                                                                     <input type="checkbox" className="form-checkbox" />
-                                                                    <span className="text-xs text-gray-600 ml-2">Contract / Freelance</span>
-                                                                </label>
-                                                                </li>
-                                                                <li>
-                                                                <label className="flex items-center">
-                                                                    <input type="checkbox" className="form-checkbox" />
-                                                                    <span className="text-xs text-gray-600 ml-2">Co-founder</span>
+                                                                    <span className="text-xs text-gray-600 ml-2">Product</span>
                                                                 </label>
                                                                 </li>
                                                             </ul>
@@ -128,32 +122,26 @@ export default function CompanyProfile() {
                                                             <li>
                                                             <label className="flex items-center">
                                                                 <input type="checkbox" className="form-checkbox" />
-                                                                <span className="text-xs text-gray-600 ml-2">$20K - $50K</span>
+                                                                <span className="text-xs text-gray-600 ml-2">Full Time</span>
                                                             </label>
                                                             </li>
                                                             <li>
                                                             <label className="flex items-center">
                                                                 <input type="checkbox" className="form-checkbox" />
-                                                                <span className="text-xs text-gray-600 ml-2">$50K - $100K</span>
+                                                                <span className="text-xs text-gray-600 ml-2">Part Time</span>
                                                             </label>
                                                             </li>
                                                             <li>
                                                             <label className="flex items-center">
                                                                 <input type="checkbox" className="form-checkbox" />
-                                                                <span className="text-xs text-gray-600 ml-2">&gt; $100K</span>
-                                                            </label>
-                                                            </li>
-                                                            <li>
-                                                            <label className="flex items-center">
-                                                                <input type="checkbox" className="form-checkbox" />
-                                                                <span className="text-xs text-gray-600 ml-2">Drawing / Painting</span>
+                                                                <span className="text-xs text-gray-600 ml-2">Contract</span>
                                                             </label>
                                                             </li>
                                                         </ul>
                                                         </div>
                                                         {/* Group 3 */}
                                                         <div>
-                                                        <div className="text-xs text-gray-800 font-semibold mb-3">Location</div>
+                                                        <div className="text-xs text-gray-800 font-semibold mb-3">LOCATION</div>
                                                         <label className="sr-only">Location</label>
                                                         <select className="form-select w-full">
                                                             <option>Anywhere</option>
