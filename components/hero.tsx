@@ -23,7 +23,7 @@ export default function Hero() {
           <div className="max-w-3xl text-center md:text-left">
             {/* Copy */}
             <h1 className="h1 font-inter mb-6">
-              Join the best tech startups in the <span className="font-nycd text-indigo-500 font-normal">industry</span>
+              Join the best tech ss in the <span className="font-nycd text-indigo-500 font-normal">industry</span>
             </h1>
             <p className="text-lg text-gray-500 mb-8">
               Our landing page template works on all devices, so you only have to set it

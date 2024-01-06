@@ -6,7 +6,7 @@ export default function Newsletter() {
         aria-hidden="true"
       />
       <div className="font-nycd text-xl text-indigo-500 mb-1">Land your dream job</div>
-      <div className="text-2xl font-bold mb-5">Get a weekly email with the latest startup jobs.</div>
+      <div className="text-2xl font-bold mb-5">Get a weekly email with the latest AI jobs.</div>
       <form className="inline-flex max-w-sm">
         <div className="flex flex-col sm:flex-row justify-center max-w-xs mx-auto sm:max-w-none">
           <input type="email" className="form-input py-1.5 w-full mb-2 sm:mb-0 sm:mr-2" placeholder="Your email" aria-label="Your email" />

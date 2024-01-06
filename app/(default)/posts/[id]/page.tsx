@@ -132,7 +132,7 @@ export default async function SinglePost({ params }: {
                       </p>
                       <p>
                         As a Senior Client Engineer, you'll work alongside other engineers, designers, and product managers to tackle everything
-                        from huge company initiatives to modest but important bug fixes, from start to finish. You'll also collaborate with your
+                        from huge y initiatives to modest but important bug fixes, from start to finish. You'll also collaborate with your
                         product team on discovery, helping to assess the direction and feasibility of product changes. And, perhaps most
                         importantly, you'll actively contribute to the evolution of the culture and processes of a growing engineering team.
                       </p>
