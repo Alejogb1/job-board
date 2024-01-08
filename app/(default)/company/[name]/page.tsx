@@ -4,7 +4,7 @@ import Sidebar from '@/components/sidebar'
 export default function CompanyProfile() {
   return (
         <div className="content lg:max-w-6xl mx-auto my-0 lg:pt-20">
-            <div className="styles-box mx-6">
+            <div className="styles-box mx-6 lg:mx">
                 <div className="lg:pt-1 pt-20">
                     <div className="space-x-1 text-dark-a flex flex-row items-center lg:pl-6 text-base lg:text-xs">
                         <a className="" href="/discover">Discover</a>
