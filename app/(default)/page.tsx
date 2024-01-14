@@ -4,7 +4,7 @@ import Sidebar from '@/components/sidebar'
 import PostsList from './posts-list'
 import Testimonials from '@/components/testimonials'
 import Header from '@/components/ui/header'
-import SearchBar from '@/components/SearchBar'
+import SearchBar from '@/components/searchbar'
 export default function Home() {
   return (
     <>
