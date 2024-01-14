@@ -7,7 +7,7 @@ export default function Sidebar() {
   const [remoteJob, setRemoteJob] = useState<boolean>(false)
 
   return (
-    <aside className="mb-8 md:mb-0 md:w-64 lg:w-72 md:ml-12 lg:ml-20 md:shrink-0 md:order-1">
+    <aside className="hidden lg:block md:block mb-8 md:mb-0 md:w-64 lg:w-72 md:ml-12 lg:ml-20 md:shrink-0 md:order-1">
       <div data-sticky="" data-margin-top="32" data-sticky-for="768" data-sticky-wrap="">
         <div className="relative bg-gray-50 rounded-xl border border-gray-200 p-5">
           <div className="absolute top-5 right-5 leading-none">

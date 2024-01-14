@@ -59,11 +59,11 @@ export default async function SinglePost({ params }: {
             {/* Sidebar */}
             <aside className="mb-8 md:mb-0 md:w-64 lg:w-72 md:ml-12 lg:ml-20 md:shrink-0 md:order-1">
               <div data-sticky data-margin-top="32" data-sticky-for="768" data-sticky-wrap>
-                <div className="relative bg-gray-50 rounded-xl border border-gray-200 p-5">
-                  <div className="text-center mb-6">
-                    <Image className="inline-flex mb-2" src={post.image} width={72} height={72} alt={post.name} />
-                    <h2 className="text-lg font-bold text-gray-800">{post.name}</h2>
-                  </div>
+                <div className="relative bg-gray-50 rounded-xl border border-gray-200 p-5" >
+                  <a className="text-center mb-6 group items-center" href={`/company/${post.name.toLowerCase()}`}>
+                    <Image className="mx-auto mb-2" src={post.image} width={72} height={72} alt={post.name} />
+                    <h2 className="text-lg font-bold text-gray-800 group-hover:underline">{post.name}</h2>
+                  </a>
 
                   <div className="flex justify-center md:justify-start mb-5">
                     <ul className="inline-flex flex-col space-y-2">
@@ -100,7 +100,7 @@ export default async function SinglePost({ params }: {
                   </div>
 
                   <div className="text-center">
-                    <a className="text-sm text-indigo-500 font-medium hover:underline" href="#">
+                    <a className="text-sm text-indigo-500 font-medium hover:underline" href={`/company/${post.name.toLowerCase()}`}>
                       View Company Profile
                     </a>
                   </div>

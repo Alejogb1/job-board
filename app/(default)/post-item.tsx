@@ -1,6 +1,19 @@
+'use client'
 import Link from 'next/link'
+import { useState, Fragment } from 'react'
+import { Dialog, Transition } from '@headlessui/react'
+
 
 export default function PostItem({ ...props }) {
+  let [isOpen, setIsOpen] = useState(true)
+
+  function closeModal() {
+    setIsOpen(false)
+  }
+
+  function openModal() {
+    setIsOpen(true)
+  }
   return (
     <div className={`[&:nth-child(-n+12)]:-order-1 group ${!props.sticky && 'border-b border-gray-200'}`}>
       <div className={`px-4 py-6 ${props.sticky && 'bg-indigo-100 rounded-xl'}`}>
@@ -42,7 +55,7 @@ export default function PostItem({ ...props }) {
             </div>
             <div className="min-w-[120px] flex items-center lg:justify-end space-x-3 lg:space-x-0">
               <div className="lg:hidden group-hover:lg:block">
-                <Link className="btn-sm py-1.5 px-3 text-white bg-indigo-500 hover:bg-indigo-600 group shadow-sm" href={`/posts/${props.id}`}>
+                <Link className="btn-sm psy-1.5 px-3 text-white bg-indigo-500 hover:bg-indigo-600 group shadow-sm" href={`/posts/${props.id}`}>
                   Apply Now{' '}
                   <span className="tracking-normal text-indigo-200 group-hover:translate-x-0.5 transition-transform duration-150 ease-in-out ml-1">
                     -&gt;
