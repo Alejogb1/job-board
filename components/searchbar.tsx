@@ -17,7 +17,7 @@ export default function SearchBar(){
         <form className="styles-form-component sticky top-0 z-0 bg-white w-full lg:pb-2 lg:pt-4 border border-gray-200 lg:px-4 lg:mb-4">
             <div className="styles-filter lg:p-0">
             <div className="search-bar">
-                <div className="styles px-4 py-2">
+                <div className="styles px-4 py-4">
                 <div className="gap-2 flex flex-col lg:flex-row">
                     <div className="role-wrapper grow lg:basis-6/12 max-w-full">
                         <button onClick={handleRoleButtonClick} className="focus-button rounded-sm border border-gray-300 bg-slate-50 text-gray-400 text-base h-12 cursor-pointer w-full" type='button'>
