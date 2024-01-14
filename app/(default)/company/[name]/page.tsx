@@ -57,9 +57,9 @@ export default function CompanyProfile() {
                             </div>
                             <div className="profile flex flex-row align-start w-full">
                                 <section className='lg:py-6 lg:px-8 py-8'>
-                                    <h1 className='sm:text-2xl lg:text-xl font-semibold lg:font-medium text-dark-aaaa antialiased'>Jobs at Thumbstack</h1>
+                                    <h1 className='text-2xl pb-4 lg:text-xl font-semibold lg:font-medium text-dark-aaaa antialiased'>Jobs at Thumbstack</h1>
                                     <div className="mb-6">
-                                        <div className="text-xs">
+                                        <div className="text-sm text-black">
                                         Thumbtack empowers people to DO. We empower customers to get more done and small business owners to do the work they love.
                                         </div>
                                     </div>
