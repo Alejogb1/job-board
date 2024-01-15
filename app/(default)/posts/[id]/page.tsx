@@ -124,6 +124,12 @@ export default async function SinglePost({ params }: {
                       >
                         Senior-level / Expert
                 </a>
+                <a
+                        className={`text-xs text-gray-500 font-medium inline-flex px-2 py-0.5 hover:text-gray-600 bg-indigo-50 rounded-md mr-1 mb-5 whitespace-nowrap transition duration-150 ease-in-out`}
+                        href="#0"
+                      >
+                        🌎 Remote
+                </a>
                 {/* Job description */}
                 <div className="space-y-8 mb-8">
                   <div>
