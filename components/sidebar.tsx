@@ -34,7 +34,7 @@ export default function Sidebar() {
                 <li>
                   <label className="flex items-center">
                     <input type="checkbox" className="form-checkbox" />
-                    <span className="text-sm text-gray-600 ml-2">Intership</span>
+                    <span className="text-sm text-gray-600 ml-2">Internship</span>
                   </label>
                 </li>
                 <li>
