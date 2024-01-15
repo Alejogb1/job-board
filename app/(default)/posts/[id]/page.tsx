@@ -71,14 +71,14 @@ export default async function SinglePost({ params }: {
                         <svg className="shrink-0 fill-gray-400 mr-3" width="14" height="14" xmlns="http://www.w3.org/2000/svg">
                           <path d="M9.707 4.293a1 1 0 0 0-1.414 1.414L10.586 8H2V2h3a1 1 0 1 0 0-2H2a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h8.586l-2.293 2.293a1 1 0 1 0 1.414 1.414l4-4a1 1 0 0 0 0-1.414l-4-4Z" />
                         </svg>
-                        <span className="text-sm text-gray-600">{post.date}</span>
+                        <span className="text-sm text-gray-600">1 week</span>
                       </li>
                       <li className="flex items-center">
                         <svg className="shrink-0 fill-gray-400 mr-3" width="14" height="16" xmlns="http://www.w3.org/2000/svg">
                           <circle cx="7" cy="7" r="2" />
                           <path d="M6.3 15.7c-.1-.1-4.2-3.7-4.2-3.8C.7 10.7 0 8.9 0 7c0-3.9 3.1-7 7-7s7 3.1 7 7c0 1.9-.7 3.7-2.1 5-.1.1-4.1 3.7-4.2 3.8-.4.3-1 .3-1.4-.1Zm-2.7-5 3.4 3 3.4-3c1-1 1.6-2.2 1.6-3.6 0-2.8-2.2-5-5-5S2 4.2 2 7c0 1.4.6 2.7 1.6 3.7 0-.1 0-.1 0 0Z" />
                         </svg>
-                        <span className="text-sm text-gray-600">{post.tag2}</span>
+                        <span className="text-sm text-gray-600">Remote - US</span>
                       </li>
                       <li className="flex items-center">
                         <svg className="shrink-0 fill-gray-400 mr-3" width="16" height="12" xmlns="http://www.w3.org/2000/svg">
@@ -117,70 +117,146 @@ export default async function SinglePost({ params }: {
                     <span className="tracking-normal">&lt;-</span> All Jobs
                   </Link>
                 </div>
-                <h1 className="text-4xl font-extrabold font-inter mb-10">{post.title}</h1>
+                <h1 className="text-4xl font-extrabold font-inter mb-4">{post.title}</h1>
+                <a
+                        className={`text-xs text-gray-500 font-medium inline-flex px-2 py-0.5 hover:text-gray-600 bg-indigo-50 rounded-md mr-1 mb-5 whitespace-nowrap transition duration-150 ease-in-out`}
+                        href="#0"
+                      >
+                        Senior-level / Expert
+                </a>
                 {/* Job description */}
                 <div className="space-y-8 mb-8">
                   <div>
-                    <h3 className="text-xl font-bold text-gray-800 mb-3">The Role</h3>
                     <div className="text-gray-500 space-y-3">
-                      <p>In the world of AI, behavioural predictions are leading the charge to better machine learning.</p>
+                      <p><span className='text-gray-800 font-semibold'>Employment type:</span> Full-time</p>                    
+                      <p><span className='text-gray-800 font-semibold'>Experience required:</span> 3-5 years</p>                    
+                      <p><span className='text-gray-800 font-semibold'>Mission:</span> To help more and more people experience financial well-being</p>                                        </div>
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-800 mb-3">Opportunity</h3>
+                    <div className="text-gray-500 space-y-3">
                       <p>
-                        There is so much happening in the AI space. Advances in the economic sectors have seen automated business practices
-                        rapidly increasing economic value. While the realm of the human sciences has used the power afforded by computational
-                        capabilities to solve many human based dilemmas. Even the art scene has adopted carefully selected ML applications to
-                        usher in the technological movement.
-                      </p>
-                      <p>
-                        As a Senior Client Engineer, you'll work alongside other engineers, designers, and product managers to tackle everything
-                        from huge y initiatives to modest but important bug fixes, from start to finish. You'll also collaborate with your
-                        product team on discovery, helping to assess the direction and feasibility of product changes. And, perhaps most
-                        importantly, you'll actively contribute to the evolution of the culture and processes of a growing engineering team.
+                        BlackRock is looking for a Market Data Operations Associate to join the Index & Data Solutions team. The Associate will be responsible for handling the end-to-end administration of contracts, maintaining the market data inventory, validating invoices, and supporting the contractual usage declaration process.
                       </p>
                     </div>
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold text-gray-800 mb-3">About You</h3>
+                    <h3 className="text-xl font-bold text-gray-800 mb-3">Responsibilities</h3>
                     <div className="text-gray-500 space-y-3">
-                      <p>
-                        You love building great software. Your work could be supporting new feature development, migrating existing features, and
-                        creating other mobile and web solutions for customers. You'll have a primary focus on frontend development using
-                        Javascript. Our client's tech stack is JavaScript, primarily using React. A strong understanding of JS core (ES2019+) is
-                        required, with some exposure in Java as back-end technology. We use modern tools, which means you'll have the opportunity
-                        to work with Webpack, Redux, Apollo, Styled Components, and much more.
-                      </p>
-                      <p>
-                        You love learning. Engineering is an ever-evolving world. You enjoy playing with new tech and exploring areas that you
-                        might not have experience with yet. You are self-driven, self-learner willing to share knowledge and participate actively
-                        in your community.
-                      </p>
-                      <p>
-                        Having overlap with your team is critical when working in a global remote team. Modus requires all team members to overlap
-                        with EST morning hours daily. In addition, reliable high speed internet is a must.
-                      </p>
-                    </div>
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold text-gray-800 mb-3">Things You Might Do</h3>
-                    <div className="text-gray-500 space-y-3">
-                      <p>
-                        We are a fast-growing, and remote-first company, so you'll likely get experience on many different projects across the
-                        organization. That said, here are some things you'll probably do:
-                      </p>
                       <ul className="list-disc list-inside space-y-3">
-                        <li>Give back to the community via open source and blog posts</li>
-                        <li>
-                          Travel and meet great people- as part of our remote-first lifestyle, it's important that we come together as needed to
-                          work together, meet each other in person and have fun together. Please keep that in mind when you apply
-                        </li>
-                        <li>
-                          Teach and be taught: Modus creates active teams that work in internal and external projects together, giving
-                          opportunities to stay relevant with the latest technologies and learning from experts worldwide
-                        </li>
-                        <li>Interact directly with internal and external clients to represent Modus and its values</li>
+                        <li>Maintaining the market data inventory, validating invoices, and handling provider change notifications</li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-800 mb-3">Requirements:</h3>
+                    <div className="text-gray-500 space-y-3">
+                      <ul className="list-disc list-inside space-y-3">
+                        <li>Graduate or post-graduate degree in a related field</li>
+                        <li>Proficient with Excel and other MS Office applications. Experience with SQL, Power BI, and Python is a plus.</li>
+                        <li>3-5 years relevant work experience</li>
+                        <li>Knowledge of the Financial Services industry and market and index data providers</li>
+                        <li>Strong problem-solving and analytical skills, excellent communication skills (written and verbal)</li>
+                        <li>Knowledge of Market and Index Data providers and ability to interpret contract terms and conditions</li>
                       </ul>
                     </div>
                   </div>
                 </div>
+                {/* Job skills here */}
+                <div className="">
+                  <h3 className="text-md font-semibold text-gray-800 mb-3">Skills</h3>
+                  <a
+                            className={`text-xs text-gray-500 font-medium inline-flex px-2 py-0.5 hover:text-gray-600 bg-indigo-50 rounded-md mr-1 mb-5 whitespace-nowrap transition duration-150 ease-in-out`}
+                            href="#0"
+                        >
+                          Big Data
+                  </a>
+
+                  <a
+                            className={`text-xs text-gray-500 font-medium inline-flex px-2 py-0.5 hover:text-gray-600 bg-indigo-50 rounded-md mr-1 mb-5 whitespace-nowrap transition duration-150 ease-in-out`}
+                            href="#0"
+                        >
+                          Computer Science
+                  </a>
+
+                  <a
+                            className={`text-xs text-gray-500 font-medium inline-flex px-2 py-0.5 hover:text-gray-600 bg-indigo-50 rounded-md mr-1 mb-5 whitespace-nowrap transition duration-150 ease-in-out`}
+                            href="#0"
+                        >
+                          Data analysis
+                  </a>
+
+                  <a
+                            className={`text-xs text-gray-500 font-medium inline-flex px-2 py-0.5 hover:text-gray-600 bg-indigo-50 rounded-md mr-1 mb-5 whitespace-nowrap transition duration-150 ease-in-out`}
+                            href="#0"
+                        >
+                          R
+                  </a>
+
+                  <a
+                            className={`text-xs text-gray-500 font-medium inline-flex px-2 py-0.5 hover:text-gray-600 bg-indigo-50 rounded-md mr-1 mb-5 whitespace-nowrap transition duration-150 ease-in-out`}
+                            href="#0"
+                        >
+                          Research
+                  </a>
+
+                  <a
+                            className={`text-xs text-gray-500 font-medium inline-flex px-2 py-0.5 hover:text-gray-600 bg-indigo-50 rounded-md mr-1 mb-5 whitespace-nowrap transition duration-150 ease-in-out`}
+                            href="#0"
+                        >
+                          SQL
+                  </a>
+              </div>
+                <div className="">
+                  <h3 className="text-md font-semibold text-gray-800 mb-3">Perks</h3>
+                  <a
+                            className={`text-xs text-gray-500 font-medium inline-flex px-2 py-0.5 hover:text-gray-600 bg-indigo-50 rounded-md mr-1 mb-5 whitespace-nowrap transition duration-150 ease-in-out`}
+                            href="#0"
+                        >
+                          Career development
+                  </a>
+
+                  <a
+                            className={`text-xs text-gray-500 font-medium inline-flex px-2 py-0.5 hover:text-gray-600 bg-indigo-50 rounded-md mr-1 mb-5 whitespace-nowrap transition duration-150 ease-in-out`}
+                            href="#0"
+                        >
+                          Competitive pay
+                  </a>
+
+                  <a
+                            className={`text-xs text-gray-500 font-medium inline-flex px-2 py-0.5 hover:text-gray-600 bg-indigo-50 rounded-md mr-1 mb-5 whitespace-nowrap transition duration-150 ease-in-out`}
+                            href="#0"
+                        >
+                          Fitness / gym
+                  </a>
+
+                  <a
+                            className={`text-xs text-gray-500 font-medium inline-flex px-2 py-0.5 hover:text-gray-600 bg-indigo-50 rounded-md mr-1 mb-5 whitespace-nowrap transition duration-150 ease-in-out`}
+                            href="#0"
+                        >
+                          Flex hours
+                  </a>
+
+                  <a
+                            className={`text-xs text-gray-500 font-medium inline-flex px-2 py-0.5 hover:text-gray-600 bg-indigo-50 rounded-md mr-1 mb-5 whitespace-nowrap transition duration-150 ease-in-out`}
+                            href="#0"
+                        >
+                          Health care
+                  </a>
+
+                  <a
+                            className={`text-xs text-gray-500 font-medium inline-flex px-2 py-0.5 hover:text-gray-600 bg-indigo-50 rounded-md mr-1 mb-5 whitespace-nowrap transition duration-150 ease-in-out`}
+                            href="#0"
+                        >
+                          Insurance
+                  </a>
+                  <a
+                            className={`text-xs text-gray-500 font-medium inline-flex px-2 py-0.5 hover:text-gray-600 bg-indigo-50 rounded-md mr-1 mb-5 whitespace-nowrap transition duration-150 ease-in-out`}
+                            href="#0"
+                        >
+                          Startup environment
+                  </a>
+              </div>
                 {/* Social share */}
                 <div className="flex items-center justify-end space-x-4">
                   <div className="text-xl font-nycd text-gray-400">Share job</div>
