@@ -4,6 +4,7 @@ import { useEffect } from 'react'
 
 import Header from '@/components/ui/header'
 import Footer from '@/components/ui/footer'
+import Hero from '@/components/hero'
 
 const Sticky = require('sticky-js')
 
@@ -25,6 +26,7 @@ export default function DefaultLayout({
       <main className="grow">
         <div className="bg-white min-h-screen h-full box-inherit">
           <Header/>
+          <Hero/>
           {children}
         </div>
       </main>
