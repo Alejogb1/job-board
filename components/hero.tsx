@@ -68,7 +68,7 @@ export default function Hero() {
                   />
                 </div>
                 <div className="text-sm text-gray-500 font-medium">
-                  Reach <span className="text-indigo-500">100K+</span> Professionals
+                  Reach <span className="text-indigo-500">100K+</span> professionals
                 </div>
               </div>
             </div>
