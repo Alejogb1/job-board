@@ -12,7 +12,7 @@ export default function Home() {
       <section>
         <div className="max-w-6xl mx-auto px sm:px">
           <div className="py-16 md:py-16">
-            <h2 className='text-3xl pb-4 text-black mt-6 mb-4'>Search for AI jobs</h2>
+            <h2 className='text-3xl font-semibold pb-4 text-black mt-6 mb-4'>Search for AI jobs</h2>
             <div className="md:flex md:justify-between" data-sticky-container>
                 <Sidebar/>
               {/* Main content */}
