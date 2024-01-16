@@ -26,7 +26,6 @@ export default function DefaultLayout({
       <main className="grow">
         <div className="bg-white min-h-screen h-full box-inherit">
           <Header/>
-          <Hero/>
           {children}
         </div>
       </main>
