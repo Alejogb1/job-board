@@ -2,6 +2,7 @@ import Header from '@/components/ui/header'
 import './css/style.css'
 
 import { Inter, Nothing_You_Could_Do } from 'next/font/google'
+import Footer from '@/components/ui/footer'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -32,6 +33,7 @@ export default function RootLayout({
         <div className="flex flex-col min-h-screen overflow-hidden supports-[overflow:clip]:overflow-clip">
           {children}
         </div>
+        <Footer/>
       </body>
     </html>
   )
