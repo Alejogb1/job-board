@@ -1,7 +1,7 @@
 export default function PressLogos() {
   return (
     <section>
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+      <div className="max-w-6xl mx-auto hidden md:block lg:block overflow-hidden">
         <div className="py-6 lg:py-4 border-b border-gray-200">
           {/* Items */}
           <div className="flex flex-wrap items-center justify-around text-center">

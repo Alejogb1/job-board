@@ -106,22 +106,28 @@ export default function Sidebar() {
               <div className="text-sm text-gray-800 font-semibold mb-3">Salary Range</div>
               <ul className="space-y-2">
                 <li>
-                  <label className="flex items-center">
-                    <input type="checkbox" className="form-checkbox" />
-                    <span className="text-sm text-gray-600 ml-2">$20K - $50K</span>
-                  </label>
+                  <a className="text-sm text-gray-800 cursor-pointer">Up to $ 50.000</a>
+
                 </li>
                 <li>
-                  <label className="flex items-center">
-                    <input type="checkbox" className="form-checkbox" />
-                    <span className="text-sm text-gray-600 ml-2">$50K - $100K</span>
-                  </label>
+                  <a className="text-sm text-gray-800 cursor-pointer">$ 50.000 to $ 100.000</a>
                 </li>
                 <li>
-                  <label className="flex items-center">
-                    <input type="checkbox" className="form-checkbox" />
-                    <span className="text-sm text-gray-600 ml-2">&gt; $100K</span>
-                  </label>
+                    <a className="text-sm text-gray-800 cursor-pointer">$ 100.000 to $ 200.000</a>
+                </li>
+                <li>
+                    <a className="text-sm text-gray-800 cursor-pointer">More than $ 200.000</a>
+                </li>
+                <li>
+                  <div className="flex gap-2">
+                    <div className="w-1/4">
+                      <input type="number" id="number-input" aria-describedby="helper-text-explanation" className="rounded-sm h-4/4 max-w-full relative border border-gray-300 max-w-4/12 text-gray-900 text-xs p-1" placeholder="Min" required/>
+                    </div>
+                    <span>-</span>
+                    <div className="w-1/4">
+                      <input type="number" id="number-input" aria-describedby="helper-text-explanation" className="rounded-sm h-4/4 max-w-full relative border border-gray-300 max-w-4/12 text-gray-900 text-xs p-1" placeholder="Max" required/>
+                    </div>
+                  </div>
                 </li>
               </ul>
             </div>

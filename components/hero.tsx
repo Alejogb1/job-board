@@ -18,7 +18,7 @@ export default function Hero() {
       </div>
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        <div className="pt-28 pb-8 md:pt-36 md:pb-16">
+        <div className="pt-28 pb-2 md:pt-36 md:pb-6">
           {/* Hero content */}
           <div className="max-w-3xl text-center md:text-left">
             {/* Copy */}
@@ -68,7 +68,7 @@ export default function Hero() {
                   />
                 </div>
                 <div className="text-sm text-gray-500 font-medium">
-                  Reach <span className="text-indigo-500">100K+</span> Prefessionals
+                  Reach <span className="text-indigo-500">100K+</span> professionals
                 </div>
               </div>
             </div>

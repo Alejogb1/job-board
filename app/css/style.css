@@ -21,5 +21,8 @@
     outline: none; /* Example: Remove default focus outline */
     box-shadow: 0 0 0 2px rgba(66, 153, 225, 0.5); /* Example: Add a blue border on focus */
 }
-
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
   
