@@ -9,22 +9,26 @@ import Link from 'next/link'
 import Image from 'next/image'
 import PostItem from '../../post-item'
 import Newsletter from '@/components/newsletter'
+import getCompany from '@/lib/getCompany'
+import extractDomain from '@/lib/extractDomain'
+import createSlug from '@/lib/slug'
+
 
 export async function generateStaticParams() {
-  const postsData: Promise<Post[]> = getAllPosts()
-  const posts = await postsData
+  const postsData: Promise<any> = getAllPosts()
+  const posts:any = await postsData
 
-  return posts.map(post => ({
-    id: post.id.toString()
+  return posts.jobs.map(post => ({
+    slug: post.slug
   }))
 }
 
 export async function generateMetadata({ params }: {
-  params: { id: number }
+  params: { slug: number }
 }): Promise<Metadata> {
-  const postsData: Promise<Post[]> = getAllPosts()
-  const posts = await postsData
-  const post = posts.find((post) => post.id === Number(params.id))
+  const postsData: Promise<any> = getAllPosts()
+  const posts:any = await postsData
+  const post = posts.jobs.find((post) => post.slug === Number(params.slug))
 
   if (!post) {
     return {
@@ -40,13 +44,41 @@ export async function generateMetadata({ params }: {
 }
 
 export default async function SinglePost({ params }: {
-  params: { id: number }
+  params: { slug: number }
 }) {
+  function getRandomIntegers(min:number, max:number) {
+     // Ensure there's enough room for the gap
+      if (max - min < 4) {
+        throw new Error('Not enough room for the specified gap.');
+      }
 
-  const postsData: Promise<Post[]> = getAllPosts()
-  const posts = await postsData
-  const post = posts.find((post) => post.id === Number(params.id))
+      const randomInt1 = Math.floor(Math.random() * (max - min - 4 + 1)) + min;
+      const randomInt2 = randomInt1 + 4;
 
+      return [randomInt1, randomInt2];
+    }
+  
+  // Example usage
+
+  
+  const postsData: Promise<any> = getAllPosts()
+  const posts:any = await postsData
+
+  const post:any = posts.jobs.find((post) => post.slug === String(params.slug))
+
+  const minRange = 1;
+  const maxRange = posts.jobs.length;
+  console.log("MAX RANGE: ", maxRange)
+  const randomIntegers = getRandomIntegers(minRange, maxRange);
+  console.log("RANDOM: ", randomIntegers)
+  const companyData: Promise<any> = getCompany(post.company_code)
+  const company:any = await companyData
+  try {
+    posts.jobs.slice(randomIntegers[0],randomIntegers[1])
+    console.log("tried")
+  } catch (error) {
+    console.error(error);
+  }
   if (!post) {
     notFound()
   }
@@ -60,9 +92,9 @@ export default async function SinglePost({ params }: {
             <aside className="mb-8 md:mb-0 md:w-64 lg:w-72 md:ml-12 lg:ml-20 md:shrink-0 md:order-1">
               <div data-sticky data-margin-top="32" data-sticky-for="768" data-sticky-wrap>
                 <div className="relative bg-gray-50 rounded-xl border border-gray-200 p-5" >
-                  <a className="text-center mb-6 group items-center" href={`/company/${post.name.toLowerCase()}`}>
-                    <Image className="mx-auto mb-2" src={post.image} width={72} height={72} alt={post.name} />
-                    <h2 className="text-lg font-bold text-gray-800 group-hover:underline">{post.name}</h2>
+                  <a className="text-center mb-6 group items-center" href={`/company/${createSlug(company.company.company_name)}`}>
+                    <Image className="mx-auto mb-2" src={`https://logo.clearbit.com/${extractDomain(company.company.company_webiste_url)}`} width={72} height={72} alt={post.job_title} />
+                    <h2 className="text-lg font-bold text-gray-800 group-hover:underline">{post.job_title}</h2>
                   </a>
 
                   <div className="flex justify-center md:justify-start mb-5">
@@ -91,7 +123,7 @@ export default async function SinglePost({ params }: {
                   </div>
 
                   <div className="max-w-xs mx-auto mb-5">
-                    <a className="btn w-full text-white bg-indigo-500 hover:bg-indigo-600 group shadow-sm" href="#0">
+                    <a className="btn w-full text-white bg-indigo-500 hover:bg-indigo-600 group shadow-sm" target='_blank' href={`${post.job_post_url}`}>
                       Apply Now{' '}
                       <span className="tracking-normal text-indigo-200 group-hover:translate-x-0.5 transition-transform duration-150 ease-in-out ml-1">
                         -&gt;
@@ -100,7 +132,7 @@ export default async function SinglePost({ params }: {
                   </div>
 
                   <div className="text-center">
-                    <a className="text-sm text-indigo-500 font-medium hover:underline" href={`/company/${post.name.toLowerCase()}`}>
+                    <a className="text-sm text-indigo-500 font-medium hover:underline" href={`/company/${createSlug(company.company.company_name)}`}>
                       View company
                     </a>
                   </div>
@@ -117,7 +149,7 @@ export default async function SinglePost({ params }: {
                     <span className="tracking-normal">&lt;-</span> All Jobs
                   </Link>
                 </div>
-                <h1 className="text-4xl font-extrabold font-inter mb-4">{post.title}</h1>
+                <h1 className="text-4xl font-extrabold font-inter mb-4">{post.job_title}</h1>
                 <a
                         className={`text-xs text-gray-500 font-medium inline-flex px-2 py-0.5 hover:text-gray-600 bg-indigo-50 rounded-md mr-1 mb-5 whitespace-nowrap transition duration-150 ease-in-out`}
                         href="#0"
@@ -309,7 +341,8 @@ export default async function SinglePost({ params }: {
                 <h4 className="text-2xl font-bold font-inter mb-8">Related Jobs</h4>
                 {/* List container */}
                 <div className="flex flex-col border-t border-gray-200">
-                  {posts.slice(1,4).map(post => {
+                  {
+                  posts.jobs.slice(randomIntegers[0],randomIntegers[1]).map(post => {
                     return (
                       <PostItem key={post.id} {...post} />
                     )

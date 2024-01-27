@@ -22,7 +22,6 @@ export default function Home() {
                 <SearchBar/>
                 <PostsList />
               </div>
-
             </div>
           </div>
         </div>

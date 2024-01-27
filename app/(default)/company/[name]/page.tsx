@@ -127,14 +127,14 @@ export default function CompanyProfile() {
                                                         {/* Group 3 */}
                                                         <div>
                                                         <div className="text-xs text-gray-800 font-semibold mb-3">LOCATION</div>
-                                                        <label className="sr-only">Location</label>
-                                                        <select className="form-select w-full">
-                                                            <option>Anywhere</option>
-                                                            <option>London</option>
-                                                            <option>San Francisco</option>
-                                                            <option>New York</option>
-                                                            <option>Berlin</option>
-                                                        </select>
+                                                            <label className="sr-only">Location</label>
+                                                            <select className="form-select w-full">
+                                                                <option>Anywhere</option>
+                                                                <option>London</option>
+                                                                <option>San Francisco</option>
+                                                                <option>New York</option>
+                                                                <option>Berlin</option>
+                                                            </select>
                                                         </div>
                                                     </div>
                                                     </div>

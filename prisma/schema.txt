@@ -37,19 +37,27 @@ model Company {
   created_at          DateTime
 }
 
+model JobLocation {
+  id     Int    @id @default(autoincrement())
+  job_id JobPost @relation(fields: [id], references: [id])
+  state  String
+  country String
+  zip    String
+}
+
 model JobPost {
   id               Int @id @default(autoincrement())
-  job_post_url     String 
+  post_by_id       Int
+  job_post_url     String @unique
   slug             String
-  job_title        String
   job_body         String
-  company          Company @relation(fields: [company_code], references: [id])
-  company_code     Int
-  region           String
-  tags             Tag[]
+  company          Company? @relation(fields: [id], references: [id])
+  job_location_id  JobLocation?
+  tags             Tags[]
   is_active        Boolean
   is_remote        Boolean
   is_sponsored     Boolean
+  created_at       DateTime
 }
 
 model Users {
@@ -59,11 +67,24 @@ model Users {
   created_at DateTime
 }
 
-model Tag {
-  id    Int       @id @default(autoincrement())
-  job_post JobPost  @relation(fields: [job_post_id], references: [id])
-  job_post_id Int
+model Tags {
+  id         Int       @id @default(autoincrement())
+  job_post_id JobPost  @relation(fields: [id], references: [id])
   created_at DateTime
-  tag_name String 
-  tag_identifier Int @unique
+  skillsets  Skillsets[]
+  perks      Perks[]
+}
+
+model Skillsets {
+  id       Int     @id @default(autoincrement())
+  tag_id   Tags    @relation(fields: [id], references: [id])
+  title    String
+  created_at DateTime
+}
+
+model Perks {
+  id        Int     @id @default(autoincrement())
+  tag_id   Tags    @relation(fields: [id], references: [id])
+  title     String
+  created_at DateTime
 }

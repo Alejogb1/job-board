@@ -1,7 +1,12 @@
+'use server'
+import prisma from "./prisma"
+
 export default async function getAllPosts() {
-    const res = await fetch('https://raw.githubusercontent.com/cruip/cruip-dummy/main/job-board-posts.json')
 
-    if (!res.ok) throw new Error('failed to fetch data')
-
-    return res.json()
+    const jobs = await prisma.jobPost.findMany({ take: 20})
+    
+    if(!jobs) throw new Error('failed to fetch data')
+    return {
+        jobs 
+    }
 }
