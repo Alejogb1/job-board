@@ -13,12 +13,24 @@ import getCompany from '@/lib/getCompany'
 import extractDomain from '@/lib/extractDomain'
 import createSlug from '@/lib/slug'
 
+interface Post {
+    id: number,
+    post_by_id: number,
+    is_active: boolean,
+    is_remote: boolean,
+    is_sponsored: boolean,
+    job_title: string,
+    job_body: string,
+    slug: string,
+    job_post_url: string,
+    created_at: Date,
+}
 
 export async function generateStaticParams() {
   const postsData: Promise<any> = getAllPosts()
-  const posts:any = await postsData
+  const posts:[Post] = await postsData
 
-  return posts.jobs.map(post => ({
+  return posts.map(post => ({
     slug: post.slug
   }))
 }
@@ -27,8 +39,8 @@ export async function generateMetadata({ params }: {
   params: { slug: number }
 }): Promise<Metadata> {
   const postsData: Promise<any> = getAllPosts()
-  const posts:any = await postsData
-  const post = posts.jobs.find((post) => post.slug === Number(params.slug))
+  const posts:[Post] = await postsData
+  const post = posts.find((post) => post.slug === String(params.slug))
 
   if (!post) {
     return {
@@ -37,7 +49,7 @@ export async function generateMetadata({ params }: {
   }  
 
   return {
-    title: post.title,
+    title: post.job_title,
     description: 'Page description',
   }
 
@@ -62,17 +74,17 @@ export default async function SinglePost({ params }: {
 
   
   const postsData: Promise<any> = getAllPosts()
-  const posts:any = await postsData
+  const posts:[Post] = await postsData
 
-  const post:any = posts.jobs.find((post) => post.slug === String(params.slug))
+  const post:any = posts.find((post) => post.slug === String(params.slug))
 
   const minRange = 1;
-  const maxRange = posts.jobs.length;
+  const maxRange = posts.length;
   const randomIntegers = getRandomIntegers(minRange, maxRange);
   const companyData: Promise<any> = getCompany(post.company_code)
   const company:any = await companyData
   try {
-    posts.jobs.slice(randomIntegers[0],randomIntegers[1])
+    posts.slice(randomIntegers[0],randomIntegers[1])
   } catch (error) {
     console.error(error);
   }
@@ -339,7 +351,7 @@ export default async function SinglePost({ params }: {
                 {/* List container */}
                 <div className="flex flex-col border-t border-gray-200">
                   {
-                  posts.jobs.slice(randomIntegers[0],randomIntegers[1]).map(post => {
+                  posts.slice(randomIntegers[0],randomIntegers[1]).map(post => {
                     return (
                       <PostItem key={post.id} {...post} />
                     )

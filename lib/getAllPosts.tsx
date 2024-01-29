@@ -1,15 +1,9 @@
 'use server'
 import prisma from "./prisma"
 
-export default async function getAllPosts(page: number) {
-    const itemsPerPage = 10;
-    const skip = (page - 1) * itemsPerPage;
-
+export default async function getAllPosts() {
     try {
-        const jobs: any[] = await prisma.jobPost.findMany({
-            take: itemsPerPage,
-            skip: skip,
-        });
+        const jobs: any[] = await prisma.jobPost.findMany();
 
         return jobs;
     } catch (error) {

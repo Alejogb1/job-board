@@ -2,7 +2,7 @@
 Note: This code includes an example of how to fetch data from an external JSON file that is hosted at https://raw.githubusercontent.com/cruip/cruip-dummy/main/job-board-posts.json. To facilitate this, we've included a lib directory in the root which contains a function that can fetch the JSON content. Additionally, we've defined the Post types in the types.d.ts file located in the root.
 */}
 
-import getAllPosts from '@/lib/getAllPosts'
+import getFilteredPosts from '@/lib/getAllPosts'
 import PostItem from './post-item'
 import Newsletter from '@/components/newsletter'
 import getCompanies from '@/lib/getCompany'
@@ -38,7 +38,7 @@ export default async function PostsList({
   currentPage: number;
 })  {
 
-  const postsData: Promise<any> =  getAllPosts(currentPage)
+  const postsData: Promise<any> =  getFilteredPosts(currentPage)
   const posts:[Post] = await postsData
 
   const totalPages:number = 9
