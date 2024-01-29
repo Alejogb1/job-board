@@ -21,7 +21,7 @@
     "@types/react-dom": "^18.2.17",
     "framer-motion": "^10.17.9",
     "next": "14.0.4",
-    "prisma": "^5.8.0",
+    "prisma": "^5.8.1",
     "prisma-offset-pagination": "^0.0.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
