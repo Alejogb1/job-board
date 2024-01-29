@@ -8,9 +8,9 @@ export default function CompanyProfile() {
                 <div className="lg:pt-1 pt-20">
                     <div className="space-x-1 text-dark-a flex flex-row items-center lg:pl-6 text-base lg:text-xs">
                         <a className="" href="/discover">Discover</a>
-                        <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" className="w-2"><path fill-rule="evenodd" clip-rule="evenodd" d="M8 21a.997.997 0 00.707-.293l8-8a.999.999 0 000-1.414l-8-8a.999.999 0 10-1.414 1.414L14.586 12l-7.293 7.293A.999.999 0 008 21z" fill="currentColor"></path></svg>
+                        <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" className="w-2"><path fillRule="evenodd" clipRule="evenodd" d="M8 21a.997.997 0 00.707-.293l8-8a.999.999 0 000-1.414l-8-8a.999.999 0 10-1.414 1.414L14.586 12l-7.293 7.293A.999.999 0 008 21z" fill="currentColor"></path></svg>
                         <a className="" href="/discover/companies">Company</a>
-                        <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" className="w-2"><path fill-rule="evenodd" clip-rule="evenodd" d="M8 21a.997.997 0 00.707-.293l8-8a.999.999 0 000-1.414l-8-8a.999.999 0 10-1.414 1.414L14.586 12l-7.293 7.293A.999.999 0 008 21z" fill="currentColor"></path></svg>
+                        <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" className="w-2"><path fillRule="evenodd" clipRule="evenodd" d="M8 21a.997.997 0 00.707-.293l8-8a.999.999 0 000-1.414l-8-8a.999.999 0 10-1.414 1.414L14.586 12l-7.293 7.293A.999.999 0 008 21z" fill="currentColor"></path></svg>
                         <a className="" href="/company/thumbtack">Thumbtack</a>
                     </div>
                 </div>

@@ -68,14 +68,11 @@ export default async function SinglePost({ params }: {
 
   const minRange = 1;
   const maxRange = posts.jobs.length;
-  console.log("MAX RANGE: ", maxRange)
   const randomIntegers = getRandomIntegers(minRange, maxRange);
-  console.log("RANDOM: ", randomIntegers)
   const companyData: Promise<any> = getCompany(post.company_code)
   const company:any = await companyData
   try {
     posts.jobs.slice(randomIntegers[0],randomIntegers[1])
-    console.log("tried")
   } catch (error) {
     console.error(error);
   }

@@ -1,12 +1,19 @@
 'use server'
 import prisma from "./prisma"
 
-export default async function getAllPosts() {
+export default async function getAllPosts(page: number) {
+    const itemsPerPage = 10;
+    const skip = (page - 1) * itemsPerPage;
 
-    const jobs = await prisma.jobPost.findMany({ take: 20})
-    
-    if(!jobs) throw new Error('failed to fetch data')
-    return {
-        jobs 
+    try {
+        const jobs: any[] = await prisma.jobPost.findMany({
+            take: itemsPerPage,
+            skip: skip,
+        });
+
+        return jobs;
+    } catch (error) {
+        console.error('Database Error:', error);
+        throw new Error('Failed to fetch job posts.');
     }
 }

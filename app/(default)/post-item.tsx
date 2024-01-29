@@ -4,11 +4,13 @@ import { useState, Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import getCompany from '@/lib/getCompany'
 import extractDomain from '@/lib/extractDomain'
+import getAllPosts from '@/lib/getAllPosts'
 
-export default async function PostItem({ ...props }) {
 
+export default async function PostItem({...props }) {
     const companyData: Promise<any> = getCompany(props.company_code)
     const company:any = await companyData
+
     return (
       <div className={`[&:nth-child(-n+12)]:-order-1 group border-b border-gray-200`}>
         <div className={`px-4 py-6`}>

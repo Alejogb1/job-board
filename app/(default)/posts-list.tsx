@@ -6,10 +6,14 @@ import getAllPosts from '@/lib/getAllPosts'
 import PostItem from './post-item'
 import Newsletter from '@/components/newsletter'
 import getCompanies from '@/lib/getCompany'
-import { usePathname } from 'next/navigation'
 import Link from 'next/link'
+import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
+import { useSearchParams, usePathname, useRouter } from 'next/navigation';
+import Pagination from '@/components/ui/pagination'
+import type { InferGetServerSidePropsType, GetServerSideProps } from 'next'
+
 interface Post {
-    jobs : { id: number,
+    id: number,
       post_by_id: number,
       is_active: boolean,
       is_remote: boolean,
@@ -19,7 +23,6 @@ interface Post {
       slug: string,
       job_post_url: string,
       created_at: Date,
-    }
   }
 
   interface PaginationProps {
@@ -27,57 +30,30 @@ interface Post {
     currentPage: number
   }
 
-  function Pagination({ totalPages, currentPage }: PaginationProps) {
-    const pathname = usePathname()
-    const basePath = pathname.split('/')[1]
-    const prevPage = currentPage - 1 > 0
-    const nextPage = currentPage + 1 <= totalPages
-  
-    return (
-      <div className="space-y-2 pb-8 pt-6 md:space-y-5">
-        <nav className="flex justify-between">
-          {!prevPage && (
-            <button className="cursor-auto disabled:opacity-50" disabled={!prevPage}>
-              Previous
-            </button>
-          )}
-          {prevPage && (
-            <Link
-              href={currentPage - 1 === 1 ? `/${basePath}/` : `/${basePath}/page/${currentPage - 1}`}
-              rel="prev"
-            >
-              Previous
-            </Link>
-          )}
-          <span>
-            {currentPage} of {totalPages}
-          </span>
-          {!nextPage && (
-            <button className="cursor-auto disabled:opacity-50" disabled={!nextPage}>
-              Next
-            </button>
-          )}
-          {nextPage && (
-            <Link href={`/${basePath}/page/${currentPage + 1}`} rel="next">
-              Next
-            </Link>
-          )}
-        </nav>
-      </div>
-    )
-  }
-export default async function PostsList() {
-  const postsData: Promise<any> = getAllPosts()
+export default async function PostsList({
+  query,
+  currentPage,
+}: {
+  query: string;
+  currentPage: number;
+})  {
+
+  const postsData: Promise<any> =  getAllPosts(currentPage)
   const posts:[Post] = await postsData
+
+  const totalPages:number = 9
+
+  console.log(" QUERY: ", query)
+  console.log(" PAGE: ", currentPage)
 
   if(posts){
       return (
         <div className="pb-8 md:pb-16">
           {/* List container */}
           <div className="flex flex-col">
-          {posts.jobs.map(post => {
+          {posts.map(post => {
               return (
-                <PostItem key={post.id} {...post}/>
+                  <PostItem  key={post.id} {...post}/>
               )
             })}
             {/* Newletter CTA */}
@@ -85,6 +61,9 @@ export default async function PostsList() {
               <Newsletter />
             </div>
     
+          </div>
+          <div className="mt-5 flex w-full justify-center">
+              <Pagination totalPages={totalPages}/>
           </div>
         </div>
       )

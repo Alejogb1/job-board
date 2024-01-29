@@ -8,7 +8,6 @@ export default async function getCompany(input:number) {
             id : input
         }}
     )
-    console.log("company: ", company)
     if(!company) throw new Error('failed to fetch data')
     return {
         company 

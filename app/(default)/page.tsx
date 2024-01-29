@@ -5,7 +5,18 @@ import PostsList from './posts-list'
 import Testimonials from '@/components/testimonials'
 import Header from '@/components/ui/header'
 import SearchBar from '@/components/searchbar'
-export default function Home() {
+import { useSearchParams, usePathname, useRouter } from 'next/navigation';
+export default function Home({
+  searchParams,
+}: {
+  searchParams?: {
+    query?: string;
+    page?: string;
+  };
+}) {
+  const query = searchParams?.query || '';
+  const currentPage = Number(searchParams?.page) || 1;
+
   return (
     <>
       <Hero/>
@@ -20,7 +31,7 @@ export default function Home() {
               {/* Main content */}
               <div className="md:grow">
                 <SearchBar/>
-                <PostsList />
+                <PostsList query={query} currentPage={currentPage} />
               </div>
             </div>
           </div>
