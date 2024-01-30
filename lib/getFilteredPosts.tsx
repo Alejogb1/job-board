@@ -6,12 +6,12 @@ export default async function getFilteredPosts(page: number) {
     const skip = (page - 1) * itemsPerPage;
 
     try {
-        const jobs: any[] = await prisma.jobPost.findMany({
+        const posts: any[] = await prisma.jobPost.findMany({
             take: itemsPerPage,
             skip: skip,
         });
 
-        return jobs;
+        return posts;
     } catch (error) {
         console.error('Database Error:', error);
         throw new Error('Failed to fetch job posts.');

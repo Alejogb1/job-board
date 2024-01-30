@@ -31,7 +31,7 @@ export default function Home({
               {/* Main content */}
               <div className="md:grow">
                 <SearchBar/>
-                <PostsList query={query} currentPage={currentPage} />
+                <PostsList currentPage={currentPage} />
               </div>
             </div>
           </div>
