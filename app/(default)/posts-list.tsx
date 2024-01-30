@@ -19,16 +19,10 @@ interface Post {
 }
 
 // Define the component
-export default function PostsList({
-  posts,
-  totalPages,
-  currentPage,
-}: {
-  posts: Post[];
-  totalPages: number;
-  currentPage: number;
-}) {
-  console.log(" PAGE: ", currentPage)
+export default async function PostsList({currentPage}:{currentPage:number}) {
+  const postsData: Promise<any> = getFilteredPosts(currentPage); // Fetch data for the first page
+  const posts: Post[] = await postsData;
+  const totalPages: number = 9; // Set the total number of pages
 
   return (
     <div className="pb-8 md:pb-16">
@@ -49,35 +43,4 @@ export default function PostsList({
       </div>
     </div>
   );
-}
-
-// Add getStaticPaths function to generate dynamic paths at build time
-export async function getStaticPaths() {
-  // Fetch data to determine dynamic paths
-  const postsData: Promise<any> = getFilteredPosts(1); // Fetch data for the first page
-  const posts: Post[] = await postsData;
-
-  // Create paths based on the slugs of fetched posts
-  const paths = posts.map(post => ({
-    params: { slug: post.slug },
-  }));
-
-  return { paths, fallback: false };
-}
-
-// Add getStaticProps function to fetch data for a specific path at build time
-export async function getStaticProps({ params } : {params:any}) {
-  const currentPage = 1; // You can extract page number from params if needed
-  const postsData: Promise<any> = getFilteredPosts(currentPage);
-  const posts: Post[] = await postsData;
-
-  const totalPages: number = 9; // Set the total number of pages
-
-  return {
-    props: {
-      posts,
-      totalPages,
-      currentPage,
-    },
-  };
 }
