@@ -42,7 +42,7 @@ model JobPost {
   job_post_url     String 
   slug             String
   job_title        String
-  job_body         String
+  job_body         Bytes
   company          Company @relation(fields: [company_code], references: [id])
   company_code     Int
   region           String
@@ -65,5 +65,4 @@ model Tag {
   job_post_id Int
   created_at DateTime
   tag_name String 
-  tag_identifier Int @unique
 }
