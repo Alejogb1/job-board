@@ -46,7 +46,9 @@ model JobPost {
   company          Company @relation(fields: [company_code], references: [id])
   company_code     Int
   region           String
-  tags             Tag[]
+  tags             TagsOnPosts[]
+  min_salary       Int
+  max_salary       Int
   is_active        Boolean
   is_remote        Boolean
   is_sponsored     Boolean
@@ -61,8 +63,19 @@ model Users {
 
 model Tag {
   id    Int       @id @default(autoincrement())
-  job_post JobPost  @relation(fields: [job_post_id], references: [id])
-  job_post_id Int
+  job_post TagsOnPosts[]
+  tag_type String
   created_at DateTime
-  tag_name String 
+  title String 
+}
+
+model TagsOnPosts {
+  post       JobPost     @relation(fields: [postId], references: [id])
+  postId     Int // relation scalar field (used in the `@relation` attribute above)
+  tag   Tag @relation(fields: [tagId], references: [id])
+  tagId Int // relation scalar field (used in the `@relation` attribute above)
+  assignedAt DateTime @default(now())
+  assignedBy String
+
+  @@id([postId, tagId]) 
 }
