@@ -23,8 +23,7 @@ export default function Home({
       <PressLogos/>
       <section>
         <div className="max-w-6xl mx-auto px-6 sm:px">
-          <div className="pb-16 md:pb-16">
-            <h2 className='text-3xl font-bold pb-4 text-black mt-6 mb-4'>Search for AI jobs</h2>
+          <div className="pb-16 md:pb-16 py-4">
             <div className="md:flex md:justify-between" data-sticky-container>
                 <Sidebar/>
               {/* Main content */}
