@@ -1,4 +1,6 @@
-/** @type {import('next').NextConfig} */
+/** @type {import('tailwindcss').Config} */
+const withMDX = require('@next/mdx')()
+
 const nextConfig = {
     images: {
       remotePatterns: [
@@ -10,7 +12,13 @@ const nextConfig = {
         },
       ],
     },
+    pageExtensions: ['js', 'jsx', 'mdx', 'ts', 'tsx'],
+    plugins: [
+      require('@tailwindcss/typography'),
+      // ...
+    ],
+  
   }
   
 
-module.exports = nextConfig
+module.exports = withMDX(nextConfig)
