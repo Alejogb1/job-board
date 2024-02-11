@@ -9,6 +9,7 @@ datasource db {
 
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["fullTextSearch", "fullTextIndex"]
 }
 
 model CompanyImage {
@@ -25,6 +26,13 @@ model CompanyTeams {
   title       String
 }  
 
+model CompanyLinks {
+  id           Int @id @default(autoincrement())
+  company     Company? @relation(fields: [company_id], references: [id])
+  company_id  Int @unique  
+  url         String
+}
+
 model Company {
   id                  Int @id @default(autoincrement())
   jobs                JobPost[]
@@ -34,6 +42,7 @@ model Company {
   profile_description String?
   location            String
   company_webiste_url String
+  company_links       CompanyLinks[]
   created_at          DateTime
 }
 
