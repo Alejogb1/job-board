@@ -1,15 +1,12 @@
 'use server'
 import Link from 'next/link'
-import { useState, Fragment } from 'react'
-import { Dialog, Transition } from '@headlessui/react'
 import getCompany from '@/lib/getCompany'
 import extractDomain from '@/lib/extractDomain'
-import getAllPosts from '@/lib/getAllPosts'
-
 
 export default async function PostItem({...props }) {
     const companyData: Promise<any> = getCompany(props.company_code)
     const company:any = await companyData
+
 
     return (
       <div className={`[&:nth-child(-n+12)]:-order-1 group border-b border-gray-200`}>
@@ -39,7 +36,7 @@ export default async function PostItem({...props }) {
                     className={`text-xs text-gray-500 font-medium inline-flex px-2 py-0.5 hover:text-gray-600 rounded-md m-1 whitespace-nowrap transition duration-150 ease-in-out bg-gray-50`}
                     href="#0"
                   >
-                    150k
+                   150k
                   </a>
                 </div>
               </div>
