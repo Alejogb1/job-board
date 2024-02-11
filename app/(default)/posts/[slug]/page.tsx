@@ -12,6 +12,8 @@ import Newsletter from '@/components/newsletter'
 import getCompany from '@/lib/getCompany'
 import extractDomain from '@/lib/extractDomain'
 import createSlug from '@/lib/slug'
+import Markdown from 'react-markdown'
+import { MDXRemote } from 'next-mdx-remote/rsc'
 
 interface Post {
     id: number,
@@ -69,10 +71,6 @@ export default async function SinglePost({ params }: {
 
       return [randomInt1, randomInt2];
     }
-  
-  // Example usage
-
-  
   const postsData: Promise<any> = getAllPosts()
   const posts:[Post] = await postsData
 
@@ -83,6 +81,11 @@ export default async function SinglePost({ params }: {
   const randomIntegers = getRandomIntegers(minRange, maxRange);
   const companyData: Promise<any> = getCompany(post.company_code)
   const company:any = await companyData
+  
+  const bufferData = Buffer.from(post.job_body);
+  const descriptionString = bufferData.toString('utf-8');
+
+  console.log(descriptionString)
   try {
     posts.slice(randomIntegers[0],randomIntegers[1])
   } catch (error) {
@@ -126,7 +129,7 @@ export default async function SinglePost({ params }: {
                           <path d="M15 0H1C.4 0 0 .4 0 1v10c0 .6.4 1 1 1h14c.6 0 1-.4 1-1V1c0-.6-.4-1-1-1Zm-1 10H2V2h12v8Z" />
                           <circle cx="8" cy="6" r="2" />
                         </svg>
-                        <span className="text-sm text-gray-600">{post.tag1}</span>
+                        <span className="text-sm text-gray-600"></span>
                       </li>
                     </ul>
                   </div>
@@ -173,41 +176,7 @@ export default async function SinglePost({ params }: {
                 </a>
                 {/* Job description */}
                 <div className="space-y-8 mb-8">
-                  <div>
-                    <div className="text-gray-500 space-y-3">
-                      <p><span className='text-gray-800 font-semibold'>Employment type:</span> Full-time</p>                    
-                      <p><span className='text-gray-800 font-semibold'>Experience required:</span> 3-5 years</p>                    
-                      <p><span className='text-gray-800 font-semibold'>Mission:</span> To help more and more people experience financial well-being</p>                                        </div>
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold text-gray-800 mb-3">Opportunity</h3>
-                    <div className="text-gray-500 space-y-3">
-                      <p>
-                        BlackRock is looking for a Market Data Operations Associate to join the Index & Data Solutions team. The Associate will be responsible for handling the end-to-end administration of contracts, maintaining the market data inventory, validating invoices, and supporting the contractual usage declaration process.
-                      </p>
-                    </div>
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold text-gray-800 mb-3">Responsibilities</h3>
-                    <div className="text-gray-500 space-y-3">
-                      <ul className="list-disc list-inside space-y-3">
-                        <li>Maintaining the market data inventory, validating invoices, and handling provider change notifications</li>
-                      </ul>
-                    </div>
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold text-gray-800 mb-3">Requirements:</h3>
-                    <div className="text-gray-500 space-y-3">
-                      <ul className="list-disc list-inside space-y-3">
-                        <li>Graduate or post-graduate degree in a related field</li>
-                        <li>Proficient with Excel and other MS Office applications. Experience with SQL, Power BI, and Python is a plus.</li>
-                        <li>3-5 years relevant work experience</li>
-                        <li>Knowledge of the Financial Services industry and market and index data providers</li>
-                        <li>Strong problem-solving and analytical skills, excellent communication skills (written and verbal)</li>
-                        <li>Knowledge of Market and Index Data providers and ability to interpret contract terms and conditions</li>
-                      </ul>
-                    </div>
-                  </div>
+                    <Markdown>{descriptionString}</Markdown> 
                 </div>
                 {/* Job skills here */}
                 <div className="">
