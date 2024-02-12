@@ -26,52 +26,10 @@ export default function Hero() {
               Get the best tech jobs in <span className="font-nycd text-indigo-500 font-normal">Artificial Intelligence</span>
             </h1>
             <p className="text-lg text-gray-500 mb-8">
-              Our landing page template works on all devices, so you only have to set it
-              <br className="hidden md:block" /> up once, and get beautiful results forever.
+              Secure top-tier tech roles, drive future breakthroughs in Artificial Intelligence
+              <br className="hidden md:block" /> with our intelligent job search platform.
             </p>
-            {/* Button + Avatars */}
-            <div className="sm:flex sm:items-center sm:justify-center md:justify-start space-y-6 sm:space-y-0 sm:space-x-5">
-              <div>
-                <Link className="btn text-white bg-indigo-500 hover:bg-indigo-600 shadow-sm" href="/post-a-job">
-                  Post a job - $299
-                </Link>
-              </div>
-              <div className="sm:flex sm:items-center sm:justify-center space-y-2 sm:space-y-0 sm:space-x-3">
-                <div className="inline-flex -space-x-3 -ml-0.5">
-                  <Image
-                    className="rounded-full border-2 border-indigo-50 box-content"
-                    src={Avatar01}
-                    width={32}
-                    height={32}
-                    alt="Avatar 01"
-                  />
-                  <Image
-                    className="rounded-full border-2 border-indigo-50 box-content"
-                    src={Avatar02}
-                    width={32}
-                    height={32}
-                    alt="Avatar 02"
-                  />
-                  <Image
-                    className="rounded-full border-2 border-indigo-50 box-content"
-                    src={Avatar03}
-                    width={32}
-                    height={32}
-                    alt="Avatar 03"
-                  />
-                  <Image
-                    className="rounded-full border-2 border-indigo-50 box-content"
-                    src={Avatar04}
-                    width={32}
-                    height={32}
-                    alt="Avatar 04"
-                  />
-                </div>
-                <div className="text-sm text-gray-500 font-medium">
-                  Reach <span className="text-indigo-500">100K+</span> professionals
-                </div>
-              </div>
-            </div>
+            
           </div>
         </div>
       </div>
