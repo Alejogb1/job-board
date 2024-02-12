@@ -85,7 +85,7 @@ export default async function SinglePost({ params }: {
   const bufferData = Buffer.from(post.job_body);
   const descriptionString = bufferData.toString('utf-8');
 
-  console.log(descriptionString)
+  console.log("COMPANY: ", company)
   try {
     posts.slice(randomIntegers[0],randomIntegers[1])
   } catch (error) {
@@ -104,10 +104,10 @@ export default async function SinglePost({ params }: {
             <aside className="mb-8 md:mb-0 md:w-64 lg:w-72 md:ml-12 lg:ml-20 md:shrink-0 md:order-1">
               <div data-sticky data-margin-top="32" data-sticky-for="768" data-sticky-wrap>
                 <div className="relative bg-gray-50 rounded-xl border border-gray-200 p-5" >
-                  <a className="text-center mb-6 group items-center" href={`/company/${createSlug(company.company.company_name)}`}>
+                  <p className="text-center mb-6 group items-center">
                     <Image className="mx-auto mb-2" src={`https://logo.clearbit.com/${extractDomain(company.company.company_webiste_url)}`} width={72} height={72} alt={post.job_title} />
-                    <h2 className="text-lg font-bold text-gray-800 group-hover:underline">{post.job_title}</h2>
-                  </a>
+                    <h2 className="text-lg font-bold text-gray-800">{company.company.company_name}</h2>
+                  </p>
 
                   <div className="flex justify-center md:justify-start mb-5">
                     <ul className="inline-flex flex-col space-y-2">
@@ -122,14 +122,14 @@ export default async function SinglePost({ params }: {
                           <circle cx="7" cy="7" r="2" />
                           <path d="M6.3 15.7c-.1-.1-4.2-3.7-4.2-3.8C.7 10.7 0 8.9 0 7c0-3.9 3.1-7 7-7s7 3.1 7 7c0 1.9-.7 3.7-2.1 5-.1.1-4.1 3.7-4.2 3.8-.4.3-1 .3-1.4-.1Zm-2.7-5 3.4 3 3.4-3c1-1 1.6-2.2 1.6-3.6 0-2.8-2.2-5-5-5S2 4.2 2 7c0 1.4.6 2.7 1.6 3.7 0-.1 0-.1 0 0Z" />
                         </svg>
-                        <span className="text-sm text-gray-600">Remote - US</span>
+                        <span className="text-sm text-gray-600">{post.region}</span>
                       </li>
                       <li className="flex items-center">
                         <svg className="shrink-0 fill-gray-400 mr-3" width="16" height="12" xmlns="http://www.w3.org/2000/svg">
                           <path d="M15 0H1C.4 0 0 .4 0 1v10c0 .6.4 1 1 1h14c.6 0 1-.4 1-1V1c0-.6-.4-1-1-1Zm-1 10H2V2h12v8Z" />
                           <circle cx="8" cy="6" r="2" />
                         </svg>
-                        <span className="text-sm text-gray-600"></span>
+                        <span className="text-sm text-gray-600">{post.min_salary <= 0 ? "Salary range not found" : `USD ${post.min_salary}K - ${post.max_salary}K`}</span>
                       </li>
                     </ul>
                   </div>
@@ -144,8 +144,8 @@ export default async function SinglePost({ params }: {
                   </div>
 
                   <div className="text-center">
-                    <a className="text-sm text-indigo-500 font-medium hover:underline" href={`/company/${createSlug(company.company.company_name)}`}>
-                      View company
+                    <a className="text-sm text-indigo-500 font-medium hover:underline cursor-pointer" href={company.company.company_webiste_url} target='_blank'>
+                      Visit company
                     </a>
                   </div>
                 </div>
