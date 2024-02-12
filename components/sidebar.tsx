@@ -43,46 +43,34 @@ export default function Sidebar() {
                     <span className="text-sm text-gray-600 ml-2">Contract / Freelance</span>
                   </label>
                 </li>
-                <li>
-                  <label className="flex items-center">
-                    <input type="checkbox" className="form-checkbox" />
-                    <span className="text-sm text-gray-600 ml-2">Co-founder</span>
-                  </label>
-                </li>
               </ul>
             </div>
             {/* Group 2 */}
             <div>
-              <div className="text-sm text-gray-800 font-semibold mb-3">Job Roles</div>
+              <div className="text-sm text-gray-800 font-semibold mb-3">Job Level</div>
               <ul className="space-y-2">
                 <li>
                   <label className="flex items-center">
                     <input type="checkbox" className="form-checkbox" defaultChecked />
-                    <span className="text-sm text-gray-600 ml-2">Programming</span>
+                    <span className="text-sm text-gray-600 ml-2">Senior-level / Expert</span>
                   </label>
                 </li>
                 <li>
                   <label className="flex items-center">
                     <input type="checkbox" className="form-checkbox" />
-                    <span className="text-sm text-gray-600 ml-2">Design</span>
+                    <span className="text-sm text-gray-600 ml-2">Mid-level / Intermediate</span>
                   </label>
                 </li>
                 <li>
                   <label className="flex items-center">
                     <input type="checkbox" className="form-checkbox" />
-                    <span className="text-sm text-gray-600 ml-2">Management / Finance</span>
+                    <span className="text-sm text-gray-600 ml-2">Entry-level / Junior</span>
                   </label>
                 </li>
                 <li>
                   <label className="flex items-center">
                     <input type="checkbox" className="form-checkbox" />
-                    <span className="text-sm text-gray-600 ml-2">Customer Support</span>
-                  </label>
-                </li>
-                <li>
-                  <label className="flex items-center">
-                    <input type="checkbox" className="form-checkbox" />
-                    <span className="text-sm text-gray-600 ml-2">Sales / Marketing</span>
+                    <span className="text-sm text-gray-600 ml-2">Executive-level / Director</span>
                   </label>
                 </li>
               </ul>
@@ -106,17 +94,16 @@ export default function Sidebar() {
               <div className="text-sm text-gray-800 font-semibold mb-3">Salary Range</div>
               <ul className="space-y-2">
                 <li>
-                  <a className="text-sm text-gray-800 cursor-pointer">Up to $ 50.000</a>
-
+                  <a className="text-sm text-gray-800 cursor-pointer">Up to $ 100.000</a>
                 </li>
                 <li>
-                  <a className="text-sm text-gray-800 cursor-pointer">$ 50.000 to $ 100.000</a>
+                  <a className="text-sm text-gray-800 cursor-pointer">$ 100.000 to $ 150.000</a>
                 </li>
                 <li>
-                    <a className="text-sm text-gray-800 cursor-pointer">$ 100.000 to $ 200.000</a>
+                    <a className="text-sm text-gray-800 cursor-pointer">$ 150.000 to $ 250.000</a>
                 </li>
                 <li>
-                    <a className="text-sm text-gray-800 cursor-pointer">More than $ 200.000</a>
+                    <a className="text-sm text-gray-800 cursor-pointer">Over $ 250.000</a>
                 </li>
                 <li>
                   <div className="flex gap-2">
