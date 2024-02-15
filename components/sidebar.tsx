@@ -14,6 +14,7 @@ export default function Sidebar() {
 
   const handleTag = (term:string, checked:boolean) => {
       const params = new URLSearchParams(searchParams);
+      params.set('page', '1');
       if(searchParams.has("filter")) {
         if (term && checked) {
           params.append('filter', term);
