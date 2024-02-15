@@ -32,7 +32,7 @@ export default function Pagination({totalPages} : {totalPages:number}) {
           if (page === '...') position = 'middle';
 
             return (
-                <li>
+                <li key={index}>
                     <a href={createPageURL(page)}className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">{page}</a>
                 </li>
             );
