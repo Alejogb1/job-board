@@ -65,9 +65,9 @@ model JobPost {
   @@fulltext ([region])
 }
 
-model Users {
+model User {
   userId     Int      @id @default(autoincrement())
-  username   String   @unique
+  username   String  
   email      String   @unique
   created_at DateTime
 }
