@@ -11,9 +11,15 @@ export default function Home({
 }: {
   searchParams?: {
     query?: string;
+    loc?: string;
     page?: string;
+    filter?: any;
   };
 }) {
+  const query = searchParams?.query || '';
+  const location = searchParams?.loc || '';
+  const tags = searchParams?.filter || '';
+
   const currentPage = Number(searchParams?.page) || 1;
 
   return (
@@ -29,7 +35,7 @@ export default function Home({
               {/* Main content */}
               <div className="md:grow">
                 <SearchBar/>
-                <PostsList currentPage={currentPage} />
+                <PostsList tags={tags} location={location} query={query}  currentPage={currentPage} />
               </div>
             </div>
           </div>
