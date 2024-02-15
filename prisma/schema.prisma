@@ -39,7 +39,7 @@ model Company {
   company_teams       CompanyTeams[]
   company_image       CompanyImage?
   company_name        String
-  profile_description String?
+  profile_description String? 
   location            String
   company_webiste_url String
   company_links       CompanyLinks[]
@@ -61,6 +61,8 @@ model JobPost {
   is_active        Boolean
   is_remote        Boolean
   is_sponsored     Boolean
+  @@fulltext ([job_title])
+  @@fulltext ([region])
 }
 
 model Users {
