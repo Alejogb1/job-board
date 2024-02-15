@@ -2,21 +2,18 @@
 import Link from 'next/link'
 import getCompany from '@/lib/getCompany'
 import extractDomain from '@/lib/extractDomain'
-import getTagsOnPosts from '@/lib/getTags'
 import getTag from '@/lib/getTag'
-
+import getTagsOnPosts from '@/lib/getTags'
 export default async function PostItem({...props }) {
     const companyData: Promise<any> = getCompany(props.company_code)
     const company:any = await companyData
 
     const tagsOnPostData: Promise<any> = getTagsOnPosts(props.id)
     const tags:any = await tagsOnPostData
-
-
-    const one_tagData: Promise<any> = getTag(tags[6].tagId) 
+    const one_tagData: Promise<any> = getTag(tags[6]?.tagId) 
     const tag:any = await one_tagData
 
-    const second_tagData: Promise<any> = getTag(tags[4].tagId) 
+    const second_tagData: Promise<any> = getTag(tags[4]?.tagId) 
     const second_tag:any = await second_tagData
 
     let salary_index = 0
