@@ -3,8 +3,7 @@ import PostItem from './post-item'
 import Newsletter from '@/components/newsletter'
 import Pagination from '@/components/ui/pagination'
 import getFilteredPosts from '@/lib/getFilteredPosts'
-
-import getFilteredTags from '@/lib/getFilteredPostsTags'
+import getFilteredPostsWithTags from '@/lib/getFilteredPostsTags'
 import getTagsPosts from '@/lib/sidebar/getJobsRole'
 // Define the Post interface
 interface Post {
@@ -20,7 +19,7 @@ interface Post {
     created_at: Date,
 }
 // Define the component
-export default async function PostsList({tags, location, query, currentPage}:{tags:any, location: string, query:string , currentPage:number}) {
+export default async function PostsList({tags, location, query, currentPage, remote}:{tags:any, location: string, query:string , currentPage:number, remote:string}) {
   
   const tagsPostData: Promise<any> = getTagsPosts(tags);
   const tagsPosts:any = await tagsPostData
@@ -28,8 +27,7 @@ export default async function PostsList({tags, location, query, currentPage}:{ta
   const totalPages: number = 9; // Set the total number of pages
 
   if (tagsPosts) {
-      console.log("TAGS RETRIEVED: ", tags)
-      const postsData: Promise<any> = getFilteredTags(currentPage, query, location,tags); // Fetch data for the first page
+      const postsData: Promise<any> = getFilteredPostsWithTags(currentPage, query, location,tags,remote); // Fetch data for the first page
       const posts: Post[] = await postsData;
       return (
         <div className="pb-8 md:pb-16">

@@ -14,11 +14,13 @@ export default function Home({
     loc?: string;
     page?: string;
     filter?: any;
+    remote?:string;
   };
 }) {
   const query = searchParams?.query || '';
   const location = searchParams?.loc || '';
   const tags = searchParams?.filter || '';
+  const remote = searchParams?.remote || '';
 
   const currentPage = Number(searchParams?.page) || 1;
 
@@ -35,7 +37,7 @@ export default function Home({
               {/* Main content */}
               <div className="md:grow">
                 <SearchBar/>
-                <PostsList tags={tags} location={location} query={query}  currentPage={currentPage} />
+                <PostsList remote={remote} tags={tags} location={location} query={query}  currentPage={currentPage} />
               </div>
             </div>
           </div>

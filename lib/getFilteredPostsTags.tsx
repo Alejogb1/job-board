@@ -3,12 +3,10 @@ import { string } from "zod";
 import prisma from "./prisma";
 import { PrismaClient, Prisma } from '@prisma/client'
 
-export default async function getFilteredTags(page: number, term: string, location: string, tags:unknown[]) {
+export default async function getFilteredPostsWithTags(page: number, term: string, location: string, tags:unknown[], remote:string) {
     const itemsPerPage = 10;
     const skip = (page - 1) * itemsPerPage;
 
-    console.log(typeof tags);
-    console.log(tags);
 
     try {
         let whereClause: any = {}
@@ -53,7 +51,6 @@ export default async function getFilteredTags(page: number, term: string, locati
         }
         if (typeof tags == "object") {
             tags.map((tag, index) => {
-                console.log(index)
                 switch (tag) {
                     case 'fulltime':
                         tags[index] = 370
@@ -83,9 +80,8 @@ export default async function getFilteredTags(page: number, term: string, locati
                       console.log(`out of ${tag}`);
                   }
             })
-            console.log("tag before prisma map: ",tags)
             whereClause = {
-              AND: [
+              OR: [
                 {
                   tags: {
                     some: {
@@ -112,14 +108,18 @@ export default async function getFilteredTags(page: number, term: string, locati
         if (location) {
             whereClause.region = { search: location };
         }
+        if (remote) {
+          whereClause.is_remote = true;
+        }
+
+        console.log("WHERE CLAUSE: ", remote)
+
         try {
-          console.log("executing prisma default route")
           const posts: any[] = await prisma.jobPost.findMany({
             take: itemsPerPage,
             skip: skip,
             where: whereClause,
           });    
-        console.log(posts)
 
         return posts 
            

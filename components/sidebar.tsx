@@ -1,20 +1,27 @@
 'use client'
 import { useSearchParams, usePathname, useRouter } from 'next/navigation';
-import { useDebouncedCallback } from 'use-debounce';
-
+import { useCallback } from 'react';
 import { useState } from 'react'
 
 export default function Sidebar() {
 
-  const [remoteJob, setRemoteJob] = useState<boolean>(false)
-  const [checked, setChecked] = useState<boolean>(false)
+  const [remoteJobCondition, setremoteJobCondition] = useState<boolean>(false)
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
+  console.log("page refresh")
+  const params = new URLSearchParams(searchParams)
 
+  if (remoteJobCondition){
+      params.set('remote', "yes");
+      replace(`${pathname}?${params.toString()}`);
+  } else if(!remoteJobCondition){
+    params.delete('remote');
+    replace(`${pathname}?${params.toString()}`);
+  }
   const handleTag = (term:string, checked:boolean) => {
-      const params = new URLSearchParams(searchParams);
-      params.set('page', '1');
+      const params = new URLSearchParams(searchParams)
+      params.set('page', '1')
       if(searchParams.has("filter")) {
         if (term && checked) {
           params.append('filter', term);
@@ -26,6 +33,9 @@ export default function Sidebar() {
       } else if (checked == false) {
         params.delete('filter');
       }
+
+      console.log("debugging handle tag function")
+      
       replace(`${pathname}?${params.toString()}`);
     }
 
@@ -134,13 +144,13 @@ export default function Sidebar() {
               <div className="text-sm text-gray-800 font-semibold mb-3">Remote Only</div>
               <div className="flex items-center">
                 <div className="form-switch">
-                  <input type="checkbox" id="remote-toggle" className="sr-only" checked={remoteJob} onChange={() => setRemoteJob(!remoteJob)} />
+                  <input type="checkbox" id="remote-toggle" className="sr-only" checked={remoteJobCondition} onClick={() => setremoteJobCondition(!remoteJobCondition)} />
                   <label className="bg-gray-300" htmlFor="remote-toggle">
                     <span className="bg-white shadow-sm" aria-hidden="true" />
                     <span className="sr-only">Remote Only</span>
                   </label>
                 </div>
-                <div className="text-sm text-gray-400 italic ml-2">{remoteJob ? 'On' : 'Off'}</div>
+                <div className="text-sm text-gray-400 italic ml-2">{remoteJobCondition ? 'On' : 'Off'}</div>
               </div>
             </div>
             {/* Group 3 */}
