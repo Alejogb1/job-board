@@ -32,13 +32,15 @@ export default function Sidebar() {
         params.set('filter', term);
       } else if (checked == false) {
         params.delete('filter');
-      }
-
-      console.log("debugging handle tag function")
-      
+      }      
       replace(`${pathname}?${params.toString()}`);
     }
-
+    const handleSalaryRangeChange = (input:string) => {
+      const params = new URLSearchParams(searchParams)
+      params.set('page', '1')
+      params.set('salary_range', input)
+      replace(`${pathname}?${params.toString()}`);
+    }
   return (
     <aside className="hidden lg:block md:block mb-8 md:mb-0 md:w-64 lg:w-72 md:ml-12 lg:ml-20 md:shrink-0 md:order-1">
       <div data-sticky="" data-margin-top="32" data-sticky-for="768" data-sticky-wrap="">
@@ -158,18 +160,19 @@ export default function Sidebar() {
               <div className="text-sm text-gray-800 font-semibold mb-3">Salary Range</div>
               <ul className="space-y-2">
                 <li>
-                  <a 
-                  className="text-sm text-gray-800 cursor-pointer"
-                  >Up to $ 100.000</a>
+                  <button 
+                  className="text-sm text-gray-600 cursor-pointer" 
+                  onClick={() => handleSalaryRangeChange("less_100")}
+                  >Up to $ 100.000</button>
                 </li>
                 <li>
-                  <a className="text-sm text-gray-800 cursor-pointer">$ 100.000 to $ 150.000</a>
+                  <button className="text-sm text-gray-600 cursor-pointer" onClick={() => handleSalaryRangeChange("100-150")}>$ 100.000 to $ 150.000</button>
                 </li>
                 <li>
-                    <a className="text-sm text-gray-800 cursor-pointer">$ 150.000 to $ 250.000</a>
+                    <button className="text-sm text-gray-600 cursor-pointer" onClick={() => handleSalaryRangeChange("150-250")}>$ 150.000 to $ 250.000</button>
                 </li>
                 <li>
-                    <a className="text-sm text-gray-800 cursor-pointer">Over $ 250.000</a>
+                    <button className="text-sm text-gray-600 cursor-pointer" onClick={() => handleSalaryRangeChange("more_250")}>Over $ 250.000</button>
                 </li>
                 <li>
                   <div className="flex gap-2">

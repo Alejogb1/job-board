@@ -3,11 +3,17 @@ import { string } from "zod";
 import prisma from "./prisma";
 import { PrismaClient, Prisma } from '@prisma/client'
 
-export default async function getFilteredPostsWithTags(page: number, term: string, location: string, tags:unknown[], remote:string) {
+export default async function getFilteredPostsWithTags(
+  page: number, 
+  term: string, 
+  location: string, 
+  tags:unknown[], 
+  remote:string,
+  salary_range:string,
+  ) {
+    console.log("SALARY RANGE: ", salary_range)
     const itemsPerPage = 10;
     const skip = (page - 1) * itemsPerPage;
-
-
     try {
         let whereClause: any = {}
         if (typeof tags == "string" && tags){
@@ -96,6 +102,27 @@ export default async function getFilteredPostsWithTags(page: number, term: strin
                     },
                   },
                 },
+                {
+                  tags: {
+                    some: {
+                      tagId: tags[2],
+                    },
+                  },
+                },
+                {
+                  tags: {
+                    some: {
+                      tagId: tags[3],
+                    },
+                  },
+                },
+                {
+                  tags: {
+                    some: {
+                      tagId: tags[4],
+                    },
+                  },
+                },
               ],
 
             }
@@ -111,9 +138,38 @@ export default async function getFilteredPostsWithTags(page: number, term: strin
         if (remote) {
           whereClause.is_remote = true;
         }
+        if (salary_range) {
+          switch(salary_range) {
+            case '100-150':
+              whereClause.min_salary = {gt: 100}
+              whereClause.max_salary = {lt: 150}
+            case '150-250':
+              whereClause.min_salary = {gt: 150}
+              whereClause.max_salary = {lt: 250}
+            case 'less_100':
+              whereClause = { 
+                OR : [
+                  {
+                    min_salary : {
+                      gt: 10,
+                    }
+                  },
+                  {
+                    max_salary : {
+                      lt: 200
+                    }
+                  },
+          
+                ]
+              }
+            case 'more_250':
+              whereClause.min_salary = {gt: 250}
+            default:
+                console.log(`out of salary range`);
 
-        console.log("WHERE CLAUSE: ", remote)
-
+          }
+        }
+        console.log("WHERE CLAUSE: ", whereClause)
         try {
           const posts: any[] = await prisma.jobPost.findMany({
             take: itemsPerPage,

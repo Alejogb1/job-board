@@ -19,7 +19,17 @@ interface Post {
     created_at: Date,
 }
 // Define the component
-export default async function PostsList({tags, location, query, currentPage, remote}:{tags:any, location: string, query:string , currentPage:number, remote:string}) {
+export default async function PostsList(
+  {tags, location, query, currentPage, remote, salary_range}:
+  {
+    tags:any, 
+    location: string, 
+    query:string , 
+    currentPage:number, 
+    remote:string,
+    salary_range:string,
+  }
+  ) {
   
   const tagsPostData: Promise<any> = getTagsPosts(tags);
   const tagsPosts:any = await tagsPostData
@@ -27,7 +37,7 @@ export default async function PostsList({tags, location, query, currentPage, rem
   const totalPages: number = 9; // Set the total number of pages
 
   if (tagsPosts) {
-      const postsData: Promise<any> = getFilteredPostsWithTags(currentPage, query, location,tags,remote); // Fetch data for the first page
+      const postsData: Promise<any> = getFilteredPostsWithTags(currentPage, query, location,tags,remote,salary_range); // Fetch data for the first page
       const posts: Post[] = await postsData;
       return (
         <div className="pb-8 md:pb-16">
@@ -48,7 +58,8 @@ export default async function PostsList({tags, location, query, currentPage, rem
           </div>
         </div>
       );
-    } else {
+    } 
+    else  {
       const postsData: Promise<any> = getFilteredPosts(currentPage, query, location); // Fetch data for the first page
       const posts: Post[] = await postsData;
       return (
@@ -70,6 +81,5 @@ export default async function PostsList({tags, location, query, currentPage, rem
           </div>
         </div>
       );
-  }
-
+  } 
 }

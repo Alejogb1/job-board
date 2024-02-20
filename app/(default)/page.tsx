@@ -15,13 +15,14 @@ export default function Home({
     page?: string;
     filter?: any;
     remote?:string;
+    salary_range?:string;
   };
 }) {
   const query = searchParams?.query || '';
   const location = searchParams?.loc || '';
   const tags = searchParams?.filter || '';
   const remote = searchParams?.remote || '';
-
+  const salary_range = searchParams?.salary_range || '';
   const currentPage = Number(searchParams?.page) || 1;
 
   return (
@@ -37,7 +38,7 @@ export default function Home({
               {/* Main content */}
               <div className="md:grow">
                 <SearchBar/>
-                <PostsList remote={remote} tags={tags} location={location} query={query}  currentPage={currentPage} />
+                <PostsList salary_range={salary_range} remote={remote} tags={tags} location={location} query={query}  currentPage={currentPage} />
               </div>
             </div>
           </div>
