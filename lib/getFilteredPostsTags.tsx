@@ -11,7 +11,6 @@ export default async function getFilteredPostsWithTags(
   remote:string,
   salary_range:string,
   ) {
-    console.log("SALARY RANGE: ", salary_range)
     const itemsPerPage = 10;
     const skip = (page - 1) * itemsPerPage;
     try {

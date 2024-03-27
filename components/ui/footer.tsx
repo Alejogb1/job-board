@@ -86,7 +86,7 @@ export default function Footer() {
             </div>
 
             {/* Copyright */}
-            <div className="text-sm text-gray-500">@Cruip.com | All rights reserved</div>
+            <div className="text-sm text-gray-500">Jobseekr | All rights reserved</div>
           </div>
         </div>
       </div>

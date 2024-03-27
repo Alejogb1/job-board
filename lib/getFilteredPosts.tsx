@@ -50,6 +50,7 @@ export default async function getFilteredPosts(page: number, term:string, locati
             return posts;
         }
     } catch (error) {
+        console.log(error)
         console.error('Database Error:', error);
         throw new Error('Failed to fetch job posts.');
     }

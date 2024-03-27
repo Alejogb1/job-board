@@ -10,7 +10,7 @@ export default function Newsletter() {
       <form className="inline-flex max-w-sm ">
         <div className="flex flex-col sm:flex-row justify-center max-w-xs mx-auto sm:max-w-none">
           <input type="email" className="form-input py-1.5 w-full mb-2 sm:mb-0 sm:mr-2" placeholder="Your email" aria-label="Your email" />
-          <button className="btn-sm text-white bg-indigo-500 hover:bg-indigo-600 shadow-sm whitespace-nowrap" type="submit">
+          <button className="btn-sm text-white bg-black hover:bg-gray-700 shadow-sm whitespace-nowrap" type="submit">
             Join Newsletter
           </button>
         </div>

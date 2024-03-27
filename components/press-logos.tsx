@@ -1,15 +1,10 @@
 export default function PressLogos() {
   return (
     <section>
-      <div className="max-w-6xl mx-auto hidden md:block lg:block overflow-hidden">
-        <div className="py-6 lg:py-4 border-b border-gray-200">
+        <div className="max-w-6xl mx-auto hidden md:block lg:block overflow-hidden">
+        <div className="border-b border-gray-200">
           {/* Items */}
           <div className="flex flex-wrap items-center justify-around text-center">
-            {/* Trusted by */}
-            <div className="w-full lg:w-auto py-3 px-2 lg:py-2">
-              <div className="font-nycd text-2xl text-indigo-500 whitespace-nowrap">Trusted by</div>
-            </div>
-
             {/* Item */}
             <div className="w-1/2 sm:w-1/3 lg:w-auto py-3 px-2 lg:py-2">
               <svg

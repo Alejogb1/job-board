@@ -5,6 +5,7 @@ import Pagination from '@/components/ui/pagination'
 import getFilteredPosts from '@/lib/getFilteredPosts'
 import getFilteredPostsWithTags from '@/lib/getFilteredPostsTags'
 import getTagsPosts from '@/lib/sidebar/getJobsRole'
+import { usePosts } from '@/lib/usePosts'
 // Define the Post interface
 interface Post {
     id: number,
@@ -19,35 +20,30 @@ interface Post {
     created_at: Date,
 }
 // Define the component
-export default async function PostsList(
-  {tags, location, query, currentPage, remote, salary_range}:
-  {
-    tags:any, 
-    location: string, 
-    query:string , 
-    currentPage:number, 
-    remote:string,
-    salary_range:string,
-  }
-  ) {
-  
-  const tagsPostData: Promise<any> = getTagsPosts(tags);
-  const tagsPosts:any = await tagsPostData
+export default async function PostsList({query}:{query:string}) {
 
-  const totalPages: number = 9; // Set the total number of pages
-
-  if (tagsPosts) {
-      const postsData: Promise<any> = getFilteredPostsWithTags(currentPage, query, location,tags,remote,salary_range); // Fetch data for the first page
+      const postsData: Promise<any> = getFilteredPosts(1, query, ""); // Fetch data for the first page
       const posts: Post[] = await postsData;
-      return (
-        <div className="pb-8 md:pb-16">
+      console.log("data acquired ", posts.length)
+      const totalPages: number = 9; // Set the total number of pages
+      if (posts.length > 0) {
+        return (  
+          <div className="pb-8 md:pb-16">
+          {query ? (
+          <p className="ml mb-4 text-xs">
+          {posts.length === 0
+            ? 'There are no posts that match '
+            : `Showing ${posts.length} results for `}
+          <span className="font-semibold">{query}</span>
+          </p>
+          ) : null}
           {/* List container */}
           <div className="flex flex-col">
-            {posts.map(post => {
-              return (
-                <PostItem key={post.id} {...post} />
-              );
-            })}
+              {posts.map(post => {
+                  return (
+                    <PostItem key={post.id} {...post} />
+                  );
+                })}
             {/* Newletter CTA */}
             <div className="py-8 border-b border-gray-200 -order-1">
               <Newsletter />
@@ -57,29 +53,9 @@ export default async function PostsList(
             <Pagination totalPages={totalPages} />
           </div>
         </div>
-      );
-    } 
-    else  {
-      const postsData: Promise<any> = getFilteredPosts(currentPage, query, location); // Fetch data for the first page
-      const posts: Post[] = await postsData;
-      return (
-        <div className="pb-8 md:pb-16">
-          {/* List container */}
-          <div className="flex flex-col">
-            {posts.map(post => {
-              return (
-                <PostItem key={post.id} {...post} />
-              );
-            })}
-            {/* Newletter CTA */}
-            <div className="py-8 border-b border-gray-200 -order-1">
-              <Newsletter />
-            </div>
-          </div>
-          <div className="mt-5 flex w-full justify-center">
-            <Pagination totalPages={totalPages} />
-          </div>
-        </div>
-      );
+        )       
+      } 
+    return (
+      <p className='ml mb-4 text-xs'>No posts found for {query}</p>
+    )
   } 
-}

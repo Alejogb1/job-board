@@ -2,11 +2,24 @@ import Hero from '@/components/hero'
 import PressLogos from '@/components/press-logos'
 import Sidebar from '@/components/sidebar'
 import PostsList from './posts-list'
-import Testimonials from '@/components/testimonials'
-import Header from '@/components/ui/header'
-import SearchBar from '@/components/searchbar'
-import { useSearchParams, usePathname, useRouter } from 'next/navigation';
-export default function Home({
+import SearchField from '@/components/search-field'
+import { useSearchParams } from 'next/navigation'
+import { useCallback } from 'react'
+import getFilteredPosts from '@/lib/getFilteredPosts'
+import { useQuery } from '@tanstack/react-query'
+interface Post {
+  id: number,
+  post_by_id: number,
+  is_active: boolean,
+  is_remote: boolean,
+  is_sponsored: boolean,
+  job_title: string,
+  job_body: string,
+  slug: string,
+  job_post_url: string,
+  created_at: Date,
+}
+export default async function Home({
   searchParams,
 }: {
   searchParams?: {
@@ -28,17 +41,17 @@ export default function Home({
   return (
     <>
       <Hero/>
-      {/*  Page content */}
-      <PressLogos/>
+      <PressLogos/> 
       <section>
-        <div className="max-w-6xl mx-auto px-6 sm:px">
-          <div className="pb-16 md:pb-16 py-4">
+        <div className="max-w-6xl mx-auto px-6 sm:px mt-10">
+          <div className="">
             <div className="md:flex md:justify-between" data-sticky-container>
-                <Sidebar/>
-              {/* Main content */}
+              <Sidebar/>
               <div className="md:grow">
-                <SearchBar/>
-                <PostsList salary_range={salary_range} remote={remote} tags={tags} location={location} query={query}  currentPage={currentPage} />
+                <SearchField />
+                { query ? (
+                  <PostsList query={query}/>  
+                ): null}
               </div>
             </div>
           </div>

@@ -85,7 +85,6 @@ export default async function SinglePost({ params }: {
   const bufferData = Buffer.from(post.job_body);
   const descriptionString = bufferData.toString('utf-8');
 
-  console.log("COMPANY: ", company)
   try {
     posts.slice(randomIntegers[0],randomIntegers[1])
   } catch (error) {
@@ -108,7 +107,6 @@ export default async function SinglePost({ params }: {
                     <Image className="mx-auto mb-2" src={`https://logo.clearbit.com/${extractDomain(company.company.company_webiste_url)}`} width={72} height={72} alt={post.job_title} />
                     <h2 className="text-lg font-bold text-gray-800">{company.company.company_name}</h2>
                   </p>
-
                   <div className="flex justify-center md:justify-start mb-5">
                     <ul className="inline-flex flex-col space-y-2">
                       <li className="flex items-center">
@@ -135,11 +133,8 @@ export default async function SinglePost({ params }: {
                   </div>
 
                   <div className="max-w-xs mx-auto mb-5">
-                    <a className="btn w-full text-white bg-indigo-500 hover:bg-indigo-600 group shadow-sm" target='_blank' href={`${post.job_post_url}`}>
+                    <a className="btn w-full text-white bg-black-500 hover:bg-indigo-600 group shadow-sm" target='_blank' href={`${post.job_post_url}`}>
                       Apply Now{' '}
-                      <span className="tracking-normal text-indigo-200 group-hover:translate-x-0.5 transition-transform duration-150 ease-in-out ml-1">
-                        -&gt;
-                      </span>
                     </a>
                   </div>
 

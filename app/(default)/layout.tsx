@@ -2,8 +2,12 @@
 
 import { useEffect } from 'react'
 import Header from '@/components/ui/header'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
 const Sticky = require('sticky-js')
+// Create a client
+const queryClient = new QueryClient()
 
 export default function DefaultLayout({
   children,
@@ -23,7 +27,10 @@ export default function DefaultLayout({
       <main className="grow">
         <div className="bg-white min-h-screen h-full box-inherit">
           <Header/>
-          {children}
+          <QueryClientProvider client={queryClient}>
+            {children}
+            <ReactQueryDevtools initialIsOpen={false} />
+          </QueryClientProvider>
         </div>
       </main>
     </>
