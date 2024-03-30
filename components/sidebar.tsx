@@ -1,37 +1,40 @@
 'use client'
-import { useSearchParams, usePathname, useRouter } from 'next/navigation';
-import { useCallback, useEffect } from 'react';
-import { useState } from 'react'
-import PropTypes from 'prop-types';
+// import { useSearchParams, usePathname, useRouter } from 'next/navigation';
+// import { useCallback, useEffect } from 'react';
+// import { useState } from 'react'
+// import PropTypes from 'prop-types';
+import Link from 'next/link'
 
 export default function Sidebar() {
-  const router= useRouter();
-  const searchParams = useSearchParams();
-  const pathname = usePathname();
-  const params = new URLSearchParams(searchParams)
+  // const router= useRouter();
+  // const searchParams = useSearchParams();
+  // const pathname = usePathname();
+  // const params = new URLSearchParams(searchParams)
 
-   const handleTag = (term:string, checked:boolean) => {
-      const params = new URLSearchParams(searchParams)
-      params.set('page', '1')
-      if(searchParams.has("filter")) {
-        if (term && checked) {
-          params.append('filter', term);
-        } else if (checked == false) {
-          params.delete('filter', term);
-        }
-      } else if (term && checked == true) {
-        params.set('filter', term);
-      } else if (checked == false) {
-        params.delete('filter');
-      }      
-      router.replace(`${pathname}?${params.toString()}`);
-    }
-    const handleSalaryRangeChange = (input:string) => {
-      const params = new URLSearchParams(searchParams)
-      params.set('page', '1')
-      params.set('salary_range', input)
-      router.replace(`${pathname}?${params.toString()}`);
-    }  
+  //  const handleTag = (term:string, checked:boolean) => {
+  //     const params = new URLSearchParams(searchParams)
+  //     params.set('page', '1')
+  //     if(searchParams.has("filter")) {
+  //       if (term && checked) {
+  //         params.append('filter', term);
+  //       } else if (checked == false) {
+  //         params.delete('filter', term);
+  //       }
+  //     } else if (term && checked == true) {
+  //       params.set('filter', term);
+  //     } else if (checked == false) {
+  //       params.delete('filter');
+  //     }      
+  //     router.replace(`${pathname}?${params.toString()}`);
+  //   }
+
+  //   const handleSalaryRangeChange = (input:string, event:any) => {
+  //     event.preventDefault
+  //     const params = new URLSearchParams(searchParams)
+  //     params.set('page', '1')
+  //     params.set('salary_range', input)
+  //     router.replace(`${pathname}?${params.toString()}`);
+  //   }  
   return (
     <aside className="hidden lg:block md:block mb-8 md:mb-0 md:w-64 lg:w-72 md:ml-12 lg:ml-20 md:shrink-0 md:order-1">
       <div data-sticky="" data-margin-top="32" data-sticky-for="768" data-sticky-wrap="">
@@ -135,19 +138,22 @@ export default function Sidebar() {
               <div className="text-sm text-gray-800 font-semibold mb-3">Salary Range</div>
               <ul className="space-y-2">
                 <li>
-                  <button 
+                  <Link 
                   className="text-sm text-gray-600 cursor-pointer" 
-                  onClick={() => handleSalaryRangeChange("less_100")}
-                  >Up to $ 100.000</button>
+                  href={{
+                    pathname: '/salary/100',
+                  }}>
+                    Up to $ 100.000
+                  </Link>
                 </li>
                 <li>
-                  <button className="text-sm text-gray-600 cursor-pointer" onClick={() => handleSalaryRangeChange("100-150")}>$ 100.000 to $ 150.000</button>
+                  <Link className="text-sm text-gray-600 cursor-pointer" href="/salary/100-150">$ 100.000 to $ 150.000</Link>
                 </li>
                 <li>
-                    <button className="text-sm text-gray-600 cursor-pointer" onClick={() => handleSalaryRangeChange("150-250")}>$ 150.000 to $ 250.000</button>
+                  <Link className="text-sm text-gray-600 cursor-pointer" href="/salary/100-250">$ 150.000 to $ 250.000</Link>
                 </li>
                 <li>
-                    <button className="text-sm text-gray-600 cursor-pointer" onClick={() => handleSalaryRangeChange("more_250")}>Over $ 250.000</button>
+                  <Link className="text-sm text-gray-600 cursor-pointer" href="/salary/250">Over $ 250.000</Link>
                 </li>
               </ul>        
               </div>

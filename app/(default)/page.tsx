@@ -37,7 +37,7 @@ export default async function Home({
   const remote = searchParams?.remote || '';
   const salary_range = searchParams?.salary_range || '';
   const currentPage = Number(searchParams?.page) || 1;
-
+  console.log(currentPage)
   return (
     <>
       <Hero/>
@@ -50,7 +50,7 @@ export default async function Home({
               <div className="md:grow">
                 <SearchField />
                 { query ? (
-                  <PostsList query={query}/>  
+                  <PostsList query={query} currentPage={currentPage}/>  
                 ): null}
               </div>
             </div>

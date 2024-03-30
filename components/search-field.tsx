@@ -4,10 +4,19 @@ import { useCallback, useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { createUrl } from '@/lib/utils/createUrl';
 import { DEFAULT_MIN_VERSION } from 'tls';
+import { ReactSearchAutocomplete } from 'react-search-autocomplete'
+import Select from "react-tailwindcss-select";
+
+
 interface Props {
   searchHandler: (value:string) => void
   inputRef: string
 }
+const options = [
+  { value: "data engineer", label: "data engineer" },
+  { value: "data scientist", label: "data scientist" },
+  { value: "machine learning research", label: "machine learning researcher" }
+];
 
 export default function SearchField({ inputRef, onSearch }: any){
     const router = useRouter();
@@ -16,20 +25,26 @@ export default function SearchField({ inputRef, onSearch }: any){
     const onSubmit = (e:any) => {
       e.preventDefault();
 
-      const val = e.target as HTMLFormElement;
-      const search = val.search as HTMLInputElement;
       const newParams = new URLSearchParams(searchParams.toString());
-  
-      if (search.value) {
-        newParams.set('query', search.value);
+      console.log("Item:", item)
+
+      if (item) {
+        const val = (item as { value: string }).value;
+        const search = val;
+        newParams.set('query', search);
       } else {
         newParams.delete('query');
       }
   
       router.push(createUrl('/', newParams));
     }
-  
-    return(
+    const [item, setItem] = useState(null);
+
+    const handleChange = (value:any) => {
+      console.log("value:", value);
+      setItem(value);
+    };
+  return(
         <div className="text-gray-200 ">
             <div className="styles-filter lg:p-0">
             <div className="search-bar">
@@ -37,14 +52,24 @@ export default function SearchField({ inputRef, onSearch }: any){
                 <form onSubmit={onSubmit} className="flex gap-2">
                     <div className="w-full lg:w-6/12">
                         <div className="relative block w-full before:absolute before:inset-px before:rounded-[calc(theme(borderRadius.lg)-1px)] before:bg-white before:shadow after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:ring-inset after:ring-transparent sm:after:focus-within:ring-2 sm:after:focus-within:ring-blue-500 has-[[data-disabled]]:opacity-50 before:has-[[data-disabled]]:bg-zinc-950/5 before:has-[[data-disabled]]:shadow-none before:has-[[data-invalid]]:shadow-red-500/10">
-                                <input  
+                                {/* <input  
                                   defaultValue={searchParams?.get('query') || ''}
                                   key={searchParams?.get('query')}
                                   name="search"
                                   type="text" 
                                   placeholder="Search for job title or keyword" 
                                   className={`relative block w-full appearance-none rounded-lg px-[calc(theme(spacing[3.5])-1px)] py-[calc(theme(spacing[2.5])-1px)] sm:px-[calc(theme(spacing[3])-1px)] sm:py-[calc(theme(spacing[1.5])-1px)] text-base/6 text-zinc-950 placeholder:text-zinc-500 sm:text-sm/6  border border-zinc-950/10 data-[hover]:border-zinc-950/20 bg-transparent focus:outline-none data-[invalid]:border-red-500 data-[invalid]:data-[hover]:border-red-500 data-[disabled]:border-zinc-950/20`}                            
-                                />                        
+                                />           */}            
+                                  <Select
+                                    value={item}
+                                    onChange={handleChange}
+                                    options={options} 
+                                    isSearchable={true}
+                                    primaryColor={''}                                
+                                  />
+
+                        </div>
+                        <div className="">
                         </div>
                     </div>
                     <div className="md:mt-0">

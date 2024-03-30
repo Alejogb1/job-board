@@ -1,9 +1,14 @@
 /** @type {import('tailwindcss').Config} */
+
+
+const {nextui} = require("@nextui-org/react");
+
 module.exports = {
   content: [
     './app/**/*.{js,ts,jsx,tsx}',
     './pages/**/*.{js,ts,jsx,tsx}',
     './components/**/*.{js,ts,jsx,tsx}',
+    "./node_modules/react-tailwindcss-select/dist/index.esm.js"
   ],
   theme: {
     extend: {
@@ -36,5 +41,6 @@ module.exports = {
   },
   plugins: [
     require('@tailwindcss/forms'),
+    nextui()
   ],
 };

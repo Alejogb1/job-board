@@ -4,6 +4,7 @@ import { useEffect } from 'react'
 import Header from '@/components/ui/header'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import {NextUIProvider} from "@nextui-org/react";
 
 const Sticky = require('sticky-js')
 // Create a client
@@ -27,10 +28,12 @@ export default function DefaultLayout({
       <main className="grow">
         <div className="bg-white min-h-screen h-full box-inherit">
           <Header/>
-          <QueryClientProvider client={queryClient}>
-            {children}
-            <ReactQueryDevtools initialIsOpen={false} />
-          </QueryClientProvider>
+            <QueryClientProvider client={queryClient}>
+              <NextUIProvider>
+               {children}
+              </NextUIProvider>
+              <ReactQueryDevtools initialIsOpen={false} />
+            </QueryClientProvider>
         </div>
       </main>
     </>

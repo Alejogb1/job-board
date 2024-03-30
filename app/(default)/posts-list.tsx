@@ -20,10 +20,9 @@ interface Post {
     created_at: Date,
 }
 // Define the component
-export default async function PostsList({query}:{query:string}) {
-
-      const postsData: Promise<any> = getFilteredPosts(1, query, ""); // Fetch data for the first page
-      const posts: Post[] = await postsData;
+export default async function PostsList({query, currentPage }:{query: string, currentPage: number}) {
+      const postsData: Promise<any> = getFilteredPosts(currentPage, query); // Fetch data for the first page
+      const posts: Post[] = await postsData; 
       console.log("data acquired ", posts.length)
       const totalPages: number = 9; // Set the total number of pages
       if (posts.length > 0) {

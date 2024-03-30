@@ -18,7 +18,7 @@ export default function Pagination({totalPages} : {totalPages:number}) {
       };
     
     return (
-       <nav aria-label="" className='hidden md:block lg:block'>
+       <nav aria-label="" className='md:block lg:block'>
         <ul className="inline-flex -space-x-px text-sm mt-4">
           <li>
             <a href={createPageURL(currentPage - 1)}  aria-current="page" className="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700">Previous</a>
