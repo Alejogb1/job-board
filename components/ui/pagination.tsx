@@ -19,9 +19,9 @@ export default function Pagination({totalPages} : {totalPages:number}) {
     
     return (
        <nav aria-label="" className=' md:block lg:block'>
-        <ul className="px-5 mx-5 max-w-8/12 inline-flex -space-x-px text-xs mt-4">
+        <ul className="max-w-8/12 inline-flex -space-x-px text-xs mt-4">
           <li>
-            <a href={createPageURL(currentPage - 1)}  aria-current="page" className="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700">Previous</a>
+            <a href={createPageURL(currentPage - 1)}  aria-current="page" className="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-white bg-black border border-e-0 border-white hover:bg-gray-600">Previous</a>
           </li>
           {allPages.map((page, index) => {
           let position: 'first' | 'last' | 'single' | 'middle' | undefined;
@@ -32,13 +32,13 @@ export default function Pagination({totalPages} : {totalPages:number}) {
           if (page === '...') position = 'middle';
 
             return (
-                <li key={index}>
-                    <a href={createPageURL(page)}className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">{page}</a>
+                <li key={index} className='hidden md:block'>
+                    <a href={createPageURL(page)}className="flex items-center justify-center px-3 h-8 leading-tight text-white bg-black border border-white hover:bg-gray-600 ">{page}</a>
                 </li>
             );
         })}
           <li>
-            <a href={createPageURL(currentPage + 1)} className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700">Next</a>
+            <a href={createPageURL(currentPage + 1)} className="flex items-center justify-center px-3 h-8 leading-tight text-white bg-black border border-white  hover:bg-gray-600">Next</a>
           </li>
         </ul>
       </nav>

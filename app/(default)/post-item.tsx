@@ -58,7 +58,7 @@ export default async function PostItem({...props }) {
                 </div>
                 <div className="min-w-[120px] flex items-center lg:justify-end space-x-3 lg:space-x-0">
                   <div className="lg:hidden group-hover:lg:block">
-                    <Link className="btn-sm py-1.5 px-3 text-white bg-blue-500 hover:bg-blue-600 group shadow-sm" href={`/posts/${props.slug}`}>
+                    <Link target="_blank" className="btn-sm py-1.5 px-3 text-white bg-blue-500 hover:bg-blue-600 group shadow-sm" href={`${props.job_post_url}`}>
                       Apply Now
                     </Link>
                   </div>
@@ -105,7 +105,7 @@ export default async function PostItem({...props }) {
                 </div>
                 <div className="min-w-[120px] flex items-center lg:justify-end space-x-3 lg:space-x-0">
                   <div className="lg:hidden group-hover:lg:block">
-                    <Link className="btn-sm py-1.5 px-3 text-white bg-blue-500 hover:bg-blue-600 group shadow-sm" href={`/posts/${props.slug}`}>
+                  <Link target="_blank" className="btn-sm py-1.5 px-3 text-white bg-blue-500 hover:bg-blue-600 group shadow-sm" href={`${props.job_post_url}`}>
                       Apply Now
                     </Link>
                   </div>

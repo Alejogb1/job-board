@@ -270,7 +270,7 @@ export default async function SinglePost({ params }: {
               </div>
                 {/* Social share */}
                 <div className="flex items-center justify-end space-x-4">
-                  <div className="text-xl font-nycd text-gray-400">Share job</div>
+                  {/* <div className="text-xl font-nycd text-gray-400">Share job</div> */}
                   <ul className="inline-flex space-x-3">
                     <li>
                       <a
