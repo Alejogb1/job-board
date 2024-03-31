@@ -133,13 +133,13 @@ export default async function SinglePost({ params }: {
                   </div>
 
                   <div className="max-w-xs mx-auto mb-5">
-                    <a className="btn w-full text-white bg-black-500 hover:bg-indigo-600 group shadow-sm" target='_blank' href={`${post.job_post_url}`}>
+                    <a className="btn w-full text-white bg-black hover:bg-gray-600 group shadow-sm" target='_blank' href={`${post.job_post_url}`}>
                       Apply Now{' '}
                     </a>
                   </div>
 
                   <div className="text-center">
-                    <a className="text-sm text-indigo-500 font-medium hover:underline cursor-pointer" href={company.company.company_webiste_url} target='_blank'>
+                    <a className="text-sm text-gray-500 font-medium hover:underline cursor-pointer" href={company.company.company_webiste_url} target='_blank'>
                       Visit company
                     </a>
                   </div>
@@ -152,19 +152,19 @@ export default async function SinglePost({ params }: {
               {/* Job description */}
               <div className="pb-8">
                 <div className="mb-4">
-                  <Link className="text-indigo-500 font-medium" href="/">
+                  <Link className="text-gray-500 font-medium" href="/">
                     <span className="tracking-normal">&lt;-</span> All Jobs
                   </Link>
                 </div>
                 <h1 className="text-4xl font-extrabold font-inter mb-4">{post.job_title}</h1>
                 <a
-                        className={`text-xs text-gray-500 font-medium inline-flex px-2 py-0.5 hover:text-gray-600 bg-indigo-50 rounded-md mr-1 mb-5 whitespace-nowrap transition duration-150 ease-in-out`}
+                        className={`text-xs text-gray-500 font-medium inline-flex px-2 py-0.5 hover:text-gray-600 bg-gray-50 rounded-md mr-1 mb-5 whitespace-nowrap transition duration-150 ease-in-out`}
                         href="#0"
                       >
                         Senior-level / Expert
                 </a>
                 <a
-                        className={`text-xs text-gray-500 font-medium inline-flex px-2 py-0.5 hover:text-gray-600 bg-indigo-50 rounded-md mr-1 mb-5 whitespace-nowrap transition duration-150 ease-in-out`}
+                        className={`text-xs text-gray-500 font-medium inline-flex px-2 py-0.5 hover:text-gray-600 bg-gray-50 rounded-md mr-1 mb-5 whitespace-nowrap transition duration-150 ease-in-out`}
                         href="#0"
                       >
                         🌎 Remote
@@ -177,42 +177,42 @@ export default async function SinglePost({ params }: {
                 <div className="">
                   <h3 className="text-md font-semibold text-gray-800 mb-3">Skills</h3>
                   <a
-                            className={`text-xs text-gray-500 font-medium inline-flex px-2 py-0.5 hover:text-gray-600 bg-indigo-50 rounded-md mr-1 mb-5 whitespace-nowrap transition duration-150 ease-in-out`}
+                            className={`text-xs text-gray-500 font-medium inline-flex px-2 py-0.5 hover:text-gray-600 bg-gray-50 rounded-md mr-1 mb-5 whitespace-nowrap transition duration-150 ease-in-out`}
                             href="#0"
                         >
                           Big Data
                   </a>
 
                   <a
-                            className={`text-xs text-gray-500 font-medium inline-flex px-2 py-0.5 hover:text-gray-600 bg-indigo-50 rounded-md mr-1 mb-5 whitespace-nowrap transition duration-150 ease-in-out`}
+                            className={`text-xs text-gray-500 font-medium inline-flex px-2 py-0.5 hover:text-gray-600 bg-gray-50 rounded-md mr-1 mb-5 whitespace-nowrap transition duration-150 ease-in-out`}
                             href="#0"
                         >
                           Computer Science
                   </a>
 
                   <a
-                            className={`text-xs text-gray-500 font-medium inline-flex px-2 py-0.5 hover:text-gray-600 bg-indigo-50 rounded-md mr-1 mb-5 whitespace-nowrap transition duration-150 ease-in-out`}
+                            className={`text-xs text-gray-500 font-medium inline-flex px-2 py-0.5 hover:text-gray-600 bg-gray-50 rounded-md mr-1 mb-5 whitespace-nowrap transition duration-150 ease-in-out`}
                             href="#0"
                         >
                           Data analysis
                   </a>
 
                   <a
-                            className={`text-xs text-gray-500 font-medium inline-flex px-2 py-0.5 hover:text-gray-600 bg-indigo-50 rounded-md mr-1 mb-5 whitespace-nowrap transition duration-150 ease-in-out`}
+                            className={`text-xs text-gray-500 font-medium inline-flex px-2 py-0.5 hover:text-gray-600 bg-gray-50 rounded-md mr-1 mb-5 whitespace-nowrap transition duration-150 ease-in-out`}
                             href="#0"
                         >
                           R
                   </a>
 
                   <a
-                            className={`text-xs text-gray-500 font-medium inline-flex px-2 py-0.5 hover:text-gray-600 bg-indigo-50 rounded-md mr-1 mb-5 whitespace-nowrap transition duration-150 ease-in-out`}
+                            className={`text-xs text-gray-500 font-medium inline-flex px-2 py-0.5 hover:text-gray-600 bg-gray-50 rounded-md mr-1 mb-5 whitespace-nowrap transition duration-150 ease-in-out`}
                             href="#0"
                         >
                           Research
                   </a>
 
                   <a
-                            className={`text-xs text-gray-500 font-medium inline-flex px-2 py-0.5 hover:text-gray-600 bg-indigo-50 rounded-md mr-1 mb-5 whitespace-nowrap transition duration-150 ease-in-out`}
+                            className={`text-xs text-gray-500 font-medium inline-flex px-2 py-0.5 hover:text-gray-600 bg-gray-50 rounded-md mr-1 mb-5 whitespace-nowrap transition duration-150 ease-in-out`}
                             href="#0"
                         >
                           SQL
@@ -221,48 +221,48 @@ export default async function SinglePost({ params }: {
                 <div className="">
                   <h3 className="text-md font-semibold text-gray-800 mb-3">Perks</h3>
                   <a
-                            className={`text-xs text-gray-500 font-medium inline-flex px-2 py-0.5 hover:text-gray-600 bg-indigo-50 rounded-md mr-1 mb-5 whitespace-nowrap transition duration-150 ease-in-out`}
+                            className={`text-xs text-gray-500 font-medium inline-flex px-2 py-0.5 hover:text-gray-600 bg-gray-50 rounded-md mr-1 mb-5 whitespace-nowrap transition duration-150 ease-in-out`}
                             href="#0"
                         >
                           Career development
                   </a>
 
                   <a
-                            className={`text-xs text-gray-500 font-medium inline-flex px-2 py-0.5 hover:text-gray-600 bg-indigo-50 rounded-md mr-1 mb-5 whitespace-nowrap transition duration-150 ease-in-out`}
+                            className={`text-xs text-gray-500 font-medium inline-flex px-2 py-0.5 hover:text-gray-600 bg-gray-50 rounded-md mr-1 mb-5 whitespace-nowrap transition duration-150 ease-in-out`}
                             href="#0"
                         >
                           Competitive pay
                   </a>
 
                   <a
-                            className={`text-xs text-gray-500 font-medium inline-flex px-2 py-0.5 hover:text-gray-600 bg-indigo-50 rounded-md mr-1 mb-5 whitespace-nowrap transition duration-150 ease-in-out`}
+                            className={`text-xs text-gray-500 font-medium inline-flex px-2 py-0.5 hover:text-gray-600 bg-gray-50 rounded-md mr-1 mb-5 whitespace-nowrap transition duration-150 ease-in-out`}
                             href="#0"
                         >
                           Fitness / gym
                   </a>
 
                   <a
-                            className={`text-xs text-gray-500 font-medium inline-flex px-2 py-0.5 hover:text-gray-600 bg-indigo-50 rounded-md mr-1 mb-5 whitespace-nowrap transition duration-150 ease-in-out`}
+                            className={`text-xs text-gray-500 font-medium inline-flex px-2 py-0.5 hover:text-gray-600 bg-gray-50 rounded-md mr-1 mb-5 whitespace-nowrap transition duration-150 ease-in-out`}
                             href="#0"
                         >
                           Flex hours
                   </a>
 
                   <a
-                            className={`text-xs text-gray-500 font-medium inline-flex px-2 py-0.5 hover:text-gray-600 bg-indigo-50 rounded-md mr-1 mb-5 whitespace-nowrap transition duration-150 ease-in-out`}
+                            className={`text-xs text-gray-500 font-medium inline-flex px-2 py-0.5 hover:text-gray-600 bg-gray-50 rounded-md mr-1 mb-5 whitespace-nowrap transition duration-150 ease-in-out`}
                             href="#0"
                         >
                           Health care
                   </a>
 
                   <a
-                            className={`text-xs text-gray-500 font-medium inline-flex px-2 py-0.5 hover:text-gray-600 bg-indigo-50 rounded-md mr-1 mb-5 whitespace-nowrap transition duration-150 ease-in-out`}
+                            className={`text-xs text-gray-500 font-medium inline-flex px-2 py-0.5 hover:text-gray-600 bg-gray-50 rounded-md mr-1 mb-5 whitespace-nowrap transition duration-150 ease-in-out`}
                             href="#0"
                         >
                           Insurance
                   </a>
                   <a
-                            className={`text-xs text-gray-500 font-medium inline-flex px-2 py-0.5 hover:text-gray-600 bg-indigo-50 rounded-md mr-1 mb-5 whitespace-nowrap transition duration-150 ease-in-out`}
+                            className={`text-xs text-gray-500 font-medium inline-flex px-2 py-0.5 hover:text-gray-600 bg-gray-50 rounded-md mr-1 mb-5 whitespace-nowrap transition duration-150 ease-in-out`}
                             href="#0"
                         >
                           Startup environment
@@ -274,7 +274,7 @@ export default async function SinglePost({ params }: {
                   <ul className="inline-flex space-x-3">
                     <li>
                       <a
-                        className="flex justify-center items-center text-indigo-500 bg-indigo-100 hover:text-white hover:bg-indigo-500 rounded-full transition duration-150 ease-in-out"
+                        className="flex justify-center items-center text-gray-500 bg-gray-100 hover:text-white hover:bg-gray-500 rounded-full transition duration-150 ease-in-out"
                         href="#0"
                         aria-label="Twitter"
                       >
@@ -285,7 +285,7 @@ export default async function SinglePost({ params }: {
                     </li>
                     <li>
                       <a
-                        className="flex justify-center items-center text-indigo-500 bg-indigo-100 hover:text-white hover:bg-indigo-500 rounded-full transition duration-150 ease-in-out"
+                        className="flex justify-center items-center text-gray-500 bg-gray-100 hover:text-white hover:bg-gray-500 rounded-full transition duration-150 ease-in-out"
                         href="#0"
                         aria-label="Facebook"
                       >
@@ -296,7 +296,7 @@ export default async function SinglePost({ params }: {
                     </li>
                     <li>
                       <a
-                        className="flex justify-center items-center text-indigo-500 bg-indigo-100 hover:text-white hover:bg-indigo-500 rounded-full transition duration-150 ease-in-out"
+                        className="flex justify-center items-center text-gray-500 bg-gray-100 hover:text-white hover:bg-gray-500 rounded-full transition duration-150 ease-in-out"
                         href="#0"
                         aria-label="Telegram"
                       >
