@@ -21,12 +21,11 @@ const options = [
 export default function SearchField({ inputRef, onSearch }: any){
     const router = useRouter();
     const searchParams = useSearchParams();
+    const [item, setItem] = useState(null);
 
     const onSubmit = (e:any) => {
       e.preventDefault();
-
       const newParams = new URLSearchParams(searchParams.toString());
-      console.log("Item:", item)
 
       if (item) {
         const val = (item as { value: string }).value;
@@ -38,12 +37,44 @@ export default function SearchField({ inputRef, onSearch }: any){
   
       router.push(createUrl('/', newParams));
     }
-    const [item, setItem] = useState(null);
 
     const handleChange = (value:any) => {
-      console.log("value:", value);
       setItem(value);
     };
+    // const onEnterHandler = useCallback((event) => {
+    //   const isEnterPressed = event.which === ENTER_KEY
+    //     || event.keyCode === ENTER_KEY;
+    //   if (isEnterPressed && TypeChecker.isFunction(onEnter)) {
+    //     onEnter(event.target.value, event);
+    //   }
+    // }, [onEnter]);
+
+    useEffect(() => {
+      const keyDownHandler = (event:any) => {
+      if (event.key == 'Enter') {
+        event.preventDefault();
+        const newParams = new URLSearchParams(searchParams.toString());
+
+        if (item) {
+        const val = (item as { value: string }).value;
+        const search = val;
+        newParams.set('query', search);
+        } else {
+        newParams.delete('query');
+        }
+      
+        router.push(createUrl('/', newParams));
+      }
+      };
+
+      document.addEventListener('keydown', keyDownHandler);
+
+      return () => {
+      document.removeEventListener('keydown', keyDownHandler);
+      };
+    }, [item]);
+  
+  
   return(
         <div className="text-gray-200 ">
             <div className="styles-filter lg:p-0">
