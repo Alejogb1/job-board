@@ -65,7 +65,7 @@ export default function SearchField({ inputRef, onSearch }: any){
                                     onChange={handleChange}
                                     options={options} 
                                     isSearchable={true}
-                                    primaryColor={''}                                
+                                    primaryColor={''}                          
                                   />
 
                         </div>

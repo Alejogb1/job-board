@@ -51,7 +51,7 @@ export default async function Home({
                 <SearchField />
                 { query ? (
                   <PostsList query={query} currentPage={currentPage}/>  
-                ): null}
+                ): <PostsList query={""} currentPage={currentPage}/> }
               </div>
             </div>
           </div>

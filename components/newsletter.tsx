@@ -5,7 +5,7 @@ export default function Newsletter() {
         className="absolute inset-0 rounded-xl bg-gray-50 border border-gray-200 -rotate-1 -z-10 group-hover:rotate-0 transition duration-150 ease-in-out "
         aria-hidden="true"
       />
-      <div className="font-nycd text-xl text-indigo-500 mb-1">Land your dream job</div>
+      <div className="font-nycd text-xl text-gray-500 mb-1">Land your dream job</div>
       <div className="text-2xl font-bold mb-5">Get a weekly email with the latest AI jobs.</div>
       <form className="inline-flex max-w-sm ">
         <div className="flex flex-col sm:flex-row justify-center max-w-xs mx-auto sm:max-w-none">
