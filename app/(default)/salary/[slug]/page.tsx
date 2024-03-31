@@ -15,12 +15,12 @@ export default function Page() {
               <div className="md:flex md:justify-between" data-sticky-container>
                 <Sidebar/>
                 <div className="md:grow">
-                    <p className='ml mb-4 text-xs'>No posts found for this</p>
+                  <p className='ml mb-4 text-xs'>Working on this section</p>
                 </div>
               </div>
             </div>
           </div>
         </section>
       </>
-    )
+    );
   }

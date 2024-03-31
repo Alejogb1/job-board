@@ -14,8 +14,20 @@ interface Props {
 }
 const options = [
   { value: "data engineer", label: "data engineer" },
+  { value: "deep learning", label: "deep learning engineer" },
   { value: "data scientist", label: "data scientist" },
-  { value: "machine learning research", label: "machine learning researcher" }
+  { value: "machine learning research", label: "machine learning researcher" },
+  { value: "analyst", label: "analyst" },
+  { value: "product manager", label: "product manager" },
+  { value: "generative", label: "generative AI" },
+  { value: "engineer", label: "engineering" },
+  { value: "analyst", label: "analyst" },
+  { value: "architecture", label: "architecture" },
+  { value: "vision", label: "computer vision" },
+  { value: "nlp", label: "NLP" },
+  { value: "security", label: "cybersecurity" },
+  { value: "operations", label: "MLOps" },
+  { value: "visualization", label: "visualization" },
 ];
 
 export default function SearchField({ inputRef, onSearch }: any){
