@@ -13,6 +13,15 @@ interface Props {
   inputRef: string
 }
 const options = [
+  { 
+    options :[
+      { value: "AI engineer", label: "AI engineer" },
+      { value: "AI researcher", label: "AI researcher" },
+      { value: "AI scientist", label: "AI scientist" },
+      { value: "AI specialist", label: "AI specialist" },
+      { value: "AI consultant", label: "AI consultant" },
+    ]
+  },
   { value: "data engineer", label: "data engineer" },
   { value: "deep learning", label: "deep learning engineer" },
   { value: "data scientist", label: "data scientist" },
@@ -28,7 +37,9 @@ const options = [
   { value: "security", label: "cybersecurity" },
   { value: "operations", label: "MLOps" },
   { value: "visualization", label: "visualization" },
+
 ];
+
 
 export default function SearchField({ inputRef, onSearch }: any){
     const router = useRouter();
