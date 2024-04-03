@@ -21,7 +21,7 @@ export default function Pagination({totalPages} : {totalPages:number}) {
        <nav aria-label="" className=' md:block lg:block'>
         <ul className="max-w-8/12 inline-flex -space-x-px text-xs mt-4">
           <li>
-            <a href={createPageURL(currentPage - 1)}  aria-current="page" className="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-white bg-black border border-e-0 border-white hover:bg-gray-600">Previous</a>
+            <a href={createPageURL(currentPage - 1)}  aria-current="page" className="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-white bg-black rounded-l-md border border-e-0 border-white hover:bg-gray-600">Previous</a>
           </li>
           {allPages.map((page, index) => {
           let position: 'first' | 'last' | 'single' | 'middle' | undefined;
@@ -38,7 +38,7 @@ export default function Pagination({totalPages} : {totalPages:number}) {
             );
         })}
           <li>
-            <a href={createPageURL(currentPage + 1)} className="flex items-center justify-center px-3 h-8 leading-tight text-white bg-black border border-white  hover:bg-gray-600">Next</a>
+            <a href={createPageURL(currentPage + 1)} className="flex items-center justify-center px-3 h-8 leading-tight text-white bg-black rounded-r-md border border-white  hover:bg-gray-600">Next</a>
           </li>
         </ul>
       </nav>

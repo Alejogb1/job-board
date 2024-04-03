@@ -143,17 +143,17 @@ export default function Sidebar() {
                   href={{
                     pathname: '/salary/100',
                   }}>
-                    Up to $ 100.000
+                    Up to $ 100,000
                   </Link>
                 </li>
                 <li>
-                  <Link className="text-sm text-gray-600 cursor-pointer" href="/salary/100-150">$ 100.000 to $ 150.000</Link>
+                  <Link className="text-sm text-gray-600 cursor-pointer" href="/salary/100-150">$ 100,000 to $ 150,000</Link>
                 </li>
                 <li>
-                  <Link className="text-sm text-gray-600 cursor-pointer" href="/salary/100-250">$ 150.000 to $ 250.000</Link>
+                  <Link className="text-sm text-gray-600 cursor-pointer" href="/salary/100-250">$ 150,000 to $ 250,000</Link>
                 </li>
                 <li>
-                  <Link className="text-sm text-gray-600 cursor-pointer" href="/salary/250">Over $ 250.000</Link>
+                  <Link className="text-sm text-gray-600 cursor-pointer" href="/salary/250">Over $ 250,000</Link>
                 </li>
               </ul>        
               </div>
