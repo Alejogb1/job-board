@@ -2,14 +2,13 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 datasource db {
-  provider     = "mysql"
+  provider     = "postgresql"
   url          = env("DATABASE_URL")
-  relationMode = "prisma"
+  directUrl    = env("DIRECT_URL")
 }
 
 generator client {
   provider = "prisma-client-js"
-  previewFeatures = ["fullTextSearch", "fullTextIndex"]
 }
 
 model CompanyImage {
@@ -47,11 +46,11 @@ model Company {
 }
 
 model JobPost {
-  id               Int @id @default(autoincrement())
+  id               Int @id
   job_post_url     String 
   slug             String
   job_title        String
-  job_body         Bytes
+  job_body         Bytes?
   company          Company @relation(fields: [company_code], references: [id])
   company_code     Int
   region           String
@@ -61,8 +60,6 @@ model JobPost {
   is_active        Boolean
   is_remote        Boolean
   is_sponsored     Boolean
-  @@fulltext ([job_title])
-  @@fulltext ([region])
 }
 
 model User {

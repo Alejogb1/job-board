@@ -8,14 +8,14 @@ export default async function PostItem({...props }) {
     const companyData: Promise<any> = getCompany(props.company_code)
     const company:any = await companyData
 
-    const tagsOnPostData: Promise<any> = getTagsOnPosts(props.id)
+/*     const tagsOnPostData: Promise<any> = getTagsOnPosts(props.id)
     const tags:any = await tagsOnPostData
     const one_tagData: Promise<any> = getTag(tags[6]?.tagId) 
     const tag:any = await one_tagData
 
     const second_tagData: Promise<any> = getTag(tags[4]?.tagId) 
     const second_tag:any = await second_tagData
-
+ */
     let salary_index = 0
     let salaryTag = ''
     if (props.min_salary > 0) {
@@ -41,7 +41,7 @@ export default async function PostItem({...props }) {
                     </Link>
                   </div>
                   <div className="-m-1">
-                    <a
+                    {/* <a
                       className={`text-xs text-gray-500 font-medium inline-flex px-2 py-0.5 hover:text-gray-600  m-1 whitespace-nowrap transition duration-150 ease-in-out bg-gray-50`}
                       href="#0"
                     >
@@ -52,7 +52,7 @@ export default async function PostItem({...props }) {
                       href="#0"
                     >
                      {tag[0].title}
-                    </a>
+                    </a> */}
                     <a className="inline-flex items-center gap-x-1.5 rounded-md px-1.5 py-0.5 text-sm/5 font-medium sm:text-xs/5 forced-colors:outline bg-lime-500/20 text-lime-700 group-data-[hover]:bg-lime-500">Well-paid</a>
                   </div>
                 </div>
@@ -88,7 +88,7 @@ export default async function PostItem({...props }) {
                     </Link>
                   </div>
                   <div className="-m-1">
-                    <a
+{/*                     <a
                       className={`text-xs text-gray-500 font-medium inline-flex px-2 py-0.5 hover:text-gray-600  m-1 whitespace-nowrap transition duration-150 ease-in-out bg-gray-50`}
                       href="#0"
                     >
@@ -99,7 +99,7 @@ export default async function PostItem({...props }) {
                       href="#0"
                     >
                      {second_tag[0].title}
-                    </a>
+                    </a> */}
                     <a className="inline-flex items-center gap-x-1.5 rounded-md px-1.5 py-0.5 text-sm/5 font-medium sm:text-xs/5 forced-colors:outline bg-purple-500/20 text-purple-700 group-data-[hover]:bg-purple-500">Urgent</a>
                   </div>
                 </div>

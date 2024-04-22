@@ -28,34 +28,6 @@ interface Post {
     created_at: Date,
 }
 
-export async function generateStaticParams() {
-  const postsData: Promise<any> = getAllPosts()
-  const posts:[Post] = await postsData
-
-  return posts.map(post => ({
-    slug: post.slug
-  }))
-}
-
-export async function generateMetadata({ params }: {
-  params: { slug: number }
-}): Promise<Metadata> {
-  const postsData: Promise<any> = getAllPosts()
-  const posts:[Post] = await postsData
-  const post = posts.find((post) => post.slug === String(params.slug))
-
-  if (!post) {
-    return {
-      title: 'Post Not Found'
-    }
-  }  
-
-  return {
-    title: post.job_title,
-    description: 'Page description',
-  }
-
-}
 
 export default async function SinglePost({ params }: {
   params: { slug: number }
@@ -82,10 +54,10 @@ export default async function SinglePost({ params }: {
   const companyData: Promise<any> = getCompany(post.company_code)
   const company:any = await companyData
   
-  const bufferData = Buffer.from(post.job_body);
+/*   const bufferData = Buffer.from(post.job_body);
   const descriptionString = bufferData.toString('utf-8');
 
-  try {
+ */  try {
     posts.slice(randomIntegers[0],randomIntegers[1])
   } catch (error) {
     console.error(error);
@@ -171,8 +143,9 @@ export default async function SinglePost({ params }: {
                 </a>
                 {/* Job description */}
                 <div className="space-y-8 mb-8">
-                    <Markdown>{descriptionString}</Markdown> 
-                </div>
+                    Still on the working :C
+{/*                     <Markdown>{descriptionString}</Markdown> 
+ */}                </div>
                 {/* Job skills here */}
                 <div className="">
                   <h3 className="text-md font-semibold text-gray-800 mb-3">Skills</h3>
@@ -314,12 +287,13 @@ export default async function SinglePost({ params }: {
                 <h4 className="text-2xl font-bold font-inter mb-8">Related Jobs</h4>
                 {/* List container */}
                 <div className="flex flex-col border-t border-gray-200">
-                  {
+                  Still on the working
+{/*                   {
                   posts.slice(randomIntegers[0],randomIntegers[1]).map(post => {
                     return (
                       <PostItem key={post.id} {...post} />
                     )
-                  })}
+                  })} */}
                 </div>
               </div>
 
