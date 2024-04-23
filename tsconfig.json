@@ -24,6 +24,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "lib/utils/useNextRouting.js", "app/(default)/posts/[slug]/page"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "lib/utils/useNextRouting.js", "app/(default)/posts/[slug]/page", "app/error.js"],
   "exclude": ["node_modules"]
 }
