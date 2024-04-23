@@ -1,3 +1,4 @@
+'use server'
 // Import necessary components and libraries
 import PostItem from './post-item'
 import Newsletter from '@/components/newsletter'
