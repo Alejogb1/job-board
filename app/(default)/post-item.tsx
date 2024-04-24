@@ -41,12 +41,13 @@ export default async function PostItem({...props }) {
                     </Link>
                   </div>
                   <div className="-m-1">
-                    {/* <a
+                    <a
                       className={`text-xs text-gray-500 font-medium inline-flex px-2 py-0.5 hover:text-gray-600  m-1 whitespace-nowrap transition duration-150 ease-in-out bg-gray-50`}
                       href="#0"
                     >
                       {salaryTag}
                     </a>
+                    {/* 
                     <a
                       className={`text-xs text-gray-500 font-medium inline-flex px-2 py-0.5 hover:text-gray-600  m-1 whitespace-nowrap transition duration-150 ease-in-out bg-gray-50`}
                       href="#0"
