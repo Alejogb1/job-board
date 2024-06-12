@@ -1,7 +1,3 @@
-{/*
-Note: This code includes an example of how to fetch data from an external JSON file that is hosted at https://raw.githubusercontent.com/cruip/cruip-dummy/main/job-board-posts.json. To facilitate this, we've included a lib directory in the root which contains a function that can fetch the JSON content. Additionally, we've defined the Post types in the types.d.ts file located in the root.
-*/}
-
 import getAllPosts from '@/lib/getAllPosts'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
@@ -12,9 +8,11 @@ import Newsletter from '@/components/newsletter'
 import getCompany from '@/lib/getCompany'
 import extractDomain from '@/lib/extractDomain'
 import createSlug from '@/lib/slug'
-import Markdown from 'react-markdown'
 import { MDXRemote } from 'next-mdx-remote/rsc'
-
+import Markdown from 'markdown-to-jsx'
+import React from 'react'
+import { render } from 'react-dom'
+import Job from "../../../_posts/job.mdx"
 interface Post {
     id: number,
     post_by_id: number,
@@ -45,7 +43,69 @@ export default async function SinglePost({ params }: {
     }
   const postsData: Promise<any> = getAllPosts()
   const posts:[Post] = await postsData
+  const md = `
 
+**Loom Video:**
+
+Our Founder/CEO, [Gabe Greenberg](https://twitter.com/gabe_g2i), created a more in depth Loom video that we highly recommend you watch! Check it out here: [https://www.loom.com/share/a58abfd8e16a43e499d81c59f123db4d](https://www.loom.com/share/a58abfd8e16a43e499d81c59f123db4d)
+
+**Overview:**
+
+You’ll join an expert annotation team to create training data for the world's most advanced AI models. No previous AI experience is necessary. You'll get your foot in the door with one of the biggest players in the AI/LLM space today. We are seeking eager to learn future developers who wants to join an experience to train AI large language models, helping cutting-edge generative AI models write better code. Projects typically include discrete, highly variable problems that involve engaging with these models as they learn to code.
+
+**What Will I Be Doing:**
+
+\- You will have a 4 days of paid training when you start.
+
+\- Evaluating the quality of AI-generated code, including human-readable summaries of your rationale.
+
+\- Writing robust test cases to confirm code works efficiently and effectively.
+
+**Pay Rate:**
+
+\- US Based (50 USD /hr)
+
+\- Expectations are 15+ hours per week however there is no upper limit. We have engineers working 20-40 hrs per week and some that are working 40+ hours per week. You can work as much as you want to. You'll get paid on a weekly basis. You get paid per hour of work done on the platform.
+
+**Contract Length:**
+
+\- Contract is long term, there is no end date.
+
+\- You can end the contract at any time. Our hope is that you would commit to 6 months of work, but if you start and it's not a fit for you, we totally understand.
+
+**Flexible Schedules:**
+
+You are expected to work 15+ hours a week with the ability to work 40+ hours. Developers can set their own hours. Take a 3-hour lunch, no problem. You are paid according to time spent on the platform, which is calculated in the coding exercises, as opposed to tracking your own hours.
+
+**Interview Process:**
+
+1) Apply using this Ashby form.
+
+2) If you look like a good fit, we'll send an async video interview (4 minutes) with two questions.
+
+3) You'll perform a 35-minute live technical interview at any stack with the G2i technical interview team. If you solidly pass, you'll get the job. We are performing these interviews on behalf of the company.
+
+4) We'll set up a group call to answer further questions about the role and the company and can help you sign G2i's terms of service as a developer.
+
+5) We'll then work with the company to help get you onboarded.
+
+**Tech Stack Priorities:**
+
+JavaScript, Python, Java, C
+
+**Required Qualifications:**
+
+\- You are currently attending or have graduated from an Ivy League college, Top 50 college in the US, or University of Waterloo in Canada
+
+\- Professional programming experience is NOT required but intro level computer science and and data structure courses are required.
+
+\- Complete fluency in the English language.
+
+\- Ability to articulate complex technical concepts clearly and engagingly.
+
+\- Excellent attention to detail and ability to maintain consistency in writing.
+  
+  `
   const post:any = posts.find((post) => post.slug === String(params.slug))
 
   const minRange = 1;
@@ -75,12 +135,12 @@ export default async function SinglePost({ params }: {
             <aside className="mb-8 md:mb-0 md:w-64 lg:w-72 md:ml-12 lg:ml-20 md:shrink-0 md:order-1">
               <div data-sticky data-margin-top="32" data-sticky-for="768" data-sticky-wrap>
                 <div className="relative bg-gray-50 rounded-xl border border-gray-200 p-5" >
-                  <p className="text-center mb-6 group items-center">
+                  <div className="text-center mb-6 group items-center">
                     <Image className="mx-auto mb-2" src={`https://logo.clearbit.com/${extractDomain(company.company.company_webiste_url)}`} width={72} height={72} alt={post.job_title} />
-                    <h2 className="text-lg font-bold text-gray-800">{company.company.company_name}</h2>
-                  </p>
+                    <p className="text-lg font-bold text-gray-800">{company.company.company_name}</p>
+                  </div>
                   <div className="flex justify-center md:justify-start mb-5">
-                    <ul className="inline-flex flex-col space-y-2">
+                    <ul className="inline-flex flex-col space-y-2"> 
                       <li className="flex items-center">
                         <svg className="shrink-0 fill-gray-400 mr-3" width="14" height="14" xmlns="http://www.w3.org/2000/svg">
                           <path d="M9.707 4.293a1 1 0 0 0-1.414 1.414L10.586 8H2V2h3a1 1 0 1 0 0-2H2a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h8.586l-2.293 2.293a1 1 0 1 0 1.414 1.414l4-4a1 1 0 0 0 0-1.414l-4-4Z" />
@@ -143,9 +203,8 @@ export default async function SinglePost({ params }: {
                 </a>
                 {/* Job description */}
                 <div className="space-y-8 mb-8">
-                    Still on the working :C
-{/*                     <Markdown>{descriptionString}</Markdown> 
- */}                </div>
+                  {<Markdown children={md}/>}
+                </div>
                 {/* Job skills here */}
                 <div className="">
                   <h3 className="text-md font-semibold text-gray-800 mb-3">Skills</h3>

@@ -29,3 +29,22 @@ input::-webkit-inner-spin-button {
 h2 {
     font-size: 22px;
 }
+p {
+    line-height: 1.5;
+    margin-top: 0.75rem;
+    margin-bottom: 0.75rem;
+
+}
+p a {
+    --tw-text-opacity: 1;
+    color: rgb(99 102 241 / var(--tw-text-opacity));
+}
+p strong {
+    margin-bottom: 0.75rem;
+    font-size: 1.25rem;
+    line-height: 1.5;
+    letter-spacing: -0.01em;
+    font-weight: 700;
+    color: rgb(31 41 55 / var(--tw-text-opacity));
+    margin-bottom: 2.75rem; 
+}
