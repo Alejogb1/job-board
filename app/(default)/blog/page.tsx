@@ -13,7 +13,7 @@ type PostData = {
 export default async function BlogPage() {
   const allPostsData = await getSortedPostsData();          
   return (
-      <section className="text-lg pt-20 mx-auto max-w-2xl">
+      <section className="sm:text-md text-lg sm:pt-10 pt-20 mx-auto max-w-2xl">
         <h2 className="text-2xl font-bold">Wei Jiang</h2>
         <ul className="list-disc pl-0">
           {allPostsData.map(({ id, date, title }: PostData) => (

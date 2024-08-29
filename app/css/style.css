@@ -173,3 +173,22 @@ ol > li::before {
     font-weight: bold;
 }
 
+/* Additional styles for responsiveness */
+@media (max-width: 768px) {
+    h2 {
+        font-size: 1.5rem; /* Adjusted for smaller screens */
+    }
+    h3 {
+        font-size: 1.25rem; /* Adjusted for smaller screens */
+    }
+    p {
+        font-size: 1rem; /* Adjusted for smaller screens */
+    }
+    ul {
+        padding-inline-start: 20px; /* Adjusted padding for smaller screens */
+    }
+    ol {
+        padding-left: 1em; /* Adjusted padding for smaller screens */
+    }
+}
+

@@ -7,7 +7,7 @@ export const siteTitle = 'Wei Jiang blog';
 
 export default function Layout({ children, home }: { children: React.ReactNode, home: boolean }) {
   return (
-    <div className="container pt-20 mx-auto max-w-2xl">
+    <div className="container pt-20 mx-auto sm:pt-10 text-lg max-w-2xl">
       <Head>
         <link rel="icon" href="/favicon.ico" />
         <meta
@@ -26,11 +26,11 @@ export default function Layout({ children, home }: { children: React.ReactNode, 
       <header className="flex flex-col items-center">
         {home ? (
           <>
-            <h1 className="text-4xl font-bold">{name}</h1>
+            <h1 className="text-4xl sm:text-3xl text-center">{name}</h1> {/* Adjusted for smaller screens */}
           </>
         ) : (
           <>
-            <h2 className="text-2xl">
+            <h2 className="text-2xl sm:text-xl text-center"> {/* Adjusted for smaller screens */}
               <Link href="/" className="text-inherit">
                 {siteTitle}
               </Link>
