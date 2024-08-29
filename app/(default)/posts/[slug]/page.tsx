@@ -30,10 +30,11 @@ interface Post {
 export default async function SinglePost({ params }: {
   params: { slug: number }
 }) {
-  function getRandomIntegers(min:number, max:number) {
+  function getRandomIntegers(min: number, max: number) {
      // Ensure there's enough room for the gap
       if (max - min < 4) {
-        throw new Error('Not enough room for the specified gap.');
+        // Adjusted error message for clarity
+        throw new Error(`Not enough room for the specified gap. Ensure max is at least ${min + 4}.`);
       }
 
       const randomInt1 = Math.floor(Math.random() * (max - min - 4 + 1)) + min;

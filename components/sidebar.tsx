@@ -136,8 +136,8 @@ export default function Sidebar() {
 
             <div>
               <div className="text-sm text-gray-800 font-semibold mb-3">Salary Range</div>
-              <ul className="space-y-2">
-                <li>
+              <div className="space-y-2">
+                <div>
                   <Link 
                   className="text-sm text-gray-600 cursor-pointer" 
                   href={{
@@ -145,17 +145,17 @@ export default function Sidebar() {
                   }}>
                     Up to $ 100,000
                   </Link>
-                </li>
-                <li>
+                </div>
+                <div>
                   <Link className="text-sm text-gray-600 cursor-pointer" href="/salary/100-150">$ 100,000 to $ 150,000</Link>
-                </li>
-                <li>
+                </div>
+                <div>
                   <Link className="text-sm text-gray-600 cursor-pointer" href="/salary/100-250">$ 150,000 to $ 250,000</Link>
-                </li>
-                <li>
+                </div>
+                <div>
                   <Link className="text-sm text-gray-600 cursor-pointer" href="/salary/250">Over $ 250,000</Link>
-                </li>
-              </ul>        
+                </div>
+              </div>        
               </div>
           </div>
       </div>

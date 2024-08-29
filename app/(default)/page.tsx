@@ -47,12 +47,13 @@ export default async function Home({
           <div className="">
             <div className="md:flex md:justify-between" data-sticky-container>
               <Sidebar/>
-              <div className="md:grow">
+              <h2 className="text-xl font-bold">Building!</h2>
+              {/* <div className="md:grow">
                 <SearchField />
                 { query ? (
                   <PostsList query={query} currentPage={currentPage}/>  
                 ): <PostsList query={""} currentPage={currentPage}/> }
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

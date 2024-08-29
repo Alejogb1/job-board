@@ -41,10 +41,135 @@ p a {
 }
 p strong {
     margin-bottom: 0.75rem;
-    font-size: 1.25rem;
+    font-size: 1rem;
     line-height: 1.5;
     letter-spacing: -0.01em;
     font-weight: 700;
     color: rgb(31 41 55 / var(--tw-text-opacity));
     margin-bottom: 2.75rem; 
 }
+
+ul {
+    display: block;
+    list-style-type: disc;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 40px;
+    unicode-bidi: isolate;
+}
+li {
+    display: list-item;
+    text-align: -webkit-match-parent;
+    unicode-bidi: isolate;
+}
+
+h2 {
+    font-size: 1.875rem; /* 30px */
+    line-height: 2.25rem; /* 36px */
+    font-weight: 700;
+    color: rgb(31 41 55 / var(--tw-text-opacity));
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
+h3 {
+    font-size: 1.5rem; /* 24px */
+    line-height: 2rem; /* 32px */
+    font-weight: 600;
+    color: rgb(55 65 81 / var(--tw-text-opacity));
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+}
+
+pre {
+    background-color: #f4f4f4;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 1rem;
+    overflow-x: auto;
+    margin-bottom: 1.5rem;
+}
+
+code {
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: #333;
+}
+
+pre code {
+    display: block;
+    white-space: pre;
+    word-wrap: normal;
+}
+
+:not(pre) > code {
+    background-color: #f0f0f0;
+    padding: 0.2em 0.4em;
+    border-radius: 3px;
+    font-size: 0.875em;
+}
+
+.language-bash::before {
+    content: '$ ';
+    color: #999;
+    user-select: none;
+}
+
+.hljs-keyword,
+.hljs-builtin,
+.hljs-type {
+    color: #0000ff;
+}
+
+.hljs-string,
+.hljs-symbol {
+    color: #008000;
+}
+
+.hljs-number {
+    color: #009999;
+}
+
+.hljs-comment {
+    color: #999999;
+    font-style: italic;
+}
+
+.hljs-function,
+.hljs-class {
+    color: #990000;
+}
+/* Styling for enumerated lists in markdown */
+li > p {
+    display: inline-block;
+    margin: 0;
+}
+
+li {
+    margin-bottom: 0.5em;
+}
+
+ol {
+    counter-reset: list-counter;
+    list-style-type: none;
+    padding-left: 2em;
+}
+
+ol > li {
+    counter-increment: list-counter;
+    position: relative;
+}
+
+ol > li::before {
+    content: counter(list-counter) ") ";
+    position: absolute;
+    left: -2em;
+    width: 1.5em;
+    text-align: right;
+    color: #000000;
+    font-weight: bold;
+}
+
