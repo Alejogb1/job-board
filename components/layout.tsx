@@ -3,7 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 const name = 'Wei Jang';
-export const siteTitle = 'Wei Jiang blog';
+export const siteTitle = 'Wei jiang blog';
 
 export default function Layout({ children, home }: { children: React.ReactNode, home: boolean }) {
   return (

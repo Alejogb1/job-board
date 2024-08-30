@@ -6,7 +6,7 @@ id: 'etl-pipeline'
 
 hey, sounds like you’re ready to level up your data pipeline game, which is great. are you getting tired of managing all those scripts by hand? moving to something like airflow could be a total lifesaver for you.
 
-by the way, i'm jein wang, and i’ve been knee-deep in data engineering for a while now, especially with orchestration tools like airflow. i’ve seen a lot of teams go through what you’re dealing with, and i’m happy to share some tips that could make your life a lot easier.
+by the way, i'm jiang wei, and i’ve been knee-deep in data engineering for a while now, especially with orchestration tools like airflow. i’ve seen a lot of teams go through what you’re dealing with, and i’m happy to share some tips that could make your life a lot easier.
 
 ## etl pipelines basics
 
@@ -154,4 +154,4 @@ for an even deeper dive into container orchestration and microservices, check ou
 hope this helps! getting your first orchestration project up and running might seem a bit overwhelming at first, but trust me, once you’ve got it dialed in, you’ll never want to go back to the old way. if you run into any issues, feel free to hit me up. good luck!
 
 
-jein.wang@jobseekr.ai
+jiang.wei@jobseekr.ai
