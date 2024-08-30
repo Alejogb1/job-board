@@ -18,12 +18,11 @@ id: 'getting-started-databases'
 	•	Use the right queries.
 
 
-hey there jein wang from Meta here, 
+hey there jiang wei from Meta here, 
 
 so, where to begin? it’s less about knowing all the keywords and more about understanding the fundamental concepts that underpin database design and implementation. 
 
 keep it modular. document everything. don't reinvent the wheel. always be learning. optimize smartly. monitor like crazy. plan for failure.
-
 
 
 I appreciate you reaching out—always happy to dive into a topic like this. Building a database engine, especially a NoSQL one, is a challenging yet incredibly rewarding project. I get that it can be overwhelming when you're just starting out, but you’re on the right track by wanting to ground your work in solid research and practical experience.
@@ -67,4 +66,4 @@ best of luck with your project! it’s an ambitious one, but if you stick with i
 
 cheers,  
 
-jein.wang@jobseekr.ai
+jiang.wei@jobseekr.ai
