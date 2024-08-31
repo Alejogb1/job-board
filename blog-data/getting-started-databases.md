@@ -3,67 +3,197 @@ title: "Meta's Engineer guide to getting started with Databases"
 date: '2024-08-29'
 id: 'getting-started-databases'
 ---
-	Too many keywords, not enough fundamentals.
-    •	Break down complexity.
-	•	Focus on fundamentals.
-	•	Learn through hands-on projects.
-	•	Start small, iterate.
-	•	Use simple data structures.
-	•	Understand the trade-offs.
-	•	Optimize for performance.
-	•	Use the right tools.
-	•	Focus on the user.
-	•	Use the right data types.
-	•	Use the right indexes.
-	•	Use the right queries.
+	•too many keywords, not enough basics.
+	•	break it down.
+	•	focus on the fundamentals. 
+	(did you know the word “fundamentals” comes from the latin “fundamentum” 
+	meaning foundation? yeah, latin’s still lurking in our tech lingo.)
+	•	learn by doing.
+	•	start small, grow from there.
+	•	stick with simple stuff. 
+	(speaking of simple, did you know the first computer bug 
+	was literally a moth found in a computer? crazy, right?)
+	•	understand the trade-offs.
+	•	optimize when it makes sense.
+	•	pick the right tools.
+	•	keep the user in mind.
+	•	use the right data types. 
+	•	choose the right indexes.
+	•	write efficient queries.
+---
+hey, it’s jiang wei from meta,
 
+so, where do we start? look, cramming all the cool buzzwords in isn’t gonna help much. you gotta get what’s going on at the core of database design and how it all fits together.
 
-hey there jiang wei from Meta here, 
+```java
+import java.util.HashMap;
+import java.util.Map;
 
-so, where to begin? it’s less about knowing all the keywords and more about understanding the fundamental concepts that underpin database design and implementation. 
+public class KeyValueStore {
+    private Map<String, String> store = new HashMap<>();
 
-keep it modular. document everything. don't reinvent the wheel. always be learning. optimize smartly. monitor like crazy. plan for failure.
+    public void put(String key, String value) {
+        store.put(key, value);
+    }
 
+    public String get(String key) {
+        return store.getOrDefault(key, null);
+    }
 
-I appreciate you reaching out—always happy to dive into a topic like this. Building a database engine, especially a NoSQL one, is a challenging yet incredibly rewarding project. I get that it can be overwhelming when you're just starting out, but you’re on the right track by wanting to ground your work in solid research and practical experience.
+    public void delete(String key) {
+        store.remove(key);
+    }
+}
+```
 
-### getting started with databases
-First off, it’s great that you’re already comfortable with Java and Python. Both languages have their strengths when it comes to building systems like a database engine. Java is robust for handling complex data structures and managing memory, while Python can be invaluable for rapid prototyping and testing your concepts.
+first things first, let’s not get too fancy too fast. keep it modular, write everything down (trust me, your future self will thank you), and for the love of code, don’t reinvent the wheel. and yeah, keep learning and optimizing, but don’t overdo it. also, have a plan b for when things go sideways, 'cause they will.
 
-To get started:
+```python
+class SimpleCache:
+    def __init__(self):
+        self.cache = {}
 
-1. **clarify your goals**: are you looking to create a key-value store, a document store, or something more specialized? each has its own architecture and design considerations. start small—maybe a basic key-value store—and gradually introduce more complexity. meta’s early database projects began this way, focusing first on core functionality before expanding.
+    def set(self, key, value):
+        if len(self.cache) >= 5:
+            self.cache.pop(next(iter(self.cache)))
+        self.cache[key] = value
 
-2. **build your foundation**: understanding data structures like [B-trees](https://engineering.fb.com/2018/06/25/core-data/a-look-inside-rocksdb/), [hash maps](https://research.fb.com/publications/a-journey-of-1000-microseconds-an-inside-look-at-facebook-s-in-memory-data-store/), and [LSM trees](https://engineering.fb.com/2020/05/13/core-data/storage-performance-with-rocksdb/) is crucial. these are the building blocks of your database engine. at meta, we rely on these structures to ensure that our databases are both fast and scalable.
+    def get(self, key):
+        return self.cache.get(key, None)
 
-3. **dive into operating systems**: understanding how your database will interact with the underlying OS is key. concepts like memory management, disk I/O, and concurrency are vital. [working with file systems](https://engineering.fb.com/2019/02/21/production-engineering/how-we-built-hdfs-eb-the-world-s-largest-hdfs-cluster/) and [optimizing for SSDs](https://engineering.fb.com/2021/06/21/data-infrastructure/magma/) are examples of how deep knowledge in this area can influence database performance.
+cache = SimpleCache()
+cache.set('a', 1)
+cache.set('b', 2)
+```
 
-4. **study existing databases**: look at systems like [Redis](https://engineering.fb.com/2019/04/25/production-engineering/rebuilding-the-facebook-tech-stack-to-support-global-services/), [Bigtable](https://cloud.google.com/bigtable), and [DynamoDB](https://aws.amazon.com/dynamodb/) for inspiration. these systems were designed with specific goals in mind, and understanding their architecture can provide you with insights for your own project.
+it's great you're comfy with java and python. java's your go-to for handling complex stuff and memory, while python’s more of a quick and dirty, get-things-done kinda tool. they’re both solid choices for building something like a database engine.
 
-### verification & validation
-When it comes to ensuring that your approach is solid, it’s all about rigorous testing and iteration.
+```java
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
-1. **unit testing**: test every component in isolation. for example, when we develop new features for our databases at meta, we write extensive unit tests to catch any issues early on.
+public class OperationQueue {
+    private BlockingQueue<Runnable> queue = new LinkedBlockingQueue<>();
 
-2. **integration testing**: once your components are tested, see how they work together. simulate real-world usage, including edge cases like network failures or high concurrency. at meta, we use [stress testing](https://engineering.fb.com/2018/05/08/core-data/tuning-rocksdb-for-facebook-scale/) to ensure that our systems can handle extreme conditions.
+    public void addOperation(Runnable operation) throws InterruptedException {
+        queue.put(operation);
+    }
 
-3. **continuous integration (CI)**: set up a CI pipeline that automatically runs your tests whenever you make changes. this helps catch issues before they make it into production. at meta, this is a standard practice to maintain the integrity of our systems.
+    public void execute() throws InterruptedException {
+        while (!queue.isEmpty()) {
+            Runnable operation = queue.take();
+            operation.run();
+        }
+    }
+}
+```
 
-### best practices & lessons learned
-From my experience, here are a few tips:
+alright, what’s the game plan? think about what you’re really aiming for here. are you building a key-value store, a document store, or something else entirely? keep it simple to start, like maybe a basic key-value store, and then level up as you go. that’s kinda how we kicked things off at meta with our early database projects—focused on the core stuff first, then piled on the rest later.
 
-1. **modularity**: keep your code modular. this makes it easier to test, maintain, and expand. for example, at meta, our database components are designed to be as independent as possible, which simplifies both development and debugging.
+oh, and don’t forget about the boring stuff like operating systems. knowing how your database plays with the os is key. memory management, disk i/o, multitasking—all that stuff matters more than you think. if you get it right, your database will run smoother than a freshly waxed surfboard. check out [working with file systems](https://engineering.fb.com/2022/06/20/data-infrastructure/transparent-memory-offloading-more-memory-at-a-fraction-of-the-cost-and-power/) and [optimizing for SSDs](https://engineering.fb.com/2021/06/21/data-infrastructure/magma/) for some useful insights.
 
-2. **documentation**: document everything—your design decisions, your code, your tests. this will not only help you stay organized but also make it easier for others to understand and contribute to your project.
+```python
+def write_to_disk(filename, data):
+    with open(filename, 'w') as file:
+        file.write(data)
 
-3. **don’t reinvent the wheel**: leverage existing libraries and tools where it makes sense. for instance, instead of writing your own storage engine from scratch, consider building on top of something like [RocksDB](https://engineering.fb.com/2013/11/06/core-data/under-the-hood-rocksdb-a-high-performance-key-value-store/) or [LevelDB](https://github.com/google/leveldb). this allows you to focus on what makes your database unique.
+write_to_disk('example.txt', 'Hello, Disk I/O!')
+```
 
-4. **keep learning**: technology and best practices evolve rapidly. stay up-to-date with the latest research, attend conferences, and engage with the community. learning from others is crucial, and at meta, we’re constantly evolving our approaches based on new insights and developments.
+ever thought about how file systems work? or how to really get the most out of ssds? well, maybe you should. understanding this stuff can make a world of difference. check out [introducing bryce canyon: our next generation storage platform](https://engineering.fb.com/2017/03/08/data-center-engineering/introducing-bryce-canyon-our-next-generation-storage-platform/) and [tao: facebook's distributed data store for the social graph](https://research.facebook.com/publications/tao-facebooks-distributed-data-store-for-the-social-graph/) for more info.
 
-i hope this helps you get a clear sense of direction as you embark on this journey. remember, building something like a database engine is a marathon, not a sprint. take your time, iterate, and learn as you go. and don’t hesitate to reach out if you need more specific guidance along the way.
+one more thing—take a peek at what’s already out there. look at [redis](https://engineering.fb.com/2022/06/08/core-infra/cache-made-consistent/), [bigtable](https://cloud.google.com/bigtable), and [dynamodb](https://aws.amazon.com/dynamodb/)... you know, the big dogs. they’ve been built for specific reasons, and studying them can give you a solid footing for your project.
 
-best of luck with your project! it’s an ambitious one, but if you stick with it, you’ll come out the other side with a deep, valuable understanding of database systems.
+now, let’s talk about making sure your stuff actually works:
 
-cheers,  
+- unit testing: test each piece on its own, like we do at meta. catch the bugs before they bug you.
+
+```java
+public class UnitTest {
+    public static boolean testPut() {
+        KeyValueStore store = new KeyValueStore();
+        store.put("test", "value");
+        return "value".equals(store.get("test"));
+    }
+
+    public static void main(String[] args) {
+        System.out.println("testPut: " + (testPut() ? "Passed" : "Failed"));
+    }
+}
+```
+
+- integration testing: once you’re happy with the individual parts, see how they play together. throw in some real-world scenarios, like network fails or crazy traffic, and see if your system holds up.
+
+```python
+def integration_test():
+    cache = SimpleCache()
+    cache.set('a', 1)
+    cache.set('b', 2)
+    assert cache.get('a') == 1
+    assert cache.get('b') == 2
+    cache.set('c', 3)
+    assert cache.get('c') == 3
+
+integration_test()
+```
+
+- continuous integration (ci): automate your tests. seriously. it’s a lifesaver. at meta, we rely on ci to keep our systems from imploding.
+
+as for that cool paper on autonomous testing, it’s interesting but maybe skip it for now unless you’re really into that stuff. you can dive in when you’re ready. check out [autonomous testing](https://engineering.fb.com/2021/10/20/developer-tools/autonomous-testing/) for some extra reading if you’re curious.
+
+once you’ve got the basics down, you might wanna get into some advanced stuff, like distributed databases. that’s where things get really wild. check out [scaling services with shard manager](https://engineering.fb.com/2020/08/24/production-engineering/scaling-services-with-shard-manager/), [akkio: a distributed database for real-time analytics](https://engineering.fb.com/2018/10/08/core-infra/akkio/), and [fsdp: a distributed database for real-time analytics](https://engineering.fb.com/2021/07/15/open-source/fsdp/) for some deep dives.
+
+and, while we’re at it, a quick rundown on some best practices:
+
+- keep it modular. makes life easier for testing, maintaining, and expanding.
+
+```java
+class User {
+    private String username;
+
+    public User(String username) {
+        this.username = username;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+}
+
+class UserManager {
+    private Map<String, User> users = new HashMap<>();
+
+    public void addUser(String username) {
+        users.put(username, new User(username));
+    }
+
+    public User getUser(String username) {
+        return users.get(username);
+    }
+}
+```
+
+- write stuff down. yeah, i know, documentation is boring, but it’ll save you a headache later. trust me.
+- don’t build everything from scratch. use libraries and tools that are already out there, like [rocksdb](https://engineering.fb.com/2013/11/06/core-data/under-the-hood-rocksdb-a-high-performance-key-value-store/) or [leveldb](https://github.com/google/leveldb).
+
+```python
+import json
+
+def load_data(filename):
+    with open(filename) as file:
+        return json.load(file)
+
+data = load_data('data.json')
+```
+
+- keep learning. tech moves fast. keep up with the latest, hit up conferences, and chat with the community.
+
+hope that helps you get your bearings as you dive into this project. building a database engine is a beast, but it’s totally worth it. take it slow, iterate, and don’t be afraid to make mistakes. if you need more tips, just holler.
+
+good luck, and remember—it’s a marathon, not a sprint.
+
+cheers,
 
 jiang.wei@jobseekr.ai
+
+---

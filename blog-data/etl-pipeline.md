@@ -1,6 +1,6 @@
 ---
 title: 'Building your first ETL orchestration pipeline?'
-date: '2024-08-29'
+date: '2024-08-30'
 id: 'etl-pipeline'
 ---
 
