@@ -33,7 +33,7 @@ class mydatamodule(pl.LightningDataModule):
         return combinedloader(loaders, mode='max_size_cycle')
 ```
 
-this approach ensures that smaller datasets don't run out of samples too quickly, keeping your training balanced. for more info, check out the [pytorch lightning documentation](https://pytorch-lightning.readthedocs.io/en/stable/extensions/combine.html).
+this approach ensures that smaller datasets don't run out of samples too quickly, keeping your training balanced. for more info, check out the [pytorch lightning documentation](https://lightning.ai/docs/pytorch/stable/).
 
 ### weighted loss computation
 
@@ -57,17 +57,17 @@ when it comes to handling multiple datasets in pytorch lightning, there are seve
 
 **caching small datasets** in memory can be a game-changer. if your ram can handle it, this approach can dramatically speed up access times and reduce i/o delays. it's like having a high-speed expressway for your data. for more on this, check out the [efficient data loading article](https://towardsdatascience.com/efficient-data-loading-in-pytorch-59f0d6d5c4d6).
 
-**data augmentation** is another powerful tool, especially for smaller datasets. techniques like rotations and flips can effectively increase your dataset size, helping to reduce overfitting and balance your data. it's like teaching your model to see the world from different angles. the [data augmentation book](https://www.elsevier.com/books/data-augmentation-for-deep-learning/yang/978-0-12-818548-2) is a treasure trove of these techniques.
+**data augmentation** is another powerful tool, especially for smaller datasets. techniques like rotations and flips can effectively increase your dataset size, helping to reduce overfitting and balance your data. it's like teaching your model to see the world from different angles. the [data augmentation book](https://www.amazon.com/Data-Augmentation-Python-learning-augmentation/dp/1803246456) is a treasure trove of these techniques.
 
-**modularizing your pipeline** is crucial for long-term success. it's like building with legos - you can easily swap out or add new pieces as your project evolves. this flexibility is invaluable as your project grows. the [building machine learning systems book](https://www.oreilly.com/library/view/building-machine/9781492045110/) offers great insights on this approach.
+**modularizing your pipeline** is crucial for long-term success. it's like building with legos - you can easily swap out or add new pieces as your project evolves. this flexibility is invaluable as your project grows. the [building machine learning systems book](https://www.amazon.com/Building-Machine-Learning-Pipelines-Automating/dp/1492053198) offers great insights on this approach.
 
 if you find your model's performance plateauing, consider **beefing up your feed-forward layers**. it's like giving your model a brain upgrade, allowing it to capture more complex patterns. just keep an eye out for overfitting and have your regularization methods ready. the [transformer paper by vaswani et al.](https://arxiv.org/abs/1706.03762) dives deep into how scaling layer sizes can boost performance.
 
-speaking of regularization, methods like **dropout or weight decay** are your best friends in preventing overfitting, especially with more complex models. they're like training wheels that keep your model steady and robust. the [regularization techniques book](https://www.springer.com/gp/book/9789811644113) is a great resource for mastering these methods.
+speaking of regularization, methods like **dropout or weight decay** are your best friends in preventing overfitting, especially with more complex models. they're like training wheels that keep your model steady and robust. the [regularization techniques book](https://www.manning.com/books/regularization-in-deep-learning-cx) is a great resource for mastering these methods.
 
 **lazy loading** is a smart way to manage memory, especially when dealing with large datasets. it's like just-in-time delivery for your data, loading it only when needed. this approach can help you avoid memory issues and boost overall performance. the [efficient data loading paper](https://arxiv.org/abs/1805.10710) provides a detailed look at this method.
 
-lastly, for those working with massive models or datasets, **distributed training** can be a lifesaver. it's like having a team of gpus or machines working in harmony to handle the heavy lifting. the [distributed machine learning handbook](https://www.springer.com/gp/book/9783030786033) is an excellent resource for diving into these advanced techniques.
+lastly, for those working with massive models or datasets, **distributed training** can be a lifesaver. it's like having a team of gpus or machines working in harmony to handle the heavy lifting. the [distributed machine learning handbook](https://www.manning.com/books/distributed-machine-learning-patterns) is an excellent resource for diving into these advanced techniques.
 
 by applying these ideas, you can handle various datasets and make your model training better, tackling issues and boosting your results.
 
