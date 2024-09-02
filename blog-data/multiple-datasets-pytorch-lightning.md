@@ -49,13 +49,13 @@ def training_step(self, batch, batch_idx):
     return total_loss
 ```
 
-this method ensures that more important datasets have a greater effect on the loss calculation. for more details, refer to the [deep learning handbook by ian goodfellow](https://www.springer.com/gp/book/9783030056491).
+this method ensures that more important datasets have a greater effect on the loss calculation. for more details, refer to the [deep learning handbook by ian goodfellow](https://www.deeplearningbook.org).
 
 ### good practices and extra suggestions
 
 when it comes to handling multiple datasets in pytorch lightning, there are several practices that can significantly improve your model's performance and efficiency. 
 
-**caching small datasets** in memory can be a game-changer. if your ram can handle it, this approach can dramatically speed up access times and reduce i/o delays. it's like having a high-speed expressway for your data. for more on this, check out the [efficient data loading article](https://towardsdatascience.com/efficient-data-loading-in-pytorch-59f0d6d5c4d6).
+**caching small datasets** in memory can be a game-changer. if your ram can handle it, this approach can dramatically speed up access times and reduce i/o delays. it's like having a high-speed expressway for your data. for more on this, check out the [hpca2020 paper](https://hsienhsinlee.github.io/MARS/pub/hpca2020.pdf)
 
 **data augmentation** is another powerful tool, especially for smaller datasets. techniques like rotations and flips can effectively increase your dataset size, helping to reduce overfitting and balance your data. it's like teaching your model to see the world from different angles. the [data augmentation book](https://www.amazon.com/Data-Augmentation-Python-learning-augmentation/dp/1803246456) is a treasure trove of these techniques.
 
@@ -65,7 +65,7 @@ if you find your model's performance plateauing, consider **beefing up your feed
 
 speaking of regularization, methods like **dropout or weight decay** are your best friends in preventing overfitting, especially with more complex models. they're like training wheels that keep your model steady and robust. the [regularization techniques book](https://www.manning.com/books/regularization-in-deep-learning-cx) is a great resource for mastering these methods.
 
-**lazy loading** is a smart way to manage memory, especially when dealing with large datasets. it's like just-in-time delivery for your data, loading it only when needed. this approach can help you avoid memory issues and boost overall performance. the [efficient data loading paper](https://arxiv.org/abs/1805.10710) provides a detailed look at this method.
+**lazy loading** is a smart way to manage memory, especially when dealing with large datasets. it's like just-in-time delivery for your data, loading it only when needed. this approach can help you avoid memory issues and boost overall performance. the [data loading paper](https://arxiv.org/abs/1805.10710) provides a detailed look at this method.
 
 lastly, for those working with massive models or datasets, **distributed training** can be a lifesaver. it's like having a team of gpus or machines working in harmony to handle the heavy lifting. the [distributed machine learning handbook](https://www.manning.com/books/distributed-machine-learning-patterns) is an excellent resource for diving into these advanced techniques.
 
