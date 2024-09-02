@@ -4,7 +4,7 @@ date: '2024-09-02'
 id: 'multiple-datasets-pytorch-lightning'
 ---
 
-hi, i’m jian wei. 2 years ago, i worked on integrating datasets from sources like [common crawl](https://commoncrawl.org/), ranging from 100 gb to 15 tb. balancing this diverse data was a challenge, but by using `combinedloader` with a custom max-size cycle, we managed the load effectively, just like how [facebook](https://about.fb.com/) handles their vast amount of user data. i’ll dive into how this approach, along with smart data partitioning, kept everything running smoothly. References i've used along this article:
+hi, i’m jiang wei. 2 years ago, i worked on integrating datasets from sources like [common crawl](https://commoncrawl.org/), ranging from 100 gb to 15 tb. balancing this diverse data was a challenge, but by using `combinedloader` with a custom max-size cycle, we managed the load effectively, just like how [facebook](https://about.fb.com/) handles their vast amount of user data. i’ll dive into how this approach, along with smart data partitioning, kept everything running smoothly. References i've used along this article:
 
 
 [Accurate, Large Minibatch SGD: Training ImageNet in 1 Hour](https://research.facebook.com/publications/accurate-large-minibatch-sgd-training-imagenet-in-1-hour/) - yo, this beast trains imagenet faster than i can microwave a burrito. absolute madness
