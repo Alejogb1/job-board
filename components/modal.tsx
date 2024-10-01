@@ -8,9 +8,9 @@ export default function MyDialog() {
     <Dialog open={isOpen} onClose={() => setIsOpen(false)}>
       <Dialog.Panel>
         <Dialog.Title>Deactivate account</Dialog.Title>
-        <Dialog.Description>
+        <Description>
           This will permanently deactivate your account
-        </Dialog.Description>
+        </Description>
 
         <p>
           Are you sure you want to deactivate your account? All of your data

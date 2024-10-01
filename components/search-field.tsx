@@ -107,7 +107,7 @@ export default function SearchField({ inputRef, onSearch }: any){
                 <div className="styles">
                 <form onSubmit={onSubmit} className="flex gap-2">
                     <div className="w-full lg:w-6/12">
-                        <div className="relative block w-full before:absolute before:inset-px before:rounded-[calc(theme(borderRadius.lg)-1px)] before:bg-white before:shadow after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:ring-inset after:ring-transparent sm:after:focus-within:ring-2 sm:after:focus-within:ring-blue-500 has-[[data-disabled]]:opacity-50 before:has-[[data-disabled]]:bg-zinc-950/5 before:has-[[data-disabled]]:shadow-none before:has-[[data-invalid]]:shadow-red-500/10">
+                        <div className="py-0 relative block w-full before:absolute before:inset-px before:rounded-[calc(theme(borderRadius.lg)-1px)] before:bg-white before:shadow after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:ring-inset after:ring-transparent sm:after:focus-within:ring-2 sm:after:focus-within:ring-blue-500 has-[[data-disabled]]:opacity-50 before:has-[[data-disabled]]:bg-zinc-950/5 before:has-[[data-disabled]]:shadow-none before:has-[[data-invalid]]:shadow-red-500/10">
                                 {/* <input  
                                   defaultValue={searchParams?.get('query') || ''}
                                   key={searchParams?.get('query')}
@@ -121,12 +121,18 @@ export default function SearchField({ inputRef, onSearch }: any){
                                     onChange={handleChange}
                                     options={options} 
                                     isSearchable={true}
-                                    primaryColor={''}                          
+                                    primaryColor={''}    
+                                    classNames={{
+                                    
+                                      listItem: () => (
+                                          `block transition duration-200 px-2 py-0h cursor-pointer select-none truncate rounded`
+                                      )
+                                  }}
+                                            
                                   />
 
                         </div>
-                        <div className="">
-                        </div>
+                        
                     </div>
                     <div className="md:mt">
                       <button 
