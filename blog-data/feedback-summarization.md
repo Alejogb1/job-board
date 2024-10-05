@@ -3,8 +3,7 @@ title: 'Customer feedback summarization 101 (by Meta)'
 date: '2024-10-05'
 id: 'feedback-summarization'
 ---
-
-
+![alt text](https://mastermetrics.com/wp-content/uploads/2024/07/meta-ai.jpg)
 hey, i’m jein wang, and i’ve spent the last few years neck deep in ai research at Meta, where my main obsession has been efficiency not roughly the kind you read about in textbooks, but the kind that shaves milliseconds off critical operations in production level systems. my specialty? squeezing performance out of large models, cutting through noisy feedback, and fine tuning processes that most engineers would overlook. some tend to overlook details that push ai from "functional" to "seamless"
 
 i got my start in ai back when things were a bit more rudimentary i.e pre attention mechanism days i.e when we were all focused on getting recurrent neural nets to roughly behave. now, i’m on a mission to perfect how we process feedback, from summarizing reviews to real time recommendation systems. think of it like tuning memory management in gpus i.e every tiny optimization matters, and it’s the difference between good and great.
@@ -23,6 +22,7 @@ here’s what i’d recommend for getting your head around summarization:
 
 alright, let’s get down to business and build out this summarization model using the fine food reviews dataset from amazon (you can grab it on kaggle). 
 
+![alt text](https://media.springernature.com/lw685/springer-static/image/art%3A10.1007%2Fs10462-022-10144-1/MediaObjects/10462_2022_10144_Fig1_HTML.png)
 
 here’s the planand we’re gonna take the review description, run it through the model, and spit out a summary using the review title as the target. we’ll be putting tensorflow 1.1 to work with a sequence to sequence (seq2seq) model, powered by a bi directional rnn for the encoder and some slick attention in the decoder. 
 

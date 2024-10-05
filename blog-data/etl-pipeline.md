@@ -3,7 +3,6 @@ title: 'Building your first ETL orchestration pipeline?'
 date: '2024-08-30'
 id: 'etl-pipeline'
 ---
-
 hey, sounds like you’re ready to level up your data pipeline game, which is great. are you getting tired of managing all those scripts by hand? moving to something like airflow could be a total lifesaver for you.
 
 by the way, i'm jiang wei, and i’ve been knee-deep in data engineering for a while now, especially with orchestration tools like airflow. i’ve seen a lot of teams go through what you’re dealing with, and i’m happy to share some tips that could make your life a lot easier.
