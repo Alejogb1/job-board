@@ -1,5 +1,5 @@
 ---
-title: 'Customer Feedback Summarization 101 (Meta)'
+title: 'Customer feedback summarization 101 (by Meta)'
 date: '2024-10-05'
 id: 'feedback-summarization'
 ---
