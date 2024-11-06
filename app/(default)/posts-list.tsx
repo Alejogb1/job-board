@@ -32,7 +32,7 @@ export default async function PostsList({query, currentPage }:{query: string, cu
           {query ? (
           <p className="ml mb-4 text-xs">
           {posts.length === 0
-            ? 'There are no posts that match '
+            ? 'There are no posts that match'
             : `Showing ${posts.length} results for `}
           <span className="font-semibold">{query}</span>
           </p>

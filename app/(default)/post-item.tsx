@@ -19,7 +19,7 @@ export default async function PostItem({...props }) {
     let salary_index = 0
     let salaryTag = ''
     if (props.min_salary > 0) {
-      salaryTag = `$${props.min_salary}K - $${props.max_salary}K`
+      salaryTag = `$${props.min_salary / 1000}K - $${props.max_salary / 1000}K`
       salary_index = 1
     } 
     if(salary_index > 0 ) {

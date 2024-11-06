@@ -6,7 +6,6 @@ import SearchField from '@/components/search-field'
 import { useSearchParams } from 'next/navigation'
 import { useCallback } from 'react'
 import getFilteredPosts from '@/lib/getFilteredPosts'
-import { useQuery } from '@tanstack/react-query'
 interface Post {
   id: number,
   post_by_id: number,
@@ -47,13 +46,12 @@ export default async function Home({
           <div className="">
             <div className="md:flex md:justify-between" data-sticky-container>
               <Sidebar/>
-              <h2 className="text-xl font-bold">Building!</h2>
-              {/* <div className="md:grow">
+              <div className="md:grow">
                 <SearchField />
                 { query ? (
                   <PostsList query={query} currentPage={currentPage}/>  
                 ): <PostsList query={""} currentPage={currentPage}/> }
-              </div> */}
+              </div>
             </div>
           </div>
         </div>
