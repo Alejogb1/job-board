@@ -1,13 +1,14 @@
 // app/sitemap.xml/route.ts
 
 import { getAllPostIds } from '@/lib/blogPosts';
+import { getAllJobPostSlugs } from '@/lib/getAllPosts'; // Assume you have this function or create it
 import { NextResponse } from 'next/server';
 
-function generateSiteMap(posts: { id: string }[]) {
+function generateSiteMap(blogPosts: { id: string }[], jobPosts: { slug: string; url: string }[]) {
   const baseUrl = 'https://www.jobseekr.ai';
 
-  // Structure each blog post entry with consistent XML formatting
-  const postUrls = posts
+  // Generate XML entries for blog posts
+  const blogPostUrls = blogPosts
     .map((post) => {
       return `
     <url>
@@ -18,22 +19,38 @@ function generateSiteMap(posts: { id: string }[]) {
     })
     .join('');
 
-  // Final sitemap structure with header and main website entry
+  // Generate XML entries for job posts
+  const jobPostUrls = jobPosts
+    .map((post) => {
+      return `
+    <url>
+      <loc>${post.url}</loc>
+      <changefreq>daily</changefreq>
+      <priority>0.7</priority>
+    </url>`;
+    })
+    .join('');
+
+  // Final sitemap structure with main website and combined blog & job posts
   return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>${baseUrl}</loc>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
-  </url>${postUrls}
+  </url>
+  ${blogPostUrls}
+  ${jobPostUrls}
 </urlset>`;
 }
 
 export async function GET() {
-  const postsWithParams = await getAllPostIds();
-  const posts = postsWithParams.map((post) => post.params); // Adjust shape if needed
+  const blogPostsWithParams = await getAllPostIds();
+  const blogPosts = blogPostsWithParams.map((post) => post.params); // Adjust shape if needed
 
-  const sitemap = generateSiteMap(posts);
+  const jobPosts = await getAllJobPostSlugs(); // Fetch job post slugs and URLs
+
+  const sitemap = generateSiteMap(blogPosts, jobPosts);
 
   return new NextResponse(sitemap, {
     status: 200,

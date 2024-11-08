@@ -3,9 +3,6 @@ import PressLogos from '@/components/press-logos'
 import Sidebar from '@/components/sidebar'
 import PostsList from './posts-list'
 import SearchField from '@/components/search-field'
-import { useSearchParams } from 'next/navigation'
-import { useCallback } from 'react'
-import getFilteredPosts from '@/lib/getFilteredPosts'
 interface Post {
   id: number,
   post_by_id: number,
