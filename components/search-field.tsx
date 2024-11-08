@@ -123,7 +123,6 @@ export default function SearchField({ inputRef, onSearch }: any){
                                     isSearchable={true}
                                     primaryColor={''}    
                                     classNames={{
-                                    
                                       listItem: () => (
                                           `block transition duration-200 px-2 py-0h cursor-pointer select-none truncate rounded`
                                       )
