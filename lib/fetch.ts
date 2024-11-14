@@ -1,4 +1,4 @@
-import getAllPosts from "./getAllPosts";
+import {getAllPosts} from "./getAllPosts";
 
 export default function fetcher() {
     const postsData = getAllPosts()
