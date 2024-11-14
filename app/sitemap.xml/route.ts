@@ -1,7 +1,7 @@
 // app/sitemap.xml/route.ts
 
 import { getAllPostIds } from '@/lib/blogPosts';
-import { getAllJobPostSlugs } from '@/lib/getAllPosts'; // Assume you have this function or create it
+import { getAllPosts } from '@/lib/getAllPosts'; // Assume you have this function or create it
 import { NextResponse } from 'next/server';
 
 function generateSiteMap(blogPosts: { id: string }[], jobPosts: { slug: string; url: string }[]) {
