@@ -48,7 +48,7 @@ export async function GET() {
   const blogPostsWithParams = await getAllPostIds();
   const blogPosts = blogPostsWithParams.map((post) => post.params); // Adjust shape if needed
 
-  const jobPosts = await getAllJobPostSlugs(); // Fetch job post slugs and URLs
+  const jobPosts = await getAllPosts(); // Fetch job post slugs and URLs
 
   const sitemap = generateSiteMap(blogPosts, jobPosts);
 
