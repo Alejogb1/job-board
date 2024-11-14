@@ -113,9 +113,14 @@
     const minRange = 1;
     const maxRange = posts.length;
     const randomIntegers = getRandomIntegers(minRange, maxRange);
-    const companyData: Promise<any> = getCompany(post.company_code)
-    const company:any = await companyData
-    
+    const companyData = post.company_code ? getCompany(post.company_code) : Promise.resolve(null);
+    const company: any = await companyData;
+    const companyName = company?.company?.company_name || 'Company Name Not Found';
+    const companyUrl = company?.company?.company_webiste_url || 'https://example.com';
+    const logoUrl = company?.company?.company_webiste_url
+      ? `https://logo.clearbit.com/${extractDomain(company.company.company_webiste_url)}`
+      : '/default-logo.png'; // Fallback to a default logo
+  
   /*   const bufferData = Buffer.from(post.job_body);
     const descriptionString = bufferData.toString('utf-8');
 
@@ -138,8 +143,8 @@
                 <div data-sticky data-margin-top="32" data-sticky-for="768" data-sticky-wrap>
                   <div className="relative bg-gray-50 rounded-xl border border-gray-200 p-5" >
                     <div className="text-center mb-6 group items-center">
-                      <Image className="mx-auto mb-2" src={`https://logo.clearbit.com/${extractDomain(company.company.company_webiste_url)}`} width={72} height={72} alt={post.job_title} />
-                      <p className="text-lg font-bold text-gray-800">{company.company.company_name}</p>
+                      <Image className="mx-auto mb-2" src={`https://logo.clearbit.com/${extractDomain(companyUrl)}`} width={72} height={72} alt={post.job_title} />
+                      <p className="text-lg font-bold text-gray-800">{companyName}</p>
                     </div>
                     <div className="flex justify-center md:justify-start mb-5">
                       <ul className="inline-flex flex-col space-y-2"> 
@@ -173,7 +178,7 @@
                     </div>
 
                     <div className="text-center">
-                      <a className="text-sm text-gray-500 font-medium hover:underline cursor-pointer" href={company.company.company_webiste_url} target='_blank'>
+                      <a className="text-sm text-gray-500 font-medium hover:underline cursor-pointer" href={companyUrl} target='_blank'>
                         Visit company
                       </a>
                     </div>
