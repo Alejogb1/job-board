@@ -1,4 +1,4 @@
-  import getAllPosts from '@/lib/getAllPosts'
+  
   import type { Metadata } from 'next'
   import { notFound } from 'next/navigation'
   import Link from 'next/link'
@@ -7,6 +7,7 @@
   import Newsletter from '@/components/newsletter'
   import getCompany from '@/lib/getCompany'
   import extractDomain from '@/lib/extractDomain'
+  import {getAllPosts} from '@/lib/getAllPosts'
   import createSlug from '@/lib/slug'
   import { MDXRemote } from 'next-mdx-remote/rsc'
   import ReactMarkdown from 'react-markdown'

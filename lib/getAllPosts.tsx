@@ -2,7 +2,7 @@
 
 import prisma from './prisma';
 
-export async function getAllJobPostSlugs() {
+export async function getAllPosts() {
     try {
         // Fetch only the fields needed for the sitemap
         const jobs = await prisma.jobPost.findMany({
