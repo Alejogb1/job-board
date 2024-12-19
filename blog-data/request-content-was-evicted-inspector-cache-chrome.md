@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "request-content-was-evicted-inspector-cache-chrome"
 ---
 
-Alright so you're hitting that "request content was evicted from inspector cache in chrome" error huh Yeah I've seen that little beast pop up more times than I care to admit It's a classic chrome devtools quirk and honestly it's not always super intuitive what's going on
+Alright so you're hitting that "request content was evicted from inspector cache in chrome" error right Yeah I've seen that little beast pop up more times than I care to admit It's a classic chrome devtools quirk and honestly it's not always super intuitive what's going on
 
 First off don't panic It usually doesn't mean your code is fundamentally broken It's more about how chrome manages its resources while you're debugging especially when things get a bit heavy on the network side
 

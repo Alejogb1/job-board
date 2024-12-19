@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "32011-garbage-collector-java-type"
 ---
 
-Okay so 32011 garbage collector java type huh Been there done that Got the t-shirt even Probably have a few old project repos with scars from that very beast Let me tell you what I know about garbage collectors in Java and specifically how to handle a situation where things go south like say with the "32011" thing you might be seeing
+Okay so 32011 garbage collector java type right Been there done that Got the t-shirt even Probably have a few old project repos with scars from that very beast Let me tell you what I know about garbage collectors in Java and specifically how to handle a situation where things go south like say with the "32011" thing you might be seeing
 
 First off the 32011 code itself isn't like some official Java error code you'll find in the javadocs or anything It's usually a symptom of something deeper some interaction between the garbage collector and the JVM's memory management Usually it appears when the JVM is under serious stress meaning you have a memory leak a very high allocation rate or a combination of both When the garbage collector starts struggling you can see these weird codes get thrown around in logs or monitoring tools It's not really an *error* in the strict sense more like an "I'm not feeling so good" message from the JVM
 

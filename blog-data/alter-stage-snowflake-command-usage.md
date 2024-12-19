@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "alter-stage-snowflake-command-usage"
 ---
 
-Alright so you're asking about `ALTER STAGE` in Snowflake huh Been there wrestled that beast plenty of times Let's break it down from a "I've seen it all" perspective and get you squared away
+Alright so you're asking about `ALTER STAGE` in Snowflake right Been there wrestled that beast plenty of times Let's break it down from a "I've seen it all" perspective and get you squared away
 
 First off `ALTER STAGE` it's not exactly rocket science but its definitely a spot where things can get messy if you're not careful I remember back in my early Snowflake days I had this whole data ingestion pipeline built everything looking slick until one day it just decides to blow up Turns out the stage definition was subtly different from what the load commands were expecting Spent a solid 3 hours debugging that one yeah good times
 

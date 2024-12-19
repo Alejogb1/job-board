@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-am-i-getting-a-recursionerror-maximum-recursion-depth-exceeded-when-merging-deeplabv3-config"
 ---
 
-alright, so, recursion error huh? maximum recursion depth exceeded. classic. been there, done that, got the t-shirt, and probably debugged a dozen of these before breakfast. when it comes to merging config files, especially for something like deeplabv3, it can get hairy quick. let's unpack why you’re probably hitting this error and how to fix it.
+alright, so, recursion error right? maximum recursion depth exceeded. classic. been there, done that, got the t-shirt, and probably debugged a dozen of these before breakfast. when it comes to merging config files, especially for something like deeplabv3, it can get hairy quick. let's unpack why you’re probably hitting this error and how to fix it.
 
 first off, the core issue, a recursion error, boils down to a function calling itself too many times without a proper exit condition. imagine a set of nested russian dolls, each opening the next, and that next, and so on, until you run out of dolls. that's a recursion gone wild. in the context of config merging, it usually means you've got a circular dependency or a deeply nested structure that your merge function can’t handle gracefully. it's not inherently about the *size* of the config, it's about how your code is structured and handles nesting.
 

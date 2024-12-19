@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "videorate-ffmpeg-command-usage"
 ---
 
-Okay so you're asking about ffmpeg videorate huh Been there done that many times Let's break this down real simple no fluff Just straight to the point how to use videorate with ffmpeg I've wrestled with this beast enough to know the ins and outs It's not rocket science but it can get confusing if you don't know what's up
+Okay so you're asking about ffmpeg videorate right Been there done that many times Let's break this down real simple no fluff Just straight to the point how to use videorate with ffmpeg I've wrestled with this beast enough to know the ins and outs It's not rocket science but it can get confusing if you don't know what's up
 
 First off videorate isn't a standalone command It's an ffmpeg video filter You use it within the ffmpeg command to manipulate the frame rate of your video So think of it as one of ffmpegs many processing modules not a separate program itself
 

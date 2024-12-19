@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "what-is-the-best-approach-to-build-a-model-with-multiple-targets-on-the-y-set"
 ---
 
-alright, so tackling multiple targets in your y set, huh? been there, done that, got the t-shirt (and a few sleepless nights). it's a common problem, and thankfully, we've got a few solid paths we can take. it really boils down to the nature of your targets and what kind of relationship you expect between them. let's walk through it.
+alright, so tackling multiple targets in your y set, right? been there, done that, got the t-shirt (and a few sleepless nights). it's a common problem, and thankfully, we've got a few solid paths we can take. it really boils down to the nature of your targets and what kind of relationship you expect between them. let's walk through it.
 
 first, let's break down what we mean by "multiple targets." are we talking about:
 

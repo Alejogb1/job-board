@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-is-tensorboard-is-not-creating-any-files"
 ---
 
-alright, so tensorboard isn't spitting out files, huh? been there, fought that battle. it's usually something pretty straightforward but can feel like you're chasing ghosts in the machine when it's not cooperating. let’s troubleshoot this.
+alright, so tensorboard isn't spitting out files, right? been there, fought that battle. it's usually something pretty straightforward but can feel like you're chasing ghosts in the machine when it's not cooperating. let’s troubleshoot this.
 
 first off, let’s be clear, tensorboard isn’t some magical file-generating wizard; it's a visualization tool that needs data, specifically event files, usually with `.tfevents` extensions, to display. these event files contain the logs of your training process, things like loss, accuracy, and histogram of activations. if tensorboard doesn't see those, it's going to be a barren wasteland.
 

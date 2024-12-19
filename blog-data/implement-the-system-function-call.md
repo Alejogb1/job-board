@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "implement-the-system-function-call"
 ---
 
-Alright so you want to talk about implementing system calls huh been there done that got the t-shirt and probably debugged a kernel panic or two while doing it. Let’s break this down real simple no fluff just tech talk.
+Alright so you want to talk about implementing system calls right been there done that got the t-shirt and probably debugged a kernel panic or two while doing it. Let’s break this down real simple no fluff just tech talk.
 
 Basically system calls are the way your programs talk to the kernel the big boss of the operating system. Think of it like this your application is a regular Joe and the kernel is like the city hall. Your app needs some resources it can’t just grab them on its own it needs permission needs the official stamp. That's where system calls come in they are the formal requests that let your program ask the kernel to do things on its behalf like opening a file reading from memory or sending data across the network.
 

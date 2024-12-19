@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "im-trying-to-export-gym-gazebo-gazebocircuit2turtlebotlidar-as-a-custom-env-to-my-algorithm-i-could-not-import-gym-gazebo-as-a-typical-gym-env"
 ---
 
-alright, so you’re hitting that classic wall with gym-gazebo, huh? i've been there, staring blankly at the screen after hours of trying to get a custom gazebo environment to play nice with my reinforcement learning algorithm. it's definitely not as straightforward as just `import gym; gym.make('my-env')`, and i totally get the frustration.
+alright, so you’re hitting that classic wall with gym-gazebo, right? i've been there, staring blankly at the screen after hours of trying to get a custom gazebo environment to play nice with my reinforcement learning algorithm. it's definitely not as straightforward as just `import gym; gym.make('my-env')`, and i totally get the frustration.
 
 first off, gym-gazebo isn't a regular gym environment you can install from pip. it's more of a framework that bridges the gap between gazebo, the robot simulator, and the gym api. this means you need a bit of setup, it's not just a plug-and-play situation.
 

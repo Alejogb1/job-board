@@ -6,7 +6,7 @@ id: "what-is-a-simple-way-to-create-lags-when-testing-time-series-models"
 
 here we go.
 
-so, you're looking to inject some artificial lag into your time series data, huh? i get it. testing these models can be a pain, especially when trying to see how they react to delays or data inconsistencies. i've been there, staring at graphs that refuse to cooperate, so let me share what worked for me.
+so, you're looking to inject some artificial lag into your time series data, right? i get it. testing these models can be a pain, especially when trying to see how they react to delays or data inconsistencies. i've been there, staring at graphs that refuse to cooperate, so let me share what worked for me.
 
 the core idea is to manipulate the timestamps associated with your data points. you're essentially shifting them in time to simulate a delay. it sounds simple, and it is when you break it down. no fancy math or deep algorithms are needed for this part.
 

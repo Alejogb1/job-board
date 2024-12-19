@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "1e-13-scientific-notation-meaning"
 ---
 
-Alright so you're asking about 1e-13 scientific notation huh Been there done that seen it all let me break it down for you like I'm talking to a rubber duck I swear I’ve debugged worse stuff than this at 3 AM fueled by stale pizza and lukewarm coffee
+Alright so you're asking about 1e-13 scientific notation right Been there done that seen it all let me break it down for you like I'm talking to a rubber duck I swear I’ve debugged worse stuff than this at 3 AM fueled by stale pizza and lukewarm coffee
 
 1e-13 is just a compact way of writing a really really small number in decimal form It's a shortcut it’s essentially telling you to take 1 and multiply it by 10 raised to the power of -13 Think of it as moving the decimal point 13 places to the left
 

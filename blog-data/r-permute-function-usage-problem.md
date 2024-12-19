@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "r-permute-function-usage-problem"
 ---
 
-Okay so "r permute function usage problem" huh Alright I’ve seen this rodeo before let me walk you through it because I’ve spent way too much time untangling permutation issues particularly in R It's like a rite of passage for anyone doing any kind of serious data analysis there You think you’re good then boom permutation problems slap you in the face
+Okay so "r permute function usage problem" right Alright I’ve seen this rodeo before let me walk you through it because I’ve spent way too much time untangling permutation issues particularly in R It's like a rite of passage for anyone doing any kind of serious data analysis there You think you’re good then boom permutation problems slap you in the face
 
 So the question as I understand it seems to be about the `permute` function in R or maybe a more general issue about creating permutations The core of the problem is you’re trying to generate shuffled or rearranged versions of a dataset a vector a list anything really and it’s not quite working how you'd expect I've been there believe me I was knee-deep in a Monte Carlo simulation once trying to test some complex algorithm I thought my logic was perfect but then my permutations were either too repetitive or not random enough my p-values were all wrong and I spent like 3 days pulling my hair out trying to fix it It was a mess
 

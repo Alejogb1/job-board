@@ -67,7 +67,7 @@ multiplied_numbers = map(*, numbers_list, multipliers_list)
 println(multiplied_numbers)
 ```
 
-The output is `[2, 6, 12]`. Pretty neat huh. Notice that I'm using the `*` operator directly which can also be passed as a function
+The output is `[2, 6, 12]`. Pretty neat right. Notice that I'm using the `*` operator directly which can also be passed as a function
 
 One thing that really tripped me up initially was when using `map` to change an original array. `map` creates a brand-new array with the transformed data it does not change the array in place this is a very important feature of functional programming. If you want to change the original array in place you have to use other methods like broadcasting but that's for another conversation we can have another time about in-place transformations. `map!` is another function that you could use for this though.
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "convertto-securestring-key-not-valid-use-problem"
 ---
 
-Okay so you’re wrestling with `ConvertTo-SecureString` puking about an invalid key huh Been there done that got the t-shirt probably several actually It's a classic PowerShell gotcha a real head scratcher when you first encounter it
+Okay so you’re wrestling with `ConvertTo-SecureString` puking about an invalid key right Been there done that got the t-shirt probably several actually It's a classic PowerShell gotcha a real head scratcher when you first encounter it
 
 Let me break it down from my perspective and maybe it will help you. I remember vividly back in the day probably circa PowerShell v3 maybe v4 we were deploying these little automation scripts for our dev environments. One thing we needed to do was store database connection strings you know passwords the sensitive stuff.
 

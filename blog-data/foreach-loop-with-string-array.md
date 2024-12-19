@@ -25,7 +25,7 @@ foreach (string str in myStrings)
 }
 ```
 
-That's it that's the core of it pretty simple huh The `foreach` loop takes each element in the `myStrings` array and puts it into the `str` variable for each cycle of the loop then we just print that string to the console in this example
+That's it that's the core of it pretty simple right The `foreach` loop takes each element in the `myStrings` array and puts it into the `str` variable for each cycle of the loop then we just print that string to the console in this example
 
 This will of course output:
 

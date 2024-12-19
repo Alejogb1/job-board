@@ -4,7 +4,7 @@ date: "2024-12-03"
 id: "how-can-data-be-read-from-google-drive-files-in-a-nodejs-app-without-using-api-keys"
 ---
 
-Hey so you wanna read data from Google Drive files in your Node app without messing with API keys huh  That's a cool challenge  Let's break it down because directly accessing files without some kind of auth is generally a no-go  Security is super important remember  But we can explore some clever workarounds
+Hey so you wanna read data from Google Drive files in your Node app without messing with API keys right  That's a cool challenge  Let's break it down because directly accessing files without some kind of auth is generally a no-go  Security is super important remember  But we can explore some clever workarounds
 
 First off forget about directly accessing files like you'd do with a local file system  Google Drive is a cloud service  It's all about controlled access  Think of it like a heavily guarded vault you can't just waltz in  You need credentials or a proper key to get anything
 

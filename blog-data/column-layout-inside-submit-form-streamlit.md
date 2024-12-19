@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "column-layout-inside-submit-form-streamlit"
 ---
 
-Okay so you're wrestling with column layouts inside a Streamlit submit form huh Been there done that got the t-shirt And the stress rash let me tell you its a fun one Not really
+Okay so you're wrestling with column layouts inside a Streamlit submit form right Been there done that got the t-shirt And the stress rash let me tell you its a fun one Not really
 
 Alright so you've got a Streamlit app probably something like this you've got your form you want some inputs and you want those inputs to be nicely arranged in columns not just stacked on top of each other classic user interface requirement But you're running into that classic Streamlit form behavior where things get all wonky and layouting starts acting like its a toddler throwing a tantrum Specifically the `st.columns` function I bet is not doing what you hoped when inside the `st.form` context right Well yeah thats a common pitfall many beginners face it can feel frustrating but its all fixable dont panic
 

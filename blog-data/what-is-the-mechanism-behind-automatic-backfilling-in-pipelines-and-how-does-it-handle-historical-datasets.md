@@ -6,7 +6,7 @@ id: "what-is-the-mechanism-behind-automatic-backfilling-in-pipelines-and-how-doe
 
 Okay so you wanna know about automatic backfilling in pipelines right  Its a pretty cool thing actually  Imagine you have this awesome data pipeline  It's chugging along processing new data every day  But then you realize  hey wait a minute  I need this pipeline to process data from like last year too  That's where backfilling comes in
 
-Basically its about retroactively running your pipeline on historical data  So if your pipeline's processing daily sales figures and you just built it this month  backfilling lets you go back and process all the sales data from January  It's like giving your pipeline a time machine  Pretty neat huh
+Basically its about retroactively running your pipeline on historical data  So if your pipeline's processing daily sales figures and you just built it this month  backfilling lets you go back and process all the sales data from January  It's like giving your pipeline a time machine  Pretty neat right
 
 The mechanism depends heavily on how your pipeline is built  If you're using something like Airflow or Prefect  they have built in features to manage this  Airflow for instance lets you define DAGs Directed Acyclic Graphs  that specify the order of tasks in your pipeline  You can design your DAG to include a backfill task  that specifically targets historical data  Think of it like this  your DAG is the blueprint  and the backfill task is the instruction to apply that blueprint to past data
 

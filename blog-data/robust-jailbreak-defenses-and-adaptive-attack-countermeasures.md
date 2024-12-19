@@ -4,7 +4,7 @@ date: '2024-11-15'
 id: 'robust-jailbreak-defenses-and-adaptive-attack-countermeasures'
 ---
 
-Hey, so you're interested in jailbreak defenses, huh? It's a whole other level of security, like trying to lock down Fort Knox with lasers and motion sensors.  
+Hey, so you're interested in jailbreak defenses, right? It's a whole other level of security, like trying to lock down Fort Knox with lasers and motion sensors.  
 
 First off, you need to understand the basics. Jailbreaking is like finding a secret door in your phone's software that lets you access its inner workings.  Imagine you can change the system files, add new features, or even bypass security measures.  It's powerful, but it can also be risky.
 

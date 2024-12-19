@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-do-calling-an-async-function-in-react-without-clicking-a-button"
 ---
 
-so, you're asking how to trigger an async function in react without a button click, huh? been there, done that, got the t-shirt. it’s a common hurdle when you’re past the basics and start dealing with data fetching or other asynchronous operations. let me walk you through it, based on my scars, i mean, *experience*.
+so, you're asking how to trigger an async function in react without a button click, right? been there, done that, got the t-shirt. it’s a common hurdle when you’re past the basics and start dealing with data fetching or other asynchronous operations. let me walk you through it, based on my scars, i mean, *experience*.
 
 the core issue here is react’s rendering lifecycle. components mount, render, update, and sometimes unmount. if you want to fire off an async task *automatically*, you need to hook into these phases. a naive approach would be to simply call the function directly in the component's body – like this:
 

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-reward-for-two-parameters-in-reinforcement-learning"
 ---
 
-so, you're asking how to handle reward when you have two different things you're trying to optimize in reinforcement learning, huh? i've been there, trust me. it’s not as straightforward as just having one goal you're trying to max out. i recall spending a good couple of weeks in late 2017 on this exact issue. back then i was working on this project to train a simulated drone to both navigate a course *and* conserve battery, which meant we had a dual-objective reward scheme. i initially thought "oh it’s just reward, what's the worst that can happen?" i was wrong. completely wrong. 
+so, you're asking how to handle reward when you have two different things you're trying to optimize in reinforcement learning, right? i've been there, trust me. it’s not as straightforward as just having one goal you're trying to max out. i recall spending a good couple of weeks in late 2017 on this exact issue. back then i was working on this project to train a simulated drone to both navigate a course *and* conserve battery, which meant we had a dual-objective reward scheme. i initially thought "oh it’s just reward, what's the worst that can happen?" i was wrong. completely wrong. 
 
 the core problem is that your agent needs some kind of signal to tell it how well it's doing. with a single objective, it's easy: if the agent performs well according to the single metric, it gets a positive reward; otherwise, it gets a negative reward or a small one. simple. but with two, it's not clear how to balance them. it's like trying to push two buttons at the same time, except sometimes one button gets stuck.
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "groovy-sql-query-execution-example"
 ---
 
-Okay so you're asking about groovy and sql execution huh? I've been there man believe me. I've wrestled with JDBC drivers and weird SQL dialects more times than I care to remember. It's a classic case of "it works on my machine" until it totally doesn't.
+Okay so you're asking about groovy and sql execution right? I've been there man believe me. I've wrestled with JDBC drivers and weird SQL dialects more times than I care to remember. It's a classic case of "it works on my machine" until it totally doesn't.
 
 Alright lets dive into it I've got some scars from past battles I can show you.
 

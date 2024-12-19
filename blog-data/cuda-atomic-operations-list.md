@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "cuda-atomic-operations-list"
 ---
 
-Alright so you wanna know about CUDA atomic operations huh Been there done that got the t-shirt and probably a few scars from debugging those little beasts Let's break it down because honestly they're crucial for anything serious with CUDA and they are not just a simple `++` operation on shared memory
+Alright so you wanna know about CUDA atomic operations right Been there done that got the t-shirt and probably a few scars from debugging those little beasts Let's break it down because honestly they're crucial for anything serious with CUDA and they are not just a simple `++` operation on shared memory
 
 I remember way back when I was first messing with CUDA I tried to do some kind of histogram calculation naively with shared memory It was a complete mess race conditions everywhere values all over the place I thought I was going crazy The debugger was useless because the problems were non-deterministic and well what can you say about non-deterministic problems They're hard I quickly learned that if you want to avoid data corruption in parallel operations you have to use atomics plain and simple
 

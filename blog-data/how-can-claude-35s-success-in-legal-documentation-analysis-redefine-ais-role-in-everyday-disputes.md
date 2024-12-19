@@ -10,7 +10,7 @@ The success of Claude 3.5 in legal doc analysis is huge because it completely ch
 
 Claude could totally change that  imagine having a personal AI assistant that can help you understand a rental agreement or a loan contract  it could highlight key clauses flag potential problems  even suggest edits  That's  game changing  It levels the playing field  giving regular folks access to something previously only available to the wealthy
 
-It's not just about understanding documents either  Claude can help with dispute resolution  imagine a simple disagreement between neighbors about a fence  instead of hiring lawyers  they could use Claude to analyze relevant laws and precedents  to help them find a common ground  Its like having a neutral super smart mediator available 24/7  that's pretty neat huh
+It's not just about understanding documents either  Claude can help with dispute resolution  imagine a simple disagreement between neighbors about a fence  instead of hiring lawyers  they could use Claude to analyze relevant laws and precedents  to help them find a common ground  Its like having a neutral super smart mediator available 24/7  that's pretty neat right
 
 Now obviously its not a perfect replacement for human lawyers  not yet anyway  but it's a massive step towards making legal services more accessible  more affordable  and frankly less stressful  It's also going to impact how lawyers work  they'll probably use tools like Claude to do a lot of the initial grunt work freeing them up to focus on the more complex strategic stuff  which is cool  
 

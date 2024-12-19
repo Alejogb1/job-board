@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "tools-or-a-website-to-help-with-database-normalization"
 ---
 
-Okay so you're looking for tools or websites to help with database normalization huh Been there done that man Let me tell you it's a pain in the neck if you don't get it right from the get-go I've spent countless nights debugging data inconsistencies because some junior dev thought denormalization was cool
+Okay so you're looking for tools or websites to help with database normalization right Been there done that man Let me tell you it's a pain in the neck if you don't get it right from the get-go I've spent countless nights debugging data inconsistencies because some junior dev thought denormalization was cool
 
 So here's the deal First off no magic bullet exists no single website or tool will just magically normalize your database for you It's a process a thinking process that you have to understand and apply tools just assist you So don't think you can just throw your schema at a tool and be done with it
 

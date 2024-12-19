@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "im-getting-this-error-for-my-verilog-code-illegal-operation-for-constant-expr"
 ---
 
-Okay so "illegal operation for constant expr" in Verilog huh Been there man countless times Let me tell you its like a rite of passage for anyone serious about hardware description languages It's usually something stupid you overlooked and you are going to hate yourself for it after figuring it out
+Okay so "illegal operation for constant expr" in Verilog right Been there man countless times Let me tell you its like a rite of passage for anyone serious about hardware description languages It's usually something stupid you overlooked and you are going to hate yourself for it after figuring it out
 
 Okay so the "constant expression" bit its referring to something that should be resolvable at compile time The Verilog compiler wants to figure out this calculation during the compile phase not during the simulation or hardware execution phase This is because constant expressions are used in a lot of places like parameter definitions or array dimensions or even case statements and well if the value is not known at compile time then the compiler throws a tantrum And rightfully so
 

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-does-caret-traincontrol-methodnull-give-an-accuracy-numeric0-when-other-methods-work-perfectly"
 ---
 
-alright, so you've hit that classic caret `traincontrol` gotcha with `method="null"`, huh? i've been there, stared at that `accuracy: numeric(0)` output more times than i care to count. it's less about some hidden bug and more about understanding what `method="null"` actually does, or rather, *doesn't* do.
+alright, so you've hit that classic caret `traincontrol` gotcha with `method="null"`, right? i've been there, stared at that `accuracy: numeric(0)` output more times than i care to count. it's less about some hidden bug and more about understanding what `method="null"` actually does, or rather, *doesn't* do.
 
 let's break it down from my past experiences. back in the early 2010s, i was building this text classification system for sentiment analysis. i had a decent workflow, everything humming along nicely, resampling with `cv`, `boot`, the usual suspects. then, i wanted to tweak something really specific with how the model was trained, something custom, like, super niche. i read the caret documentation, found the `method="null"`, thought, "sweet! that's my ticket for controlling everything by myself."
 

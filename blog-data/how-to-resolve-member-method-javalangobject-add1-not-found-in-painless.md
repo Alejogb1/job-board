@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-resolve-member-method-javalangobject-add1-not-found-in-painless"
 ---
 
-alright, so, you're hitting the `member method [java.lang.Object, add/1] not found` error in painless, huh? i've been there, trust me. this particular error pops up when you're trying to use the `add()` method on a java object that doesn't actually have it. sounds straightforward, but it can get tricky when you're deep into painless scripts inside elasticsearch. let me break down what's probably happening and how to get around it.
+alright, so, you're hitting the `member method [java.lang.Object, add/1] not found` error in painless, right? i've been there, trust me. this particular error pops up when you're trying to use the `add()` method on a java object that doesn't actually have it. sounds straightforward, but it can get tricky when you're deep into painless scripts inside elasticsearch. let me break down what's probably happening and how to get around it.
 
 first off, painless is designed to be a safe, sandboxed scripting language. it doesn't give you the full, unrestricted access to all java classes that java itself does. it’s got its guardrails. that said, this error generally surfaces when we're attempting to invoke `add()` on something that's not a list or a set (like, maybe, a plain old `java.lang.object`). in other words, the error message is quite literal. it's telling you exactly what it can’t find: a method named `add` that takes one argument on an object that is a plain old java object instance.
 

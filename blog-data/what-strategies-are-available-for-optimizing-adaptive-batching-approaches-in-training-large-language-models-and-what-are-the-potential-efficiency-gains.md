@@ -4,7 +4,7 @@ date: "2024-12-12"
 id: "what-strategies-are-available-for-optimizing-adaptive-batching-approaches-in-training-large-language-models-and-what-are-the-potential-efficiency-gains"
 ---
 
-Hey there!  So you're diving into the fascinating world of training `large language models` (LLMs), huh?  That's awesome! It's a seriously complex field, but also incredibly rewarding.  You're asking about optimizing `adaptive batching` – a smart way to make training more efficient. Let's unpack this together.
+Hey there!  So you're diving into the fascinating world of training `large language models` (LLMs), right?  That's awesome! It's a seriously complex field, but also incredibly rewarding.  You're asking about optimizing `adaptive batching` – a smart way to make training more efficient. Let's unpack this together.
 
 Think of training an LLM like teaching a really, really smart parrot to talk.  You don't just shout the same phrase repeatedly; you adjust your teaching style based on how well the parrot understands.  Adaptive batching is similar.  Instead of using the same `batch size` (number of examples shown at once) throughout training, it cleverly adjusts this size based on the model's performance.  This avoids wasting computation on examples the model already "gets."
 

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-measure-flexibility-using-entropy-or-other-methods"
 ---
 
-so, you're looking into measuring flexibility, huh? interesting. i've been down this road before, not just in some abstract theoretical sense, but also when i was dealing with some gnarly issues in a large scale distributed system a few years back. it's less about physical flexibility and more about how easily things can adapt and change. it’s a cool area to explore.
+so, you're looking into measuring flexibility, right? interesting. i've been down this road before, not just in some abstract theoretical sense, but also when i was dealing with some gnarly issues in a large scale distributed system a few years back. it's less about physical flexibility and more about how easily things can adapt and change. it’s a cool area to explore.
 
 when you talk about flexibility, what we're really getting at is the capacity of a system, or a process, or even a dataset to handle new situations without falling apart or needing a major overhaul. entropy comes into play here because it gives us a way to quantify disorder, randomness, or, in this case, how much 'wiggle room' a system has. higher entropy in a context can indicate more flexibility or potential for change because it suggests many possible states.
 

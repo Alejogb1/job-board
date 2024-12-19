@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "with-ruby-on-rails-how-to-pass-params-through-a-custom-beforevalidation-function"
 ---
 
-alright, so you're hitting that classic rails params puzzle with `before_validation`, huh? i've been there, staring at the screen, wondering why my data isn't flowing the way i expected. seems like a simple enough thing, but it can get tangled up pretty quickly.
+alright, so you're hitting that classic rails params puzzle with `before_validation`, right? i've been there, staring at the screen, wondering why my data isn't flowing the way i expected. seems like a simple enough thing, but it can get tangled up pretty quickly.
 
 let me break it down based on how i've tackled this in the past. first off, the `before_validation` callback in rails runs *before* the model tries to validate its attributes. that's key. at this stage, you're working with the attribute data already set on the model instance, not the raw params hash from the request. the request's params get used to populate the model's attributes *before* `before_validation` is triggered. so, directly manipulating the params hash inside a `before_validation` isn't really how it's designed to work.
 

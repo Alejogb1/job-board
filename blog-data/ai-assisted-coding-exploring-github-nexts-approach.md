@@ -6,7 +6,7 @@ id: "ai-assisted-coding-exploring-github-nexts-approach"
 
 yo dude so i just watched this totally rad vid about github next and ai code generation  it's like a whole spiel about how ai is gonna totally revamp coding  think electricity but for software  they're basically saying ai is the new electricity and it's going to change everything
 
-the setup was this whole conference thing ai engineer world's fair  fancy huh  some vc lady britney walker is hosting  she's all about ai infrastructure investments so naturally she's stoked about this github next thing  they got a bunch of speakers lined up to talk about code generation  it's like a hype train for ai coding
+the setup was this whole conference thing ai engineer world's fair  fancy right  some vc lady britney walker is hosting  she's all about ai infrastructure investments so naturally she's stoked about this github next thing  they got a bunch of speakers lined up to talk about code generation  it's like a hype train for ai coding
 
 one thing that jumped out was this visual  they showed a pic of an old factory with all these belts and pulleys connected to a massive steam engine  it was all super clunky and inefficient the workers were totally at the mercy of this giant machine it really highlighted how inefficient things were before electricity  then they showed a modern factory with smaller electric motors everywhere way more flexible and efficient  that's the analogy they were using for ai in coding  ai is going to make coding way more efficient and flexible just like electricity did for manufacturing
 

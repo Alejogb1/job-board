@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "no-transport-jquery-ajax-issue"
 ---
 
-Alright so you're seeing a "no transport" issue with jQuery AJAX huh Been there done that got the t-shirt feels like a rite of passage for any web dev really Especially if you've been around the block like I have
+Alright so you're seeing a "no transport" issue with jQuery AJAX right Been there done that got the t-shirt feels like a rite of passage for any web dev really Especially if you've been around the block like I have
 
 Okay first off let's get the basic assumptions out of the way you're trying to make an AJAX request using jQuery specifically the `$.ajax` `$.get` `$.post` methods or some variant of them and your browser console is throwing a "no transport" error It's not exactly a pretty sight I know believe me
 

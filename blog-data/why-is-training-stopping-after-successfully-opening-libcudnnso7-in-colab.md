@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-is-training-stopping-after-successfully-opening-libcudnnso7-in-colab"
 ---
 
-alright, so you're hitting a wall with your colab training, huh? specifically, it seems like the process stalls right after libcudnn.so.7 loads successfully. i've been there, trust me. seeing that "libcudnn.so.7" confirmation message feels like a small victory, only to be followed by... nothing. it's infuriating, i get it. let's break this down because there is no single 'it's always this' answer, but more of a process of elimination.
+alright, so you're hitting a wall with your colab training, right? specifically, it seems like the process stalls right after libcudnn.so.7 loads successfully. i've been there, trust me. seeing that "libcudnn.so.7" confirmation message feels like a small victory, only to be followed by... nothing. it's infuriating, i get it. let's break this down because there is no single 'it's always this' answer, but more of a process of elimination.
 
 first off, the fact that libcudnn is loading points us away from a basic setup issue with cuda or driver incompatibilities. if that was the case, you'd probably see errors before that point. think of it like this: the libraries are the foundation, and we've laid a solid foundation now. we're not arguing about the cement mix anymore. the problem likely lies in what we’re trying to build on that foundation.
 

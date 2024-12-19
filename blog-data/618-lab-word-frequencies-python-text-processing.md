@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "618-lab-word-frequencies-python-text-processing"
 ---
 
-Okay so word frequencies in Python huh classic I've banged my head against this wall more times than I care to admit Seriously this is like a rite of passage for anyone getting into text processing and data analysis in Python I remember my early days probably around python 2.7 days or so back when you had to worry about unicode like it was a bomb waiting to go off I was working on a project involving parsing tons of legal documents think court transcripts and laws and the like My boss at the time a real stickler for clean data was breathing down my neck about getting accurate term frequencies He had some weird obsession with being able to spot certain phrases and keywords like "reasonable doubt" and I had to deliver like yesterday I made all the rookie mistakes you can imagine trying to brute force it with simple loops and regexes it was a total mess Performance was trash and I swear I had some race conditions hiding in there somewhere It made me want to quit and take up knitting seriously
+Okay so word frequencies in Python right classic I've banged my head against this wall more times than I care to admit Seriously this is like a rite of passage for anyone getting into text processing and data analysis in Python I remember my early days probably around python 2.7 days or so back when you had to worry about unicode like it was a bomb waiting to go off I was working on a project involving parsing tons of legal documents think court transcripts and laws and the like My boss at the time a real stickler for clean data was breathing down my neck about getting accurate term frequencies He had some weird obsession with being able to spot certain phrases and keywords like "reasonable doubt" and I had to deliver like yesterday I made all the rookie mistakes you can imagine trying to brute force it with simple loops and regexes it was a total mess Performance was trash and I swear I had some race conditions hiding in there somewhere It made me want to quit and take up knitting seriously
 
 The key is you need to think more like a machine than you do a human that's the secret for text processing you want to use libraries that are designed for this stuff Instead of reinventing the wheel let's get to the code.
 
@@ -79,7 +79,7 @@ frequencies = get_word_frequencies_regex(example_text)
 print(frequencies)
 ```
 
-Alright this one looks different huh I replaced the `string.punctuation` part with a regex. The line `re.sub(r'[^a-z\s]', '', text)` uses a regular expression to keep only lowercase letters and spaces in the text. everything else is removed this gives you a more robust way to handle all kinds of input including weird emojis unicode symbols and whatnot which you may encounter on text from the wild.
+Alright this one looks different right I replaced the `string.punctuation` part with a regex. The line `re.sub(r'[^a-z\s]', '', text)` uses a regular expression to keep only lowercase letters and spaces in the text. everything else is removed this gives you a more robust way to handle all kinds of input including weird emojis unicode symbols and whatnot which you may encounter on text from the wild.
 
 Now what about more complex scenarios? you will want to be familiar with nltk specifically its tokenizers if you want to do advanced processing you can use it to deal with things like stemming lemmatization and stop words but that is beyond this question for the purpose of this I am just covering the basics
 

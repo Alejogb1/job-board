@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-am-i-getting-a-kaminari-pagination-typeerror"
 ---
 
-alright, so you're hitting a `typeerror` with kaminari pagination, huh? been there, done that, got the t-shirt, probably spilled coffee on it too. it's one of those things that can pop up and make you feel like you've suddenly forgotten everything about rails. let's break this down.
+alright, so you're hitting a `typeerror` with kaminari pagination, right? been there, done that, got the t-shirt, probably spilled coffee on it too. it's one of those things that can pop up and make you feel like you've suddenly forgotten everything about rails. let's break this down.
 
 first off, a `typeerror` generally means you're trying to do something with a variable that it's not designed for. in the context of kaminari, which is a gem specifically designed for handling pagination of activerecord collections or arrays, it usually boils down to kaminari not receiving the data it expects. i've debugged similar problems for weeks back in my early days, just banging my head against the wall before realizing i was feeding kaminari a potato instead of a proper collection.
 

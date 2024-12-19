@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "selection-count-vba-excel-code"
 ---
 
-Okay so you're asking about selection counts in VBA Excel huh been there done that a few times trust me it sounds simple on paper "just count selected cells right" but it can get weird fast Let me tell you about my past adventures with this kind of thing I once worked on a project that involved a heavily user interacted spreadsheet think stock trading platform with tons of custom macros and VBA code The users were constantly making selections all over the place copying pasting deleting and we needed to track precisely how many cells they were working with and which ones They were complaining about some calculations being wrong and my team and I suspected selection-related bugs were in play So i had to dive deep into the VBA side of things and get this working reliably Lets get to it
+Okay so you're asking about selection counts in VBA Excel right been there done that a few times trust me it sounds simple on paper "just count selected cells right" but it can get weird fast Let me tell you about my past adventures with this kind of thing I once worked on a project that involved a heavily user interacted spreadsheet think stock trading platform with tons of custom macros and VBA code The users were constantly making selections all over the place copying pasting deleting and we needed to track precisely how many cells they were working with and which ones They were complaining about some calculations being wrong and my team and I suspected selection-related bugs were in play So i had to dive deep into the VBA side of things and get this working reliably Lets get to it
 
 First off the most basic thing is to get the count of cells in the current selection its a one-liner really
 

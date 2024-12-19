@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "what-are-the-advantages-and-the-motivation-of-modports-in-a-systemverilog-interf"
 ---
 
-Alright so you're asking about modports in SystemVerilog interfaces huh Been there done that I've spent more nights than I care to remember debugging designs without proper modport usage trust me it's a pain point
+Alright so you're asking about modports in SystemVerilog interfaces right Been there done that I've spent more nights than I care to remember debugging designs without proper modport usage trust me it's a pain point
 
 Let's dive right in forget the fluff I’ll give you the real deal from someone who’s actually wrestled with this stuff not just read about it in a textbook I’ve been doing this for like 15 years now so I’ve seen my fair share of messy Verilog and the salvation that is SystemVerilog
 

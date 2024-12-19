@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "how-to-write-a-test-bench-verilog-tutorial"
 ---
 
-Okay so you wanna dive into test benches in Verilog huh I get it Been there done that a million times Feels like yesterday I was pulling my hair out with the same problem Back in my uni days we had this as a required course ughh
+Okay so you wanna dive into test benches in Verilog right I get it Been there done that a million times Feels like yesterday I was pulling my hair out with the same problem Back in my uni days we had this as a required course ughh
 
 So lets cut the fluff Test benches are not rocket science theyre really just Verilog modules designed to *test* your other Verilog modules Your design usually the thing you actually care about is the Device Under Test or DUT for short The test bench is the environment you create to see if your DUT behaves as intended Think of it like a science experiment where your DUT is the subject and your test bench is the lab equipment
 

@@ -4,7 +4,7 @@ date: '2024-11-15'
 id: 'condensed-actionable-insights-for-ai-engineers'
 ---
 
-Hey, so you're looking for actionable insights for AI engineers huh  Cool  I get it  Building and deploying AI models can be a real head-scratcher  But don't worry  I've got your back
+Hey, so you're looking for actionable insights for AI engineers right  Cool  I get it  Building and deploying AI models can be a real head-scratcher  But don't worry  I've got your back
 
 First things first  You gotta make sure your data is clean  Noisy data will throw off your models  Think of it like this  If you're trying to train a model to recognize cats  You don't want to feed it pictures of dogs  Right  So spend some time cleaning and prepping your data  It'll pay off in the long run
 

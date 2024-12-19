@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "manifest-typing-meaning-explanation-coding"
 ---
 
-Alright so manifest typing huh I get you I've been there man fighting type systems is like a rite of passage in this coding game Let me break down what I know from my experience dealing with manifest typing the headaches and the wins trust me I’ve seen my fair share of compiler errors because of this topic.
+Alright so manifest typing right I get you I've been there man fighting type systems is like a rite of passage in this coding game Let me break down what I know from my experience dealing with manifest typing the headaches and the wins trust me I’ve seen my fair share of compiler errors because of this topic.
 
 First off manifest typing also known as explicit typing is basically where you the programmer have to tell the compiler or interpreter the specific data type of a variable when you declare it Its like going to the DMV and having to fill out every single form field no assumptions just plain specification you declare a variable and boom you also declare its type a string an integer a float a custom class doesn’t matter you gotta say it out loud or rather write it out in your code.
 

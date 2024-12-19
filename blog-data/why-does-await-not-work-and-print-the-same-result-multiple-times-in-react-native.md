@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-does-await-not-work-and-print-the-same-result-multiple-times-in-react-native"
 ---
 
-so, you're seeing the same result printed multiple times when using `await` in react-native, huh? yeah, i've been there. it's a classic head-scratcher, and it usually boils down to a few common culprits. it's not that `await` is broken, it's more about how react-native, asynchronous operations, and react's rendering cycle play together.
+so, you're seeing the same result printed multiple times when using `await` in react-native, right? yeah, i've been there. it's a classic head-scratcher, and it usually boils down to a few common culprits. it's not that `await` is broken, it's more about how react-native, asynchronous operations, and react's rendering cycle play together.
 
 let's break it down, think of this as a debugging session, where i am talking to my past self. because i had this same issue.
 

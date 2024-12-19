@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "is-there-a-way-to-show-images-in-a-wagtail-model-admin-record-listing-page"
 ---
 
-alright, so, you're looking to get images showing up in the wagtail model admin record listings, huh? yeah, i've been down that rabbit hole before. it's not as straightforward as it probably should be, but totally doable. let me share some stuff i've picked up over the years.
+alright, so, you're looking to get images showing up in the wagtail model admin record listings, right? yeah, i've been down that rabbit hole before. it's not as straightforward as it probably should be, but totally doable. let me share some stuff i've picked up over the years.
 
 first thing, wagtail's admin is built on django's admin, so a lot of the concepts are pretty similar, but with a wagtail-specific twist. the basic list view you see, that's just rendering stuff based on the model's fields. directly dropping images in there...not gonna work. django admin, and by extension wagtail admin, isn't designed to render full html snippets by default within the list display columns. it expects simple text or a reference to a display function. it's all about the database.
 

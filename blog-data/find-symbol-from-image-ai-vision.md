@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "find-symbol-from-image-ai-vision"
 ---
 
-Okay so you're looking to pluck symbols out of images using AI vision huh I get it Been there done that Seriously I've spent way too many nights wrestling with this exact problem back in my early days when I was trying to build a text recognition system for old scanned documents think ancient Sumerian cuneiform but in image form yeah it was a nightmare
+Okay so you're looking to pluck symbols out of images using AI vision right I get it Been there done that Seriously I've spent way too many nights wrestling with this exact problem back in my early days when I was trying to build a text recognition system for old scanned documents think ancient Sumerian cuneiform but in image form yeah it was a nightmare
 
 Basically you're venturing into the realm of object detection and character recognition sometimes called Optical Character Recognition or OCR but in your case it's generalized to symbols not necessarily characters which is a bit more complex Let's break this down in a way that even someone relatively new to this can grasp I'll throw in some code examples in Python since that's what most folks use these days
 

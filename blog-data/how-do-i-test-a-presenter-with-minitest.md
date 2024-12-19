@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-do-i-test-a-presenter-with-minitest"
 ---
 
-alright, so you're looking to test your presenters with minitest, huh? i've been down that rabbit hole more times than i care to remember. let me share some war stories and how i usually approach this.
+alright, so you're looking to test your presenters with minitest, right? i've been down that rabbit hole more times than i care to remember. let me share some war stories and how i usually approach this.
 
 first off, remember that presenters are basically view logic helpers. they’re taking data from your models, massaging it, and making it ready for your views. the goal with testing them isn't to replicate the view rendering process – that's the job of integration tests or view-specific tests. instead, we want to focus on whether the presenter is doing its data transformation and formatting correctly.
 

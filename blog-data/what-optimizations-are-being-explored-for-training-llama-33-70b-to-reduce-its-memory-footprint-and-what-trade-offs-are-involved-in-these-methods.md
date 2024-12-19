@@ -4,7 +4,7 @@ date: "2024-12-10"
 id: "what-optimizations-are-being-explored-for-training-llama-33-70b-to-reduce-its-memory-footprint-and-what-trade-offs-are-involved-in-these-methods"
 ---
 
-Hey there!  So you're curious about squeezing more out of Llama 3.3 70B, huh?  Training those massive language models is like trying to fit a whole library into a tiny backpack – it's a challenge!  But folks are getting clever, coming up with some neat ways to reduce the memory footprint without sacrificing *too* much performance. Let's dive in and explore some of these optimization strategies and the inevitable compromises.
+Hey there!  So you're curious about squeezing more out of Llama 3.3 70B, right?  Training those massive language models is like trying to fit a whole library into a tiny backpack – it's a challenge!  But folks are getting clever, coming up with some neat ways to reduce the memory footprint without sacrificing *too* much performance. Let's dive in and explore some of these optimization strategies and the inevitable compromises.
 
 It's a bit like baking a cake, really. You want the biggest, fluffiest cake possible, but you're limited by oven space (memory). So, you start thinking creatively – smaller pans, different ingredients, maybe even a multi-stage baking process.  That's essentially what's happening with Llama 3.3 70B optimization.
 

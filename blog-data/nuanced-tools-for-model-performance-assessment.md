@@ -4,7 +4,7 @@ date: '2024-11-15'
 id: 'nuanced-tools-for-model-performance-assessment'
 ---
 
-Hey, so you're looking to level up your model performance assessment game huh cool.  There's a lot to unpack here, but the key is to get beyond simple accuracy scores  Think about it, just because your model is accurate doesn't mean it's actually useful in the real world. You need to look at the whole picture, understand the nuances.  
+Hey, so you're looking to level up your model performance assessment game right cool.  There's a lot to unpack here, but the key is to get beyond simple accuracy scores  Think about it, just because your model is accurate doesn't mean it's actually useful in the real world. You need to look at the whole picture, understand the nuances.  
 
 Let's dive into some of the cool stuff you can do.  First, you can start with **confusion matrices** These are like a heat map for your predictions, showing you how often your model correctly classified things and where it went wrong.   You can even use **precision and recall** to look at the specific strengths and weaknesses of your model.
 

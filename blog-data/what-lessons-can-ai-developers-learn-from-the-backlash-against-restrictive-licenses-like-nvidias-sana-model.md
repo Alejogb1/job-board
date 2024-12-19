@@ -4,7 +4,7 @@ date: "2024-12-05"
 id: "what-lessons-can-ai-developers-learn-from-the-backlash-against-restrictive-licenses-like-nvidias-sana-model"
 ---
 
-Okay so you're asking about the NVIDIA SANA thing and what it means for us AI devs right  big deal huh  It's all about licenses and how people react when they feel like they're getting screwed over  basically  think of it like this you build something awesome a super cool AI model  and you want people to use it  but you also want to protect your work right  so you slap a license on it  but if that license is too restrictive  too controlling  people are gonna get mad  and rightfully so
+Okay so you're asking about the NVIDIA SANA thing and what it means for us AI devs right  big deal right  It's all about licenses and how people react when they feel like they're getting screwed over  basically  think of it like this you build something awesome a super cool AI model  and you want people to use it  but you also want to protect your work right  so you slap a license on it  but if that license is too restrictive  too controlling  people are gonna get mad  and rightfully so
 
 NVIDIA's SANA deal was a perfect storm of this kinda stuff  too many restrictions people felt  like they couldn't really use the model for anything interesting without jumping through hoops  and the community was NOT happy  It sparked a huge debate about open source versus closed source  about fair use about the whole ethics of AI development  it was messy  a total train wreck in the best and worst ways
 

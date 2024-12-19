@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-do-i-interpret-ssim-index-results"
 ---
 
-alright, so you’re looking at ssim scores, huh? i've been there, staring at those numbers wondering what they actually mean. it's not always as straightforward as it seems, so let’s break it down from someone who's spent way too much time comparing images.
+alright, so you’re looking at ssim scores, right? i've been there, staring at those numbers wondering what they actually mean. it's not always as straightforward as it seems, so let’s break it down from someone who's spent way too much time comparing images.
 
 first off, ssim, or structural similarity index, is a metric that tries to quantify how similar two images are, from a *human perception* point of view. it doesn’t just look at pixel-by-pixel differences, like a simple mean squared error (mse) would. instead, it looks at local patterns of brightness, contrast, and structure. this makes it a much better measure of perceived image quality than mse, especially when comparing compressed or processed images to their original versions.
 

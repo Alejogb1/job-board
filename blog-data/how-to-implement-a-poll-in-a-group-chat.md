@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-implement-a-poll-in-a-group-chat"
 ---
 
-alright, so you're looking at building a poll feature within a group chat, huh? i've been there, done that, got the t-shirt, and probably a few scars to show for it. i remember back in '08, i was working on a little side project—a sort of proto-discord for a gaming community i was part of. we really needed a way to decide on raid times, and well, that's when i learned about the joys and pains of real-time poll implementations. it sounds straightforward, but trust me, the devil is in the details.
+alright, so you're looking at building a poll feature within a group chat, right? i've been there, done that, got the t-shirt, and probably a few scars to show for it. i remember back in '08, i was working on a little side project—a sort of proto-discord for a gaming community i was part of. we really needed a way to decide on raid times, and well, that's when i learned about the joys and pains of real-time poll implementations. it sounds straightforward, but trust me, the devil is in the details.
 
 the basic idea isn't that complex, you're talking about capturing user input (their votes) and displaying the results in a way that's both informative and updates live, preferably. we’re not building a general purpose survey engine here, just something simple for a chat group, so it should be streamlined for that specific use case, focusing on simplicity of interaction.
 

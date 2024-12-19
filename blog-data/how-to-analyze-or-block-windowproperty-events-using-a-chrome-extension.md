@@ -6,7 +6,7 @@ id: "how-to-analyze-or-block-windowproperty-events-using-a-chrome-extension"
 
 hey there,
 
-so, you're looking into intercepting `window.property` events with a chrome extension, huh? i've been down that rabbit hole myself, and it's a bit more nuanced than it initially seems. it's not as straightforward as hooking into dom events. let me walk you through what i've learned.
+so, you're looking into intercepting `window.property` events with a chrome extension, right? i've been down that rabbit hole myself, and it's a bit more nuanced than it initially seems. it's not as straightforward as hooking into dom events. let me walk you through what i've learned.
 
 basically, direct event listeners on `window` properties aren't a thing. you can't just do `window.someProperty.addEventListener('change', ...)` and expect it to work. those aren't event emitters. instead, you need to get creative with javascript's object model and proxies, and that's where things become interesting.
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "how-can-i-get-nth-element-from-a-list"
 ---
 
-Okay so you want to get the nth element from a list huh Simple enough but also a classic problem thats popped up in pretty much every language Ive touched over the years and Ive touched a few believe me. Lets dive in.
+Okay so you want to get the nth element from a list right Simple enough but also a classic problem thats popped up in pretty much every language Ive touched over the years and Ive touched a few believe me. Lets dive in.
 
 First off if youre thinking about this youre likely working with some kind of data structure that can hold a sequence of elements. Could be a Python list a Java ArrayList something similar. Key thing is that these elements are ordered and you access them by position index.
 

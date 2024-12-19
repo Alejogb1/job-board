@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "complete-the-following-table-with-your-observations-r-code"
 ---
 
-Okay so you’ve got a table thing going on huh with observations and R code I get it Been there done that more times than I care to remember Lets dive in
+Okay so you’ve got a table thing going on right with observations and R code I get it Been there done that more times than I care to remember Lets dive in
 
 First off lets establish something R’s ecosystem is vast and wild its a beautiful jungle where data goes to party but sometimes you need a machete to get through the thick of it I’ve personally spent countless nights debugging stuff that seemed like it should just work I once spent three days tracking a bug that came down to a single rogue space in a data frame column name trust me we've all been there lets not linger on the past ok lets move to the answer
 

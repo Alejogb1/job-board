@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "cant-specify-class-path-in-java"
 ---
 
-Okay so you're banging your head against the wall with classpaths in Java huh Been there done that got the t-shirt and probably a few permanent indentations on my desk from frustration Okay let's break this down I've wrestled with this beast more times than I care to remember so hopefully this helps
+Okay so you're banging your head against the wall with classpaths in Java right Been there done that got the t-shirt and probably a few permanent indentations on my desk from frustration Okay let's break this down I've wrestled with this beast more times than I care to remember so hopefully this helps
 
 First off when you say can't specify classpath you gotta be a bit more specific because that's kinda like saying "my car doesn't work" there's a million and one reasons why that might be let's run down the common suspects
 

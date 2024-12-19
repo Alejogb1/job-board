@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "929-strings-to-integers-zybooks-problem"
 ---
 
-Okay so you're wrestling with Zybooks string to integer conversion huh I've been there believe me its a classic CS 101 rite of passage I remember back in my freshman year I spent like a whole weekend debugging a particularly nasty edge case on this very problem man that was rough lets see if i can help you out without you tearing out all your hair
+Okay so you're wrestling with Zybooks string to integer conversion right I've been there believe me its a classic CS 101 rite of passage I remember back in my freshman year I spent like a whole weekend debugging a particularly nasty edge case on this very problem man that was rough lets see if i can help you out without you tearing out all your hair
 
 Alright so you've got a string and you need to turn it into a integer I'm guessing the Zybooks problem is throwing some curveballs at you like invalid input or maybe leading spaces or something else along those lines That’s very normal when dealing with user-provided input lets look into some patterns and techniques that I found quite helpful over the years
 

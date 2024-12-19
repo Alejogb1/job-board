@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "an-invalid-attribute-was-designated-on-the-pdo-object-laravel"
 ---
 
-Okay so you're hitting that good ol' PDO invalid attribute error in Laravel huh Been there done that got the t-shirt and probably a few stress wrinkles along the way Trust me this isn't a fun one but it's definitely solvable Let's break it down
+Okay so you're hitting that good ol' PDO invalid attribute error in Laravel right Been there done that got the t-shirt and probably a few stress wrinkles along the way Trust me this isn't a fun one but it's definitely solvable Let's break it down
 
 First off when we talk about PDO in Laravel we're usually talking about the database connection under the hood Laravel's Eloquent ORM makes things nice and abstract for us most of the time but sometimes you need to get a bit down and dirty and that's where PDO comes in Direct access to PDO is pretty powerful but it's also where things can go sideways if you're not careful Now this "invalid attribute" error means you're trying to set a PDO attribute that either doesn't exist or can't be set in the way you're trying to set it Most likely you've messed with some configuration setting directly on the underlying PDO object either through a raw query or something a bit fancier
 

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-can-i-do-rails-testing-with-tenant-milia-with-spoof-login"
 ---
 
-so, you're looking into testing a rails app with multi-tenancy using milia and want to fake user logins, huh? i've been down that rabbit hole before, and it can get a bit tricky if you don't know the right spots to tweak. let's break this down into something manageable, i'll tell you the way i approached it in past projects.
+so, you're looking into testing a rails app with multi-tenancy using milia and want to fake user logins, right? i've been down that rabbit hole before, and it can get a bit tricky if you don't know the right spots to tweak. let's break this down into something manageable, i'll tell you the way i approached it in past projects.
 
 first off, the key here is to understand how milia structures its tenant handling. it essentially sets up a 'current_tenant' based on the subdomain, or the domain, or a combination of both. in your tests, you need to simulate this setup *before* you try to log in a user, or attempt to interact with resources scoped to that tenant. not doing this will give you some weird errors and you'll be scratching your head why it does not work.
 

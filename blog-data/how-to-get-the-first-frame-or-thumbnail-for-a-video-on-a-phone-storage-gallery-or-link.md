@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-get-the-first-frame-or-thumbnail-for-a-video-on-a-phone-storage-gallery-or-link"
 ---
 
-alright, so you're asking about grabbing that initial frame, the thumbnail, from a video, whether it's chilling in the phone's gallery or hanging out on a link somewhere, huh? i've been down this rabbit hole more times than i care to count, and trust me, there are some gotchas. let's break it down, shall we?
+alright, so you're asking about grabbing that initial frame, the thumbnail, from a video, whether it's chilling in the phone's gallery or hanging out on a link somewhere, right? i've been down this rabbit hole more times than i care to count, and trust me, there are some gotchas. let's break it down, shall we?
 
 first off, the approach varies a bit depending on where the video's coming from. if it's a file on the phone, we can use native api's to get to it directly. but if it’s a url, things get a bit more… involved.
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "longest-cycle-graph-theory-algorithm"
 ---
 
-Alright so you wanna find the longest cycle in a graph huh Been there done that a few times back in my day let me tell you its not always a walk in the park but lets break it down
+Alright so you wanna find the longest cycle in a graph right Been there done that a few times back in my day let me tell you its not always a walk in the park but lets break it down
 
 First thing first you gotta understand that finding the absolute *longest* cycle in a general graph is NP-hard it's like trying to find a needle in a haystack but the needle is also made of hay and that hay is also hay its a mess this basically means no one has found a super-efficient algorithm that works for *every* type of graph out there that guarantees finding the absolute longest cycle in a reasonable timeframe if the graphs are large enough so we have to do some clever stuff depending on what kind of graph we're dealing with
 

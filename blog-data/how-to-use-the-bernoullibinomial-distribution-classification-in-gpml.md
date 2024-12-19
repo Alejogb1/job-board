@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-use-the-bernoullibinomial-distribution-classification-in-gpml"
 ---
 
-alright, so you’re looking at using bernoulli or binomial distributions for classification within gaussian process machine learning (gpml), huh? been there, done that, got the t-shirt (and several debugging scars). it's not exactly a walk in the park, but it's definitely doable. let me break it down from my experience, hopefully it'll save you some of the headaches i went through.
+alright, so you’re looking at using bernoulli or binomial distributions for classification within gaussian process machine learning (gpml), right? been there, done that, got the t-shirt (and several debugging scars). it's not exactly a walk in the park, but it's definitely doable. let me break it down from my experience, hopefully it'll save you some of the headaches i went through.
 
 first off, the crux of the matter is that standard gaussian processes output a continuous value, not probabilities directly. we need to link that output to a probability, which is where the bernoulli or binomial distribution comes into play. the choice between the two mostly depends on your data. if you have binary outcomes (like 'yes' or 'no', 'spam' or 'not spam'), a bernoulli distribution is your best friend. if your outcomes are counts (like number of successes in a fixed number of trials), then you lean towards the binomial.
 

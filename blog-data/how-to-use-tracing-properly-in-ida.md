@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "how-to-use-tracing-properly-in-ida"
 ---
 
-Okay so you wanna dive into IDA tracing huh Been there done that got the t-shirt and probably a few dozen hair-pulling sessions to go with it Tracing in IDA is powerful but man it can be a rabbit hole if you don't know what you're doing I've spent my fair share of evenings staring at disassembled code scratching my head wondering why a register jumped to some random address so let's try to break this down a bit
+Okay so you wanna dive into IDA tracing right Been there done that got the t-shirt and probably a few dozen hair-pulling sessions to go with it Tracing in IDA is powerful but man it can be a rabbit hole if you don't know what you're doing I've spent my fair share of evenings staring at disassembled code scratching my head wondering why a register jumped to some random address so let's try to break this down a bit
 
 First things first let's talk about what we're actually trying to achieve when we trace Execution tracing helps you follow the flow of execution of a program instruction by instruction Register values memory accesses conditional jumps all of this data paints a clear picture of what's happening under the hood Think of it as stepping through a debugging session but with a much more detailed and granular view This is invaluable for reverse engineering malware figuring out how a piece of software actually works or debugging tricky code paths that are hard to catch with standard breakpoints
 

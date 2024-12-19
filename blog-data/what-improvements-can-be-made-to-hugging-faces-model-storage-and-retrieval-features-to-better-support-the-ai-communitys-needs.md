@@ -4,7 +4,7 @@ date: "2024-12-04"
 id: "what-improvements-can-be-made-to-hugging-faces-model-storage-and-retrieval-features-to-better-support-the-ai-communitys-needs"
 ---
 
-Hey so you wanna talk about making Hugging Face's model hub even better huh  That's a cool idea  I've been thinking about this too  It's awesome what they've already done but there's definitely room for improvement especially as the community grows bigger and the models get more complex  
+Hey so you wanna talk about making Hugging Face's model hub even better right  That's a cool idea  I've been thinking about this too  It's awesome what they've already done but there's definitely room for improvement especially as the community grows bigger and the models get more complex  
 
 First off search  Right now finding what you need can be a bit of a wild goose chase  The tagging system is okay but sometimes its inconsistent  Imagine having something like a semantic search  You could just describe the kind of model you need say "a small efficient image captioning model for low-power devices" and boom the hub serves up the best matches based on model architecture performance benchmarks and even user reviews  That would be a game changer  I'm thinking about looking into papers on vector databases like FAISS or Annoy for that kind of thing  Maybe some work on natural language processing techniques to better understand user queries could also be helpful  There's tons of material on that out there look into "Introduction to Information Retrieval" by Manning et al  that book's a classic
 

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-can-i-access-a-language-code-for-urdu"
 ---
 
-alright, so you're looking to get the language code for urdu, huh? i’ve definitely been down that road before, chasing language codes for various projects. seems simple enough, but these things always have a way of… well, let's just say they aren't always straightforward.
+alright, so you're looking to get the language code for urdu, right? i’ve definitely been down that road before, chasing language codes for various projects. seems simple enough, but these things always have a way of… well, let's just say they aren't always straightforward.
 
 first off, when we’re talking about language codes, we're usually dealing with standards, specifically iso standards. in this case, you’ll want iso 639. this standard defines codes for the representation of names of languages. it’s like a lingua franca for machines. think of it as the universal translator but for language identification. i remember back in my early days, working on a multilingual content management system. i spent a good few days trying to figure out why some languages were being displayed weirdly, and it all came down to not using the iso codes correctly. i was trying to map language names directly instead of using the codes. lesson learned that day, always stick to standards whenever possible.
 

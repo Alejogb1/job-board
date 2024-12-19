@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-is-the-prediction-line-is-too-underfit"
 ---
 
-so, you've got a prediction line that's just not doing its job, huh? i've been there, staring at plots that look like a toddler drew them, while the actual data is a complex symphony. underfitting, it's a pain. let's break down why this happens and what we can do about it.
+so, you've got a prediction line that's just not doing its job, right? i've been there, staring at plots that look like a toddler drew them, while the actual data is a complex symphony. underfitting, it's a pain. let's break down why this happens and what we can do about it.
 
 basically, underfitting means your model is too simple. it's not capturing the underlying patterns in your data. imagine trying to fit a straight line to a dataset that curves and weaves. that straight line will miss most of the action, and that's what your prediction line is doing. your model's too dumb, in short.
 

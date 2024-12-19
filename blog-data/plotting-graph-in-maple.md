@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "plotting-graph-in-maple"
 ---
 
-Okay so plotting graphs in Maple huh I've been there done that many many times like seriously this feels like a flashback to my undergrad days
+Okay so plotting graphs in Maple right I've been there done that many many times like seriously this feels like a flashback to my undergrad days
 
 First thing first you're probably looking at a few different scenarios right plotting functions maybe data points or a combination I've struggled with all of them and let me tell you Maple syntax can be quirky at times especially if you're used to Python or MATLAB it's a different beast
 

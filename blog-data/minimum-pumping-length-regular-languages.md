@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "minimum-pumping-length-regular-languages"
 ---
 
-Alright so you're asking about minimum pumping length for regular languages huh Been there done that got the t-shirt and probably a few debugging scars to show for it Let me tell you it's one of those things that sounds deceptively simple on paper but when you're knee-deep in a complex automata implementation it can feel like wrestling a particularly stubborn gremlin
+Alright so you're asking about minimum pumping length for regular languages right Been there done that got the t-shirt and probably a few debugging scars to show for it Let me tell you it's one of those things that sounds deceptively simple on paper but when you're knee-deep in a complex automata implementation it can feel like wrestling a particularly stubborn gremlin
 
 So basically you want to know the smallest number *n* such that any string *s* in a regular language *L* where *length(s) >= n* can be broken down into three parts *s = xyz* meeting specific conditions that the pumping lemma states right? This stuff is fundamental to understanding what regular languages can and can't do and it's also an incredibly useful tool for proving a language *isn't* regular I remember back in the day when I was working on that lexer for my custom programming language I spent days chasing down a bug It turned out the whole issue was that I had mistakenly created a language that I thought was regular but I couldn't actually prove it was regular so my lexer was essentially a mess of hacks eventually i realized it would never work correctly That's when I really dived into the pumping lemma and it all clicked it was like a bad dream but it had an extremely educational experience associated with it.
 

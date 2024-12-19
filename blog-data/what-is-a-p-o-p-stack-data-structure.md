@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "what-is-a-p-o-p-stack-data-structure"
 ---
 
-Okay so you wanna know about pop stacks huh Been there done that got the t-shirt literally I actually spilled coffee on one once code was fine surprisingly but the keyboard was a mess Anyway a pop stack or sometimes just called a stack yeah its a pretty fundamental data structure in computer science its basically a way to organize data where you can only add or remove items from one end this end is what we call the top think of it like a stack of plates the last plate you put on is the first one you take off thats it
+Okay so you wanna know about pop stacks right Been there done that got the t-shirt literally I actually spilled coffee on one once code was fine surprisingly but the keyboard was a mess Anyway a pop stack or sometimes just called a stack yeah its a pretty fundamental data structure in computer science its basically a way to organize data where you can only add or remove items from one end this end is what we call the top think of it like a stack of plates the last plate you put on is the first one you take off thats it
 
 It follows a LIFO or Last-In-First-Out principle This means the last element you push onto the stack will be the first one you pop off It's a really simple concept actually but very powerful you can use them in many areas like function call management parsing expressions undo redo mechanisms compiler design etc its just everywhere really
 

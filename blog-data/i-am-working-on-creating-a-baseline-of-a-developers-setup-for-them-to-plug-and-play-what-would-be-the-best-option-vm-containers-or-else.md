@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "i-am-working-on-creating-a-baseline-of-a-developers-setup-for-them-to-plug-and-play-what-would-be-the-best-option-vm-containers-or-else"
 ---
 
-alright, so you're aiming for that sweet spot of a 'plug and play' dev environment, huh? i get it. been there, done that, and got the t-shirt (multiple actually, they keep sending them at conferences, i have enough to start a small clothing business). seriously though, this is a common problem, and there's no single silver bullet, but let's break down your options: vm's, containers, and… 'else'. that 'else' is where things can get interesting, but let's start with what you've laid out.
+alright, so you're aiming for that sweet spot of a 'plug and play' dev environment, right? i get it. been there, done that, and got the t-shirt (multiple actually, they keep sending them at conferences, i have enough to start a small clothing business). seriously though, this is a common problem, and there's no single silver bullet, but let's break down your options: vm's, containers, and… 'else'. that 'else' is where things can get interesting, but let's start with what you've laid out.
 
 virtual machines, the classic approach. i've been in the industry long enough to remember when these were the *only* viable way to do this sort of thing. back in '08, i was tasked with setting up dev environments for a team of 20, and we went full vmware esxi. the learning curve was steep, and let me tell you, the resources those things ate... it was like feeding a pack of very hungry wolves. we ended up with a server farm just for development machines, each one a full os with its own allocated ram and cpu. talk about overhead.
 

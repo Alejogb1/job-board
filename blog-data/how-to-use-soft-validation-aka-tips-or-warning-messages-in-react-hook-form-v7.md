@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "how-to-use-soft-validation-aka-tips-or-warning-messages-in-react-hook-form-v7"
 ---
 
-Alright so you're wrestling with soft validation in react hook form v7 huh been there done that got the t-shirt probably have a few actual t-shirts with obscure coding jokes on them collecting dust in the closet.
+Alright so you're wrestling with soft validation in react hook form v7 right been there done that got the t-shirt probably have a few actual t-shirts with obscure coding jokes on them collecting dust in the closet.
 
 Okay let's break it down soft validation isn't about stopping the user dead in their tracks it's more like gently nudging them in the right direction you want to provide helpful tips warnings things that suggest a better way without being a full-blown form-blocking error message. This is pretty much crucial for user experience nobody likes yelling red text and form submissions that act like they're allergic to information.
 

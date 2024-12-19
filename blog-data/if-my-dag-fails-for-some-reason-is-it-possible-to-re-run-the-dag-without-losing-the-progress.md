@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "if-my-dag-fails-for-some-reason-is-it-possible-to-re-run-the-dag-without-losing-the-progress"
 ---
 
-alright, so you're having dags hiccup and want to pick up where things left off, huh? i’ve been there, more times than i’d like to count. it’s a pain, especially when you're dealing with long-running processes. let me walk you through how i usually handle this sort of situation. it's all about setting things up properly from the start to make this process smoother.
+alright, so you're having dags hiccup and want to pick up where things left off, right? i’ve been there, more times than i’d like to count. it’s a pain, especially when you're dealing with long-running processes. let me walk you through how i usually handle this sort of situation. it's all about setting things up properly from the start to make this process smoother.
 
 first off, it's crucial to understand why your dags are failing. are we talking about transient network issues, some faulty logic in your tasks, or resource constraints? knowing that will help tailor the solution. but regardless, assuming you've at least got a grip on the root cause, let's talk about recovery.
 

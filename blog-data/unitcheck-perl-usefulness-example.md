@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "unitcheck-perl-usefulness-example"
 ---
 
-Alright so unitcheck perl huh okay I’ve been around the block a few times with that one Let me tell you it’s a love hate relationship but mostly love now that I've wrestled it into submission
+Alright so unitcheck perl right okay I’ve been around the block a few times with that one Let me tell you it’s a love hate relationship but mostly love now that I've wrestled it into submission
 
 First up for anyone landing here completely new unitcheck in Perl is basically your buddy for finding bugs in your code before they turn into a massive headache You know how it goes you write some code looks great on your machine then it crashes in production well unitcheck helps you avoid that It's all about static analysis which means it looks at your code without actually running it It tries to predict potential problems like undefined variables type mismatches and other common gotchas
 

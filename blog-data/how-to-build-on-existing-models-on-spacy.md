@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-build-on-existing-models-on-spacy"
 ---
 
-so, you want to build on existing spacy models huh? i get it. been there, done that, got the t-shirt – probably a dozen of them actually. i've spent a good chunk of my career elbow deep in natural language processing, and spacy is a tool i keep coming back to. it's just so clean and flexible, once you understand its quirks. and trust me, it has them.
+so, you want to build on existing spacy models right? i get it. been there, done that, got the t-shirt – probably a dozen of them actually. i've spent a good chunk of my career elbow deep in natural language processing, and spacy is a tool i keep coming back to. it's just so clean and flexible, once you understand its quirks. and trust me, it has them.
 
 let's talk about fine-tuning, because that’s usually what people mean when they say "build on". you've got a pre-trained spacy model, probably one of their `en_core_web_*` variants, maybe something else you found, and you need it to do something more specific. the stock models are great for general language tasks, but if you're dealing with, say, very specific terminology in the medical field or social media slang, well, they need a bit of a nudge in the right direction.
 

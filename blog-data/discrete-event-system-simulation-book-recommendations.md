@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "discrete-event-system-simulation-book-recommendations"
 ---
 
-Okay so you're looking for resources on discrete event system simulation huh been there done that a few times myself Lets talk books since you asked
+Okay so you're looking for resources on discrete event system simulation right been there done that a few times myself Lets talk books since you asked
 
 First thing that pops to mind when thinking about this kinda thing is the classic stuff you know the foundations My undergrad days were fueled by these types of books I remember struggling so hard with some of the more theoretical concepts but trust me its worth it in the long run Its like learning the rules of a game before you try to win every single round You really do need to understand all the bits and pieces before you start creating elaborate systems
 

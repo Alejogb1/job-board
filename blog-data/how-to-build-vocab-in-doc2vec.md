@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-build-vocab-in-doc2vec"
 ---
 
-alright, so you’re looking at building vocabulary with doc2vec, huh? i’ve been down that road more times than i care to remember, so let me share some hard-earned knowledge. it’s not always straightforward, but there are definite ways to get a good vocab.
+alright, so you’re looking at building vocabulary with doc2vec, right? i’ve been down that road more times than i care to remember, so let me share some hard-earned knowledge. it’s not always straightforward, but there are definite ways to get a good vocab.
 
 first off, let’s clarify something – doc2vec, at its heart, is about learning vector representations of documents. vocabulary building isn't separate; it's a crucial part of the process. when you’re training the model, the vocabulary is inherently generated from the text you feed it. the model doesn't magically know words beforehand. it constructs its vocabulary based on the unique tokens (words, usually) it encounters during training.
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "while-running-the-dbt-run-command-gets-error"
 ---
 
-Okay so you're hitting a snag with `dbt run` huh? I've been there man. The dreaded "dbt run threw an error" message its like a rite of passage for any dbt user. Let's dig in cause this can be a total rabbit hole but its usually something pretty straightforward if you've seen it before.
+Okay so you're hitting a snag with `dbt run` right? I've been there man. The dreaded "dbt run threw an error" message its like a rite of passage for any dbt user. Let's dig in cause this can be a total rabbit hole but its usually something pretty straightforward if you've seen it before.
 
 First things first what kind of error are we talking about? Is it a syntax error? a connection problem? Is the model compiling at all? The more specific the better but lets work our way from the basics here.
 

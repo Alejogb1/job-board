@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-do-ancestral-trees-in-a-birth-death-process-simulation-python"
 ---
 
-so, you're looking at simulating ancestral trees within a birth-death process, huh? i've been down that rabbit hole a few times, and it's definitely a fun challenge. let me share how i usually tackle it, and maybe it'll give you some ideas for your own implementation.
+so, you're looking at simulating ancestral trees within a birth-death process, right? i've been down that rabbit hole a few times, and it's definitely a fun challenge. let me share how i usually tackle it, and maybe it'll give you some ideas for your own implementation.
 
 first off, let's talk about the core problem: we're not just simulating the branching process forward in time. we also want to know *where* those branches came from, tracing lineages backward from a final set of individuals (or samples) to their common ancestor. this means that you have to keep track of ancestry as the simulation runs and then to backtrack this information when the simulation ends.
 

@@ -15,7 +15,7 @@ another key moment was when he talked about algorithmic complexity  this isn't a
 then he dove into specific techniques for optimization  one of them was using data structures effectively  he showed how switching from a linked list to an array could dramatically speed things up in certain scenarios depending on what operations you're doing this whole time he keeps stressing the importance of knowing what you need your code to do before you make it  which is great advice you know how sometimes we get in the zone and just write until we get something working  well he was against that
 
 
-let's see some code examples huh  because that's what i'm really into
+let's see some code examples right  because that's what i'm really into
 
 first a less-than-optimal way to search a list in python
 

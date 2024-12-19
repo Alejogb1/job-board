@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "2d-array-in-verilog-declaration"
 ---
 
-Alright so you're wrestling with declaring 2D arrays in Verilog huh Been there done that multiple times It's not as straightforward as some other languages which is why I figure you're here I've been elbow deep in hardware design for what feels like forever and Verilog's quirky nature on multidimensional arrays has bitten me more than once Let me walk you through it with some examples and maybe save you the headache I went through
+Alright so you're wrestling with declaring 2D arrays in Verilog right Been there done that multiple times It's not as straightforward as some other languages which is why I figure you're here I've been elbow deep in hardware design for what feels like forever and Verilog's quirky nature on multidimensional arrays has bitten me more than once Let me walk you through it with some examples and maybe save you the headache I went through
 
 First off Verilog isn’t exactly thrilled with the term “2D array” or “multidimensional array” It prefers to think of them as arrays of vectors or memory depending on what you’re actually doing This distinction is crucial for understanding how to declare and use them So when you're thinking 2D array Verilog thinks "array of bit vectors"
 

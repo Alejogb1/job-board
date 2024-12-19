@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-is-zsh-piping-a-log-output-and-adding-coloring"
 ---
 
-alright, so you're asking about piping log output in zsh and adding some color, huh? i've been down this road more times than i can count, and it's one of those things that seems simple at first but can get hairy pretty fast if you don't know some of the ins and outs. i remember way back when, during my early days messing around with linux, i had this ridiculously complex script to manage some server processes. i wanted to see what was going on, and the output was just a wall of text. totally unreadable. that's when i really got into figuring out how to pipe and color things in the terminal.
+alright, so you're asking about piping log output in zsh and adding some color, right? i've been down this road more times than i can count, and it's one of those things that seems simple at first but can get hairy pretty fast if you don't know some of the ins and outs. i remember way back when, during my early days messing around with linux, i had this ridiculously complex script to manage some server processes. i wanted to see what was going on, and the output was just a wall of text. totally unreadable. that's when i really got into figuring out how to pipe and color things in the terminal.
 
 the basic idea with piping is to take the output of one command and send it as the input to another command. the `|` character is the pipe in zsh (and most unix-like shells). so, if you have a log file, you might do something like `cat my_log.log | some_command`. the output of cat, which is the contents of the log file, becomes the input of `some_command`.
 

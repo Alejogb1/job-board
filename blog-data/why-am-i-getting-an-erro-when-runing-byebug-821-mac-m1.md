@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-am-i-getting-an-erro-when-runing-byebug-821-mac-m1"
 ---
 
-alright, so you're hitting a snag with byebug 8.2.1 on your mac m1, huh? yeah, i've been there, got the t-shirt, probably several. this particular issue is surprisingly common with the transition to apple silicon and it often has to do with the underlying architecture and the way some ruby gems, especially native extensions, are compiled.
+alright, so you're hitting a snag with byebug 8.2.1 on your mac m1, right? yeah, i've been there, got the t-shirt, probably several. this particular issue is surprisingly common with the transition to apple silicon and it often has to do with the underlying architecture and the way some ruby gems, especially native extensions, are compiled.
 
 let's break this down. the mac m1 uses arm64 architecture, which is different from the x86_64 architecture most of us were used to. ruby gems like byebug often include native extensions written in c. these extensions have to be compiled for the specific architecture they'll be running on. if the version of byebug you're using wasn't compiled for arm64, or if the build process didn't correctly pick up the arm64 toolchain, you're going to run into problems. errors, sometimes cryptic ones, are part of the fun, isn't it? 
 

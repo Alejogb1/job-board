@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-do-an-aiosmtpd-cli-authentication"
 ---
 
-alright, so you're looking at setting up authentication for your aiosmtpd server, and want to do it from the command line, huh? i've been there, trust me. spent a good chunk of my early career neck-deep in email servers, and aiosmtpd wasn't always as straightforward as we'd like. back then, before a lot of the refined libraries, we were practically building the wheel for every single feature, authentication included. think raw socket programming, handling every single byte, good old days. not!
+alright, so you're looking at setting up authentication for your aiosmtpd server, and want to do it from the command line, right? i've been there, trust me. spent a good chunk of my early career neck-deep in email servers, and aiosmtpd wasn't always as straightforward as we'd like. back then, before a lot of the refined libraries, we were practically building the wheel for every single feature, authentication included. think raw socket programming, handling every single byte, good old days. not!
 
 it's a fair question. while aiosmtpd has made things way easier, sometimes the initial setup can seem like a hurdle, especially when you’re accustomed to more traditional smtp setups. let's cut to the chase, no need for fancy footwork, just the facts.
 

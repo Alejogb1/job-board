@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "c-programming-to-assembly-language-converter"
 ---
 
-Okay so you need a C to assembly converter huh been there done that got the t-shirt and probably a few compiler errors tattooed on my soul Let's break it down like it's a poorly written makefile because honestly some days it feels that way
+Okay so you need a C to assembly converter right been there done that got the t-shirt and probably a few compiler errors tattooed on my soul Let's break it down like it's a poorly written makefile because honestly some days it feels that way
 
 First off there isn't like a magical one size fits all "C to assembly" button you push and bam you're done It's a process a whole ecosystem really You're not converting directly it's more like you're stepping through transformations Each step has its own rules and quirks
 

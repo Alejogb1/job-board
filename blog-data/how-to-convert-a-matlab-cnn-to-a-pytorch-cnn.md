@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-convert-a-matlab-cnn-to-a-pytorch-cnn"
 ---
 
-alright, so you’re looking at moving a convolutional neural network from matlab to pytorch, huh? i’ve been there, done that, got the t-shirt, probably even accidentally overwrote some important weights file in the process. it's not exactly a walk in the park, but it's definitely doable, and once you’ve got the hang of it, it becomes a pretty routine process.
+alright, so you’re looking at moving a convolutional neural network from matlab to pytorch, right? i’ve been there, done that, got the t-shirt, probably even accidentally overwrote some important weights file in the process. it's not exactly a walk in the park, but it's definitely doable, and once you’ve got the hang of it, it becomes a pretty routine process.
 
 let’s break it down, since it involves several parts. the core issue stems from different ways these libraries structure and operate their networks, so it's not just a matter of copy-pasting. matlab and pytorch handle layer definitions, weight initialization, and even data formats slightly differently.
 

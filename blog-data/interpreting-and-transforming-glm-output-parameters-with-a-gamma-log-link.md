@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "interpreting-and-transforming-glm-output-parameters-with-a-gamma-log-link"
 ---
 
-Alright so you're wrestling with gamma GLMs and that whole log-link thing huh I get it it's not exactly a walk in the park been there done that probably more times than I care to admit Let me break down how I usually approach this kinda thing and maybe give you some insights from my own slightly traumatizing experiences with this beast
+Alright so you're wrestling with gamma GLMs and that whole log-link thing right I get it it's not exactly a walk in the park been there done that probably more times than I care to admit Let me break down how I usually approach this kinda thing and maybe give you some insights from my own slightly traumatizing experiences with this beast
 
 So first off the core problem is that your GLM spits out coefficients on a transformed scale its not the original data's scale its the scale of the link function and when youre using a gamma distribution with a log link its even less direct its like trying to decipher a secret code written in math and statistics
 

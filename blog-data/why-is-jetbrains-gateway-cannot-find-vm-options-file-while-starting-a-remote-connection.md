@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-is-jetbrains-gateway-cannot-find-vm-options-file-while-starting-a-remote-connection"
 ---
 
-alright, so you're hitting the "cannot find vm options file" error with jetbrains gateway, huh? i've been there, felt that particular flavor of frustration more than a few times, especially when i started messing around with remote development. it’s a pain, but usually, there's a straightforward reason why it pops up, it's rarely some deeply hidden config issue.
+alright, so you're hitting the "cannot find vm options file" error with jetbrains gateway, right? i've been there, felt that particular flavor of frustration more than a few times, especially when i started messing around with remote development. it’s a pain, but usually, there's a straightforward reason why it pops up, it's rarely some deeply hidden config issue.
 
 let me break down what's probably happening and how i've solved it in the past. essentially, jetbrains gateway, when initiating a remote connection, needs a specific file that tells it how to launch the backend ide process – the actual code editor that runs on the remote machine. this file, the vm options file, dictates things like the jvm heap size, specific jvm flags, and other important settings. the error message you’re seeing simply means that gateway can't locate this crucial configuration file in the expected location.
 

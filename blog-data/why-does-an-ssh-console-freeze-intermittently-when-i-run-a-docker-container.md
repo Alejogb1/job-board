@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-does-an-ssh-console-freeze-intermittently-when-i-run-a-docker-container"
 ---
 
-so, you're hitting that frustrating ssh freeze when a docker container starts, huh? been there, definitely. it's one of those things that can make you feel like you're losing your mind, especially when you're under pressure to get things deployed. i remember way back, when docker was still relatively new, i was trying to set up a complex microservices architecture on a cloud provider. i'd ssh in, start the containers, and bam, the console would just lock up randomly. i spent a solid week thinking i had network issues, constantly checking firewalls, and even the physical wiring in the server room. turns out, the problem was staring me in the face the whole time.
+so, you're hitting that frustrating ssh freeze when a docker container starts, right? been there, definitely. it's one of those things that can make you feel like you're losing your mind, especially when you're under pressure to get things deployed. i remember way back, when docker was still relatively new, i was trying to set up a complex microservices architecture on a cloud provider. i'd ssh in, start the containers, and bam, the console would just lock up randomly. i spent a solid week thinking i had network issues, constantly checking firewalls, and even the physical wiring in the server room. turns out, the problem was staring me in the face the whole time.
 
 anyway, let’s get to the meat of it. intermittent ssh freezes when starting a docker container are usually because of a few common issues. i've seen this happen for various reasons so let me walk you through the main ones and what to do.
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "building-web-applications-with-uml-diagrams"
 ---
 
-Okay so you wanna build web apps using UML diagrams huh alright I’ve been there done that and got the T-shirt and maybe even a few scars so let's break this down in a way that hopefully makes sense.
+Okay so you wanna build web apps using UML diagrams right alright I’ve been there done that and got the T-shirt and maybe even a few scars so let's break this down in a way that hopefully makes sense.
 
 First off I’m not gonna sugarcoat it using UML directly to build web apps isn't the most common path nowadays it's more of a design tool than a code generation tool and in my experience it can be kinda clunky if you try to make it do more than it's meant to but don't get me wrong it has its place mainly in the initial planning stage I guess
 

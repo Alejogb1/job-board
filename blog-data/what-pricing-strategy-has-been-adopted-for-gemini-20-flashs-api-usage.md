@@ -4,7 +4,7 @@ date: "2024-12-12"
 id: "what-pricing-strategy-has-been-adopted-for-gemini-20-flashs-api-usage"
 ---
 
-Alright so pricing for Gemini 2.0 Flash API huh interesting question that's like digging into the real guts of the thing not just the shiny facade We’re talking about the cost of wielding that AI power and its honestly super relevant if you're trying to build anything serious not just play around with fancy toys
+Alright so pricing for Gemini 2.0 Flash API right interesting question that's like digging into the real guts of the thing not just the shiny facade We’re talking about the cost of wielding that AI power and its honestly super relevant if you're trying to build anything serious not just play around with fancy toys
 
 See the thing with these massive models especially ones like Gemini is they’re expensive to train and run It’s not like spinning up a little server for your personal blog this is heavy duty compute on a huge scale So naturally the folks building them have to figure out how to recoup costs and make it sustainable hence pricing strategies come into play
 

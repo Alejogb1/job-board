@@ -4,7 +4,7 @@ date: "2024-12-12"
 id: "what-is-the-significance-of-googles-contributions-to-open-source-projects-in-the-ai-space"
 ---
 
-okay so Google and open source AI huh that's a seriously big topic like imagine this entire AI ecosystem right it's this sprawling jungle of algorithms and models and tools and a lot of it wouldn't be nearly as lush without Google’s fingerprints all over it.
+okay so Google and open source AI right that's a seriously big topic like imagine this entire AI ecosystem right it's this sprawling jungle of algorithms and models and tools and a lot of it wouldn't be nearly as lush without Google’s fingerprints all over it.
 
 think about TensorFlow first up like everyone's talking about it and for good reason that's their flagship open source AI project it's not just some random library it's like the foundation for so much deep learning research and development i mean you got everything from image recognition to natural language processing all built on this framework it’s flexible it’s powerful and crucially it’s open source meaning anyone can grab it modify it contribute back it’s democratized access to cutting-edge machine learning that’s massive think about the barriers it breaks down before you would need huge teams of specialized people but now if you got the know how you can basically run sophisticated experiments on your laptop that's a game changer.
 

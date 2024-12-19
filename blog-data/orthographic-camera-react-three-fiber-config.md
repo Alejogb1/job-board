@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "orthographic-camera-react-three-fiber-config"
 ---
 
-Alright so orthographic camera react three fiber config huh I've been down that rabbit hole before like way more times than I care to admit it’s one of those things that sounds simple in theory but then you actually try to implement it and suddenly you're staring at a black screen or something wildly distorted
+Alright so orthographic camera react three fiber config right I've been down that rabbit hole before like way more times than I care to admit it’s one of those things that sounds simple in theory but then you actually try to implement it and suddenly you're staring at a black screen or something wildly distorted
 
 Let me tell you about the first time I dealt with this it was back in my early days using threejs I was building this architectural visualization app nothing fancy just a simple model viewer but the client insisted everything had to be perfectly aligned no perspective distortion at all naturally my noob self thought "oh easy just switch to orthographic camera" famous last words right
 

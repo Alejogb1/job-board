@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-test-an-android-application-with-a-stylus"
 ---
 
-alright, so you’re looking into testing your android app with a stylus, huh? i’ve been down that road, more times than i care to remember, and it’s definitely not as straightforward as just poking around with a finger. believe me. it has its own quirks, and getting it to play nice with your testing framework takes some wrangling. i'm not gonna pretend it's all sunshine and rainbows, but here's a breakdown of how i've tackled it in the past, along with some tips i've picked up along the way.
+alright, so you’re looking into testing your android app with a stylus, right? i’ve been down that road, more times than i care to remember, and it’s definitely not as straightforward as just poking around with a finger. believe me. it has its own quirks, and getting it to play nice with your testing framework takes some wrangling. i'm not gonna pretend it's all sunshine and rainbows, but here's a breakdown of how i've tackled it in the past, along with some tips i've picked up along the way.
 
 first off, the problem. fingers are large. styluses are pointy. android treats them, and their respective inputs, differently. your app might be perfectly responsive to a finger tap, but completely miss a stylus tap, or misinterpret its position, causing chaos. if your ui relies on precise input, like drawing apps or anything involving small interactive elements, then stylus testing is not a luxury, it’s a necessity. think of it as the difference between operating a crane with a sledgehammer, and using the designed control panel; accuracy matters.
 

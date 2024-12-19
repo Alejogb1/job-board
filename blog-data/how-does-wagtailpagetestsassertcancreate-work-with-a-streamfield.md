@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-does-wagtailpagetestsassertcancreate-work-with-a-streamfield"
 ---
 
-alright, so you’re asking about how `wagtailpagetests.assertCanCreate` plays with streamfields, huh? i’ve been there, tangled in the nuances of wagtail testing myself, and streamfields can certainly add a layer of complexity when you're trying to assert that a page type can be created with the expected blocks.
+alright, so you’re asking about how `wagtailpagetests.assertCanCreate` plays with streamfields, right? i’ve been there, tangled in the nuances of wagtail testing myself, and streamfields can certainly add a layer of complexity when you're trying to assert that a page type can be created with the expected blocks.
 
 it all boils down to how wagtail handles the data structure of streamfields. unlike simple text fields or foreign key relations, streamfields use a json-like format behind the scenes to represent the order and type of blocks you place in them. `assertCanCreate`, in its basic form, checks if a user has permission to create a given page type and if the form for that page type can be loaded. it doesn't inherently *understand* the internal structure of your streamfield, it just checks the form can be generated. that's often not enough though.
 

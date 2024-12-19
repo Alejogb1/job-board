@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "no-module-named-snowflake-python"
 ---
 
-Alright so you're banging your head against that dreaded `ModuleNotFoundError: No module named 'snowflake'` huh?  Yeah I've been there done that got the t-shirt probably even spilled coffee on it at 3 AM while trying to get some data pipeline working.  It's a classic python package problem and let me tell you it can be frustratingly simple to fix but also maddeningly obscure when it goes wrong.
+Alright so you're banging your head against that dreaded `ModuleNotFoundError: No module named 'snowflake'` right?  Yeah I've been there done that got the t-shirt probably even spilled coffee on it at 3 AM while trying to get some data pipeline working.  It's a classic python package problem and let me tell you it can be frustratingly simple to fix but also maddeningly obscure when it goes wrong.
 
 First thing's first don't panic this isn't some rare bug lurking in the depths of your OS. Its probably something super common a simple missed install or a messed up environment and I bet I can help get this sorted.
 

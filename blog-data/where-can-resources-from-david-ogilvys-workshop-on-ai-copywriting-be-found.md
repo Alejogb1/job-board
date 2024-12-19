@@ -4,7 +4,7 @@ date: "2024-12-03"
 id: "where-can-resources-from-david-ogilvys-workshop-on-ai-copywriting-be-found"
 ---
 
-Hey so you're looking for Ogilvy's AI copywriting workshop stuff huh  That's a cool area  I haven't stumbled across a direct recording or official handout from a specific workshop labeled "AI Copywriting" by Ogilvy himself  The guy was a legend but remember this was before the current AI boom  His insights though super relevant even today  they translate really well to this new landscape
+Hey so you're looking for Ogilvy's AI copywriting workshop stuff right  That's a cool area  I haven't stumbled across a direct recording or official handout from a specific workshop labeled "AI Copywriting" by Ogilvy himself  The guy was a legend but remember this was before the current AI boom  His insights though super relevant even today  they translate really well to this new landscape
 
 Think about it his whole thing was about understanding the consumer  creating compelling narratives  and crafting persuasive messages  AI just helps automate and scale those processes  It's not a replacement for the core Ogilvy principles its more like a supercharged tool
 

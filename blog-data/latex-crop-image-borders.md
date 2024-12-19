@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "latex-crop-image-borders"
 ---
 
-Okay so you wanna crop image borders in LaTeX huh Been there done that got the t-shirt multiple times honestly this is like a rite of passage for anyone who spends enough time with LaTeX and images I've battled this beast more often than I'd like to admit let's dive in
+Okay so you wanna crop image borders in LaTeX right Been there done that got the t-shirt multiple times honestly this is like a rite of passage for anyone who spends enough time with LaTeX and images I've battled this beast more often than I'd like to admit let's dive in
 
 First off you’re probably dealing with a situation where your images got these annoying white borders or even worse some colored padding you don’t want right? Maybe they’re screenshots with some extra fluff or diagrams that have too much margin Whatever it is it's cramping your style and LaTeX is not automatically helping you out like it should I remember once I had this huge project due a journal publication and I had all these embedded plots from MATLAB yeah MATLAB and they all had this extra border that looked atrocious it was a nightmare i almost had a breakdown
 

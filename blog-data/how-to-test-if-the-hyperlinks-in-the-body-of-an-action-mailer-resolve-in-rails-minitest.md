@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-test-if-the-hyperlinks-in-the-body-of-an-action-mailer-resolve-in-rails-minitest"
 ---
 
-so, you're having trouble testing those action mailer hyperlinks, huh? been there, done that, got the t-shirt – and probably a few grey hairs too. this is one of those problems that seems simple on the surface, but quickly spirals into a rabbit hole of "how do i actually *test* this thing?". i've spent way too many late nights debugging similar issues, so let me give you the lowdown on how i approach it, hopefully it saves you some time.
+so, you're having trouble testing those action mailer hyperlinks, right? been there, done that, got the t-shirt – and probably a few grey hairs too. this is one of those problems that seems simple on the surface, but quickly spirals into a rabbit hole of "how do i actually *test* this thing?". i've spent way too many late nights debugging similar issues, so let me give you the lowdown on how i approach it, hopefully it saves you some time.
 
 first off, let's be clear, we aren't testing if the actual urls are valid on the internet. that's a different can of worms. what we’re concerned with here is whether the url *generation* in our action mailer templates is working correctly. this means we need to ensure that the urls we're building in our rails app (using things like `_url` helpers) are generating the expected paths in the email body and include required parameters.
 

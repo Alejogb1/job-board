@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "how-to-remove-all-metadata-using-ffmpeg"
 ---
 
-Okay so you wanna strip metadata from your media files using ffmpeg huh Been there done that let me tell you it’s a rabbit hole but a necessary one if you’re serious about cleaning up your digital life or prepping content for specific platforms
+Okay so you wanna strip metadata from your media files using ffmpeg right Been there done that let me tell you it’s a rabbit hole but a necessary one if you’re serious about cleaning up your digital life or prepping content for specific platforms
 
 I've spent way too many hours wrestling with ffmpeg it’s powerful but it also has its quirks It wasn't always smooth sailing believe me I once spent a whole weekend trying to figure out why a seemingly simple video was crashing a mobile app turns out it was some obscure metadata tag that ffmpeg hadn’t touched a nightmare I tell you So I learned the hard way that sometimes getting rid of everything is the best approach
 

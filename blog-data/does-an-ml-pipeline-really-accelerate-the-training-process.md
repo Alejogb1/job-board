@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "does-an-ml-pipeline-really-accelerate-the-training-process"
 ---
 
-so, you're asking if an ml pipeline actually speeds up training, huh? it's a question that seems simple on the surface, but it has a lot of nuances once you start unpacking it. i've been through this rodeo a few times, and let me tell you, it's not a straightforward yes or no.
+so, you're asking if an ml pipeline actually speeds up training, right? it's a question that seems simple on the surface, but it has a lot of nuances once you start unpacking it. i've been through this rodeo a few times, and let me tell you, it's not a straightforward yes or no.
 
 first off, let's define what i mean by an "ml pipeline" because it can be a bit ambiguous. when i say pipeline, i'm talking about automating the series of steps needed to get your model trained – from data ingestion, to preprocessing, to model training itself, evaluation, and sometimes even deployment. it's basically making the whole process a bit less manual and more like a production line.
 

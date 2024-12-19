@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "temporary-value-dropped-while-borrowed-rust-error"
 ---
 
-Alright so you're hitting that classic "temporary value dropped while borrowed" error in Rust huh I've been there more times than I care to admit it's a rite of passage really it's like the compiler's way of saying "hey you're not thinking about ownership and lifetimes quite right" and it is actually a good thing in the long run I've spent hours debugging this kind of stuff so let me try to explain this in the simplest and straightforward manner
+Alright so you're hitting that classic "temporary value dropped while borrowed" error in Rust right I've been there more times than I care to admit it's a rite of passage really it's like the compiler's way of saying "hey you're not thinking about ownership and lifetimes quite right" and it is actually a good thing in the long run I've spent hours debugging this kind of stuff so let me try to explain this in the simplest and straightforward manner
 
 Essentially the Rust compiler is a stickler for the rules about memory management and specifically how borrowing works It's trying to keep you from doing something dangerous and that involves a very specific rule about temporaries and borrows You see when you create a value let's say inside a function or part of a line of code but you don't assign it to a variable with an explicit lifetime its going to be a "temporary value" Now if you try to create a reference to that temporary value the compiler will complain because the temporary value's lifetime might not be long enough to outlive the borrow so its like trying to put a fire out with a fire hose its never good
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "how-to-add-dbc-tabs-to-dash-multi-page-app-with-pages"
 ---
 
-Alright so you’re wrestling with dash multi-page apps and wanting to throw in some dbc tabs huh Been there done that got the t-shirt and probably spilled coffee on it too a few times
+Alright so you’re wrestling with dash multi-page apps and wanting to throw in some dbc tabs right Been there done that got the t-shirt and probably spilled coffee on it too a few times
 
 It’s a bit of a sticky situation at first glance combining dash's routing mechanism with dbc’s tab component isn’t exactly plug and play It feels like trying to fit a square peg into a round hole but don’t worry we can definitely make this work I've spent way more hours than I'd like to admit debugging similar shenanigans
 

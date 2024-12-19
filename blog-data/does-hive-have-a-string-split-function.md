@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "does-hive-have-a-string-split-function"
 ---
 
-Alright so you're asking about string splitting in Hive huh Been there done that a bunch of times let me tell you Hive's a beast and its string handling can be well interesting
+Alright so you're asking about string splitting in Hive right Been there done that a bunch of times let me tell you Hive's a beast and its string handling can be well interesting
 
 First things first yeah Hive totally has string split capabilities It's not like some obscure function hidden away in a dark corner It's front and center and ready to roll Specifically we are talking about the `split` function and this bad boy is your go to for turning a comma separated or any other delimited string into an array of strings and honestly I’ve used this more than I've had hot dinners.
 
@@ -22,7 +22,7 @@ FROM
   user_data;
 ```
 
-This query would give you a result where each user id is associated with an array of strings representing their interests. So instead of a single field like “hiking,coding,gaming” you get an array like `[“hiking”, “coding”, “gaming”]`. Pretty slick huh
+This query would give you a result where each user id is associated with an array of strings representing their interests. So instead of a single field like “hiking,coding,gaming” you get an array like `[“hiking”, “coding”, “gaming”]`. Pretty slick right
 
 Now lets say you need to filter based on these interests. You can leverage array functions along with split. For example If I need to find out all users that like coding I can use the following approach
 

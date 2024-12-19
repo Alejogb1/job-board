@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-validate-functions-in-a-hardhat-test"
 ---
 
-alright, so you're looking at how to validate functions within your hardhat tests, huh? i've been there, and it's a pretty common spot to stumble. let me walk you through how i've handled this in the past. it's not about just calling the function and hoping it works; it's about making sure it does *exactly* what it's supposed to do, under various scenarios. think of it as creating little contracts within your tests to guarantee function behavior.
+alright, so you're looking at how to validate functions within your hardhat tests, right? i've been there, and it's a pretty common spot to stumble. let me walk you through how i've handled this in the past. it's not about just calling the function and hoping it works; it's about making sure it does *exactly* what it's supposed to do, under various scenarios. think of it as creating little contracts within your tests to guarantee function behavior.
 
 first off, let's talk about the basic setup. assume you've got a hardhat project up and running. you have your smart contracts in the `contracts` folder, and your tests live in the `test` folder, typically using mocha and chai for your testing framework. if you are starting out, read 'testing javascript applications' by luciano ramalho or 'effective javascript' by david herman both have good explanations on creating robust javascript tests.
 

@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "what-methods-enable-optical-multiplexing-to-achieve-higher-data-throughput-per-channel-in-systems-with-photonic-interconnects"
 ---
 
-Okay so you wanna know about boosting data speeds using light right optical multiplexing the cool stuff  It's all about cramming more data onto each light beam think of it like a superhighway for data instead of one car at a time we're sending a whole convoy on the same lane  Pretty neat huh
+Okay so you wanna know about boosting data speeds using light right optical multiplexing the cool stuff  It's all about cramming more data onto each light beam think of it like a superhighway for data instead of one car at a time we're sending a whole convoy on the same lane  Pretty neat right
 
 The main ways we do this are wavelength division multiplexing WDM and time division multiplexing TDM  Think of WDM like painting different colors onto the same beam each color carries its own data stream  So you have one fiber but many data channels each a different color amazing right  TDM is a bit different its like sending short bursts of data one after another super fast its like multiplexing in the time domain  Its like having one color but sending many different signals one after the other incredibly rapidly
 

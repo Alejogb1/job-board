@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-do-a-meilisearch-filter-rails-array"
 ---
 
-alright, so you're looking to filter meilisearch results based on an array of values from your rails app, huh? been there, done that, got the t-shirt. meilisearch is fantastic, but getting it to play nice with complex filtering scenarios in rails can sometimes feel a bit like trying to herd cats. i’ve certainly spent a few late nights scratching my head over this one myself.
+alright, so you're looking to filter meilisearch results based on an array of values from your rails app, right? been there, done that, got the t-shirt. meilisearch is fantastic, but getting it to play nice with complex filtering scenarios in rails can sometimes feel a bit like trying to herd cats. i’ve certainly spent a few late nights scratching my head over this one myself.
 
 first off, let’s tackle the core issue: meilisearch filters are designed to work with specific fields and values. they aren’t inherently built to handle filtering against a dynamic array. typically, you’d filter by something like `category = 'electronics'` or `price > 100`. when dealing with arrays, we need to be a bit more creative. think of it as crafting the query to ask meilisearch to look for documents where one of the many values in the array matches an indexed field.
 

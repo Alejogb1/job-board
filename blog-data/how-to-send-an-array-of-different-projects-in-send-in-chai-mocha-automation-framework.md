@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-send-an-array-of-different-projects-in-send-in-chai-mocha-automation-framework"
 ---
 
-alright, so you're looking to send an array of project data in your chai mocha tests, huh? i've been down this road more times than i care to remember. it's one of those things that sounds simple enough but can quickly turn into a debugging marathon if you're not careful. i remember back in the day, before node had half the tools it does now, i was dealing with a test suite that needed to hit a bunch of different endpoints with varying payloads. that's when i really started to appreciate the power of iterating through data sets.
+alright, so you're looking to send an array of project data in your chai mocha tests, right? i've been down this road more times than i care to remember. it's one of those things that sounds simple enough but can quickly turn into a debugging marathon if you're not careful. i remember back in the day, before node had half the tools it does now, i was dealing with a test suite that needed to hit a bunch of different endpoints with varying payloads. that's when i really started to appreciate the power of iterating through data sets.
 
 first off, let's be clear about what we're talking about. you've got an array, and each element in that array represents a project. each of these "project" elements, i'm guessing, is an object. these objects need to be sent in a request. think of the api endpoint as a conveyor belt, and we’re feeding it individual “project” boxes.
 

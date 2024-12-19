@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "verilog-bitwise-or-operator-definition"
 ---
 
-Okay so you're asking about the bitwise OR operator in Verilog huh I've been there man plenty of times wrestling with logic gates at 3 am because of something I overlooked with these simple operators Lets dive in
+Okay so you're asking about the bitwise OR operator in Verilog right I've been there man plenty of times wrestling with logic gates at 3 am because of something I overlooked with these simple operators Lets dive in
 
 It's a core part of Verilog so it's a fundamental to understand I'll give you my take based on how I've used it over the years and the gotchas I've personally run into so here we go
 

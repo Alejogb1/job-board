@@ -4,7 +4,7 @@ date: '2024-11-15'
 id: 'innovative-architectures-enhancing-performance'
 ---
 
-Hey there!  So you're interested in how to crank up performance, huh  That's a topic I geek out on too  There's a ton of cool stuff going on with architecture these days that can really make a difference  Let me break down a few things I've been playing with lately  
+Hey there!  So you're interested in how to crank up performance, right  That's a topic I geek out on too  There's a ton of cool stuff going on with architecture these days that can really make a difference  Let me break down a few things I've been playing with lately  
 
 First up, we gotta talk about **microservices**  They're like Lego blocks for your app  You break down your code into smaller, independent services  This makes it way easier to scale and update just the parts that need it  Think about it  If you have a huge monolithic app, fixing one bug could affect everything  Microservices keep things isolated  
 

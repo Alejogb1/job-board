@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "2101-find-abbreviation-zybooks-python"
 ---
 
-Okay so someone's wrestling with abbreviations in Zybooks Python huh I've been there trust me it's a classic case of "I have this string and I want to make it shorter but not like *that* shorter"
+Okay so someone's wrestling with abbreviations in Zybooks Python right I've been there trust me it's a classic case of "I have this string and I want to make it shorter but not like *that* shorter"
 
 Right so looking at the question "2101 find abbreviation zybooks python" screams that we’re dealing with Zybooks exercises most likely that whole auto-graded shebang where they're expecting a specific output format and if you're not spot on it's gonna mark you down brutal I've spent far too much time staring at those test cases cursing the precise formatting requirements but it's a necessary evil for learning the nitty gritty details I guess
 

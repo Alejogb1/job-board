@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "how-to-get-the-return-value-from-a-thread"
 ---
 
-Okay so you want to grab a return value from a thread huh been there done that many times let me tell you its not exactly straightforward when you're just starting out I've lost more than a few nights to this kind of thing believe me
+Okay so you want to grab a return value from a thread right been there done that many times let me tell you its not exactly straightforward when you're just starting out I've lost more than a few nights to this kind of thing believe me
 
 First off the core problem is that threads by their very nature operate concurrently they're off doing their own thing and they don't automatically hand back some results when they finish its not like a regular function call that gives you a value back on the spot You need some mechanism to receive that value after the thread has completed
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "insufficient-developer-role-instagram-api"
 ---
 
-Okay so you're hitting a wall with insufficient developer role permissions on the Instagram API huh Been there done that got the t-shirt probably have a few old projects rusting away in a GitHub repo because of it. Let's break this down it's a common enough problem and it usually stems from a few easily overlooked places I've messed this up so many times I'm basically a walking error code manual for this specific issue
+Okay so you're hitting a wall with insufficient developer role permissions on the Instagram API right Been there done that got the t-shirt probably have a few old projects rusting away in a GitHub repo because of it. Let's break this down it's a common enough problem and it usually stems from a few easily overlooked places I've messed this up so many times I'm basically a walking error code manual for this specific issue
 
 First things first its crucial to understand Instagram's API permissions model it's not a free for all they've got different levels for different use cases and if you are trying to do something your developer role doesn't allow yeah you're going to get this insufficient role error. We're talking permissions here not magic. So think of it like a VIP club where you need the right membership card to access certain areas. And getting that card is usually not straightforward sometimes it's harder than fixing a segfault in C at 3 am.
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "number-of-right-isosceles-triangles-in-a-rectangular-grid"
 ---
 
-Okay so you're asking about counting right isosceles triangles in a rectangular grid huh Been there done that got the t-shirt It’s one of those problems that seems simple at first then you start banging your head against the wall trying to figure out all the edge cases Believe me i've spent way too many late nights on this kind of stuff
+Okay so you're asking about counting right isosceles triangles in a rectangular grid right Been there done that got the t-shirt It’s one of those problems that seems simple at first then you start banging your head against the wall trying to figure out all the edge cases Believe me i've spent way too many late nights on this kind of stuff
 
 First off let's be clear what we mean by "right isosceles triangles" we're talking about triangles where one angle is 90 degrees and the two sides adjacent to that right angle are the same length right No tricks no complicated definitions that’s important when we try to calculate our count
 
@@ -55,7 +55,7 @@ def count_all_isosceles_triangles(n, m):
 
 So that is it. You now have the amount of isosceles triangles in a rectangular grid. This code is obviously not the most optimal right You might be able to do some kind of mathematical derivation to avoid the iterations but I'll leave that up to you and your brain cells.
 
-Now you want some resources instead of links huh I’ve been there i know the pain of having links that no longer work. If you want a deeper understanding of combinatorial mathematics i would suggest "Concrete Mathematics" by Graham Knuth and Patashnik. This book is like a treasure trove of techniques for tackling counting problems it’s quite an old book but has stood the test of time.
+Now you want some resources instead of links right I’ve been there i know the pain of having links that no longer work. If you want a deeper understanding of combinatorial mathematics i would suggest "Concrete Mathematics" by Graham Knuth and Patashnik. This book is like a treasure trove of techniques for tackling counting problems it’s quite an old book but has stood the test of time.
 
 Also for a more theoretical approach on geometric problems in general you can check out "Computational Geometry: Algorithms and Applications" by de Berg Cheong van Kreveld and Overmars I've spent countless hours reading that book. It's more focused on algorithms but understanding how algorithms work will help you understand the problem more.
 

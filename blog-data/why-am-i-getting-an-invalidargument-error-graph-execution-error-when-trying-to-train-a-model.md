@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-am-i-getting-an-invalidargument-error-graph-execution-error-when-trying-to-train-a-model"
 ---
 
-alright, so you're hitting an `invalidargument` error during model training, huh? that's a classic, i've been there more times than i'd like to remember. the "graph execution error" part is usually a giveaway that the issue lies within how your data is flowing through the computation graph you've built. think of it like a pipeline; if the pipes aren't correctly connected or if one of them is carrying the wrong stuff, things get messy quickly.
+alright, so you're hitting an `invalidargument` error during model training, right? that's a classic, i've been there more times than i'd like to remember. the "graph execution error" part is usually a giveaway that the issue lies within how your data is flowing through the computation graph you've built. think of it like a pipeline; if the pipes aren't correctly connected or if one of them is carrying the wrong stuff, things get messy quickly.
 
 from my experience, this error almost always boils down to data mismatch. typically, it's either the data type, shape, or a combination of both that your model's expecting vs what you are providing it. let's break this down a bit and see if we can find where your issue is lurking.
 

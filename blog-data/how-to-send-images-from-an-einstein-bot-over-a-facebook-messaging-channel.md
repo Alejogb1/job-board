@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-send-images-from-an-einstein-bot-over-a-facebook-messaging-channel"
 ---
 
-alright, so you're looking at sending images from an einstein bot over facebook messenger, huh? been there, done that, got the t-shirt – and probably a few gray hairs too. it's not as straightforward as just pointing and clicking, that's for sure. let me break down what i've learned from my own adventures in this particular rabbit hole, it wasn't pretty but let's talk about it.
+alright, so you're looking at sending images from an einstein bot over facebook messenger, right? been there, done that, got the t-shirt – and probably a few gray hairs too. it's not as straightforward as just pointing and clicking, that's for sure. let me break down what i've learned from my own adventures in this particular rabbit hole, it wasn't pretty but let's talk about it.
 
 i remember when i first tackled this, it was back when i was working on this chatbot for a small online pet store. they wanted customers to be able to send pictures of their pets to get recommendations on food and toys, and facebook was the main channel. naive me, i thought it would be a simple attachment thing, like email. boy, was i wrong. things never work out the way you initially planned, do they? well they rarely do, that's why you are here.
 

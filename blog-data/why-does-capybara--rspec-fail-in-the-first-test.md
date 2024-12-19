@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-does-capybara--rspec-fail-in-the-first-test"
 ---
 
-alright, so you’re seeing capybara and rspec failing on the very first test, huh? yeah, that’s a classic. been there, done that, got the t-shirt (and the stack traces to prove it). let's unpack this.
+alright, so you’re seeing capybara and rspec failing on the very first test, right? yeah, that’s a classic. been there, done that, got the t-shirt (and the stack traces to prove it). let's unpack this.
 
 first off, it's almost never capybara or rspec themselves being fundamentally broken. these tools are pretty solid. the problem usually stems from how they’re set up, or what they’re interacting with. it is very important to understand the context of these interactions.
 

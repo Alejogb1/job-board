@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-am-i-unable-to-open-a-model-loaded-into-github-with-git-lfs"
 ---
 
-so, you're having trouble opening a model pulled from github that's using git lfs, huh? i've been there, more times than i care to remember. it's one of those things that seems simple until it isn't. let me tell you, i've spent hours banging my head against the wall with this, so maybe i can save you some trouble.
+so, you're having trouble opening a model pulled from github that's using git lfs, right? i've been there, more times than i care to remember. it's one of those things that seems simple until it isn't. let me tell you, i've spent hours banging my head against the wall with this, so maybe i can save you some trouble.
 
 first off, let's get one thing straight: git lfs is not magic. it doesn't actually store the large files directly in your git repo. instead, it stores pointers to the actual files which are stashed away on a separate server. this is crucial to understanding why you're seeing issues. when you clone a repo using lfs, you're only initially getting those pointers not the actual model data.
 

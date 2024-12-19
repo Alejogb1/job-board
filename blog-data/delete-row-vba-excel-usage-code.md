@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "delete-row-vba-excel-usage-code"
 ---
 
-Alright so you're looking to delete rows in Excel using VBA huh been there done that a million times Seriously. Let me tell you I've wrestled with Excel's object model more than I'd like to admit. Back in the day when I was still learning the ropes I messed up a crucial sheet of sales data by thinking a simple delete function was well simple. Let's just say I learned a lot about error handling and backup practices that week.
+Alright so you're looking to delete rows in Excel using VBA right been there done that a million times Seriously. Let me tell you I've wrestled with Excel's object model more than I'd like to admit. Back in the day when I was still learning the ropes I messed up a crucial sheet of sales data by thinking a simple delete function was well simple. Let's just say I learned a lot about error handling and backup practices that week.
 
 The thing with deleting rows in VBA is it's not as straightforward as you might initially think. You can't just say "delete this row". Well you can but you've gotta know what you're doing and how Excel actually works under the hood. There are nuances and edge cases that'll bite you if you're not careful I've seen colleagues accidentally delete entire sheets because of a single line of code. It's not pretty. So yeah I've been in that fire let's call it experience.
 

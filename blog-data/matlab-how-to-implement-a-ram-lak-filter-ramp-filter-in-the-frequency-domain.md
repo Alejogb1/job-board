@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "matlab-how-to-implement-a-ram-lak-filter-ramp-filter-in-the-frequency-domain"
 ---
 
-Okay so you're asking how to do a Ram-Lak filter in MATLAB using the frequency domain huh? Classic image processing stuff Been there done that got the t-shirt and probably spilled coffee on it a few times let me tell you about it
+Okay so you're asking how to do a Ram-Lak filter in MATLAB using the frequency domain right? Classic image processing stuff Been there done that got the t-shirt and probably spilled coffee on it a few times let me tell you about it
 
 Right off the bat if you're trying to sharpen an image or do some sort of image reconstruction a Ram-Lak filter is often the go to Its basically a high pass filter that boosts high frequencies relative to low frequencies Its useful in situations where you want to enhance edges or features while suppressing smooth regions Think of it like this you're trying to bring the details to the forefront while ignoring the boring parts of an image
 

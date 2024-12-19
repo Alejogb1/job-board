@@ -4,7 +4,7 @@ date: "2024-12-03"
 id: "how-can-you-track-azure-openai-api-usage-and-token-performance-effectively"
 ---
 
-Hey so you wanna track your Azure OpenAI API usage and how well those tokens are doin huh That's a super important thing to keep an eye on especially if you're paying for it which you probably are It's not just about the money though Understanding your token performance helps you optimize your prompts make your models more efficient and generally avoid unexpected bills or performance issues Let's break it down
+Hey so you wanna track your Azure OpenAI API usage and how well those tokens are doin right That's a super important thing to keep an eye on especially if you're paying for it which you probably are It's not just about the money though Understanding your token performance helps you optimize your prompts make your models more efficient and generally avoid unexpected bills or performance issues Let's break it down
 
 First off you've gotta get the data Azure provides monitoring tools built right in They give you different views depending on what you care about cost consumption token counts response times you name it Think of it like a dashboard for your AI spending and activity
 

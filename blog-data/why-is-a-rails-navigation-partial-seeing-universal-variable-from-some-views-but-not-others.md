@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-is-a-rails-navigation-partial-seeing-universal-variable-from-some-views-but-not-others"
 ---
 
-alright, so you've got this rails app, and a navigation partial, classic stuff. it's working fine in some views, pulling in this universal variable like it's supposed to, but then in other views, it's just...gone. feels like you're talking to a wall, huh? i've been there, more times than i'd like to count. lets go step by step.
+alright, so you've got this rails app, and a navigation partial, classic stuff. it's working fine in some views, pulling in this universal variable like it's supposed to, but then in other views, it's just...gone. feels like you're talking to a wall, right? i've been there, more times than i'd like to count. lets go step by step.
 
 first, let's talk scope. in rails, variables are not globally available everywhere by default. it's not like javascript where things can sometimes end up hanging in the window scope. instead, variables have a defined scope. basically, where they were born decides if they can be seen in other places.
 

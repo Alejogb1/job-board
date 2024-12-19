@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-can-i-make-a-hole-at-a-specific-place-using-a-script-unity"
 ---
 
-well, so you're looking to punch a hole in something with a script in unity, huh? been there, done that, got the t-shirt—and probably a few scars from accidentally deleting the entire level mesh in the process.
+well, so you're looking to punch a hole in something with a script in unity, right? been there, done that, got the t-shirt—and probably a few scars from accidentally deleting the entire level mesh in the process.
 
 let’s break this down, because "making a hole" in unity isn't quite as straightforward as grabbing a drill. we're talking about manipulating meshes, and that can get a bit hairy if you're not careful. we're going to look at a few approaches, starting with the easiest and then move to the more complex ones. it really depends on what you're trying to do and how fancy you wanna get.
 

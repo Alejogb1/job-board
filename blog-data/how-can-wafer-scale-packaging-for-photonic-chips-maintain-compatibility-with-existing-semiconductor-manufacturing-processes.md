@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "how-can-wafer-scale-packaging-for-photonic-chips-maintain-compatibility-with-existing-semiconductor-manufacturing-processes"
 ---
 
-Okay so wafer-scale packaging for photonic chips huh  thats a biggie  right now we're kinda stuck with these individual chip packages its like Lego but way more expensive and fragile  We need to go bigger think wafer level  like  making a giant Lego castle instead of tiny little houses  but  keeping it compatible with the existing fab lines  that's the challenge right  
+Okay so wafer-scale packaging for photonic chips right  thats a biggie  right now we're kinda stuck with these individual chip packages its like Lego but way more expensive and fragile  We need to go bigger think wafer level  like  making a giant Lego castle instead of tiny little houses  but  keeping it compatible with the existing fab lines  that's the challenge right  
 
 The main issue is the difference in how photonic and electronic chips are made  electronics are all about tiny transistors and those are made using very mature processes  lithography etching  all that jazz  Photonic chips on the other hand they're more about waveguides and other optical elements often needing different materials and fabrication techniques maybe some specialized deposition processes or something  So the question becomes how to integrate these disparate processes without blowing the whole thing up  or creating a mess  or slowing things down way too much
 

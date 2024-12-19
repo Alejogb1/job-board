@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "qnetworkreply-no-statuscode-or-error-but-failing"
 ---
 
-Okay so you're hitting that classic qnetworkreply black hole huh No status code no error just *poof* Your request went into the void I've seen this movie so many times it's practically a documentary at this point Let me walk you through what's likely going on and how I've tackled this gremlin in the past
+Okay so you're hitting that classic qnetworkreply black hole right No status code no error just *poof* Your request went into the void I've seen this movie so many times it's practically a documentary at this point Let me walk you through what's likely going on and how I've tackled this gremlin in the past
 
 First off the fact that you're not getting a status code or an error is actually pretty informative It means the lower-level networking stuff is likely okay The TCP handshake probably completed the connection was established and data was at least partially transmitted before things went haywire It's not a DNS issue or a firewall actively blocking you those usually throw explicit errors
 

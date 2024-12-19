@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "godot-error-class-recipe-hides-a-global-script-class"
 ---
 
-Okay so you're hitting that "Godot class recipe hiding global script" thing huh I know that one all too well Been there debugged that got the t-shirt and probably still have the scars I swear this feels like it's a rite of passage for every Godot dev eventually they stumble on this class recipe gotcha
+Okay so you're hitting that "Godot class recipe hiding global script" thing right I know that one all too well Been there debugged that got the t-shirt and probably still have the scars I swear this feels like it's a rite of passage for every Godot dev eventually they stumble on this class recipe gotcha
 
 Let me break it down for you from my experience and we'll see if we can sort you out You're using class recipes which are like a way to create new types of nodes with custom code right and you have a global script that you've defined somewhere likely for helper functions or just general utility code
 

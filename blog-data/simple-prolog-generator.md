@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "simple-prolog-generator"
 ---
 
-Okay so a simple Prolog generator huh Been there done that Got my hands dirty with this kind of thing way back when we were still arguing about whether tabs or spaces were the real deal You know the usual programmer debates Anyway lets talk Prolog generators because I've wrestled with this beast before and lived to tell the tale
+Okay so a simple Prolog generator right Been there done that Got my hands dirty with this kind of thing way back when we were still arguing about whether tabs or spaces were the real deal You know the usual programmer debates Anyway lets talk Prolog generators because I've wrestled with this beast before and lived to tell the tale
 
 So you want a program that spits out Prolog code programmatically Makes sense Its a powerful thing to have especially when you are doing some sort of metaprogramming or trying to generate a large knowledge base dynamically I've actually used this in a project where I was trying to model a complex scheduling problem with lots of constraints and writing the entire Prolog by hand was just not feasible
 

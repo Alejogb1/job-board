@@ -75,7 +75,7 @@ This uses the `bertopic` library for topic modeling  it's a relatively new but p
 
 For the theory behind topic modeling  "Introduction to Information Retrieval" by Manning, Raghavan, and Schütze is an excellent resource  it covers LDA and other related techniques in detail  also  search for papers on "topic modeling for social media"  lots of relevant work out there
 
-So that's the basic idea  preprocess the data  summarize it using an LLM  then use other NLP techniques to extract insights  It's a multi-step process  but the results are worth it  imagine automatically getting daily summaries of your Discord server  highlighting important discussions  action items  and even potential issues  pretty neat huh
+So that's the basic idea  preprocess the data  summarize it using an LLM  then use other NLP techniques to extract insights  It's a multi-step process  but the results are worth it  imagine automatically getting daily summaries of your Discord server  highlighting important discussions  action items  and even potential issues  pretty neat right
 
 Remember  this is a high-level overview  there are a lot of details and optimizations you can explore  experiment with different models  preprocessing techniques  and parameter settings to get the best results for your specific needs  there are countless tweaks and parameters you can adjust in each step of the process for optimizing your desired outcome
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "618-lab-word-frequencies-python-code"
 ---
 
-Okay so you're tackling the classic word frequency problem with Python huh I've been there believe me So 618 lab you say I guess that means you're in some sort of intro CS course Maybe its Data Structures or something anyway I know this problem inside and out it's a rite of passage for anyone getting into programming particularly with text analysis
+Okay so you're tackling the classic word frequency problem with Python right I've been there believe me So 618 lab you say I guess that means you're in some sort of intro CS course Maybe its Data Structures or something anyway I know this problem inside and out it's a rite of passage for anyone getting into programming particularly with text analysis
 
 Let's break it down I've seen countless variations of this over the years starting from my own early struggles with C++ before I even touched Python good times or rather not so good at the time
 

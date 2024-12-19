@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "660003-sap-b1-error-code"
 ---
 
-Okay so you're wrestling with the dreaded 66000/3 error in SAP Business One huh Been there done that got the t-shirt and probably a few stress-induced grey hairs trying to figure this one out let me tell you I've seen this error pop up more times than I care to remember and it's always a fun little puzzle to solve
+Okay so you're wrestling with the dreaded 66000/3 error in SAP Business One right Been there done that got the t-shirt and probably a few stress-induced grey hairs trying to figure this one out let me tell you I've seen this error pop up more times than I care to remember and it's always a fun little puzzle to solve
 
 So first off 66000 generally speaking in SAP B1 usually points to a problem with data access a sort of generic "something went wrong fetching this" kind of error you know kind of the catch all for all things database related The /3 part specifically is where things get a little more interesting it's more often than not a permissions issue within the database itself that SAP B1 is using
 

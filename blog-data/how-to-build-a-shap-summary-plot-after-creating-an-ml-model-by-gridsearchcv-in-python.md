@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-build-a-shap-summary-plot-after-creating-an-ml-model-by-gridsearchcv-in-python"
 ---
 
-alright, so you're banging your head against the wall trying to get a shap summary plot after using gridsearchcv, huh? i've been there, more times than i care to remember. it’s like, you finally get your model trained, feel a sense of victory, and then… shap throws a curveball. no worries, we’ll sort it out.
+alright, so you're banging your head against the wall trying to get a shap summary plot after using gridsearchcv, right? i've been there, more times than i care to remember. it’s like, you finally get your model trained, feel a sense of victory, and then… shap throws a curveball. no worries, we’ll sort it out.
 
 i recall one particularly grueling project back when i was still a fresh-faced grad student (okay, maybe not so fresh-faced, but definitely less grizzled). it was a classification problem, predicting some obscure scientific thing-a-ma-jig, i don't really remember, using like 100 features, and of course the professor insisted on using grid search because, well, that's what professors do. i had finally gotten the damn grid search to finish and give me the best estimator. i was feeling pretty good about myself, ready for a beer, and then the moment of truth to see which features were actually important and bam! shap blew up on me! it was returning me some weird object, not the plot i was expecting. let me just say i spent an entire night and most of the next day debugging. i almost went crazy. it turned out the problem wasn't with shap itself (mostly) but rather how the best_estimator from gridsearchcv is a pipeline, and shap needs the actual fitted model.
 

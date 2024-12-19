@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-does-a-rails-named-scope-fail-to-receive-arguments-in-an-rspec-test-case-after-updating-to-rails-528"
 ---
 
-so, you've bumped into the classic rails 5.2.8 named scope argument mystery, huh? yeah, i've been there, wrestled with it myself a few times. it's one of those things that can have you scratching your head, especially when your tests were all green before the upgrade. let me walk you through what's probably happening and how i've tackled this in the past.
+so, you've bumped into the classic rails 5.2.8 named scope argument mystery, right? yeah, i've been there, wrestled with it myself a few times. it's one of those things that can have you scratching your head, especially when your tests were all green before the upgrade. let me walk you through what's probably happening and how i've tackled this in the past.
 
 basically, before rails 5.2.8, named scopes had a bit of a relaxed approach to argument handling, particularly within the context of rspec tests. it's as if they were quite happy to just take whatever was passed to them, more or less. think of it like this, imagine passing a slightly incorrect formatted email to your mail client, older versions of the email client would try their best to send the email anyway. post 5.2.8 though rails tightened up the screws. now, it expects arguments to be passed exactly how they were defined in your model. if not, it throws a fit or worse silently fails and your tests suddenly go red for no apparent reason.
 

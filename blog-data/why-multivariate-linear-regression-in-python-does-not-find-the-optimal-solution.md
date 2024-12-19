@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-multivariate-linear-regression-in-python-does-not-find-the-optimal-solution"
 ---
 
-so, you’re having trouble with your multivariate linear regression not hitting that sweet spot, huh? i’ve been there, trust me. it’s like chasing a phantom bug, you tweak and tweak, but it just doesn’t quite land. let me share what i’ve picked up from my past scrapes with this, and hopefully, it'll shed some light on what you might be experiencing.
+so, you’re having trouble with your multivariate linear regression not hitting that sweet spot, right? i’ve been there, trust me. it’s like chasing a phantom bug, you tweak and tweak, but it just doesn’t quite land. let me share what i’ve picked up from my past scrapes with this, and hopefully, it'll shed some light on what you might be experiencing.
 
 first, let’s clarify: ‘optimal’ in linear regression typically means finding the parameters (the coefficients) that minimize some cost function, usually the mean squared error (mse). the standard approach in python uses methods like ordinary least squares (ols), which have analytical solutions. in theory these should find the global minimum if the assumptions are met. so, when it doesn’t, it's not like the algorithm just decided to go for a coffee break. there are typically some practical reasons that tend to be lurking behind.
 

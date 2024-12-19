@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "extended-functionality-software-design-explanation"
 ---
 
-Okay so extended functionality software design huh Been there done that got the t-shirt Well several t-shirts actually dealing with this kind of stuff I’ve seen it all from monolithic disasters that crashed if you looked at them wrong to microservices that talked so much they made your network cry
+Okay so extended functionality software design right Been there done that got the t-shirt Well several t-shirts actually dealing with this kind of stuff I’ve seen it all from monolithic disasters that crashed if you looked at them wrong to microservices that talked so much they made your network cry
 
 Let me give you a rundown from a trenches perspective because theoretical textbook answers are fun and all but we are here for real-world scars
 

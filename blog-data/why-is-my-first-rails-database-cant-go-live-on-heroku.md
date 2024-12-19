@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-is-my-first-rails-database-cant-go-live-on-heroku"
 ---
 
-so, your rails app's database isn't playing ball with heroku, huh? i've been there, spent way too many late nights staring at cryptic heroku logs. let's break it down, this is usually a mix of a few common culprits and i've probably seen all of them at some point in my career, which is longer than i'd care to disclose.
+so, your rails app's database isn't playing ball with heroku, right? i've been there, spent way too many late nights staring at cryptic heroku logs. let's break it down, this is usually a mix of a few common culprits and i've probably seen all of them at some point in my career, which is longer than i'd care to disclose.
 
 first off, let's talk about the database itself. heroku doesn't just magically know about your local postgres setup. usually, you're using sqlite in development, which is perfect for getting things rolling fast, but it's a no-go for production on heroku. it's a different system, so the connection stuff is all different. heroku expects you to use postgres, and they provide a managed postgres service (or you can bring your own, but let's keep it simple).
 

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-can-i-use-cairo-to-replace-ggplot-graphics-in-powerbi"
 ---
 
-well, this is a fun one. i've been down this rabbit hole before, trying to get the crispness and flexibility of custom graphics into places they just weren't designed for. powerbi, lovely as it is for dashboards, really does box you in when it comes to visualisations beyond the basic chart types. ggplot, of course, gives you incredible power, but its reliance on r or python makes it tricky to directly inject into a powerbi workflow. so, you're thinking of using cairo instead, huh? i like the cut of your jib.
+well, this is a fun one. i've been down this rabbit hole before, trying to get the crispness and flexibility of custom graphics into places they just weren't designed for. powerbi, lovely as it is for dashboards, really does box you in when it comes to visualisations beyond the basic chart types. ggplot, of course, gives you incredible power, but its reliance on r or python makes it tricky to directly inject into a powerbi workflow. so, you're thinking of using cairo instead, right? i like the cut of your jib.
 
 cairo, for those who aren't completely familiar, is a 2d graphics library that's been around a while, and it's seriously powerful. it’s not exactly a drop-in replacement for ggplot, mind you, but it gives you the low-level control over rendering that can achieve pretty much anything you can imagine. the key here isn't about direct compatibility; it's about translating the *intent* of a ggplot plot into cairo's primitives.
 

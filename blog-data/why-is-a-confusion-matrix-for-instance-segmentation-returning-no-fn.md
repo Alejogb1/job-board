@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-is-a-confusion-matrix-for-instance-segmentation-returning-no-fn"
 ---
 
-hey, so you're seeing no false negatives (fn) in your confusion matrix for instance segmentation, huh? that's a bit... unusual. i've been down that road, trust me. it usually points to a problem with how you're calculating things, not necessarily that your model is *that* perfect. let's break it down.
+hey, so you're seeing no false negatives (fn) in your confusion matrix for instance segmentation, right? that's a bit... unusual. i've been down that road, trust me. it usually points to a problem with how you're calculating things, not necessarily that your model is *that* perfect. let's break it down.
 
 first things first, instance segmentation is more complex than simple classification or even semantic segmentation. we are dealing with multiple objects, their masks *and* their classification. this means we have to keep track of *object matching*, and this is where the fn can easily go missing if you're not careful.
 

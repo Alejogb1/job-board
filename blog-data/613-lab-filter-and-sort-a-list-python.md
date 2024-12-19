@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "613-lab-filter-and-sort-a-list-python"
 ---
 
-Okay so you’re looking at filtering and sorting a list in Python huh I've been there more times than I can count it's a bread-and-butter task really you see this pattern everywhere. Honestly I think I've written variations of this problem probably since Python 2 days back when we had those weird lambda functions everywhere and print statements that weren’t functions I'm getting flashbacks.
+Okay so you’re looking at filtering and sorting a list in Python right I've been there more times than I can count it's a bread-and-butter task really you see this pattern everywhere. Honestly I think I've written variations of this problem probably since Python 2 days back when we had those weird lambda functions everywhere and print statements that weren’t functions I'm getting flashbacks.
 
 Okay so here’s the deal you've got a list you want to cherry-pick certain elements based on a condition then you want those cherry-picked elements nicely organized in some order typically ascending or descending numerical or alphabetical you know the drill.
 

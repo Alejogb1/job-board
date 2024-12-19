@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "how-to-inspect-incoming-tcp-and-ip-headers-ebpf"
 ---
 
-Okay so you wanna get down and dirty with inspecting TCP and IP headers using eBPF huh been there done that plenty of times its like trying to understand a really messed up network conversation in real time but super fascinating once you get the hang of it
+Okay so you wanna get down and dirty with inspecting TCP and IP headers using eBPF right been there done that plenty of times its like trying to understand a really messed up network conversation in real time but super fascinating once you get the hang of it
 
 Alright so first things first eBPF Extended Berkeley Packet Filter its the cool kid on the block for doing all sorts of kernel level networking magic its not your grandma's packet filtering this is deep dives into packet data without even needing to copy it to user space which is insane efficiency for our use case and very good if you are dealing with low-latency stuff and you are basically working on baremetal environments
 

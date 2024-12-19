@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "416-lab-warm-up-drawing-a-right-triangle-coding"
 ---
 
-Alright so you're looking to draw a right triangle using code huh been there done that countless times. I remember back in college when we had to do this for graphics class man that was a trip we were using like really low level stuff then and now we got these fancy libraries. We're not talking about complex 3D rendering or anything just your basic right triangle. This thing is fundamentally basic like a "Hello World" of geometric programming. So I get your question.
+Alright so you're looking to draw a right triangle using code right been there done that countless times. I remember back in college when we had to do this for graphics class man that was a trip we were using like really low level stuff then and now we got these fancy libraries. We're not talking about complex 3D rendering or anything just your basic right triangle. This thing is fundamentally basic like a "Hello World" of geometric programming. So I get your question.
 
 Okay first thing first we need to figure out what you want to use for the rendering right some people use canvas others want terminal outputs others are in game engines. So let's go through a couple of options here.
 

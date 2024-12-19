@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-am-i-getting-a-conflicting-implementation-for-a-trait-on-different-contents-of-a-vector"
 ---
 
-alright, so you're running into that classic trait implementation conflict when dealing with vectors, huh? i've been there, trust me. it's one of those things that seems straightforward at first glance but can turn into a headache pretty quickly.
+alright, so you're running into that classic trait implementation conflict when dealing with vectors, right? i've been there, trust me. it's one of those things that seems straightforward at first glance but can turn into a headache pretty quickly.
 
 the core issue, from my experience, is that rust's trait system is incredibly powerful, but it’s also very explicit. when you’re dealing with a vector (or any generic container, really), the compiler needs to know exactly which trait implementations apply. when you're getting a conflict, it usually means you've inadvertently given the compiler multiple paths to implement a trait for the same type, and it's throwing its hands up in exasperation. i've spent my fair share of late nights staring at similar errors.
 

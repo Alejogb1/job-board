@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "generating-random-numbers-in-verilog"
 ---
 
-Okay so you're asking about random number generation in Verilog huh Yeah I've been down that rabbit hole a few times lets just say it wasn't always pretty
+Okay so you're asking about random number generation in Verilog right Yeah I've been down that rabbit hole a few times lets just say it wasn't always pretty
 
 Alright lets break this down we're dealing with hardware description language here which is a very different beast from say Python or Java the idea of "random" is a bit more nuanced it's not like you have some magic `random()` function at your disposal things are generally more deterministic which makes it a challenge you're not getting true randomness like from atmospheric noise or radioactive decay we're talking pseudorandom numbers from a mathematical algorithm which is good enough for most use cases
 

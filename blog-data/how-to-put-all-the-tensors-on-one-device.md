@@ -28,7 +28,7 @@ print(tensor1.device)
 print(tensor2.device)
 ```
 
-pretty simple, huh? just call `to()` and everything ends up in the target device. this example assumes that you are running pytorch and have a gpu available. if you do not, both tensors will be sitting in cpu, same principle applies.
+pretty simple, right? just call `to()` and everything ends up in the target device. this example assumes that you are running pytorch and have a gpu available. if you do not, both tensors will be sitting in cpu, same principle applies.
 
 the important bit to remember, here, is that you need to track the device you are moving to. it's very easy to assume it's just gonna magically end up on the gpu. in practice, you must make sure that the target device is actually accessible, and that you have the correct device string or object in the first place. also, consider where it would be wise to move a tensor. i've seen projects where folks moved entire datasets to the gpu, which often crashes the thing since the memory footprint is way too large. so, do consider the tensor size and device memory when choosing the target location. there is some wisdom in moving just the working batch and not the whole dataset at once.
 

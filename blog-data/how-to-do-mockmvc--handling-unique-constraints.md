@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-do-mockmvc--handling-unique-constraints"
 ---
 
-so, you're hitting that fun wall with `mockmvc` and unique constraints, huh? i've been there, many times. it's a classic "testing-the-edge-cases" scenario. it usually surfaces when you're trying to simulate concurrent requests or just trying to make sure your api doesn't let duplicates slip through.
+so, you're hitting that fun wall with `mockmvc` and unique constraints, right? i've been there, many times. it's a classic "testing-the-edge-cases" scenario. it usually surfaces when you're trying to simulate concurrent requests or just trying to make sure your api doesn't let duplicates slip through.
 
 my first time encountering this was back in the early days of a project building a user registration system. we were using spring boot and, of course, `mockmvc` for our tests. everything seemed to work perfectly until, boom, we started seeing weird database exceptions on our integration tests. turns out, we weren't properly handling the unique constraint on the email field. it was a good lesson in how easily things can go wrong.
 

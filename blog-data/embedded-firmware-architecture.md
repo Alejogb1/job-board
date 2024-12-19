@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "embedded-firmware-architecture"
 ---
 
-Alright so embedded firmware architecture huh Been there done that got the t-shirt several t-shirts actually Lets dive in
+Alright so embedded firmware architecture right Been there done that got the t-shirt several t-shirts actually Lets dive in
 
 First off its not exactly a monolithic thing there is no single best architecture it really depends on the project the hardware the team size all that jazz I've seen some absolute monstrosities and some elegant designs Its not a one size fits all situation and anyone telling you that probably hasnt dealt with a real embedded system.
 

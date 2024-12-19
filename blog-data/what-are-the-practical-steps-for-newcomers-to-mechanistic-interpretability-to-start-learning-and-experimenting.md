@@ -4,7 +4,7 @@ date: "2024-12-11"
 id: "what-are-the-practical-steps-for-newcomers-to-mechanistic-interpretability-to-start-learning-and-experimenting"
 ---
 
-Okay so you wanna dive into mechanistic interpretability huh cool  It's a wild ride trust me  Feels like decoding alien tech sometimes but super rewarding  So where do you even begin  Well forget those fancy online courses for now  They'll come later  Let's get our hands dirty first
+Okay so you wanna dive into mechanistic interpretability right cool  It's a wild ride trust me  Feels like decoding alien tech sometimes but super rewarding  So where do you even begin  Well forget those fancy online courses for now  They'll come later  Let's get our hands dirty first
 
 First thing's first you need a solid foundation in  well a few things actually  Linear algebra is your bread and butter  Seriously get comfy with matrices vectors transformations the whole shebang  Strang's *Introduction to Linear Algebra* is your bible  No shortcuts here  Then you gotta get friendly with calculus  Derivatives integrals gradients  All that good stuff  Again gotta be solid  Stewart's *Calculus* is a classic  And finally probability and statistics  Bayes theorem  distributions  hypothesis testing  All that jazz  Think of *All of Statistics* by Larry Wasserman as your guide
 

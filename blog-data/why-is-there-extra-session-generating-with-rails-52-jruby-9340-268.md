@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-is-there-extra-session-generating-with-rails-52-jruby-9340-268"
 ---
 
-alright, so you're seeing extra sessions popping up with rails 5.2 and jruby 9.3.4.0 (that’s basically ruby 2.6.8 compat), huh? yeah, i've been there, battled with that beast myself a while back. it’s not exactly a straightforward problem, and it took me a fair amount of head scratching to get to the bottom of it. let me lay out what i learned and maybe it will save you some time.
+alright, so you're seeing extra sessions popping up with rails 5.2 and jruby 9.3.4.0 (that’s basically ruby 2.6.8 compat), right? yeah, i've been there, battled with that beast myself a while back. it’s not exactly a straightforward problem, and it took me a fair amount of head scratching to get to the bottom of it. let me lay out what i learned and maybe it will save you some time.
 
 first off, it’s not typically a rails core issue, especially if you're not seeing this behavior with standard ruby. the problem usually stems from how jruby interacts with rack and the underlying java servlet container, things that are often different than normal ruby. you end up with subtle differences in session handling that manifest as these ghost sessions.
 

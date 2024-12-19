@@ -4,7 +4,7 @@ date: "2024-12-03"
 id: "how-can-issues-with-zapier-automation-for-extracting-text-from-pdfs-be-resolved"
 ---
 
-Hey so you're having trouble with Zapier and PDF text extraction huh  That's a super common problem actually  Zapier's great for connecting stuff but its PDF handling can be a bit flaky sometimes  There are a few things we can look at to troubleshoot this  It all boils down to how Zapier handles the PDF and what kind of PDF you're working with
+Hey so you're having trouble with Zapier and PDF text extraction right  That's a super common problem actually  Zapier's great for connecting stuff but its PDF handling can be a bit flaky sometimes  There are a few things we can look at to troubleshoot this  It all boils down to how Zapier handles the PDF and what kind of PDF you're working with
 
 First off  the quality of the PDF itself is huge  If your PDF is scanned  like an image of a page rather than a text-based document  Zapier's going to have a really hard time extracting text because it's essentially trying to read an image  Think of it like trying to read a photo of a newspaper  you can kind of do it but its gonna be a mess  For scanned PDFs you really need OCR Optical Character Recognition software which converts images of text into actual text  Many OCR services exist but if you want to do it yourself  consider Tesseract OCR it's open source and pretty powerful  You might find some research papers on its accuracy and performance by searching for "Tesseract OCR accuracy benchmarking" in your favorite academic search engine
 

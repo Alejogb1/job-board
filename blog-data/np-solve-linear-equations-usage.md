@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "np-solve-linear-equations-usage"
 ---
 
-Alright so you're asking about `np.linalg.solve` usage huh Okay I've been down that rabbit hole more times than I care to admit. Linear equations are a staple in like basically everything in the tech world so yeah lets get to it I'm gonna try and break it down in a way that's not going to make your head spin or at least I'll try
+Alright so you're asking about `np.linalg.solve` usage right Okay I've been down that rabbit hole more times than I care to admit. Linear equations are a staple in like basically everything in the tech world so yeah lets get to it I'm gonna try and break it down in a way that's not going to make your head spin or at least I'll try
 
 First off `np.linalg.solve` is your go-to for solving systems of linear equations using NumPy. It's like the workhorse of this kind of stuff. It's basically taking a system of equations that look like this Ax = b where A is the matrix of coefficients x is the vector of unknowns you're solving for and b is the vector of constants. `np.linalg.solve` figures out x for you. Pretty neat right
 
@@ -27,7 +27,7 @@ x = np.linalg.solve(A, b)
 print(x) # Output: [2. 3.]
 ```
 
-See it's like magic huh? In this example we have a system of two equations:
+See it's like magic right? In this example we have a system of two equations:
 
 * 3x + y = 9
 * x + 2y = 8

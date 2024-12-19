@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "dynamo-local-from-node-aws-all-operations-fail-cannot-do-operations-on-a-non-e"
 ---
 
-Okay so you're saying you’re wrestling with DynamoDB local from node.js huh? And everything's just crashing and burning because you're hitting this “cannot do operations on a non e” error. Yep. I've been there. Got the battle scars to prove it. Seen it all man. So listen up.
+Okay so you're saying you’re wrestling with DynamoDB local from node.js right? And everything's just crashing and burning because you're hitting this “cannot do operations on a non e” error. Yep. I've been there. Got the battle scars to prove it. Seen it all man. So listen up.
 
 First off “non e” is dynamodb’s way of telling you that something about your endpoint configuration is messed up. Think of it like a phone number thats not connected. You're calling but nobody is picking up or its not ringing at all. I spent a week once debugging this kind of nonsense and it turns out i just had some stupid typo in a serverless yaml configuration.
 

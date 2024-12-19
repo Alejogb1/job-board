@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "what-is-a-good-project-using-machine-learning-for-optimization"
 ---
 
-alright, so you're looking for a good ml project focusing on optimization, huh? i've been around the block a few times with these sorts of things, and i've got a few ideas bubbling up from the old memory banks. it's less about some grandiose, groundbreaking invention and more about getting hands-on with the core concepts. it's about truly understanding how ml can effectively improve existing processes, you know? not trying to recreate the wheel.
+alright, so you're looking for a good ml project focusing on optimization, right? i've been around the block a few times with these sorts of things, and i've got a few ideas bubbling up from the old memory banks. it's less about some grandiose, groundbreaking invention and more about getting hands-on with the core concepts. it's about truly understanding how ml can effectively improve existing processes, you know? not trying to recreate the wheel.
 
 first off, let’s think about where ml shines in optimization tasks. we’re talking about scenarios where you have a goal you want to achieve, and you have multiple variables that influence how well you reach that goal, but those variables interact in complex ways. it's not always clear which combination of variables is the best. that's where ml comes in. ml models, especially the regression kind, can learn these relationships from data and then propose better configurations of those variables.
 

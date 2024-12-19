@@ -4,7 +4,7 @@ date: "2024-12-03"
 id: "what-tools-are-recommended-for-generating-social-media-posters-using-ai"
 ---
 
-Hey so you wanna make killer social media posters with AI huh cool beans
+Hey so you wanna make killer social media posters with AI right cool beans
 
 Lotsa options out there its a wild west right now everyone's jumping on the bandwagon  but lemme give you the lowdown on what I've messed around with and what I think is actually useful
 

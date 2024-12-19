@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "db-implementation-how-to-start"
 ---
 
-Okay so you want to dive into database implementation huh Been there done that a few times trust me it's a wild ride but a super rewarding one if you're into that sort of thing.
+Okay so you want to dive into database implementation right Been there done that a few times trust me it's a wild ride but a super rewarding one if you're into that sort of thing.
 
 First off forget everything you think you know about using databases seriously forget it because you are going to be neck deep in how they work which is a whole different ball game. It's like the difference between driving a car and building the engine.
 

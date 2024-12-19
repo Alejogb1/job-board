@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "lag-in-sas-function-usage"
 ---
 
-Okay so lag in SAS function usage huh been there done that got the t-shirt or more accurately the slightly frayed keyboard I’ve smashed in frustration over slow SAS jobs So yeah I get it you’re running some SAS code and the LAG function is making things feel like molasses in January it’s a classic problem and let me tell you I’ve wrestled with this beast more times than I care to admit
+Okay so lag in SAS function usage right been there done that got the t-shirt or more accurately the slightly frayed keyboard I’ve smashed in frustration over slow SAS jobs So yeah I get it you’re running some SAS code and the LAG function is making things feel like molasses in January it’s a classic problem and let me tell you I’ve wrestled with this beast more times than I care to admit
 
 First things first when we say lag we’re talking about accessing values from previous rows right It’s a common need in time series analysis or anytime you need to compare a current observation to what came before But the way SAS handles it sometimes well it’s not exactly a speed demon especially if you’re dealing with large datasets or complex logic and the problems start there so let me take you back to the dark ages of my early SAS days I was building this complex financial model for a client a monster of a dataset millions of records you know the type and I naively thought hey LAG should do the trick right
 

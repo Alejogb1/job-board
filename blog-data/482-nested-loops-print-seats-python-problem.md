@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "482-nested-loops-print-seats-python-problem"
 ---
 
-Okay so you're wrestling with nested loops and seat printing in Python huh Been there done that I remember back in my early days before the whole "cloud" thing took off I was managing a physical server farm Yeah actual servers not VMs or containers That thing had a console that looked like it came from a 1980s sci-fi movie anyway that job involved a whole lot of physical space planning and believe it or not nested loops were my best friend for figuring out where to put new servers and cables it's a bit like theater seating but with less drama and more blinking lights
+Okay so you're wrestling with nested loops and seat printing in Python right Been there done that I remember back in my early days before the whole "cloud" thing took off I was managing a physical server farm Yeah actual servers not VMs or containers That thing had a console that looked like it came from a 1980s sci-fi movie anyway that job involved a whole lot of physical space planning and believe it or not nested loops were my best friend for figuring out where to put new servers and cables it's a bit like theater seating but with less drama and more blinking lights
 
 So let's break down this nested loop seat printing problem it's not rocket science its just good ol' iteration and a little bit of formatting The core idea is that you've got this two dimensional structure rows and columns Think of a theater or maybe an airplane Each row has multiple seats or columns And that's where our nested loops come in handy The outer loop will usually take care of the rows and the inner loop will iterate through the columns in each row
 

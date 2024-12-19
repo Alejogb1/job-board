@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "520-lab-brute-force-equation-solver-zybooks"
 ---
 
-Alright so you're looking at a brute force equation solver specifically in the context of zybooks 520 lab huh Been there done that let me tell you I've wrestled with my fair share of zybooks labs over the years especially the ones that require a bit of computational grunt like a brute force approach
+Alright so you're looking at a brute force equation solver specifically in the context of zybooks 520 lab right Been there done that let me tell you I've wrestled with my fair share of zybooks labs over the years especially the ones that require a bit of computational grunt like a brute force approach
 
 This 520 lab if I recall correctly is typically a situation where you've got some equation maybe a polynomial maybe something a little more obscure and you're tasked with finding integer solutions for it Because the search space is usually constrained it lends itself pretty well to a brute force solution You could try more advanced methods but for this specific task it's generally overkill besides the lab is usually designed for a brute force approach to build the fundamental concept into new programmers
 

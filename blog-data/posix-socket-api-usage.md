@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "posix-socket-api-usage"
 ---
 
-Alright so you're asking about the POSIX socket API usage huh Been there done that got the t-shirt and probably a few lingering network errors to prove it I've spent way too many late nights wrestling with those damn things believe me
+Alright so you're asking about the POSIX socket API usage right Been there done that got the t-shirt and probably a few lingering network errors to prove it I've spent way too many late nights wrestling with those damn things believe me
 
 Let me break it down from a real trenches perspective I mean we're talking about the bedrock of network communication here sockets man sockets
 

@@ -4,7 +4,7 @@ date: "2024-12-12"
 id: "what-is-the-significance-of-cudas-backward-compatibility-in-maintaining-nvidias-dominance-and-how-could-this-affect-competition-in-the-gpu-market"
 ---
 
-Hey there!  So you're curious about CUDA and Nvidia's stranglehold on the GPU market, huh?  That's a really interesting question, and it gets into some seriously fascinating stuff about software, hardware, and the power of `network effects`. Let's dive in!
+Hey there!  So you're curious about CUDA and Nvidia's stranglehold on the GPU market, right?  That's a really interesting question, and it gets into some seriously fascinating stuff about software, hardware, and the power of `network effects`. Let's dive in!
 
 We all know Nvidia makes killer GPUs, right?  But it's not just about the silicon itself. A huge part of their success is their CUDA platform.  Think of CUDA as the language GPUs speak – it's the software framework that lets programmers tap into the massive parallel processing power of Nvidia's cards. And this is where the backward compatibility really comes into play.
 

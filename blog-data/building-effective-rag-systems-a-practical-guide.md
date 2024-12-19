@@ -4,7 +4,7 @@ date: "2024-11-16"
 id: "building-effective-rag-systems-a-practical-guide"
 ---
 
-dude so i just watched this killer talk on rag optimization—retrieval augmented generation—and it was seriously mind-blowing  they basically broke down how to build these super smart ai systems that answer questions using a giant knowledge base  think of it like having a personal research assistant that can pull info from a massive library and give you the perfect answer instantly  pretty cool huh
+dude so i just watched this killer talk on rag optimization—retrieval augmented generation—and it was seriously mind-blowing  they basically broke down how to build these super smart ai systems that answer questions using a giant knowledge base  think of it like having a personal research assistant that can pull info from a massive library and give you the perfect answer instantly  pretty cool right
 
 the whole thing was super casual—like two friends chatting about tech—but they packed in a ton of awesome stuff so let's break it down  they started by showing a slide that looked like a circuit board exploded but that's basically the architecture of rag the core idea is pretty simple you've got your question you search a giant database for related stuff and then a fancy language model like gpt-3 spits out an answer based on the search results  seems easy right  well it's not that simple
 

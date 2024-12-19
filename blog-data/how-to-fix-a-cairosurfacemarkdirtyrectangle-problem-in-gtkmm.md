@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-fix-a-cairosurfacemarkdirtyrectangle-problem-in-gtkmm"
 ---
 
-alright, so you're banging your head against cairo_surface_mark_dirty_rectangle in gtkmm, huh? i feel your pain, i've been there, done that, got the t-shirt that's stained with frustrated tears and probably a little bit of pizza sauce from late-night debugging sessions. let me break down what i've learned from past battles with this particular beast, and hopefully, we can get your app redrawing smoothly.
+alright, so you're banging your head against cairo_surface_mark_dirty_rectangle in gtkmm, right? i feel your pain, i've been there, done that, got the t-shirt that's stained with frustrated tears and probably a little bit of pizza sauce from late-night debugging sessions. let me break down what i've learned from past battles with this particular beast, and hopefully, we can get your app redrawing smoothly.
 
 the core of the issue with `cairo_surface_mark_dirty_rectangle` is that it’s all about telling cairo, the underlying graphics library, which parts of your drawing surface have changed and need to be redrawn. it's a performance optimization, and if used improperly can lead to partial or incorrect redraws. it’s not always intuitive how gtkmm uses this, so lets' dive deeper.
 

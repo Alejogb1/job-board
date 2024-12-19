@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "wix-embeddedchainer-examples"
 ---
 
-Okay so you're digging into Wix's EmbeddedChainer huh I get it I've been there done that bought the t-shirt and probably accidentally deleted the source code a few times let's talk about that mess
+Okay so you're digging into Wix's EmbeddedChainer right I get it I've been there done that bought the t-shirt and probably accidentally deleted the source code a few times let's talk about that mess
 
 First off if you're asking for *examples* you're probably hitting a wall with the official documentation it's like a treasure map with half the landmarks missing Yeah the concept is pretty straightforward right you want to create a chain of actions within an installer usually related to custom actions or sequencing but actually doing it especially with Wix's EmbeddedChainer is like herding cats blindfolded
 

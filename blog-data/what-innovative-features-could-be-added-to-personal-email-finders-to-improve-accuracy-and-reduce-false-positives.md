@@ -4,7 +4,7 @@ date: "2024-12-03"
 id: "what-innovative-features-could-be-added-to-personal-email-finders-to-improve-accuracy-and-reduce-false-positives"
 ---
 
-Hey so you wanna make email finders way better huh  That's awesome  Finding emails is like a total wild west right now so many false positives its crazy  Let's brainstorm some seriously cool upgrades for these things  Accuracy is king  We gotta ditch the guesswork
+Hey so you wanna make email finders way better right  That's awesome  Finding emails is like a total wild west right now so many false positives its crazy  Let's brainstorm some seriously cool upgrades for these things  Accuracy is king  We gotta ditch the guesswork
 
 
 First off better data is key  Most finders use kinda crappy databases with outdated info  Think about this  Imagine having access to a real-time updated global index of every email address ever created  Sounds impossible but its not really  We could build a distributed system  Like a massively parallel search engine kinda thing across multiple servers think of a distributed hash table  This would let us instantly query billions of emails super fast without the typical slowdowns

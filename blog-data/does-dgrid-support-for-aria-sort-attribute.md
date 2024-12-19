@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "does-dgrid-support-for-aria-sort-attribute"
 ---
 
-so, you're asking about dgrid and its support for the aria-sort attribute, huh? i've been there, wrestled with dgrid a fair bit myself, so let me share what i've learned.
+so, you're asking about dgrid and its support for the aria-sort attribute, right? i've been there, wrestled with dgrid a fair bit myself, so let me share what i've learned.
 
 the short answer is: yes, dgrid *can* work with aria-sort, but it doesn't do it automatically out of the box. it's not like you flip a switch and suddenly you have accessible sorting indicators. you'll need to handle it yourself. which, to be honest, makes sense given dgrid's flexibility, but it also means some extra coding on your end.
 

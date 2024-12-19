@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "no-module-named-dbtadaptersfactory-error"
 ---
 
-Alright so you're hitting that good old "no module named 'dbt.adapters.factory'" error huh I feel you Been there done that bought the t-shirt and even accidentally compiled the wrong version of the adapter and spent an hour figuring out what went wrong classic stuff
+Alright so you're hitting that good old "no module named 'dbt.adapters.factory'" error right I feel you Been there done that bought the t-shirt and even accidentally compiled the wrong version of the adapter and spent an hour figuring out what went wrong classic stuff
 
 This error usually means your dbt installation specifically your dbt-core setup isn't finding the adapter library that it needs It's like trying to make a specific type of sandwich without the right kind of bread It's not a core dbt thing but it needs a specific adapter for your database say postgres or snowflake to make the magic happen
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "operand-type-clash-uniqueidentifier-is-incompatible-with-int"
 ---
 
-Okay so operand type clash uniqueidentifier is incompatible with int huh Yeah I’ve been there seen that movie multiple times its always a pain
+Okay so operand type clash uniqueidentifier is incompatible with int right Yeah I’ve been there seen that movie multiple times its always a pain
 
 So basically what this error screams is you’re trying to mix apples and oranges at the database level you’re slamming a unique identifier a GUID which is essentially a 128-bit number usually represented as a string into a place that expects a standard integer a 32-bit or 64-bit number Now the database engine is throwing its virtual hands up saying “Dude I cannot compute that”
 

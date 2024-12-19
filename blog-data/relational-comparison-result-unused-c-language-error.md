@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "relational-comparison-result-unused-c-language-error"
 ---
 
-Alright so you got hit with the "relational comparison result unused" huh Classic I've seen that one pop up more times than I've had lukewarm coffee during all-nighters let me tell you
+Alright so you got hit with the "relational comparison result unused" right Classic I've seen that one pop up more times than I've had lukewarm coffee during all-nighters let me tell you
 
 Okay so basically the compiler a picky little thing if you ask me is throwing a fit because you wrote an expression that involves a comparison like is a greater than b or is x equal to y but you didn't actually use the result of that comparison The C compiler is all about explicit actions it's like "Hey you computed something a true or false thing and now you're just letting it hang out there like it's some useless piece of trash I'm gonna warn you about it"
 

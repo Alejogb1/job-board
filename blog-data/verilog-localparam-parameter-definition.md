@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "verilog-localparam-parameter-definition"
 ---
 
-Okay so Verilog localparam parameter definitions huh Been there done that got the t-shirt several times actually Let's dive in because this is a rabbit hole many have fallen into and I've clawed my way out more than once
+Okay so Verilog localparam parameter definitions right Been there done that got the t-shirt several times actually Let's dive in because this is a rabbit hole many have fallen into and I've clawed my way out more than once
 
 First things first when we talk about `localparam` and `parameter` in Verilog we're essentially talking about constants We're setting up fixed values that can be used throughout our design Think of them as named magic numbers that make your code way more readable and maintainable The key difference is scope and how they can be overridden
 

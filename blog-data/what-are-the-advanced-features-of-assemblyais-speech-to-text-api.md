@@ -4,7 +4,7 @@ date: "2024-12-03"
 id: "what-are-the-advanced-features-of-assemblyais-speech-to-text-api"
 ---
 
-Hey so you wanna know about AssemblyAI's advanced speech-to-text stuff huh  Cool  It's way beyond just basic transcription you know  We're talking seriously powerful stuff  Let's dive in
+Hey so you wanna know about AssemblyAI's advanced speech-to-text stuff right  Cool  It's way beyond just basic transcription you know  We're talking seriously powerful stuff  Let's dive in
 
 First off  forget simple text output  AssemblyAI gets into speaker diarization that's like magic  It figures out who's talking when  Seriously useful if you have a meeting recording or a podcast with multiple people  You get timestamps for each speaker's lines  Makes analysis and summarization super easy  Think about it  you could automatically generate individual transcripts for each participant  No more manual work  Sweet right
 

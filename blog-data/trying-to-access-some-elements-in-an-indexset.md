@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "trying-to-access-some-elements-in-an-indexset"
 ---
 
-Okay so you're wrestling with index sets huh I've been there believe me its a surprisingly common pitfall especially when you start juggling complex data structures
+Okay so you're wrestling with index sets right I've been there believe me its a surprisingly common pitfall especially when you start juggling complex data structures
 
 Let's break it down because at its core dealing with index sets is about efficiently referencing collections of items typically in arrays or similar data containers You say you're trying to access elements that implies you're not just creating or manipulating sets but actually using them to pull data out
 

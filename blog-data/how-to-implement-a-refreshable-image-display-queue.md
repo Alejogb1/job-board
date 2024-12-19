@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-implement-a-refreshable-image-display-queue"
 ---
 
-so, you're looking to build a refreshable image display queue, huh? i've definitely been down that road before, many times actually. it's one of those things that sounds simple enough on the surface, but can get pretty hairy once you start diving into the details. let me share my experience and how i usually tackle it, keeping it techy and down to earth.
+so, you're looking to build a refreshable image display queue, right? i've definitely been down that road before, many times actually. it's one of those things that sounds simple enough on the surface, but can get pretty hairy once you start diving into the details. let me share my experience and how i usually tackle it, keeping it techy and down to earth.
 
 the core problem, as i see it, is managing a sequence of images where the display needs to update at intervals, but you also want the flexibility to add, remove, or prioritize images in that queue. and, crucially, to do all this efficiently without bogging down your app or device.
 

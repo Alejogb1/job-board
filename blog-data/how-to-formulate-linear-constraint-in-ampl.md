@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-formulate-linear-constraint-in-ampl"
 ---
 
-alright, so you're asking about formulating linear constraints in ampl, huh? been there, done that. i remember back in the day, during my phd, i was working on this huge supply chain optimization problem. the thing was massive, we're talking hundreds of variables and what felt like a million constraints. trying to code all of that directly in some imperative language was just a nightmare, i kid you not. it was slow, error-prone, and just plain painful. that's when i discovered ampl. changed my life, i tell you, when dealing with that type of problem.
+alright, so you're asking about formulating linear constraints in ampl, right? been there, done that. i remember back in the day, during my phd, i was working on this huge supply chain optimization problem. the thing was massive, we're talking hundreds of variables and what felt like a million constraints. trying to code all of that directly in some imperative language was just a nightmare, i kid you not. it was slow, error-prone, and just plain painful. that's when i discovered ampl. changed my life, i tell you, when dealing with that type of problem.
 
 ampl really shines when dealing with these kinds of model formulations because it allows you to express the problem in a way that's very close to the mathematical notation. the separation of the model from the data is a game changer and makes your code much more readable and maintainable. let's break down how we'd tackle linear constraints in ampl with a few examples so you can get the gist of it.
 

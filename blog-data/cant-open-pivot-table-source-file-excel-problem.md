@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "cant-open-pivot-table-source-file-excel-problem"
 ---
 
-Alright so you’re having trouble with an Excel pivot table not opening its source file huh I get it I've been there done that bought the t-shirt and probably even written a script to fix it myself a few times This ain't my first rodeo with Excel and its quirky ways believe me
+Alright so you’re having trouble with an Excel pivot table not opening its source file right I get it I've been there done that bought the t-shirt and probably even written a script to fix it myself a few times This ain't my first rodeo with Excel and its quirky ways believe me
 
 Let me break down what's probably happening and how you can approach this because pivot table source file issues in Excel are like a right of passage for anyone working with data Seriously
 

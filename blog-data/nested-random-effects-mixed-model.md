@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "nested-random-effects-mixed-model"
 ---
 
-Okay so nested random effects mixed model huh I've been down this rabbit hole a few times let me tell you It's not exactly a walk in the park but definitely something you can get your head around with a bit of elbow grease.
+Okay so nested random effects mixed model right I've been down this rabbit hole a few times let me tell you It's not exactly a walk in the park but definitely something you can get your head around with a bit of elbow grease.
 
 First off when you say "nested" it's crucial we understand exactly what we're nesting. Essentially you've got groups within groups think of it like this you've got students within classrooms within schools that's a classic example. The key thing here is that the grouping at the lower level is completely nested within the grouping at the higher level a student isn't in multiple classrooms in this model for instance. It's not crossed or partially crossed it's purely nested. If its partially crossed then we need a different approach.
 

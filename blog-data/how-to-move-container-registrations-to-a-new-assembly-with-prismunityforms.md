@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-move-container-registrations-to-a-new-assembly-with-prismunityforms"
 ---
 
-alright, so, you're facing the classic prism.unity.forms container migration headache, huh? i’ve been there, multiple times, and it’s never *fun*. i've spent way more hours than i care to count staring at registration errors. it usually starts when your project grows and you realize putting everything in the main application assembly was a terrible idea (we all do it, don’t judge too hard). let's get into it.
+alright, so, you're facing the classic prism.unity.forms container migration headache, right? i’ve been there, multiple times, and it’s never *fun*. i've spent way more hours than i care to count staring at registration errors. it usually starts when your project grows and you realize putting everything in the main application assembly was a terrible idea (we all do it, don’t judge too hard). let's get into it.
 
 the core issue is that prism’s unity container needs to know where all your types are so it can do its dependency injection magic. when you start splitting your registrations across different assemblies, unity gets confused. prism has some ways to deal with this, but they’re not always obvious.
 

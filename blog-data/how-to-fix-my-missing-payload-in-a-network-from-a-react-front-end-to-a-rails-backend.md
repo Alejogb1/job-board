@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-fix-my-missing-payload-in-a-network-from-a-react-front-end-to-a-rails-backend"
 ---
 
-alright, so you're hitting that classic react frontend to rails backend, missing payload blues, huh? i've been there, more times than i care to count, and it's always a head-scratcher until you trace the wires, so to speak.
+alright, so you're hitting that classic react frontend to rails backend, missing payload blues, right? i've been there, more times than i care to count, and it's always a head-scratcher until you trace the wires, so to speak.
 
 let me tell you a story. back in my early days, i was building this e-commerce platform (don’t laugh, everyone starts somewhere). i had this form, a simple product creation form, react on the front, rails handling the api on the back. seemed straightforward enough. i filled out the form, hit submit, and… crickets. the rails server was getting the request, but the params were empty. a big void. felt like i was yelling into a well. this happened multiple times, across different projects, different frameworks, always the same feeling of a ghost in the machine.
 

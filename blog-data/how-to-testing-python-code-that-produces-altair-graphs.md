@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-testing-python-code-that-produces-altair-graphs"
 ---
 
-alright, so you're hitting that classic wall of testing visualizations, huh? i’ve been there, staring at the monitor wondering how to assert that my beautiful altair chart is actually, well, beautiful *and* correct. it's not like checking a simple integer return value. it’s a visual thing, and testing visuals programmatically is a different beast.
+alright, so you're hitting that classic wall of testing visualizations, right? i’ve been there, staring at the monitor wondering how to assert that my beautiful altair chart is actually, well, beautiful *and* correct. it's not like checking a simple integer return value. it’s a visual thing, and testing visuals programmatically is a different beast.
 
 first off, let's clear the air, testing altair outputs directly like we might with, say, a math function is a headache. you can't just `assert chart == some_expected_chart`. altair charts are complex objects that are essentially a spec for a visualization. they are not an image, not a pixel-perfect thing. so, we need a different strategy.
 

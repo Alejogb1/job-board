@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "java-how-to-program-epub-reader"
 ---
 
-Okay so you wanna build an epub reader in Java huh Been there done that let me tell ya It’s not exactly a walk in the park but it’s doable if you break it down and understand the core components I’ve spent way too many nights wrestling with this thing in my early days trust me
+Okay so you wanna build an epub reader in Java right Been there done that let me tell ya It’s not exactly a walk in the park but it’s doable if you break it down and understand the core components I’ve spent way too many nights wrestling with this thing in my early days trust me
 
 First off epubs are basically zipped up websites think of it that way They are collections of HTML CSS images and some metadata files It's not some magical format its just structured data so before you even start thinking about fancy rendering its critical you get good at handling zip archives and understand the directory structure of a standard epub
 

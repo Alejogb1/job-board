@@ -4,7 +4,7 @@ date: "2024-12-11"
 id: "what-advice-is-there-for-new-phds-entering-the-field-of-mechanistic-interpretability"
 ---
 
-Hey so you're a fresh PhD jumping into mechanistic interpretability huh that's awesome super cool field  lots of open questions  kinda wild west really  First things first congrats on finishing  PhD is a beast  seriously  massive respect
+Hey so you're a fresh PhD jumping into mechanistic interpretability right that's awesome super cool field  lots of open questions  kinda wild west really  First things first congrats on finishing  PhD is a beast  seriously  massive respect
 
 So advice  well  it's a pretty new field  so there's no like one size fits all playbook  but here's what I've picked up  mostly by making tons of mistakes  lol
 

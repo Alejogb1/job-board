@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "837-exclamat-on-po-nts-codehs-problem"
 ---
 
-Alright so you're banging your head against the wall with that pesky 837 exclamation points codehs problem huh I get it Been there done that Got the t-shirt and probably spilled coffee on it while debugging something similar You know how it is
+Alright so you're banging your head against the wall with that pesky 837 exclamation points codehs problem right I get it Been there done that Got the t-shirt and probably spilled coffee on it while debugging something similar You know how it is
 
 Okay first off let's just clarify what we're talking about here We're dealing with a situation where you've got some input probably a string and you need to figure out how many exclamation points are in it Now this sounds dead simple like beginner-level stuff and it is but the devil's in the details as always right CodeHS especially can be particular about how they want the solution It's about the specific way you approach the problem I’ve seen it make people crazy just trying to figure out how the grader thinks trust me I’ve seen things man things I wish I could unsee involving while loops and off-by-one errors
 

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-pass-a-resource-from-a-controller-to-view-in-railsdevise"
 ---
 
-so, you're trying to get some data from your rails controller into your view, and devise is involved, huh? i've been there, trust me. this seems to pop up quite a bit, and it's usually a pretty simple fix once you see how it all connects. let's break it down.
+so, you're trying to get some data from your rails controller into your view, and devise is involved, right? i've been there, trust me. this seems to pop up quite a bit, and it's usually a pretty simple fix once you see how it all connects. let's break it down.
 
 the main thing to understand is that controllers are the middleman. they handle the request, grab whatever data needed, and then pass that data off to the view, which is responsible for rendering it to the user. devise, in this case, adds a layer of authentication logic, but doesn't fundamentally alter the core flow of data from controller to view.
 

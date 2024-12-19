@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "pandas-importerror-cannot-import-name-int64index-from-pandas"
 ---
 
-Okay so you’re wrestling with that good old `ImportError: cannot import name 'Int64Index' from 'pandas'` huh Been there done that got the t-shirt and probably spilled coffee on it too a few times This thing has bitten me more times than I care to admit let me break down what’s probably going on and how I’ve tackled it in the trenches
+Okay so you’re wrestling with that good old `ImportError: cannot import name 'Int64Index' from 'pandas'` right Been there done that got the t-shirt and probably spilled coffee on it too a few times This thing has bitten me more times than I care to admit let me break down what’s probably going on and how I’ve tackled it in the trenches
 
 First off this error screams version mismatch louder than a dial-up modem in a library So `Int64Index` it’s a pandas object it used to be directly importable from the top level `pandas` namespace in older versions We’re talking like pandas before 10 or something like that But then pandas devs did what devs do they refactored things and that’s good practice we agree right. Now it's tucked away inside `pandas.core.indexes.numeric`
 

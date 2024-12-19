@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "implementing-a-for-loop-in-systemverilog"
 ---
 
-Okay so you wanna loop in SystemVerilog huh been there done that got the t-shirt and probably spilled coffee on it too more times than I'd like to admit Let's break this down it's not rocket science but it's got its quirks
+Okay so you wanna loop in SystemVerilog right been there done that got the t-shirt and probably spilled coffee on it too more times than I'd like to admit Let's break this down it's not rocket science but it's got its quirks
 
 See SystemVerilog isn't your average C++ or Python it's hardware description language at its core so looping isn't like banging out some quick iterations it's about describing hardware that will do the looping for you that's a big difference and a big mindset shift
 

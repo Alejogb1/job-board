@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "module-mpmath-has-no-attribute-rational-python"
 ---
 
-Okay so you're running into that old chestnut where `mpmath` is playing hard to get with its `rational` attribute huh? Been there done that got the t-shirt and a few sleepless nights debugging it let me tell you
+Okay so you're running into that old chestnut where `mpmath` is playing hard to get with its `rational` attribute right? Been there done that got the t-shirt and a few sleepless nights debugging it let me tell you
 
 First off let's break it down real quick `mpmath` yeah that's the multi-precision floating-point library the one you reach for when regular floats just won't cut it because they're like trying to measure the galaxy with a ruler right
 

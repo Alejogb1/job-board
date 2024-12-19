@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "how-to-achieve-base64-url-safe-encoding-in-c"
 ---
 
-Okay so you want url safe base64 encoding in C huh Yeah I get it its a common pain point especially when you start dealing with web apis or any kind of data transmission where you have to keep those pesky URL characters from messing things up been there done that got the t-shirt well not really a t-shirt but the scars of debugging session are real trust me
+Okay so you want url safe base64 encoding in C right Yeah I get it its a common pain point especially when you start dealing with web apis or any kind of data transmission where you have to keep those pesky URL characters from messing things up been there done that got the t-shirt well not really a t-shirt but the scars of debugging session are real trust me
 
 See the standard base64 encoding uses plus signs `+` forward slashes `/` and padding equals signs `=` and those are all no-gos in a URL they need to be swapped out for things that are url friendly like dashes `_` and underscores `-` no padding needed in this context which is kind of nice one less thing to deal with
 

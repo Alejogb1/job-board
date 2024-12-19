@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "what-techniques-can-be-employed-to-minimize-the-latency-variability-across-different-types-of-queries-in-a-distributed-search-engine"
 ---
 
-Okay so you wanna tame that latency beast in your distributed search engine huh  That's a tough one  latency variability is the enemy of a good user experience  think about it  sometimes your search is lightning fast other times you're staring at a spinning wheel  nobody likes that  We need to make it consistently snappy
+Okay so you wanna tame that latency beast in your distributed search engine right  That's a tough one  latency variability is the enemy of a good user experience  think about it  sometimes your search is lightning fast other times you're staring at a spinning wheel  nobody likes that  We need to make it consistently snappy
 
 First thing to think about is query routing  If you're just sending all queries to a single node  or even a small subset of nodes  you're asking for trouble  One overloaded node can screw the whole thing up  Load balancing is key here  And it's not just about the number of queries  some queries are heavier than others  a simple keyword search is way different from a complex faceted search  You need to intelligently distribute the load considering query complexity
 

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-is-there-a-dead-kernal-when-loading-a-quantized-model-in-pytorch"
 ---
 
-alright, so, a dead kernel when loading a quantized pytorch model, huh? i’ve been there, seen that, got the t-shirt. it’s a frustrating one, and it usually comes down to a few key things, mostly involving mismatches in your environment or how the quantization was actually performed. let me walk you through it based on my own painful experiences.
+alright, so, a dead kernel when loading a quantized pytorch model, right? i’ve been there, seen that, got the t-shirt. it’s a frustrating one, and it usually comes down to a few key things, mostly involving mismatches in your environment or how the quantization was actually performed. let me walk you through it based on my own painful experiences.
 
 first off, let's clarify what “dead kernel” generally means in this context. it means the python process running your pytorch code crashes unexpectedly. it’s a hard crash, no traceback, no helpful error message – just *poof*, gone. it's like your computer suddenly decided to take a nap without telling you. this is often the result of an issue deep within the c++ backend that pytorch uses, which isn't always surfaced gracefully to the python layer.
 

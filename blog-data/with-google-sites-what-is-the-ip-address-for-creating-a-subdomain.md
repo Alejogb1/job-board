@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "with-google-sites-what-is-the-ip-address-for-creating-a-subdomain"
 ---
 
-hey, so you're diving into google sites and subdomains, huh? it's a bit of a twisty area, not as straightforward as setting up a regular website. let me break down what i’ve learned over the years of messing with this kind of stuff, specifically regarding the whole "ip address for a subdomain" thing with google sites, because that's not how it works, and that's probably where the confusion is coming from.
+hey, so you're diving into google sites and subdomains, right? it's a bit of a twisty area, not as straightforward as setting up a regular website. let me break down what i’ve learned over the years of messing with this kind of stuff, specifically regarding the whole "ip address for a subdomain" thing with google sites, because that's not how it works, and that's probably where the confusion is coming from.
 
 first off, and this is key, google sites doesn't really work with ip addresses for subdomains in the traditional sense. unlike having your own server where you'd point a subdomain to a specific ip address, google sites manages all the hosting and infrastructure for you. think of it as a highly managed environment where they take care of all the server details. when you create a site, it lives on their infrastructure, not on an ip address you can directly configure.
 

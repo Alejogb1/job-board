@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-is-vertigo-mutation-testing-for-solidity-command-not-found-on-mac-os"
 ---
 
-alright, so you're having trouble with the `vertigo` command not being found on your macos, huh? i've been down that rabbit hole more times than i care to remember, and it usually boils down to a few common culprits. let's troubleshoot this like we're debugging a tricky smart contract.
+alright, so you're having trouble with the `vertigo` command not being found on your macos, right? i've been down that rabbit hole more times than i care to remember, and it usually boils down to a few common culprits. let's troubleshoot this like we're debugging a tricky smart contract.
 
 first off, `vertigo` isn't a command that magically appears. it's a tool for mutation testing solidity smart contracts, which implies it needs to be installed first. think of it like a library you need to import into your python script, except in this case, it's a tool available on the command line. the most common way to get it is via `npm`, the node package manager. assuming you already have nodejs and npm installed, here's the first thing you should be checking:
 

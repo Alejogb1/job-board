@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "brace-indexing-is-not-supported-for-variables-error"
 ---
 
-Okay so you're hitting that "brace indexing is not supported for variables" error huh? Yeah I've been there more times than I'd like to admit It's like the classic "gotcha" moment in programming where you think you're being clever and the interpreter just slaps you with reality.
+Okay so you're hitting that "brace indexing is not supported for variables" error right? Yeah I've been there more times than I'd like to admit It's like the classic "gotcha" moment in programming where you think you're being clever and the interpreter just slaps you with reality.
 
 So let me break this down from my experience because trust me I've battled this one probably longer than I care to think about I remember this one project back in my early days doing some data analysis It involved a ton of nested dictionaries which we all know now is probably a bad idea but back then we thought we were the kings and queens of Pythonic data structures. I was trying to pull out a specific value and I had a chain of what looked like dictionary lookups but I'd accidentally started mixing square brackets and curly braces. The error was screaming at me and I was just staring blankly at my screen wondering what I'd done wrong. So yeah I feel your pain.
 

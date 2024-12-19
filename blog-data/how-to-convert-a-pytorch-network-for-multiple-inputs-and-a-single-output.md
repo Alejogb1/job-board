@@ -50,7 +50,7 @@ if __name__ == '__main__':
     print("output shape:", output.shape)
 ```
 
-in this code, the `MultiInputNetConcat` class takes a list of input sizes and then uses `nn.modulelist` to store the fully connected layers that will transform each of the incoming tensors. then, in the forward pass, i'm just using torch.cat to combine them along the second dimension (dim=1). the resulting output is then passed to one final layer to get the output. simple, huh? well, not always, as i discovered during the great 'tensor mismatch of '19. basically, i had some input streams changing shapes without warning, leading to runtime errors and a very annoyed me.
+in this code, the `MultiInputNetConcat` class takes a list of input sizes and then uses `nn.modulelist` to store the fully connected layers that will transform each of the incoming tensors. then, in the forward pass, i'm just using torch.cat to combine them along the second dimension (dim=1). the resulting output is then passed to one final layer to get the output. simple, right? well, not always, as i discovered during the great 'tensor mismatch of '19. basically, i had some input streams changing shapes without warning, leading to runtime errors and a very annoyed me.
 
 a crucial thing to note with this method is that you might need to preprocess each input stream individually, especially if they represent different types of data. i remember once when i tried to combine raw sensor data with image features, the network just completely ignored the image data. the problem was that sensor values were in a very different range than image features. normalizing each input separately to a common range fixed it immediately. this is one of those "lessons learned the hard way" scenarios.
 

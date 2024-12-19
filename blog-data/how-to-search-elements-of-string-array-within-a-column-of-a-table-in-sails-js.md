@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-search-elements-of-string-array-within-a-column-of-a-table-in-sails-js"
 ---
 
-alright, so, you've got a table in sails.js and want to find rows where a column's value contains at least one of the strings from a given array, huh? been there, done that. it's a pretty common scenario when you're dealing with tag filtering or something similar. let me walk you through how i've approached this in the past.
+alright, so, you've got a table in sails.js and want to find rows where a column's value contains at least one of the strings from a given array, right? been there, done that. it's a pretty common scenario when you're dealing with tag filtering or something similar. let me walk you through how i've approached this in the past.
 
 first off, forget trying to use some magical built-in function that directly does this. sails, or rather waterline (the underlying orm), isn't really set up for that kind of complex matching in a single query. it mostly focuses on basic equality and some limited comparisons, not arbitrary array inclusion checks within a string column. we need to craft a specific query using a where clause with a little extra logic.
 

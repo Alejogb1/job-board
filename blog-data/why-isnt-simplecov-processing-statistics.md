@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-isnt-simplecov-processing-statistics"
 ---
 
-alright, so you're having trouble with simplecov not generating coverage stats, huh? i've been there, trust me. it's one of those things that can make you question your entire setup. let's unpack this. it’s not always immediately obvious, and there are several typical culprits at play.
+alright, so you're having trouble with simplecov not generating coverage stats, right? i've been there, trust me. it's one of those things that can make you question your entire setup. let's unpack this. it’s not always immediately obvious, and there are several typical culprits at play.
 
 first off, let's be sure about the basics. simplecov, at its core, is a code coverage tool for ruby. it works by hooking into the ruby runtime and tracking which lines of your code are executed during your test runs. if it's not producing stats, it means this instrumentation isn't happening or the data isn't making it to simplecov.
 

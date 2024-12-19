@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "r-linearhypothesis-car-package-testing-for-superiority-and-not-just-equality"
 ---
 
-Alright so you're diving into `linearHypothesis` from the `car` package huh a classic I've been down this rabbit hole more times than I care to admit Let's talk about testing for superiority with `linearHypothesis` because yeah it's not as straightforward as just checking for equality
+Alright so you're diving into `linearHypothesis` from the `car` package right a classic I've been down this rabbit hole more times than I care to admit Let's talk about testing for superiority with `linearHypothesis` because yeah it's not as straightforward as just checking for equality
 
 Okay first off `linearHypothesis` it's a fantastic tool for testing linear hypotheses but it's built primarily to assess if a set of parameters or linear combinations of parameters are equal to some value usually zero Now that's super helpful for things like checking if a certain effect is significant which often boils down to if a coefficient is different from zero or if two coefficients are equal to each other but what about what you’re asking about that is if one coefficient is *greater* or *less* than another a one sided test not just a difference
 

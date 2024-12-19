@@ -4,7 +4,7 @@ date: "2024-12-10"
 id: "what-debugging-tools-are-available-for-identifying-bottlenecks-in-streaming-pipelines"
 ---
 
-Okay so you wanna debug streaming pipelines huh  that's a whole other beast compared to your average app debugging  right  Its less about stepping through code line by line and more about understanding the flow of data and where things are slowing down or breaking down completely  Think of it like trying to unclog a massive river instead of fixing a leaky faucet.
+Okay so you wanna debug streaming pipelines right  that's a whole other beast compared to your average app debugging  right  Its less about stepping through code line by line and more about understanding the flow of data and where things are slowing down or breaking down completely  Think of it like trying to unclog a massive river instead of fixing a leaky faucet.
 
 First off forget about your IDE's fancy debugger for this kind of stuff  You need tools designed for distributed systems and high-volume data processing  We're talking specialized profilers monitoring tools and log aggregators the whole shebang.
 

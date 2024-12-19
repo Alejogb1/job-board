@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "convert-c-language-to-assembly-code-tool"
 ---
 
-Okay so you wanna go from C to assembly huh been there done that got the t-shirt and probably a few compiler errors to boot Trust me it's a rabbit hole but a rewarding one if you're into that kind of thing I've spent more late nights than I care to remember debugging assembly that I thought was supposed to be high-level C it can get messy real quick.
+Okay so you wanna go from C to assembly right been there done that got the t-shirt and probably a few compiler errors to boot Trust me it's a rabbit hole but a rewarding one if you're into that kind of thing I've spent more late nights than I care to remember debugging assembly that I thought was supposed to be high-level C it can get messy real quick.
 
 So straight to the point you need a tool a compiler to be precise to convert your C code into assembly language no magic wand here or at least not the mystical kind more like a well-oiled machine kinda magic. The go-to choice for this kinda operation is GCC the GNU Compiler Collection It's like the Swiss Army knife of compilation. I've been using GCC since college yeah that long ago and trust me it hasn't let me down yet well mostly.
 

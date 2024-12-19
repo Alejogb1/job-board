@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "can-anyone-tell-me-the-method-of-integration-of-easypaisa-into-node-js"
 ---
 
-alright, so you're looking to get easypaisa hooked into your node.js app, huh? i've been down this road, and it's… a journey. not gonna lie, integrating payment gateways, especially the ones specific to regions, always throws a few curveballs. easypaisa, being a pakistan-specific thing, isn't exactly something you'll find a pre-baked npm package for, which is where the fun begins.
+alright, so you're looking to get easypaisa hooked into your node.js app, right? i've been down this road, and it's… a journey. not gonna lie, integrating payment gateways, especially the ones specific to regions, always throws a few curveballs. easypaisa, being a pakistan-specific thing, isn't exactly something you'll find a pre-baked npm package for, which is where the fun begins.
 
 first off, forget the plug-and-play notion of some generic payment library. you are mostly going to be dealing with their api directly. what you're looking at is basically a server-to-server interaction between your node.js backend and easypaisa's servers. there is no official node.js library, so we have to roll our own.
 

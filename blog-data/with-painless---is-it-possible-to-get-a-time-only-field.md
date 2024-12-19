@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "with-painless---is-it-possible-to-get-a-time-only-field"
 ---
 
-so, you're asking about extracting just the time component from a date/time field using painless, huh? yeah, i've been down that rabbit hole myself. it's one of those things that seems straightforward at first, but then you start hitting quirks and limitations. it's not as simple as just calling a `getTime()` function, let me tell you.
+so, you're asking about extracting just the time component from a date/time field using painless, right? yeah, i've been down that rabbit hole myself. it's one of those things that seems straightforward at first, but then you start hitting quirks and limitations. it's not as simple as just calling a `getTime()` function, let me tell you.
 
 the short answer is, yes, it's possible, but it’s not directly a single function call. you'll need to do a little bit of manipulation with painless scripting. basically, you're going to extract the hours, minutes, and seconds as numbers and construct a string from that.
 

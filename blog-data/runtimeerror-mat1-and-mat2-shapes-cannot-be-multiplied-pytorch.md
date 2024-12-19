@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "runtimeerror-mat1-and-mat2-shapes-cannot-be-multiplied-pytorch"
 ---
 
-Okay so you're slamming into the classic PyTorch matrix multiplication shape mismatch huh Yeah I know that feeling intimately been there done that bought the t-shirt actually I have several probably with like tensor shapes printed on them somewhere Anyway let's break down this runtimeerror mat1 and mat2 shapes cannot be multiplied thing because it's not as scary as it looks I promise
+Okay so you're slamming into the classic PyTorch matrix multiplication shape mismatch right Yeah I know that feeling intimately been there done that bought the t-shirt actually I have several probably with like tensor shapes printed on them somewhere Anyway let's break down this runtimeerror mat1 and mat2 shapes cannot be multiplied thing because it's not as scary as it looks I promise
 
 First off it means exactly what it says you're trying to multiply two matrices or tensors using PyTorch's matmul or sometimes with the @ operator and their dimensions just don't line up remember matrix multiplication isnt just slap two arrays together and bam you got a result nah there's rules to this game Specifically if you're doing matrix multiplication of say A and B the number of columns in A has to be equal to the number of rows in B this is fundamental linear algebra stuff think of it like trying to fit two LEGO bricks together if the pegs on one don't match the holes on the other it ain't gonna work
 

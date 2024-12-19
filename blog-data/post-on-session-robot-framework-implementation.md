@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "post-on-session-robot-framework-implementation"
 ---
 
-Alright so you're wrestling with session management in Robot Framework huh been there done that got the t-shirt and several battle scars to prove it This isn't your typical hello world scenario we're talking about persistent state communication between different parts of your test suite and that's where things can get hairy faster than a cat stuck in a yarn ball Let's break it down like we're debugging a particularly stubborn piece of code
+Alright so you're wrestling with session management in Robot Framework right been there done that got the t-shirt and several battle scars to prove it This isn't your typical hello world scenario we're talking about persistent state communication between different parts of your test suite and that's where things can get hairy faster than a cat stuck in a yarn ball Let's break it down like we're debugging a particularly stubborn piece of code
 
 I've been using Robot Framework since it was practically a newborn baby and trust me session management especially when you are working with different APIs or trying to simulate a multi-user scenario it can become a real head scratcher especially if you're used to simple linear scripts Remember back in the day when we were using just keywords and global variables everything felt like a single threaded application running sequentially a simple script a simple life then we needed to keep state between different parts of our tests boom sessions enter stage left we're talking about a shift from linear to a more dynamic approach it's a bit like trying to manage a network of independent actors all needing to know a bit of the current world's state
 

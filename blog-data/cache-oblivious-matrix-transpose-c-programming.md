@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "cache-oblivious-matrix-transpose-c-programming"
 ---
 
-Okay so cache oblivious matrix transpose in C huh I've been down that rabbit hole before let me tell you it's a classic problem that makes you appreciate good memory access patterns it's not just about transposing a matrix it's about doing it efficiently without knowing the specifics of the cache which is the whole cache oblivious part
+Okay so cache oblivious matrix transpose in C right I've been down that rabbit hole before let me tell you it's a classic problem that makes you appreciate good memory access patterns it's not just about transposing a matrix it's about doing it efficiently without knowing the specifics of the cache which is the whole cache oblivious part
 
 I remember back in the day when I was still working on my undergrad thesis a professor threw this at me as a challenge "transpose this matrix so that it sings to your CPU" he said with a cryptic grin I was like "okay sure dude let's see what we can do" naive college me I tried all sorts of things the standard row-major swaps the column-major approaches and yeah they all worked in the sense they transposed the matrix but when you scaled up with bigger matrices it was like watching a turtle race a jet I mean cache misses were everywhere performance was dreadful
 

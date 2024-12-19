@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "seaborn-3d-scatter-plot-customisation"
 ---
 
-Okay so seaborn 3d scatter plots huh yeah I've been there a few times believe me customization can be a bit of a rabbit hole especially when you're trying to get it exactly right This is one of those things where you think "oh it's just a scatter plot how hard can it be" and then you find yourself three hours deep wrestling with matplotlib axes objects
+Okay so seaborn 3d scatter plots right yeah I've been there a few times believe me customization can be a bit of a rabbit hole especially when you're trying to get it exactly right This is one of those things where you think "oh it's just a scatter plot how hard can it be" and then you find yourself three hours deep wrestling with matplotlib axes objects
 
 So lemme break it down based on what I've seen over the years my own struggles and hopefully steer you clear of some pitfalls I definitely fell into back in the day
 

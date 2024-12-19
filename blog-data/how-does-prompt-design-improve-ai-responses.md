@@ -4,7 +4,7 @@ date: '2024-11-14'
 id: 'how-does-prompt-design-improve-ai-responses'
 ---
 
-So, prompt engineering, huh  It's basically like  giving the AI the right instructions  to get the best results  Think of it like writing a really specific recipe  If you want a delicious cake  you gotta use the right ingredients and steps  Same with AI  you gotta be specific with your prompts  For example  if you just tell it  "write me a story"  you might get something generic  but if you say  "write me a story about a robot who falls in love with a human"  you'll get something much more interesting  
+So, prompt engineering, right  It's basically like  giving the AI the right instructions  to get the best results  Think of it like writing a really specific recipe  If you want a delicious cake  you gotta use the right ingredients and steps  Same with AI  you gotta be specific with your prompts  For example  if you just tell it  "write me a story"  you might get something generic  but if you say  "write me a story about a robot who falls in love with a human"  you'll get something much more interesting  
 
 And yeah,  it's all about  making the prompts clear  and  well-structured  You can use things like  "keywords"  "examples"  "constraints"  and even  "code snippets"  to help the AI understand what you want 
 

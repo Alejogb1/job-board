@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "testing-grammar-for-ambiguities"
 ---
 
-Alright so you want to test grammar for ambiguities huh I've been down that rabbit hole more times than I care to remember It's a tricky beast but totally solvable if you approach it methodically I've had my fair share of late nights debugging parser generators because of this so let me share some hard-won wisdom
+Alright so you want to test grammar for ambiguities right I've been down that rabbit hole more times than I care to remember It's a tricky beast but totally solvable if you approach it methodically I've had my fair share of late nights debugging parser generators because of this so let me share some hard-won wisdom
 
 First off when we say ambiguity we mean a situation where a single input sequence can be parsed according to the grammar in more than one way This is a problem for our parsers because they're supposed to give us a single definitive structure for the input It's like trying to understand a sentence with multiple equally plausible meanings it just messes things up So we need to identify these spots in the grammar
 

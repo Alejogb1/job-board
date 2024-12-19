@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "how-to-split-a-string-in-sparql"
 ---
 
-Okay so you're asking about splitting strings in SPARQL huh? Been there done that a few times it's not exactly a walk in the park if you're coming from say a Javascript or Python background where string handling is super straightforward SPARQL is more about data retrieval than complex string manipulation but we can still get it done
+Okay so you're asking about splitting strings in SPARQL right? Been there done that a few times it's not exactly a walk in the park if you're coming from say a Javascript or Python background where string handling is super straightforward SPARQL is more about data retrieval than complex string manipulation but we can still get it done
 
 First off SPARQL natively doesn't have a `split` function like you'd find in other languages No one thought this would be a problem when they designed SPARQL I guess so we're kind of left to hack our way around it using the functions that it does provide Which yeah means more complexity not really the best experience if you ask me But it is what it is we work with what we have right?
 

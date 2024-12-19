@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "amdahls-law-calculator-speedup-calculation"
 ---
 
-Okay so you wanna talk about Amdahl's Law huh Speedup calculations classic stuff Been there done that got the t-shirt and probably a few grey hairs from debugging performance bottlenecks over the years lets dive in
+Okay so you wanna talk about Amdahl's Law right Speedup calculations classic stuff Been there done that got the t-shirt and probably a few grey hairs from debugging performance bottlenecks over the years lets dive in
 
 First off Amdahl's Law is your go to for figuring out how much faster your code can realistically get if you parallelize some of it it's not some magic bullet that'll make everything instantly zoom along it's a constraint a reality check that's why it's so useful
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "ambiguous-abbreviation-stata-error"
 ---
 
-Okay so you're hitting an "ambiguous abbreviation" error in Stata huh I've been there more times than I care to admit It's like a right of passage for any Stata user you know The error pops up usually when Stata is unsure which command or variable you're referring to because you've used an abbreviation that matches more than one thing I mean come on Stata what do you expect me to write the whole thing out every time
+Okay so you're hitting an "ambiguous abbreviation" error in Stata right I've been there more times than I care to admit It's like a right of passage for any Stata user you know The error pops up usually when Stata is unsure which command or variable you're referring to because you've used an abbreviation that matches more than one thing I mean come on Stata what do you expect me to write the whole thing out every time
 
 Let me break this down based on my experience I remember one project back in my grad school days like it was yesterday I was trying to analyze some panel data on firms' R&D expenditure using Stata and I thought I was being all efficient with my abbreviations I typed in something like `reg res cap invest` intending to run a regression of 'research' on 'capital' and 'investment' Well Stata just looked at me with that ambiguous abbreviation error message and said "Nope try again kid" I had to learn my lesson real quick I was spending hours debugging it I wasn't paying attention to the context and how stata processes the commands and how it matches abbreviations
 

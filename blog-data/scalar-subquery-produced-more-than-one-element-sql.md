@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "scalar-subquery-produced-more-than-one-element-sql"
 ---
 
-Okay so you've got that "scalar subquery produced more than one element" error huh I've seen that beast a bunch of times believe me It’s a classic really a rite of passage for anyone messing around with SQL especially when you start getting fancy with subqueries
+Okay so you've got that "scalar subquery produced more than one element" error right I've seen that beast a bunch of times believe me It’s a classic really a rite of passage for anyone messing around with SQL especially when you start getting fancy with subqueries
 
 Let's break it down from my experience perspective I remember banging my head against this wall back in my early days I was working on a project for a e-commerce platform we were trying to get some complex customer insights using sql It was messy and i was just learning
 

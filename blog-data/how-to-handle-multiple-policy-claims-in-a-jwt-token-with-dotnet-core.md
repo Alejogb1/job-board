@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-handle-multiple-policy-claims-in-a-jwt-token-with-dotnet-core"
 ---
 
-alright, let's tackle this. multiple policy claims in jwt, huh? i’ve been down this road a few times, and it can get a bit messy if you're not careful. dotnet core’s authentication system is pretty flexible but needs a bit of a nudge when dealing with complex jwt claims. 
+alright, let's tackle this. multiple policy claims in jwt, right? i’ve been down this road a few times, and it can get a bit messy if you're not careful. dotnet core’s authentication system is pretty flexible but needs a bit of a nudge when dealing with complex jwt claims. 
 
 first off, the core issue is that the standard claims-based authorization in dotnet core often assumes a single value per claim type. when a jwt comes along and has, say, multiple `role` claims or a custom `permission` claim with an array of values, things can start to fail silently. that's the fun part, debugging those silent failures!
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "fast-fourier-transform-in-r-what-am-i-doing-wrong"
 ---
 
-Okay so you're wrestling with the Fast Fourier Transform in R huh Been there done that I've spent more nights debugging FFT implementations than I care to admit It’s like a rite of passage for anyone messing with signal processing or frequency analysis it seems. Let's see if I can point out some usual suspects based on my own history of messing with this stuff.
+Okay so you're wrestling with the Fast Fourier Transform in R right Been there done that I've spent more nights debugging FFT implementations than I care to admit It’s like a rite of passage for anyone messing with signal processing or frequency analysis it seems. Let's see if I can point out some usual suspects based on my own history of messing with this stuff.
 
 First things first you didn't specify what 'wrong' means you're getting errors are your results off is the code crashing details man details I'm gonna assume you're getting *something* but it's not what you expect and that's usually the case.
 

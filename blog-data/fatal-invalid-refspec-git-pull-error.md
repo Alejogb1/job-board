@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "fatal-invalid-refspec-git-pull-error"
 ---
 
-Okay so you’re getting a `fatal invalid refspec` error during a `git pull` huh? Been there done that got the t-shirt multiple times believe me. This is a pretty common pain point especially when you're messing with remote branches and trying to keep everything synced. Let me walk you through some of the usual suspects and how I've wrangled this particular git gremlin in the past.
+Okay so you’re getting a `fatal invalid refspec` error during a `git pull` right? Been there done that got the t-shirt multiple times believe me. This is a pretty common pain point especially when you're messing with remote branches and trying to keep everything synced. Let me walk you through some of the usual suspects and how I've wrangled this particular git gremlin in the past.
 
 First off let’s break down what a refspec even is. Think of it as git’s way of specifying what parts of the remote repository you’re interested in and how they should map to your local branches. Basically it's a set of rules git uses during push and pull operations. The error `fatal invalid refspec` basically means git doesn't understand the rules you've provided or are trying to use during the pull.
 

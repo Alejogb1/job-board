@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-count-the-number-of-occurrences-in-an-arrayhash-with-a-specific-value"
 ---
 
-alright, so you're dealing with counting value occurrences in a data structure, huh? yeah, i've been there, done that, got the t-shirt, and probably debugged it at 3 am more times than i'd like to remember. it's a super common problem, pops up everywhere from data analysis to just plain old app logic. i'll break it down how i usually approach this.
+alright, so you're dealing with counting value occurrences in a data structure, right? yeah, i've been there, done that, got the t-shirt, and probably debugged it at 3 am more times than i'd like to remember. it's a super common problem, pops up everywhere from data analysis to just plain old app logic. i'll break it down how i usually approach this.
 
 first off, let's talk about the basics. we’ve got an array or a hash (sometimes called a dictionary or map) and a specific value. what you want is to know how many times that specific value shows up inside of the data structure. this sounds simple, and it is at its core, but sometimes the way you implement it can make a world of difference. especially when you start dealing with massive datasets, you'll want your code to be as efficient as possible.
 

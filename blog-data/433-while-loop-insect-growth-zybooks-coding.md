@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "433-while-loop-insect-growth-zybooks-coding"
 ---
 
-Okay so you're wrestling with a while loop and some insect growth scenario from zybooks huh been there done that probably like a hundred times in my career I remember my early days it was always something like this endless loops logic errors weird off by one bugs good times good times anyway let's break it down since I've been down this road a few times
+Okay so you're wrestling with a while loop and some insect growth scenario from zybooks right been there done that probably like a hundred times in my career I remember my early days it was always something like this endless loops logic errors weird off by one bugs good times good times anyway let's break it down since I've been down this road a few times
 
 Okay first things first you're dealing with a while loop I'm guessing for iterative insect growth calculations typical zybooks fare So the core issue is likely with loop conditions the incrementing logic inside the loop or maybe even variable initialization We'll cover all the usual suspects
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "vhdl-loop-usage-example"
 ---
 
-Okay so you wanna talk about VHDL loops huh Been there done that a few times let me tell ya VHDL loops can be a bit finicky if you don't know what you're doing It's not like coding a regular software loop they are very much hardware based think hardware descriptions and not general purpose code and well it took me a while to figure that out the first time
+Okay so you wanna talk about VHDL loops right Been there done that a few times let me tell ya VHDL loops can be a bit finicky if you don't know what you're doing It's not like coding a regular software loop they are very much hardware based think hardware descriptions and not general purpose code and well it took me a while to figure that out the first time
 
 Let’s get this straight loops in VHDL aren’t like your typical while or for loops you might see in Python or C you're not exactly iterating in the same way as those loops You’re describing hardware that repeats a certain structure or operation when synthesized you're specifying repetitive hardware structures think of it as a template for repeating blocks not like a procedural instruction set
 

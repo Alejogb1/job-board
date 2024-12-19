@@ -4,7 +4,7 @@ date: "2024-12-03"
 id: "what-is-the-significance-of-poincare-ball-embedding-for-hierarchical-data-representation"
 ---
 
-Hey so you wanna know about Poincaré Ball embeddings for hierarchical data huh  Cool stuff  It's like this imagine you've got this crazy tree structure right  Lots of branches and sub-branches  Think file systems or maybe organizational charts  The problem is how do you represent that mess in a way a computer can actually *understand*?  Just shoving it into a regular vector space is gonna totally mess up the inherent hierarchy  Stuff that's close together in the tree should be close together in your representation  Right?
+Hey so you wanna know about Poincaré Ball embeddings for hierarchical data right  Cool stuff  It's like this imagine you've got this crazy tree structure right  Lots of branches and sub-branches  Think file systems or maybe organizational charts  The problem is how do you represent that mess in a way a computer can actually *understand*?  Just shoving it into a regular vector space is gonna totally mess up the inherent hierarchy  Stuff that's close together in the tree should be close together in your representation  Right?
 
 That's where the Poincaré ball comes in  It's not your grandpappy's Euclidean space  Think of it as a hypersphere  but only the *inside* of the sphere counts  The further you get towards the edge the slower things get  It's like a warped space where distances near the center are normal but distances close to the edge get stretched out   This stretching is key because it naturally captures hierarchical relationships
 

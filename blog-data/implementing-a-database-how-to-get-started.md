@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "implementing-a-database-how-to-get-started"
 ---
 
-Okay so you wanna build a database huh Been there done that got the t-shirt and probably a few scars along the way let's talk shop no fluff just real world experience. You're asking about *getting started* which is like saying "I want to climb Everest" lots of ways to go about it and some are definitely less painful than others.
+Okay so you wanna build a database right Been there done that got the t-shirt and probably a few scars along the way let's talk shop no fluff just real world experience. You're asking about *getting started* which is like saying "I want to climb Everest" lots of ways to go about it and some are definitely less painful than others.
 
 First off forget about trying to build a full-blown Postgres or MySQL killer right out the gate Seriously that's a recipe for disaster been there seen the aftermath it was messy. Instead let's break it down to the basics what's a database really? At its heart it's just a way to store and retrieve data right? We're not talking about some magical black box here.
 

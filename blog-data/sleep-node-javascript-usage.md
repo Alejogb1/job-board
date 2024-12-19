@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "sleep-node-javascript-usage"
 ---
 
-Okay so you wanna know about `sleep` in Nodejs huh alright I've been down that rabbit hole more times than I care to admit let me give you the lowdown from someone who's actually wrestled with this not just read about it on some blog
+Okay so you wanna know about `sleep` in Nodejs right alright I've been down that rabbit hole more times than I care to admit let me give you the lowdown from someone who's actually wrestled with this not just read about it on some blog
 
 The thing is Nodejs by its very nature is asynchronous single-threaded magic right You've got this event loop that juggles everything and throwing a `sleep` in there is like putting a huge stop sign in the middle of a busy highway everything just grinds to a halt The reason why we dont find a function called sleep in the standard library is exactly this reason it's generally not a good idea to use traditional blocking sleep calls in node because the event loop stops spinning so your app literally freezes.
 

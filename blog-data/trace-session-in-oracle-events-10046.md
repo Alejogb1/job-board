@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "trace-session-in-oracle-events-10046"
 ---
 
-Okay so you wanna dive into trace session in Oracle using event 10046 huh Been there done that a million times it feels like Let's break it down without any fluff or confusing metaphors
+Okay so you wanna dive into trace session in Oracle using event 10046 right Been there done that a million times it feels like Let's break it down without any fluff or confusing metaphors
 
 Look event 10046 is your go-to buddy when you need to see what's happening at the Oracle engine level It's all about tracing SQL statements and database activity I've used this countless times to debug slow queries find locking issues and generally figure out why my app is crawling at a snails pace Trust me understanding this event will save you a lot of late nights banging your head against the wall
 

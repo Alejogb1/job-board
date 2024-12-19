@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-is-a-tensorflow-target-shape-not-matching-and-how-to-properly-format-data"
 ---
 
-alright, so you're banging your head against a tensorflow shape mismatch, huh? i've been there, more times than i care to count. it's one of those things that can feel totally baffling at first, but usually boils down to a pretty straightforward data formatting issue. let me break down what's likely happening and how i've tackled this in the past.
+alright, so you're banging your head against a tensorflow shape mismatch, right? i've been there, more times than i care to count. it's one of those things that can feel totally baffling at first, but usually boils down to a pretty straightforward data formatting issue. let me break down what's likely happening and how i've tackled this in the past.
 
 first off, let's talk about what a shape is in tensorflow terms. it's basically the dimensions of your data. think of it like this: if you have a single number, the shape is just (). a list of numbers, like [1, 2, 3], has a shape of (3,). a matrix, a list of lists, [[1, 2], [3, 4]], well that's (2, 2). and when we're working with deep learning models, we're usually dealing with tensors – multidimensional arrays. each dimension needs to be consistent for tensorflow to perform its calculations correctly. the error message you're probably seeing is essentially tensorflow screaming because the shape of the data it's expecting doesn't match the shape of the data you're feeding it.
 

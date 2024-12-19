@@ -6,7 +6,7 @@ id: "why-is-azureml-submitting-a-deployment-to-compute-taking-very-long"
 
 hey there,
 
-so, you're seeing azureml deployments to compute taking ages, huh? yeah, i've been there, multiple times, and it's rarely a simple thing. it’s like waiting for a pizza that was ordered in another country. lets break down why this might happen and what i've tried over the years. i'll try to keep it simple and give you some practical angles, like when i had to deal with similar headaches.
+so, you're seeing azureml deployments to compute taking ages, right? yeah, i've been there, multiple times, and it's rarely a simple thing. it’s like waiting for a pizza that was ordered in another country. lets break down why this might happen and what i've tried over the years. i'll try to keep it simple and give you some practical angles, like when i had to deal with similar headaches.
 
 first off, let’s consider the lifecycle of a typical deployment with azureml. it’s not just a “push it and done” situation. there’s a whole process behind the scenes. when you submit a deployment, azureml has to package your model, all dependencies, sometimes even the environment itself, then push that to the compute target, and then finally it has to get that container image up and running. this whole pipeline has a lot of potential bottlenecks.
 

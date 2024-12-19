@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-am-i-getting-an-exifimagetype-failed-to-open-stream-no-such-file-or-directory-in"
 ---
 
-alright, so you're hitting that classic "exif_imagetype failed to open stream" error, huh? i've seen this one pop up more times than i care to remember. it’s usually about paths, permissions, or files that just aren't what the exif functions expect. let's break it down, based on my years of banging my head against similar issues.
+alright, so you're hitting that classic "exif_imagetype failed to open stream" error, right? i've seen this one pop up more times than i care to remember. it’s usually about paths, permissions, or files that just aren't what the exif functions expect. let's break it down, based on my years of banging my head against similar issues.
 
 first, this error from `exif_imagetype()` in php screams one thing: the function can't find or access the file you're giving it. it's not about the *contents* of the file being wrong for an image (like a text file pretending to be a jpeg). it's about the function straight up not being able to get its hands on the file itself.
 

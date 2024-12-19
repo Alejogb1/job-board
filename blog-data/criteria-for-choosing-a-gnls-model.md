@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "criteria-for-choosing-a-gnls-model"
 ---
 
-Alright so you're asking about choosing a Generalized Nonlinear Least Squares GNLS model huh Been there done that Man I swear its like picking a specific grain of sand on a beach sometimes I've wrestled with these things for ages its a right pain when you need just the perfect fit
+Alright so you're asking about choosing a Generalized Nonlinear Least Squares GNLS model right Been there done that Man I swear its like picking a specific grain of sand on a beach sometimes I've wrestled with these things for ages its a right pain when you need just the perfect fit
 
 My journey with GNLS started way back a few years ago I was working on a project where we were trying to model some kind of complex biological reaction think enzyme kinetics stuff It was all curves and non-linear behavior Standard linear regression was just throwing its hands up in surrender the classic underfitting scenario you know So I dove into the world of non-linear models specifically GNLS because it's flexible and powerful and sometimes also a headache inducing beast to tame
 

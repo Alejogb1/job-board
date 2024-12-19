@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-write-a-unit-test-for-a-trait-in-a-model-laravel"
 ---
 
-alright, so you're looking to unit test a trait within your laravel model, huh? i've been there, battled that particular beast more times than i care to remember. it’s one of those things that seems simple on the surface but can get tricky pretty quickly if you don't have a solid plan. let me break down how i've tackled this sort of thing in the past, using my own scars as the basis of this advice.
+alright, so you're looking to unit test a trait within your laravel model, right? i've been there, battled that particular beast more times than i care to remember. it’s one of those things that seems simple on the surface but can get tricky pretty quickly if you don't have a solid plan. let me break down how i've tackled this sort of thing in the past, using my own scars as the basis of this advice.
 
 the core issue with unit testing traits is that they're not standalone entities. they're designed to be mixed into classes, particularly your eloquent models. so you can’t test a trait in isolation, you’re always testing it within the context of something else.
 

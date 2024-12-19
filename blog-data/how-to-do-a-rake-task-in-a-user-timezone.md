@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-do-a-rake-task-in-a-user-timezone"
 ---
 
-alright, so you're hitting the classic timezone wall with rake tasks, huh? been there, done that, got the t-shirt… and probably a few lingering headaches. i remember back in '09, working on this monstrosity of a rails app for a global e-commerce platform, we had users all over the place, and scheduling stuff was, well, a *mess*. cron jobs firing off at seemingly random times, emails going out at 3 am for some folks while it was lunchtime for others… absolute chaos. lesson learned: timezone awareness is crucial, especially when background jobs are involved.
+alright, so you're hitting the classic timezone wall with rake tasks, right? been there, done that, got the t-shirt… and probably a few lingering headaches. i remember back in '09, working on this monstrosity of a rails app for a global e-commerce platform, we had users all over the place, and scheduling stuff was, well, a *mess*. cron jobs firing off at seemingly random times, emails going out at 3 am for some folks while it was lunchtime for others… absolute chaos. lesson learned: timezone awareness is crucial, especially when background jobs are involved.
 
 the core problem, as i see it, is that rake tasks, by default, operate in the server’s timezone. the clock on your server isn't the clock of your users, and if your app caters to people across different timezones you've got a major problem. the user's timezone is a piece of contextual data you need to carry with you. you can't assume it, or everything goes haywire.
 

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-create-with-nodejs-microsoft-office--open-office--pdf--thumbnails"
 ---
 
-so, you're asking how to generate thumbnails from office documents, pdfs, using nodejs, huh? yeah, i've been down that rabbit hole a few times. it's not exactly a walk in the park, but definitely doable. let's break it down.
+so, you're asking how to generate thumbnails from office documents, pdfs, using nodejs, right? yeah, i've been down that rabbit hole a few times. it's not exactly a walk in the park, but definitely doable. let's break it down.
 
 first off, there's no single magical library that handles *all* office formats and pdfs perfectly. you end up juggling a few different tools and processes. from my experience, it’s more about finding the *best fit* for your use case, and there will always be trade-offs. i remember back in 2015, trying to implement this for a document management system i was working on at the time. i was using a custom linux server (ubuntu 14.04 if i remember correctly) and had to juggle different dependencies, it was a nightmare sometimes. initially, i tried using some pure js libraries which just didn't work correctly. that was a frustrating week, so i had to reconsider the approach.
 

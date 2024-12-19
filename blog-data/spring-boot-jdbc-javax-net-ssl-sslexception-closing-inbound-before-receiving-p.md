@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "spring-boot-jdbc-javax-net-ssl-sslexception-closing-inbound-before-receiving-p"
 ---
 
-Okay so you got that dreaded "javax net ssl SSLException closing inbound before receiving p" thing huh Been there done that got the t-shirt and the therapy bills honestly I feel your pain Its like the internet just decided to ghost you mid-handshake Not cool I tell you not cool
+Okay so you got that dreaded "javax net ssl SSLException closing inbound before receiving p" thing right Been there done that got the t-shirt and the therapy bills honestly I feel your pain Its like the internet just decided to ghost you mid-handshake Not cool I tell you not cool
 
 So lets break this down because this isnt a simple "just restart your server" type of thing Yeah I wish it was We are diving into the slightly messy world of SSL/TLS handshakes gone south
 

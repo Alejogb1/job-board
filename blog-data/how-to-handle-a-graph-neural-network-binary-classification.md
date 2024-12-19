@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-handle-a-graph-neural-network-binary-classification"
 ---
 
-alright, so you're tackling graph neural network binary classification, huh? i've been there, done that, got the t-shirt with the slightly faded graph logo on it. trust me, it can be a bit of a beast if you're not careful but once you get the hang of it, it's actually pretty straightforward, at least for most cases.
+alright, so you're tackling graph neural network binary classification, right? i've been there, done that, got the t-shirt with the slightly faded graph logo on it. trust me, it can be a bit of a beast if you're not careful but once you get the hang of it, it's actually pretty straightforward, at least for most cases.
 
 basically, what we're dealing with is a situation where you have some data represented as a graph—nodes connected by edges—and your goal is to predict whether each node belongs to one of two classes. this could be anything: identifying fraudulent accounts in a social network, predicting if a molecule is active, or even classifying user behavior in an online platform. i once used this technique to analyze server logs and identify potential intrusion attempts (it was a long time ago in a company far, far away with really questionable IT).
 

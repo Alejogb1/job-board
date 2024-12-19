@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "helm-ternary-conditions-templates"
 ---
 
-Okay so you're asking about ternary conditions in Helm templates huh Been there done that got the t-shirt and probably a few scars to prove it Let me tell you it can get messy fast if you're not careful especially when you start nesting conditions like russian dolls
+Okay so you're asking about ternary conditions in Helm templates right Been there done that got the t-shirt and probably a few scars to prove it Let me tell you it can get messy fast if you're not careful especially when you start nesting conditions like russian dolls
 
 Look Helm templates they're basically Go templates with some extra sprinkles from the Kubernetes world They're powerful but also very picky and unforgiving when it comes to syntax and logic errors And ternary conditions are a common point where things go sideways So you're in good company if you're banging your head against the wall right now believe me I have been in your shoes I have had to use it for several services in previous companies
 

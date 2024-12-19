@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "error-reading-server-preface-http2-connection"
 ---
 
-Okay so you're hitting a "error reading server preface http2 connection" huh Been there done that got the t-shirt seriously This error is a classic head scratcher especially when you think everything *should* be working
+Okay so you're hitting a "error reading server preface http2 connection" right Been there done that got the t-shirt seriously This error is a classic head scratcher especially when you think everything *should* be working
 
 Let's break it down from my experience and what I've seen others wrestle with It almost always boils down to a fundamental mismatch or a hiccup in the initial handshake process between your client and the server when attempting an HTTP/2 connection The preface the error is bitching about is that specific sequence of bytes that says "hey we're talking HTTP/2"
 

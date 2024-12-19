@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "why-does-2e3-return-2000-isnt-2-to-the-3rd-power-equal-to-8"
 ---
 
-Okay so you're tripping on `2e3` returning `2000` and not `8` huh Been there done that plenty of times early in my career let me tell you It's a classic gotcha in JavaScript and many other languages actually it ain’t just JS
+Okay so you're tripping on `2e3` returning `2000` and not `8` right Been there done that plenty of times early in my career let me tell you It's a classic gotcha in JavaScript and many other languages actually it ain’t just JS
 
 Alright so the root of your confusion lies in how languages interpret the `e` notation It's not exponentiation like you're thinking with `2**3` or `Math.pow(2, 3)` This `e` is shorthand for scientific notation specifically its for "times ten to the power of"  So `2e3` actually means 2 times 10 to the power of 3 or 2 * 10<sup>3</sup>
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "python-to-assembly-language-converter"
 ---
 
-Okay so you wanna go from Python to Assembly huh Alright I get it Been there done that Got the scars to prove it
+Okay so you wanna go from Python to Assembly right Alright I get it Been there done that Got the scars to prove it
 
 See a while back I was knee-deep in a project involving a custom embedded system something that needed to be ridiculously low-level We were talking about squeezing every single clock cycle out of this little chip and Python wasn't exactly cutting it for real-time performance So yeah I needed a way to translate Python logic into assembly I didn't need a full compiler mind you more of a translator for specific parts of the code
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "b-c-concatenation-operator-usage"
 ---
 
-Okay so you're asking about the C++ concatenation operator specifically huh Been there done that tons of times Let me tell you my experiences maybe they will help you out too
+Okay so you're asking about the C++ concatenation operator specifically right Been there done that tons of times Let me tell you my experiences maybe they will help you out too
 
 So first off what we actually mean by "concatenation operator" in C++ is usually the plus operator `+` when dealing with strings Specifically that `std::string` type we use a lot Not just plain old C-style char arrays Those are a whole different beast and we'll try to avoid that here cause they are just asking for buffer overflows and segmentation faults you know the drill The plus operator `+` for `std::string` is well designed that makes it really easier
 
@@ -27,7 +27,7 @@ int main() {
 }
 ```
 
-Pretty simple huh? This example will output "Hello World" to your console.  The plus operator here takes `str1` and `str2` allocates a new string big enough to hold both and then copies each character from the two string values into the new resulting string It's a clean operation It's doing the allocation for you it handles the memory for you you dont have to worry about it And most importantly this is safer than using c style strings.
+Pretty simple right? This example will output "Hello World" to your console.  The plus operator here takes `str1` and `str2` allocates a new string big enough to hold both and then copies each character from the two string values into the new resulting string It's a clean operation It's doing the allocation for you it handles the memory for you you dont have to worry about it And most importantly this is safer than using c style strings.
 
 I once had a really nasty bug where I was using `strcpy` and `strcat` to concatenate character arrays. The length calculation was wrong by just one byte.  Oh boy it didn't crash immediately it corrupted some seemingly random data somewhere else in the system it took me days to hunt down the culprit I learned my lesson that day the hard way Stick to `std::string` for string manipulation unless you have a truly valid reason to not do that. And trust me most of the times you dont have valid reasons not to use them.
 

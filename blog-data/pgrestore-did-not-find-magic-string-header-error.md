@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "pgrestore-did-not-find-magic-string-header-error"
 ---
 
-Okay so you're hitting the "pg_restore did not find magic string header" error huh? I've been there man believe me I've wrestled with this beast way more times than I care to admit it's like a rite of passage for Postgres users sometimes
+Okay so you're hitting the "pg_restore did not find magic string header" error right? I've been there man believe me I've wrestled with this beast way more times than I care to admit it's like a rite of passage for Postgres users sometimes
 
 So here's the deal this error usually screams one thing loud and clear your restore file isn't what pg_restore expects it to be It's essentially saying "hey I'm looking for a file that starts with a specific sequence of bytes a magic string if you will and you're giving me something that doesn't match that pattern" It's Postgres trying to ensure the integrity of backups it's a good thing but man is it annoying when it goes wrong
 

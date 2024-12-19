@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-predict-multi-labeled-datapoints"
 ---
 
-alright, so you're tackling multi-label classification, huh? been there, done that, got the t-shirt (and probably a few more from late nights debugging). it's not as straightforward as your standard single-label stuff, but it's definitely a solvable problem. i remember back in the day, trying to build a system to automatically tag articles for an online news platform. ended up going through a whole bunch of methods before landing on something that worked halfway decently, haha.
+alright, so you're tackling multi-label classification, right? been there, done that, got the t-shirt (and probably a few more from late nights debugging). it's not as straightforward as your standard single-label stuff, but it's definitely a solvable problem. i remember back in the day, trying to build a system to automatically tag articles for an online news platform. ended up going through a whole bunch of methods before landing on something that worked halfway decently, haha.
 
 first off, the big difference with multi-label is that each datapoint can belong to multiple categories simultaneously, not just one. like a movie could be tagged 'action', 'sci-fi', and 'thriller' all at once. this changes how you think about prediction and evaluation compared to regular classification.
 

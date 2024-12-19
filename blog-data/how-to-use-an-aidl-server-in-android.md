@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-use-an-aidl-server-in-android"
 ---
 
-so, you're looking to get an aidl server up and running on android, huh? i've been down that road a few times, and it can feel a little bumpy initially. it's not rocket science but the first time the process feels weird. let me walk you through it, based on my own experience battling weird binder errors.
+so, you're looking to get an aidl server up and running on android, right? i've been down that road a few times, and it can feel a little bumpy initially. it's not rocket science but the first time the process feels weird. let me walk you through it, based on my own experience battling weird binder errors.
 
 first off, aidl, or android interface definition language, is basically how you define a contract for inter-process communication. think of it like a blueprint for two separate apps, or even two separate processes within the same app, to talk to each other. one is the server that exposes methods for use, and the other is the client that invokes those methods. it's all about method calls being marshalled across process boundaries. this can be tricky, but aidl simplifies the process by handling the low-level serialization stuff.
 

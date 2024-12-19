@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "npsolve-numpy-problem-error"
 ---
 
-Okay so you're seeing an `np.linalg.solve` error with numpy huh Been there done that got the t-shirt I've wrestled with this specific problem more times than I'd like to admit and it's usually one of a few suspects
+Okay so you're seeing an `np.linalg.solve` error with numpy right Been there done that got the t-shirt I've wrestled with this specific problem more times than I'd like to admit and it's usually one of a few suspects
 
 Let's break it down real quick from my past experiences and what I've seen on various forums and in real-world debugging sessions I am not sure about the exact use case you have but I can give general ideas which are pretty common
 

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-am-i-getting-an-error-in-truffle-test-with-an-it-statement"
 ---
 
-alright, so you're hitting a snag with truffle tests and an "it" statement throwing errors, huh? i've been down that road a few times myself, and let me tell you, it's usually a pretty common culprit causing these kinds of headaches. based on what you've said i'm guessing it's not a problem with truffle itself more often than not the errors that happen on the `it` statement are related to how the contracts or tests are written.
+alright, so you're hitting a snag with truffle tests and an "it" statement throwing errors, right? i've been down that road a few times myself, and let me tell you, it's usually a pretty common culprit causing these kinds of headaches. based on what you've said i'm guessing it's not a problem with truffle itself more often than not the errors that happen on the `it` statement are related to how the contracts or tests are written.
 
 i'll give you some common scenarios i've stumbled upon and some quick ways to check if your problem relates to those. i've spent more than my fair share of late nights debugging these things in the past when i was working on a dapp for an imaginary decentralized stock market back in 2017. we had some serious problems with our test suite because of these.
 

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-do-a-wordpress-blog-image-resize"
 ---
 
-alright, so you're facing the classic wordpress image resize conundrum, huh? been there, done that, got the t-shirt, and probably even wrote a plugin about it at some point. let's break down what usually happens and how to get around it.
+alright, so you're facing the classic wordpress image resize conundrum, right? been there, done that, got the t-shirt, and probably even wrote a plugin about it at some point. let's break down what usually happens and how to get around it.
 
 first off, wordpress handles image resizing in a few different ways, and none of them are perfect out of the box. when you upload an image, wordpress automatically generates several sizes based on your theme's configuration and your wordpress settings. these usually include thumbnail, medium, and large versions, but they vary. the issue comes when you need a very specific size not preconfigured, or when you want to control this process more than wordpress defaults allow. or if you have older images that weren't generated correctly. i remember one time i was working on a project for a travel blog and they had a ton of old, wonky images uploaded by multiple editors that didn’t understand resizing, and let me tell you, debugging that mess was like trying to find a specific grain of sand on a beach after a storm.
 

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-isnt-my-convolutional-neural-network-reaching-an-acceptable-accuracy"
 ---
 
-well, alright, let's get into this. you've got a convolutional neural network, and it's just not performing like you expect, huh? i've been there, trust me. i've spent more late nights staring at training curves than i care to remember. it's frustrating when things don't just click into place, especially when you've put the work in.
+well, alright, let's get into this. you've got a convolutional neural network, and it's just not performing like you expect, right? i've been there, trust me. i've spent more late nights staring at training curves than i care to remember. it's frustrating when things don't just click into place, especially when you've put the work in.
 
 first off, it's pretty common. cnn's aren't magic wands, they need the conditions to be just so. there's a whole bunch of potential culprits, and we need to systematically check through them. i'll walk you through some of the usual suspects, based on my experience in the trenches, and hopefully we can pinpoint what's causing your headache.
 

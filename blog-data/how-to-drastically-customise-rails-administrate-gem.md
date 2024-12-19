@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-drastically-customise-rails-administrate-gem"
 ---
 
-alright, so you're looking to really bend administrate to your will, huh? i get it. it's a great gem, gets you up and running with a decent admin interface super quickly, but sometimes that 'decent' just doesn't cut it. i’ve been down this road myself, multiple times. let me share some of the pain, and hopefully some solutions, that i've learned the hard way.
+alright, so you're looking to really bend administrate to your will, right? i get it. it's a great gem, gets you up and running with a decent admin interface super quickly, but sometimes that 'decent' just doesn't cut it. i’ve been down this road myself, multiple times. let me share some of the pain, and hopefully some solutions, that i've learned the hard way.
 
 my first real encounter with administrate's limitations was back when i was working on a system for managing research papers, i wanted to display the pdfs in a fancy viewer inline, rather than just linking to them. administrate out of the box gives you a simple link, which felt so outdated, i mean, come on. initially, i tried some crazy javascript hacks, patching things in after the page loaded, a nightmare. the maintenance was unbearable, each update of the gem broke half of my modifications. lesson learned, don't be that guy. so, yeah, i feel your pain. lets tackle this properly.
 

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-am-i-getting-a-rails-upgrade-message-heres-how-to-upgrade-bundle-config---delete-bin-rails-appupdatebin-not-working"
 ---
 
-alright, so you're seeing that "heres how to upgrade bundle config --delete bin rails app:update:bin" message in rails and it's not doing what you'd expect, huh? i've been there, more times than i care to count honestly, and usually it's a bit more involved than the message lets on. been messing with rails since, well, before actioncable was a thing, back when we had to cobble together websockets manually. good times... well, maybe not.
+alright, so you're seeing that "heres how to upgrade bundle config --delete bin rails app:update:bin" message in rails and it's not doing what you'd expect, right? i've been there, more times than i care to count honestly, and usually it's a bit more involved than the message lets on. been messing with rails since, well, before actioncable was a thing, back when we had to cobble together websockets manually. good times... well, maybe not.
 
 first off, that message is rails' way of saying, "hey, i've noticed you're trying to use commands that are expecting some newer files and structures and i can't find them". it's usually tied to changes in how rails handles its executables, specifically the `bin/rails` file and potentially some related setup. it mostly pops up after a gem upgrade. the `bundle config --delete bin` part is supposed to clean up some configuration that might be causing issues and then `rails app:update:bin` is the command that’s supposed to regenerate the new necessary files.
 

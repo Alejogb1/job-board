@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-can-i-refresh-all-the-cookies-token-and-session-after-logout-calling-api-using-rails-hotwire"
 ---
 
-alright, so, you're hitting that classic problem with rails hotwire and needing to nuke all auth stuff on logout, huh? been there, messed that up, got the t-shirt, like, several times. it's not always as straightforward as it looks. let's break down the how and the why, because understanding the moving parts here is key to actually fixing it cleanly.
+alright, so, you're hitting that classic problem with rails hotwire and needing to nuke all auth stuff on logout, right? been there, messed that up, got the t-shirt, like, several times. it's not always as straightforward as it looks. let's break down the how and the why, because understanding the moving parts here is key to actually fixing it cleanly.
 
 first off, i've found that the main issue isn't usually the hotwire part *per se*, but rather how we're handling the authentication state *and* how hotwire plays into that state. i remember once, early in my career i had this app that was like, 80% hotwire and 20% custom javascript (before i *really* learned stimulusjs. lol, what a mess). the logout button was a simple link_to that did a rails post request that cleared the cookies in the session, and rendered back with a 303 redirect, which worked sometimes! but then, users would try to hit the back button or the reload and would be "logged in" again. it felt like whack-a-mole. turns out, the browser was *really* eager to reuse cached pages. the session was empty in the backend, but the front end was completely unaware of it, because it still had the stale cookies and html. so frustrating.
 

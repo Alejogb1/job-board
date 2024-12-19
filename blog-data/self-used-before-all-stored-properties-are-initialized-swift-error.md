@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "self-used-before-all-stored-properties-are-initialized-swift-error"
 ---
 
-Alright so you're hitting that classic Swift roadblock huh "self used before all stored properties are initialized" Been there done that got the t-shirt and probably a few gray hairs too lets dive in
+Alright so you're hitting that classic Swift roadblock right "self used before all stored properties are initialized" Been there done that got the t-shirt and probably a few gray hairs too lets dive in
 
 I've seen this particular error pop up more times than I care to remember especially back in my early Swift days Like when I was first dabbling with UIKit and custom views boy oh boy did that bite me more than once I recall one project this weather app where I had this elaborate custom view for displaying the temperature It was a real mess of subviews and animations and the initialization sequence was more tangled than my headphones after a week in my backpack I spent a solid three hours debugging this exact error only to realize I had a single non optional variable declared right at the top without an initial value Talk about feeling dumb
 

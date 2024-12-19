@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "q-gram-approximate-matching"
 ---
 
-Okay so you're asking about q-gram approximate matching huh Been there done that got the t-shirt and probably several more t-shirts with slightly different versions of the same q-gram code printed on them I've spent way too much of my life wrestling with this stuff lets just say I didn't have a social life for a while there
+Okay so you're asking about q-gram approximate matching right Been there done that got the t-shirt and probably several more t-shirts with slightly different versions of the same q-gram code printed on them I've spent way too much of my life wrestling with this stuff lets just say I didn't have a social life for a while there
 
 Alright let me break it down for you from the perspective of someone who's actually coded this stuff not just read about it in textbooks First off q-gram matching in case you're not entirely familiar at its core its about breaking down strings into smaller chunks called q-grams and comparing those chunks instead of the entire strings That's like saying "hey we have these long sentences instead of comparing the whole sentence lets just compare if they have the same few words within them" That makes it easier to find similarity in strings even if they are not exactly identical you have typos you got word order difference you have extra characters its all handled way better with q grams
 

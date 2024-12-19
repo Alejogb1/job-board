@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-extract-a-one-hot-representation-of-a-midi-file"
 ---
 
-alright, so you're after a one-hot encoding of midi data, huh? i've been down this rabbit hole myself a few times. it's a pretty crucial step if you're planning on feeding that music data into any machine learning model. it's not usually straightforward, there are a few gotchas you need to be aware of, which i'll lay out based on my past experiences.
+alright, so you're after a one-hot encoding of midi data, right? i've been down this rabbit hole myself a few times. it's a pretty crucial step if you're planning on feeding that music data into any machine learning model. it's not usually straightforward, there are a few gotchas you need to be aware of, which i'll lay out based on my past experiences.
 
 first off, let's talk about what a one-hot encoding actually is in this context. with midi, we're dealing with a sequence of events—notes starting and stopping, changes in velocity (how hard a note is struck), controller changes, and a lot more. we need to transform this sequential data into a format a machine learning algorithm can understand, hence the need for one-hot encoding, essentially creating a vector where a '1' indicates the presence of a particular event, and a '0' indicates its absence, think of it as a binary 'is it on or off' system for all potential midi events.
 

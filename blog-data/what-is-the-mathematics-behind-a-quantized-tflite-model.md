@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "what-is-the-mathematics-behind-a-quantized-tflite-model"
 ---
 
-alright, so you're asking about the math behind quantized tflite models, huh? it's a pretty interesting area, and i've spent more time than i care to remember elbow deep in this stuff. i've debugged my share of models that went sideways due to quantization weirdness. let me break it down from my perspective, someone who's actually been there, seen the wonky outputs, and had to fix it.
+alright, so you're asking about the math behind quantized tflite models, right? it's a pretty interesting area, and i've spent more time than i care to remember elbow deep in this stuff. i've debugged my share of models that went sideways due to quantization weirdness. let me break it down from my perspective, someone who's actually been there, seen the wonky outputs, and had to fix it.
 
 basically, quantization is about representing numbers with less precision than you would with the standard 32-bit floating-point numbers (float32). these float32 values, they're great for training, but they're computationally expensive when you're running things on resource-constrained devices like phones or embedded systems. so, we downgrade to lower-bit integers to get the performance gains.
 

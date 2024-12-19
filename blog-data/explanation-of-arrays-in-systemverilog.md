@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "explanation-of-arrays-in-systemverilog"
 ---
 
-Alright so you wanna talk about arrays in SystemVerilog huh Been there done that got the scars to prove it I swear those multi-dimensional packed arrays gave me nightmares back in the day Let me break it down for you like I would for a newbie just starting out except you're not a newbie because you asked so lets go
+Alright so you wanna talk about arrays in SystemVerilog right Been there done that got the scars to prove it I swear those multi-dimensional packed arrays gave me nightmares back in the day Let me break it down for you like I would for a newbie just starting out except you're not a newbie because you asked so lets go
 
 SystemVerilog arrays are like containers for storing data They can hold variables of the same type think of it like a toolbox each compartment holding screws or maybe bolts but not both at the same time You got your basic types like int logic bit reg these are your building blocks then you can group them up with arrays into a larger structure
 

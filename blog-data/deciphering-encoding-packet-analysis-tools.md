@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "deciphering-encoding-packet-analysis-tools"
 ---
 
-Okay so you want to talk about encoding and packet analysis huh I get it it's a messy corner of the internet that a lot of people avoid but somebody's gotta do it right
+Okay so you want to talk about encoding and packet analysis right I get it it's a messy corner of the internet that a lot of people avoid but somebody's gotta do it right
 
 I've been wrestling with this stuff for years probably since before you were born actually back when modems shrieked like banshees and the internet was mostly text I’ve seen my share of encoding nightmares From the good old days of ASCII and EBCDIC where a single character mismatch would crash your entire program to the more modern unicode encoding hellscapes with UTF-8 and its variants I’ve debugged protocols that look like spaghetti code written by a drunk octopus. I've seen things you wouldn't believe.
 

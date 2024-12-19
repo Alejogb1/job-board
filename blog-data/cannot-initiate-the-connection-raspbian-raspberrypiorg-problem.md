@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "cannot-initiate-the-connection-raspbian-raspberrypiorg-problem"
 ---
 
-Okay so you're hitting that classic "can't connect to raspbian raspberrypi.org" wall huh Been there done that got the t-shirt I've lost weekends to this exact issue and I bet I can guess at least half the things you've already tried
+Okay so you're hitting that classic "can't connect to raspbian raspberrypi.org" wall right Been there done that got the t-shirt I've lost weekends to this exact issue and I bet I can guess at least half the things you've already tried
 
 Let me tell you about the time I was setting up a cluster of these little guys for a distributed rendering project I was seriously pushing the limits of what a Pi could do and this connection hiccup almost made me chuck the whole thing out the window twice I swear the frustration level was like trying to debug a multithreaded kernel while hungover it was bad
 

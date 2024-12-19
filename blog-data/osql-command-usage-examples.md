@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "osql-command-usage-examples"
 ---
 
-Okay so you need osql examples huh Been there done that let me tell you
+Okay so you need osql examples right Been there done that let me tell you
 
 Alright lets dive right in osql man I've wrestled with that command line beast more times than I care to remember back in the day we're talking early 2000s when GUIs were still considered optional yeah that's how far back I go I was managing some massive SQL servers you know the kind that would make your laptop cry just thinking about them and osql was my main tool It was like my Swiss army knife but less stylish and way more command-liney
 

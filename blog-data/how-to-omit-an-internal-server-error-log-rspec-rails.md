@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-omit-an-internal-server-error-log-rspec-rails"
 ---
 
-alright, so you're trying to silence those pesky internal server error logs during your rspec tests in rails, huh? i've been there, more times than i'd like to recall. it's like trying to find a needle in a haystack sometimes, especially when you just want clean test output and not a wall of red error messages that don't actually break anything functionally.
+alright, so you're trying to silence those pesky internal server error logs during your rspec tests in rails, right? i've been there, more times than i'd like to recall. it's like trying to find a needle in a haystack sometimes, especially when you just want clean test output and not a wall of red error messages that don't actually break anything functionally.
 
 let me tell you about a particularly annoying situation i had a few years back. i was working on a legacy rails application, the kind where the codebase seemed to have grown organically, like a jungle. we had integration tests that were incredibly brittle, and any little blip in a dependent service would cause a flood of `500 internal server error` logs, even if the main feature we were testing was working perfectly. these weren't actual bugs in our app's core logic, but errors in external api calls, things like timeouts or unavailable resources. so the tests passed, but the logs were ugly. debugging became a pain, because we had to filter out these red herrings all the time. it was incredibly unproductive.
 

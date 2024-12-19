@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "warning-message-glmfit-fitted-probabilities-occurred-warning-r"
 ---
 
-Okay so you're getting that `glm.fit: fitted probabilities numerically 0 or 1 occurred` warning in R huh Been there done that got the t-shirt and probably a few debugging scars too This is a classic and it usually means your logistic regression model is having a really hard time fitting the data properly Basically your model is trying so hard to make perfect predictions that its probabilities are getting squished right up against 0 or 1 and that makes the internal calculations go a bit haywire
+Okay so you're getting that `glm.fit: fitted probabilities numerically 0 or 1 occurred` warning in R right Been there done that got the t-shirt and probably a few debugging scars too This is a classic and it usually means your logistic regression model is having a really hard time fitting the data properly Basically your model is trying so hard to make perfect predictions that its probabilities are getting squished right up against 0 or 1 and that makes the internal calculations go a bit haywire
 
 I remember back in my early days probably 2015 or so I was working on some customer churn data a pretty standard problem for anyone dabbling in this stuff I had this nice dataset with a bunch of features like number of purchases last login time demographics the whole shebang And yeah I threw a logistic regression at it expecting some nice area under the curve AUC action What I got was this same damned `glm.fit` warning staring me in the face like a mocking digital owl
 

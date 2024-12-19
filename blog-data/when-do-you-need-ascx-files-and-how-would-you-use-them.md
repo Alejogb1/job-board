@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "when-do-you-need-ascx-files-and-how-would-you-use-them"
 ---
 
-Okay so you're asking about ascx files huh Been there done that got the t-shirt and probably a few stress-induced grey hairs dealing with them over the years. Let's dive in
+Okay so you're asking about ascx files right Been there done that got the t-shirt and probably a few stress-induced grey hairs dealing with them over the years. Let's dive in
 
 First things first ascx files they're not some arcane mystery they're just user controls in the good old ASPNET web forms world Think of them as reusable bits of UI little lego bricks you can snap together to build your web pages. I mean in web forms everything’s a control right? Page’s a control its controls all the way down.
 

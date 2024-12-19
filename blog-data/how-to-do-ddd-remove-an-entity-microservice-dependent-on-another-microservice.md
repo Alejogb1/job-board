@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-do-ddd-remove-an-entity-microservice-dependent-on-another-microservice"
 ---
 
-alright, so you're looking at the classic distributed systems headache, huh? dealing with interdependent microservices, specifically removing one that's a dependency of another. i've been there, more times than i care to remember. it’s never as simple as just flipping a switch. you can't just yank out a component, especially not one that's acting as a dependency for another, without consequences. let’s talk about how to approach this using, what i understand as your preferred domain-driven design, ddd, methodology in mind.
+alright, so you're looking at the classic distributed systems headache, right? dealing with interdependent microservices, specifically removing one that's a dependency of another. i've been there, more times than i care to remember. it’s never as simple as just flipping a switch. you can't just yank out a component, especially not one that's acting as a dependency for another, without consequences. let’s talk about how to approach this using, what i understand as your preferred domain-driven design, ddd, methodology in mind.
 
 from my own experience, i had a project, oh, maybe seven years ago, where we built a system for processing financial transactions. we had a service for user accounts (user-service) and a separate one for handling payments (payment-service). payment-service, obviously, was heavily reliant on user-service for, well, user details. then, the business went through a restructuring, and suddenly, we needed to integrate with an external payment provider which handled the user creation by itself and we needed to get user-service out of the payment-service picture. it was a nightmare, i tell you.
 

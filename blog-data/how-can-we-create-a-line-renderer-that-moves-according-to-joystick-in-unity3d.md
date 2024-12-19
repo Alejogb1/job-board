@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-can-we-create-a-line-renderer-that-moves-according-to-joystick-in-unity3d"
 ---
 
-alright, so you're looking to get a line renderer in unity to follow a joystick, huh? i've definitely been down that road before, it’s surprisingly common and kinda tricky if you are starting up. let me tell you about my experience and how i got it working, also throw in some code snippets that should get you running.
+alright, so you're looking to get a line renderer in unity to follow a joystick, right? i've definitely been down that road before, it’s surprisingly common and kinda tricky if you are starting up. let me tell you about my experience and how i got it working, also throw in some code snippets that should get you running.
 
 back in the day, i was working on a, let’s call it "retro vector game" project, and the core mechanic involved a ship that traced its path with a glowing line. it had to be driven by a physical joystick to have that arcade-feel. my first attempts were…messy. i initially tried directly setting the line renderer’s positions every frame based on the raw joystick input, and the results were jittery and terrible. the line would flicker and jump all over the place, it was definitely not smooth. after lots of frustration, i realised the core of the issue is handling the position update logic properly and smoothing the input.
 

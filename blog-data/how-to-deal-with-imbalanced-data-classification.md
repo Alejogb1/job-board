@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "how-to-deal-with-imbalanced-data-classification"
 ---
 
-Alright so you've got imbalanced data classification huh? Been there done that got the t-shirt and probably a few grey hairs. Let me tell you its a classic pain point we all hit sooner or later when you're knee-deep in machine learning projects. You think you've got everything set up your model's humming along then bam accuracy is great but specificity or recall is in the toilet. We've all stared at those numbers feeling like we're talking to a wall I've had that feeling myself way back when I was working on a fraud detection system for a small fintech startup.
+Alright so you've got imbalanced data classification right? Been there done that got the t-shirt and probably a few grey hairs. Let me tell you its a classic pain point we all hit sooner or later when you're knee-deep in machine learning projects. You think you've got everything set up your model's humming along then bam accuracy is great but specificity or recall is in the toilet. We've all stared at those numbers feeling like we're talking to a wall I've had that feeling myself way back when I was working on a fraud detection system for a small fintech startup.
 
 I remember my first time vividly. We had transaction data millions of them and maybe a couple thousand labeled as fraudulent. The model was absolutely thrilled predicting not-fraud every single time because it was so easy I mean 99.99% not-fraud what’s the big deal right? High accuracy but absolutely useless. That’s when I really understood the sting of imbalanced datasets. So let’s break this down we'll go through some common solutions and hopefully give you some real world advice and not just theoretical BS.
 

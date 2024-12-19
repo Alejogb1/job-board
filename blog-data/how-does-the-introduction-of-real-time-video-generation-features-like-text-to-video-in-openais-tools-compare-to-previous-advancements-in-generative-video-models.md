@@ -4,7 +4,7 @@ date: "2024-12-10"
 id: "how-does-the-introduction-of-real-time-video-generation-features-like-text-to-video-in-openais-tools-compare-to-previous-advancements-in-generative-video-models"
 ---
 
-Hey there! So, you're curious about how OpenAI's text-to-video tools stack up against what we've seen before in the world of generative video, huh? That's a *fantastic* question!  It's a field that's moving so fast, it's hard to keep up, but let's dive in and see if we can make some sense of it all.
+Hey there! So, you're curious about how OpenAI's text-to-video tools stack up against what we've seen before in the world of generative video, right? That's a *fantastic* question!  It's a field that's moving so fast, it's hard to keep up, but let's dive in and see if we can make some sense of it all.
 
 One thing that immediately leaps to mind is the sheer accessibility.  Previous advancements in generative video were, let's be honest, pretty niche.  Think complex software, powerful (and expensive!) hardware, and a level of technical expertise that kept it firmly in the hands of specialists.  OpenAI's approach feels…different.  It's bringing these capabilities to a much broader audience, and that's a game-changer.  The ease of use is a HUGE difference. You’re not wrestling with complex code and parameters; you're essentially just typing in a prompt, and *voilà*, video magic happens.
 

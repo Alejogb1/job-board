@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "postgresql-15-trailing-junk-after-numeric-literal-error"
 ---
 
-Alright so you're getting the "trailing junk after numeric literal" error in Postgresql 15 huh Been there done that Let me tell you this isn't a fun error to chase down mostly because it's not always obvious why its happening at least initially I've seen this pop up in so many different contexts over the years I almost have a PTSD trigger response when I see it
+Alright so you're getting the "trailing junk after numeric literal" error in Postgresql 15 right Been there done that Let me tell you this isn't a fun error to chase down mostly because it's not always obvious why its happening at least initially I've seen this pop up in so many different contexts over the years I almost have a PTSD trigger response when I see it
 
 First off lets be clear what's going on Postgres is a bit pedantic when it comes to data types It wants everything to be in its place and playing by the rules When it sees something it thinks is a number it expects that number to be complete no extra bits of letters or symbols clinging onto it like barnacles on a ship Now if you happen to throw something at it like "123abc" it's gonna scream "trailing junk after numeric literal" That `abc` part is the unwanted trailing junk
 

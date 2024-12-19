@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-add-a-dnslabel-for-an-azure-container-group-while-deploying-via-docker-compose-yml-file"
 ---
 
-so, you're hitting that container group dns label snag with docker compose on azure, huh? i've been there, got the t-shirt, and probably a few stress-induced grey hairs to go with it. it's not exactly front and center in the documentation, and the way azure likes to handle these things can sometimes feel like solving a cryptic crossword. let me walk you through it, based on some past headaches i've personally encountered.
+so, you're hitting that container group dns label snag with docker compose on azure, right? i've been there, got the t-shirt, and probably a few stress-induced grey hairs to go with it. it's not exactly front and center in the documentation, and the way azure likes to handle these things can sometimes feel like solving a cryptic crossword. let me walk you through it, based on some past headaches i've personally encountered.
 
 first off, the core issue is that docker compose, in its native form, doesn’t directly speak azure container instance (aci) lingo when it comes to dns labels. compose primarily deals with docker containers and local networking. aci, on the other hand, needs that label explicitly set within its own resource definition. so, we need a little bit of translation. it's like trying to explain the plot of inception to someone who's only watched cartoons.
 

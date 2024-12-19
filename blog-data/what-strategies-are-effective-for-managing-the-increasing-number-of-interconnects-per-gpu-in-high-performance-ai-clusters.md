@@ -8,7 +8,7 @@ Okay so you're wrestling with the interconnect explosion in your AI clusters rig
 
 My brain's been melting over this too  It's not just about bandwidth it's latency it's power consumption it's the sheer logistical nightmare of managing all those connections  Think about it  Every extra link adds complexity adds potential bottlenecks  It's a fractal of frustration  The more you try to optimize the more it seems to explode  
 
-So strategies huh  Let's brainstorm  First off forget hoping for some magical silver bullet  This is a multi-pronged problem demanding a multi-pronged solution
+So strategies right  Let's brainstorm  First off forget hoping for some magical silver bullet  This is a multi-pronged problem demanding a multi-pronged solution
 
 **1 Topology is King**
 

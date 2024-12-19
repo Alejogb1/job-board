@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-handle-alglib-c-matrix-constraints"
 ---
 
-alright, so you're dealing with alglib's c# matrix constraints, huh? i've been there, trust me. it’s one of those things that seems straightforward at first, but then you hit a wall. i recall this one project i had back in the early 2010s, it was some image processing thing, where i needed to solve a linear system with constraints on the resulting matrix. at the time, alglib seemed like the go-to library, but those constraints… well, they gave me a run for my money.
+alright, so you're dealing with alglib's c# matrix constraints, right? i've been there, trust me. it’s one of those things that seems straightforward at first, but then you hit a wall. i recall this one project i had back in the early 2010s, it was some image processing thing, where i needed to solve a linear system with constraints on the resulting matrix. at the time, alglib seemed like the go-to library, but those constraints… well, they gave me a run for my money.
 
 the core problem, as i see it, isn’t that alglib is bad; it’s that understanding how to *effectively* implement constraints in their framework needs some thought. alglib's documentation is…well, it’s not the most user-friendly resource out there. i mean, i get it, math libraries aren't exactly known for their bedtime stories, but still, some examples and clear explanations would have saved me hours.
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "case-when-vhdl-syntax"
 ---
 
-Okay so you're asking about `CASE` statements in VHDL huh Been there done that tons of times Let's break it down in a way that makes sense
+Okay so you're asking about `CASE` statements in VHDL right Been there done that tons of times Let's break it down in a way that makes sense
 
 Basically you're dealing with a construct that lets you pick different actions based on the value of some expression It's like a switch statement in C or Java but in the context of hardware design with all its nuances
 

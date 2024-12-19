@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-add-security-headers-to-the-apache-airflow-web-ui"
 ---
 
-alright, so you're looking to beef up the security on your airflow web ui, huh? i've been there, trust me. it's one of those things that you often overlook at the beginning when you're just trying to get things off the ground, but it becomes critically important once you actually start running stuff in production. it's like building a house and forgetting to put locks on the doors. you will eventually need it.
+alright, so you're looking to beef up the security on your airflow web ui, right? i've been there, trust me. it's one of those things that you often overlook at the beginning when you're just trying to get things off the ground, but it becomes critically important once you actually start running stuff in production. it's like building a house and forgetting to put locks on the doors. you will eventually need it.
 
 i remember when i was first setting up a data pipeline for a small startup, we were so focused on just getting the etl process working that security was an afterthought. airflow was just kinda humming along, happily displaying all of our dag configurations and variable values to, well, anyone who happened to stumble upon the web interface. i didn't have anything super sensitive, but it was still not something you want out in the open. it was quite a stressful situation. this was back in 2018, airflow was still in its early days. i was a young padawan with a lot to learn and had a long way to go. i was just trying to survive the data pipelines trenches at that point.
 

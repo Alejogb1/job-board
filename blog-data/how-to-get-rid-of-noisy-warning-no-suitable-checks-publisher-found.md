@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "how-to-get-rid-of-noisy-warning-no-suitable-checks-publisher-found"
 ---
 
-Alright so you're wrestling with that "no suitable checks publisher found" warning huh Been there absolutely done that a few times myself its like a persistent mosquito buzzing in your code compilation process drives you nuts
+Alright so you're wrestling with that "no suitable checks publisher found" warning right Been there absolutely done that a few times myself its like a persistent mosquito buzzing in your code compilation process drives you nuts
 
 First off let's be clear This warning is a byproduct of code signing and security protocols it pops up when your compiler or development environment can't verify the legitimacy or origin of certain components or libraries you're using It's not always a showstopper but ignoring it is definitely playing Russian roulette with your app's security and potentially user trust
 

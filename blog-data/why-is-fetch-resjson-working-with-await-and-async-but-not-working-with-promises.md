@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-is-fetch-resjson-working-with-await-and-async-but-not-working-with-promises"
 ---
 
-alright, so you're hitting that classic javascript gotcha with `fetch`, `async/await`, and promises, huh? i've been there, trust me. it's a rite of passage for anyone working with asynchronous javascript. let me break down what's going on, from my own experience and with some code examples.
+alright, so you're hitting that classic javascript gotcha with `fetch`, `async/await`, and promises, right? i've been there, trust me. it's a rite of passage for anyone working with asynchronous javascript. let me break down what's going on, from my own experience and with some code examples.
 
 first off, the core of the issue isn't that `res.json()` *doesn't* work with promises. it does. it absolutely returns a promise. the problem arises because the `fetch` api, when used with `.then()` chaining, requires that you handle each promise resolution correctly. it's about the specific timing of when you're trying to access the json data.
 

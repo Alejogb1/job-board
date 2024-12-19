@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "ocaml-absolute-value-floats-calculation"
 ---
 
-Alright so you're asking about calculating the absolute value of floats in OCaml huh Been there done that let me tell you it's not exactly rocket science but sometimes you do need to remember the precise function name especially if your brain is fried from a marathon coding session
+Alright so you're asking about calculating the absolute value of floats in OCaml right Been there done that let me tell you it's not exactly rocket science but sometimes you do need to remember the precise function name especially if your brain is fried from a marathon coding session
 
 I remember this one time back in '08 when I was trying to implement a numerical solver for a physics simulation. I had all these calculations flying around and I kept getting weird results. Turns out I was forgetting to take the absolute value of some intermediate floating-point numbers and my simulation was going haywire like a caffeinated hamster on a wheel. It was a debugging nightmare I spent hours tracing back the problem only to find I had overlooked the simple act of getting the absolute value
 

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "what-is-the-airflow-autobackfill-explanation"
 ---
 
-so, you're asking about airflow's `auto_backfill`, huh? i've been there, staring at that parameter, wondering what magic it holds. it's one of those features that can really save your bacon, or completely screw you over if you don't understand it. i’ll break down what it does, why it exists, and throw in some code examples to show you how it works in practice.
+so, you're asking about airflow's `auto_backfill`, right? i've been there, staring at that parameter, wondering what magic it holds. it's one of those features that can really save your bacon, or completely screw you over if you don't understand it. i’ll break down what it does, why it exists, and throw in some code examples to show you how it works in practice.
 
 first off, let’s forget the hype and get down to the bare basics. `auto_backfill`, at its core, is all about dealing with those annoying historical gaps in your data pipelines. think of it this way: you've been running a dag that extracts data, transforms it, and loads it into a data warehouse. for months, it's been chugging along nicely, doing its job daily. one fine morning you, as the devops person that you are, you release a change. a bug gets introduced which stops the dag in it's tracks for a few days. you fix the bug, re-release and go on your merry way. but now you have this problem: a few days' worth of data are missing from the database. your business people will ask questions and they will not be happy. this is where `auto_backfill` comes into play. it’s the 'catch-up' mechanism.
 

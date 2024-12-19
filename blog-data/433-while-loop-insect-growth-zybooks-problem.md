@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "433-while-loop-insect-growth-zybooks-problem"
 ---
 
-Okay so you're wrestling with that 433 while loop insect growth problem on Zybooks huh Been there done that more times than I care to admit Lets break this down because I feel your pain trust me
+Okay so you're wrestling with that 433 while loop insect growth problem on Zybooks right Been there done that more times than I care to admit Lets break this down because I feel your pain trust me
 
 First off if you're new to programming specifically while loops it can be a bit of a head scratcher its not just you I remember my early days I was convinced loops were some kind of black magic that only wizards understood I spent hours staring at my screen wondering why my code wasnt spitting out the right numbers or why my program just refused to stop that's the good old infinite loop special
 

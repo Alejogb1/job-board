@@ -4,7 +4,7 @@ date: "2024-12-12"
 id: "how-does-linkedins-sales-navigator-protect-profile-data-through-authentication-mechanisms-teaching-point-explains-security-measures-for-data-access-in-linkedins-premium-tools"
 ---
 
-okay so LinkedIn Sales Navigator huh its like the ninja of professional networking you know stealthy but powerful well thinking about how it guards profile data its all about locking the doors and checking ids before letting anyone in
+okay so LinkedIn Sales Navigator right its like the ninja of professional networking you know stealthy but powerful well thinking about how it guards profile data its all about locking the doors and checking ids before letting anyone in
 
 first off we gotta talk authentication its basically the front line defense it's how LinkedIn knows you're you and not some random bot or worse a competitor trying to poach your sales leads its not just a password thing either even though that's the most basic level think about it like the bouncer at a club password or your fancy key to get inside but the club's got multiple levels of security right
 

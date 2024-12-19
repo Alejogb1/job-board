@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-initialize-an-activerecord-model-by-passing-a-database-url"
 ---
 
-alright, so you're asking about initializing an activerecord model using a database url directly, huh? been there, done that, got the t-shirt (and the late-night debugging sessions to prove it). it’s a bit less straightforward than using the typical `database.yml` configuration file, but definitely doable, and sometimes it's the only practical way forward, especially when you’re dealing with dynamic environments or specific use cases that require more runtime flexibility.
+alright, so you're asking about initializing an activerecord model using a database url directly, right? been there, done that, got the t-shirt (and the late-night debugging sessions to prove it). it’s a bit less straightforward than using the typical `database.yml` configuration file, but definitely doable, and sometimes it's the only practical way forward, especially when you’re dealing with dynamic environments or specific use cases that require more runtime flexibility.
 
 i remember one particularly painful project back in my early days. we were building a microservice that needed to connect to a database instance that could change at any moment based on some automated deployment scripts. hardcoding database credentials or even using environment variables felt brittle and prone to errors, so we had to figure out how to dynamically connect to a database using just the url string.
 

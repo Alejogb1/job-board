@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "with-activeadmin-how-to-avoid-duplicating-declaration-between-index-and-exports"
 ---
 
-alright, so you're banging your head against the wall with activeadmin and those pesky duplicate declarations between your index page and exports, huh? i've been there. trust me. feels like you're writing the same stuff twice and it's not exactly the 'dry' principle we all try to stick to when coding. i get it.
+alright, so you're banging your head against the wall with activeadmin and those pesky duplicate declarations between your index page and exports, right? i've been there. trust me. feels like you're writing the same stuff twice and it's not exactly the 'dry' principle we all try to stick to when coding. i get it.
 
 i remember this one project, back in the early 2010s, it was a disaster. we were building this e-commerce platform, and everything was fine in the beginning. we were using activeadmin because it was so fast to get it up and running and the client was constantly changing the columns they wanted to see, we had a ton of fields in the database, so our index page declarations were monstrous and then... then they wanted exports. of course, they did. we were using csv and later moved to excel exports and the code became a mess. it was just copy pasting of the same columns from the index block to the export block and the code was so long, we were probably going to have to hire a full-time copy-paster to maintain it. changes in the table would result in double work.
 

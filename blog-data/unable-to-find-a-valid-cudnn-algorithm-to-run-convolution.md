@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "unable-to-find-a-valid-cudnn-algorithm-to-run-convolution"
 ---
 
-Okay so you’re hitting that wall huh "unable to find a valid cudnn algorithm to run convolution" I know that feeling intimately Been there done that got the t-shirt and the late night debugging sessions to prove it
+Okay so you’re hitting that wall right "unable to find a valid cudnn algorithm to run convolution" I know that feeling intimately Been there done that got the t-shirt and the late night debugging sessions to prove it
 
 Let me tell you this isn't your fault well maybe a little bit It's a classic cudnn dance that we've all tripped over at some point Don't beat yourself up it's a rite of passage in the world of deep learning
 

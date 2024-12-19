@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "frida-call-function-using-arguments"
 ---
 
-Okay so you wanna call a function using Frida with arguments huh I've been there dude tons of times This whole process can be a bit of a headache especially when you're dealing with weird data types or some quirky native code But don’t fret I’ve spilled enough coffee over this stuff to help you out
+Okay so you wanna call a function using Frida with arguments right I've been there dude tons of times This whole process can be a bit of a headache especially when you're dealing with weird data types or some quirky native code But don’t fret I’ve spilled enough coffee over this stuff to help you out
 
 Let's break it down First off the general idea is pretty straightforward You use Frida to hook the function you wanna call then you execute that function with your own arguments Now this seems simple but let me tell you some implementation can be a real pain in the rear end I’ve spent a week debugging a single argument passing issue in some legacy Java library Once I did a deep dive with Java reflection to figure out that the parameter was a proxy object and I had to create it from scratch on the fly in JS just to pass it to the hooked function And that’s not the worst I’ve seen it gets way worse when it comes to c++
 

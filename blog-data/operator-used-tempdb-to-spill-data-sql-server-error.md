@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "operator-used-tempdb-to-spill-data-sql-server-error"
 ---
 
-Okay so you're seeing a tempdb spill issue with SQL Server huh Been there done that got the t-shirt and probably a few grey hairs too. This is one of those SQL Server classics it's a rite of passage really if you've worked with the engine long enough. Let me walk you through what's likely going on and how I've tackled it in the past.
+Okay so you're seeing a tempdb spill issue with SQL Server right Been there done that got the t-shirt and probably a few grey hairs too. This is one of those SQL Server classics it's a rite of passage really if you've worked with the engine long enough. Let me walk you through what's likely going on and how I've tackled it in the past.
 
 Basically when SQL Server is executing a query it needs working space. It uses RAM whenever it can but sometimes that's not enough. For complex operations like sorting joining large datasets or using features like window functions SQL Server might need to use tempdb the database dedicated to temporary storage. When the amount of data that needs temporary storage exceeds the RAM allocated it starts to "spill" onto disk within tempdb. And that's where the "operator used tempdb to spill data" message comes from It's a performance red flag. Your query is doing something that requires more working space than the server has readily available and the performance will generally degrade.
 

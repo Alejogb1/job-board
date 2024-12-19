@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-store-a-function-as-a-jotai-atom"
 ---
 
-alright, so you're looking at storing a function within a jotai atom, huh? been there, done that, got the t-shirt (and the accompanying stack overflow post with a very low score). it's not as straightforward as shoving a primitive in there but it's definitely doable and i've spent my share of time figuring out the cleanest way to go about it.
+alright, so you're looking at storing a function within a jotai atom, right? been there, done that, got the t-shirt (and the accompanying stack overflow post with a very low score). it's not as straightforward as shoving a primitive in there but it's definitely doable and i've spent my share of time figuring out the cleanest way to go about it.
 
 first, let's clarify something fundamental: jotai atoms are primarily designed to hold _data_. they're essentially reactive containers for values. functions, while technically data (in javascript at least), often represent behavior or logic. storing a function directly might not be the ideal way in all cases, but there are scenarios where it's useful. i had to use this pattern in my past when i was making a simple crud app and needed to change how the data is filtered based on which component was actively showing. back then jotai was pretty new and i was fighting with state management for a week so i feel your pain.
 

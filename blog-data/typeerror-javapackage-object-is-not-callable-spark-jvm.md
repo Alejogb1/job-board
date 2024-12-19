@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "typeerror-javapackage-object-is-not-callable-spark-jvm"
 ---
 
-Okay so you're hitting the classic `TypeError javapackage object is not callable` in your Spark JVM environment huh Been there done that got the t-shirt probably still have the coffee stains on it to prove it this one's a beast but it's usually a pretty straightforward root cause
+Okay so you're hitting the classic `TypeError javapackage object is not callable` in your Spark JVM environment right Been there done that got the t-shirt probably still have the coffee stains on it to prove it this one's a beast but it's usually a pretty straightforward root cause
 
 Let me break it down for you from the trenches of my past Spark debugging adventures I've seen this pop up more times than I care to admit so listen up and you'll get out of this mess in no time
 

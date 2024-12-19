@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "blurred-barcode-recognition-software"
 ---
 
-Okay so blurred barcode recognition you say huh Yeah I've been down that rabbit hole before trust me It's not as simple as slapping a library on and calling it a day believe me I learned that the hard way back in my early days working at a shipping company We had a conveyor belt going at warp speed and the barcodes were a mess mostly due to some old printer and rough handling like I'm talking smudged faded you name it The commercially available scanners were choking on them big time That's where the real fun started for me
+Okay so blurred barcode recognition you say right Yeah I've been down that rabbit hole before trust me It's not as simple as slapping a library on and calling it a day believe me I learned that the hard way back in my early days working at a shipping company We had a conveyor belt going at warp speed and the barcodes were a mess mostly due to some old printer and rough handling like I'm talking smudged faded you name it The commercially available scanners were choking on them big time That's where the real fun started for me
 
 First thing I realized was that your typical barcode scanner relies on crisp edges sharp contrasts that stuff isn't there when you are dealing with a blurred barcode It’s like trying to read a bad scan that's been through a washing machine a couple of times So you can't just rely on simple thresholding and edge detection techniques you need to get a little bit fancy
 

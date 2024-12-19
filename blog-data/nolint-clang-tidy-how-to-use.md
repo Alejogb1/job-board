@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "nolint-clang-tidy-how-to-use"
 ---
 
-Okay so someone wants to know about `nolint clang-tidy` huh I've been down this rabbit hole more times than I care to admit Lets break it down real simple no frills just the tech
+Okay so someone wants to know about `nolint clang-tidy` right I've been down this rabbit hole more times than I care to admit Lets break it down real simple no frills just the tech
 
 First off `nolint` is not a command itself it's a directive a comment really It tells `clang-tidy` "hey ignore this specific piece of code don't bother me with your warnings" It's a way to silence noise when you know better than the static analyzer at least you think you do you sometimes don't but hey we all learn
 

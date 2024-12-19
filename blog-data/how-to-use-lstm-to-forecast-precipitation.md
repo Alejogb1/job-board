@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-use-lstm-to-forecast-precipitation"
 ---
 
-so, you're looking into using lstms for precipitation forecasting, huh? been there, done that. it's a classic problem, and let me tell you, it’s not always straightforward. i've spent a good chunk of my career knee-deep in time series data, specifically atmospheric stuff, and lstms can be powerful, but they also come with their own set of quirks.
+so, you're looking into using lstms for precipitation forecasting, right? been there, done that. it's a classic problem, and let me tell you, it’s not always straightforward. i've spent a good chunk of my career knee-deep in time series data, specifically atmospheric stuff, and lstms can be powerful, but they also come with their own set of quirks.
 
 first off, let's talk about why lstms are even considered for this. traditional time series models like arima often struggle with non-linear relationships, which, guess what? weather patterns are full of. lstms, on the other hand, are a type of recurrent neural network capable of learning complex temporal dependencies. they can essentially remember what happened in the past and use that to predict the future, which is crucial for precipitation, which tends to have inertia. if it rained yesterday, there is a higher chance it will rain today (usually), compared if it was completely dry for a week.
 

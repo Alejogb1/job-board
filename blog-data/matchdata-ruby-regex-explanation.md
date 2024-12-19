@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "matchdata-ruby-regex-explanation"
 ---
 
-Alright so you're asking about `MatchData` in Ruby regex and how it works huh Been there done that countless times I've wrestled with regex like a toddler trying to assemble a nuclear reactor yeah it's not pretty I'll try to lay out everything I know about `MatchData` and how to extract information from it especially for beginners
+Alright so you're asking about `MatchData` in Ruby regex and how it works right Been there done that countless times I've wrestled with regex like a toddler trying to assemble a nuclear reactor yeah it's not pretty I'll try to lay out everything I know about `MatchData` and how to extract information from it especially for beginners
 
 Okay so you fire off a regular expression operation in Ruby using something like `=~` or `match` and if it finds a match it doesn’t just throw back a true or false you get a `MatchData` object Think of it like a detailed report of the matching process It's basically a treasure trove of information about what exactly got matched and where it occurred in the target string
 

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-set-constraints-to-labels-so-that-one-is-at-leading-side-and-the-other-at-trailing-side-in-swift"
 ---
 
-alright, so you're looking to pin labels to opposite sides of a view in swift, huh? been there, done that, got the t-shirt (and the stack overflow badges to prove it). it's a pretty common ui layout problem, especially when you're trying to squeeze content into a constrained space. it always seems like simple thing until the layout engine decides to go haywire.
+alright, so you're looking to pin labels to opposite sides of a view in swift, right? been there, done that, got the t-shirt (and the stack overflow badges to prove it). it's a pretty common ui layout problem, especially when you're trying to squeeze content into a constrained space. it always seems like simple thing until the layout engine decides to go haywire.
 
 my early days of ios development involved a project with a list of chat messages. each message cell had a username label and a timestamp label. they always needed to be at opposite ends of the cell, no matter how long the username was. trust me, i've had the labels overlap and the layouts break more times than i care to count. it wasn't pretty, and debugging that crap was a pain. that's when i started really figuring out how autolayout worked, and specifically how to handle this kind of layout.
 

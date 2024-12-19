@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "mpi-allreduce-distributed-memory-explanation"
 ---
 
-Okay so you're asking about `MPI_Allreduce` in distributed memory systems huh Been there done that a bunch of times I mean like seriously too many times to count. It's a fundamental thing if you're dabbling in parallel computing with MPI. I've banged my head against this one enough to practically write a textbook about it myself so I'll break it down for you.
+Okay so you're asking about `MPI_Allreduce` in distributed memory systems right Been there done that a bunch of times I mean like seriously too many times to count. It's a fundamental thing if you're dabbling in parallel computing with MPI. I've banged my head against this one enough to practically write a textbook about it myself so I'll break it down for you.
 
 First up let's be clear We're not talking about shared memory here. This is all about distributed memory systems where each process has its own private memory and they can only talk to each other using messages. So you've got a bunch of computers or cores each running a copy of your program each with its own chunk of data. Now `MPI_Allreduce` is your go-to guy when you need to combine data from all processes and then distribute the result back to everyone. Think of it as a global reduction across your entire distributed system followed by a broadcast all in one go.
 

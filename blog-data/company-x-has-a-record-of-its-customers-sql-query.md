@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "company-x-has-a-record-of-its-customers-sql-query"
 ---
 
-Alright so company X has a customer record huh SQL query is the name of the game here I’ve been down this road a few times believe me dealing with databases is basically my daily bread and butter Been there done that got the t-shirt and the SQL injection scars to prove it
+Alright so company X has a customer record right SQL query is the name of the game here I’ve been down this road a few times believe me dealing with databases is basically my daily bread and butter Been there done that got the t-shirt and the SQL injection scars to prove it
 
 Okay first off let’s break this down like it’s a lego set we need to figure out what ‘record’ means here and what exactly they wanna know about their customers The question is vague yeah but that's typical that's the nature of the beast you get thrown these random requests and you gotta make sense of them I'm used to that kind of thing because hey who isn't in this field right?
 

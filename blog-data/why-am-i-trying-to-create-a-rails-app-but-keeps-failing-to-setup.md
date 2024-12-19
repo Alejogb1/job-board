@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-am-i-trying-to-create-a-rails-app-but-keeps-failing-to-setup"
 ---
 
-alright, so you're hitting the wall trying to get your rails app off the ground, huh? i've been there, more times than i care to count. it's like trying to assemble a complex lego set with the instructions written in hieroglyphs. frustrating is an understatement. let's break down some common trip-ups and see if any of these resonate with your situation.
+alright, so you're hitting the wall trying to get your rails app off the ground, right? i've been there, more times than i care to count. it's like trying to assemble a complex lego set with the instructions written in hieroglyphs. frustrating is an understatement. let's break down some common trip-ups and see if any of these resonate with your situation.
 
 first off, let's talk about the environment. rails is very particular about its surroundings. think of it like a finicky houseplant; needs the right soil, light, and temperature. the 'soil' here is ruby, your database, and bundler.
 

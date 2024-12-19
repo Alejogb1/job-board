@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "cuda-atomic-operations-usage-list"
 ---
 
-Alright so you're asking about CUDA atomic operations like a good old stack overflow question huh I've been there done that a few times trust me I've wrestled with CUDA's memory model and atomics more than I care to admit especially back in the day when I was trying to get my first big parallel simulation running on a single GTX 480 yeah those were times I still remember the pain of debugging memory corruption issues and race conditions luckily we've come a long way since then but the core concepts of atomics still apply
+Alright so you're asking about CUDA atomic operations like a good old stack overflow question right I've been there done that a few times trust me I've wrestled with CUDA's memory model and atomics more than I care to admit especially back in the day when I was trying to get my first big parallel simulation running on a single GTX 480 yeah those were times I still remember the pain of debugging memory corruption issues and race conditions luckily we've come a long way since then but the core concepts of atomics still apply
 
 So basically you're dealing with situations where multiple threads in your CUDA kernel want to access and modify the same memory location concurrently it's like a crowded street where everyone is trying to write on the same whiteboard at the same time without any coordination chaos right That's where atomic operations step in they ensure that these operations are performed as a single indivisible unit preventing data corruption and race conditions
 

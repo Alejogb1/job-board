@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "is-azure-verifiable-identity-something-and-can-we-write-our-own-custom-smart-contract"
 ---
 
-alright, so you're asking about azure verifiable credentials and if we can roll our own smart contracts with them, huh? i've been down this rabbit hole a few times, and it’s a pretty interesting area, so let me break down what i’ve learned and how i’d approach it.
+alright, so you're asking about azure verifiable credentials and if we can roll our own smart contracts with them, right? i've been down this rabbit hole a few times, and it’s a pretty interesting area, so let me break down what i’ve learned and how i’d approach it.
 
 first, let’s tackle the ‘is it something?’ part. yeah, azure verifiable credentials (vc) are definitely a thing. they're microsoft's take on decentralized identity, leveraging standards like w3c’s verifiable credentials and did (decentralized identifiers). the core idea is to give people more control over their identity data. instead of relying on centralized authorities, you get credentials issued to a digital wallet, you present them to relying parties, and they verify the claims through cryptographic means. it's like having a digital passport where only the necessary information is shared, not everything.
 

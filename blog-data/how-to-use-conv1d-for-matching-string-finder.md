@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-use-conv1d-for-matching-string-finder"
 ---
 
-alright, so you're looking into using conv1d for a string matching problem, huh? i've been there, done that, got the t-shirt with the slightly faded 'segmentation fault' logo. let me tell you, it's not exactly the most obvious tool for the job, but it can work pretty well if you approach it with the correct mindset. it's definitely not the first thing that springs to mind when you're looking at regular expressions or similar stuff, but stay with me.
+alright, so you're looking into using conv1d for a string matching problem, right? i've been there, done that, got the t-shirt with the slightly faded 'segmentation fault' logo. let me tell you, it's not exactly the most obvious tool for the job, but it can work pretty well if you approach it with the correct mindset. it's definitely not the first thing that springs to mind when you're looking at regular expressions or similar stuff, but stay with me.
 
 first, ditch the idea of it directly matching strings like a regex. that's not where conv1d shines. think of it more as a pattern detector, working on numerical representations of your strings. you gotta convert those text chars into something numeric, and there are a few ways to do that.
 

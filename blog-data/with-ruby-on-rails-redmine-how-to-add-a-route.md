@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "with-ruby-on-rails-redmine-how-to-add-a-route"
 ---
 
-alright, so you're looking at adding a route in your redmine rails app, huh? been there, done that, got the t-shirt... and probably a few bug reports filed against my name too. it's one of those things that seems simple on the surface, but can get a little twisty depending on what you're trying to achieve. let's break it down.
+alright, so you're looking at adding a route in your redmine rails app, right? been there, done that, got the t-shirt... and probably a few bug reports filed against my name too. it's one of those things that seems simple on the surface, but can get a little twisty depending on what you're trying to achieve. let's break it down.
 
 first off, we need to remember that routing in rails is all about mapping urls to controller actions. basically, when someone types a url into their browser, rails looks at its routing table to figure out which controller and method should handle the request.
 

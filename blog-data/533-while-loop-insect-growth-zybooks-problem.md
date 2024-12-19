@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "533-while-loop-insect-growth-zybooks-problem"
 ---
 
-Okay so you're hitting the classic "while loop insect growth zybooks problem" huh I know this one all too well been there done that got the t-shirt and by t-shirt I mean I spent like three days debugging this exact thing back in my early days when I was a fresh-faced CS student ready to conquer the world one poorly written loop at a time
+Okay so you're hitting the classic "while loop insect growth zybooks problem" right I know this one all too well been there done that got the t-shirt and by t-shirt I mean I spent like three days debugging this exact thing back in my early days when I was a fresh-faced CS student ready to conquer the world one poorly written loop at a time
 
 Let me break it down based on what I remember and some painful lessons I learned let me just say this this is not your average for loop this problem forces you to really understand loop control in while loops something that many people struggle with I mean I even used to struggle with it don't worry you are not alone
 

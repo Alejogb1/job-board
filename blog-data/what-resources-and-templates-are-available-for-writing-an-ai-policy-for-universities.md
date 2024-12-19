@@ -4,7 +4,7 @@ date: "2024-12-03"
 id: "what-resources-and-templates-are-available-for-writing-an-ai-policy-for-universities"
 ---
 
-Hey so you're looking for resources and templates for an AI policy for universities huh cool beans  That's a seriously big deal actually  Universities are gonna be at the forefront of AI development and ethical considerations so getting this right is kinda a huge responsibility.  Let's dive in  I've got some thoughts  and some code examples because why not
+Hey so you're looking for resources and templates for an AI policy for universities right cool beans  That's a seriously big deal actually  Universities are gonna be at the forefront of AI development and ethical considerations so getting this right is kinda a huge responsibility.  Let's dive in  I've got some thoughts  and some code examples because why not
 
 First off there's not gonna be a single perfect template that just magically works for every university  Each place has its own unique quirks and priorities so you'll probably need to do a fair bit of customization.  Think of any template as more of a really good starting point a foundation to build on.
 

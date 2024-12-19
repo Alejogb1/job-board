@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "concatenate-in-vhdl-signals"
 ---
 
-Alright so you're asking about concatenating signals in VHDL huh Been there done that got the t-shirt And a few gray hairs from debugging those pesky signal assignments trust me I've seen it all the good the bad and the downright weird when it comes to VHDL concatenation
+Alright so you're asking about concatenating signals in VHDL right Been there done that got the t-shirt And a few gray hairs from debugging those pesky signal assignments trust me I've seen it all the good the bad and the downright weird when it comes to VHDL concatenation
 
 First things first let's talk about why you'd even want to do this concatenating signals is fundamental for building larger data structures from smaller ones imagine you have say a 4 bit bus and a 2 bit bus and you want to treat them as a single 6 bit bus for some reason that's where concatenation comes in handy it's like assembling lego blocks into a bigger more complex structure that's kind of the basic principle
 
@@ -90,4 +90,4 @@ When it comes to troubleshooting it really is very simple in most cases if you s
 
 Regarding resources for more in-depth knowledge on VHDL concatenation and related topics I would suggest you to check out Ashenden's "The Designer's Guide to VHDL" it's a classic it's really a very deep dive into everything you would ever need and also there's "Digital Design Principles and Practices" by Wakerly this is a really good practical perspective into the matter and if you want something very very practical check out Pong P. Chu's book "FPGA Prototyping Using VHDL Examples" that book really saves the day when you want something practical
 
-You know someone told me once that VHDL is like trying to build a house with instructions written in hieroglyphs but that's also why we like it I guess huh Anyway I hope this helps I've been there many times with this stuff let me know if you got any other questions we all do at some point so lets be on the lookout to help each other out
+You know someone told me once that VHDL is like trying to build a house with instructions written in hieroglyphs but that's also why we like it I guess right Anyway I hope this helps I've been there many times with this stuff let me know if you got any other questions we all do at some point so lets be on the lookout to help each other out

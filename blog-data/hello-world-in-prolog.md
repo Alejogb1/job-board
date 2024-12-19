@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "hello-world-in-prolog"
 ---
 
-Okay so you wanna dive into Prolog huh Alright I've been there done that probably more than a few times Lets get this 'hello world' thing sorted in a way that even your cat could probably understand eventually
+Okay so you wanna dive into Prolog right Alright I've been there done that probably more than a few times Lets get this 'hello world' thing sorted in a way that even your cat could probably understand eventually
 
 First off Prolog isn't your typical procedural language no `print()` no `console log` you're gonna be wrestling with logic facts and rules not just telling the computer what to do step by step Think of it like this instead of giving the computer an instruction list you are giving it a knowledge base and asking it questions
 

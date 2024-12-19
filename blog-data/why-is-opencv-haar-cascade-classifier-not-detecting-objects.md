@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-is-opencv-haar-cascade-classifier-not-detecting-objects"
 ---
 
-so, you're having trouble getting your haar cascade to detect stuff, huh? been there, done that, got the t-shirt (it's a bit stained from all the late-night coding sessions). it's a classic problem, and honestly, it's rarely ever just one thing. let's break it down.
+so, you're having trouble getting your haar cascade to detect stuff, right? been there, done that, got the t-shirt (it's a bit stained from all the late-night coding sessions). it's a classic problem, and honestly, it's rarely ever just one thing. let's break it down.
 
 first off, the most common culprit, at least in my experience, is the training data. i mean, if the haar cascade doesn't know what it's looking for because the training set was garbage, it's not gonna find anything. it's like showing someone a picture of a cat and asking them to find a dog – they’ll be staring at the picture forever. i remember this one project, back in my early days, i was trying to detect stop signs. i thought i was being clever and used some public dataset, but turns out half the stop signs were blurry or partially covered by trees. i spent two days pulling my hair out before i figured out the obvious. the training data must be spot-on. good quality images, consistent lighting, no weird angles. the more, the better usually. you need a good balance between positive (the objects you want to detect) and negative images (everything else). if you overload with positives, it gets overfitted, and it will detect pretty much anything as your object. if you overload negatives, it gets so conservative that it might not detect anything at all. 
 

@@ -4,7 +4,7 @@ date: '2024-11-15'
 id: 'combining-python-like-syntax-with-c-level-performance-in-mojo'
 ---
 
-So, you're digging this new Mojo thing, huh  It's pretty cool, right Combining Python's ease of use with the speed of C  That's the dream, yeah  I've been messing around with it  It's still in its early stages  But I'm getting some good vibes
+So, you're digging this new Mojo thing, right  It's pretty cool, right Combining Python's ease of use with the speed of C  That's the dream, yeah  I've been messing around with it  It's still in its early stages  But I'm getting some good vibes
 
 The syntax is basically Python  Except for a few things like how you declare functions  It's like this
 

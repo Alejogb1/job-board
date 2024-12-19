@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-does-r-cnn-find-the-bounding-box"
 ---
 
-so, you're asking how r-cnn pinpoints those bounding boxes, huh? i've spent way too many late nights staring at convolutional neural networks trying to get these things working properly, so i'll try to break it down for you based on my experience.
+so, you're asking how r-cnn pinpoints those bounding boxes, right? i've spent way too many late nights staring at convolutional neural networks trying to get these things working properly, so i'll try to break it down for you based on my experience.
 
 first off, remember r-cnn isn't doing this in one single step. it's a multi-stage process and it involves a series of operations. so we're not talking about a single magical formula for getting the boxes.
 

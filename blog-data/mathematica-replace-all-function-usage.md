@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "mathematica-replace-all-function-usage"
 ---
 
-Okay so you wanna nuke every function call in Mathematica huh Alright I get it I’ve been there done that let me tell you about my experience trying to do this kind of thing back in the day We're talking about a full-scale surgical replacement of function calls across a massive Mathematica codebase a situation that is not for the faint of heart I swear I once almost accidentally made every integer in a program the number 42 trying to do something similar needless to say that was a learning experience.
+Okay so you wanna nuke every function call in Mathematica right Alright I get it I’ve been there done that let me tell you about my experience trying to do this kind of thing back in the day We're talking about a full-scale surgical replacement of function calls across a massive Mathematica codebase a situation that is not for the faint of heart I swear I once almost accidentally made every integer in a program the number 42 trying to do something similar needless to say that was a learning experience.
 
 So the straightforward way of just string manipulation well thats a mess a colossal unmaintainable mess You might be able to get away with it for very simple cases but trust me when you hit nested function calls or weird arguments or different syntaxes it all falls apart And debugging regex spaghetti is never a good time So what are we gonna do? We are gonna leverage Mathematica's own symbolic capabilities of course thats the beauty of the language
 

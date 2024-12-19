@@ -4,7 +4,7 @@ date: "2024-12-03"
 id: "what-methods-are-used-to-integrate-discord-and-github-contributor-data-for-engagement-tracking-and-airdrops"
 ---
 
-Hey so you wanna know how to link Discord and GitHub for tracking peeps and airdrops huh  That's a pretty cool project actually  Lots of moving parts but totally doable  Let's break it down  the simplest way is probably using APIs and some clever scripting
+Hey so you wanna know how to link Discord and GitHub for tracking peeps and airdrops right  That's a pretty cool project actually  Lots of moving parts but totally doable  Let's break it down  the simplest way is probably using APIs and some clever scripting
 
 First you gotta get the data right  GitHub's API is your friend here  you can fetch contributor data  like commit history  issue contributions  pull requests  all that good stuff  It's pretty well documented  you should find plenty of examples online  and there are some really good books on API integration in Python or Javascript  check out "RESTful Web APIs" by Leonard Richardson and Mike Amundsen  it's a classic  for actually grabbing the data you mostly just need to know the endpoints and the authentication  OAuth is your go-to for secure access  don't hardcode your token tho  that's a big no-no  keep it in a secure environment variable
 

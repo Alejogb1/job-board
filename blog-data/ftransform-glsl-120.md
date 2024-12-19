@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "ftransform-glsl-120"
 ---
 
-Okay so ftransform glsl 120 huh Been there done that Got my share of headaches with that specific version of the old school GLSL pipeline Let me tell you it's a journey a trip down memory lane of fixed function rendering and quirks You're asking about ftransform which basically is the built-in that transforms vertex positions from object space to clip space It was the workhorse back in the days when vertex shaders were optional a quaint memory if you ask me
+Okay so ftransform glsl 120 right Been there done that Got my share of headaches with that specific version of the old school GLSL pipeline Let me tell you it's a journey a trip down memory lane of fixed function rendering and quirks You're asking about ftransform which basically is the built-in that transforms vertex positions from object space to clip space It was the workhorse back in the days when vertex shaders were optional a quaint memory if you ask me
 
 Back then ftransform was how you did your basic modelview projection transformations It was all matrix multiplications and not much wiggle room It was part of the vertex program and was handled behind the scenes No access to modify or tweak the process outside of matrix manipulation That's why when vertex shaders became more mainstream and fully customizable ftransform slowly faded out We're way past those times now almost like dinosaurs
 

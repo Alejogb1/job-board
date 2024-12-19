@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "in-rails-how-can-i-split-putpatch-requests-on-a-resource-to-different-actions"
 ---
 
-alright, so you're looking at how to route put/patch requests in rails to different controller actions, huh? been there, done that, got the t-shirt – and several bug reports. it's a common enough need, especially when your api starts getting more nuanced.
+alright, so you're looking at how to route put/patch requests in rails to different controller actions, right? been there, done that, got the t-shirt – and several bug reports. it's a common enough need, especially when your api starts getting more nuanced.
 
 i remember way back when, i was working on this crud app for managing, i guess you could call them, "widgets." initially, it was straightforward: a put or patch to `/widgets/1` would just update the whole widget, everything all at once, a big messy blob of json being passed. but as the widget concept evolved, we needed to be able to update different aspects of it separately. one update for its basic info, another for its, let's say "advanced settings," and yet another for its "state." that meant we couldn't just rely on the standard rails restful routing for put and patch anymore. that's where i learned some hard lessons about resource routing customization, and thankfully some rails magic as well.
 

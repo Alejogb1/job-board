@@ -110,4 +110,4 @@ print(response)
 this would interact with a hypothetical api  the actual implementation would be far more complex involving things like prompt engineering to instruct the model how to call external functions plus sophisticated error handling for these external calls
 
 
-the ending?  fireworks ai wants you to try their stuff  they’re open api compatible so you can hook it into whatever you already use  they've got a playground for quick tests and they handle everything from tiny experiments to massive production deployments and that’s the story of fireworks ai from the perspective of a friend who just happened to watch the talk and was blown away  pretty neat huh?
+the ending?  fireworks ai wants you to try their stuff  they’re open api compatible so you can hook it into whatever you already use  they've got a playground for quick tests and they handle everything from tiny experiments to massive production deployments and that’s the story of fireworks ai from the perspective of a friend who just happened to watch the talk and was blown away  pretty neat right?

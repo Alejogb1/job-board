@@ -4,7 +4,7 @@ date: "2024-12-10"
 id: "what-memory-management-strategies-are-being-explored-for-performance-sensitive-applications-in-mojo-and-how-do-they-compare-to-those-in-rust-or-c"
 ---
 
-Hey there!  So you're curious about memory management in Mojo, Rust, and C++, huh?  That's a *really* interesting question, especially when we're talking about performance-sensitive applications. Let's dive in!  It's a bit of a deep dive, but I'll try to keep it conversational and approachable.
+Hey there!  So you're curious about memory management in Mojo, Rust, and C++, right?  That's a *really* interesting question, especially when we're talking about performance-sensitive applications. Let's dive in!  It's a bit of a deep dive, but I'll try to keep it conversational and approachable.
 
 First off, let's acknowledge that memory management is basically the *heart* of any performance-sensitive application.  If you're not managing your memory efficiently, you're going to have slowdowns, crashes, and generally a bad time.  Think of it like this: your application's memory is its workspace. A messy workspace means a messy project, right?
 

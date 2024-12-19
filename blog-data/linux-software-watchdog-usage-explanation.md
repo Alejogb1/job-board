@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "linux-software-watchdog-usage-explanation"
 ---
 
-Alright so software watchdogs on Linux huh I've been there trust me I've seen things. Like kernel panics happening at 3 am because a rogue thread decided to take an unplanned vacation in memory land.  Been wrestling with these little lifesavers for years feels like. It's a bit like having a responsible friend who checks on you periodically just to make sure you haven't gone off the rails. 
+Alright so software watchdogs on Linux right I've been there trust me I've seen things. Like kernel panics happening at 3 am because a rogue thread decided to take an unplanned vacation in memory land.  Been wrestling with these little lifesavers for years feels like. It's a bit like having a responsible friend who checks on you periodically just to make sure you haven't gone off the rails. 
 
 Let's break this down no fluff just the code and the concepts you actually need because I'm guessing you're probably in the middle of a debug session right now and the clock is ticking.
 

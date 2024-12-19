@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "new-to-nlp-help-needed-with-using-spacy-to-get-pos"
 ---
 
-alright, so you're diving into nlp and want to grab part-of-speech tags using spacy, huh? been there, done that, got the t-shirt (and a few scars from debugging unicode issues). it's a fairly common starting point, and spacy is definitely a solid tool for this. i remember when i first touched nlp stuff back in the day. i was trying to build a rudimentary chatbot for my college project using nlp, and honestly, getting the basics of pos tagging correct was surprisingly tricky. i spent an entire weekend just staring at error messages and feeling very, very confused until i slowly got the hang of it with the help of some online guides (before stackoverflow was a thing, yeah i'm *that* old).
+alright, so you're diving into nlp and want to grab part-of-speech tags using spacy, right? been there, done that, got the t-shirt (and a few scars from debugging unicode issues). it's a fairly common starting point, and spacy is definitely a solid tool for this. i remember when i first touched nlp stuff back in the day. i was trying to build a rudimentary chatbot for my college project using nlp, and honestly, getting the basics of pos tagging correct was surprisingly tricky. i spent an entire weekend just staring at error messages and feeling very, very confused until i slowly got the hang of it with the help of some online guides (before stackoverflow was a thing, yeah i'm *that* old).
 
 anyway, let's get down to business. pos tagging, if you're unfamiliar, is basically the process of marking each word in a sentence with its grammatical role. nouns, verbs, adjectives, adverbs, you get the idea. spacy makes this quite easy, but there are always a few things that can trip you up.
 

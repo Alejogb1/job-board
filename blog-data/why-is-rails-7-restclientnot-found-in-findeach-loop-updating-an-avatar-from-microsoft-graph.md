@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-is-rails-7-restclientnot-found-in-findeach-loop-updating-an-avatar-from-microsoft-graph"
 ---
 
-so, you're seeing `restclient::notfound` inside a `find_each` loop when updating avatars from microsoft graph with rails 7, huh? yeah, i've been there, wrestled with similar beasts in the past. let me try and break it down from my experience; i think i've got a pretty good handle on what's likely happening here.
+so, you're seeing `restclient::notfound` inside a `find_each` loop when updating avatars from microsoft graph with rails 7, right? yeah, i've been there, wrestled with similar beasts in the past. let me try and break it down from my experience; i think i've got a pretty good handle on what's likely happening here.
 
 first off, `find_each` is your friend for batch processing, but it has a specific flow. it fetches records in batches, not all at once. inside that loop, you're making requests to microsoft graph, which is where the `restclient` bit comes in. the `restclient::notfound` error screams that microsoft graph is telling you, "hey, the resource you asked for, it’s not here." the trouble is, *why* is it saying this only sometimes, and seemingly within the loop? well, let's untangle this ball of yarn.
 

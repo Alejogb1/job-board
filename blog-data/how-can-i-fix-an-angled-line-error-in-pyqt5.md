@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-can-i-fix-an-angled-line-error-in-pyqt5"
 ---
 
-alright, so you've got a angled line acting up in pyqt5, huh? i’ve been there, more times than i care to recall. it’s usually down to a few predictable culprits, and i've spent my fair share of late nights staring at a screen trying to figure them out, so i feel your pain. let’s break this down.
+alright, so you've got a angled line acting up in pyqt5, right? i’ve been there, more times than i care to recall. it’s usually down to a few predictable culprits, and i've spent my fair share of late nights staring at a screen trying to figure them out, so i feel your pain. let’s break this down.
 
 first off, when you say “angled line error”, i'm guessing the line is either not drawing where it’s supposed to be, is jagged, or isn’t rendering at all, is that about it? those are the classic scenarios. i recall back in the day when i was crafting a custom plotting tool, i had a diagonal line that looked more like a pixelated staircase. that was a headache and made me double-check my math and coordinate transforms, over and over, until it finally made sense.
 

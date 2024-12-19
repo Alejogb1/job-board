@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "what-methods-can-reduce-the-costs-of-storing-and-querying-large-indexes-in-amazon-s3-for-distributed-search-engines"
 ---
 
-Okay so you're wrestling with the cost of storing and querying massive indexes in S3 for your distributed search engine huh  That's a totally legit pain point  S3 is awesome for storage it's cheapish relatively speaking but those query costs can spiral out of control especially with really big indexes  Let's brainstorm some ways to tame that beast
+Okay so you're wrestling with the cost of storing and querying massive indexes in S3 for your distributed search engine right  That's a totally legit pain point  S3 is awesome for storage it's cheapish relatively speaking but those query costs can spiral out of control especially with really big indexes  Let's brainstorm some ways to tame that beast
 
 First off  we gotta get real about what's driving the costs  Is it the sheer volume of data you're shoving into S3 or are your queries just wildly inefficient  Maybe it's a bit of both  Let's attack this from multiple angles
 

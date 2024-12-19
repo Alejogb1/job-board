@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "21h-interrupt-dos"
 ---
 
-Okay so 21h interrupt DOS huh seen this one a few times back in the day lets dive in I’ve been wrestling with this stuff since probably before some of you were even born yeah seriously I'm talking about real DOS era stuff not just some retro emulator game it was a beast back then no fancy GUI no stack overflow we had to figure things out ourselves with debuggers and cryptic error messages those were the good days well good in a really painful kind of way
+Okay so 21h interrupt DOS right seen this one a few times back in the day lets dive in I’ve been wrestling with this stuff since probably before some of you were even born yeah seriously I'm talking about real DOS era stuff not just some retro emulator game it was a beast back then no fancy GUI no stack overflow we had to figure things out ourselves with debuggers and cryptic error messages those were the good days well good in a really painful kind of way
 
 So 21h interrupt it's the heart of DOS the whole system pretty much relies on it it’s like the central switchboard for all kinds of stuff input output file operations memory management you name it when you call the 21h interrupt you’re basically asking DOS to do something for you its the API before APIs even had names you load up the AH register with a function number and that tells DOS what you want it to do sometimes you’ll need to set other registers with data or addresses depending on the specific function
 

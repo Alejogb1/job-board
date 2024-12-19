@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-edit-mounted-files-in-a-devcontainer"
 ---
 
-alright, so you're asking how to mess with files inside a devcontainer while it's running, huh? i get it, been there. it's like trying to perform surgery on a spaceship while it's in orbit – gotta be precise.
+alright, so you're asking how to mess with files inside a devcontainer while it's running, right? i get it, been there. it's like trying to perform surgery on a spaceship while it's in orbit – gotta be precise.
 
 first off, let's clarify what's probably happening. devcontainers, at their core, are docker containers. they usually mount a local directory on your machine into the container. this is how you see your project files inside the container, and how changes get reflected both inside and outside it. the container itself is pretty much a self-contained system, so it’s important to understand that we are not altering the image of the devcontainer, we are altering files inside of the running container instance.
 

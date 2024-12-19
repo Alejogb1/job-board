@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "ctas-query-aborted-error-redshift-query"
 ---
 
-Alright so you're seeing a "ctas query aborted error" in Redshift huh Been there done that got the t-shirt well actually a whole drawer full of those metaphorical t-shirts but lets stick to the code right
+Alright so you're seeing a "ctas query aborted error" in Redshift right Been there done that got the t-shirt well actually a whole drawer full of those metaphorical t-shirts but lets stick to the code right
 
 This error its basically Redshift telling you that something went sideways during a `CREATE TABLE AS SELECT` operation its a bit of a vague message I know but theres a handful of common culprits I've had the pleasure of wrestling with over my years of Redshift glory so lets dive in
 

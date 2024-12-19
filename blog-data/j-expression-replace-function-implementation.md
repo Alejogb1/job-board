@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "j-expression-replace-function-implementation"
 ---
 
-Okay so j expression replace function implementation huh yeah I've been there a few times this is a classic problem and honestly anyone who's dipped their toes in the j programming language for more than a weekend has probably had to wrestle with this one I remember when I first started using j I was trying to do some data wrangling thing involving text files it was a mess I had this huge block of text and I needed to swap out all instances of one particular string for another and it felt like i was in the wild west at first but i got it going so here’s how i usually approach it
+Okay so j expression replace function implementation right yeah I've been there a few times this is a classic problem and honestly anyone who's dipped their toes in the j programming language for more than a weekend has probably had to wrestle with this one I remember when I first started using j I was trying to do some data wrangling thing involving text files it was a mess I had this huge block of text and I needed to swap out all instances of one particular string for another and it felt like i was in the wild west at first but i got it going so here’s how i usually approach it
 
 Alright so lets get the core concept its not about replacing directly its about finding and building new string thats how it works in j it’s not like some python string replace it uses more of a functional approach we’re going to use the power of j's array processing to locate the occurrences and piece things back together using a mix of indexing and concatenation
 

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-parse-circle-annotation-data-for-model-training-in-detectron2"
 ---
 
-alright, so you're looking to feed circle annotations into detectron2 for model training, huh? i've been down this road before, and it's definitely got some quirks. it's not like just slapping bounding boxes around objects, circles require a bit more finesse.
+alright, so you're looking to feed circle annotations into detectron2 for model training, right? i've been down this road before, and it's definitely got some quirks. it's not like just slapping bounding boxes around objects, circles require a bit more finesse.
 
 let's break this down from a practical angle. when detectron2 talks about annotations, it usually expects json-formatted data, typically adhering to the coco format. coco, if you haven’t bumped into it, primarily focuses on polygons, boxes and keypoints, and it doesn't directly have circle objects natively, so we have to do a bit of extra work here. i remember one time i was working on an industrial inspection project; we were using circles to identify the presence of particular features on circuit boards. i initially thought i could just hack in an approach without transforming the circle data to polygons but detectron2 just wasn't having it – it's pretty picky.
 

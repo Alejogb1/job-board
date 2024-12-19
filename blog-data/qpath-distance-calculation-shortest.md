@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "qpath-distance-calculation-shortest"
 ---
 
-Okay so shortest qpath distance calculation huh I've been wrestling with this kind of thing for what feels like forever honestly my early days were rough I remember being at this startup where we were building a real-time recommendation engine it was a graph database based thing and we needed to find the shortest path between nodes like constantly the whole system would grind to a halt if we didn't get this right so yeah I've had my fair share of painful nights debugging shortest path algorithms
+Okay so shortest qpath distance calculation right I've been wrestling with this kind of thing for what feels like forever honestly my early days were rough I remember being at this startup where we were building a real-time recommendation engine it was a graph database based thing and we needed to find the shortest path between nodes like constantly the whole system would grind to a halt if we didn't get this right so yeah I've had my fair share of painful nights debugging shortest path algorithms
 
 So the question itself qpath distance implies that we are dealing with a graph problem a graph is fundamentally nodes and edges connecting them the q could stand for query which is not that relevant and distance is just a number which represents how far it is from node a to node b in the context of shortest distance we mean the minimum number of edges one must traverse or the minimum cumulative weight of edges one must traverse if they're weighted to get from one node to another we're not talking about Euclidean distance or anything like that this is pure graph theory territory
 

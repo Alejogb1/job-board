@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "case-statement-in-verilog"
 ---
 
-Alright let's dive into this verilog case statement thing I've wrestled with this beast more times than I care to remember and honestly its still a point of minor frustration even after all these years So you wanna know about case statements in verilog huh Cool beans let's break it down in a way that even my past self struggling with timing closure would understand
+Alright let's dive into this verilog case statement thing I've wrestled with this beast more times than I care to remember and honestly its still a point of minor frustration even after all these years So you wanna know about case statements in verilog right Cool beans let's break it down in a way that even my past self struggling with timing closure would understand
 
 First things first a case statement in verilog is essentially a multi-way branch It's your go-to when you have a single expression and you want different things to happen based on the value of that expression Think of it like a giant if-else chain but way more elegant and readable at least once you get the hang of the syntax
 

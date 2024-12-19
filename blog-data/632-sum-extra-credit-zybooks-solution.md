@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "632-sum-extra-credit-zybooks-solution"
 ---
 
-Alright so you're wrestling with Zybooks 632 extra credit sum huh I know that feeling intimately been there done that got the t-shirt and probably a few more grey hairs too It's a classic problem on the surface it looks simple enough just add up numbers right but then you get to the extra credit part and bam it throws a wrench in the works I remember my early days coding back in the dial-up modem era when dinosaurs roamed the earth it feels like
+Alright so you're wrestling with Zybooks 632 extra credit sum right I know that feeling intimately been there done that got the t-shirt and probably a few more grey hairs too It's a classic problem on the surface it looks simple enough just add up numbers right but then you get to the extra credit part and bam it throws a wrench in the works I remember my early days coding back in the dial-up modem era when dinosaurs roamed the earth it feels like
 
 I spent a good three days pulling my hair out over a similar problem it wasn't exactly Zybooks but the core issue was the same trying to handle input where you don't know how many numbers you're getting and sometimes those numbers just decide to be negative because life isn't fair Turns out that handling the variable length input was a real headache especially when you need to track minimums maximums or any kind of aggregation before you even get to summing it all up I was using C at the time no fancy scripting languages or anything just good old pointers and manual memory management I swear I dreamed of segmentation faults
 

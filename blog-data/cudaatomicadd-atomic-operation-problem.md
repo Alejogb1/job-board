@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "cudaatomicadd-atomic-operation-problem"
 ---
 
-Okay so you're hitting the classic cuda atomic add issue huh been there done that got the t-shirt probably spilled coffee on it too multiple times honestly
+Okay so you're hitting the classic cuda atomic add issue right been there done that got the t-shirt probably spilled coffee on it too multiple times honestly
 
 First off let's just acknowledge that atomic operations in cuda especially when you're new to it it’s like walking on a tightrope made of spaghetti one wrong move and your whole program's gonna crash harder than a hard drive with a magnet attached I'm not kidding I spent probably 2 weeks one time back in grad school debugging an atomic add issue turned out I was just using the wrong memory space like an absolute newbie moment that still makes me cringe
 

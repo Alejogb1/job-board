@@ -6,7 +6,7 @@ id: "why-am-i-getting-a-typeerror-argument-of-type-nonetype-is-not-iterable-on-a
 
 hey there,
 
-so, you're hitting that classic `typeerror: argument of type 'nonetype' is not iterable` when dealing with airflow auth, huh? i've been there, staring blankly at the traceback, wondering what i messed up this time. it’s like airflow is playing a cryptic puzzle game sometimes. let me break down what’s most likely going on, based on my personal adventures battling similar issues.
+so, you're hitting that classic `typeerror: argument of type 'nonetype' is not iterable` when dealing with airflow auth, right? i've been there, staring blankly at the traceback, wondering what i messed up this time. it’s like airflow is playing a cryptic puzzle game sometimes. let me break down what’s most likely going on, based on my personal adventures battling similar issues.
 
 first off, let’s translate what that error message really means in plain english. basically, somewhere in the airflow authentication code, it’s expecting to loop through something (like a list or a dictionary) but instead it's finding a `none`. a `none` is python's way of saying "there's nothing here, zero, nada." and you can't iterate over nothing – hence, the `typeerror`.
 

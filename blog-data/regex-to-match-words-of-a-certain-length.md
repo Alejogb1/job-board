@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "regex-to-match-words-of-a-certain-length"
 ---
 
-Okay so regex to match words of a certain length huh been there done that many times lets get this thing sorted out no fluff just practical code and some stories from the trenches
+Okay so regex to match words of a certain length right been there done that many times lets get this thing sorted out no fluff just practical code and some stories from the trenches
 
 Right so the core thing here is we need a regex that respects word boundaries and can enforce the length criteria we're talking about individual words not parts of words or random character clusters the key component here is using `\b` which marks a word boundary in regex for example if you are looking for a word that starts with "a" and ends with "b" you will use something like `\ba.*b\b` where `.` means any character and * means 0 or more
 

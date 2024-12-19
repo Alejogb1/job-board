@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "verilog-generate-for-loop-usage"
 ---
 
-Okay so you're asking about `generate` for loops in Verilog huh Been there done that countless times Let's break it down I've seen my share of headaches with this feature so I'm gonna give you the real deal no fluff
+Okay so you're asking about `generate` for loops in Verilog right Been there done that countless times Let's break it down I've seen my share of headaches with this feature so I'm gonna give you the real deal no fluff
 
 First things first `generate` for loops are your go-to when you need to instantiate multiple instances of the same module or create repeated logic structures that vary slightly These loops are evaluated at compile time not during simulation or actual hardware runtime This is a critical distinction a lot of newcomers miss Think of it like a preprocessor directive in C but more powerful
 

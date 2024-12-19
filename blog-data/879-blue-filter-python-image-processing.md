@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "879-blue-filter-python-image-processing"
 ---
 
-Okay so you're looking at 8.7.9 blue filter python image processing huh been there done that plenty of times let me tell you.
+Okay so you're looking at 8.7.9 blue filter python image processing right been there done that plenty of times let me tell you.
 
 This is a pretty standard task really and I've tripped over it myself back when I was just messing around with OpenCV and Pillow trying to make sense of color spaces. It seems simple on the surface but getting it just right can be a pain in the neck believe me. What we're basically trying to do is isolate and manipulate the blue channel of an image.
 

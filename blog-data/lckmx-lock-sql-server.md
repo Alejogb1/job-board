@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "lckmx-lock-sql-server"
 ---
 
-Alright so you're hitting a classic deadlock issue in SQL Server huh I've been there trust me It's like banging your head against a wall trying to figure out why your queries are just hanging there doing absolutely nothing
+Alright so you're hitting a classic deadlock issue in SQL Server right I've been there trust me It's like banging your head against a wall trying to figure out why your queries are just hanging there doing absolutely nothing
 
 Let's break this down I see you mentioned `lck_m_x` that's the specific wait type in SQL Server indicating a lock acquired in exclusive mode on a memory object Now memory objects can be all sorts of things but in most situations where you're having deadlock problems they're typically related to data access or rather the resources SQL Server uses to manage data access Think indexes tables and so on
 

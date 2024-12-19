@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-do-rails-6-signin-and-create-sessions-works-in-devise"
 ---
 
-alright, so you're asking about how devise handles sign-in and session creation in rails 6, huh? yeah, i've been down that rabbit hole plenty of times. it's one of those things that seems simple on the surface, but when you start needing to tweak it or debug weird behavior, things get interesting real fast.
+alright, so you're asking about how devise handles sign-in and session creation in rails 6, right? yeah, i've been down that rabbit hole plenty of times. it's one of those things that seems simple on the surface, but when you start needing to tweak it or debug weird behavior, things get interesting real fast.
 
 first off, devise is a gem, a ruby gem, and it's not just a piece of code, it's a full authentication system. that's why it touches a bunch of stuff when you use it, not just models, or controllers. it basically automates the whole user authentication process, from registration to session management. when it comes to signing in, devise relies on a few core rails mechanisms, especially sessions.
 

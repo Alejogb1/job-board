@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-am-i-getting-a-taskcompletionsource-deadlock-while-using-socketasynceventargs"
 ---
 
-alright, so you're hitting a classic taskcompletionsource deadlock when using socketasynceventargs, huh? i've been there, felt that pain. it's like threading the eye of a needle while riding a unicycle – tricky, and one wrong move and you're faceplanting. let me break down what's probably happening, based on my own less-than-stellar experiences, and how i eventually got it sorted out.
+alright, so you're hitting a classic taskcompletionsource deadlock when using socketasynceventargs, right? i've been there, felt that pain. it's like threading the eye of a needle while riding a unicycle – tricky, and one wrong move and you're faceplanting. let me break down what's probably happening, based on my own less-than-stellar experiences, and how i eventually got it sorted out.
 
 the core problem usually boils down to a misunderstanding of how `taskcompletionsource` and asynchronous operations with `socketasynceventargs` interact. it’s tempting to think that when you call `socket.receiveasync(args)`, the operation magically happens in parallel and the `args.completed` event fires in some separate thread. but the reality is, that's not quite how it works, especially with the asynchronous pattern.
 

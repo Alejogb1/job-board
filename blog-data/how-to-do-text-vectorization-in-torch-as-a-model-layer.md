@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-do-text-vectorization-in-torch-as-a-model-layer"
 ---
 
-alright, so you're looking to slot text vectorization directly into your pytorch model as a layer, huh? i've been down that rabbit hole myself a few times, so i can definitely share some insights and, most importantly, code that actually works. believe me, i’ve had my share of headaches getting this piece to play nice with the rest of the network.
+alright, so you're looking to slot text vectorization directly into your pytorch model as a layer, right? i've been down that rabbit hole myself a few times, so i can definitely share some insights and, most importantly, code that actually works. believe me, i’ve had my share of headaches getting this piece to play nice with the rest of the network.
 
 the issue most people run into is that typical text preprocessing steps – tokenization, vocabulary creation, integer encoding – they are often done as separate, upfront operations. which means your model is only getting preprocessed number sequences as input. it's fine for experimentation, but when you're pushing for a full, end-to-end system, it's way cleaner and faster to have that vectorization step baked right into your model architecture. it simplifies the data pipeline a lot.
 

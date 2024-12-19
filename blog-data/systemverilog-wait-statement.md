@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "systemverilog-wait-statement"
 ---
 
-Okay so you’re asking about `wait` in SystemVerilog huh Been there done that got the t-shirt literally I have a drawer full of vendor swag with subtle wait statement horror stories embroidered on them I kid you not
+Okay so you’re asking about `wait` in SystemVerilog right Been there done that got the t-shirt literally I have a drawer full of vendor swag with subtle wait statement horror stories embroidered on them I kid you not
 
 Let’s break it down no fluff just the technical bits `wait` is like the basic building block of synchronization in SystemVerilog a way to make sure your testbench or your verification environment doesn't go off the rails and start doing things out of order It's about telling a process to chill out for a bit until a specific condition becomes true
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "simulating-sports-matches-in-online-game"
 ---
 
-Okay so simulating sports matches online huh I've been down this rabbit hole more times than I care to admit Let me tell you it's not as straightforward as throwing some numbers at a wall and hoping for the best especially when you’re trying to keep it feeling somewhat realistic and responsive in an online game environment
+Okay so simulating sports matches online right I've been down this rabbit hole more times than I care to admit Let me tell you it's not as straightforward as throwing some numbers at a wall and hoping for the best especially when you’re trying to keep it feeling somewhat realistic and responsive in an online game environment
 
 Alright so let’s unpack this thing My first real foray into this was back when I was doing a small indie project a 2D pixel art football game Yeah I know I'm not proud of the art but the simulation was the real meat of it at least for me I was young and naive I thought a simple random number generator would cut it Oh boy was I wrong The games were just chaos teams scoring at ridiculous rates and no real sense of strategy it was like watching toddlers play a sport that they barely understand it was bad really bad I quickly realized that I needed something more structured
 

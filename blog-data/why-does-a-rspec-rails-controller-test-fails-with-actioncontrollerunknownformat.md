@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-does-a-rspec-rails-controller-test-fails-with-actioncontrollerunknownformat"
 ---
 
-alright, so you're bumping into that classic `actioncontroller::unknownformat` error in your rspec rails controller tests, huh? i've been there, trust me. it's like hitting a brick wall with a feather duster, frustrating and not immediately obvious why it's happening. i've spent countless hours debugging these back in the day, probably more than i care to acknowledge.
+alright, so you're bumping into that classic `actioncontroller::unknownformat` error in your rspec rails controller tests, right? i've been there, trust me. it's like hitting a brick wall with a feather duster, frustrating and not immediately obvious why it's happening. i've spent countless hours debugging these back in the day, probably more than i care to acknowledge.
 
 let's break this down, this error basically means your controller action doesn't know how to handle the format your test is requesting. this often comes down to how your rspec test is setting up the request and how your rails controller is configured. it's a format mismatch, pure and simple.
 

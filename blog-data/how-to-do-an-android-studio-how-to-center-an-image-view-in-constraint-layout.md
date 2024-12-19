@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-do-an-android-studio-how-to-center-an-image-view-in-constraint-layout"
 ---
 
-alright, so you're trying to center an imageview inside a constraint layout in android studio, huh? i've been there, trust me. it seems simple enough on the surface, but constraint layout, while powerful, can be a bit finicky if you haven't spent time with it. i remember back when i first started playing around with android dev, i got so tangled up in layout issues i nearly threw my laptop out the window, not really but almost, it was a frustrating learning curve.
+alright, so you're trying to center an imageview inside a constraint layout in android studio, right? i've been there, trust me. it seems simple enough on the surface, but constraint layout, while powerful, can be a bit finicky if you haven't spent time with it. i remember back when i first started playing around with android dev, i got so tangled up in layout issues i nearly threw my laptop out the window, not really but almost, it was a frustrating learning curve.
 
 the good news is, centering an imageview is pretty straightforward once you understand a few basic principles. it really boils down to using the correct constraints and understanding how they work together. think of constraints like rubber bands: you stretch them from one part of your view to another, and the view will be pulled to where they are anchored, it sounds weird i know, bear with me.
 

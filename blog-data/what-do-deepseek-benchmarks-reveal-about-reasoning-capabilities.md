@@ -4,7 +4,7 @@ date: "2024-12-03"
 id: "what-do-deepseek-benchmarks-reveal-about-reasoning-capabilities"
 ---
 
-Hey so you wanna know about DeepSeek reasoning benchmarks huh  cool beans
+Hey so you wanna know about DeepSeek reasoning benchmarks right  cool beans
 
 It's a pretty big deal actually figuring out how well these AI things reason  like really reason not just parrot back what they've seen a million times  DeepSeek is all about that  trying to objectively measure how good different models are at  well  reasoning
 

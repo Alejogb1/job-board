@@ -6,7 +6,7 @@ id: "should-i-exclude-the-grails-wrapper-from-my-git-repository"
 
 hey there,
 
-so, you're pondering the grails wrapper and its place in your git repo, huh? i get it. it’s one of those seemingly small decisions that can have ripple effects down the line, especially when you start working in teams or have multiple machines involved in the build process. i've been there, tangled in similar dependency management webs, and let me tell you, there are good arguments on both sides.
+so, you're pondering the grails wrapper and its place in your git repo, right? i get it. it’s one of those seemingly small decisions that can have ripple effects down the line, especially when you start working in teams or have multiple machines involved in the build process. i've been there, tangled in similar dependency management webs, and let me tell you, there are good arguments on both sides.
 
 first off, let's talk about what the grails wrapper actually *is*. it's essentially a script (typically `gradlew` on unix-like systems or `gradlew.bat` on windows) and a properties file (`gradle/wrapper/gradle-wrapper.properties`) that are included in your grails project. they allow you to execute gradle builds *without* having gradle installed globally on your system. this means that anyone working on the project, regardless of their local setup, will use the specific gradle version declared by the project itself. it's a great way to enforce consistency and avoid those "works on my machine" moments.
 

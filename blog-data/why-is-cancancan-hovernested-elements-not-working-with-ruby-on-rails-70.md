@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-is-cancancan-hovernested-elements-not-working-with-ruby-on-rails-70"
 ---
 
-alright, so you're having a tough time with cancancan and nested elements in rails 7.0, huh? i've been there, trust me. it’s one of those things that sounds simple on paper, but the reality can be a bit of a headache. let’s get into the nitty-gritty of it.
+alright, so you're having a tough time with cancancan and nested elements in rails 7.0, right? i've been there, trust me. it’s one of those things that sounds simple on paper, but the reality can be a bit of a headache. let’s get into the nitty-gritty of it.
 
 first off, cancancan is all about authorization. it determines what a user can and cannot do, based on roles, abilities, and whatnot. it’s generally fantastic for single model actions. but when you start nesting things – like a user who owns a blog, and that blog has posts, comments, etc. – things can get dicey very quickly with cancancan.
 

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-do-i-get-an-updated-state-in-a-function-after-a-dispatch-react-redux"
 ---
 
-alright, so you're hitting that classic redux async update snag, huh? i've been there, staring at the console, wondering why my component stubbornly refuses to acknowledge the changes i *know* i dispatched. it's like you're shouting instructions into a void sometimes. it happens. let me break down how i usually approach this, and what's worked for me in projects big and small.
+alright, so you're hitting that classic redux async update snag, right? i've been there, staring at the console, wondering why my component stubbornly refuses to acknowledge the changes i *know* i dispatched. it's like you're shouting instructions into a void sometimes. it happens. let me break down how i usually approach this, and what's worked for me in projects big and small.
 
 first, let’s nail down the root of the issue. you dispatch an action, your reducer updates the state, and... well, it doesn't immediately reflect in the component that triggered the dispatch, or in some other function that depends on the updated value. this isn’t because redux is broken. it's because redux state updates are, by design, asynchronous. your component's render cycle hasn't yet caught up. it's still referencing the old state. this leads to a lot of confusion until you get the hang of how react hooks handle things with redux.
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "initialization-of-internal-failed-without-raising-an-exception-systemerror"
 ---
 
-Okay so you're hitting that infamous `_internal` initialization failure huh Been there seen that got the t-shirt and probably a few grey hairs to show for it Let's unpack this thing because it's less "spooky ghost in the machine" and more "oopsie daisy I missed a crucial step" trust me on this one
+Okay so you're hitting that infamous `_internal` initialization failure right Been there seen that got the t-shirt and probably a few grey hairs to show for it Let's unpack this thing because it's less "spooky ghost in the machine" and more "oopsie daisy I missed a crucial step" trust me on this one
 
 First off that `SystemError` not being raised is a classic sign we're dealing with a low level Python thing This usually happens when the C level parts of Python that manage things like object allocation or module loading encounter an issue but the error handling at the C layer either doesn't map perfectly to Python's exception system or there is no clean way to communicate the problem up the stack This lack of exception is the real pain since you don’t have a Python traceback to pinpoint the exact issue it just quietly dies or leads to weird behavior later on that is way harder to diagnose This is where debugging gets the most interesting and fun
 

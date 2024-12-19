@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "blur-barcode-image-processing"
 ---
 
-Alright so you're asking about blurring barcode images huh Been there done that Got my share of blurry barcode nightmares I’m not gonna lie This is not a walk in the park especially if you want reliable results I've wasted more hours than I'd care to admit on this one so let's get into it.
+Alright so you're asking about blurring barcode images right Been there done that Got my share of blurry barcode nightmares I’m not gonna lie This is not a walk in the park especially if you want reliable results I've wasted more hours than I'd care to admit on this one so let's get into it.
 
 So first things first when you say blurry that can mean a lot of different things You might be dealing with motion blur due to camera shake you could have out-of-focus blur maybe the image itself was just poorly captured Or even a combination of all of the above The type of blur definitely impacts how you approach it.
 

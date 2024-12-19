@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "fmseloss-pytorch-module-example"
 ---
 
-Okay so you’re wrestling with `f.mse_loss` in PyTorch huh I've been there plenty of times believe me it’s a common sticking point even for folks who’ve been slinging tensors for a while Let’s unpack this thing and get you squared away with some real-world examples because just seeing the documentation sometimes just doesn’t cut it
+Okay so you’re wrestling with `f.mse_loss` in PyTorch right I've been there plenty of times believe me it’s a common sticking point even for folks who’ve been slinging tensors for a while Let’s unpack this thing and get you squared away with some real-world examples because just seeing the documentation sometimes just doesn’t cut it
 
 First off `f.mse_loss` is the Mean Squared Error loss function It’s part of PyTorch's `torch.nn.functional` module so you’ll often see it imported as `import torch.nn.functional as f` It’s a straightforward calculation the average of the squared differences between your predictions and the actual targets That’s the core concept
 

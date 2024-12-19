@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-better-train-a-dcgan"
 ---
 
-alright, so you're hitting the wall with dcgans, huh? i've been there, trust me. it’s like trying to teach a toddler to paint like van gogh – frustrating and sometimes just plain messy. i've spent a good chunk of my career wrestling with these generative models, and they can be real divas. let's talk about how to coax them into producing something decent.
+alright, so you're hitting the wall with dcgans, right? i've been there, trust me. it’s like trying to teach a toddler to paint like van gogh – frustrating and sometimes just plain messy. i've spent a good chunk of my career wrestling with these generative models, and they can be real divas. let's talk about how to coax them into producing something decent.
 
 first off, the vanilla dcgan, as cool as it is conceptually, often falls flat on its face in practice. it's not uncommon to end up with mode collapse, where the generator spits out only a handful of very similar, low-quality images, or gradients that just vanish into thin air. i had this project years ago where i was tasked with generating realistic textures, and my first dcgan attempt looked more like something a toddler drew with mud than actual seamless textures. it was a humbling experience.
 

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-do-a-devcontainerjson-for-vscode-using-an-existing-container"
 ---
 
-alright, so you're looking to hook up vscode with a devcontainer using an already running container, huh? i've been down that road, more times than i care to recall, and trust me, it can be a little fiddly the first couple of tries. i’m assuming you're already comfortable with docker and have a container kicking around, maybe one you've been using for local development or some kind of personal project.
+alright, so you're looking to hook up vscode with a devcontainer using an already running container, right? i've been down that road, more times than i care to recall, and trust me, it can be a little fiddly the first couple of tries. i’m assuming you're already comfortable with docker and have a container kicking around, maybe one you've been using for local development or some kind of personal project.
 
 let's break it down. the goal here is to get vscode to connect to that existing container for its development environment rather than having it build a brand new one every time. you're bypassing that initial build process, which can be quite time-consuming, especially when dealing with more complex setups. the key piece is that `devcontainer.json` file. this little json guy tells vscode how to interact with your container.
 

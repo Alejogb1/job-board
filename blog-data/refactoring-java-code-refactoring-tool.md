@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "refactoring-java-code-refactoring-tool"
 ---
 
-Alright so you're asking about refactoring Java code and looking for a good tool huh been there done that a million times Seems like you’re struggling with the classic spaghetti code situation and you're looking for a life raft I totally get it Let me give you the lowdown from someone who's wrestled with more legacy Java than they care to remember
+Alright so you're asking about refactoring Java code and looking for a good tool right been there done that a million times Seems like you’re struggling with the classic spaghetti code situation and you're looking for a life raft I totally get it Let me give you the lowdown from someone who's wrestled with more legacy Java than they care to remember
 
 I’ve been a Java dev since the stone ages when J2EE was all the rage we had these giant monoliths that were like trying to untangle Christmas lights after a cat party Let me tell you refactoring those was like performing open-heart surgery with a butter knife It’s like trying to fix a broken car with only duct tape and a dream Back then we didn't have the nice tools we do now it was all manual labor using text editors and sheer force of will So when you talk about tools I'm all ears and very very sympathetic
 

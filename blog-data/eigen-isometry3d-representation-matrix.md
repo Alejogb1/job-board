@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "eigen-isometry3d-representation-matrix"
 ---
 
-Okay so eigen isometry3d representation matrix huh I've been there man trust me this is like digging into a particularly stubborn API from the early 2000s that has documentation written in like hieroglyphics
+Okay so eigen isometry3d representation matrix right I've been there man trust me this is like digging into a particularly stubborn API from the early 2000s that has documentation written in like hieroglyphics
 
 Okay so lemme break it down from my perspective having wrestled with this beast a few times over the years Back when I was first trying my hand at building this 3D model viewer for my grad project it hit me like a ton of bricks these rotations and translations well they just wouldn't behave especially when I started dealing with animated models That's where I crashed headfirst into this isometry matrix problem and it took a few late nights fueled by bad instant coffee to really get it
 

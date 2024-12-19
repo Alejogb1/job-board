@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-cut-a-part-of-a-shape-with-the-help-of-another-painted-shape-above"
 ---
 
-alright, so you're trying to chop out a section of a shape using another shape that's painted on top, huh? yeah, i've been there, spent a good couple of late nights debugging this kind of stuff. it seems pretty straightforward at first, but the devil is always in the details, especially when dealing with complex shapes and rendering. let me tell you about the time i was working on this interactive map application, and i needed to create these cut-out areas based on user-drawn polygons. it was a nightmare until i found a proper method. so i'll share what i learned.
+alright, so you're trying to chop out a section of a shape using another shape that's painted on top, right? yeah, i've been there, spent a good couple of late nights debugging this kind of stuff. it seems pretty straightforward at first, but the devil is always in the details, especially when dealing with complex shapes and rendering. let me tell you about the time i was working on this interactive map application, and i needed to create these cut-out areas based on user-drawn polygons. it was a nightmare until i found a proper method. so i'll share what i learned.
 
 first off, what you're describing is fundamentally a boolean operation, specifically a difference operation. we're subtracting the area of the 'upper' shape from the 'lower' shape. the hard part is doing this on the pixel level, efficiently, and also dealing with all the edge cases you will encounter.
 

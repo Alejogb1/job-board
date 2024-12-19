@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "plotting-in-fortran-library-guide"
 ---
 
-Okay so plotting in Fortran huh I've been down this road more times than I'd like to admit Back in the day when I was still wrestling with punch cards I had this physics simulation spitting out mountains of numerical data and visualizing it well that was a whole other ballgame Let me tell you it wasn't as straightforward as importing a magic library in Python
+Okay so plotting in Fortran right I've been down this road more times than I'd like to admit Back in the day when I was still wrestling with punch cards I had this physics simulation spitting out mountains of numerical data and visualizing it well that was a whole other ballgame Let me tell you it wasn't as straightforward as importing a magic library in Python
 
 Alright so first off Fortran isn’t exactly known for its out-of-the-box graphics prowess It's a number crunching beast not a pixel pushing prodigy But that doesn't mean we're stuck staring at raw data tables forever There are definitely viable options you just need to roll up your sleeves a bit and get your hands dirty
 

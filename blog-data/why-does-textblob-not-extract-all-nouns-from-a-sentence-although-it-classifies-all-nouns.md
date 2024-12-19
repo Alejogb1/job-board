@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-does-textblob-not-extract-all-nouns-from-a-sentence-although-it-classifies-all-nouns"
 ---
 
-alright, so you're banging your head against the wall with textblob, huh? i feel you. been there, done that, got the t-shirt with a regex pattern on it. the core of your problem, as i see it, is not that textblob is classifying nouns *incorrectly*, it's that it's not *extracting* them all *consistently* during certain operations, specifically when you expect all the nouns to magically appear for you. this can be super frustrating, especially when you're relying on it for, let's say, topic modeling or something.
+alright, so you're banging your head against the wall with textblob, right? i feel you. been there, done that, got the t-shirt with a regex pattern on it. the core of your problem, as i see it, is not that textblob is classifying nouns *incorrectly*, it's that it's not *extracting* them all *consistently* during certain operations, specifically when you expect all the nouns to magically appear for you. this can be super frustrating, especially when you're relying on it for, let's say, topic modeling or something.
 
 i remember back in '09, i was working on this project to automatically generate metadata for articles. i thought textblob would be my silver bullet. i threw a bunch of text at it and expected to get a beautiful list of all the nouns that defined the article's main topics. boy, was i wrong. it worked great... sometimes. other times, it would randomly miss a noun or two, especially proper nouns that weren't in its internal dictionary, and also a lot of compound nouns. back then, i was still fairly new to nlp stuff.
 

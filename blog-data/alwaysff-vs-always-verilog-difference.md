@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "alwaysff-vs-always-verilog-difference"
 ---
 
-Okay so you wanna know about `always_ff` vs `always` in Verilog huh been there done that got the t-shirt let me tell you this isn't just some syntax sugar its a whole different way of thinking about hardware description trust me I've debugged enough of these things to have a few gray hairs so lets get down to brass tacks
+Okay so you wanna know about `always_ff` vs `always` in Verilog right been there done that got the t-shirt let me tell you this isn't just some syntax sugar its a whole different way of thinking about hardware description trust me I've debugged enough of these things to have a few gray hairs so lets get down to brass tacks
 
 Alright so lets talk about `always` first the classic the bread and butter of Verilog been around forever really its like that old reliable screwdriver you have in your tool box it works but sometimes it kinda gets you into trouble you know? The `always` block is a procedural block meaning things inside it happen sequentially its like a recipe you follow step by step you can use it for all sorts of things combinational logic sequential logic really whatever you throw at it that's both its strength and its weakness too much flexibility can make your code a bit of a mess if you're not careful see here's a basic example of an `always` block implementing some simple logic
 

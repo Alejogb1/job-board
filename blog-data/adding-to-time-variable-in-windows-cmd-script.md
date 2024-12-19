@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "adding-to-time-variable-in-windows-cmd-script"
 ---
 
-Alright so you're wrestling with time manipulation in Windows cmd scripts huh I've been there it's a rabbit hole trust me
+Alright so you're wrestling with time manipulation in Windows cmd scripts right I've been there it's a rabbit hole trust me
 
 Let's break this down I see your question as wanting to basically do addition to a time variable within a batch file Not a complex thing in theory but the batch scripting syntax being what it is well it can be a bit finicky I'm not going to sugarcoat it I've spent hours debugging what seemed like trivial time operations in batch files back in my early coding days
 

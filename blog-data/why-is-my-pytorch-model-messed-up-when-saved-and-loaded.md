@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-is-my-pytorch-model-messed-up-when-saved-and-loaded"
 ---
 
-hey, so you're having trouble with your pytorch model acting wonky after saving and loading, huh? yeah, that's a classic one, and i've definitely been there, staring at a screen thinking, "what in the world is going on?" it’s frustrating when things don't just work as expected, especially after spending all that time training. i can help you with this.
+hey, so you're having trouble with your pytorch model acting wonky after saving and loading, right? yeah, that's a classic one, and i've definitely been there, staring at a screen thinking, "what in the world is going on?" it’s frustrating when things don't just work as expected, especially after spending all that time training. i can help you with this.
 
 first, let me share a bit of my past experience. i remember this one time, back when i was still relatively new to pytorch, i trained a cool image classifier, feeling pretty good about myself. i saved the model, reloaded it for some inference, and the predictions were just… utter garbage. i was like, "did i just hallucinate the whole training process?" i re-ran the training, i checked my training pipeline several times and still the same result. it took me way too long to realize what it was, and it was embarrassingly simple when i finally found the root of the problem. that experience left a strong memory and i've seen it happen several times with others so let's try to solve your issue.
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "755-coin-flip-fun-number-heads-tails-javascript"
 ---
 
-Okay so a coin flip in javascript huh Been there done that and probably broke a few keyboards in the process It sounds simple and it is really once you get the hang of it But there are a few things to watch out for especially if you are coming from a different language background
+Okay so a coin flip in javascript right Been there done that and probably broke a few keyboards in the process It sounds simple and it is really once you get the hang of it But there are a few things to watch out for especially if you are coming from a different language background
 
 Let’s be frank this isn’t rocket science or even a hard interview question Its basically a random number generator thingy that gives you two options 0 or 1 in this case we interpret 0 as tails and 1 as heads The key is getting that random number generation correct and handling it nicely in your code
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "gradient-softmax-calculation-explanation"
 ---
 
-Okay so you're asking about gradient calculation for softmax huh Been there done that seen the t-shirt Let me break it down for you real casual like we're hanging out at a hackathon or something
+Okay so you're asking about gradient calculation for softmax right Been there done that seen the t-shirt Let me break it down for you real casual like we're hanging out at a hackathon or something
 
 Basically softmax is used a lot in machine learning particularly when you're dealing with classification problems Think of it as a way to turn raw scores into probabilities It takes a vector of numbers spits out another vector where all the elements are between zero and one and they all add up to one So you get a nice probability distribution out of it
 

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-can-i-preprocess-data-into-tensors"
 ---
 
-alright, so you're looking at prepping data into tensors, huh? been there, done that, got the t-shirt – probably several, stained with coffee from late nights debugging this exact thing. it's one of those foundational steps that can make or break your whole machine learning pipeline, and trust me, i've seen it break, spectacularly.
+alright, so you're looking at prepping data into tensors, right? been there, done that, got the t-shirt – probably several, stained with coffee from late nights debugging this exact thing. it's one of those foundational steps that can make or break your whole machine learning pipeline, and trust me, i've seen it break, spectacularly.
 
 let's break it down like we're debugging some nasty code. the core issue here is that machine learning models, especially the deep learning ones, don't understand raw data. they crave numbers, organized into multi-dimensional arrays – tensors. whether it's text, images, audio, or tabular data, it all needs to be transformed into this format. you can't just throw a bunch of strings or jpegs at a neural network and expect magic to happen.
 

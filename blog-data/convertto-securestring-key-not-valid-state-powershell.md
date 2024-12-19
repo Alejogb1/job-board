@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "convertto-securestring-key-not-valid-state-powershell"
 ---
 
-Okay so you're wrestling with `ConvertTo-SecureString` throwing a "key not valid state" error in PowerShell huh been there done that got the t-shirt and probably several debugging scars to match Let me break this down from my trenches because this isn't some esoteric corner case this is a common pain point when you're diving into secure handling of credentials or sensitive data in PowerShell scripts Especially when moving things between machines or user contexts
+Okay so you're wrestling with `ConvertTo-SecureString` throwing a "key not valid state" error in PowerShell right been there done that got the t-shirt and probably several debugging scars to match Let me break this down from my trenches because this isn't some esoteric corner case this is a common pain point when you're diving into secure handling of credentials or sensitive data in PowerShell scripts Especially when moving things between machines or user contexts
 
 First off lets get this out of the way `ConvertTo-SecureString` uses data protection API (DPAPI) under the hood DPAPI keys are tied to the user account and the machine So if you're trying to decrypt a secure string created by another user or on a different computer that "key not valid state" error is exactly what you would expect It means the system can't use the existing key to decrypt the payload
 

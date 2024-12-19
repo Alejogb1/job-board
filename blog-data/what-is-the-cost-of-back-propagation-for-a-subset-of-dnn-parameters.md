@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "what-is-the-cost-of-back-propagation-for-a-subset-of-dnn-parameters"
 ---
 
-alright, let's tackle this. the cost of backpropagation for a subset of dnn parameters, huh? that's a question that brings back memories of some late nights debugging. i've definitely been there, staring at a loss curve that just refused to cooperate.
+alright, let's tackle this. the cost of backpropagation for a subset of dnn parameters, right? that's a question that brings back memories of some late nights debugging. i've definitely been there, staring at a loss curve that just refused to cooperate.
 
 basically, what we're talking about is how much computation it takes to update only a *portion* of the weights in a deep neural network, instead of all of them. it’s a common trick, especially if you have a large model and only want to tweak a small part of it – think fine-tuning a pre-trained model, or maybe you're experimenting with a new layer and don’t want to touch the rest.
 

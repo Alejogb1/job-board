@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-cant-i-see-what-draws-paint-on-my-surfaceview"
 ---
 
-so, you're not seeing the paint calls on your surfaceview, huh? been there, done that, got the t-shirt. let me tell you, it's a classic problem and there are multiple places where things can go sideways. it's less about the drawing itself and more about the lifecycle of the surfaceview and the thread handling the drawing. let's break it down like a good old bug hunt.
+so, you're not seeing the paint calls on your surfaceview, right? been there, done that, got the t-shirt. let me tell you, it's a classic problem and there are multiple places where things can go sideways. it's less about the drawing itself and more about the lifecycle of the surfaceview and the thread handling the drawing. let's break it down like a good old bug hunt.
 
 first off, surfaceview is not your regular view. it operates on a separate surface, which is kind of like a blank canvas managed by the os. drawing to this surface needs to happen on a background thread, or you'll lock up the ui thread, and nobody wants that. we're not drawing directly on the view in the same way we would with a regular view's ondraw().
 

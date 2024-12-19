@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-am-i-getting-working-with-form-object-and-nested-attributes-couldnt-find-jointablerecord-with-id1-for-parent-with-id"
 ---
 
-alright, so you're bumping into that classic "couldn't find join table record" error when dealing with form objects and nested attributes, huh? i've definitely been there, staring at the screen, wondering where that missing record went. it's a real head-scratcher when it pops up. let's break down what’s likely happening, and how to get you unstuck.
+alright, so you're bumping into that classic "couldn't find join table record" error when dealing with form objects and nested attributes, right? i've definitely been there, staring at the screen, wondering where that missing record went. it's a real head-scratcher when it pops up. let's break down what’s likely happening, and how to get you unstuck.
 
 basically, this error arises when you're trying to update a relationship through nested attributes in your form, and the system can’t find the necessary record in your join table to update. think of it like trying to edit a specific entry in a many-to-many relationship through a parent model, but the system can't locate the specific linking piece in the junction table. your question strongly suggests you're using some kind of an orm framework, and the error looks very much like it's a rails active record error but the fundamentals apply to many other setups with nested data.
 

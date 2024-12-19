@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "dead-code-java-meaning-definition"
 ---
 
-Okay so dead code java huh I've been around the block a few times with this one seen it crop up in all sorts of projects from quick and dirty scripts to enterprise behemoths let me break it down for you and share some of the pain I've personally experienced dealing with this beast
+Okay so dead code java right I've been around the block a few times with this one seen it crop up in all sorts of projects from quick and dirty scripts to enterprise behemoths let me break it down for you and share some of the pain I've personally experienced dealing with this beast
 
 Basically dead code in java or any programming language for that matter is code that will never ever be executed By 'never ever' I mean under any circumstances that your program is likely to encounter think conditional branches that are always false try-catch blocks that never actually throw exceptions or methods that are simply never called The compiler might not flag it as an error because it's syntactically valid just useless baggage
 

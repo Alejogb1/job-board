@@ -42,7 +42,7 @@ print(f"Total calories burned: {total_calories}")
 
 ```
 
-This is okay it's functional I guess but lets make it a little more professional huh
+This is okay it's functional I guess but lets make it a little more professional right
 
 The thing with these kind of problems is if you start to have too many of these activity if else statements it is not very readable So it is better to use a dictionary it's a data structure that lets you store the activities and their rates in a more readable way.
 
@@ -99,7 +99,7 @@ print(f"Total calories burned: {total_calories_class}")
 ```
 Alright now we're using classes to our advantage This is basically a blueprint of how to calculate our calories and we can reuse it if we wanted to calculate for many users and just different activities. Now you're probably thinking wait this is becoming too complicated but trust me when you get bigger projects it helps a lot especially if you want to expand and add more features later.
 
-You know I once spent 48 hours debugging a problem and after all the struggle I realized I was passing an int as a string to my calculation function It taught me the importance of proper variable types and naming conventions I never again made that mistake and it was a good lesson to learn I should have probably used type checking then hahaha funny how you learn it the hard way huh.
+You know I once spent 48 hours debugging a problem and after all the struggle I realized I was passing an int as a string to my calculation function It taught me the importance of proper variable types and naming conventions I never again made that mistake and it was a good lesson to learn I should have probably used type checking then hahaha funny how you learn it the hard way right.
 
 So that's it really If you stick to this approach it should be pretty straightforward For the resources I would recommend checking out "Clean Code" by Robert C Martin it is a classic and teaches you the importance of organizing your code Also "Structure and Interpretation of Computer Programs" by Abelson and Sussman is also a good one to learn about how the fundamentals of programming work they are both classics and I would not go anywhere else they have it all. And of course practice this is key to improving I cannot overstate this enough practice is key.
 

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-do-linux-package-installation-in-kubernetes-pods"
 ---
 
-so, you're looking at getting packages installed *inside* your kubernetes pods, huh? i've been there, done that, and got the t-shirt... multiple times, actually. it's a common need, and thankfully, there are several ways to approach it. it really boils down to how much control you want and what kind of package you’re dealing with. let’s unpack this.
+so, you're looking at getting packages installed *inside* your kubernetes pods, right? i've been there, done that, and got the t-shirt... multiple times, actually. it's a common need, and thankfully, there are several ways to approach it. it really boils down to how much control you want and what kind of package you’re dealing with. let’s unpack this.
 
 first off, let's be clear: you generally don’t want to be ssh-ing into your pods and manually installing stuff. that’s a recipe for inconsistency and configuration drift, and it goes against the whole idea of kubernetes being a declarative system. think of your pods as cattle, not pets - you want them to be easily reproducible. so, we’re looking at ways to automate this.
 

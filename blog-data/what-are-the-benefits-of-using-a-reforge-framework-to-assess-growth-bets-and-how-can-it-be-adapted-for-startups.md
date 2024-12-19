@@ -4,7 +4,7 @@ date: "2024-12-03"
 id: "what-are-the-benefits-of-using-a-reforge-framework-to-assess-growth-bets-and-how-can-it-be-adapted-for-startups"
 ---
 
-Hey so you're asking about Reforge and growth bets for startups huh cool beans  It's a pretty sweet framework actually really helps you prioritize and focus your efforts  Think of it like this instead of throwing spaghetti at the wall and seeing what sticks you're actually building a really solid structure  It's all about data-driven decision making  no more gut feelings  
+Hey so you're asking about Reforge and growth bets for startups right cool beans  It's a pretty sweet framework actually really helps you prioritize and focus your efforts  Think of it like this instead of throwing spaghetti at the wall and seeing what sticks you're actually building a really solid structure  It's all about data-driven decision making  no more gut feelings  
 
 The core benefit is its structured approach  it stops you from getting lost in a million tiny growth hacks  Instead it guides you through a process of identifying potential areas for growth analyzing them rigorously and then prioritizing based on potential impact and feasibility  This is huge for startups because resources are usually tight  you don't have time or money to waste on wild guesses  
 

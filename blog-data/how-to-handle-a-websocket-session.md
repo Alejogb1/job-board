@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-handle-a-websocket-session"
 ---
 
-alright, so you're looking at managing websocket sessions, huh? it's a pretty common situation when building real-time applications, and there are definitely some best practices i've picked up after doing this for a while. i've seen this go wrong more times than i'd like to remember, so i'm happy to share what i’ve learned.
+alright, so you're looking at managing websocket sessions, right? it's a pretty common situation when building real-time applications, and there are definitely some best practices i've picked up after doing this for a while. i've seen this go wrong more times than i'd like to remember, so i'm happy to share what i’ve learned.
 
 first off, think of a websocket session as a continuous, two-way communication pipe between your server and a client. unlike http requests that are quick in and out, a websocket connection stays open for the duration of the session, allowing data to flow back and forth immediately. this means you need to treat it differently.
 

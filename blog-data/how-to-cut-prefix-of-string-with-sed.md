@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "how-to-cut-prefix-of-string-with-sed"
 ---
 
-Alright so you need to chop off the start of a string using sed huh I've been there done that way too many times lets break it down and make sure you nail this thing
+Alright so you need to chop off the start of a string using sed right I've been there done that way too many times lets break it down and make sure you nail this thing
 
 Okay so first things first sed short for stream editor is a real swiss army knife when it comes to text manipulation its command line power is insane and i rely on it daily not gonna lie its a crucial tool in my arsenal for anything text processing especially when scripting up automations or handling log files I mean you know a lot of people go with awk but for me sed is my go-to I've had enough fights with awk's syntax to last me a lifetime but hey thats just my personal preference
 

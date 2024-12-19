@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "code-scanning-could-not-process-sarif-file-error"
 ---
 
-Alright so you're seeing a "code scanning could not process sarif file" error huh Been there done that got the t-shirt and probably a few obscure error messages burned into my brain along the way Let's dive in this ain't my first rodeo with SARIF files throwing a tantrum
+Alright so you're seeing a "code scanning could not process sarif file" error right Been there done that got the t-shirt and probably a few obscure error messages burned into my brain along the way Let's dive in this ain't my first rodeo with SARIF files throwing a tantrum
 
 First off SARIF aka Static Analysis Results Interchange Format is basically a standard for sharing the output of static analysis tools Think of it like a universal language that different code analysis tools use to communicate their findings If a SARIF file is broken or messed up your code scanning tools are gonna throw a fit because they just can't understand what it's trying to say
 

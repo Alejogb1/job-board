@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "latches-in-verilog-coding-explanation"
 ---
 
-Okay so latches in verilog huh Been there done that got the t-shirt and a few gray hairs to prove it believe me. We all stumble into this trap early on it's like a right of passage in the verilog world. It seems simple enough on the surface but they can bite you hard especially if you’re not careful.
+Okay so latches in verilog right Been there done that got the t-shirt and a few gray hairs to prove it believe me. We all stumble into this trap early on it's like a right of passage in the verilog world. It seems simple enough on the surface but they can bite you hard especially if you’re not careful.
 
 First things first what exactly is a latch. Well in simple words a latch is a memory element that stores a value until its input changes. It’s different from a flip-flop that only changes its output on a clock edge. In verilog if you describe a logic block where a signal’s output isn't assigned under all possible conditions you often unintentionally infer a latch. Think of it as this if a signal doesn't know where to go in every scenario it just kind of sticks to what it had. Not the most elegant way of storing values but it's there.
 

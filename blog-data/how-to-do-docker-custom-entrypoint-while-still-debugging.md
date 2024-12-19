@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-do-docker-custom-entrypoint-while-still-debugging"
 ---
 
-so, you're looking to hack around docker entrypoints and still have your debugger work, huh? been there. let's unpack this. it's a common headache, and there isn't a single silver bullet, more of a collection of practical techniques that depend a little on your specific situation.
+so, you're looking to hack around docker entrypoints and still have your debugger work, right? been there. let's unpack this. it's a common headache, and there isn't a single silver bullet, more of a collection of practical techniques that depend a little on your specific situation.
 
 the core problem is that your `entrypoint` script in docker replaces the usual command-line invocation that your debugger is expecting. the debugger needs to attach to a process. when the entrypoint runs its thing it can spawn subprocesses, or change how the python interpreter is invoked, so the debugger can't just attach to it. the `docker run` command, which usually starts your application, is bypassed. the `entrypoint` script, you set in your dockerfile, takes over. that’s the catch.
 

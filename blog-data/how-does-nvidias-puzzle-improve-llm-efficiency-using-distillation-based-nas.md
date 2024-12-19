@@ -4,7 +4,7 @@ date: "2024-12-03"
 id: "how-does-nvidias-puzzle-improve-llm-efficiency-using-distillation-based-nas"
 ---
 
-Hey so you're into distillation-based NAS for LLMs huh cool  Nvidia's Puzzle is a pretty neat approach right  It's all about finding the best architecture for your large language model without having to search the entire crazy vast space of possibilities  think of it like this you've got a giant mountain range of possible architectures and you're trying to find the peak the best performing one  brute force searching is like climbing every single peak which is just insane takes forever  Distillation helps you shortcut that
+Hey so you're into distillation-based NAS for LLMs right cool  Nvidia's Puzzle is a pretty neat approach right  It's all about finding the best architecture for your large language model without having to search the entire crazy vast space of possibilities  think of it like this you've got a giant mountain range of possible architectures and you're trying to find the peak the best performing one  brute force searching is like climbing every single peak which is just insane takes forever  Distillation helps you shortcut that
 
 The basic idea is you start with a teacher model a big powerful LLM it already knows its stuff  It's like a wise old guru  You then train a bunch of student models different architectures with varying complexities  These students learn from the teacher's wisdom but instead of directly copying the teacher's outputs they learn from the teacher's *knowledge*  This is distillation the teacher distills its knowledge into the students
 

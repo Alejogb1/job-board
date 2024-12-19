@@ -4,7 +4,7 @@ date: "2024-12-12"
 id: "what-are-the-limitations-of-using-llama-33-in-fine-tuning-tasks-with-smaller-gpus-and-what-methods-such-as-pagedadamw-can-mitigate-these-challenges"
 ---
 
-Hey there!  So you're diving into the world of fine-tuning `Llama 3.3`, huh? That's awesome!  It's a powerful model, but like any powerful tool, it comes with some quirks, especially when you're working with smaller GPUs. Let's unpack this together in a friendly, chatty way.
+Hey there!  So you're diving into the world of fine-tuning `Llama 3.3`, right? That's awesome!  It's a powerful model, but like any powerful tool, it comes with some quirks, especially when you're working with smaller GPUs. Let's unpack this together in a friendly, chatty way.
 
 The biggest hurdle with fine-tuning large language models (LLMs) like Llama 3.3 on smaller GPUs is, well, the sheer `size` of the thing.  We're talking *gigabytes* of parameters – that's like trying to fit a whole elephant into a hamster cage!  Your GPU just isn't going to have the memory to hold the entire model, let alone the data you need for fine-tuning.  This leads to a few key problems:
 

@@ -6,7 +6,7 @@ id: "why-is-an-async-jest-test-with-glob-stuck"
 
 hey there,
 
-so you're having trouble with an async jest test that's using glob and it's just hanging, huh? i've been there, trust me. this specific combo, async tests with file system operations (which is often what glob is used for), can get sticky pretty fast. let's break down what's probably going on and how i'd tackle it, based on some of my own past headaches.
+so you're having trouble with an async jest test that's using glob and it's just hanging, right? i've been there, trust me. this specific combo, async tests with file system operations (which is often what glob is used for), can get sticky pretty fast. let's break down what's probably going on and how i'd tackle it, based on some of my own past headaches.
 
 first, the core of the issue is often how async operations interact with jest's test runner. jest expects tests to either complete synchronously or resolve a promise when they're async. when you're dealing with glob, which can trigger asynchronous file system reads, you can easily get into a situation where your test doesn’t explicitly signal it's done to jest. and the test just… sits there waiting.
 

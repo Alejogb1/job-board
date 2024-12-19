@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "modulo-ada-programming-operator-meaning"
 ---
 
-Okay so you're asking about the modulo operator in Ada huh Been there done that probably with more spaghetti code than anyone cares to admit
+Okay so you're asking about the modulo operator in Ada right Been there done that probably with more spaghetti code than anyone cares to admit
 
 Alright let's break this down in tech terms no fluffy stuff I've wrestled with this Ada mod thing for longer than I care to remember. Ada is all about correctness which means you can't just wing it like with some other languages that shall remain nameless. The modulo operator in Ada it's about the remainder after integer division that’s the core of it. It's not some magical incantation it's basic arithmetic dressed up in a syntax you might find unfamiliar if you're used to the curly braces crowd.
 

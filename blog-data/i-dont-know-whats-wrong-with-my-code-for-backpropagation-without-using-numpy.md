@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "i-dont-know-whats-wrong-with-my-code-for-backpropagation-without-using-numpy"
 ---
 
-alright, so you’re having trouble with backpropagation when you’re avoiding numpy, huh? i get it. it's a classic situation. been there, done that, got the t-shirt and the battle scars to prove it. let me walk you through my experience and some approaches that might get you unstuck.
+alright, so you’re having trouble with backpropagation when you’re avoiding numpy, right? i get it. it's a classic situation. been there, done that, got the t-shirt and the battle scars to prove it. let me walk you through my experience and some approaches that might get you unstuck.
 
 i remember when i first tried to implement backprop from scratch. this was way back, before everyone and their cat were using pytorch or tensorflow. i was working on a tiny project, a simple neural network to classify handwritten digits – yeah, the good old mnist dataset. i thought, "how hard can it be?" famous last words. i decided against using any high level libraries, because the point of the project was precisely to grasp the inner workings, so no numpy for me either.
 

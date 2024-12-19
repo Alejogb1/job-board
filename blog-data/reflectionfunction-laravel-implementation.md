@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "reflectionfunction-laravel-implementation"
 ---
 
-Okay so you want to dive deep into reflection functions in Laravel huh Been there done that got the t-shirt probably have the scars too Lets talk reflection in Laravel it’s like peeling back the layers of an onion but instead of tears you get code clarity I’ve wrestled with this quite a bit in the past so lets get into it
+Okay so you want to dive deep into reflection functions in Laravel right Been there done that got the t-shirt probably have the scars too Lets talk reflection in Laravel it’s like peeling back the layers of an onion but instead of tears you get code clarity I’ve wrestled with this quite a bit in the past so lets get into it
 
 First off when we say "reflection functions" we're talking about PHP’s reflection API right Not some magical Laravel specific thing Laravel just gives us the tools to make it more useful in our context PHP Reflection lets you inspect classes functions methods properties basically everything about your code at runtime This can be really powerful for building flexible and dynamic systems and also lets face it its often needed in some more advanced use cases
 

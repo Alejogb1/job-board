@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "im-trying-to-finetune-a-bank-bot"
 ---
 
-alright, so you're looking to finetune a bank-bot, huh? i've been there, done that, got the t-shirt—and probably a few sleepless nights along the way. these bots, especially in finance, are tricky little beasts. you can’t just throw data at them and expect magic; it takes planning, testing, and more testing. the kind of testing that makes you want to question your career choices, but hey, we all get there.
+alright, so you're looking to finetune a bank-bot, right? i've been there, done that, got the t-shirt—and probably a few sleepless nights along the way. these bots, especially in finance, are tricky little beasts. you can’t just throw data at them and expect magic; it takes planning, testing, and more testing. the kind of testing that makes you want to question your career choices, but hey, we all get there.
 
 let's talk about what that actually entails. when we say "finetuning," we’re usually talking about taking a pre-trained language model—something like a large transformer model—and adjusting its parameters to better understand and respond to the nuances of your specific domain. in this case, financial jargon, transaction types, security protocols, all that good stuff. it’s not about teaching the model to be a bank, it's about making it speak the bank's language fluently.
 

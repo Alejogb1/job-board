@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-is-php---thumbnail-created-from-a-high-definition-uploaded-image-returning-blurry"
 ---
 
-hey, so you're seeing blurry thumbnails after generating them with php, huh? i've been there, trust me. it's a classic and frustrating issue, but definitely solvable. let's break down why this happens and what you can do about it.
+hey, so you're seeing blurry thumbnails after generating them with php, right? i've been there, trust me. it's a classic and frustrating issue, but definitely solvable. let's break down why this happens and what you can do about it.
 
 first things first, php itself isn't inherently the problem. the issue lies in how you're processing the image, specifically when resizing it. the blurry result usually comes from poor resampling algorithms or not understanding the source image dimensions versus the target thumbnail dimensions. i remember back in 2009, i was building an image gallery application and it was a mess. i was using a basic resize function i found in some forum and every single picture, after resizing it, looked like it was taken with a potato. spent a whole weekend figuring out the resampling problem. never again, i said. that time was before the good old days when we could rely on libraries like imagemagick.
 

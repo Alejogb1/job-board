@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "ant-proxy-configuration-setup"
 ---
 
-Okay so you're wrestling with `ant` proxy settings huh Been there man I've spent way too many late nights debugging build processes that just refuse to connect to the internet because of some stupid proxy issue Lets talk this out I've seen a thing or two about this so I got you
+Okay so you're wrestling with `ant` proxy settings right Been there man I've spent way too many late nights debugging build processes that just refuse to connect to the internet because of some stupid proxy issue Lets talk this out I've seen a thing or two about this so I got you
 
 First off understand that `ant`'s proxy handling is not always the most intuitive It relies on Java's underlying networking capabilities so what you're effectively doing is configuring how the JVM that runs `ant` handles network requests through your proxy server
 

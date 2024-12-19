@@ -4,7 +4,7 @@ date: "2024-12-11"
 id: "what-resources-tutorials-papers-forums-are-recommended-for-those-starting-in-mechanistic-interpretability"
 ---
 
-Hey so you wanna get into mechanistic interpretability huh that's awesome its a super cool field  I've been messing around with it for a while now and its seriously mind bending  Its like reverse engineering the brain but instead of brains its neural networks  Pretty wild right
+Hey so you wanna get into mechanistic interpretability right that's awesome its a super cool field  I've been messing around with it for a while now and its seriously mind bending  Its like reverse engineering the brain but instead of brains its neural networks  Pretty wild right
 
 Okay so where to start  Forget tutorials for now  Tutorials are great for learning syntax but they wont give you the intuition you need for this stuff  You need the *why* not just the *how*  Think of it like learning to play the guitar you can learn chords and scales but until you understand music theory you wont really *get* it
 

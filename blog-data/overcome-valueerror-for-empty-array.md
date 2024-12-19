@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "overcome-valueerror-for-empty-array"
 ---
 
-Alright so you've run into that `ValueError` when dealing with empty arrays huh Been there done that a million times I swear Python loves throwing that at you like its a game
+Alright so you've run into that `ValueError` when dealing with empty arrays right Been there done that a million times I swear Python loves throwing that at you like its a game
 
 Let me tell you about the time I was building this data processing pipeline back at my old gig We were ingesting sensor data from this super old machine it was like something out of a science fiction movie except its tech was way less advanced We needed to get the average reading but sometimes that machine would just decide to take a nap and not send any data Boom empty array `ValueError` all over the place Debugging that was more painful than a root canal let me tell you
 

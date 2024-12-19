@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-get-the-training-metrics-in-a-file"
 ---
 
-alright, so you're asking how to get training metrics dumped into a file, huh? been there, done that, got the t-shirt. or, well, a few crumpled notebooks filled with plots and handwritten notes, more like. it's a common problem when you're knee-deep in training neural networks or any kind of model really.
+alright, so you're asking how to get training metrics dumped into a file, right? been there, done that, got the t-shirt. or, well, a few crumpled notebooks filled with plots and handwritten notes, more like. it's a common problem when you're knee-deep in training neural networks or any kind of model really.
 
 let me tell you, early on in my career, i thought just printing to the console was enough. i'd have this glorious wall of numbers scrolling by, feeling like a true data scientist wizard, and then… poof, the session ends, the console clears, and i'm left with nothing. so, yeah, i learned the importance of logging to a file, the hard way. the amount of time wasted trying to recreate previous runs because i didn't log the metrics… man, i don’t want to revisit those days.
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "cositicpp-package-uninstall-error"
 ---
 
-Okay so you're getting that `co.sitic.pp` package uninstall error huh Been there man let me tell you
+Okay so you're getting that `co.sitic.pp` package uninstall error right Been there man let me tell you
 
 It's one of those really specific things that usually pops up when you've been messing around with Android stuff or maybe some weird custom ROM or development setup. I remember the first time I hit something like this it was back when I was trying to root my old Nexus 5. I was probably around 20 and had zero clue what I was doing. I followed some random forum guide and got myself into a deep mess of permission errors and package conflicts. It was a nightmare but a good lesson honestly
 

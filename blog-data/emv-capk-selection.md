@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "emv-capk-selection"
 ---
 
-Alright so you're asking about EMV CAPK selection huh Been there done that Got the t-shirt probably have a few actually along with a couple of battle scars from debugging those payment flows
+Alright so you're asking about EMV CAPK selection right Been there done that Got the t-shirt probably have a few actually along with a couple of battle scars from debugging those payment flows
 
 Ok first off let me lay down some real talk about EMV its not a walk in the park its more like a carefully choreographed dance and CAPK selection is a crucial step in that dance Its what lets the terminal figure out which public key to use for verifying the card's signature and trust me if this goes sideways you're going to have a bad time
 
@@ -136,6 +136,6 @@ If you are serious about diving deeper into this rabbit hole I recommend checkin
 
 I know sometimes this stuff seems like the absolute worst especially when you get stuck on a subtle error but stick with it it’s totally doable with proper debugging and patience
 
-And here is my one joke of the post I can't believe I'm going to actually write this what did the developer say when his code was working for the first time perfectly? "It's not a bug it's a feature that I haven't released yet" pretty bad huh
+And here is my one joke of the post I can't believe I'm going to actually write this what did the developer say when his code was working for the first time perfectly? "It's not a bug it's a feature that I haven't released yet" pretty bad right
 
 Anyway good luck hope this helps and may your CAPK selection always work on the first try

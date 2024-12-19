@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-connect-a-salesforce-einstein-enhanced-bot-with-facebook-over-a-messaging-channel"
 ---
 
-alright, so you're looking to get your salesforce einstein enhanced bot chatting with folks on facebook messenger, huh? i've been down this road, and let me tell you, it's not always a walk in the park, but totally doable. i've built a few of these integrations in my time, mostly for startups trying to handle customer support with a little more automation, and it's generally a pretty interesting setup. the biggest problem is always the initial configuration.
+alright, so you're looking to get your salesforce einstein enhanced bot chatting with folks on facebook messenger, right? i've been down this road, and let me tell you, it's not always a walk in the park, but totally doable. i've built a few of these integrations in my time, mostly for startups trying to handle customer support with a little more automation, and it's generally a pretty interesting setup. the biggest problem is always the initial configuration.
 
 first off, let's talk about the pieces you need. you've got your einstein bot, obviously, which you've hopefully already set up inside your salesforce org. this is where all your chatbot logic lives, the intents, the entities, and the dialog flows. it handles the natural language processing and decides how to respond to user input. then, you've got the facebook side of things, meaning your facebook page and the developer tools it comes with. that's where you'll get your page access token, which is essentially the key to let your bot talk to facebook messenger.
 

@@ -6,7 +6,7 @@ id: "why-could-not-find-gem-nested-scaffold-x8664-linux-in-any-of-the-gem-source
 
 hey there,
 
-so, you're banging your head against the wall because bundler can't find `nested-scaffold x86_64-linux`, huh? been there, felt that. i’ve spent more nights than i care to remember chasing down gem-related gremlins. it's one of those things that just makes you question your entire existence as a developer sometimes. let me break down what’s probably happening and how to fix it, based on my own trials and tribulations.
+so, you're banging your head against the wall because bundler can't find `nested-scaffold x86_64-linux`, right? been there, felt that. i’ve spent more nights than i care to remember chasing down gem-related gremlins. it's one of those things that just makes you question your entire existence as a developer sometimes. let me break down what’s probably happening and how to fix it, based on my own trials and tribulations.
 
 first, the message “could not find gem 'nested-scaffold x86_64-linux'” is pretty specific. the `x86_64-linux` bit is the key. it tells us this isn’t just a regular ruby gem; it's a platform-specific gem. these are called binary gems or native extensions. a binary gem contains pre-compiled code that is specific to the operating system and architecture it was built for. that's why we see that `x86_64-linux` there, referring to a 64-bit linux system. if you're running on a different operating system or architecture like say, an m1 mac, or a windows machine, bundler ain't gonna find this gem in it's usual haunts.
 

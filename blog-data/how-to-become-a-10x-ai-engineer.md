@@ -28,7 +28,7 @@ def calculate_sum(numbers):
 def calculate_sum(numbers):
     return sum(numbers)
 ```
-pretty neat huh
+pretty neat right
 
 
 then there’s the ai products engineer these guys build ai products like midjourney or autogpt  they're not just using ai tools they’re building them so they're essentially creating the future of software its a whole different level. think about this:

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-split-a-dataset-over-multiple-gpus"
 ---
 
-alright, so you're looking at splitting a dataset across multiple gpus, huh? it's a common problem, and honestly, i've spent a good chunk of my career knee-deep in this sort of thing. it’s not always straightforward, but once you get the hang of it, it becomes pretty routine. i remember back in '09, working on this image recognition project. we had a mountain of data and a single, pathetic gpu. training times were measured in geologic eras. that's when i first started really diving into multi-gpu training, and boy, did i learn some lessons the hard way.
+alright, so you're looking at splitting a dataset across multiple gpus, right? it's a common problem, and honestly, i've spent a good chunk of my career knee-deep in this sort of thing. it’s not always straightforward, but once you get the hang of it, it becomes pretty routine. i remember back in '09, working on this image recognition project. we had a mountain of data and a single, pathetic gpu. training times were measured in geologic eras. that's when i first started really diving into multi-gpu training, and boy, did i learn some lessons the hard way.
 
 the core idea is that instead of having one gpu process the entire dataset, you divide the data and the computational workload across several gpus. it's like having a team of chefs instead of one guy trying to cook a banquet single-handedly. different frameworks and libraries offer different approaches, but the underlying principles are the same.
 

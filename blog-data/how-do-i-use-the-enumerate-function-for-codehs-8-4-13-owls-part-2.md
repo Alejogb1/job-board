@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "how-do-i-use-the-enumerate-function-for-codehs-8-4-13-owls-part-2"
 ---
 
-Alright so you're wrestling with `enumerate` in CodeHS 8 4 13 Owls Part 2 huh Been there done that more times than I care to admit Let me break it down for you like I'm debugging a particularly nasty piece of legacy code
+Alright so you're wrestling with `enumerate` in CodeHS 8 4 13 Owls Part 2 right Been there done that more times than I care to admit Let me break it down for you like I'm debugging a particularly nasty piece of legacy code
 
 First off `enumerate` is your friend Seriously it's one of those Python built-ins that once you grok it you wonder how you ever lived without it especially when you're dealing with lists and needing both the index and the value
 

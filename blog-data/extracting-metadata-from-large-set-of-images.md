@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "extracting-metadata-from-large-set-of-images"
 ---
 
-Okay so you’re wrestling with extracting metadata from a ton of images huh I get it Been there done that more times than I care to remember It's like the universe decided to dump all its picture data on your doorstep and said “have fun”
+Okay so you’re wrestling with extracting metadata from a ton of images right I get it Been there done that more times than I care to remember It's like the universe decided to dump all its picture data on your doorstep and said “have fun”
 
 First off we are talking serious scale here right It's not like 20 pictures from your phone we are dealing with potentially thousands or hundreds of thousands or even more So forget about manually going through each file and pulling out Exif data by hand we need a proper automated pipeline
 

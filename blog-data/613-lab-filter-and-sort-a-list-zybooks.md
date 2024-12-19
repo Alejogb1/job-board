@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "613-lab-filter-and-sort-a-list-zybooks"
 ---
 
-Okay so you're looking at a Zybooks lab problem about filtering and sorting lists huh been there done that probably have the t-shirt somewhere in my drawer. Specifically this 6.13 lab sounds like it involves working with data structures maybe a list of objects and applying some filtering criteria then sorting the resulting filtered list. Seems pretty standard in a lot of programming situations. I've banged my head against similar problems before believe me.
+Okay so you're looking at a Zybooks lab problem about filtering and sorting lists right been there done that probably have the t-shirt somewhere in my drawer. Specifically this 6.13 lab sounds like it involves working with data structures maybe a list of objects and applying some filtering criteria then sorting the resulting filtered list. Seems pretty standard in a lot of programming situations. I've banged my head against similar problems before believe me.
 
 Let me tell you about this one project I had back in the day. We were building this data analysis tool for sensor readings. Imagine thousands of sensors spitting out data every second. The initial data was just a jumbled mess a raw list of readings each reading represented as an object with fields like 'sensor_id' 'timestamp' and 'value'. The clients wanted to visualize this data but only for specific sensors and within a certain range of values. I had to implement something that filtered this massive list based on user selected criteria and then sort the results by timestamp before plotting it on a graph. Took me a few late nights fueled by bad coffee and even worse pizza to get it right.
 

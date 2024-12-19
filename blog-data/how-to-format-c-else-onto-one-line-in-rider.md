@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-format-c-else-onto-one-line-in-rider"
 ---
 
-so, you're having trouble getting rider to format your c# `else` statements onto one line, huh? i’ve been there. trust me, the struggle is real when you’re trying to maintain a particular code style and your ide has other plans.
+so, you're having trouble getting rider to format your c# `else` statements onto one line, right? i’ve been there. trust me, the struggle is real when you’re trying to maintain a particular code style and your ide has other plans.
 
 i've spent a fair amount of time battling with rider's formatting engine, and specifically on this particular issue of `else` placement. it's one of those seemingly minor things that can really throw a wrench in your workflow if you're picky about consistency. it can be particularly frustrating when you’ve got a coding standard in your team where compact `if-else` structures are preferred.
 

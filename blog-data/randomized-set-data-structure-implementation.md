@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "randomized-set-data-structure-implementation"
 ---
 
-Okay so you want to talk about randomized set implementations huh Been there done that Let me tell you it's not as straightforward as some might think you'd think it's a simple wrapper around a hashset or something but nah not really There are nuances
+Okay so you want to talk about randomized set implementations right Been there done that Let me tell you it's not as straightforward as some might think you'd think it's a simple wrapper around a hashset or something but nah not really There are nuances
 
 My first encounter with this was way back in like probably 2014 or 2015 I was working on this real-time data processing pipeline and we needed a way to deduplicate incoming events without a fixed order of insertion or deletion basically we had a firehose of events and needed to keep track of which ones we had already seen to avoid reprocessing them and the order we processed them did not matter But just a plain set didn't quite cut it because we occasionally had to remove entries randomly to simulate expiring entries without a strict fifo or lifo queue It was a real headache at first
 

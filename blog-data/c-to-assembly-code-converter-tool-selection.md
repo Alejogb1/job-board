@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "c-to-assembly-code-converter-tool-selection"
 ---
 
-Okay so you're looking at c to assembly code converter tools huh Been there done that probably a dozen times at least Let me tell you finding the right one can feel like debugging a multi-threaded program in the dark with only a blinking led for help
+Okay so you're looking at c to assembly code converter tools right Been there done that probably a dozen times at least Let me tell you finding the right one can feel like debugging a multi-threaded program in the dark with only a blinking led for help
 
 First off why do you even need this right like most people just blindly trust the compiler to do its thing But no not us We wanna see whats under the hood We wanna see those raw machine instructions and that's totally fine I get it I've spent too many nights staring at disassembled code trying to squeeze every last bit of performance from some embedded system
 

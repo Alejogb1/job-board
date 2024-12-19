@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "fast-fourier-transform-r-implementation-usage"
 ---
 
-Okay so you're asking about fast fourier transforms FFTs in R huh Been there done that a million times seems like. R and signal processing is a weird beast I’ve wrestled with this so many times it’s not even funny. Let's just say I’ve spent more time debugging FFT outputs in R than I have sleeping some months. No seriously it's true I’ve probably got the eye bags to prove it.
+Okay so you're asking about fast fourier transforms FFTs in R right Been there done that a million times seems like. R and signal processing is a weird beast I’ve wrestled with this so many times it’s not even funny. Let's just say I’ve spent more time debugging FFT outputs in R than I have sleeping some months. No seriously it's true I’ve probably got the eye bags to prove it.
 
 So the core of what you’re dealing with is taking a time-domain signal and flipping it into the frequency domain.  Think of it like decomposing a chord into its individual notes it’s the same concept but way more math intensive. R makes it easier though thank goodness. The `fft()` function is your go-to tool it’s built right in so no extra package install needed for the basic implementation but beware there are nuances.
 

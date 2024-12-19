@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "dbc-button-alignment-problem"
 ---
 
-Okay so dbc button alignment huh I've been down that rabbit hole myself more times than I care to admit Let's break it down because dbc can be a bit finicky especially when it comes to aligning those darn buttons
+Okay so dbc button alignment right I've been down that rabbit hole myself more times than I care to admit Let's break it down because dbc can be a bit finicky especially when it comes to aligning those darn buttons
 
 First off when you say "alignment problem" I'm guessing you're dealing with a few common culprits either buttons are stacked weirdly when you want them horizontal or they're off-center within their container or maybe they're just refusing to play nice with other components Yeah I've seen it all
 

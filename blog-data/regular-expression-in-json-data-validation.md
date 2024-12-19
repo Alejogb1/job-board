@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "regular-expression-in-json-data-validation"
 ---
 
-Okay so yeah regular expressions and json data validation huh I've been there man trust me this isn't my first rodeo with this particular tech rodeo
+Okay so yeah regular expressions and json data validation right I've been there man trust me this isn't my first rodeo with this particular tech rodeo
 
 So you're dealing with JSON data that needs some stricter rules than just is it valid JSON or not Right you want to ensure that specific fields within that JSON follow a specific pattern defined by a regex Okay I get it I've spent way too many late nights wrestling with this exact problem and believe me I've seen all the messy ways it can go sideways
 

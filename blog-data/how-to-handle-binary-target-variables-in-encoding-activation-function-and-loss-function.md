@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-handle-binary-target-variables-in-encoding-activation-function-and-loss-function"
 ---
 
-alright, so binary target variables huh? that’s a classic, been there a bunch of times. it’s one of those things that seems simple at first glance, but then you start diving in and discover there’s a lot of subtle choices that can make or break your model’s performance. i remember back in '14 when i was working on a project classifying network traffic as malicious or benign, i stumbled on similar issues and let me tell you, it wasn't pretty at first.
+alright, so binary target variables right? that’s a classic, been there a bunch of times. it’s one of those things that seems simple at first glance, but then you start diving in and discover there’s a lot of subtle choices that can make or break your model’s performance. i remember back in '14 when i was working on a project classifying network traffic as malicious or benign, i stumbled on similar issues and let me tell you, it wasn't pretty at first.
 
 let’s break down each part: encoding, activation, and loss. i’ll give you what i’ve picked up over the years, and some code snippets to show you what i mean.
 

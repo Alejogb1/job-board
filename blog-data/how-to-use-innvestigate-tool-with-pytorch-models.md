@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-use-innvestigate-tool-with-pytorch-models"
 ---
 
-alright, so you're looking to use innvestigate with pytorch models, huh? i've been down this road before, and it can get a little messy at first, especially if you're used to, say, tensorflow-based explainability tools. i’ll share what i learned, hopefully it saves you some head-scratching.
+alright, so you're looking to use innvestigate with pytorch models, right? i've been down this road before, and it can get a little messy at first, especially if you're used to, say, tensorflow-based explainability tools. i’ll share what i learned, hopefully it saves you some head-scratching.
 
 first things first, innvestigate isn't directly plug-and-play with pytorch like it is with some other frameworks. you'll need to do a little translation work. it's not a huge deal but it is a hurdle to get over. in my early days, i remember trying to simply toss a pytorch model into innvestigate and got a bunch of errors i didn’t understand. after a whole afternoon of reading, i realized i had to essentially bridge the gap using a custom layer and some forward hook magic. not that magic is a thing... more like, very specific coding.
 

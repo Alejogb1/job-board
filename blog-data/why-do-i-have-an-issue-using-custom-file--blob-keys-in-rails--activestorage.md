@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-do-i-have-an-issue-using-custom-file--blob-keys-in-rails--activestorage"
 ---
 
-alright, so you're having trouble with custom keys in activestorage, huh? i've been there, done that, got the t-shirt, and probably a few metaphorical scars to show for it. it's one of those areas where activestorage can feel a little… *opinionated* if you try to stray off the beaten path. let me lay out what i've seen and how i've tackled similar situations.
+alright, so you're having trouble with custom keys in activestorage, right? i've been there, done that, got the t-shirt, and probably a few metaphorical scars to show for it. it's one of those areas where activestorage can feel a little… *opinionated* if you try to stray off the beaten path. let me lay out what i've seen and how i've tackled similar situations.
 
 first off, activestorage, by default, wants to handle all the filename and key generation for you. it’s got a specific way of doing things: it takes the model name, the attachment name, a unique id, and then maybe a variation if you have multiple files per attachment. think of it like a well-oiled machine—but sometimes you just need to tweak a cog or two, and that's where the trouble begins.
 

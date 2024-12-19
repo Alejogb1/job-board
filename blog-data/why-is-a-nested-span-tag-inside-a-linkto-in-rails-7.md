@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-is-a-nested-span-tag-inside-a-linkto-in-rails-7"
 ---
 
-so, you're seeing a nested `<span>` tag inside a `link_to` helper in rails 7, and wondering what's going on, huh? i've definitely been there, staring at my rendered html and thinking, "wait, where did *that* come from?". it’s a classic rails gotcha, and it stems from how rails handles html escaping and its internal helpers. let's break it down, and i’ll share some scars i earned dealing with this.
+so, you're seeing a nested `<span>` tag inside a `link_to` helper in rails 7, and wondering what's going on, right? i've definitely been there, staring at my rendered html and thinking, "wait, where did *that* come from?". it’s a classic rails gotcha, and it stems from how rails handles html escaping and its internal helpers. let's break it down, and i’ll share some scars i earned dealing with this.
 
 first off, the `link_to` helper in rails is designed to be pretty versatile. it accepts a name (what the user sees), a path (where the link goes), and a bunch of html options. these options can include classes, ids, and other attributes. the crucial thing to remember is that rails, by default, escapes html within the ‘name’ part of the `link_to`. this means it turns characters like `<`, `>`, `&`, etc., into their html entity equivalents (`&lt;`, `&gt;`, `&amp;`). the aim here is to prevent cross-site scripting (xss) vulnerabilities.
 

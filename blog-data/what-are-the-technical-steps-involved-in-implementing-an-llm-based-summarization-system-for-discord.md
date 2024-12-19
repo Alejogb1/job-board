@@ -4,7 +4,7 @@ date: "2024-12-03"
 id: "what-are-the-technical-steps-involved-in-implementing-an-llm-based-summarization-system-for-discord"
 ---
 
-Okay so you wanna build an LLM summarizer for Discord huh that's pretty cool  lets break it down super casually like we're chatting over beers
+Okay so you wanna build an LLM summarizer for Discord right that's pretty cool  lets break it down super casually like we're chatting over beers
 
 First off  you'll need a solid understanding of LLMs  obviously  think large language models like GPT-3 or its cousins  you know the ones that can generate text translate languages write different kinds of creative content and answer your questions in an informative way  theres a bunch of papers on these  search for "attention is all you need"  that's a foundational paper for transformers  the architecture most LLMs are built on  also look into the various GPT papers from OpenAI  they're usually pretty readable even if you're not a hardcore researcher
 

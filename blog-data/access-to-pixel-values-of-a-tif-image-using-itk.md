@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "access-to-pixel-values-of-a-tif-image-using-itk"
 ---
 
-Okay so you wanna get at those sweet pixel values in a TIFF using ITK huh Been there done that got the t-shirt and maybe a few debugging scars to prove it Let me tell you this isn't exactly rocket science but it's got a few wrinkles you gotta iron out I've wrestled with this beast on several occasions mostly back in my medical imaging days where everything was either a DICOM or some weird proprietary TIFF variant But yeah I've got the scars let's talk TIFF pixels in ITK
+Okay so you wanna get at those sweet pixel values in a TIFF using ITK right Been there done that got the t-shirt and maybe a few debugging scars to prove it Let me tell you this isn't exactly rocket science but it's got a few wrinkles you gotta iron out I've wrestled with this beast on several occasions mostly back in my medical imaging days where everything was either a DICOM or some weird proprietary TIFF variant But yeah I've got the scars let's talk TIFF pixels in ITK
 
 First off ITK is brilliant for image processing don't get me wrong but sometimes it feels like it's designed for academics and less for us folks who just need to get the job done You're not wrong thinking it should be simpler But hey that's the price of power right It's definitely not a simple pixel access method compared to other libraries like PIL but it does make your life simpler when it comes to image processing operations especially on medical images which are often complex and large
 

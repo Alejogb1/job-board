@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "no-exact-matches-buildexpression-swift-static-method"
 ---
 
-Okay so you're hitting that "no exact matches buildexpression swift static method" wall huh I get it been there done that like literally yesterday it feels like Let's break this down I mean I spent the better part of last week wrestling with something similar so trust me I know the pain
+Okay so you're hitting that "no exact matches buildexpression swift static method" wall right I get it been there done that like literally yesterday it feels like Let's break this down I mean I spent the better part of last week wrestling with something similar so trust me I know the pain
 
 Alright so you want a static method in Swift that somehow builds something via this `buildExpression` deal and the Swift compiler is just throwing fits at you saying it can't find the right match or something like that right It's usually a problem with type constraints or generics which is like the compilers kryptonite it always finds some hidden edge case you totally missed Let me tell you about my little adventure with this a while back
 

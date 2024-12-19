@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-do-ajax-callbacks-not-fire-with-jqueryujs-jquery-rails-v450"
 ---
 
-alright, so you're banging your head against the wall because your ajax callbacks aren't triggering when using jquery_ujs, especially with jquery-rails v4.5.0, huh? i’ve been there, trust me. it’s like staring at a perfectly good piece of code that just refuses to cooperate. let me tell you about my escapades with this beast.
+alright, so you're banging your head against the wall because your ajax callbacks aren't triggering when using jquery_ujs, especially with jquery-rails v4.5.0, right? i’ve been there, trust me. it’s like staring at a perfectly good piece of code that just refuses to cooperate. let me tell you about my escapades with this beast.
 
 back in the day, when rails was still young and jquery was king, i spent a solid week debugging what looked like a simple form submission. i was trying to get a modal to update dynamically after a user submitted some data. i had all the callbacks set up, the `ajax:success`, `ajax:error`, even `ajax:complete`, i thought i was in the clear. the server was receiving the data, processing it, and sending back the correct response. but the modal? yeah, it remained stubbornly unchanged. no errors, no console output, just… silence.
 

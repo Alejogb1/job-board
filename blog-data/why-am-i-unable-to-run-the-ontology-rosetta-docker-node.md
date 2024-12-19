@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-am-i-unable-to-run-the-ontology-rosetta-docker-node"
 ---
 
-so, you're having trouble getting the ontology rosetta docker node up and running, huh? i've been there, believe me. docker can be a bit of a beast sometimes, especially when you're dealing with more complex setups like rosetta. it’s never a smooth sail when you start messing around with network configurations and port mappings, i tell ya.
+so, you're having trouble getting the ontology rosetta docker node up and running, right? i've been there, believe me. docker can be a bit of a beast sometimes, especially when you're dealing with more complex setups like rosetta. it’s never a smooth sail when you start messing around with network configurations and port mappings, i tell ya.
 
 i remember back when i was first getting into blockchain dev, i spent a good three days trying to debug a similar issue with a hyperledger fabric setup. turns out i had a conflicting port binding that wasn't immediately obvious. spent hours staring at docker logs, feeling like i was trying to decipher ancient hieroglyphs. so, i totally get the frustration. let's see if we can break down what might be going on with your ontology rosetta docker setup.
 

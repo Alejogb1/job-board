@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "akazecreate-opencv-error"
 ---
 
-Okay so "akaze_create opencv error" huh I've seen this rodeo more times than I care to admit. This isn't some obscure corner case it's a classic. Let's get down to brass tacks and I'll spill some hard-earned wisdom about why this thing keeps kicking you in the teeth. Been there done that bought the t-shirt probably have a stack of them in my closet actually.
+Okay so "akaze_create opencv error" right I've seen this rodeo more times than I care to admit. This isn't some obscure corner case it's a classic. Let's get down to brass tacks and I'll spill some hard-earned wisdom about why this thing keeps kicking you in the teeth. Been there done that bought the t-shirt probably have a stack of them in my closet actually.
 
 First up “akaze_create” we’re talking about the AKAZE feature detector in OpenCV. It's a pretty robust one but it's not bulletproof by any means. The error itself likely stems from a configuration mismatch a library issue or simply a misunderstanding of how the thing is supposed to behave. I remember my first encounter with this. Back in '18 I was trying to build some real-time image stitching for a robotic arm project and this popped up out of nowhere during the feature detection phase. Imagine this your robot arm is going haywire trying to find features and you're debugging this thing till 3 am. Good times yeah not really.
 

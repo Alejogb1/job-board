@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "triangle-strip-opengl-drawing"
 ---
 
-Okay so you want to draw triangle strips in OpenGL huh Been there done that Got the t-shirt and probably a few bug reports to boot Let's break it down I mean no one starts out knowing this stuff right?
+Okay so you want to draw triangle strips in OpenGL right Been there done that Got the t-shirt and probably a few bug reports to boot Let's break it down I mean no one starts out knowing this stuff right?
 
 I've been messing with OpenGL for probably close to 15 years now started back when fixed-function pipelines were still kinda a thing I remember pulling my hair out with immediate mode glBegin glEnd madness Then came vertex buffers and shaders thank god And yeah triangle strips they seemed so simple on paper but little quirks little gotchas all over the place
 

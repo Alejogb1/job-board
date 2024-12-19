@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-am-i-getting-an-error-using-roialign-when-training-a-mask-r-cnn-model"
 ---
 
-alright, so you're hitting the "error using roialign" snag when training your mask r-cnn model, huh? yeah, that's a classic. i've been there, more times than i care to remember. it's usually not a *single* thing, but rather a confluence of a few common gotchas. let's break it down.
+alright, so you're hitting the "error using roialign" snag when training your mask r-cnn model, right? yeah, that's a classic. i've been there, more times than i care to remember. it's usually not a *single* thing, but rather a confluence of a few common gotchas. let's break it down.
 
 first off, "roialign" is that region of interest alignment operation, a key component in mask r-cnn that refines bounding box proposals and generates the pixel-aligned mask predictions. the error you're seeing typically points to something going wrong during the calculation of those alignments. i had a particularly nasty experience with this, back when i was working on a satellite imagery project. we were trying to detect small objects like boats and cars from very high-resolution images, and the roialign was just throwing errors left and center. it turned out we had a mismatch between the sizes of the feature maps and the region proposals, a really stupid oversight on my part, honestly. so it's not always the library.
 

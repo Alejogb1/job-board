@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-is-an-imageview-inside-a-horizontal-stackview-is-not-respecting-constraint-height"
 ---
 
-alright, so you've got an imageview tucked inside a horizontal stackview and it's acting up, ignoring its height constraints, huh? yeah, i've been there, done that, got the t-shirt, probably stained with coffee and a bit of frustration. this is a classic layout quirk, and it usually boils down to a few common suspects. let's break it down and figure out what's going on.
+alright, so you've got an imageview tucked inside a horizontal stackview and it's acting up, ignoring its height constraints, right? yeah, i've been there, done that, got the t-shirt, probably stained with coffee and a bit of frustration. this is a classic layout quirk, and it usually boils down to a few common suspects. let's break it down and figure out what's going on.
 
 first off, stackviews are designed to manage the layout of their contained views, particularly when it comes to arranging them horizontally or vertically. when you use a horizontal stackview, it's primarily concerned with allocating space along the horizontal axis and its children's intrinsic content sizes, *not* so much with forcing specific heights. by default, the stackview wants to make all items the same height based on the tallest item. that's the core of the problem. it tries to take care of spacing and horizontal arrangement, and often, it's happy to stretch views to fit if they don't have defined height constraints.
 

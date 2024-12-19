@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-do-you-make-block-diagrams-with-node-inside-nodes-in-mermaid"
 ---
 
-alright, so you're diving into nested node structures with mermaid, huh? i’ve been there, felt that pain. it's not always obvious how to get that visual hierarchy exactly the way you want it. mermaid is fantastic for quick diagrams, but those compound shapes do need a bit of extra attention.
+alright, so you're diving into nested node structures with mermaid, right? i’ve been there, felt that pain. it's not always obvious how to get that visual hierarchy exactly the way you want it. mermaid is fantastic for quick diagrams, but those compound shapes do need a bit of extra attention.
 
 i remember back in my early days trying to document a complex microservice architecture. i had this massive graph of dependencies and data flows. i initially tried just throwing everything into a single mermaid diagram. disaster. it was a tangled mess, nodes overlapping, labels clashing, absolutely unreadable. that's when i first ran into the need for nested structures within mermaid. trying to show that a particular subsystem was composed of other smaller microservices all within the larger context was just impossible without this nesting. it was a humbling experience to realize the limit of my initial simple approach. after some long days, and even longer nights i figured it out. the trick lies in a combination of subgraphs and careful node placement. let's break it down a bit.
 

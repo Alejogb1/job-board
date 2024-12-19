@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-is-a-spacy-matcher-rule-not-finding-a-phrase-in-text"
 ---
 
-ah, so you’re running into the classic spaCy matcher not playing ball, huh? i’ve been there, believe me. spent more nights than i care to count staring at a screen, wondering why my rules are just refusing to cooperate. it's always something simple, usually a tiny detail overlooked. let's break it down, and i’ll walk you through some of the common culprits i’ve stumbled upon.
+ah, so you’re running into the classic spaCy matcher not playing ball, right? i’ve been there, believe me. spent more nights than i care to count staring at a screen, wondering why my rules are just refusing to cooperate. it's always something simple, usually a tiny detail overlooked. let's break it down, and i’ll walk you through some of the common culprits i’ve stumbled upon.
 
 first off, the most frequent offender i see? tokenization differences. spaCy’s tokenizer is pretty smart, but it’s not psychic. what *you* think is a single phrase might actually be split into separate tokens. and if your matcher rule assumes a contiguous chunk of text but the text is tokenized differently, your rule won't find a match.
 

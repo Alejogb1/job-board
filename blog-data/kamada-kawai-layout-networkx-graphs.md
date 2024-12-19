@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "kamada-kawai-layout-networkx-graphs"
 ---
 
-Okay so you're asking about getting Kamada-Kawai layout working with NetworkX huh been there done that a few times or more lets be real here its not exactly plug and play I understand the pain
+Okay so you're asking about getting Kamada-Kawai layout working with NetworkX right been there done that a few times or more lets be real here its not exactly plug and play I understand the pain
 
 First off yeah NetworkX is great for handling graph data structures I mean who doesn't love the way it just does what it should do most of the time but the default drawing options can be well lets just say they often leave something to be desired If you just call draw on your graph it gives you those default layouts that are not really that helpful most of the time they look like someones threw a bunch of nodes at the screen and connections all over the place
 

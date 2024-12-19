@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "what-does-the-ethereum-protocol-version-mean"
 ---
 
-so, you're asking about ethereum protocol versions, huh? i've been around this block a few times, seen a fair share of forks and upgrades. it's not exactly rocket science, but there's definitely some nuance to it. let's break it down in a way that, well, maybe even my past self could have understood.
+so, you're asking about ethereum protocol versions, right? i've been around this block a few times, seen a fair share of forks and upgrades. it's not exactly rocket science, but there's definitely some nuance to it. let's break it down in a way that, well, maybe even my past self could have understood.
 
 essentially, when we talk about the ethereum protocol version, we're talking about a specific set of rules and features that the ethereum network uses. these rules dictate everything from how transactions are processed to how smart contracts are executed. think of it like software, a very complex piece of software distributed across thousands of nodes. and like any software, it evolves, it gets updates, features are added, bugs are fixed. these updates are what we call protocol upgrades, or hard forks, and each one corresponds to a different protocol version.
 

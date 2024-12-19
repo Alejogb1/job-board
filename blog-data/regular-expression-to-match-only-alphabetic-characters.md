@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "regular-expression-to-match-only-alphabetic-characters"
 ---
 
-Alright so you wanna match only alphabetic characters with a regular expression huh Been there done that Probably a hundred times Seems simple enough but trust me its easy to trip up on the edge cases Lets break it down and Ill share some of my war stories
+Alright so you wanna match only alphabetic characters with a regular expression right Been there done that Probably a hundred times Seems simple enough but trust me its easy to trip up on the edge cases Lets break it down and Ill share some of my war stories
 
 First things first I mean the most basic approach if you are dealing with standard english alphabet is going to be something like `[a-zA-Z]` That seems like a no-brainer right And most of the time it works perfectly fine But here's where things get interesting You start throwing in real-world text and suddenly you're dealing with a whole zoo of characters
 

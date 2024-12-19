@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "kubectl-get-crds-command-explanation"
 ---
 
-Alright so you're asking about `kubectl get crds` huh I've been there trust me It's one of those things that seems simple enough on the surface but gets kinda deep the moment you start actually using it on a regular basis Let's break it down from my own experiences
+Alright so you're asking about `kubectl get crds` right I've been there trust me It's one of those things that seems simple enough on the surface but gets kinda deep the moment you start actually using it on a regular basis Let's break it down from my own experiences
 
 First off `kubectl get crds` is your gateway into the world of Custom Resource Definitions in Kubernetes You know how Kubernetes has built-in resources like pods deployments services etc well CRDs let you extend that and define your own resource types It's like building your own Lego bricks for your Kubernetes cluster and the `kubectl get crds` command is how you see all those bricks you've built or are available
 

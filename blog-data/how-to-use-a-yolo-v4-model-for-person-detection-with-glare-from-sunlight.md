@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-use-a-yolo-v4-model-for-person-detection-with-glare-from-sunlight"
 ---
 
-so, you're having trouble with yolo v4 and sunlight glare messing with your person detection, huh? i get it. been there, seen that – a lot. it's one of those classic computer vision headaches that doesn't show up in the perfectly curated datasets you usually train on. let me share some stuff i've picked up over the years dealing with this specific pain.
+so, you're having trouble with yolo v4 and sunlight glare messing with your person detection, right? i get it. been there, seen that – a lot. it's one of those classic computer vision headaches that doesn't show up in the perfectly curated datasets you usually train on. let me share some stuff i've picked up over the years dealing with this specific pain.
 
 first off, yolo v4 is pretty robust, but glare, especially direct sunlight, just throws a bunch of extra noise into the image. it's like trying to listen to a good song with a hairdryer blasting nearby. the model's learned to recognize people in normal lighting conditions, not those blown-out, high-contrast situations. what the model sees as an edge or feature can get smeared or masked by the glare. simple stuff like edges are confused by bright overexposed parts of the image.
 

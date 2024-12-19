@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "how-to-use-the-predict-function-in-r-model"
 ---
 
-Alright so you're asking about `predict` in R models huh Been there done that countless times Let me tell you it's a pretty fundamental part of working with models in R but also a source of a lot of head scratching for newcomers I've been doing data stuff for I dunno 15 years now I think lost count but I remember wrestling with the exact same thing back in the day when I was trying to build my first forecasting model using ARIMA on some stock market data I almost set my computer on fire trying to get the darn thing to work the predict part was a real roadblock
+Alright so you're asking about `predict` in R models right Been there done that countless times Let me tell you it's a pretty fundamental part of working with models in R but also a source of a lot of head scratching for newcomers I've been doing data stuff for I dunno 15 years now I think lost count but I remember wrestling with the exact same thing back in the day when I was trying to build my first forecasting model using ARIMA on some stock market data I almost set my computer on fire trying to get the darn thing to work the predict part was a real roadblock
 
 Basically `predict` is your go to function when you have a model that's been trained on some data and now you want to use that model to make predictions on new unseen data It's like you've taught your model a lesson and now it's time for it to take the test You've got this model object that you created using something like `lm` for linear models `glm` for generalized linear models `randomForest` for you guessed it random forests or `svm` for support vector machines among many others and you have some new data you want to feed into it for predictions
 

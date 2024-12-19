@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "react-pdf-highlighter-how-to-use"
 ---
 
-Okay so you're asking about how to use a React PDF highlighter huh I've wrestled with this one before trust me. Its not always straightforward and you definitely can stumble down rabbit holes if you aren't careful. Been there done that got the t-shirt several times. I'm talking late nights debugging PDF parsers and getting intimately acquainted with coordinate systems. You know the drill.
+Okay so you're asking about how to use a React PDF highlighter right I've wrestled with this one before trust me. Its not always straightforward and you definitely can stumble down rabbit holes if you aren't careful. Been there done that got the t-shirt several times. I'm talking late nights debugging PDF parsers and getting intimately acquainted with coordinate systems. You know the drill.
 
 First things first the React part is pretty standard. You'll be building components probably a parent component to handle the PDF rendering and maybe a child component to handle the highlighting itself. You can totally roll your own but let's be real here reinventing the wheel is a mug's game. There are a few libraries out there that do the heavy lifting so we don't have to write a PDF parser from scratch thank heavens for that. I've tried doing that once I don't recommend.
 

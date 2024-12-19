@@ -4,7 +4,7 @@ date: "2024-12-03"
 id: "what-are-the-best-tools-for-creating-logos-with-ai"
 ---
 
-Hey so you wanna make logos with AI huh cool beans
+Hey so you wanna make logos with AI right cool beans
 
 Its a wild west out there tons of options but lemme give you the lowdown from my own tinkering  I've messed around with a bunch of these AI logo makers and honestly its like a choose your own adventure kinda thing  Theres no single "best" it really depends on your vibe your skill level and what you're aiming for
 

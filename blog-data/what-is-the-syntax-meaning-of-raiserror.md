@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "what-is-the-syntax-meaning-of-raiserror"
 ---
 
-Okay so you're asking about `RAISERROR` huh Yeah I know that pain We've all been there staring at SQL Server logs trying to figure out why something's gone sideways Let's break it down nice and simple like we're at the keyboard together debugging something at 3 am
+Okay so you're asking about `RAISERROR` right Yeah I know that pain We've all been there staring at SQL Server logs trying to figure out why something's gone sideways Let's break it down nice and simple like we're at the keyboard together debugging something at 3 am
 
 First thing first `RAISERROR` is basically SQL Server's way of throwing a custom exception You know like in programming languages when you hit an error and you're like "Yo something went bad let the system know" well `RAISERROR` does that in T-SQL its whole job is to interrupt execution and report a problem
 

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-am-i-unable-to-get-a-higher-map-value-during-model-training"
 ---
 
-alright, so you're hitting a wall with your mAP during model training, huh? i've been there, many times. it's one of those things that makes you question your sanity, especially when you've poured hours into tweaking things. let's break this down like we're debugging a particularly stubborn piece of code.
+alright, so you're hitting a wall with your mAP during model training, right? i've been there, many times. it's one of those things that makes you question your sanity, especially when you've poured hours into tweaking things. let's break this down like we're debugging a particularly stubborn piece of code.
 
 first, let's assume we're talking about object detection, since mAP (mean average precision) is a core metric there. and when i say i've been there, i mean i've stared at mAP curves that look like a flatline for days, wondering where i went wrong. one time, i spent a whole weekend convinced my dataset was cursed, only to realize i had a tiny but fatal error in my bounding box annotation parsing logic. a misplaced comma, of all things. it haunts me to this day.
 

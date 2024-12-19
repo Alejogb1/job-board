@@ -4,7 +4,7 @@ date: "2024-12-12"
 id: "what-is-project-mariner-and-how-does-it-enhance-browser-based-ai-tasks"
 ---
 
-okay so project mariner huh thats actually a pretty cool name it definitely gives off some kinda space exploration vibe which is kinda fitting when you think about what its trying to do in the browser space basically mariner is all about turbocharging AI stuff that happens right there in your chrome or firefox or whatever you use instead of relying on some far off server
+okay so project mariner right thats actually a pretty cool name it definitely gives off some kinda space exploration vibe which is kinda fitting when you think about what its trying to do in the browser space basically mariner is all about turbocharging AI stuff that happens right there in your chrome or firefox or whatever you use instead of relying on some far off server
 
 think about it most AI tasks especially the beefy ones like image generation or complex language processing usually happen somewhere else they get sent off to some giant data center and then results come back to your browser that means latency slowdowns plus theres the whole privacy angle its kinda like sending your thoughts out into the open
 

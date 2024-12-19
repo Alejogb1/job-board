@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "conversion-to-cell-from-double-is-not-possible-matlab-error"
 ---
 
-Alright so you're getting that classic "conversion to cell from double is not possible" MATLAB error huh Been there done that got the t-shirt believe me Its a real head scratcher when you first encounter it but its usually pretty straightforward once you've wrestled with it a bit Let me break down what's likely happening based on my past escapades and how to dodge this bullet
+Alright so you're getting that classic "conversion to cell from double is not possible" MATLAB error right Been there done that got the t-shirt believe me Its a real head scratcher when you first encounter it but its usually pretty straightforward once you've wrestled with it a bit Let me break down what's likely happening based on my past escapades and how to dodge this bullet
 
 See the thing with MATLAB is that it's a stickler for data types especially when you're messing around with cells Cells in MATLAB are like these versatile containers they can hold all sorts of stuff numbers strings even other cells But they’re not automatically interchangeable with numerical arrays and that's where the 'conversion' issue pops up
 

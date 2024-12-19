@@ -4,7 +4,7 @@ date: "2024-12-05"
 id: "what-are-the-practical-applications-and-limitations-of-tencents-hunyuan-text-to-video-model"
 ---
 
-Okay so you wanna know about Tencent's Hunyuan text-to-video model huh cool  It's a pretty neat piece of tech  like seriously impressive  but like all AI it has its strengths and weaknesses  Let's dive in  no need for fancy titles just straight talk
+Okay so you wanna know about Tencent's Hunyuan text-to-video model right cool  It's a pretty neat piece of tech  like seriously impressive  but like all AI it has its strengths and weaknesses  Let's dive in  no need for fancy titles just straight talk
 
 Practical Applications Man the possibilities are wild  Think about it you type in some text  like "a fluffy kitten playing in a field of sunflowers at sunset" and BAM you've got a video  No more tedious filming editing  just pure creation  That’s a game changer for so many things
 

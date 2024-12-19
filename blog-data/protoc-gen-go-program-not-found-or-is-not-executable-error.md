@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "protoc-gen-go-program-not-found-or-is-not-executable-error"
 ---
 
-Okay so you're hitting that classic "protoc-gen-go not found" error huh I feel your pain I've stared at that screen more times than I care to admit This isn't some obscure problem its practically a right of passage for anyone wrestling with protobufs and Go
+Okay so you're hitting that classic "protoc-gen-go not found" error right I feel your pain I've stared at that screen more times than I care to admit This isn't some obscure problem its practically a right of passage for anyone wrestling with protobufs and Go
 
 Alright lets break this down from the ground up and I'm gonna sprinkle in some of my past battles with this monster so you know you're not alone First off you need to understand whats actually happening here `protoc-gen-go` isn't some magical incantation it's a plugin a specific program that the `protoc` compiler which is the main protocol buffer compiler calls to actually generate Go code from your `.proto` files Without it `protoc` is like a car without an engine it can't go anywhere
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "ruby-pp-string-printing-formatting"
 ---
 
-Alright so you want to print a string in Ruby and you need some fancy formatting using `pp` huh Been there done that more times than I care to admit Let's break this down because it's not always as straightforward as you might think especially if you're dealing with complex data or want something specific in your output.
+Alright so you want to print a string in Ruby and you need some fancy formatting using `pp` right Been there done that more times than I care to admit Let's break this down because it's not always as straightforward as you might think especially if you're dealing with complex data or want something specific in your output.
 
 First off `pp` is your friend when it comes to pretty printing Ruby objects It's way better than just `puts` or `print` for inspecting data structures because it actually formats things nicely making it readable That's its main purpose debugging and visualizing data. Now I've seen a lot of people misuse it. I had this one intern once who tried to use it in production logging…yeah that was a fun cleanup. Production isn’t for pretty printing is the lesson there folks.
 

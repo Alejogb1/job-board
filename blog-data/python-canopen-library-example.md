@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "python-canopen-library-example"
 ---
 
-Alright so you’re asking about `python-canopen` huh Been there done that probably more times than I care to admit Look I’ve wrestled with CANopen a fair bit and `python-canopen` is well its a tool lets just say it’s a tool that requires understanding the ins and outs to avoid a world of pain
+Alright so you’re asking about `python-canopen` right Been there done that probably more times than I care to admit Look I’ve wrestled with CANopen a fair bit and `python-canopen` is well its a tool lets just say it’s a tool that requires understanding the ins and outs to avoid a world of pain
 
 See I started my CANopen journey back in like 2015 we were building this automated test rig for industrial motor controllers think huge noisy things whirring and clanking not exactly your friendly desktop setup Anyway we needed a way to command these controllers and get feedback in real time CANopen seemed like the best option at the time and python well python was my language of choice So `python-canopen` was the answer or so I thought
 

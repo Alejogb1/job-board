@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "is-there-an-abnormal-way-to-terminate-a-child-process-to-get-certain-outputs-in-this-code"
 ---
 
-alright, so you're asking if there's a weird way to kill a child process to get specific output, huh? i've definitely been down that rabbit hole a few times. it's usually not the *ideal* way to do things, but sometimes you're backed into a corner, or maybe you just want to see what happens. i get it.
+alright, so you're asking if there's a weird way to kill a child process to get specific output, right? i've definitely been down that rabbit hole a few times. it's usually not the *ideal* way to do things, but sometimes you're backed into a corner, or maybe you just want to see what happens. i get it.
 
 let's talk about process termination and how it relates to outputs. typically, when a process ends normally, it closes all its file descriptors, which includes pipes connected to its parent. the parent process then reads what the child process wrote to these pipes. we are used to standard exit codes and signals, but when we want non standard stuff, that is where things become interesting. when a child exits abnormally, the normal closing and cleanup might not happen. this is where we can potentially get the ‘abnormal’ outputs you are asking about.
 

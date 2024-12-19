@@ -6,7 +6,7 @@ id: "where-to-find-the-yolov5-feature-extractor"
 
 hey there,
 
-so, you're hunting for the yolo v5 feature extractor, huh? i get it. i’ve been down that rabbit hole myself more than once. it's not always as straightforward as just pulling a single file, and it’s easy to get turned around in the codebase if you're not super familiar. been there, done that, got the t-shirt.
+so, you're hunting for the yolo v5 feature extractor, right? i get it. i’ve been down that rabbit hole myself more than once. it's not always as straightforward as just pulling a single file, and it’s easy to get turned around in the codebase if you're not super familiar. been there, done that, got the t-shirt.
 
 let me break it down from my perspective and how i usually tackle this kinda thing. we’re not looking for a magical “feature_extractor.py” file, because it’s more integrated than that. think of yolo v5 as a network composed of different blocks and layers, not a singular pipeline with obvious compartments. the "feature extraction" isn’t done by a lone component. it's a process that occurs over the first chunk of the network, before the head does its bounding box predictions and classifications.
 

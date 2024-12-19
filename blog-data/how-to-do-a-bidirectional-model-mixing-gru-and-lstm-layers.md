@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-do-a-bidirectional-model-mixing-gru-and-lstm-layers"
 ---
 
-alright, so you're looking at mixing gru and lstm layers in a bidirectional model, huh? i've been down that road a few times, and it’s definitely a place where things can get… interesting. let me share what i've learned, focusing on the practical bits and skipping the academic fluff for now.
+alright, so you're looking at mixing gru and lstm layers in a bidirectional model, right? i've been down that road a few times, and it’s definitely a place where things can get… interesting. let me share what i've learned, focusing on the practical bits and skipping the academic fluff for now.
 
 the core idea here is that you want to leverage the strengths of both lstms (long-term dependencies) and grus (computational efficiency), hopefully getting the best of both worlds. doing it bidirectionally just means you're processing the sequence data in both directions – forward and backward – which usually improves performance for sequence-to-sequence tasks and time-series analysis.
 

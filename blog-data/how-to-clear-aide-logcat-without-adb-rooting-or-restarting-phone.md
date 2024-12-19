@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-clear-aide-logcat-without-adb-rooting-or-restarting-phone"
 ---
 
-Okay so you've got a logcat issue huh I've been there believe me Been wrestling with Android internals since the days of Gingerbread and let me tell you debugging without root or ADB access is like trying to find a specific grain of sand on a beach at night yeah not fun But I've cracked this nut before so let's break it down
+Okay so you've got a logcat issue right I've been there believe me Been wrestling with Android internals since the days of Gingerbread and let me tell you debugging without root or ADB access is like trying to find a specific grain of sand on a beach at night yeah not fun But I've cracked this nut before so let's break it down
 
 First off let's be real Why would you *need* to clear logcat without adb or root or a full restart That screams like a very specific problem usually its like those pesky embedded devices where you have very little control over the environment Or maybe youre dealing with a locked down device for field testing where you are not allowed to push code or change a thing I had one project back in 2016 working on medical grade embedded devices they were ultra restricted It was a nightmare when the logcat would get swamped with repetitive error messages you had to think of some sort of method to avoid a device reboot just to see whats going on If you had to perform a reboot every time for the logs you wouldn't have a working device
 

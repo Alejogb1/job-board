@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-am-i-getting-errors-with-atari-environments-in-pettingzooml"
 ---
 
-alright, so you're banging your head against atari environments in pettingzoo huh? i get it, been there, done that, got the t-shirt with pixelated game sprites on it. it's a bit of a classic "welcome to reinforcement learning" initiation ritual, isn't it? the thing about these environments, especially when mixed with multi-agent frameworks like pettingzoo, is that they can be surprisingly picky. it’s not always a simple case of “plug and play”.
+alright, so you're banging your head against atari environments in pettingzoo right? i get it, been there, done that, got the t-shirt with pixelated game sprites on it. it's a bit of a classic "welcome to reinforcement learning" initiation ritual, isn't it? the thing about these environments, especially when mixed with multi-agent frameworks like pettingzoo, is that they can be surprisingly picky. it’s not always a simple case of “plug and play”.
 
 first off, i’ve seen this exact issue a bunch of times, particularly when folks are jumping into reinforcement learning with atari games. usually, the core problems boil down to a couple of things. i distinctly remember, back in the day, messing around with a custom multi-agent pong setup. i thought it would be a breeze, took me an entire weekend to debug a similar environment issue. the error messages in these situations can be surprisingly vague and unhelpful. sometimes it's something that looks totally unrelated to what you think is the root of the issue.
 

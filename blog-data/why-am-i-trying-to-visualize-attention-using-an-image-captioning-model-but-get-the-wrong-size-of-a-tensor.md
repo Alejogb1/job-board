@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-am-i-trying-to-visualize-attention-using-an-image-captioning-model-but-get-the-wrong-size-of-a-tensor"
 ---
 
-so, you're diving into attention visualization with an image captioning model, huh? and you're hitting a tensor size mismatch. i've been there, it's a classic. let me walk you through some of the common pitfalls, based on the scars i've collected over the years.
+so, you're diving into attention visualization with an image captioning model, right? and you're hitting a tensor size mismatch. i've been there, it's a classic. let me walk you through some of the common pitfalls, based on the scars i've collected over the years.
 
 first off, let's break down what's likely happening. image captioning models, at their core, often use an encoder-decoder architecture. the encoder, typically a convolutional neural network (cnn), processes the input image and outputs a feature map. this feature map encapsulates the visual information. then, the decoder, commonly a recurrent neural network (rnn) or a transformer, takes that feature map and generates the text caption. attention mechanisms play a vital role, allowing the decoder to focus on relevant regions of the image while generating each word in the caption.
 

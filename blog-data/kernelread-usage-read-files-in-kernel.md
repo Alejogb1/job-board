@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "kernelread-usage-read-files-in-kernel"
 ---
 
-Okay so you want to read files from inside the Linux kernel using `kernel_read` huh Been there done that Got the scars too let me tell you This is like a deep dive into the murky depths of kernel land not for the faint of heart
+Okay so you want to read files from inside the Linux kernel using `kernel_read` right Been there done that Got the scars too let me tell you This is like a deep dive into the murky depths of kernel land not for the faint of heart
 
 So `kernel_read` yeah that's a kernel function It's like the VIP pass to access files directly bypassing all the user-space stuff This isn't your average `fopen` and `fread` dance it's way down there
 

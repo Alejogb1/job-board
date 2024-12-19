@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "expected-expression-before-token"
 ---
 
-Okay so you hit the dreaded "expected expression before token" error huh I know that one way too well Been there done that got the t-shirt and probably a few scars too let me tell you a bit about my journey with this particular compiler grievance and how i've handled it in the past
+Okay so you hit the dreaded "expected expression before token" error right I know that one way too well Been there done that got the t-shirt and probably a few scars too let me tell you a bit about my journey with this particular compiler grievance and how i've handled it in the past
 
 First things first this error usually means the compiler saw something it wasn't expecting Like a variable where it wanted an operator or a semicolon when it expected a curly brace Stuff like that Its the kind of thing that makes you double check every single line of code several times and by the end you just feel a bit defeated but we will beat this together dont worry
 

@@ -4,7 +4,7 @@ date: "2024-12-03"
 id: "what-tools-can-summarize-twitter-feeds-efficiently-and-how-can-automation-be-built-for-this-purpose"
 ---
 
-Hey so you wanna summarize Twitter feeds efficiently huh  that's a fun problem  lots of ways to skin that cat  first thing we gotta think about is what kind of summary you're after  are we talking just keywords a tl;dr type thing or something more nuanced like sentiment analysis or topic modeling  that totally changes the game
+Hey so you wanna summarize Twitter feeds efficiently right  that's a fun problem  lots of ways to skin that cat  first thing we gotta think about is what kind of summary you're after  are we talking just keywords a tl;dr type thing or something more nuanced like sentiment analysis or topic modeling  that totally changes the game
 
 For a simple keyword extraction thing you could just use something like NLTK its a Python library pretty straightforward stuff  you grab the tweets maybe from the Twitter API  they have rate limits you gotta watch out for  and then you just use NLTKs built-in tools to pull out the most frequent words  stop words like "the" "a" "and"  you gotta filter those out  otherwise you'll get a lot of useless noise  
 

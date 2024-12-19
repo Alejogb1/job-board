@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "application-calculation-vba-excel-function"
 ---
 
-Okay so you're looking at a VBA Excel function for some kind of application calculation huh I've been there let me tell you it's a rabbit hole and I've spent some time spelunking in it So basically what you have is a need to do something more complex than a standard excel formula can handle and you're diving into VBA that's where all the fun begins
+Okay so you're looking at a VBA Excel function for some kind of application calculation right I've been there let me tell you it's a rabbit hole and I've spent some time spelunking in it So basically what you have is a need to do something more complex than a standard excel formula can handle and you're diving into VBA that's where all the fun begins
 
 First things first lets talk about the basics before we get lost in some deep code you need to understand how excel VBA functions work right? unlike your normal excel cell formulas these things are actually little programs they run when you call them in a cell
 

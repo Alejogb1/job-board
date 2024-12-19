@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "maximum-haskell-value"
 ---
 
-Alright so you're asking about getting the maximum value in Haskell huh Been there done that so many times
+Alright so you're asking about getting the maximum value in Haskell right Been there done that so many times
 
 First off let's be clear you're not gonna get "maximum" in some absolute sense like an integer that's bigger than every other integer Haskell like most languages has limits You're asking how to find the biggest element within some data structure or a set of values thats what its about right
 

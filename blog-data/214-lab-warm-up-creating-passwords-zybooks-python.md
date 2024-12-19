@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "214-lab-warm-up-creating-passwords-zybooks-python"
 ---
 
-Okay so you're wrestling with that zybooks password lab thing huh Been there man let me tell you I've seen my fair share of password generation nightmares and some absolute security faux pas so listen up I'll give you the lowdown
+Okay so you're wrestling with that zybooks password lab thing right Been there man let me tell you I've seen my fair share of password generation nightmares and some absolute security faux pas so listen up I'll give you the lowdown
 
 First off that Zybooks lab isn't about building a Fort Knox level vault it's more like getting you to understand the basic steps involved in string manipulation in python and random generation don't overthink it we ain't dealing with cryptographic keys here
 

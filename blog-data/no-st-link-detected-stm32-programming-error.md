@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "no-st-link-detected-stm32-programming-error"
 ---
 
-Okay so you're hitting the "no st-link detected" error huh? Classic. Seen this one a few times more than I'd like. Been wrestling with STM32s since back when you had to solder everything by hand seriously almost had to build my own debugger at one point. Okay maybe not that far but you get the picture I've had my fair share of ST-Link headaches.
+Okay so you're hitting the "no st-link detected" error right? Classic. Seen this one a few times more than I'd like. Been wrestling with STM32s since back when you had to solder everything by hand seriously almost had to build my own debugger at one point. Okay maybe not that far but you get the picture I've had my fair share of ST-Link headaches.
 
 First off lets' get this straight this isn't some mystical voodoo thing. It's usually a pretty straightforward issue and it’s almost never a problem with the ST-Link hardware itself like some people immediately think. Don't go throwing out your debugger yet alright?
 

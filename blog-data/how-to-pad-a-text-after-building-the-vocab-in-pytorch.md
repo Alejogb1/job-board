@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-pad-a-text-after-building-the-vocab-in-pytorch"
 ---
 
-alright, so you're dealing with text padding after creating your vocabulary in pytorch, huh? i've been there, more times than i'd like to remember. it's a classic gotcha when you're starting to get serious with sequence data. let me share what i've learned over the years, and a couple of things that have saved my bacon (and my precious gpu time).
+alright, so you're dealing with text padding after creating your vocabulary in pytorch, right? i've been there, more times than i'd like to remember. it's a classic gotcha when you're starting to get serious with sequence data. let me share what i've learned over the years, and a couple of things that have saved my bacon (and my precious gpu time).
 
 basically, you've built your vocabulary – you've turned all your words or tokens into unique integer ids. that's great. but when you're feeding sequences to your neural network, they need to be the same length. you can't just throw in variable-length sequences, at least not without some extra work (like using masking which is another beast for another time). that’s where padding comes in. we add extra tokens—usually a special token representing "padding"—to the end of shorter sequences until they match the length of the longest sequence in your batch.
 

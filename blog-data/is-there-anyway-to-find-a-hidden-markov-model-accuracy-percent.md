@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "is-there-anyway-to-find-a-hidden-markov-model-accuracy-percent"
 ---
 
-alright, so you're asking about figuring out the accuracy of a hidden markov model, huh? been there, done that, got the t-shirt – and probably a few scars from debugging the viterbi algorithm at 3am. it's a common question, and honestly, there isn't one single, universally accepted "accuracy percentage" like you might get with a simple classification model. hmmm, let's try and break it down, and i'll tell you what worked for me over the years.
+alright, so you're asking about figuring out the accuracy of a hidden markov model, right? been there, done that, got the t-shirt – and probably a few scars from debugging the viterbi algorithm at 3am. it's a common question, and honestly, there isn't one single, universally accepted "accuracy percentage" like you might get with a simple classification model. hmmm, let's try and break it down, and i'll tell you what worked for me over the years.
 
 first off, the tricky part is that hmm's don't predict labels in the same way as, say, a logistic regression does. instead, they model sequences of observations based on underlying hidden states. so the concept of ‘accuracy’ gets a little fuzzy. you don't have a direct mapping from input to output to compare against.
 

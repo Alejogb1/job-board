@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-implement-with--as-statements-in-airflow-dags"
 ---
 
-so, you're looking at how to use `with ... as` statements within airflow dags, huh? i've been there, believe me. it’s not always as straightforward as you'd think coming from regular python, but it's totally doable and honestly, it makes your dags much cleaner. i remember when i first started using airflow, i was trying to cram everything into single operators, and the dag files looked like spaghetti code. learning to structure things better with contexts was a game changer.
+so, you're looking at how to use `with ... as` statements within airflow dags, right? i've been there, believe me. it’s not always as straightforward as you'd think coming from regular python, but it's totally doable and honestly, it makes your dags much cleaner. i remember when i first started using airflow, i was trying to cram everything into single operators, and the dag files looked like spaghetti code. learning to structure things better with contexts was a game changer.
 
 the core issue here is that airflow dags are really just python scripts. but the execution environment is different from a regular script, especially when you start using more advanced operators and wanting to manage resources. the `with ... as` pattern is great for this because it ensures proper setup and teardown even if things go south in between. in my experience, this has saved me countless hours of debugging when jobs were failing mid-execution and leaving resources hanging.
 

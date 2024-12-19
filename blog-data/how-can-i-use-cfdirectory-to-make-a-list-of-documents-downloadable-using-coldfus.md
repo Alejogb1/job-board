@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "how-can-i-use-cfdirectory-to-make-a-list-of-documents-downloadable-using-coldfus"
 ---
 
-Okay so you want to make a directory listing that lets users download files using ColdFusion huh been there done that a million times It's like the bread and butter of web dev back in the day well and still today tbh 
+Okay so you want to make a directory listing that lets users download files using ColdFusion right been there done that a million times It's like the bread and butter of web dev back in the day well and still today tbh 
 
 So let's get right into it you're thinking `cfdirectory` and that's a solid starting point It's kinda the workhorse for file system interaction in CFML its purpose is listing files and directories right it doesn’t serve files it does that for you to be able to do that.  I've spent countless hours wrestling with it especially back in the CF 5 days when I first started doing this stuff oh man those were the days remember those tag spaghetti times yeah I do. It felt like trying to debug a nuclear reactor with a potato.
 

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-identify-the-gender-and-nationality-of-a-list-of-names"
 ---
 
-alright, so you've got a list of names and you need to figure out the gender and nationality for each, huh? i've been down this rabbit hole before, and it's trickier than it first looks. it's not as simple as a quick database lookup, not by a long shot.
+alright, so you've got a list of names and you need to figure out the gender and nationality for each, right? i've been down this rabbit hole before, and it's trickier than it first looks. it's not as simple as a quick database lookup, not by a long shot.
 
 let me tell you about my experience. years ago, i was working on a project, a sort of global social media aggregator, and we needed to personalize user experiences. naturally, the first step was to figure out user demographics, and guess what? most of the data was just a name field. i quickly found out that rule-based systems fall flat on their face, even with the most extensive lists. the name "alex," for instance, could be male or female, and nationality is even more of a mess. trying to code that all in if-else statements is a journey to insanity, believe me.
 

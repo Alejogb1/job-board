@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-store-images-data-for-machine-learning"
 ---
 
-so, you're asking about image data storage for machine learning, huh? i've been around the block a few times with this one, trust me. it's not as straightforward as it might seem at first glance. i’ve had my share of headaches trying to get it just *so*, and i can definitely share some of my scars… err, experience.
+so, you're asking about image data storage for machine learning, right? i've been around the block a few times with this one, trust me. it's not as straightforward as it might seem at first glance. i’ve had my share of headaches trying to get it just *so*, and i can definitely share some of my scars… err, experience.
 
 first off, forget about just dumping raw pixel data into a database. that's a recipe for disaster, and i've learned that the hard way. back in my early days, i was working on a project classifying types of, well, let's call them "widgets." i was naive and stored the raw images in a relational database as blobs. query performance was… atrocious. it took forever to load even a small batch of images for training, and i had to redesign the whole pipeline. i was practically rewriting my entire work when i realize i messed it up. lesson learned: databases aren't optimized for this sort of thing if you are not using specialised one.
 

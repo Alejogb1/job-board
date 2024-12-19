@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "uml-extends-relationship-between-classes"
 ---
 
-Alright so you're asking about UML extends relationships specifically with classes huh Been there done that got the t-shirt multiple times I swear I've debugged enough inheritance diagrams to last a lifetime Feels like just yesterday I was wrestling with a spaghetti code project that looked like a Jackson Pollock painting of classes connected by all kinds of lines I mean it was a nightmare but I got out alive so lets tackle this
+Alright so you're asking about UML extends relationships specifically with classes right Been there done that got the t-shirt multiple times I swear I've debugged enough inheritance diagrams to last a lifetime Feels like just yesterday I was wrestling with a spaghetti code project that looked like a Jackson Pollock painting of classes connected by all kinds of lines I mean it was a nightmare but I got out alive so lets tackle this
 
 First off UML diagrams yeah they can be a headache if you're not careful But once you get the hang of the basics it's actually quite straightforward The extends relationship in UML specifically in class diagrams is just another way of saying "inheritance" in object oriented programming If you're coming from a non-OOP background think of it as a way of defining a more specialized class from a more general one The general class is the superclass or parent and the specialized class is the subclass or child This means the subclass inherits all the public and protected properties and methods of the superclass and can add it's own unique stuff or override the inherited ones
 

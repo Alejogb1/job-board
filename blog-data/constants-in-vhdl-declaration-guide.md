@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "constants-in-vhdl-declaration-guide"
 ---
 
-Alright so you're asking about constants in VHDL declarations huh Been there done that probably way too many times than I care to admit. Let's break this down. It's not rocket science but it's the kind of thing that can bite you if you're not careful especially when you're dealing with complex hardware designs.
+Alright so you're asking about constants in VHDL declarations right Been there done that probably way too many times than I care to admit. Let's break this down. It's not rocket science but it's the kind of thing that can bite you if you're not careful especially when you're dealing with complex hardware designs.
 
 First off VHDL constants they're like the unchanging rocks in your digital design landscape. You define them once and they're meant to stay the same throughout the entire design not like variables that are all over the place. I've seen more than a few junior engineers mess this up confusing constants with signals oh boy the debugging sessions those were.
 

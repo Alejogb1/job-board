@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "adding-image-inside-table-cell-in-html"
 ---
 
-Okay so you wanna jam an image into a table cell in HTML huh been there done that got the t-shirt let me tell you its simpler than you might think but of course there are quirks i mean its the web after all isn't it always a bit of a rodeo
+Okay so you wanna jam an image into a table cell in HTML right been there done that got the t-shirt let me tell you its simpler than you might think but of course there are quirks i mean its the web after all isn't it always a bit of a rodeo
 
 First things first the core of it is straight up HTML we're talking using the `<img>` tag inside a `<td>` tag thats it its like nesting dolls but much less confusing
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "rollmean-r-function-implementation"
 ---
 
-Alright so you're asking about implementing a rolling mean function in R huh? I've been down this road more times than I can count believe me Seems like every data analysis project I touch ends up needing some kind of moving average calculation Its a real bread and butter type of thing and honestly its not that complicated once you get a good handle on it
+Alright so you're asking about implementing a rolling mean function in R right? I've been down this road more times than I can count believe me Seems like every data analysis project I touch ends up needing some kind of moving average calculation Its a real bread and butter type of thing and honestly its not that complicated once you get a good handle on it
 
 I remember back when I was still wet behind the ears hacking away at my first real data science gig I thought the way to do it was with these crazy nested for loops I mean talk about a performance killer I was processing gigabytes of sensor data and my machine was practically crying for mercy I spent like a whole weekend just waiting for computations to finish it was an actual nightmare I finally had to scrap that mess and find a better solution which thankfully led me to vectors in R
 

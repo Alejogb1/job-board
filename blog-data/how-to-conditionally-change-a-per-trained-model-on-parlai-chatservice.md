@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-conditionally-change-a-per-trained-model-on-parlai-chatservice"
 ---
 
-ah, so you're looking into dynamically adjusting a pretrained model within parlai's chat service, huh? been there, done that, got the slightly singed t-shirt. it's a bit of a rabbit hole, and you definitely need to get your hands dirty with the parlai api. let me share some of my scars, err, experience.
+ah, so you're looking into dynamically adjusting a pretrained model within parlai's chat service, right? been there, done that, got the slightly singed t-shirt. it's a bit of a rabbit hole, and you definitely need to get your hands dirty with the parlai api. let me share some of my scars, err, experience.
 
 basically, you’re not going to be changing the model's underlying architecture mid-conversation. that's not how these things usually roll. instead, what we're really talking about is modifying the model's behavior by altering its inputs or outputs based on certain conditions. think of it like you're giving it extra instructions based on the context of the ongoing chat.
 

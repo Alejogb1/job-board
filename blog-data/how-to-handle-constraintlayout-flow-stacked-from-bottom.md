@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-handle-constraintlayout-flow-stacked-from-bottom"
 ---
 
-alright, so you're running into the fun world of constraintlayout flow and trying to stack things from the bottom, huh? i've been there, trust me. it's one of those things that feels simple on paper, but the devil is definitely in the details. i remember spending a whole weekend once, back when i was first getting into android development, just trying to get a simple chat interface to layout correctly with flow. ended up ordering way too much pizza that weekend and i was definitely seeing constraintlayout in my dreams, ah those days...
+alright, so you're running into the fun world of constraintlayout flow and trying to stack things from the bottom, right? i've been there, trust me. it's one of those things that feels simple on paper, but the devil is definitely in the details. i remember spending a whole weekend once, back when i was first getting into android development, just trying to get a simple chat interface to layout correctly with flow. ended up ordering way too much pizza that weekend and i was definitely seeing constraintlayout in my dreams, ah those days...
 
 the core problem is that `constraintlayout.flow` by default lays out its children from left to right, top to bottom. that's why things seem to stack from the top when they overflow. we need to flip the script on that behavior. we're basically looking at the `flow_verticalStyle` and `flow_horizontalStyle` attributes, and how we can manipulate these to get the desired effect.
 

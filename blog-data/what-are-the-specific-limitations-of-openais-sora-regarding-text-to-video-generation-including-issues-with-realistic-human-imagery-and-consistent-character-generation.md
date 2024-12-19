@@ -4,7 +4,7 @@ date: "2024-12-12"
 id: "what-are-the-specific-limitations-of-openais-sora-regarding-text-to-video-generation-including-issues-with-realistic-human-imagery-and-consistent-character-generation"
 ---
 
-Hey there!  So you're curious about Sora, huh?  OpenAI's new text-to-video model.  It's pretty darn exciting, this whole leap into generating videos from just text, but like any new technology, it's got its quirks.  Let's dive in and explore some of the limitations – because even the coolest tech has 'em!
+Hey there!  So you're curious about Sora, right?  OpenAI's new text-to-video model.  It's pretty darn exciting, this whole leap into generating videos from just text, but like any new technology, it's got its quirks.  Let's dive in and explore some of the limitations – because even the coolest tech has 'em!
 
 We're talking about a system that's still learning, right? It's like a really clever toddler who's just started to paint – they can produce some amazing splashes of color, but they might not quite understand perspective or consistent brushstrokes just yet.
 

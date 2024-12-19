@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "prime-binary-numbers-relationship"
 ---
 
-Alright so you're asking about prime binary numbers and their relationships huh yeah I've been down that rabbit hole a few times let me tell you
+Alright so you're asking about prime binary numbers and their relationships right yeah I've been down that rabbit hole a few times let me tell you
 
 It's not as straightforward as decimal primes obviously because binary is base-2 and primes are generally defined in terms of divisibility and factors in base-10 but there are some cool patterns and things you can explore especially when you start looking at binary representations of prime numbers
 

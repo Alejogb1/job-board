@@ -4,7 +4,7 @@ date: "2024-12-05"
 id: "what-potential-does-fishspeech-v15s-multilingual-zero-shot-voice-cloning-hold-for-global-applications"
 ---
 
-Okay so FishSpeech v1.5 huh multilingual zero-shot voice cloning that's pretty wild  I mean seriously the implications are huge  Imagine needing to translate something into like a dozen languages instantly and having it sound totally natural like a real person speaking each language  That’s the power we’re talking about here this isn't just text to speech we're talking about voice cloning that adapts crazy fast
+Okay so FishSpeech v1.5 right multilingual zero-shot voice cloning that's pretty wild  I mean seriously the implications are huge  Imagine needing to translate something into like a dozen languages instantly and having it sound totally natural like a real person speaking each language  That’s the power we’re talking about here this isn't just text to speech we're talking about voice cloning that adapts crazy fast
 
 First off the global reach is insane  Think about dubbing movies  Instead of needing a separate voice actor for every single language you could just clone the original actors voice and have it speak any language you want  This drastically reduces costs and time  Production timelines for movies TV shows even video games could shrink massively imagine the efficiency gains
 

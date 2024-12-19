@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "where-should-i-find-sp-xml-preparedocument"
 ---
 
-Okay so you're wrestling with `sp_xml_preparedocument` huh I've been there it's like that one SQL Server stored procedure you never quite forget once you've dealt with it
+Okay so you're wrestling with `sp_xml_preparedocument` right I've been there it's like that one SQL Server stored procedure you never quite forget once you've dealt with it
 
 Alright listen up because I've spent way too many late nights debugging this thing than I'd like to admit First things first `sp_xml_preparedocument` isn’t something you find just lying around in the database like a random table its a system stored procedure It lives within the SQL Server engine itself meaning its part of the core functionality So its not like you can `SELECT * FROM sp_xml_preparedocument` that's a no go
 

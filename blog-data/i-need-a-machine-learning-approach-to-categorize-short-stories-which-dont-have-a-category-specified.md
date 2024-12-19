@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "i-need-a-machine-learning-approach-to-categorize-short-stories-which-dont-have-a-category-specified"
 ---
 
-alright, so you've got a bunch of short stories and no labels, huh? been there, done that. it's a common scenario, especially when dealing with user-generated content or legacy datasets. let's break this down. it's not a walk in the park, but it's definitely solvable with a bit of ml elbow grease.
+alright, so you've got a bunch of short stories and no labels, right? been there, done that. it's a common scenario, especially when dealing with user-generated content or legacy datasets. let's break this down. it's not a walk in the park, but it's definitely solvable with a bit of ml elbow grease.
 
 first off, we are talking about unsupervised learning, because, well, no labels. supervised methods are out of the picture. we need the algorithm to find structure within the data itself. the usual suspect here is clustering, which aims to group similar data points together. specifically, we are going to focus on text clustering. there are some things to keep in mind:
 

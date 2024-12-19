@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "warning-message-glmfit-fitted-probabilities-occurred-r"
 ---
 
-Alright so you got that glm fit fitted probabilities warning in R huh Been there done that got the t-shirt And by t-shirt I mean I spent a solid week debugging a logistic regression model once so yeah familiar territory
+Alright so you got that glm fit fitted probabilities warning in R right Been there done that got the t-shirt And by t-shirt I mean I spent a solid week debugging a logistic regression model once so yeah familiar territory
 
 This warning pops up when the `glm` function during fitting using the iterative weighted least squares algorithm hits some edge cases basically it means the predicted probabilities are either 0 or 1 or extremely close to them And yeah that causes some numerical instability and the fitting process can act a bit wonky
 

@@ -4,7 +4,7 @@ date: "2024-12-03"
 id: "which-open-source-llms-and-all-in-one-llm-platforms-are-recommended-for-local-use"
 ---
 
-Hey so you wanna run LLMs locally huh cool beans  I get it  the cloud is great and all but sometimes you just need that sweet sweet local power right  no latency no API keys just you and your model chilling  Let's dive in
+Hey so you wanna run LLMs locally right cool beans  I get it  the cloud is great and all but sometimes you just need that sweet sweet local power right  no latency no API keys just you and your model chilling  Let's dive in
 
 First off  "all-in-one" is kinda subjective  some folks mean a platform that handles everything from model download to inference  others just want something that simplifies the inference bit  I'll cover both scenarios  plus I'm gonna assume you're comfortable with the command line at least a little bit  if not  well buckle up buttercup
 

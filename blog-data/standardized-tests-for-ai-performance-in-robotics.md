@@ -4,7 +4,7 @@ date: '2024-11-15'
 id: 'standardized-tests-for-ai-performance-in-robotics'
 ---
 
-So you're thinking about standardized tests for AI in robotics huh that's pretty cool actually  I mean it's super important to be able to measure how well these robots are doing right  But how do you even standardize something that's constantly evolving like AI  
+So you're thinking about standardized tests for AI in robotics right that's pretty cool actually  I mean it's super important to be able to measure how well these robots are doing right  But how do you even standardize something that's constantly evolving like AI  
 
 It's kinda like trying to compare apples and oranges  One robot might be great at navigating a maze another at picking up objects and another at understanding human language  So how do you make a test that's fair to all of them  
 

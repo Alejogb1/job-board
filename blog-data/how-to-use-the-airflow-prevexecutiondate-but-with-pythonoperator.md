@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-use-the-airflow-prevexecutiondate-but-with-pythonoperator"
 ---
 
-alright, let’s get down to it. so you're looking to grab the `prev_execution_date` within a `pythonoperator` in airflow, huh? i’ve been there, messed that up a couple of times myself, trust me. it's one of those things that looks straightforward at first glance but has a few gotchas lurking around.
+alright, let’s get down to it. so you're looking to grab the `prev_execution_date` within a `pythonoperator` in airflow, right? i’ve been there, messed that up a couple of times myself, trust me. it's one of those things that looks straightforward at first glance but has a few gotchas lurking around.
 
 first off, let’s be clear on what we’re talking about. the `prev_execution_date` in airflow is the datetime object representing the scheduled execution time of the previous dag run. this is super useful when you need to process data incrementally or do some kind of time-based partitioning. airflow provides a bunch of templating variables that you can use within your dag definitions, and `prev_execution_date` is one of them, accessible through the `{{ prev_execution_date }}` jjinja template string.
 

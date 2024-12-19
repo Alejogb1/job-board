@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "license-plate-perspectives-opencv-computer-vision"
 ---
 
-Okay so license plate perspectives OpenCV huh I've been wrestling with that beast for what feels like ages honestly You wouldn't believe the head scratching I went through back in the day trying to make sense of those skewed rectangles
+Okay so license plate perspectives OpenCV right I've been wrestling with that beast for what feels like ages honestly You wouldn't believe the head scratching I went through back in the day trying to make sense of those skewed rectangles
 
 I mean everyone thinks image recognition is some magical click-and-boom thing but let me tell you the real world is a messy place Especially when you're dealing with license plates at weird angles It’s like the universe is actively trying to sabotage your computer vision algorithms
 

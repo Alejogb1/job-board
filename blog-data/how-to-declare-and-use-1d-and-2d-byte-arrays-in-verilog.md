@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "how-to-declare-and-use-1d-and-2d-byte-arrays-in-verilog"
 ---
 
-Okay so you wanna juggle byte arrays in Verilog huh I've been there trust me It's not exactly Python with its easy lists but it's doable and yeah you gotta be careful about how you set things up especially when you're pushing them into hardware
+Okay so you wanna juggle byte arrays in Verilog right I've been there trust me It's not exactly Python with its easy lists but it's doable and yeah you gotta be careful about how you set things up especially when you're pushing them into hardware
 
 Alright first let's tackle the 1D byte array a simple case I've used this countless times for things like FIFO buffers or just storing small data packets Basically you declare a reg type with a width equal to your byte and then you define an array of them this is the usual way to simulate a byte array
 

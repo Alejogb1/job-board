@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-is-rails-7-turbolinks-giving-an-error-on-a-fetch-page"
 ---
 
-alright, so, rails 7 and turbolinks giving fetch headaches, huh? i've been there, more times than i care to remember. it's a classic case of the 'javascript not playing nice with turbolinks' dance. let's break this down, from the trenches, so to speak.
+alright, so, rails 7 and turbolinks giving fetch headaches, right? i've been there, more times than i care to remember. it's a classic case of the 'javascript not playing nice with turbolinks' dance. let's break this down, from the trenches, so to speak.
 
 the core issue here, and i bet a shiny nickel on this, is that turbolinks doesn’t behave like a traditional page reload. it intercepts link clicks and form submissions, swapping out the `<body>` content via ajax. this is great for speed, but it wreaks havoc when your javascript expects a full page lifecycle. specifically, when you're doing `fetch` requests, especially on what turbolinks considers a “page” transition within the same view, things can get… well, not predictable. it's basically a conflict between turbolinks' partial page reload logic and the assumption of a complete page refresh when you initiate fetch requests.
 

@@ -6,7 +6,7 @@ id: "why-am-i-getting-a-ruby-on-rails---nomethoderror-on-hasmany-relation---tryi
 
 hey there,
 
-so, you're hitting a `NoMethodError` with your `has_many` association in rails, specifically when you're trying to model categories and subcategories, huh? i've been there. many times. it's a classic gotcha that trips up even seasoned rails developers, and i definitely have some war stories about this kind of thing.
+so, you're hitting a `NoMethodError` with your `has_many` association in rails, specifically when you're trying to model categories and subcategories, right? i've been there. many times. it's a classic gotcha that trips up even seasoned rails developers, and i definitely have some war stories about this kind of thing.
 
 let's break it down. the core of the problem is often a mismatch between how you've defined your associations in the models and how you're actually trying to access them in your code. i remember back in the rails 3.2 days (yeah, i'm that old), i spent a whole weekend banging my head against a similar issue. it turned out i had misspelled the foreign key column name. it was a lowercase ‘i’ instead of a capital ‘I’… the pain.
 

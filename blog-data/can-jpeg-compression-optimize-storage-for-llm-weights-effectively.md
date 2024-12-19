@@ -4,7 +4,7 @@ date: "2024-12-03"
 id: "can-jpeg-compression-optimize-storage-for-llm-weights-effectively"
 ---
 
-Hey so you wanna know about JPEG compression for LLM weights huh  That's a pretty wild idea actually  Most folks are all about quantization and stuff for that kind of thing but JPEG for massive model parameters  it's definitely outside the box
+Hey so you wanna know about JPEG compression for LLM weights right  That's a pretty wild idea actually  Most folks are all about quantization and stuff for that kind of thing but JPEG for massive model parameters  it's definitely outside the box
 
 The core problem is LLMs are HUGE  We're talking gigabytes terabytes even petabytes of parameters  Storing and moving those things is a nightmare  So we need compression techniques to make it less of a headache right
 

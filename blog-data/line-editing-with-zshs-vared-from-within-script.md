@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "line-editing-with-zshs-vared-from-within-script"
 ---
 
-Alright so line editing with `zsh`'s `vared` from inside a script huh I've been there done that got the t-shirt probably several t-shirts actually This stuff can be a bit of a rabbit hole if you're not careful Let me spill the beans on what I've learned over the years dealing with this kind of thing it's not always straightforward let me tell you
+Alright so line editing with `zsh`'s `vared` from inside a script right I've been there done that got the t-shirt probably several t-shirts actually This stuff can be a bit of a rabbit hole if you're not careful Let me spill the beans on what I've learned over the years dealing with this kind of thing it's not always straightforward let me tell you
 
 First off `vared` is your friend when you need interactive editing of a variable in `zsh` It's like a mini text editor popping up in your terminal Now the catch is it's designed for interactive use which means it plays nice when you the human are at the keyboard typing away But when you try to use it from a script things can get a little funky
 

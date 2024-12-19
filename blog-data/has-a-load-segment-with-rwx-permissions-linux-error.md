@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "has-a-load-segment-with-rwx-permissions-linux-error"
 ---
 
-Okay so you're seeing a load segment with rwx permissions on Linux huh been there done that so many times it's practically a rite of passage for a kernel dev or someone messing with low-level stuff like me Let's break this down real quick.
+Okay so you're seeing a load segment with rwx permissions on Linux right been there done that so many times it's practically a rite of passage for a kernel dev or someone messing with low-level stuff like me Let's break this down real quick.
 
 First off rwx permissions that's read write execute all in one place not exactly something you see every day on purpose Usually we're talking about code or data segments and they have stricter permissions. Code generally has rx and data usually rw or just r but rwx is kinda a red flag. The kernel doesn't like it because it's basically an open invitation for all sorts of security problems if you’re dealing with untrusted input. Think of it as a hacker's dream basically.
 

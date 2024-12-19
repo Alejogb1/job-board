@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "timebucket-timescaledb-function-explanation"
 ---
 
-Alright so you're asking about `time_bucket` in TimescaleDB huh Been there done that wrestled with that beast a few times myself Let me break it down for you like I'm explaining it to my younger self before I knew any better You see `time_bucket` isn't some magical time wizard it's just a super useful function to group data based on time intervals It's like taking a big mess of timestamps and sorting them into neatly labeled buckets making it way easier to aggregate and analyze
+Alright so you're asking about `time_bucket` in TimescaleDB right Been there done that wrestled with that beast a few times myself Let me break it down for you like I'm explaining it to my younger self before I knew any better You see `time_bucket` isn't some magical time wizard it's just a super useful function to group data based on time intervals It's like taking a big mess of timestamps and sorting them into neatly labeled buckets making it way easier to aggregate and analyze
 
 Imagine you have a table full of sensor readings that are coming in every few seconds Maybe you want to see the average reading every hour or the total readings every day If you try to do that without `time_bucket` it's a mess lots of complicated date functions and you'll end up with something convoluted that even you won't understand in a week
 

@@ -4,7 +4,7 @@ date: "2024-12-03"
 id: "what-are-the-best-tools-for-editing-podcast-videos-and-creating-clips"
 ---
 
-Hey so you wanna edit podcast vids and make clips huh cool beans
+Hey so you wanna edit podcast vids and make clips right cool beans
 
 First off lemme tell ya theres a ton of options out there its kinda overwhelming but dont sweat it we'll get through this together  I'm a pretty big fan of video editing so I've messed around with a lot of different software  
 

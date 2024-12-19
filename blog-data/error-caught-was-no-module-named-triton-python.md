@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "error-caught-was-no-module-named-triton-python"
 ---
 
-Okay so you got hit with a "no module named triton" huh Been there done that a million times Seems like another late night debugging marathon for you Welcome to the club
+Okay so you got hit with a "no module named triton" right Been there done that a million times Seems like another late night debugging marathon for you Welcome to the club
 
 I mean its not exactly a rare sight this error you know it screams right in your face "hey you forgot something" or "hey your environment is messed up" Classic really and I've seen it pop up in so many different contexts over the years its practically a familiar friend at this point
 

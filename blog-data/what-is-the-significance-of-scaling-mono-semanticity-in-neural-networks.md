@@ -4,7 +4,7 @@ date: "2024-12-11"
 id: "what-is-the-significance-of-scaling-mono-semanticity-in-neural-networks"
 ---
 
-Okay so you're asking about scaling mono-semanticity in neural networks huh that's a pretty cool question  It's kinda like asking how to make a neural network really good at focusing on one specific thing at a time without getting distracted by other stuff  Imagine you're teaching a dog a trick you want it to only do that one trick not get confused by other commands right that's kind of the idea
+Okay so you're asking about scaling mono-semanticity in neural networks right that's a pretty cool question  It's kinda like asking how to make a neural network really good at focusing on one specific thing at a time without getting distracted by other stuff  Imagine you're teaching a dog a trick you want it to only do that one trick not get confused by other commands right that's kind of the idea
 
 Scaling mono-semanticity basically means we want our network to be able to handle really complex single tasks really well  Think of image classification say you want your network to identify only cats  not just any animal but specifically cats  and you want it to do this across millions of images with tons of variations in lighting angles poses breeds etc  That's scaling mono-semanticity  It's about making a network super specialized in one area  without sacrificing performance as the scale increases or the complexity of the single task grows
 

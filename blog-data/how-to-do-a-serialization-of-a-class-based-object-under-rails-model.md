@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-do-a-serialization-of-a-class-based-object-under-rails-model"
 ---
 
-alright, so you're hitting that classic object serialization problem within a rails model, huh? i've been there, more times than i care to remember. it's one of those things that seems simple on the surface but can get complex pretty quickly when you actually dive in. i'm guessing you're trying to persist some structured data that doesn't directly map to your database columns, and that's totally normal.
+alright, so you're hitting that classic object serialization problem within a rails model, right? i've been there, more times than i care to remember. it's one of those things that seems simple on the surface but can get complex pretty quickly when you actually dive in. i'm guessing you're trying to persist some structured data that doesn't directly map to your database columns, and that's totally normal.
 
 let me share some experiences. years ago, when i was working on this e-commerce platform (it feels like ages ago!), we had to deal with storing complex product configuration data. each product could have multiple variations with different attributes, and these variations didn’t fit nicely into a traditional relational database table. initially, we tried shoving everything into a json string which, looking back now, was not the best idea. it worked, but querying the data or trying to do anything advanced with it was a major pain. we were essentially treating a structured object like a blob, not good.
 

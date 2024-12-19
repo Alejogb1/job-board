@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-do-a-quadratic-constraint-with-the-roi-package"
 ---
 
-alright, so you're looking to wrangle quadratic constraints within the roi package, huh? i've been there, trust me. roi, for all its strengths, can feel a bit… particular… when it comes to anything beyond linear stuff. i remember back when i first started working with optimization problems, it was all nice and tidy linear objective functions and constraints. then, bam, real-world hits, and you get these wonderfully nonlinear things that the standard solvers just choke on. quadratic constraints are exactly that kind of beast.
+alright, so you're looking to wrangle quadratic constraints within the roi package, right? i've been there, trust me. roi, for all its strengths, can feel a bit… particular… when it comes to anything beyond linear stuff. i remember back when i first started working with optimization problems, it was all nice and tidy linear objective functions and constraints. then, bam, real-world hits, and you get these wonderfully nonlinear things that the standard solvers just choke on. quadratic constraints are exactly that kind of beast.
 
 so, the short answer, roi, the 'optimization infrastructure' package in r, doesn't directly handle quadratic constraints in its traditional function interfaces like `roi_solve` or `lpsolve`. this is not really surprising, honestly. it's designed for linear programming problems primarily.
 

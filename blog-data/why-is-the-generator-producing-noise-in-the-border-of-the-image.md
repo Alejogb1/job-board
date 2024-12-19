@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-is-the-generator-producing-noise-in-the-border-of-the-image"
 ---
 
-well, i’ve seen this one a bunch of times, and yeah, it's usually a pain, especially when you're trying to get clean outputs. image generation, huh? the dream, until the edges look like static tv. here's what's most likely going on, and some stuff i've tried that usually helps.
+well, i’ve seen this one a bunch of times, and yeah, it's usually a pain, especially when you're trying to get clean outputs. image generation, right? the dream, until the edges look like static tv. here's what's most likely going on, and some stuff i've tried that usually helps.
 
 first, let’s talk about the root cause: it’s all about how the generator “sees” the edge of your image. most generators, especially those based on convolutional neural networks (cnns) are built to process tiles or patches. basically, a smaller section of your image at a time, not the whole thing at once. when they are processing a part of the image that is not at the edge everything is fine, but when the process reach the edge of the image the network often faces boundary issues.
 

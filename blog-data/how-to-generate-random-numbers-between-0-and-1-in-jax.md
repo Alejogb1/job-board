@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "how-to-generate-random-numbers-between-0-and-1-in-jax"
 ---
 
-Okay so you're asking about generating random numbers between 0 and 1 in Jax huh Been there done that let me tell you This is a pretty common thing when you're doing anything with simulations or machine learning in Jax It's not as simple as just calling `random()` like in basic Python though Jax is a bit more explicit and that's a good thing in the long run it makes your code more predictable and reproducible
+Okay so you're asking about generating random numbers between 0 and 1 in Jax right Been there done that let me tell you This is a pretty common thing when you're doing anything with simulations or machine learning in Jax It's not as simple as just calling `random()` like in basic Python though Jax is a bit more explicit and that's a good thing in the long run it makes your code more predictable and reproducible
 
 First off you need to know about `jax.random` It's where all the randomness magic happens in Jax Unlike regular Python where `random()` is like a global shared resource Jax uses what we call pseudo-random number generators or PRNGs these PRNGs take a key and output a sequence of random numbers given the same key you'll always get the same sequence of numbers This is super useful for debugging and ensuring your results are reproducible Now if that doesnt make sense imagine you had a broken dice that always gave 3 given a specific push yeah thats that.
 

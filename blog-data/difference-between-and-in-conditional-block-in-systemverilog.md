@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "difference-between-and-in-conditional-block-in-systemverilog"
 ---
 
-Okay so you want to know the difference between `and` and `&&` in a SystemVerilog conditional block huh Been there done that got the t-shirt and the sleepless nights debugging it let me tell you
+Okay so you want to know the difference between `and` and `&&` in a SystemVerilog conditional block right Been there done that got the t-shirt and the sleepless nights debugging it let me tell you
 
 It's a common gotcha for anyone moving from say C or even verilog to SystemVerilog I remember when I first started with SV I used `and` like it was going out of style thinking it was the same as `&&` Yeah rookie mistake I paid for that dearly in simulation time let me tell you I was working on this complex ethernet switch at the time thousands of lines of code everywhere and the bug I was chasing was all because of `and` instead of `&&` The simulation was going to end any time soon if i didnt found this bug So first lets break down what they actually do under the hood which will help you understand why this can be a major issue
 

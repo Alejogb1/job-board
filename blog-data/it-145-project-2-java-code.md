@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "it-145-project-2-java-code"
 ---
 
-Okay so you're looking at IT-145 project 2 java code huh Been there done that Let me tell you it usually involves a bunch of specific java concepts mashed together and everyone seems to get stuck on the same points I remember the first time I saw that project my initial thought was this can't be THAT hard boy was I wrong
+Okay so you're looking at IT-145 project 2 java code right Been there done that Let me tell you it usually involves a bunch of specific java concepts mashed together and everyone seems to get stuck on the same points I remember the first time I saw that project my initial thought was this can't be THAT hard boy was I wrong
 
 Its probably something about class structures inheritance maybe some basic data structures and perhaps input output streams Seems like a typical intro to OOP project So you're probably feeling a little lost and that's completely normal I have been there Believe me
 

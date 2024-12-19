@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "cannot-find-module-fs-nodejs-error"
 ---
 
-Okay so you're hitting the classic "cannot find module 'fs'" in Nodejs huh been there done that a million times lets break this down its usually super straightforward
+Okay so you're hitting the classic "cannot find module 'fs'" in Nodejs right been there done that a million times lets break this down its usually super straightforward
 
 Alright so first thing first this error its screaming that your Nodejs app cant locate the filesystem module its a built in module part of the core Nodejs library its not something you install with npm like lodash or axios so if you're seeing that it means something's fundamentally wrong either with your setup or how your code is trying to use it
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "concatenate-inputs-in-verilog"
 ---
 
-Alright so you wanna concatenate inputs in Verilog huh Been there done that got the t-shirt and probably a few scars from debugging late night synthesis runs let me tell you its a classic problem with a few solid solutions and some gotchas you should definitely know about
+Alright so you wanna concatenate inputs in Verilog right Been there done that got the t-shirt and probably a few scars from debugging late night synthesis runs let me tell you its a classic problem with a few solid solutions and some gotchas you should definitely know about
 
 First off lets talk about the basics The easiest way to smash signals together is using the concatenation operator its that `{}` curly brace thing you see everywhere you can throw individual bits variables even whole vectors into it it’ll just line them up like they’re waiting for a bus kinda thing
 

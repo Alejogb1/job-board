@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "2-scala-language-usage-explanation"
 ---
 
-Alright so you're asking about Scala usage huh I've been neck-deep in Scala for years so I can probably shed some light on this thing It's a powerful language once you get your head around its quirks trust me I've been there
+Alright so you're asking about Scala usage right I've been neck-deep in Scala for years so I can probably shed some light on this thing It's a powerful language once you get your head around its quirks trust me I've been there
 
 Let's start with the basics you see Scala is this hybrid thing It's got the object-oriented side like Java but then it throws in a bunch of functional programming concepts into the mix Think of it as Java's cool cousin who's got a PhD in computer science and spends way too much time writing compilers
 

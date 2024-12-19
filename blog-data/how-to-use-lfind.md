@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "how-to-use-lfind"
 ---
 
-Okay so you wanna know about lfind huh alright I’ve been there believe me lfind can be a bit of a pain if you're not careful
+Okay so you wanna know about lfind right alright I’ve been there believe me lfind can be a bit of a pain if you're not careful
 
 I remember way back when I was still a junior dev fresh out of university I had this huge project dealing with tons of raw data It was before everyone was obsessed with JSON and we were using these weird custom binary formats and I had to implement some fast search algorithms well not fast like super duper fast but fast enough that it wouldn’t take forever to find some data so the issue came down to basically looking through a massive array of stuff not knowing the actual type or size in advance because that was the genius idea of my older colleague oh man I ended up having to scour through some old C documentation and even some dusty textbooks to figure out how to effectively use lfind that’s when I really started understanding pointer arithmetic too a rite of passage for us low level guys
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "module-pilimage-has-no-attribute-resampling-error"
 ---
 
-Okay so you're hitting the dreaded "module 'PIL.Image' has no attribute 'resampling'" error huh Been there wrestled with that beast myself back in the day feels like a lifetime ago but the scars remain you know how it is
+Okay so you're hitting the dreaded "module 'PIL.Image' has no attribute 'resampling'" error right Been there wrestled with that beast myself back in the day feels like a lifetime ago but the scars remain you know how it is
 
 First off let's get this straight this isn't your fault per se Python imaging library PIL or Pillow as we call it nowadays is a fickle mistress Sometimes the error message throws you off and you start thinking you're doing something wildly wrong but usually it's a small detail hidden in the package itself
 

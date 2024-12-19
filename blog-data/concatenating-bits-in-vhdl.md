@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "concatenating-bits-in-vhdl"
 ---
 
-Alright so you're asking about concatenating bits in VHDL huh Been there done that a thousand times It's like the bread and butter of hardware design but I get it especially if you're just starting it can be a bit confusing So let's dive in shall we
+Alright so you're asking about concatenating bits in VHDL right Been there done that a thousand times It's like the bread and butter of hardware design but I get it especially if you're just starting it can be a bit confusing So let's dive in shall we
 
 First off concatenation in VHDL is pretty straightforward but you gotta understand how the language treats bit vectors and arrays You see VHDL isn't just like your typical programming language where you're just throwing around data It’s hardware description language so everything you write translates to hardware connections Think of it like you're building circuits not just writing instructions
 

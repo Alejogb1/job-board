@@ -4,7 +4,7 @@ date: '2024-11-15'
 id: 'architectural-approaches-to-overcome-scaling-saturation'
 ---
 
-Okay, so you're hitting that scaling wall, huh  the dreaded "saturation" point  where your app's performance just tanks  It's like trying to squeeze a thousand people into a tiny elevator  bad news  But don't worry, there's a whole world of architectural solutions out there to help you conquer this beast  Let's break it down  
+Okay, so you're hitting that scaling wall, right  the dreaded "saturation" point  where your app's performance just tanks  It's like trying to squeeze a thousand people into a tiny elevator  bad news  But don't worry, there's a whole world of architectural solutions out there to help you conquer this beast  Let's break it down  
 
 First off, we need to pinpoint the source of the bottleneck  Is it your database  your web server  your network  Or maybe it's a combination of factors  Once you identify the culprit, you can start crafting your architectural strategy  
 

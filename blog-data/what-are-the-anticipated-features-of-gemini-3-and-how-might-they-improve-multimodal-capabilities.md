@@ -4,7 +4,7 @@ date: "2024-12-12"
 id: "what-are-the-anticipated-features-of-gemini-3-and-how-might-they-improve-multimodal-capabilities"
 ---
 
-okay so gemini 3 huh thats the buzz word right now like everyone's itching to see what google's cooking up next after gemini and gemini 1.5 pro it’s kinda like waiting for the next marvel movie you know the hype is real
+okay so gemini 3 right thats the buzz word right now like everyone's itching to see what google's cooking up next after gemini and gemini 1.5 pro it’s kinda like waiting for the next marvel movie you know the hype is real
 
 first things first we gotta think about the whole multimodal thing that's where gemini's been making waves it's not just about text anymore we're talking images video audio code all that jazz all at once gemini 1.5 pro upped the ante big time with its crazy context window but for gemini 3 i'm expecting even more of that plus some seriously refined capabilities
 

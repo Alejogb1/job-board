@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "can-a-huggingface-trainer-be-customised-for-curriculum-learning"
 ---
 
-alright, so you're asking about customizing a huggingface `trainer` for curriculum learning, huh? yeah, i've been down that rabbit hole before, and it’s a pretty common ask when you start getting into more sophisticated training setups. basically, the standard huggingface `trainer` is great for out-of-the-box training, but when you want to control the learning process more finely, especially with something like curriculum learning, you'll find yourself needing to tweak things.
+alright, so you're asking about customizing a huggingface `trainer` for curriculum learning, right? yeah, i've been down that rabbit hole before, and it’s a pretty common ask when you start getting into more sophisticated training setups. basically, the standard huggingface `trainer` is great for out-of-the-box training, but when you want to control the learning process more finely, especially with something like curriculum learning, you'll find yourself needing to tweak things.
 
 let's start with the basics: curriculum learning, in a nutshell, means training a model on easier examples first and gradually introducing more difficult ones. it’s based on the idea that humans learn that way, and it can, in many situations, help models converge better, or even reach a better final performance, mainly when you're dealing with noisy or complex data. the huggingface `trainer`, by itself, doesn’t offer a direct option for this, you need to add some scaffolding yourself.
 

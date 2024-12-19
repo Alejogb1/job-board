@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "logical-orr-arm"
 ---
 
-Alright so "logical orr arm" huh I've seen this kind of vague question a bunch of times on forums guess it's time to dig in
+Alright so "logical orr arm" right I've seen this kind of vague question a bunch of times on forums guess it's time to dig in
 
 Okay first off when someone says "logical orr arm" they're usually talking about hardware logic specifically circuits that perform an OR operation on inputs and then drive some output with that result The "arm" part is the output stage of that logic gate It could be driving a transistor an LED an input to another logic gate anything really
 

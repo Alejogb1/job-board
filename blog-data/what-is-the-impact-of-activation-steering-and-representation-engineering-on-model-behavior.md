@@ -4,13 +4,13 @@ date: "2024-12-11"
 id: "what-is-the-impact-of-activation-steering-and-representation-engineering-on-model-behavior"
 ---
 
-Okay so you wanna talk about activation steering and representation engineering huh  pretty cool stuff actually  I've been digging into this lately its like the next level of tweaking your models you know beyond just fiddling with hyperparameters  it's about directly shaping how the model learns and what it learns about
+Okay so you wanna talk about activation steering and representation engineering right  pretty cool stuff actually  I've been digging into this lately its like the next level of tweaking your models you know beyond just fiddling with hyperparameters  it's about directly shaping how the model learns and what it learns about
 
 So activation steering  think of it like this  your neural network is a bunch of neurons firing away right  each neuron has an activation level representing its confidence in whatever it's detecting  activation steering is all about influencing these activations directly  we're not changing the architecture or the training data itself  we're subtly guiding the network's internal processes during inference or even training
 
 How does it work  well there are a few ways  one common method involves adding a small extra term to the activation  think of it as a nudge  a gentle push in a preferred direction  we might boost activations associated with features we want the model to pay more attention to  or dampen those we want to suppress  it's like a soft constraint  a suggestion rather than a hard rule  this keeps the model flexible it doesn't become rigid and overly reliant on these steered activations
 
-Another approach involves using external knowledge  maybe you have some prior information about the data or the task  you can use this information to generate activation patterns that reflect your expectations  then you can steer the network towards these patterns  this is especially useful when dealing with limited data or noisy data  you're effectively adding a layer of regularization based on your domain expertise  pretty neat huh
+Another approach involves using external knowledge  maybe you have some prior information about the data or the task  you can use this information to generate activation patterns that reflect your expectations  then you can steer the network towards these patterns  this is especially useful when dealing with limited data or noisy data  you're effectively adding a layer of regularization based on your domain expertise  pretty neat right
 
 Now the effects  well it can dramatically alter the model's behavior  you can improve accuracy especially on challenging tasks where the model struggles  it can also lead to more robust predictions  less sensitive to noise and adversarial examples  think of it as making your model more confident and less easily fooled  however you need to be careful  overdoing it can lead to overfitting  the model might become too reliant on the steering signals and lose its ability to generalize to unseen data  so its a delicate balance
 

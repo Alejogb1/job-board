@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "ora-06533-subscript-beyond-count"
 ---
 
-Okay so you're banging your head against the `ORA-06533 subscript beyond count` error huh Been there done that got the t-shirt believe me This error pops up in Oracle PL/SQL when you're trying to access an element in a collection either a nested table or an array using an index that's out of bounds Basically the index you're using is either negative zero or bigger than the actual size of the collection
+Okay so you're banging your head against the `ORA-06533 subscript beyond count` error right Been there done that got the t-shirt believe me This error pops up in Oracle PL/SQL when you're trying to access an element in a collection either a nested table or an array using an index that's out of bounds Basically the index you're using is either negative zero or bigger than the actual size of the collection
 
 I've seen this thing rear its ugly head in various contexts and you’d think after 20 years I'd have it all figured out but nope it's a sneaky little devil Always crops up when you least expect it like when you're in the middle of a big deploy and all eyes are on you Yeah had that happen a few times It’s like when your code decides to throw a tantrum at 3 am on a sunday.
 

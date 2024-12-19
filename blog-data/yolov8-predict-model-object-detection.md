@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "yolov8-predict-model-object-detection"
 ---
 
-Okay so you're looking at YOLOv8 and how to use its prediction capabilities for object detection huh Been there done that a few times trust me I've wrestled with this thing more than I care to admit
+Okay so you're looking at YOLOv8 and how to use its prediction capabilities for object detection right Been there done that a few times trust me I've wrestled with this thing more than I care to admit
 
 Alright lets break it down real simple
 

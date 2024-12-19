@@ -4,7 +4,7 @@ date: "2024-12-12"
 id: "what-are-the-challenges-users-face-with-soras-onboarding-process-and-server-capacity-during-launch-events"
 ---
 
-Hey there! So you're curious about the bumps in the road Sora faced during its launch, huh?  That's a *great* question, because it highlights something really important about tech launches – even the seemingly "smooth" ones have hidden struggles. Let's dive in!  We'll look at both the onboarding process and the server capacity issues, because those two things are totally intertwined.
+Hey there! So you're curious about the bumps in the road Sora faced during its launch, right?  That's a *great* question, because it highlights something really important about tech launches – even the seemingly "smooth" ones have hidden struggles. Let's dive in!  We'll look at both the onboarding process and the server capacity issues, because those two things are totally intertwined.
 
 First off, let's remember that a brand-new service, especially one as exciting as Sora probably was, attracts a massive influx of users all at once.  Think of it like opening the gates to a hugely popular concert – everyone wants in *right now*. That immediate surge is a huge challenge to handle.
 

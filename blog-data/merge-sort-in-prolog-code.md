@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "merge-sort-in-prolog-code"
 ---
 
-Alright so you're looking at merge sort in Prolog huh Been there done that countless times I've had my fair share of wrestling with Prolog and sorting algorithms especially when I was first getting into declarative programming. It’s different from the imperative world of loops and assignments that I was used to. Let me tell you it was quite a shift.
+Alright so you're looking at merge sort in Prolog right Been there done that countless times I've had my fair share of wrestling with Prolog and sorting algorithms especially when I was first getting into declarative programming. It’s different from the imperative world of loops and assignments that I was used to. Let me tell you it was quite a shift.
 
 So when you're tackling merge sort in Prolog you're really thinking about recursion and list manipulation which are basically the bread and butter of the language. You’re not going to be directly modifying arrays like you would in say C or Java. Instead you're defining relationships and how lists should be transformed.
 

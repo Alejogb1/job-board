@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-can-i-return-a-collectionselect-value-via-ajax-to-view-in-ruby-on-rails"
 ---
 
-so, you're looking to get a `collection_select` value back to your rails view using ajax, huh? i've been there, done that, got the t-shirt – probably even spilled coffee on it while debugging some weird javascript quirk. it's a common need, and thankfully, it's not too painful once you've got the basics down. let me walk you through how i typically handle this, and hopefully, it’ll save you some time.
+so, you're looking to get a `collection_select` value back to your rails view using ajax, right? i've been there, done that, got the t-shirt – probably even spilled coffee on it while debugging some weird javascript quirk. it's a common need, and thankfully, it's not too painful once you've got the basics down. let me walk you through how i typically handle this, and hopefully, it’ll save you some time.
 
 first off, let's frame the problem clearly. you have a `collection_select` in your form, and when a user makes a selection, you want that selection to trigger an ajax call. the data from this ajax call updates something dynamically in the view. standard stuff for interactive uis.
 

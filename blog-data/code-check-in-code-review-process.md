@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "code-check-in-code-review-process"
 ---
 
-Alright so code check in code review process huh I've been down that rabbit hole more times than I care to remember Let me break it down for you from my perspective someone who's seen it all or at least a good chunk of it in the trenches
+Alright so code check in code review process right I've been down that rabbit hole more times than I care to remember Let me break it down for you from my perspective someone who's seen it all or at least a good chunk of it in the trenches
 
 First thing's first code review isn't just some formality to tick off on a checklist It's a crucial part of the software development lifecycle that keeps things from turning into a total dumpster fire I'm talking from experience here I remember this one project back in 2010 yeah it was that long ago where we just pushed code straight to main without any reviews at all The result was pure chaos Bugs were everywhere the codebase was a tangled mess it was like trying to untangle a ball of yarn that a cat played with for a week We ended up spending more time fixing things than building new features It was a mess I tell you a total mess that I do not ever want to experience ever again that's a lesson learned the hard way
 

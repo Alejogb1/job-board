@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-is-a-url-has-an-invalid-label"
 ---
 
-so, you're getting an 'invalid label' error when dealing with urls, huh? been there, done that, got the t-shirt… and probably a few more grey hairs along the way. it’s one of those frustratingly common things that pops up when you’re not expecting it. let’s break down why this happens and what you can usually do about it.
+so, you're getting an 'invalid label' error when dealing with urls, right? been there, done that, got the t-shirt… and probably a few more grey hairs along the way. it’s one of those frustratingly common things that pops up when you’re not expecting it. let’s break down why this happens and what you can usually do about it.
 
 basically, a url is made of several parts, and each has its rules. the 'label' part, which is usually the hostname (like 'www.example.com'), needs to follow specific syntax. if it doesn't, your browser or url parsing library will throw that 'invalid label' error.
 

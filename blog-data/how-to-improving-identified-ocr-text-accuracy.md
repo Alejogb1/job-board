@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-improving-identified-ocr-text-accuracy"
 ---
 
-so, you're looking to boost the accuracy of your ocr output, huh? i've been down that road more times than i care to remember. it's rarely a simple fix, and often feels like chasing a moving target. let me share some of the things that have worked for me over the years – things that go beyond just pointing a library at an image and hoping for the best.
+so, you're looking to boost the accuracy of your ocr output, right? i've been down that road more times than i care to remember. it's rarely a simple fix, and often feels like chasing a moving target. let me share some of the things that have worked for me over the years – things that go beyond just pointing a library at an image and hoping for the best.
 
 first things first, let’s talk about image preprocessing. this is where i usually spend most of my time. bad input means bad output, plain and simple. think of it like trying to build a house on a shaky foundation. you can add all the fancy features you want, but it's all going to crumble without solid ground.
 

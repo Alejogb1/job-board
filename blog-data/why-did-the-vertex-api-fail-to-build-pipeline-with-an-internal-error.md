@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-did-the-vertex-api-fail-to-build-pipeline-with-an-internal-error"
 ---
 
-so, vertex pipeline internal errors, huh? yeah, i've been there, got the t-shirt, and probably a few stress-induced grey hairs to show for it. they’re frustrating because they're so vague, it's like the api is just shrugging and saying "something broke, good luck!". not exactly helpful when you’re trying to get things done. let's break this down from my experience.
+so, vertex pipeline internal errors, right? yeah, i've been there, got the t-shirt, and probably a few stress-induced grey hairs to show for it. they’re frustrating because they're so vague, it's like the api is just shrugging and saying "something broke, good luck!". not exactly helpful when you’re trying to get things done. let's break this down from my experience.
 
 the first thing i always do when i see that dreaded 'internal error' message is to go through the basics. it's tedious, i know, but it's saved me more times than i care to count. is your pipeline definition valid? i mean, really, *really* valid? i’ve personally spent hours staring at yaml files, only to realize i had a single comma out of place. trust me, it happens to the best of us. check the following: are the component specs correct? are the inputs and outputs properly defined? is there some type mismatch lurking in there? these are the usual suspects.
 

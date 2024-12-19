@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "what-is-a-good-video-annotation-software"
 ---
 
-alright, so you're looking for a solid video annotation tool, huh? i've been down that rabbit hole more times than i care to remember. i've spent countless hours wrestling with subpar software, so i can definitely relate. it's one of those things that sounds easy, but it quickly devolves into a messy affair if you don't pick the appropriate tools.
+alright, so you're looking for a solid video annotation tool, right? i've been down that rabbit hole more times than i care to remember. i've spent countless hours wrestling with subpar software, so i can definitely relate. it's one of those things that sounds easy, but it quickly devolves into a messy affair if you don't pick the appropriate tools.
 
 i've worked on a bunch of projects that relied heavily on video annotation. one that sticks out was for a computer vision research project i was on back in university. we were training models to identify specific objects in urban environments - think traffic lights, pedestrians, cars, and that sort of thing. the sheer volume of video data was mind-boggling. we tried a bunch of tools and some of them failed spectacularly. i mean, crashes, inconsistent labeling, import/export nightmares, you name it. we were essentially data annotation archaeologists after each labelling session. it was a true mess.
 

@@ -4,7 +4,7 @@ date: "2024-12-11"
 id: "what-progress-has-been-made-in-understanding-phenomena-like-superposition-in-ai-models"
 ---
 
-Hey so you wanna know about superposition in AI models huh thats a pretty cool question  I mean superposition like in quantum physics right its kinda mind bending thinking about it in the context of neural nets and stuff  We dont have full blown quantum computers running AI yet thats still sci-fi territory mostly but the ideas are starting to bleed over which is awesome
+Hey so you wanna know about superposition in AI models right thats a pretty cool question  I mean superposition like in quantum physics right its kinda mind bending thinking about it in the context of neural nets and stuff  We dont have full blown quantum computers running AI yet thats still sci-fi territory mostly but the ideas are starting to bleed over which is awesome
 
 The thing is  classical computing its all ones and zeros right its deterministic  you give it an input you get an output  no mystery  But superposition in quantum mechanics its like a particle can be in multiple states at once until you measure it  Its probabilistic  its fuzzy  its way cooler
 

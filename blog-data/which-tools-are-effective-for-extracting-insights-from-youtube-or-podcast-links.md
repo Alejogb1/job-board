@@ -4,7 +4,7 @@ date: "2024-12-03"
 id: "which-tools-are-effective-for-extracting-insights-from-youtube-or-podcast-links"
 ---
 
-Hey so you wanna dig into YouTube and podcasts for insights huh  Cool beans  Lots of ways to do that  It's not just about watching or listening it's about actually *understanding* what's going on  Right  Let's get into the techy bits
+Hey so you wanna dig into YouTube and podcasts for insights right  Cool beans  Lots of ways to do that  It's not just about watching or listening it's about actually *understanding* what's going on  Right  Let's get into the techy bits
 
 First off  forget just eyeballing things  You need automation  Pure human power is way too slow for this  Think massive datasets and patterns  We're talking natural language processing NLP  machine learning ML and all that good stuff
 

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-secure-all-the-different-domains-on-heroku-with-a-godaddy-domain"
 ---
 
-so, you're looking at how to get your heroku app playing nicely with a godaddy domain, huh? been there, done that, got the t-shirt – and probably a few stress-induced grey hairs to show for it. it's a fairly common setup but the details can get a bit fiddly if you haven’t done it before. let’s break it down, less like a formal tutorial, more like a chat with someone who's fought the good fight and lived to tell the tale.
+so, you're looking at how to get your heroku app playing nicely with a godaddy domain, right? been there, done that, got the t-shirt – and probably a few stress-induced grey hairs to show for it. it's a fairly common setup but the details can get a bit fiddly if you haven’t done it before. let’s break it down, less like a formal tutorial, more like a chat with someone who's fought the good fight and lived to tell the tale.
 
 first off, let’s assume you have a heroku app up and running. it’s humming along at its heroku subdomain, something like `your-app-name.herokuapp.com`. you also have your godaddy domain, let’s say `your-domain.com`. the goal is to get `your-domain.com` (and maybe `www.your-domain.com`) pointing to your heroku app, and to make sure everything is secure, which, frankly, in this day and age, should always be the default.
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "reasons-for-using-the-set-seed-function"
 ---
 
-Okay so you're asking about `set.seed()` huh I get it This is a common question especially if you're starting out with anything that involves random numbers and honestly I’ve been there myself more times than I care to admit
+Okay so you're asking about `set.seed()` right I get it This is a common question especially if you're starting out with anything that involves random numbers and honestly I’ve been there myself more times than I care to admit
 
 First things first let's be crystal clear `set.seed()` isn't some kind of magic wand It's really about reproducibility and determinism which might sound a bit counterintuitive when you’re dealing with randomness but bear with me
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "how-does-streaming-operator-unpacking-work"
 ---
 
-Alright so you wanna know how streaming operator unpacking works huh I've been wrestling with this particular beast for what feels like an eternity let me tell you a story or maybe it’s just a long explanation
+Alright so you wanna know how streaming operator unpacking works right I've been wrestling with this particular beast for what feels like an eternity let me tell you a story or maybe it’s just a long explanation
 
 Okay first off before we dive deep into the guts of it lets just make sure we are on the same page we are talking about streaming unpacking specifically related to things like iterators generators or similar data streams right not some weird custom protocol magic stuff That means were in the realm of languages like python javascript or maybe even c++ with its streams library If not then what follows may not be that relevant to you I am assuming python for the code example because I am mostly comfortable with that although the concept is almost universal
 

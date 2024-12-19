@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "spheregeometry-three-js-usage"
 ---
 
-Okay so spheregeometry threejs usage huh been there done that got the t-shirt literally had a sphere geometry issue last year on a side project for a client it involved visualizing some geospatial data a ton of it and spheres were the only things that made sense i mean seriously trying to do it with cubes would be a nightmare right?
+Okay so spheregeometry threejs usage right been there done that got the t-shirt literally had a sphere geometry issue last year on a side project for a client it involved visualizing some geospatial data a ton of it and spheres were the only things that made sense i mean seriously trying to do it with cubes would be a nightmare right?
 
 Let me break it down for you in a way that maybe you ll actually understand first off you re probably talking about the `THREE.SphereGeometry` class in three js which is your go-to for creating spherical meshes you get the basics like radius width segments height segments and phi and theta start and lengths that can be used for a partial sphere.
 

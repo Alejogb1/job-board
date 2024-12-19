@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "clerk-infinite-redirect-loop-detected-auth"
 ---
 
-Okay so you're getting that dreaded "clerk infinite redirect loop detected auth?" error huh Been there done that got the t-shirt and a few angry support tickets I swear this particular error is like a rite of passage for anyone messing with authentication flows especially when you’re juggling different frameworks and libraries
+Okay so you're getting that dreaded "clerk infinite redirect loop detected auth?" error right Been there done that got the t-shirt and a few angry support tickets I swear this particular error is like a rite of passage for anyone messing with authentication flows especially when you’re juggling different frameworks and libraries
 
 It sounds like you're deep in the weeds of authentication issues and I feel your pain The core problem here almost always boils down to a misconfiguration in your authentication setup or a subtle bug in your redirection logic It's that classic dance where the system tries to authenticate the user sends them to login which then because of something stupid they send them back to authentication and around and around we go like a squirrel chasing its tail Its an infinite redirect and its not a pretty sight
 

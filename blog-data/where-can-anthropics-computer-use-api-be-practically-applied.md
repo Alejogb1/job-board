@@ -53,7 +53,7 @@ response = client.complete_prompt(
 print(response['completion'])
 ```
 
-The prompt is clear and the output is a story  you could even have it adapt the story based on user input creating a truly dynamic experience  Think of interactive fiction games or even personalized bedtime stories for kids pretty neat huh  You could search for resources on "procedural generation" and "narrative design" to dive deeper
+The prompt is clear and the output is a story  you could even have it adapt the story based on user input creating a truly dynamic experience  Think of interactive fiction games or even personalized bedtime stories for kids pretty neat right  You could search for resources on "procedural generation" and "narrative design" to dive deeper
 
 
 Finally a really interesting application is in summarizing complex information  this is particularly useful for researchers and professionals who deal with a ton of documents  Claude can quickly read through research papers legal documents or financial reports and give you a concise summary highlighting key points  this saves hours of reading time and it's way more efficient than using a human summarizer  think of the time saved for research or due diligence  A lot of work has been done on "extractive summarization" and "abstractive summarization"  Check out papers on those topics for the nitty gritty

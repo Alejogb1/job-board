@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "what-computational-resources-are-required-for-implementing-advanced-alignment-processes"
 ---
 
-Okay so you're asking about the juice needed to run advanced alignment stuff huh  Big question  It's not just about throwing money at the problem either  It's way more nuanced than that  Think of it like baking a cake you need the right ingredients in the right amounts  but you also need the right oven and the right timing right
+Okay so you're asking about the juice needed to run advanced alignment stuff right  Big question  It's not just about throwing money at the problem either  It's way more nuanced than that  Think of it like baking a cake you need the right ingredients in the right amounts  but you also need the right oven and the right timing right
 
 First off we're talking serious compute  We're not talking about your average laptop or even a beefy gaming rig  Think massive clusters of GPUs  TPUs  and potentially even specialized hardware we haven't even invented yet  We're talking thousands maybe millions of cores working in parallel  This isn't your grandmas knitting circle this is a supercomputer level operation  For example training really advanced language models like GPT-3 takes ungodly amounts of compute you're talking months of training on massive clusters  The energy consumption alone is a whole other ethical debate we can get into later  But yeah think big  Really big
 

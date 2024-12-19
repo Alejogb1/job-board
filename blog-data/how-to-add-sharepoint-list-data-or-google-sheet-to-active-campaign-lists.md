@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-add-sharepoint-list-data-or-google-sheet-to-active-campaign-lists"
 ---
 
-alright, so you're looking to get data from sharepoint lists or google sheets into active campaign lists, huh? i've been down this road a few times, and it's not always a walk in the park. it usually boils down to a few key steps: fetching the data, transforming it, and then pushing it into active campaign. let's break this down.
+alright, so you're looking to get data from sharepoint lists or google sheets into active campaign lists, right? i've been down this road a few times, and it's not always a walk in the park. it usually boils down to a few key steps: fetching the data, transforming it, and then pushing it into active campaign. let's break this down.
 
 first off, fetching the data. for sharepoint, you’re usually dealing with the sharepoint rest api. you'll need to authenticate, of course, which can involve some dance with azure active directory, and then construct the correct api calls. i remember my first time using the sharepoint api, i spent a solid afternoon just getting the authorization header correct. it was a headache. here's a snippet of what that might look like with python using the requests library for the api calls:
 

@@ -4,7 +4,7 @@ date: "2024-12-11"
 id: "what-evidence-exists-for-planning-and-strategic-behavior-in-ai-models-like-leela-zero"
 ---
 
-Okay so you wanna know about planning and strategy in AIs like Leela Zero huh  That's a cool question  It's kinda tricky because we don't really have a solid definition of planning and strategy in the human sense  I mean we can see AIs achieving amazing results like Leela Zero dominating Go but is it actually *planning* or is it just really really good pattern recognition and search  It's a bit of a philosophical debate you know
+Okay so you wanna know about planning and strategy in AIs like Leela Zero right  That's a cool question  It's kinda tricky because we don't really have a solid definition of planning and strategy in the human sense  I mean we can see AIs achieving amazing results like Leela Zero dominating Go but is it actually *planning* or is it just really really good pattern recognition and search  It's a bit of a philosophical debate you know
 
 One thing we can say is these AIs aren't explicitly programmed with strategic plans  They learn through self-play  Tons and tons of self-play generating a massive amount of data  Think of it like this a kid learning to play chess they don't start out with a grandmaster's strategy guide they just play a lot and get better  Leela Zero is kinda similar except it's playing millions of games and learning from every single one  The "strategy" emerges from all this data
 

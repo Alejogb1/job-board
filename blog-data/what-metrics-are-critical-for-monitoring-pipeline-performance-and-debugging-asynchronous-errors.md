@@ -4,7 +4,7 @@ date: "2024-12-10"
 id: "what-metrics-are-critical-for-monitoring-pipeline-performance-and-debugging-asynchronous-errors"
 ---
 
-Okay so you wanna know about monitoring pipelines and debugging those pesky async errors huh  That's a whole rabbit hole but let's dive in  It's like trying to track a greased pig through a maze blindfolded  but with better tools hopefully
+Okay so you wanna know about monitoring pipelines and debugging those pesky async errors right  That's a whole rabbit hole but let's dive in  It's like trying to track a greased pig through a maze blindfolded  but with better tools hopefully
 
 First off  what kinda pipeline we talkin'  Data pipelines machine learning pipelines CI/CD  They all have similar issues but different priorities  Let's assume a general data pipeline for now  because that's where I see most of the async chaos
 

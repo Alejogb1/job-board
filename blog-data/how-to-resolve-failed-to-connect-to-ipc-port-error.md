@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "how-to-resolve-failed-to-connect-to-ipc-port-error"
 ---
 
-Okay so you're hitting that "failed to connect to ipc port" error huh Been there done that Got the t-shirt and the slightly singed eyebrows from troubleshooting it Trust me this isn’t exactly a walk in the park and it's definitely not your first rodeo with obscure error messages that’s for sure Let’s get down to brass tacks I’ve spent way too many late nights wrestling with this beast so maybe I can save you some time and hair pulling.
+Okay so you're hitting that "failed to connect to ipc port" error right Been there done that Got the t-shirt and the slightly singed eyebrows from troubleshooting it Trust me this isn’t exactly a walk in the park and it's definitely not your first rodeo with obscure error messages that’s for sure Let’s get down to brass tacks I’ve spent way too many late nights wrestling with this beast so maybe I can save you some time and hair pulling.
 
 First off the "failed to connect to ipc port" error is super generic and can stem from a whole host of issues IPC or Inter-Process Communication is a fundamental way processes on an operating system talk to each other so when this breaks it can really mess with things Usually what happens is that some service or application on your machine is trying to reach out to another application but cant find it or establish a connection over this communication channel.
 

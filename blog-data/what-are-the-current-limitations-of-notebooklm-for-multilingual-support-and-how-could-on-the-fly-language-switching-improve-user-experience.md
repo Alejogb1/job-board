@@ -4,7 +4,7 @@ date: "2024-12-10"
 id: "what-are-the-current-limitations-of-notebooklm-for-multilingual-support-and-how-could-on-the-fly-language-switching-improve-user-experience"
 ---
 
-Hey there!  So, you're curious about NotebookLM and its multilingual capabilities, huh? That's a really smart question, because language support is *huge* in today's interconnected world.  Let's dive in – I'm excited to brainstorm this with you!
+Hey there!  So, you're curious about NotebookLM and its multilingual capabilities, right? That's a really smart question, because language support is *huge* in today's interconnected world.  Let's dive in – I'm excited to brainstorm this with you!
 
 NotebookLM, like many large language models (LLMs), is amazing at what it does, but it's not perfect, especially when it comes to handling multiple languages smoothly.  Think of it like this: imagine trying to have a conversation with someone who only speaks English, then suddenly switching to Spanish mid-sentence – it's going to be jarring, right? That's kind of the issue with current multilingual LLM support.
 

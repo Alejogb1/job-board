@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-get-the-co-ordinates-of-bounding-boxes-using-pixellib-with-its-object-class"
 ---
 
-alright, so you're looking to extract bounding box coordinates using pixellib, specifically with its object detection capabilities, huh? i've been down that road, many, many times. i remember when i first got into computer vision, i was practically throwing code at the wall, hoping something would stick. getting those bounding boxes was always a fiddly part. but hey, we've all been there. let me share some of what i've learned and hopefully save you some headache.
+alright, so you're looking to extract bounding box coordinates using pixellib, specifically with its object detection capabilities, right? i've been down that road, many, many times. i remember when i first got into computer vision, i was practically throwing code at the wall, hoping something would stick. getting those bounding boxes was always a fiddly part. but hey, we've all been there. let me share some of what i've learned and hopefully save you some headache.
 
 first things first, pixellib, for those who might be less familiar, uses mask r-cnn under the hood. it's a powerful architecture for both object detection and segmentation. the good thing for us here is that it provides convenient methods for accessing the detection results, including bounding boxes.
 

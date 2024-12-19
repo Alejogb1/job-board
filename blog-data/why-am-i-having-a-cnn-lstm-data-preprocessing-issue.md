@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-am-i-having-a-cnn-lstm-data-preprocessing-issue"
 ---
 
-so, you're hitting a wall with cnn-lstm preprocessing, huh? i've been there, plenty of times. it’s like trying to fit a square peg in a round hole, and the peg is your data, while the hole is the model. from my experience, this issue usually boils down to a few common culprits. let's break them down and see if we can pinpoint what's going wrong in your case.
+so, you're hitting a wall with cnn-lstm preprocessing, right? i've been there, plenty of times. it’s like trying to fit a square peg in a round hole, and the peg is your data, while the hole is the model. from my experience, this issue usually boils down to a few common culprits. let's break them down and see if we can pinpoint what's going wrong in your case.
 
 first off, the big one – **data shape mismatches**. cnn-lstms, like most deep learning models, are finicky about input shapes. they expect data to be in a specific format, and if it's not, they'll throw a fit, and it'll typically present itself as errors during training or prediction. you're dealing with a combination of convolutional and recurrent layers, which means we have to think in three dimensions most of the time.
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "eigen-quaternion-product"
 ---
 
-Okay so you want to talk about eigen quaternion products huh I've been there trust me a long time ago actually back when I was still hacking away on my first flight simulator project that was a mess of linear algebra and well quaternions were the less messy part believe it or not It's a beast when you start mixing eigen concepts and these 4D things but totally manageable once you get your head around the fundamental operations
+Okay so you want to talk about eigen quaternion products right I've been there trust me a long time ago actually back when I was still hacking away on my first flight simulator project that was a mess of linear algebra and well quaternions were the less messy part believe it or not It's a beast when you start mixing eigen concepts and these 4D things but totally manageable once you get your head around the fundamental operations
 
 Alright so the core issue here is you're dealing with rotations basically rotations in 3D space are notoriously awkward with matrices if you try to chain a bunch of rotations with standard rotation matrices you often run into gimbal lock and numerical drift over time which are no fun at all So quaternions to the rescue they offer a compact and stable way to represent rotations So your eigenvector problem which likely deals with linear transformations in a space that might be a rotation space is being described by quaternions instead of matrices
 

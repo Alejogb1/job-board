@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-view-a-compressed-maildir-folder-or-decompress-files"
 ---
 
-alright, so you're dealing with a compressed maildir, huh? been there, done that. i remember back in the early 2000s, when i was running my own little mail server, i had a similar situation. i was using a custom setup, mostly bash scripts and sendmail, a nightmare, but it worked. i decided to compress the maildir to save space because, well, disks weren't as large as they are today. it was a very painful lesson about backups and restore procedures. the fun thing about this kind of situation is, once you go down the rabbit hole you end up learning so much stuff that was under your nose all the time. i had to figure this out myself too, it wasn't exactly mainstream, like you know, docker images today.
+alright, so you're dealing with a compressed maildir, right? been there, done that. i remember back in the early 2000s, when i was running my own little mail server, i had a similar situation. i was using a custom setup, mostly bash scripts and sendmail, a nightmare, but it worked. i decided to compress the maildir to save space because, well, disks weren't as large as they are today. it was a very painful lesson about backups and restore procedures. the fun thing about this kind of situation is, once you go down the rabbit hole you end up learning so much stuff that was under your nose all the time. i had to figure this out myself too, it wasn't exactly mainstream, like you know, docker images today.
 
 anyway, let’s break down how to approach viewing and decompressing files inside a compressed maildir, its not a single step, its like layers that you need to peel off the onion, we are going to go one layer at a time.
 

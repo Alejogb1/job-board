@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "is-there-a-django-extension-that-does-something-similar-to-ruby-on-rails-attrjson"
 ---
 
-alright, so you're looking for a django equivalent to rails' `attr_json`, huh? i've been down that road before, and it’s definitely a pain point. let me break down what i’ve learned over the years, and give you some concrete options rather than just abstract ideas.
+alright, so you're looking for a django equivalent to rails' `attr_json`, right? i've been down that road before, and it’s definitely a pain point. let me break down what i’ve learned over the years, and give you some concrete options rather than just abstract ideas.
 
 first off, if you’re unfamiliar with `attr_json` in rails, it basically lets you seamlessly treat json columns in your database like regular model attributes. behind the scenes it does the serialization and deserialization for you when accessing and updating those fields. it’s convenient because it allows structured data within the json and your code doesn't have to do the conversion, so you treat them as ordinary model attributes.
 

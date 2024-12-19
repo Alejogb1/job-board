@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "attachfile-capybara-usage"
 ---
 
-Okay so you're asking about `attach_file` in Capybara huh Been there done that a few times Let me tell you it can be a bit of a pain if you don't know its quirks
+Okay so you're asking about `attach_file` in Capybara right Been there done that a few times Let me tell you it can be a bit of a pain if you don't know its quirks
 
 First off for anyone just stumbling across this `attach_file` is a Capybara method designed to simulate a user selecting a file to upload via a standard HTML file input element think `<input type="file">` It's not magic it doesn't bypass the file selection it actually mimics the browser interaction
 

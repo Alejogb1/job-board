@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "weka-cvparameterselection-optimizing-parameters"
 ---
 
-Okay I get it You're wrestling with Weka's parameter optimization using `CVParameterSelection` huh Been there done that countless times Let me break it down for you based on my own experiences and how I've typically handled this beast
+Okay I get it You're wrestling with Weka's parameter optimization using `CVParameterSelection` right Been there done that countless times Let me break it down for you based on my own experiences and how I've typically handled this beast
 
 First off `CVParameterSelection` is indeed your go-to for this kinda stuff It's a Weka class designed to find the best parameters for a classifier using cross-validation That's cool and all but it can be a pain to configure correctly especially if you are new to machine learning
 

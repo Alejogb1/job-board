@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-rails-duplicate-multiple-records-at-once-and-changing-certain-attributes"
 ---
 
-alright, so you're looking to duplicate records in rails, and tweak some fields while you're at it, huh? yeah, been there, done that, got the t-shirt. it's one of those things that seems straightforward at first glance, but then you’re down in the weeds trying to make it efficient, especially when you're dealing with a pile of records. let me share how i've tackled this in the past, and some patterns that've saved my bacon.
+alright, so you're looking to duplicate records in rails, and tweak some fields while you're at it, right? yeah, been there, done that, got the t-shirt. it's one of those things that seems straightforward at first glance, but then you’re down in the weeds trying to make it efficient, especially when you're dealing with a pile of records. let me share how i've tackled this in the past, and some patterns that've saved my bacon.
 
 first off, the naive approach. iterating and creating new records one by one. it works. but it's slow, and if you have relations, it becomes a real pain point real quick. i remember one time at an old gig, working on an inventory management system. we had this feature where users could 'copy' a product with all its settings, but just tweak the name and sku. doing that record by record? felt like using a typewriter to write a novel. i learned my lesson. that lesson was databases are a lot better at manipulating data than loops are. and for this reason, i almost always start with an sql insert.
 

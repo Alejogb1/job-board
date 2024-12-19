@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "angular-delay-function-usage"
 ---
 
-Okay so angular delay function usage huh Been there done that Probably more times than I care to admit Lets dive in
+Okay so angular delay function usage right Been there done that Probably more times than I care to admit Lets dive in
 
 The angular delay function which I assume you mean like a mechanism to introduce a pause before an action in your angular app is not something directly built in with a `delay` function like you might see in some other languages like javascript's `setTimeout` or `Promise.then` which by the way can still be used in angular but they are generally not the right choice here in my experience
 

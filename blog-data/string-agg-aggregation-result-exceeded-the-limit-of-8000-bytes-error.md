@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "string-agg-aggregation-result-exceeded-the-limit-of-8000-bytes-error"
 ---
 
-Alright so you're hitting the "string agg aggregation result exceeded the limit of 8000 bytes" error huh Classic Happens to the best of us Seriously I've seen it more times than I've had hot coffee and that's saying something
+Alright so you're hitting the "string agg aggregation result exceeded the limit of 8000 bytes" error right Classic Happens to the best of us Seriously I've seen it more times than I've had hot coffee and that's saying something
 
 I get it you're probably trying to concatenate a bunch of strings into one big ol' string using string_agg or a similar aggregate function in your SQL database and bam it throws this error It's like you're trying to cram way too much data into a tiny suitcase and the database is just going "Nope Not gonna happen"
 

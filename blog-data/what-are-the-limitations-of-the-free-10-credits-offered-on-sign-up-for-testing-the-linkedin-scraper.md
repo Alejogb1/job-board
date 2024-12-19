@@ -4,7 +4,7 @@ date: "2024-12-10"
 id: "what-are-the-limitations-of-the-free-10-credits-offered-on-sign-up-for-testing-the-linkedin-scraper"
 ---
 
-Okay so you're hitting me with the LinkedIn scraper free credits thing huh  ten credits sounds kinda stingy right off the bat  like seriously ten  what am I gonna do with ten credits I'm gonna scrape like three profiles tops before I'm out of juice  that's the main limitation right there  it's a total tease  they dangle this free trial in front of you  make you think you can get a feel for the thing  then bam you're scraping pennies  you're scraping air  you're scraping the bottom of the barrel basically
+Okay so you're hitting me with the LinkedIn scraper free credits thing right  ten credits sounds kinda stingy right off the bat  like seriously ten  what am I gonna do with ten credits I'm gonna scrape like three profiles tops before I'm out of juice  that's the main limitation right there  it's a total tease  they dangle this free trial in front of you  make you think you can get a feel for the thing  then bam you're scraping pennies  you're scraping air  you're scraping the bottom of the barrel basically
 
 Another huge limitation is the data you *can* get with those ten measly credits  I'm guessing you're not getting the whole enchilada  probably only basic stuff  name title maybe company  forget about detailed work history  education  skills  recommendations  all the juicy bits you actually want  that's locked behind a paywall for sure   they're not dumb  they know people will want more than a cursory glance at some profiles
 

@@ -4,7 +4,7 @@ date: "2024-12-12"
 id: "what-are-the-energy-consumption-implications-of-generating-complex-prompts-with-ai-models-and-how-can-these-processes-be-optimized-for-sustainability"
 ---
 
-Hey there!  So you're wondering about the energy footprint of those super-complex AI prompts, huh? That's a *really* interesting question, and honestly, it's something we should all be thinking more about.  It's not just about getting the best results from our AI; it's about making sure we're doing it in a way that's not wrecking the planet.
+Hey there!  So you're wondering about the energy footprint of those super-complex AI prompts, right? That's a *really* interesting question, and honestly, it's something we should all be thinking more about.  It's not just about getting the best results from our AI; it's about making sure we're doing it in a way that's not wrecking the planet.
 
 Let's dive in.  First off, generating those complicated prompts isn't as simple as it seems. It's not just you typing words – a *lot* is happening behind the scenes.  Think about it:  the AI needs to understand your prompt, break it down into manageable chunks, process it against its massive dataset, and then *generate* a response. All that takes significant computing power, and computing power means `energy consumption`.
 

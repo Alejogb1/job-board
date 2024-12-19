@@ -4,7 +4,7 @@ date: "2024-12-11"
 id: "what-are-the-challenges-of-achieving-the-ambitious-goals-of-mechanistic-interpretability"
 ---
 
-Okay so you wanna chat about mechanistic interpretability challenges huh  ambitious goals yeah totally ambitious  like trying to understand a super complex AI's brain  It's a huge undertaking  think of it like reverse engineering a super advanced alien tech that's also constantly evolving  crazy right
+Okay so you wanna chat about mechanistic interpretability challenges right  ambitious goals yeah totally ambitious  like trying to understand a super complex AI's brain  It's a huge undertaking  think of it like reverse engineering a super advanced alien tech that's also constantly evolving  crazy right
 
 The biggest hurdle I see is the sheer scale of these models  we're talking billions or even trillions of parameters  That's not just a big number it's a number that makes our current computational tools and visualization techniques basically useless  Imagine trying to map every neuron in a human brain  now imagine that brain is constantly rewriting itself and its connections  That's kinda what we're dealing with  
 

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-am-i-getting-an-airflow-schedule-issue---diff-between-schedule-time-and-run-time"
 ---
 
-alright, so you're seeing a discrepancy between your airflow scheduled time and the actual time your dag runs, huh? yeah, that's a classic, i've been down that rabbit hole more times than i care to count. it's less about airflow being broken and more about understanding the nuances of how it handles time, scheduling, and execution. let's break this down like we're debugging some legacy code.
+alright, so you're seeing a discrepancy between your airflow scheduled time and the actual time your dag runs, right? yeah, that's a classic, i've been down that rabbit hole more times than i care to count. it's less about airflow being broken and more about understanding the nuances of how it handles time, scheduling, and execution. let's break this down like we're debugging some legacy code.
 
 first off, the crucial thing to grasp is that airflow isn't running tasks exactly *when* the schedule says. it's running tasks for a *schedule interval* after it. let's say you have a dag scheduled to run daily at 8:00 am. airflow doesn't start at exactly 8:00 am, but instead, it looks for the dag run that should have started at 8:00 am on the previous day and, depending on your configuration, kicks that off at some time after that. this lag is there by design. the idea is to have all the previous tasks executed before executing the next ones.
 

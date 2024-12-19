@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "convert-c-program-into-assembly-code"
 ---
 
-Okay so you want to convert C code to assembly huh Been there done that a million times It’s a rite of passage for anyone who gets serious about systems level stuff I remember back in uni we had this professor old school guy total wizard with low level but terrible with anything resembling user interfaces He made us write entire operating systems in assembly using C only for basic bootstrapping talk about a crash course in the reality of computer architectures
+Okay so you want to convert C code to assembly right Been there done that a million times It’s a rite of passage for anyone who gets serious about systems level stuff I remember back in uni we had this professor old school guy total wizard with low level but terrible with anything resembling user interfaces He made us write entire operating systems in assembly using C only for basic bootstrapping talk about a crash course in the reality of computer architectures
 
 First thing’s first understand that assembly isn't some magic black box it's just a human readable representation of machine code Machine code is what the CPU actually executes assembly is our way of talking to it without using binary strings Remember those days trying to punch in binary instructions on punch cards good times no actually horrible times I try to block that out
 

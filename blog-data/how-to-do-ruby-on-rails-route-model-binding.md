@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-do-ruby-on-rails-route-model-binding"
 ---
 
-alright, so you’re asking about route model binding in rails, huh? i've been there, done that, got the t-shirt – and probably debugged it at 3am more times than i care to remember. this is one of those rails features that, once you get a handle on it, makes your code so much cleaner and easier to maintain. let's break it down.
+alright, so you’re asking about route model binding in rails, right? i've been there, done that, got the t-shirt – and probably debugged it at 3am more times than i care to remember. this is one of those rails features that, once you get a handle on it, makes your code so much cleaner and easier to maintain. let's break it down.
 
 basically, route model binding is rails' way of automatically loading model instances based on parameters in your routes. instead of manually fetching the record in your controller actions using params[:id] (or whatever your identifier is), rails does the heavy lifting for you. this keeps your controllers slim and focused on the actual business logic, not database fetching.
 

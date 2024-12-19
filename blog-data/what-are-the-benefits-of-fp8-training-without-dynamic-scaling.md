@@ -4,7 +4,7 @@ date: "2024-12-03"
 id: "what-are-the-benefits-of-fp8-training-without-dynamic-scaling"
 ---
 
-Hey so you're trying to train FP8 models without that fancy dynamic scaling stuff huh  That's a cool challenge  It's definitely trickier than using dynamic scaling which basically acts like an automatic gain control for your activations keeping everything nicely behaved  Without it you gotta be way more careful about how you manage your gradients and activations to avoid overflow or underflow  It's like riding a bike without training wheels more exhilarating but also potentially more face-planting
+Hey so you're trying to train FP8 models without that fancy dynamic scaling stuff right  That's a cool challenge  It's definitely trickier than using dynamic scaling which basically acts like an automatic gain control for your activations keeping everything nicely behaved  Without it you gotta be way more careful about how you manage your gradients and activations to avoid overflow or underflow  It's like riding a bike without training wheels more exhilarating but also potentially more face-planting
 
 The main problem is FP8's limited range  It only has 8 bits so you have a tiny space to represent numbers compared to FP16 or FP32  This means your activations and gradients can easily explode or vanish  Dynamic scaling helps prevent that by adjusting the scale on the fly  But if you're ditching that you need strategies to ensure stability
 

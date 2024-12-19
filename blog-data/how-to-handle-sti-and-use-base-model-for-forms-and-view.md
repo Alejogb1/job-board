@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-handle-sti-and-use-base-model-for-forms-and-view"
 ---
 
-alright, so handling single table inheritance (sti) with forms and views, huh? i've been down that road more times than i care to count, and it can get a bit hairy if you're not careful. basically, you're cramming multiple model types into one database table, and then trying to keep it all straight in your app. it's not inherently bad, but it does require a specific way of thinking. i'll lay out how i've approached it in the past, specifically focusing on getting those forms and views playing nice.
+alright, so handling single table inheritance (sti) with forms and views, right? i've been down that road more times than i care to count, and it can get a bit hairy if you're not careful. basically, you're cramming multiple model types into one database table, and then trying to keep it all straight in your app. it's not inherently bad, but it does require a specific way of thinking. i'll lay out how i've approached it in the past, specifically focusing on getting those forms and views playing nice.
 
 the core of the issue is that you have one table, let's say 'products', but you actually want to treat those rows as different things depending on their 'type' column. it could be ‘book’, ‘movie’, ‘software’, whatever. that type column is what defines the sti. ruby on rails handles this pretty well out of the box. you'll define a base model, for example `product`, then specific sub-classes, like `book`, `movie`, each inheriting from `product`.
 

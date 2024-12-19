@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "binary-primes-relationship-search"
 ---
 
-Okay so binary primes relationship search huh Yeah I've been down that rabbit hole before more times than I care to admit It's one of those things that sounds deceptively simple on paper like just figure out if binary representations of prime numbers have some sort of hidden relationship right But man the devil's in the details let me tell you
+Okay so binary primes relationship search right Yeah I've been down that rabbit hole before more times than I care to admit It's one of those things that sounds deceptively simple on paper like just figure out if binary representations of prime numbers have some sort of hidden relationship right But man the devil's in the details let me tell you
 
 First off let's level set because "relationship" is a pretty broad term We're talking about patterns right Not just any pattern a correlation a predictable connection between the binary strings of prime numbers I've spent countless late nights fueled by cold coffee and questionable pizza trying to crack this specific nut
 

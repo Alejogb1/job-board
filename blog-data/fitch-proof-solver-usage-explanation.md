@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "fitch-proof-solver-usage-explanation"
 ---
 
-Okay so you're asking about Fitch proof solvers huh Been there done that more times than I care to admit Let's dive into this thing from a purely technical viewpoint
+Okay so you're asking about Fitch proof solvers right Been there done that more times than I care to admit Let's dive into this thing from a purely technical viewpoint
 
 Right off the bat a Fitch proof solver is basically a tool for validating logical arguments in propositional and predicate calculus You feed it some premises and a conclusion and it tells you if the conclusion logically follows from those premises using the rules of natural deduction Specifically Fitch systems are a particular flavor of natural deduction characterized by the use of nested subproofs indicated with vertical lines We are not going over the syntax details of propositional and predicate calculus because that would be an entire another post but we are going straight to how these solvers work and how to use them effectively
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "difference-between-and-or-in-system-verilog"
 ---
 
-Okay so you're asking about `and` versus `or` in SystemVerilog huh I've seen this question pop up more times than I can count it's one of those foundational bits that trips up newcomers and even some experienced folks every now and again so let's break it down for you with a healthy dose of my personal pain points along the way
+Okay so you're asking about `and` versus `or` in SystemVerilog right I've seen this question pop up more times than I can count it's one of those foundational bits that trips up newcomers and even some experienced folks every now and again so let's break it down for you with a healthy dose of my personal pain points along the way
 
 First things first we're not talking about English here think logic gates the building blocks of hardware that's where SystemVerilog lives at least when dealing with these operators we're talking about bitwise and logical operations these two operators have both of them but its easy to mix it up at the start
 

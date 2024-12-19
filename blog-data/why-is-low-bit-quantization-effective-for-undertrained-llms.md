@@ -4,7 +4,7 @@ date: "2024-12-03"
 id: "why-is-low-bit-quantization-effective-for-undertrained-llms"
 ---
 
-Hey so you're into low-bit quantization for undertrained LLMs huh cool beans  I've been messing around with that stuff lately its pretty wild  Basically the idea is you got these massive language models right  They're huge  like ridiculously huge  tons of parameters  And training them is a nightmare takes forever and costs a fortune  So what if we could make them smaller faster cheaper without losing too much accuracy that's where quantization comes in
+Hey so you're into low-bit quantization for undertrained LLMs right cool beans  I've been messing around with that stuff lately its pretty wild  Basically the idea is you got these massive language models right  They're huge  like ridiculously huge  tons of parameters  And training them is a nightmare takes forever and costs a fortune  So what if we could make them smaller faster cheaper without losing too much accuracy that's where quantization comes in
 
 Quantization is all about reducing the number of bits used to represent the model's weights and activations  Instead of using 32-bit floats which is standard we can use 16-bit floats or even 8-bit integers or even weirder stuff like binary  This shrinks the model size dramatically which means faster inference less memory usage and lower power consumption its a win win win situation except for maybe the slightly reduced accuracy which can be a bummer sometimes
 

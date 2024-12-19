@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "reverse-a-vector-without-rev"
 ---
 
-Okay so you wanna reverse a vector huh without using the built in `rev` function I've been there dude more times than I'd like to admit You'd think its simple right but then you get some weird edge case or some crazy performance bottleneck I remember back in college when I was doing a project on image processing we had to do a lot of matrix manipulations and reversing vectors came up like all the time It was this stupid algorithm where we had to flip a color array back and forth for some convolution filter thing and well using the standard reverse was like super slow especially when working with huge images plus we were trying to be cool by implementing it ourselves you know the whole "not needing libraries" phase
+Okay so you wanna reverse a vector right without using the built in `rev` function I've been there dude more times than I'd like to admit You'd think its simple right but then you get some weird edge case or some crazy performance bottleneck I remember back in college when I was doing a project on image processing we had to do a lot of matrix manipulations and reversing vectors came up like all the time It was this stupid algorithm where we had to flip a color array back and forth for some convolution filter thing and well using the standard reverse was like super slow especially when working with huge images plus we were trying to be cool by implementing it ourselves you know the whole "not needing libraries" phase
 
 Anyway so the first thing you think of is a loop right just iterate backwards and copy everything to a new vector that’s fine simple easy to read maybe you use a for loop or maybe a while loop whatever floats your boat something like this works
 

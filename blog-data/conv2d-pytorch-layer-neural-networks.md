@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "conv2d-pytorch-layer-neural-networks"
 ---
 
-Alright so you're diving into `conv2d` layers in PyTorch huh I get it Been there done that countless times Let me break it down for ya from my experience and yeah I’m gonna keep it techy and informal like we're chatting on a forum
+Alright so you're diving into `conv2d` layers in PyTorch right I get it Been there done that countless times Let me break it down for ya from my experience and yeah I’m gonna keep it techy and informal like we're chatting on a forum
 
 First off `conv2d` is your bread and butter for dealing with image data in neural networks think of it as a specialized tool for recognizing patterns in a grid of pixels Unlike standard linear layers which treat each input feature independently a convolution layer looks at local regions of the input to extract features This is key for image processing where spatial relationships matter a lot
 

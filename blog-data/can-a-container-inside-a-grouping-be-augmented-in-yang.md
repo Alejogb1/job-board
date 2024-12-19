@@ -143,7 +143,7 @@ so here `refine` statement is used to set the admin-status as `config false` and
 
 **Important Considerations and a random joke**
 
-It is important to understand how xpath works you need to know the exact location in the data tree to augment or refine it because that is how YANG works it is a tree structure at its core I was once debugging a model late night it was the culmination of a month long work and a wrong xpath made me go insane I kept looking at it for an hour thinking I had made a typo in the augmentation and it turned out I did but in the path I was using it and after I fixed it I just laughed at it out loud maybe I should have gone to bed earlier that night huh
+It is important to understand how xpath works you need to know the exact location in the data tree to augment or refine it because that is how YANG works it is a tree structure at its core I was once debugging a model late night it was the culmination of a month long work and a wrong xpath made me go insane I kept looking at it for an hour thinking I had made a typo in the augmentation and it turned out I did but in the path I was using it and after I fixed it I just laughed at it out loud maybe I should have gone to bed earlier that night right
 
 another thing is `augment` statements can be spread across multiple yang files making it harder to track down what's going on it is good practice to have all augmentation related to a specific grouping to be in the same yang file to help with the organization of your models
 

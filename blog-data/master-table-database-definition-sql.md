@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "master-table-database-definition-sql"
 ---
 
-Okay so you're asking about creating a master table in a database using SQL huh Been there done that a bunch of times Let me spill the beans based on my history fighting with these things
+Okay so you're asking about creating a master table in a database using SQL right Been there done that a bunch of times Let me spill the beans based on my history fighting with these things
 
 First off "master table" isn't exactly a SQL term per se Its more like a concept We're usually talking about a table that holds core reference data stuff that other tables will likely link to Think of things like users products categories the building blocks of your data model This isn't your typical transaction table where you're logging every single purchase it's more foundational
 

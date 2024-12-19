@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "extends-uml-relationship-explanation"
 ---
 
-Okay so you're asking about UML extends relationships huh I've been wrestling with those things since the dawn of time practically ok maybe not the dawn but close enough Let me tell you a bit about my journey with UML and especially this pesky "extends" thing you know like back in the day when I was coding up some insane data processing system using C++ and Object Oriented Design I'm talking early 2000's stuff before everyone had all these fancy frameworks and tools we had to build everything from the ground up manually
+Okay so you're asking about UML extends relationships right I've been wrestling with those things since the dawn of time practically ok maybe not the dawn but close enough Let me tell you a bit about my journey with UML and especially this pesky "extends" thing you know like back in the day when I was coding up some insane data processing system using C++ and Object Oriented Design I'm talking early 2000's stuff before everyone had all these fancy frameworks and tools we had to build everything from the ground up manually
 
 First things first and this is crucial extends in UML isn't about inheritance it's not like you see in your class definitions in code like with classes or interfaces It's a use case relationship specifically use cases in UML are those bubbles with descriptive names like "Process Order" or "Generate Report" you know the ones The extends relationship however is about optional variations on that main process or action. Think of it this way you have a base use case and the "extends" use case is something that may or may not happen depending on certain conditions or user actions during the execution of the main process or base use case.
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "ora-18716-timezone-error-oracle-database"
 ---
 
-Okay so you're hitting that classic ORA-18716 timezone error in Oracle Database huh Been there done that got the t-shirt I swear this error is like a right of passage for anyone who's messed with Oracle's date and time functions
+Okay so you're hitting that classic ORA-18716 timezone error in Oracle Database right Been there done that got the t-shirt I swear this error is like a right of passage for anyone who's messed with Oracle's date and time functions
 
 Let me give you a rundown of what usually causes this headache and how I've personally wrestled it into submission over the years It's not pretty but it works
 

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-is-xlsx-is-converted-to-zip-on-download-in-rails-application"
 ---
 
-alright, so you're seeing your rails app serving up an xlsx file but the browser downloads it as a zip, huh? yeah, i've been there. it's a common gotcha, and it usually boils down to a mismatch between what your server *thinks* it's sending and what the browser *interprets*. let's break it down.
+alright, so you're seeing your rails app serving up an xlsx file but the browser downloads it as a zip, right? yeah, i've been there. it's a common gotcha, and it usually boils down to a mismatch between what your server *thinks* it's sending and what the browser *interprets*. let's break it down.
 
 basically, an xlsx file *is* a zip file. that's not the problem itself. but the browser relies on the `content-type` header to understand what kind of data it's receiving. when that header is incorrect or missing, it defaults to handling the download as a generic zip file, instead of recognizing it as an excel spreadsheet.
 

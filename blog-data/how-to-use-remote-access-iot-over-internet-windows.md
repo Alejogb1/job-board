@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "how-to-use-remote-access-iot-over-internet-windows"
 ---
 
-Alright so you wanna get your IoT thingamajig accessible from anywhere using Windows over the internet huh Been there done that got the scars to prove it. It’s a classic problem a rite of passage really. Been wrestling with this kinda stuff since dial-up was a thing. Back in the day I even used a literal serial port and modem to access my custom built weather station from the library computer yeah those were the days… No fancy cloud platforms or APIs just pure grit and a very slow connection.
+Alright so you wanna get your IoT thingamajig accessible from anywhere using Windows over the internet right Been there done that got the scars to prove it. It’s a classic problem a rite of passage really. Been wrestling with this kinda stuff since dial-up was a thing. Back in the day I even used a literal serial port and modem to access my custom built weather station from the library computer yeah those were the days… No fancy cloud platforms or APIs just pure grit and a very slow connection.
 
 Okay let's break this down. Forget the smoke and mirrors you need a solid plan. You got your IoT device which I'm assuming runs some sort of web server or can be controlled via a network protocol and you got your Windows machine which you want to use to poke it remotely.
 

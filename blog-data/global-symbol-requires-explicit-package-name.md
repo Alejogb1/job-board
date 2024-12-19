@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "global-symbol-requires-explicit-package-name"
 ---
 
-Alright so you're seeing that "global symbol requires explicit package name" error huh Classic Perl move been there done that got the t-shirt and probably a few scars too Let me tell you this isn't some rare unicorn bug it's a bread and butter issue when you're messing around with Perl's scoping rules and package system
+Alright so you're seeing that "global symbol requires explicit package name" error right Classic Perl move been there done that got the t-shirt and probably a few scars too Let me tell you this isn't some rare unicorn bug it's a bread and butter issue when you're messing around with Perl's scoping rules and package system
 
 Basically what's happening is that you're trying to use a variable or subroutine a sub without telling Perl exactly where it lives You've probably got some code that's doing something like this
 

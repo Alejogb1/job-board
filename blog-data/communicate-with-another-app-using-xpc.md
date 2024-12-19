@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "communicate-with-another-app-using-xpc"
 ---
 
-Alright so you want to get two apps chatting using XPC huh I get it Been there done that probably even bought the t-shirt
+Alright so you want to get two apps chatting using XPC right I get it Been there done that probably even bought the t-shirt
 
 Let me tell you XPC can be a bit of a trip at first its this inter process communication thing Apple throws at you It's not exactly a walk in the park but once you wrap your head around it it's pretty powerful stuff I remember my first dance with XPC it was a total headache I was trying to get a helper app to do some heavy lifting like image processing so my main app wouldn't get bogged down and become unresponsive I was so new to it I was trying to pass complex objects directly through the connection like some kind of naive newbie it failed spectacularly crashes left and right memory leaks galore good times
 

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-run-a-command-inside-a-docker-container-after-running-docker-on-windows"
 ---
 
-alright, so you want to execute a command inside a running docker container on windows, huh? i've been there, trust me. it's one of those things that seems simple enough at first glance but can lead you down a rabbit hole if you're not careful. i remember back in my early days, i spun up a container, expected it to behave like a local process, and was utterly confused when `my_command` didn’t just work. it was quite humbling.
+alright, so you want to execute a command inside a running docker container on windows, right? i've been there, trust me. it's one of those things that seems simple enough at first glance but can lead you down a rabbit hole if you're not careful. i remember back in my early days, i spun up a container, expected it to behave like a local process, and was utterly confused when `my_command` didn’t just work. it was quite humbling.
 
 let’s cut to the chase though. the core idea is that you need to tell docker to target your specific running container and then pass the command to it. windows uses a cli (command-line interface), so this will be all about that. we aren’t talking gui apps here.
 

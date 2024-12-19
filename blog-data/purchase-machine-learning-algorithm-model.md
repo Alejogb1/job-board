@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "purchase-machine-learning-algorithm-model"
 ---
 
-Okay so you're asking about purchasing a pre-trained machine learning model huh Been there done that countless times Let me tell you it's not as straightforward as downloading an app from the store It's more like navigating a maze designed by someone who really enjoyed writing obfuscated code
+Okay so you're asking about purchasing a pre-trained machine learning model right Been there done that countless times Let me tell you it's not as straightforward as downloading an app from the store It's more like navigating a maze designed by someone who really enjoyed writing obfuscated code
 
 First off let's talk about why you'd even consider buying a model instead of training your own It usually boils down to three things either you're short on time don't have the computational power to train a complex model or you lack a massive dataset necessary for good performance or all of the above
 

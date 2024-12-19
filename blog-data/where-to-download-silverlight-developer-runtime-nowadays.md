@@ -4,11 +4,11 @@ date: "2024-12-13"
 id: "where-to-download-silverlight-developer-runtime-nowadays"
 ---
 
-Okay so you wanna know where to grab the Silverlight developer runtime huh yeah I get it that’s like asking for a rotary phone charger these days but I’ve been around the block a few times and trust me I’ve seen weirder stuff
+Okay so you wanna know where to grab the Silverlight developer runtime right yeah I get it that’s like asking for a rotary phone charger these days but I’ve been around the block a few times and trust me I’ve seen weirder stuff
 
 Been there done that got the t-shirt and a few debugging scars to prove it I remember back in the day when Silverlight was the hotness it was like the cool kid on the block everyone wanted to hang out with that sweet XAML declarative UI goodness and the promise of cross-browser rich internet apps I even built a whole internal employee app for tracking expenses with it yeah I know right I feel old just saying it all the UI was custom built you could do some crazy stuff if you pushed it
 
-But things change huh Microsoft moved on and Silverlight well it kinda faded into the background which is a technical term for it got deprecated and is no longer supported that’s the plain and simple truth Now getting a legit developer runtime its tricky not impossible though
+But things change right Microsoft moved on and Silverlight well it kinda faded into the background which is a technical term for it got deprecated and is no longer supported that’s the plain and simple truth Now getting a legit developer runtime its tricky not impossible though
 
 Let me break it down for you no BS straight facts
 

@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-extend-and-generate-a-future-forecast-using-sarima"
 ---
 
-alright, so you're looking into extending a time series forecast using sarima, huh? i've been down that road more times than i care to remember, and let me tell you, it can get pretty hairy if you don't watch your step. let's break this down, no bs.
+alright, so you're looking into extending a time series forecast using sarima, right? i've been down that road more times than i care to remember, and let me tell you, it can get pretty hairy if you don't watch your step. let's break this down, no bs.
 
 first off, sarima (seasonal autoregressive integrated moving average) is a pretty solid choice for forecasting when you've got that seasonality going on in your data. it's not magic, though. you still gotta know what you're doing. i've seen too many folks just throw a sarima model at data and pray it works. spoiler: it rarely does without a good bit of tweaking.
 
