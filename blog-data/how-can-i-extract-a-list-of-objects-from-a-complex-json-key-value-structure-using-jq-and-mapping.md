@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-extract-a-list-of-objects-from-a-complex-json-key-value-structure-using-jq-and-mapping"
 ---
 
-Alright, let's tackle this. I've certainly been in the trenches with complex json structures, trying to pull specific data out without resorting to some monstrous custom parser. Using `jq` alongside mapping is absolutely the way to go, it's efficient and concise once you grasp the nuances. I recall a particularly challenging data import project a few years back where the incoming json was, well, let's just say it lacked any sort of consistent schema. We needed to grab specific object arrays nested deep within, and `jq` became my go-to weapon.
+Alright,  I've certainly been in the trenches with complex json structures, trying to pull specific data out without resorting to some monstrous custom parser. Using `jq` alongside mapping is absolutely the way to go, it's efficient and concise once you grasp the nuances. I recall a particularly challenging data import project a few years back where the incoming json was, well, let's just say it lacked any sort of consistent schema. We needed to grab specific object arrays nested deep within, and `jq` became my go-to weapon.
 
 The core problem we’re discussing hinges on extracting lists (arrays in json parlance) of objects from within a larger, potentially deeply nested, json structure. Mapping, in the context of `jq`, is primarily about applying a filter or transformation to each element of an array, and we can leverage this powerfully along with path navigation to achieve our goal. The trick is often to figure out the precise path to your target array of objects, and then apply the correct filter to either extract specific fields or keep the entire object.
 

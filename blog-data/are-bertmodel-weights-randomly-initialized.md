@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "are-bertmodel-weights-randomly-initialized"
 ---
 
-Okay, let's unpack this. The question of whether `BertModel` weights are randomly initialized is nuanced, and the short answer is: it depends on how you're using it and what you mean by 'random'. Let me explain based on my experience dealing with Transformer architectures over the years, starting from when they were practically novel and debugging pre-training was a daily ritual.
+, let's unpack this. The question of whether `BertModel` weights are randomly initialized is nuanced, and the short answer is: it depends on how you're using it and what you mean by 'random'. Let me explain based on my experience dealing with Transformer architectures over the years, starting from when they were practically novel and debugging pre-training was a daily ritual.
 
 It's critical to understand the two main phases for a model like `BertModel`: pre-training and fine-tuning. When you're working with a pre-trained `BertModel`, the weights are *not* randomly initialized. They've been meticulously learned on massive text corpora during the pre-training phase—think hundreds of gigabytes of text, carefully curated to help the model learn complex linguistic relationships. In this scenario, you load those pre-trained weights. It's a common practice in the transfer learning approach.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-decorate-a-tensorflow-function-accepting-a-tfvariable-with-tffunction-using-an-input-signature"
 ---
 
-Let's tackle this. I recall a particularly tricky project a few years back involving dynamic neural networks for time series forecasting. We needed the efficiency of `tf.function` to optimize computational graphs, but also the flexibility to handle variables that were being updated during training, which, as you know, can get complicated with TensorFlow's tracing mechanics. Specifically, passing `tf.Variable` objects into a `tf.function` decorated function and needing input signatures was a challenge we had to overcome.
+ I recall a particularly tricky project a few years back involving dynamic neural networks for time series forecasting. We needed the efficiency of `tf.function` to optimize computational graphs, but also the flexibility to handle variables that were being updated during training, which, as you know, can get complicated with TensorFlow's tracing mechanics. Specifically, passing `tf.Variable` objects into a `tf.function` decorated function and needing input signatures was a challenge we had to overcome.
 
 The core issue here stems from how `tf.function` performs graph tracing. When you decorate a Python function with `tf.function`, TensorFlow doesn't execute the function directly each time it’s called. Instead, it builds a computational graph based on the first call with a specific set of input types (and shapes if input signatures are explicitly provided). Subsequent calls then execute that pre-optimized graph. This leads to significant speed improvements, but it also means we have to be careful with how we handle variables, especially when they might change type or shape during runtime.
 

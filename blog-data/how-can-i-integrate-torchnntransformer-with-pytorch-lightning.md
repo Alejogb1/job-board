@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-integrate-torchnntransformer-with-pytorch-lightning"
 ---
 
-Okay, let's tackle this. I remember a project back in 2021, attempting to build a multi-modal transformer model for time-series prediction, and the integration of `torch.nn.Transformer` with PyTorch Lightning was pivotal. It wasn't always seamless, but the benefits were undeniable. Let's dive into how you can effectively integrate these two powerful libraries.
+,  I remember a project back in 2021, attempting to build a multi-modal transformer model for time-series prediction, and the integration of `torch.nn.Transformer` with PyTorch Lightning was pivotal. It wasn't always seamless, but the benefits were undeniable. Let's dive into how you can effectively integrate these two powerful libraries.
 
 The core challenge comes from the inherently high-level abstraction provided by PyTorch Lightning, which encourages a structured training loop, and the flexibility of `torch.nn.Transformer`, requiring specific input handling. To bridge this gap, we need to carefully manage data flow, model architecture within the `LightningModule` subclass, and ensure optimal usage of Lightning's training infrastructure.
 

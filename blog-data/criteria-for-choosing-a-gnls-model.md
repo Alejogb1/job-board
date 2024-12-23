@@ -4,11 +4,11 @@ date: "2024-12-13"
 id: "criteria-for-choosing-a-gnls-model"
 ---
 
-Alright so you're asking about choosing a Generalized Nonlinear Least Squares GNLS model right Been there done that Man I swear its like picking a specific grain of sand on a beach sometimes I've wrestled with these things for ages its a right pain when you need just the perfect fit
+so you're asking about choosing a Generalized Nonlinear Least Squares GNLS model right Been there done that Man I swear its like picking a specific grain of sand on a beach sometimes I've wrestled with these things for ages its a right pain when you need just the perfect fit
 
 My journey with GNLS started way back a few years ago I was working on a project where we were trying to model some kind of complex biological reaction think enzyme kinetics stuff It was all curves and non-linear behavior Standard linear regression was just throwing its hands up in surrender the classic underfitting scenario you know So I dove into the world of non-linear models specifically GNLS because it's flexible and powerful and sometimes also a headache inducing beast to tame
 
-Okay so when you say "criteria" right It's not one size fits all I wish it were trust me Instead it's a collection of different considerations that you gotta balance Think of it like a multi-objective optimization problem We're trying to get the best possible fit while also keeping our models practical and usable
+ so when you say "criteria" right It's not one size fits all I wish it were trust me Instead it's a collection of different considerations that you gotta balance Think of it like a multi-objective optimization problem We're trying to get the best possible fit while also keeping our models practical and usable
 
 First things first model identifiability A GNLS model its not just random math Its got parameters you need to estimate That means the model structure itself needs to be identifiable What I mean is there can't be two different sets of parameters that both lead to the same model prediction This is important If your parameters are messing around during optimization then your model may not converge or worse it might give you some random values and make you think you understood something that you really didn't
 
@@ -110,4 +110,4 @@ Finally model interpretation which goes hand in hand with the model selection pr
 
 So a lot of this stuff comes with experience right There's no magic formula to selecting the perfect GNLS model It involves a lot of trial and error and lots of critical thinking I recommend checking out "Nonlinear Regression" by Seber and Wild it's a very good place to understand all of this properly as well as "Elements of Statistical Learning" by Hastie et al. They are very good textbooks but not for casual readers as they are full of theory but still it might be useful to you
 
-Alright that's my take on GNLS model selection I've learned these the hard way through countless hours of debugging and many headaches but in the end it has worked quite well so hope this helps with your model selection journey it sure was a journey for me
+that's my take on GNLS model selection I've learned these the hard way through countless hours of debugging and many headaches but in the end it has worked quite well so hope this helps with your model selection journey it sure was a journey for me

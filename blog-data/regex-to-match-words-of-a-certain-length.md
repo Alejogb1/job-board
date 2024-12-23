@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "regex-to-match-words-of-a-certain-length"
 ---
 
-Okay so regex to match words of a certain length right been there done that many times lets get this thing sorted out no fluff just practical code and some stories from the trenches
+ so regex to match words of a certain length right been there done that many times lets get this thing sorted out no fluff just practical code and some stories from the trenches
 
 Right so the core thing here is we need a regex that respects word boundaries and can enforce the length criteria we're talking about individual words not parts of words or random character clusters the key component here is using `\b` which marks a word boundary in regex for example if you are looking for a word that starts with "a" and ends with "b" you will use something like `\ba.*b\b` where `.` means any character and * means 0 or more
 
@@ -30,13 +30,13 @@ matches = re.findall(pattern, text)
 print(matches)  # Output: ['This', 'simple', 'with', 'some', 'codes', 'coding', 'very', 'long']
 ```
 
-Okay one of the things that has tripped me up a few times in the past is when you are using languages that support unicode or when you are dealing with international texts that’s when `\w` might not be enough especially for languages with special characters so in that case you might need to use other unicode character properties instead of \w but those cases are pretty rare so for 99% of the time \w is enough just keep this in the back of your mind and this will save you headache for sure
+ one of the things that has tripped me up a few times in the past is when you are using languages that support unicode or when you are dealing with international texts that’s when `\w` might not be enough especially for languages with special characters so in that case you might need to use other unicode character properties instead of \w but those cases are pretty rare so for 99% of the time \w is enough just keep this in the back of your mind and this will save you headache for sure
 
 For the experience part let me tell you about that one time in my internship back in 2015 where I was tasked with cleaning a huge database of customer reviews for sentiment analysis we had a weird requirement to only consider the words that were between 4 and 8 characters long for some strange statistical reason I tried to do it manually with a loop and string length checks and boy that was slow like turtle slow I then realized that regex could do it in a single line and it was not just faster it was cleaner and more readable I felt like an idiot for not thinking of it before but hey we live and we learn
 
 And another thing that I remember is once I was working with logs for some network application we had this weird bug where some packets were not being processed and the logs were full of random strings that were not even valid words and the task was to find words longer than 10 characters that might point out to the faulty packets so for that I had to modify the regex and use `\b\w{10,}\b` to find words of 10 characters or more where `{10,}` is a way of indicating "10 or more"
 
-Okay let's talk about some edge cases for example lets consider hyphenated words like "well-known" with the current `\w` based regexes "well-known" would be considered as 2 distinct words "well" and "known" that’s where you have to decide if you want to treat these as individual words or as one if you need to consider the full word then you have to extend the word character set with a hyphen so in that case you should use something like `[\w-]+` which means at least one word character or hyphen and in the example above `\b[\w-]{4,10}\b` this will match words between 4 and 10 characters including hyphenated words but be aware that this will now also match things like "----" or "--test--" so you need to adjust the code according to your needs but I think you get the idea
+ let's talk about some edge cases for example lets consider hyphenated words like "well-known" with the current `\w` based regexes "well-known" would be considered as 2 distinct words "well" and "known" that’s where you have to decide if you want to treat these as individual words or as one if you need to consider the full word then you have to extend the word character set with a hyphen so in that case you should use something like `[\w-]+` which means at least one word character or hyphen and in the example above `\b[\w-]{4,10}\b` this will match words between 4 and 10 characters including hyphenated words but be aware that this will now also match things like "----" or "--test--" so you need to adjust the code according to your needs but I think you get the idea
 
 Let me show you an example using that pattern using hyphenated word that’s a thing that I use every once in a while
 

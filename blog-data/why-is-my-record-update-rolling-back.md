@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-my-record-update-rolling-back"
 ---
 
-Okay, let's tackle this. I’ve seen this particular scenario play out more times than I care to count, and it's almost always a deep dive into transaction management. You're updating a record, and it seems to vanish, reverting to its previous state; a classic rollback. It's frustrating, but often the root cause is quite logical once we break it down.
+,  I’ve seen this particular scenario play out more times than I care to count, and it's almost always a deep dive into transaction management. You're updating a record, and it seems to vanish, reverting to its previous state; a classic rollback. It's frustrating, but often the root cause is quite logical once we break it down.
 
 Fundamentally, database systems, particularly relational databases, are designed to maintain data integrity and consistency. They achieve this through ACID properties (Atomicity, Consistency, Isolation, Durability). When you attempt an update, the database begins what is essentially a transaction. This transaction represents a sequence of operations treated as a single logical unit of work. Crucially, this unit must *either* fully succeed (commit) or fully fail (rollback) – that’s the atomicity principle in action.
 

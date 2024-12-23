@@ -119,7 +119,7 @@ so, now that we've gone through the encoding process itself, let's talk about th
 *   ensure your midi files are well-formed and contain what you expect them to, a common mistake is that some midi files do not contain any notes and then the process will break if not managed properly.
 *   normalize your data if needed – sometimes you need to scale your velocity values or apply other transforms before they go into the model.
 *   decide if you want to include or exclude metadata events and other midi specific messages, it will heavily depend on what you intend to achieve, for a simple note generative model you do not need other specific messages, but if you want to generate midi as close to the input as possible it is needed.
-* and another very important step, inspect your encoded data to make sure it looks okay. if you are having issues it's easier to find it if you perform some sort of data inspection.
+* and another very important step, inspect your encoded data to make sure it looks . if you are having issues it's easier to find it if you perform some sort of data inspection.
 
 finally, a little extra, a basic midi file event visualizer which creates the one hot vector in the process, it has the code from the two previous examples (using the simple note on/off encoding method). this is how i usually debugged problems on my initial models, a simple visualization will tell you a lot of potential issues:
 

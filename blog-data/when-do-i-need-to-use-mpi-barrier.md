@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "when-do-i-need-to-use-mpi-barrier"
 ---
 
-Okay so you're asking about MPI barriers when to use them why use them all that jazz alright I've been there trust me I've debugged enough parallel code to know the frustration of forgetting a single barrier somewhere and spent days wondering why the hell it's not working like it should so let's break this down
+ so you're asking about MPI barriers when to use them why use them all that jazz I've been there trust me I've debugged enough parallel code to know the frustration of forgetting a single barrier somewhere and spent days wondering why the hell it's not working like it should so let's break this down
 
 First off what's an MPI barrier right simplest way to think about it its like a synchronization point in your parallel program imagine all your processes are little race cars on a track each doing their own thing a barrier is like a pit stop where they all have to wait until every single race car has reached that point before they are allowed to continue it makes sure that no process gets too far ahead before others catch up it’s a forced group hug of processes pretty much
 

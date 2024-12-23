@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "tensor-copy-pytorch-usage-problem"
 ---
 
-Okay so you're having trouble with tensor copies in PyTorch right Been there done that Seems like a simple thing until it isn't believe me I've spent nights wrestling with this stuff let's dive in
+ so you're having trouble with tensor copies in PyTorch right Been there done that Seems like a simple thing until it isn't believe me I've spent nights wrestling with this stuff let's dive in
 
 First off let's establish some ground rules When you're working with tensors in PyTorch especially large ones efficiency matters a ton You can't just blindly copy data around You'll run into memory issues speed bottlenecks and all kinds of weird bugs that will make you question your sanity I've seen more than one intern go pale over memory leaks caused by inefficient tensor copying trust me
 

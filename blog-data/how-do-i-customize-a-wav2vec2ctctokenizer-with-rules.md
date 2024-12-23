@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-customize-a-wav2vec2ctctokenizer-with-rules"
 ---
 
-Okay, let's tackle this. Customizing a `Wav2Vec2CTCTokenizer` with specific rules – I've been down that road more times than I care to recall. It's not always straightforward, but with a clear understanding of how tokenizers work and the specific mechanisms available within the transformers library, it’s definitely achievable. The issue usually isn't that the library can’t do it, it's often more about finding the *precise* way to instruct it to do what we need.
+,  Customizing a `Wav2Vec2CTCTokenizer` with specific rules – I've been down that road more times than I care to recall. It's not always straightforward, but with a clear understanding of how tokenizers work and the specific mechanisms available within the transformers library, it’s definitely achievable. The issue usually isn't that the library can’t do it, it's often more about finding the *precise* way to instruct it to do what we need.
 
 My own experience with this came during a project involving very specific phonetic transcriptions where standard tokenizations were proving inadequate. The base models were trained on large datasets with broadly applicable vocabularies, but we had a narrow domain with its own quirks. We needed custom rules to map certain sounds and symbols to specific tokens, and that’s where the real work started.
 

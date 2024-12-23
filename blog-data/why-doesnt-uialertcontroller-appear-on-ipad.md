@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-doesnt-uialertcontroller-appear-on-ipad"
 ---
 
-Okay, let's address this. I've seen this one trip up even experienced developers, and it's often less about a bug and more about understanding the subtle nuances of how `UIAlertController` is designed to work on iPad versus iPhone. Let me frame it with a bit of history - I remember dealing with a particularly frustrating case involving a modal sequence a few years back. The app, initially designed for iPhones, was being ported to iPad. We tested everything on the simulator, looked fine. Then, during user acceptance testing, the alerts just vanished. They weren't being dismissed early, they simply weren't visible.
+, let's address this. I've seen this one trip up even experienced developers, and it's often less about a bug and more about understanding the subtle nuances of how `UIAlertController` is designed to work on iPad versus iPhone. Let me frame it with a bit of history - I remember dealing with a particularly frustrating case involving a modal sequence a few years back. The app, initially designed for iPhones, was being ported to iPad. We tested everything on the simulator, looked fine. Then, during user acceptance testing, the alerts just vanished. They weren't being dismissed early, they simply weren't visible.
 
 The core problem isn’t that `UIAlertController` *can’t* appear on iPad, it’s that its presentation is context-dependent. Specifically, it transitions to a popover style instead of the traditional full-screen modal presentation we're accustomed to on iPhones. On an iPad, an alert needs an anchor, a point in the view hierarchy from which to display. If you're not providing this anchor, the system doesn't know where to place the popover, and therefore, it doesn’t display it.
 
@@ -19,7 +19,7 @@ This is the most common scenario: assuming the alert will just appear like it do
 ```swift
 func showAlertWithoutAnchor() {
     let alertController = UIAlertController(title: "Test Alert", message: "This alert won't appear correctly on iPad.", preferredStyle: .alert)
-    let okAction = UIAlertAction(title: "Okay", style: .default, handler: nil)
+    let okAction = UIAlertAction(title: "", style: .default, handler: nil)
     alertController.addAction(okAction)
     present(alertController, animated: true, completion: nil)
 }
@@ -34,7 +34,7 @@ Suppose you're triggering the alert from a `UIBarButtonItem`. This is a typical 
 ```swift
 func showAlertFromBarButtonItem(sender: UIBarButtonItem) {
     let alertController = UIAlertController(title: "Alert From Button", message: "This alert is anchored to the bar button.", preferredStyle: .alert)
-    let okAction = UIAlertAction(title: "Okay", style: .default, handler: nil)
+    let okAction = UIAlertAction(title: "", style: .default, handler: nil)
     alertController.addAction(okAction)
 
     if let popoverController = alertController.popoverPresentationController {
@@ -62,7 +62,7 @@ Now, what if we trigger the alert from, say, a regular `UIButton` that's not in 
 ```swift
 func showAlertFromView(sender: UIView) {
     let alertController = UIAlertController(title: "Alert From View", message: "This alert is anchored to the button view.", preferredStyle: .alert)
-    let okAction = UIAlertAction(title: "Okay", style: .default, handler: nil)
+    let okAction = UIAlertAction(title: "", style: .default, handler: nil)
     alertController.addAction(okAction)
 
     if let popoverController = alertController.popoverPresentationController {

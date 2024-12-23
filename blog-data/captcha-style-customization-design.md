@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "captcha-style-customization-design"
 ---
 
-Okay so you're asking about captcha style customization design right I've been down this rabbit hole more times than I care to admit like enough to make me swear off visual captcha's then go back and regret that decision then do it again you know the drill It's a pain point everyone hits sooner or later
+ so you're asking about captcha style customization design right I've been down this rabbit hole more times than I care to admit like enough to make me swear off visual captcha's then go back and regret that decision then do it again you know the drill It's a pain point everyone hits sooner or later
 
 Let's break it down from my scarred and frankly slightly jaded perspective I'm not gonna sugarcoat this there's no one-size-fits-all magic wand you just gotta pick your battles and pick them smart
 
@@ -129,7 +129,7 @@ I’ve always been a fan of this math based captcha because is simple to impleme
 </script>
 ```
 
-Alright I know that’s not a traditional captcha but honey pots are extremely underrated in the captcha world They are simple cheap and extremely effective a bot will always try to fill all fields while a human will never see it because it's visually hidden through css it’s a good first line of defense it’s like putting a locked gate in front of your front door it will stop the majority of the lazy robbers out there it’s also a great way to get rid of spam comment on your website
+I know that’s not a traditional captcha but honey pots are extremely underrated in the captcha world They are simple cheap and extremely effective a bot will always try to fill all fields while a human will never see it because it's visually hidden through css it’s a good first line of defense it’s like putting a locked gate in front of your front door it will stop the majority of the lazy robbers out there it’s also a great way to get rid of spam comment on your website
 
 Now resources for this stuff? Forget those outdated tutorials from 2012 that are still floating around You gotta level up your game.
 

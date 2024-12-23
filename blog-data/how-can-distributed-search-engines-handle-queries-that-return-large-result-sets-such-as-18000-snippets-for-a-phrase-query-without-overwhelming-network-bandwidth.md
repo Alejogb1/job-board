@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "how-can-distributed-search-engines-handle-queries-that-return-large-result-sets-such-as-18000-snippets-for-a-phrase-query-without-overwhelming-network-bandwidth"
 ---
 
-Okay so you're hitting a classic problem in distributed search right massive result sets killing your network  like trying to suck the ocean through a straw  eighteen thousand snippets thats a whole lotta data  the network groans under the weight  it's not just bandwidth either its latency too  getting all that info back takes ages even if you had the bandwidth  so how do we fix this monster
+ so you're hitting a classic problem in distributed search right massive result sets killing your network  like trying to suck the ocean through a straw  eighteen thousand snippets thats a whole lotta data  the network groans under the weight  it's not just bandwidth either its latency too  getting all that info back takes ages even if you had the bandwidth  so how do we fix this monster
 
 The core idea is to avoid sending all that data back at once think about it  do you really *need* all eighteen thousand snippets immediately  probably not  most users scan the first page or maybe two before they're happy  thats like the top hundred results maybe  so we focus on getting those *quickly*
 

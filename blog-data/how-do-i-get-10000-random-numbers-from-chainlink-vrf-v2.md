@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-get-10000-random-numbers-from-chainlink-vrf-v2"
 ---
 
-Okay, let's talk about generating a large batch of random numbers using Chainlink VRF V2. It’s a problem I’ve faced before, particularly back in 2022 when working on a generative art project that required a substantial amount of entropy for unique creation variations. We quickly discovered that calling VRF directly for every single number was not only inefficient but would also have dramatically increased gas costs. The key here isn't just about getting random numbers; it's about doing so in a manner that's both economical and practical.
+, let's talk about generating a large batch of random numbers using Chainlink VRF V2. It’s a problem I’ve faced before, particularly back in 2022 when working on a generative art project that required a substantial amount of entropy for unique creation variations. We quickly discovered that calling VRF directly for every single number was not only inefficient but would also have dramatically increased gas costs. The key here isn't just about getting random numbers; it's about doing so in a manner that's both economical and practical.
 
 The fundamental limitation of VRF, or any on-chain randomness solution, is the cost of each request. Each call to the VRF contract, involving cryptographic operations and oracle interaction, is a fairly gas-intensive process. So, fetching 10,000 independent random values the straightforward way, i.e., issuing 10,000 separate requests, is almost certainly a bad approach. The approach needs to be optimized to make efficient use of the VRF mechanism.
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "runtimeerror-java-gateway-process-exited-pyspark"
 ---
 
-Alright so runtime error java gateway process exited pyspark right I've been there buddy more times than I care to admit let's unpack this whole mess cuz it's a classic and there are a few ways things usually go sideways
+so runtime error java gateway process exited pyspark right I've been there buddy more times than I care to admit let's unpack this whole mess cuz it's a classic and there are a few ways things usually go sideways
 
 First off you're seeing this "java gateway process exited" error meaning something bad happened with the communication channel between your Python code running PySpark and the underlying Java Virtual Machine that Spark uses That JVM is responsible for a lot of the heavy lifting processing your data and when it dies things go boom
 

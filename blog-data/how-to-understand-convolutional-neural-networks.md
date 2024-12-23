@@ -4,7 +4,7 @@ date: "2024-11-16"
 id: "how-to-understand-convolutional-neural-networks"
 ---
 
-dude so you will *not* believe this video i watched it's like a total mind-melt about how computers think and all that jazz  it's all about teaching computers to see stuff which is way harder than it sounds okay like way harder than teaching a toddler to not eat crayons
+dude so you will *not* believe this video i watched it's like a total mind-melt about how computers think and all that jazz  it's all about teaching computers to see stuff which is way harder than it sounds  like way harder than teaching a toddler to not eat crayons
 
 the whole shebang is trying to teach computers image classification using something called convolutional neural networks  cnn for short which is basically a super fancy way of saying "let's teach a computer to spot a cat in a picture"  it's not like showing a toddler a cat and saying "that's a cat"  it's way more complex we're talking about algorithms and layers and matrices and all sorts of crazy stuff which, i must admit sounds a bit like gibberish
 
@@ -15,7 +15,7 @@ one of the first key moments was seeing how they used these filters  like these 
 another super cool thing was seeing how these filters build upon each other  the first layers find simple things like edges  the next layers combine those edges to find shapes and then it goes even deeper  finding textures patterns and eventually whole objects  it's this hierarchical process building up complexity from simplicity  it's like a game of telephone but way more useful  the image goes from pixels to lines to shapes to recognition in this crazy visual journey
 
 
-okay now this is where it gets technical so buckle up buttercup
+ now this is where it gets technical so buckle up buttercup
 
 here's a little python snippet illustrating a simple convolution operation  you don't need to understand it fully but you should get a feel for what's happening it's a simulation of that magnifying glass action
 

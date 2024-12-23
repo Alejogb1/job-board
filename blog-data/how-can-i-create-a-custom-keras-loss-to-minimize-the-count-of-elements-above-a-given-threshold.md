@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-create-a-custom-keras-loss-to-minimize-the-count-of-elements-above-a-given-threshold"
 ---
 
-Okay, let's dive into this. It's not uncommon to encounter situations where a standard loss function doesn't quite capture the specific nuances of the problem you're tackling. This definitely brings back memories of a project I did a few years back involving image segmentation for medical diagnostics; minimizing false positives, which were essentially counts of over-segmented areas above a certain size, was crucial. Standard pixel-wise loss functions just weren’t cutting it. So, creating a custom loss became unavoidable.
+, let's dive into this. It's not uncommon to encounter situations where a standard loss function doesn't quite capture the specific nuances of the problem you're tackling. This definitely brings back memories of a project I did a few years back involving image segmentation for medical diagnostics; minimizing false positives, which were essentially counts of over-segmented areas above a certain size, was crucial. Standard pixel-wise loss functions just weren’t cutting it. So, creating a custom loss became unavoidable.
 
 The core idea here, as you're asking, is to build a custom keras loss function that penalizes high element counts above a given threshold. Essentially, you're trying to get your model to predict results where only a small number of values exceed a specified level. This is definitely achievable and, when implemented correctly, quite powerful.
 

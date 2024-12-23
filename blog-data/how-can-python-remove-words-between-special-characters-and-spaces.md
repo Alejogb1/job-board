@@ -17,7 +17,7 @@ Let’s explore the core pattern construction first. The essential components ar
 3.  **Whitespace Capture:** Capturing whitespace with `\s*` (zero or more whitespace) is critical, especially to clean up surrounding spaces after the removal. Combining this will give us a more comprehensive cleanup.
 4.  **String Replacement:** Finally, using `re.sub()` or `re.subn()` (the latter for returning the substitution count) makes it easy to replace all captured parts with an empty string, effectively removing them.
 
-Okay, let's get to the code. I'll break it down into three snippets, each handling a slightly different, but common, use-case I’ve encountered.
+, let's get to the code. I'll break it down into three snippets, each handling a slightly different, but common, use-case I’ve encountered.
 
 **Snippet 1: Removing Words Between Angle Brackets**
 

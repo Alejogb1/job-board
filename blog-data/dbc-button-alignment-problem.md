@@ -4,13 +4,13 @@ date: "2024-12-13"
 id: "dbc-button-alignment-problem"
 ---
 
-Okay so dbc button alignment right I've been down that rabbit hole myself more times than I care to admit Let's break it down because dbc can be a bit finicky especially when it comes to aligning those darn buttons
+ so dbc button alignment right I've been down that rabbit hole myself more times than I care to admit Let's break it down because dbc can be a bit finicky especially when it comes to aligning those darn buttons
 
 First off when you say "alignment problem" I'm guessing you're dealing with a few common culprits either buttons are stacked weirdly when you want them horizontal or they're off-center within their container or maybe they're just refusing to play nice with other components Yeah I've seen it all
 
-See here's my thing I've been working with web UIs and component libraries since before React was cool I remember the days of hand coding every single UI element a long long time ago like when CSS frameworks were just ideas sketched on napkins okay not really but it feels like it sometimes So trust me I've wrestled with CSS layout more than the average bear and let me tell you it never gets easier you just get better at troubleshooting it
+See here's my thing I've been working with web UIs and component libraries since before React was cool I remember the days of hand coding every single UI element a long long time ago like when CSS frameworks were just ideas sketched on napkins  not really but it feels like it sometimes So trust me I've wrestled with CSS layout more than the average bear and let me tell you it never gets easier you just get better at troubleshooting it
 
-Okay so let's get concrete When dealing with dbc buttons specifically I've found that the problem usually boils down to one of these
+ so let's get concrete When dealing with dbc buttons specifically I've found that the problem usually boils down to one of these
 
 **1 The Container's Layout**
 
@@ -68,7 +68,7 @@ container = html.Div(buttons_row)
 
 **General Tips**
 
-Okay so some general wisdom here first of all use the browser developer tools inspect element is your friend you can fiddle with CSS properties in real time and see their effects instantly This is essential for troubleshooting any CSS issues you may have You can inspect the box model margins paddings borders and all that good stuff
+ so some general wisdom here first of all use the browser developer tools inspect element is your friend you can fiddle with CSS properties in real time and see their effects instantly This is essential for troubleshooting any CSS issues you may have You can inspect the box model margins paddings borders and all that good stuff
 
 Also sometimes you need to add some explicit height and width to your elements I know that's a cardinal sin but it's true It can help constrain the element and control the layout as expected this is mostly needed when there are elements that are taking space they shouldn't be taking
 

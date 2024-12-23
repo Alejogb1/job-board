@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-connect-a-private-blockchain-to-a-vps-hostinger-using-web3"
 ---
 
-Okay, let's unpack this. Connecting a private blockchain to a virtual private server, especially one from a provider like Hostinger, using web3 is a task I've tackled a few times over the years, and it often presents some unique considerations. It's not always as straightforward as connecting to a public network, but it's certainly achievable with a solid understanding of the components involved. Let's break down the essential steps and discuss the common hurdles.
+, let's unpack this. Connecting a private blockchain to a virtual private server, especially one from a provider like Hostinger, using web3 is a task I've tackled a few times over the years, and it often presents some unique considerations. It's not always as straightforward as connecting to a public network, but it's certainly achievable with a solid understanding of the components involved. Let's break down the essential steps and discuss the common hurdles.
 
 Fundamentally, you're aiming to achieve two things: having your private blockchain node running on the VPS and then interacting with that node using web3, usually from a separate application or environment. The key here is ensuring your network is properly configured and accessible while maintaining its private nature. This usually means you'll need to manage your node's networking configuration and handle API accessibility with care, avoiding unwanted exposure. I recall one particularly tricky project where our local node worked perfectly, but transferring to a remote server revealed a subtle firewall issue that took a while to identify, so let's ensure we cover all the bases.
 

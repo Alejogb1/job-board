@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-retrieve-erc-20-token-transaction-history-using-ethersjs"
 ---
 
-Okay, let's tackle this one. Been down this road myself plenty of times, often finding that seemingly simple question can quickly lead to quite a rabbit hole. Getting a reliable and complete ERC-20 token transaction history using ethers.js requires a bit of finesse, more so than a simple, singular function call. It's not just about a single query; it's about understanding the underlying data structures and limitations. Here's how I approach it, based on my experiences building various blockchain analytics tools over the past several years.
+, let's tackle this one. Been down this road myself plenty of times, often finding that seemingly simple question can quickly lead to quite a rabbit hole. Getting a reliable and complete ERC-20 token transaction history using ethers.js requires a bit of finesse, more so than a simple, singular function call. It's not just about a single query; it's about understanding the underlying data structures and limitations. Here's how I approach it, based on my experiences building various blockchain analytics tools over the past several years.
 
 The core of the issue is that ERC-20 token transfers are not stored as a separate, dedicated transaction type in the blockchain. Instead, they're encoded within the 'logs' emitted by smart contracts, specifically within the 'Transfer' event. We must delve into these logs and parse them correctly to extract the transfer details.
 

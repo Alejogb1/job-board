@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-load-page-specific-custom-javascript-functions-in-a-rails-7-app"
 ---
 
-Okay, let's talk about loading page-specific javascript functions in a rails 7 application. I've tackled this quite a bit over the years, particularly as applications grow and you find yourself needing a more granular approach than just global scripts. What starts simple quickly becomes a maintenance headache if you don't implement a reasonable strategy. When I first started working with rails back in the early days, it felt like a constant battle to avoid script bloat and unintended side effects.
+, let's talk about loading page-specific javascript functions in a rails 7 application. I've tackled this quite a bit over the years, particularly as applications grow and you find yourself needing a more granular approach than just global scripts. What starts simple quickly becomes a maintenance headache if you don't implement a reasonable strategy. When I first started working with rails back in the early days, it felt like a constant battle to avoid script bloat and unintended side effects.
 
 One approach, and arguably the most straightforward, involves leveraging the rails asset pipeline combined with some simple naming conventions. The general idea is to create separate javascript files, each tailored to a specific view or controller action, and then selectively include those files only when needed. This is where the magic of `content_for` and `javascript_include_tag` comes in, and where i’ve seen quite a few folks initially go astray.
 

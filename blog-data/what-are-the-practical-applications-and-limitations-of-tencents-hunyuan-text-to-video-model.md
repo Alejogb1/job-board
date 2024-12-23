@@ -4,7 +4,7 @@ date: "2024-12-05"
 id: "what-are-the-practical-applications-and-limitations-of-tencents-hunyuan-text-to-video-model"
 ---
 
-Okay so you wanna know about Tencent's Hunyuan text-to-video model right cool  It's a pretty neat piece of tech  like seriously impressive  but like all AI it has its strengths and weaknesses  Let's dive in  no need for fancy titles just straight talk
+ so you wanna know about Tencent's Hunyuan text-to-video model right cool  It's a pretty neat piece of tech  like seriously impressive  but like all AI it has its strengths and weaknesses  Let's dive in  no need for fancy titles just straight talk
 
 Practical Applications Man the possibilities are wild  Think about it you type in some text  like "a fluffy kitten playing in a field of sunflowers at sunset" and BAM you've got a video  No more tedious filming editing  just pure creation  That’s a game changer for so many things
 
@@ -29,7 +29,7 @@ Computational cost  generating these videos takes serious processing power  it's
 Bias is another concern  AI models learn from data  and if the data is biased the model will reflect that bias  This can lead to skewed representations  unfair stereotypes  so we need to be mindful of the data used to train these models  to ensure fairness and inclusivity
 
 
-Code Snippets Time  Alright let's get our hands dirty  I can't give you a full implementation of a text-to-video model here  that would be a whole book  but I can give you some snippets to give you a taste of the underlying principles
+Code Snippets Time  let's get our hands dirty  I can't give you a full implementation of a text-to-video model here  that would be a whole book  but I can give you some snippets to give you a taste of the underlying principles
 
 Snippet 1  A simple Python script using a pre-trained image generation model  this isn't video but it's a starting point it illustrates the basic idea of text-to-image  using a library like  Pillow  to handle image manipulation
 

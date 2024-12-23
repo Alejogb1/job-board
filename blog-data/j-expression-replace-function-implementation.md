@@ -4,9 +4,9 @@ date: "2024-12-13"
 id: "j-expression-replace-function-implementation"
 ---
 
-Okay so j expression replace function implementation right yeah I've been there a few times this is a classic problem and honestly anyone who's dipped their toes in the j programming language for more than a weekend has probably had to wrestle with this one I remember when I first started using j I was trying to do some data wrangling thing involving text files it was a mess I had this huge block of text and I needed to swap out all instances of one particular string for another and it felt like i was in the wild west at first but i got it going so here’s how i usually approach it
+ so j expression replace function implementation right yeah I've been there a few times this is a classic problem and honestly anyone who's dipped their toes in the j programming language for more than a weekend has probably had to wrestle with this one I remember when I first started using j I was trying to do some data wrangling thing involving text files it was a mess I had this huge block of text and I needed to swap out all instances of one particular string for another and it felt like i was in the wild west at first but i got it going so here’s how i usually approach it
 
-Alright so lets get the core concept its not about replacing directly its about finding and building new string thats how it works in j it’s not like some python string replace it uses more of a functional approach we’re going to use the power of j's array processing to locate the occurrences and piece things back together using a mix of indexing and concatenation
+so lets get the core concept its not about replacing directly its about finding and building new string thats how it works in j it’s not like some python string replace it uses more of a functional approach we’re going to use the power of j's array processing to locate the occurrences and piece things back together using a mix of indexing and concatenation
 
 Let’s start with a simple case replacing one single word in a string with another
 
@@ -24,7 +24,7 @@ replaceSingle=: 3 : 0
 )
 ```
 
-Okay what we have here  is a simple verb `replaceSingle` it takes two arguments the string to work on x and the pair `(old new)` as argument y
+ what we have here  is a simple verb `replaceSingle` it takes two arguments the string to work on x and the pair `(old new)` as argument y
 first we get the string we going to modify and assign it to `text` then we take the `old` and the `new` string from the `y` argument the `{::` part is just indexing the `y` argument then we find the position of the old string in text using `i. 1` which finds the first occurrence of `old` inside text which will return the position of the substring where it starts or if it does not exist it will give us 0 which is perfect for checking for its existence
 
 after that we check with an if statement if the position `pos` is 0 if it is we return the original text because it means the string we wanted to replace does not even exist in text
@@ -54,7 +54,7 @@ replaceAll=: 3 : 0
 )
 ```
 
-Okay this one is a bit more meaty in this verb we also get `text` and `old` and `new` in the same way as the previous verb `replaceSingle` but the difference starts here we are going to search for all the occurrences of `old` in the string `text` and return the indices in the `positions` varible for example if text is  `abcabcabc` and old is `abc` then the positions will be `0 3 6`  and we check to see if there are any occurrences at all if there is no occurrence we return the original text
+ this one is a bit more meaty in this verb we also get `text` and `old` and `new` in the same way as the previous verb `replaceSingle` but the difference starts here we are going to search for all the occurrences of `old` in the string `text` and return the indices in the `positions` varible for example if text is  `abcabcabc` and old is `abc` then the positions will be `0 3 6`  and we check to see if there are any occurrences at all if there is no occurrence we return the original text
 
 If there are positions it gets more interesting and complicated we start building our result in result variable first and initialize a counter at 0 we start looping through every position we get from positions in the start variable we then add the part of the text from the beginning to the position start to the result variable and add our `new` string now the interesting thing we replace the current text variable by the part of text starting after the `old` string and we update our positions variable by subtracting the starting position and the length of the old string form all the other positions this makes our loop go through all the occurrences
 now that we have a good grasp of the core functionality lets spice things up with a real problem

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-create-an-array-of-class-objects-within-another-object"
 ---
 
-Alright, let's tackle this. It's a common scenario, and I’ve definitely seen it crop up in a few projects over the years – most notably a large-scale simulation engine I worked on back in my 'pre-cloud' days. We needed to model a system of interacting entities, and having an array of object instances within another object was crucial for managing that complexity. The trick isn't just about syntax, it's also about understanding resource management and object lifetimes.
+Alright,  It's a common scenario, and I’ve definitely seen it crop up in a few projects over the years – most notably a large-scale simulation engine I worked on back in my 'pre-cloud' days. We needed to model a system of interacting entities, and having an array of object instances within another object was crucial for managing that complexity. The trick isn't just about syntax, it's also about understanding resource management and object lifetimes.
 
 You're asking about embedding an array of class objects within a containing object, and there are multiple ways to approach this, each with its own set of trade-offs. We're not just dealing with simple primitive types; we're dealing with the instantiation of classes, which means considering constructors, destructors, and memory allocation.
 

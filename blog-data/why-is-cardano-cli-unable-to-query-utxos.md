@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-cardano-cli-unable-to-query-utxos"
 ---
 
-Okay, let's tackle this one. I remember a particularly frustrating project back in '22 where I was building a DApp that heavily relied on accurate UTXO retrieval through the `cardano-cli`. I quickly discovered that, while the tool is powerful, it's not always as straightforward as one might hope, especially when querying UTXOs. The issue isn’t usually that `cardano-cli` *cannot* query UTXOs; it's more nuanced than that.
+, let's tackle this one. I remember a particularly frustrating project back in '22 where I was building a DApp that heavily relied on accurate UTXO retrieval through the `cardano-cli`. I quickly discovered that, while the tool is powerful, it's not always as straightforward as one might hope, especially when querying UTXOs. The issue isn’t usually that `cardano-cli` *cannot* query UTXOs; it's more nuanced than that.
 
 The core problem often lies in a confluence of factors, most commonly involving misconfigurations or misunderstandings of the underlying mechanisms. `cardano-cli` interacts with a local Cardano node, and the accuracy and availability of UTXO data depend entirely on the state and synchronization of that node. When things go wrong, the common symptom is that the command either hangs indefinitely, returns empty results, or throws an error message that’s less than helpful.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-isnt-the-docker-stack-updating-its-folder-structure-after-a-new-image-is-deployed"
 ---
 
-Alright, let's tackle this. It's a frustration I've definitely seen surface multiple times, and it usually comes down to a few core concepts that are easy to overlook when you're moving fast with containerized deployments. Specifically, the issue of a docker stack not reflecting file system changes after a new image is deployed often boils down to misunderstandings about how volumes are handled, image layering, and orchestration updates.
+Alright,  It's a frustration I've definitely seen surface multiple times, and it usually comes down to a few core concepts that are easy to overlook when you're moving fast with containerized deployments. Specifically, the issue of a docker stack not reflecting file system changes after a new image is deployed often boils down to misunderstandings about how volumes are handled, image layering, and orchestration updates.
 
 In my time working on a large-scale microservices platform – we had a whole team dedicated to containerization, and I remember pulling my hair out on more than one occasion because of similar issues – I’ve learned these are seldom simple, one-size-fits-all fixes. It's a nuanced interaction of several components, so let’s unpack it.
 

@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-stub-promises-with-sinon"
 ---
 
-Okay, let's talk about stubbing promises with sinon. I've had my fair share of dealing with asynchronous testing, and let me tell you, stubbing promises correctly can save a *lot* of headache. It's not always immediately obvious how to do it, especially when you first start using sinon. It’s one of those things where a little practice and understanding of what's happening under the hood goes a long way.
+, let's talk about stubbing promises with sinon. I've had my fair share of dealing with asynchronous testing, and let me tell you, stubbing promises correctly can save a *lot* of headache. It's not always immediately obvious how to do it, especially when you first start using sinon. It’s one of those things where a little practice and understanding of what's happening under the hood goes a long way.
 
 The core issue when testing with asynchronous operations, like those returning promises, is maintaining control over the execution flow. You need to isolate the unit under test and control what gets returned from its dependencies – otherwise, you are venturing into integration test territory, which can get complex very quickly. That's where sinon's stubbing capabilities become invaluable, allowing us to meticulously mock the behaviour of promise-returning functions. We want to ensure our unit behaves correctly irrespective of the actual underlying asynchronous operations that it depends on.
 

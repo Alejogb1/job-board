@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-permission-denied-errors-when-moving-files-using-airflow-in-a-docker-container-on-windows"
 ---
 
-Okay, let's tackle this. Permission denied errors with Airflow, Docker, and Windows—it's a familiar beast. I've seen this pattern countless times, and it usually boils down to a few fundamental mismatches between how Windows handles file permissions and how Docker containers, particularly those based on Linux, operate. Let me walk you through the typical causes and, more importantly, how to fix them.
+,  Permission denied errors with Airflow, Docker, and Windows—it's a familiar beast. I've seen this pattern countless times, and it usually boils down to a few fundamental mismatches between how Windows handles file permissions and how Docker containers, particularly those based on Linux, operate. Let me walk you through the typical causes and, more importantly, how to fix them.
 
 The crux of the issue stems from the way Docker on Windows interfaces with the underlying host file system. Docker Desktop for Windows employs a virtualized Linux environment, typically through Hyper-V or WSL 2, where containers actually run. When you bind mount a directory from your Windows host into a container, the file system permissions within the container aren't a direct mirror of what you see in Windows Explorer. Instead, they're typically mapped to specific user and group ids inside the container. This is where things can go sideways, particularly if you're not explicitly handling user IDs or file ownership within your Docker images or airflow configuration.
 

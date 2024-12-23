@@ -4,7 +4,7 @@ date: "2024-12-03"
 id: "how-does-srcbook-transform-written-concepts-into-working-applications-instantly"
 ---
 
-Okay so you wanna know how Srcbook—let's just call it SB for short cuz that's less typing—magically turns your brilliant ideas scribbled on napkins into actual running apps right then and there  It's kinda like having a supercharged genie in a box but instead of wishes it's code  The magic is less genies and more clever engineering a really smart blend of a few key tech areas
+ so you wanna know how Srcbook—let's just call it SB for short cuz that's less typing—magically turns your brilliant ideas scribbled on napkins into actual running apps right then and there  It's kinda like having a supercharged genie in a box but instead of wishes it's code  The magic is less genies and more clever engineering a really smart blend of a few key tech areas
 
 First off it's all about natural language processing NLP  Think of it as teaching a computer to understand human language not just words but the *meaning* behind them  SB uses some seriously advanced NLP models probably something based on transformers like the ones described in the "Attention is All You Need" paper  You should check that out its a game changer  It's not just keyword matching its understanding context relationships and intent  You describe a "user interface with two buttons a red one and a blue one that change the background color" and SB gets it  It doesn't just see words it grasps the concept of a UI the actions the desired functionality  It's like having a super smart assistant who's also a coding ninja
 

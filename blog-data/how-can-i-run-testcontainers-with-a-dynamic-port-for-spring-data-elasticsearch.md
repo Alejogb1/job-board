@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-run-testcontainers-with-a-dynamic-port-for-spring-data-elasticsearch"
 ---
 
-Alright, let's tackle this. I've bumped into this exact scenario a few times, particularly when setting up integration tests for applications heavily reliant on Elasticsearch. Dynamically assigning ports for Testcontainers when integrating with Spring Data Elasticsearch can initially seem like a minor hurdle, but it’s crucial for avoiding port conflicts, especially in continuous integration environments. Let me walk you through a practical approach, focusing on how I’ve handled it in past projects.
+Alright,  I've bumped into this exact scenario a few times, particularly when setting up integration tests for applications heavily reliant on Elasticsearch. Dynamically assigning ports for Testcontainers when integrating with Spring Data Elasticsearch can initially seem like a minor hurdle, but it’s crucial for avoiding port conflicts, especially in continuous integration environments. Let me walk you through a practical approach, focusing on how I’ve handled it in past projects.
 
 The core problem revolves around Testcontainers' inherent randomness when allocating ports, and how Spring Data Elasticsearch typically expects a fixed, preconfigured host and port combination. We need to bridge this gap so Spring's auto-configuration can connect successfully to our containerized Elasticsearch instance without requiring manual intervention each test run. There are several ways, each with its merits and quirks, but I’ve found the following methodology to be the most consistent and robust.
 

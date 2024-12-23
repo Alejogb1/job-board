@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-stop-a-docker-container-after-x-minutes"
 ---
 
-Let's tackle this... it’s a problem I've definitely encountered more times than I’d care to admit, particularly in my early days of orchestrating containerized microservices. Getting a container to gracefully terminate after a set period is critical for resource management, especially in testing and development environments. The core challenge isn't inherent to docker itself, but rather, how we signal that time has elapsed *inside* the container's operating context, and then trigger its shutdown.
+.. it’s a problem I've definitely encountered more times than I’d care to admit, particularly in my early days of orchestrating containerized microservices. Getting a container to gracefully terminate after a set period is critical for resource management, especially in testing and development environments. The core challenge isn't inherent to docker itself, but rather, how we signal that time has elapsed *inside* the container's operating context, and then trigger its shutdown.
 
 Several methods exist, and each has its nuances. We’re not just looking at a brute-force ‘kill’ command after X minutes; that's akin to pulling the power cord—messy, and often results in data corruption or incomplete process terminations. We strive for a clean, controlled shutdown. I'll detail a few approaches I've relied on, focusing on those that involve minimal external intervention, as I've found they often integrate more smoothly into existing workflows.
 

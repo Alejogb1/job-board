@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-configure-fail2bans-failregex-for-a-flask-application-running-in-a-docker-container"
 ---
 
-Alright, let's tackle this. Configuring fail2ban to effectively monitor a Flask application housed within a Docker container can sometimes feel like navigating a maze, but it's definitely achievable with a structured approach. I’ve spent a fair amount of time tweaking these setups in various production environments, so I can share some insights from those trenches.
+Alright,  Configuring fail2ban to effectively monitor a Flask application housed within a Docker container can sometimes feel like navigating a maze, but it's definitely achievable with a structured approach. I’ve spent a fair amount of time tweaking these setups in various production environments, so I can share some insights from those trenches.
 
 The core challenge lies in the fact that the Flask application's logs, typically the targets for fail2ban's scrutiny, are generated *inside* the container, while fail2ban usually resides on the *host* system, or sometimes in a separate container. We need to bridge this gap. The way I've approached this successfully usually involves three key components: correct log output from Flask, log forwarding/mounting to a location accessible by fail2ban, and crafting precise failregex patterns that match the application's log formats. Let's unpack each of these.
 

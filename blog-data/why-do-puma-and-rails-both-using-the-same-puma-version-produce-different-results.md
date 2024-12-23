@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-do-puma-and-rails-both-using-the-same-puma-version-produce-different-results"
 ---
 
-Okay, let’s unpack this puzzle, because it's a situation I’ve definitely encountered before. Years back, I was troubleshooting a staging environment where Puma was acting decidedly… *distinct* from our production setup, even though the version numbers were identical. The head scratching was real, and what it boiled down to was far more nuanced than just the version itself. Let’s delve into the specifics.
+, let’s unpack this puzzle, because it's a situation I’ve definitely encountered before. Years back, I was troubleshooting a staging environment where Puma was acting decidedly… *distinct* from our production setup, even though the version numbers were identical. The head scratching was real, and what it boiled down to was far more nuanced than just the version itself. Let’s delve into the specifics.
 
 The core issue isn't that Puma, as a binary, is behaving differently across environments. The problem usually stems from the *context* in which Puma operates. Think of it like this: you might have the same model of car, but if one is being driven on a smooth highway and the other on a rocky trail, their performances will vary significantly.
 

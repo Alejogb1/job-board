@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-altairs-multiselection-be-used-to-select-elements-based-on-a-mapping"
 ---
 
-Okay, let's delve into using Altair's `MultiSelection` for element selection via mappings, a problem I encountered quite a bit back when I was architecting data visualization dashboards for a biotech company. We needed dynamic interactive plots that responded to user selections, and Altair, with its declarative syntax, proved invaluable.
+, let's delve into using Altair's `MultiSelection` for element selection via mappings, a problem I encountered quite a bit back when I was architecting data visualization dashboards for a biotech company. We needed dynamic interactive plots that responded to user selections, and Altair, with its declarative syntax, proved invaluable.
 
 The crux of the issue, as I see it, lies in the fact that `MultiSelection` inherently works with underlying data rows rather than directly with a mapped visual representation. This means we're not directly selecting, for instance, a circle that *represents* a data point but rather the data point itself, identified through its row index. However, there are some workarounds we can use to create the desired behavior using mapping.
 

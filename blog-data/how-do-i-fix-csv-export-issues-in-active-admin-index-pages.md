@@ -40,7 +40,7 @@ end
 ```
 In this code, the `csv` block now explicitly defines the format of the output. I’m also showing how to ensure nil values don’t break the export when dealing with associations (`user_data&.some_attribute`). Additionally, I recommend using `iso8601` for date/time values, as it creates a consistent, globally unambiguous output. The `header_format` lambda is a good example of how to make your column headers internationalizable, which is another common sticking point in complex applications.
 
-Next, let’s deal with complex data, particularly relationships. The default csv generation method for Active Admin does an okay job with simple models, but it struggles when you need to pull in data from associated tables or want to perform more complex operations. I've had to address situations where an export needs data from multiple joined tables or require some data transformation, and the default output simply didn't cut it. Here is an example showing a more complex data export from relationships, and also making use of a custom method to format data.
+Next, let’s deal with complex data, particularly relationships. The default csv generation method for Active Admin does an  job with simple models, but it struggles when you need to pull in data from associated tables or want to perform more complex operations. I've had to address situations where an export needs data from multiple joined tables or require some data transformation, and the default output simply didn't cut it. Here is an example showing a more complex data export from relationships, and also making use of a custom method to format data.
 
 ```ruby
 ActiveAdmin.register Order do

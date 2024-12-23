@@ -4,7 +4,7 @@ date: "2024-12-12"
 id: "how-does-googles-gemini-20-flash-enhance-native-tool-use-for-real-time-applications"
 ---
 
-Okay let's dive into Gemini 2.0 Flash and how it's shaping up for real time tool integration it's a pretty exciting space honestly Forget the whole ponderous model thing we’re talking about speed and immediate action here Gemini Flash aims to be like a super-fast nimble brain capable of leveraging external tools on the fly
+ let's dive into Gemini 2.0 Flash and how it's shaping up for real time tool integration it's a pretty exciting space honestly Forget the whole ponderous model thing we’re talking about speed and immediate action here Gemini Flash aims to be like a super-fast nimble brain capable of leveraging external tools on the fly
 
 Imagine a scenario where you’re building a real time language translation app Instead of a slow churn through a massive model every time you need a translation Gemini Flash is supposed to be quick and efficient It's designed to understand the request fire off the right tool API in this case a translation service and bam give you a result practically instantaneously This avoids the latency that kills any real time experience
 

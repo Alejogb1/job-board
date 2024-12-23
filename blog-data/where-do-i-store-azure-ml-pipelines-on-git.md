@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "where-do-i-store-azure-ml-pipelines-on-git"
 ---
 
-Okay, let’s talk about where to store your Azure ml pipelines on git. It’s a topic that often comes up, and honestly, it’s not always as straightforward as a quick search might suggest. I've had my share of figuring this out in production environments, and believe me, there's a significant difference between a hello-world example and maintaining a complex mlops pipeline across a team. So let’s unpack this systematically.
+, let’s talk about where to store your Azure ml pipelines on git. It’s a topic that often comes up, and honestly, it’s not always as straightforward as a quick search might suggest. I've had my share of figuring this out in production environments, and believe me, there's a significant difference between a hello-world example and maintaining a complex mlops pipeline across a team. So let’s unpack this systematically.
 
 The core issue isn't just *where* to store the files, but *how* to organize them for a manageable and scalable mlops workflow. The answer isn't a single directory but rather a structured repository with clear conventions. I learned this the hard way when I first joined a team migrating from individual data scientist notebooks to an automated system. Chaos ensued, mostly because of differing storage methods and versioning protocols.
 

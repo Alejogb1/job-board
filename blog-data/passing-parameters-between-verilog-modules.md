@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "passing-parameters-between-verilog-modules"
 ---
 
-Okay so you're asking about passing parameters between Verilog modules right Been there done that more times than I can count It's like the bread and butter of hardware description but also a source of constant headaches if you don't get it right
+ so you're asking about passing parameters between Verilog modules right Been there done that more times than I can count It's like the bread and butter of hardware description but also a source of constant headaches if you don't get it right
 
 Let me tell you this was definitely not my first rodeo. Back in my early days when I was still wet behind the ears I spent probably a week trying to debug a communication interface because of a parameter mismatch. I had a bus controller and an arbiter and for some reason data was just gibberish. The issue turned out to be a bit-width mismatch between a parameter declared in one module and the one used in the other that I didn't see at first. I had a deep sigh moment when I found it. You know how it is the simplest things make you go crazy.
 

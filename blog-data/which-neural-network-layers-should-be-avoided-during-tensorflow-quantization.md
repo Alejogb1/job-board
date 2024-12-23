@@ -16,7 +16,7 @@ Now, let's consider activation layers, specifically **exotic activation function
 
 Finally, let's turn our attention to the **initial layers of a deep network**, particularly those involved in feature extraction. When quantizing feature extraction layers in image processing tasks or early layers in language processing, we noticed that the fine details captured by these initial layers often need high numerical precision. The low-bit resolution of quantized weights and activations can lead to a significant loss of information in these early layers, which the later parts of the network struggle to compensate for. Quantizing layers too early can drastically degrade the network's ability to correctly discern initial, nuanced features, leading to considerable accuracy loss in all subsequent layers. We often had to adopt a strategy where a few initial convolutional layers are kept in their floating-point form while quantizing the more computationally expensive deeper layers to achieve a viable trade-off between speed and accuracy.
 
-Okay, so how do you practically address this? It’s not a one-size-fits-all situation. I’ll give you a few Python code snippets using TensorFlow to illustrate specific techniques.
+, so how do you practically address this? It’s not a one-size-fits-all situation. I’ll give you a few Python code snippets using TensorFlow to illustrate specific techniques.
 
 **Snippet 1: Selective Quantization - LayerNorm Example:**
 

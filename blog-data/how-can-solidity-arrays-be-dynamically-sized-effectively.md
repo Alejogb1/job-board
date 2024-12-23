@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-solidity-arrays-be-dynamically-sized-effectively"
 ---
 
-Okay, let's tackle this. I recall a particularly challenging project a few years back involving a decentralized auction system, where the number of bidders could fluctuate wildly. We needed a robust way to handle potentially huge collections of bids without running into gas limit issues or creating a system vulnerable to denial-of-service. That experience really hammered home the importance of understanding dynamic array management in solidity, beyond just the basic implementations.
+,  I recall a particularly challenging project a few years back involving a decentralized auction system, where the number of bidders could fluctuate wildly. We needed a robust way to handle potentially huge collections of bids without running into gas limit issues or creating a system vulnerable to denial-of-service. That experience really hammered home the importance of understanding dynamic array management in solidity, beyond just the basic implementations.
 
 So, how do we size solidity arrays dynamically and *effectively*? It’s not as straightforward as in other programming languages. Solidity arrays come in two main flavors: fixed-size and dynamic-size. Fixed-size arrays are declared with a specific size at compile time (e.g., `uint[10]`), and their size is immutable. Dynamic arrays, on the other hand, can grow or shrink during contract execution (e.g., `uint[]`). While seemingly simple, the gas costs and limitations surrounding dynamic arrays need careful consideration.
 

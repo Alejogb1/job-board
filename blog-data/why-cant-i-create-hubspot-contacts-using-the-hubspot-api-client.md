@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-cant-i-create-hubspot-contacts-using-the-hubspot-api-client"
 ---
 
-Let's tackle this. So, you're running into a frustrating roadblock trying to create HubSpot contacts via the `hubspot-api-client`. I've been there—more times than I'd care to remember, actually. It's rarely a single, clear-cut issue. More often than not, it's a confluence of several things conspiring against you. Let's break down the most common culprits, drawing from experiences battling similar situations in past projects.
+ So, you're running into a frustrating roadblock trying to create HubSpot contacts via the `hubspot-api-client`. I've been there—more times than I'd care to remember, actually. It's rarely a single, clear-cut issue. More often than not, it's a confluence of several things conspiring against you. Let's break down the most common culprits, drawing from experiences battling similar situations in past projects.
 
 The first place to scrutinize is your authentication method. The `hubspot-api-client` requires either an api key or, more robustly, an access token obtained through oAuth. If you're using an api key, be certain it is associated with a portal that has the proper permissions to create contacts. While it seems fundamental, I’ve witnessed more than one colleague spend hours tracing errors stemming from a simple, invalid api key. On the other hand, oAuth offers better security and flexibility, but its complexity also means it introduces more possible points of failure. Have you correctly configured the oAuth flow and is your access token actually active, or has it expired? These tokens generally have a lifetime, so refreshing them is essential, especially in long-running applications.
 

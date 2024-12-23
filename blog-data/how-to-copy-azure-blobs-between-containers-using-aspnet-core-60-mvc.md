@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-copy-azure-blobs-between-containers-using-aspnet-core-60-mvc"
 ---
 
-Alright, let's tackle this. I've had my share of moving blobs around in Azure over the years, and while it might seem straightforward, there are definitely nuances to keep in mind, especially when you’re aiming for efficiency and robustness in an ASP.NET Core 6.0 MVC application. The core task, copying blobs from one container to another, hinges on the Azure Storage SDK, but the “how” can significantly impact your application’s performance and even cost.
+Alright,  I've had my share of moving blobs around in Azure over the years, and while it might seem straightforward, there are definitely nuances to keep in mind, especially when you’re aiming for efficiency and robustness in an ASP.NET Core 6.0 MVC application. The core task, copying blobs from one container to another, hinges on the Azure Storage SDK, but the “how” can significantly impact your application’s performance and even cost.
 
 Before diving into the code, let’s establish a solid conceptual ground. We're not simply downloading and re-uploading files. That would be inefficient, especially for larger blobs. Instead, we want to utilize Azure's server-side copy operation which minimizes network traffic from our application, since the actual data transfer occurs within Azure's infrastructure. This approach is significantly faster and more cost-effective because you don't incur egress bandwidth charges.
 

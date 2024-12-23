@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "how-do-alignment-processes-ensure-ethical-and-safe-ai-behavior-during-deployment"
 ---
 
-Okay so you wanna know about aligning AI right making sure its not gonna go rogue and start doing stuff it shouldnt  That's a HUGE question like seriously huge  We're talking about building systems that are smarter than us and hoping they'll still play nice its a bit like building a really powerful rocket and hoping it doesnt accidentally decide to go to the sun instead of Mars
+ so you wanna know about aligning AI right making sure its not gonna go rogue and start doing stuff it shouldnt  That's a HUGE question like seriously huge  We're talking about building systems that are smarter than us and hoping they'll still play nice its a bit like building a really powerful rocket and hoping it doesnt accidentally decide to go to the sun instead of Mars
 
 The core idea is to build in safeguards from the very beginning  You cant just slap on an ethics patch after the thing is already running  Think of it like building a house you dont want to just add some security cameras after its already built you want the foundation to be strong and the doors to be properly locked you get it
 

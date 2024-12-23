@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-do-i-get-reauthorizationrequired-errors-when-creating-webhooks-with-short-expiration-times"
 ---
 
-Alright, let's tackle this. The "reauthorizationRequired" error when dealing with short-lived webhooks can be a particularly thorny issue, and I’ve seen it trip up plenty of developers, including myself, back in my days working on that financial transaction platform. The core problem isn’t usually in the webhook’s structure itself, but rather how the authentication flow intersects with the timing constraints imposed by those short expiration periods.
+Alright,  The "reauthorizationRequired" error when dealing with short-lived webhooks can be a particularly thorny issue, and I’ve seen it trip up plenty of developers, including myself, back in my days working on that financial transaction platform. The core problem isn’t usually in the webhook’s structure itself, but rather how the authentication flow intersects with the timing constraints imposed by those short expiration periods.
 
 The fundamental concept here revolves around authentication tokens, typically bearer tokens, which are used to authorize your requests to an api endpoint, including creating and subsequently interacting with webhooks. These tokens are designed to have limited lifespans for security purposes. Short expiration times, while beneficial for security, introduce complexity when you're setting up mechanisms, such as webhooks, that rely on sustained access or continued interaction.
 

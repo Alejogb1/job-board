@@ -4,9 +4,9 @@ date: "2024-12-13"
 id: "verilog-typedef-struct-usage"
 ---
 
-Alright lets dive into this verilog `typedef struct` thing I've seen this pop up a fair bit and I've wrestled with it more times than I'd like to admit so let me share what I've learned its not exactly rocket science but there are definitely some things that can trip you up
+lets dive into this verilog `typedef struct` thing I've seen this pop up a fair bit and I've wrestled with it more times than I'd like to admit so let me share what I've learned its not exactly rocket science but there are definitely some things that can trip you up
 
-Okay so first off `typedef struct` in verilog is basically your way of creating custom data types you're essentially saying hey compiler instead of using just `reg` or `wire` I want to bundle a bunch of different signals together and give it a name this is super handy for managing complex data structures and makes your code much more readable and maintainable trust me on this one
+ so first off `typedef struct` in verilog is basically your way of creating custom data types you're essentially saying hey compiler instead of using just `reg` or `wire` I want to bundle a bunch of different signals together and give it a name this is super handy for managing complex data structures and makes your code much more readable and maintainable trust me on this one
 
 Think of it like building a mini-container for related signals its a way to group things together logically and avoid having a bunch of loose wires floating around your design for example if you're building a data packet you might have a header a payload and a checksum all those things belong together right `typedef struct` lets you define that relationship
 
@@ -36,7 +36,7 @@ module simple_example (
 endmodule
 ```
 
-Alright breakdown time `typedef struct packed` this is where you create your struct type `packed` is important it tells verilog to pack these fields together as tightly as possible without any padding between them this is usually what you want when dealing with hardware especially memory mapped areas
+breakdown time `typedef struct packed` this is where you create your struct type `packed` is important it tells verilog to pack these fields together as tightly as possible without any padding between them this is usually what you want when dealing with hardware especially memory mapped areas
 
 Then inside the curly braces you declare your members each member has a name and a data type in this case we have `header` a `payload` and `checksum` after that `packet_t` becomes the name of your custom type you can now declare variables as being of type `packet_t` like in our module where `input_packet` is one such variable
 

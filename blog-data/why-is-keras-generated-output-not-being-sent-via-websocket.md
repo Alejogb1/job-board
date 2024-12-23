@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-keras-generated-output-not-being-sent-via-websocket"
 ---
 
-Okay, let's tackle this. I've seen this scenario crop up more than a few times, typically when someone's trying to build a live, interactive application with machine learning inference. The problem – Keras model output not readily making its way across a WebSocket – usually boils down to a few key points. It's rarely an issue directly with Keras itself, but rather the way its output is being handled in the asynchronous workflow around a WebSocket connection.
+,  I've seen this scenario crop up more than a few times, typically when someone's trying to build a live, interactive application with machine learning inference. The problem – Keras model output not readily making its way across a WebSocket – usually boils down to a few key points. It's rarely an issue directly with Keras itself, but rather the way its output is being handled in the asynchronous workflow around a WebSocket connection.
 
 First off, let's acknowledge that Keras, by itself, is a model-building and training library. It's designed to process input data through a neural network and generate predictions, typically as numpy arrays or tensors. WebSocket, on the other hand, is a bidirectional communication protocol designed for transmitting data between a client and server. They operate in entirely different domains, and thus, the bridge between them is where things can get complicated.
 

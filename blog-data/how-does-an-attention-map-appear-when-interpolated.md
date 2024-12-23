@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-does-an-attention-map-appear-when-interpolated"
 ---
 
-Let's tackle this. Interpolation of attention maps, a topic I've frequently encountered in my work with neural networks, can sometimes be perplexing. The visual change that occurs during interpolation isn't always intuitive, and it’s critical to understand what it represents when analyzing model behavior. I remember once dealing with a particularly recalcitrant image classification model where the attention maps kept shifting wildly during gradient-based backpropagation; that taught me the importance of really grasping interpolation's effects.
+ Interpolation of attention maps, a topic I've frequently encountered in my work with neural networks, can sometimes be perplexing. The visual change that occurs during interpolation isn't always intuitive, and it’s critical to understand what it represents when analyzing model behavior. I remember once dealing with a particularly recalcitrant image classification model where the attention maps kept shifting wildly during gradient-based backpropagation; that taught me the importance of really grasping interpolation's effects.
 
 Essentially, interpolation in the context of attention maps refers to the process of resizing a low-resolution attention map to match the dimensions of the input image or feature map that it’s supposedly highlighting. The raw attention maps are often smaller, produced after several layers of processing in a convolutional neural network, so scaling them up to visualize their effect on the input requires interpolation. Without this, you'd essentially just get a blocky, pixelated heat map that doesn’t accurately reflect what part of the image was influencing the network's decision.
 

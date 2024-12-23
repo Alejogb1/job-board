@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "what-innovations-are-driving-the-improvement-of-alignment-processes-for-open-source-ai-models"
 ---
 
-Okay so you wanna know whats up with aligning open source AI right  like making sure these things do what we actually want them to do thats a HUGE deal  its not just about making them smart its about making them safe and helpful and all that jazz  So what's new what's exciting  well buckle up buttercup its a wild ride
+ so you wanna know whats up with aligning open source AI right  like making sure these things do what we actually want them to do thats a HUGE deal  its not just about making them smart its about making them safe and helpful and all that jazz  So what's new what's exciting  well buckle up buttercup its a wild ride
 
 First off  the whole "alignment" thing itself is evolving  its not just one problem its a million tiny problems  and we're getting better at defining those problems which is a massive step forward  think about it  early on it was just  "make it do X"  now its like  "make it do X reliably  safely  explicably and with minimal unintended consequences"  Thats a whole different level of complexity
 
@@ -14,7 +14,7 @@ Another big thing is interpretability  we're desperate to understand *why* these
 
 Then there's reinforcement learning from human feedback RLHF  This is massive  Its basically letting humans guide the model's learning process  like a superpowered version of supervised learning  instead of just giving the model tons of labeled data  we interact with it  give it feedback  and shape its behavior over time  this is where things like preference models come in  we're teaching models to prefer certain outputs over others which is a really powerful way to align their goals with ours   This stuff is super important because it lets us address issues that are hard to specify through simple data alone things like bias  fairness  and ethical considerations  There are great resources out there  I recommend checking out some books on RL  they dive deep into the practical applications of this kind of training
 
-Okay so let's look at some code snippets to illustrate some of these points  these are simplified examples but they capture the essence of the ideas
+ so let's look at some code snippets to illustrate some of these points  these are simplified examples but they capture the essence of the ideas
 
 **Snippet 1: Adversarial Robustness Testing**
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-elasticsearch-dynamically-add-fields-such-as-calculated-driving-distances-during-user-searches"
 ---
 
-Alright, let's tackle this. I recall a particularly challenging project a few years back, a location-based service requiring real-time distance calculations. It’s a scenario that often trips up newcomers to Elasticsearch: dynamically incorporating data during the search phase rather than at index time. The issue, of course, boils down to not storing these computed fields directly in the index but needing them ‘on the fly.’ Elasticsearch isn't designed to perform arbitrary calculations during searches on indexed data as a first principle, but there are several well-established techniques we can employ, using scripting and custom function scores.
+Alright,  I recall a particularly challenging project a few years back, a location-based service requiring real-time distance calculations. It’s a scenario that often trips up newcomers to Elasticsearch: dynamically incorporating data during the search phase rather than at index time. The issue, of course, boils down to not storing these computed fields directly in the index but needing them ‘on the fly.’ Elasticsearch isn't designed to perform arbitrary calculations during searches on indexed data as a first principle, but there are several well-established techniques we can employ, using scripting and custom function scores.
 
 Essentially, we need a way to execute code during query execution. Elasticsearch provides a few mechanisms to achieve this, primarily through scripting languages like painless, or via function scores. These methods allow us to manipulate search results based on the specific query parameters and the document data within the index.
 

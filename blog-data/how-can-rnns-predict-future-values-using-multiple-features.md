@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-rnns-predict-future-values-using-multiple-features"
 ---
 
-Okay, let's tackle this. It's a problem I've seen crop up in quite a few projects, from predicting network traffic to anticipating stock prices. The crux of it lies in how we feed multi-dimensional time-series data into a recurrent neural network (rnn) effectively. It's not just about chucking all the features in and hoping for the best; a bit of finesse is required. Let's break it down.
+,  It's a problem I've seen crop up in quite a few projects, from predicting network traffic to anticipating stock prices. The crux of it lies in how we feed multi-dimensional time-series data into a recurrent neural network (rnn) effectively. It's not just about chucking all the features in and hoping for the best; a bit of finesse is required. Let's break it down.
 
 The fundamental challenge when predicting future values with an rnn using multiple features is how to represent and process the input sequence. An rnn, at its core, is designed to handle sequential data where the output at a given time step is dependent on past inputs. When we introduce multiple features, we aren't just dealing with a single series of values anymore, but rather a set of parallel time series. So, each time step has multiple values associated with it, each representing a different feature. We need to carefully arrange this data so the rnn can learn the underlying relationships and dependencies within *and* across these features.
 

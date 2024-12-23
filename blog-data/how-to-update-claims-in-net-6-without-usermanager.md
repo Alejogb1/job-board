@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-update-claims-in-net-6-without-usermanager"
 ---
 
-Alright, let's tackle this. It's not uncommon to find ourselves in situations where the standard `UserManager` feels like overkill, especially when dealing with claim updates that might not directly tie into traditional user management. I've certainly encountered scenarios in legacy systems or more specialized setups where direct manipulation of claims was the more efficient path. Moving away from `UserManager` in .NET 6 isn’t inherently difficult, but it does require a good understanding of the underlying security principles and how claims are structured.
+Alright,  It's not uncommon to find ourselves in situations where the standard `UserManager` feels like overkill, especially when dealing with claim updates that might not directly tie into traditional user management. I've certainly encountered scenarios in legacy systems or more specialized setups where direct manipulation of claims was the more efficient path. Moving away from `UserManager` in .NET 6 isn’t inherently difficult, but it does require a good understanding of the underlying security principles and how claims are structured.
 
 The primary reason you might bypass the `UserManager` for claim updates is performance and flexibility. Imagine a system dealing with non-user-specific claims, like permissions tied to resources rather than individuals, or dealing with claims within a microservice architecture where local user management isn't required. Trying to shoehorn these scenarios into the `UserManager`’s framework can be cumbersome. In such situations, direct manipulation via the `ClaimsPrincipal` and its associated `ClaimsIdentity` becomes the logical choice.
 

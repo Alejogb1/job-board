@@ -4,11 +4,11 @@ date: "2024-12-13"
 id: "adding-to-time-variable-in-windows-cmd-script"
 ---
 
-Alright so you're wrestling with time manipulation in Windows cmd scripts right I've been there it's a rabbit hole trust me
+so you're wrestling with time manipulation in Windows cmd scripts right I've been there it's a rabbit hole trust me
 
 Let's break this down I see your question as wanting to basically do addition to a time variable within a batch file Not a complex thing in theory but the batch scripting syntax being what it is well it can be a bit finicky I'm not going to sugarcoat it I've spent hours debugging what seemed like trivial time operations in batch files back in my early coding days
 
-Okay first off Windows cmd itself isn’t exactly known for its amazing date-time handling capabilities It's definitely not a Python or a JavaScript when it comes to this kind of stuff you're stuck with what `date` and `time` throw at you plus some rather ugly workarounds We're gonna make it work though
+ first off Windows cmd itself isn’t exactly known for its amazing date-time handling capabilities It's definitely not a Python or a JavaScript when it comes to this kind of stuff you're stuck with what `date` and `time` throw at you plus some rather ugly workarounds We're gonna make it work though
 
 The core problem is that `time` gives you strings not easily manipulated numbers So you can’t just `set newTime=%oldTime% + 1` because `time` strings like 10:30:45 are just treated as plain text by `set` not as numeric values
 
@@ -176,7 +176,7 @@ endlocal
 
 This time it uses a function to make the code more readable it’s still essentially doing the same parsing and arithmetic but the function makes it a bit easier to call multiple times if you ever have to
 
-Alright now about resources you asked for instead of links If you really need to dig into the inner workings of batch files and low level windows stuff I’d recommend a couple of oldies but goodies You can find them in used book stores or libraries
+now about resources you asked for instead of links If you really need to dig into the inner workings of batch files and low level windows stuff I’d recommend a couple of oldies but goodies You can find them in used book stores or libraries
 
 *   **Microsoft Windows Script Host Programmer's Reference**: This is an old book but it contains the bible on how the internals of Windows scripting work It will tell you all about how cmd scripts are processed and how the internals work not specifically for date and time but a must read if you want to deeply understand Windows scripting
 *   **Advanced Batch Scripting**: You can find this title in a few places or in a couple of books with similar titles This will give you a more comprehensive guide to batch file tricks and techniques that you might find useful if you still need to use batch scripts It focuses more on the practical aspects of scripting and it will teach you some ways to cope with the limitations of batch programming

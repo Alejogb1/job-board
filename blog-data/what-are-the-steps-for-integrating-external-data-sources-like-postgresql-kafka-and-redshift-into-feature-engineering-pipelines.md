@@ -4,7 +4,7 @@ date: "2024-12-10"
 id: "what-are-the-steps-for-integrating-external-data-sources-like-postgresql-kafka-and-redshift-into-feature-engineering-pipelines"
 ---
 
-Okay so you wanna hook up your feature engineering pipeline to some external data sources right PostgreSQL Kafka Redshift the whole shebang  That's cool stuff actually its pretty fundamental to building any decent sized machine learning system  It's not rocket science but there are definitely some best practices you should keep in mind
+ so you wanna hook up your feature engineering pipeline to some external data sources right PostgreSQL Kafka Redshift the whole shebang  That's cool stuff actually its pretty fundamental to building any decent sized machine learning system  It's not rocket science but there are definitely some best practices you should keep in mind
 
 First thing's first you need to figure out how your data actually flows  Are you dealing with batch processing  Are we talking streaming  Or some hybrid of both  This totally dictates your approach  Batch is simpler generally you just pull the data in process it and move on  Streaming requires more finesse because data is constantly arriving
 

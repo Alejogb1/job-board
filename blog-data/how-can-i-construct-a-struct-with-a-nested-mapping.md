@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-construct-a-struct-with-a-nested-mapping"
 ---
 
-Okay, let's tackle this. I remember dealing with a rather complex configuration system a few years back, where the requirement was precisely this: managing data structures that contained nested mappings. It wasn't straightforward, especially when considering performance and type safety. The core issue revolves around efficiently representing and accessing hierarchical data, and that’s what we’ll explore today.
+,  I remember dealing with a rather complex configuration system a few years back, where the requirement was precisely this: managing data structures that contained nested mappings. It wasn't straightforward, especially when considering performance and type safety. The core issue revolves around efficiently representing and accessing hierarchical data, and that’s what we’ll explore today.
 
 The challenge, at its heart, isn't about whether you *can* create a struct with a nested mapping – most modern languages provide the tools for that. Instead, the pertinent question is *how* to do so in a way that's maintainable, type-safe, and performs well for your specific use case. Think of a system that manages user preferences. We might want to group those preferences by category, then sub-categorize them further. In the abstract, this translates to mapping string identifiers to another mapping, and so on.
 

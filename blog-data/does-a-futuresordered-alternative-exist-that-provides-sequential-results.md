@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "does-a-futuresordered-alternative-exist-that-provides-sequential-results"
 ---
 
-Okay, let's tackle this. I remember wrestling (oops, pardon me, *dealing*) with this exact issue a few years back when we were building a distributed processing pipeline for genomic data. We needed the speed of asynchronous operations but the deterministic order of the results was absolutely crucial for downstream analysis, a common stumbling block when dealing with `futures`. The standard `futures` implementation doesn't guarantee the order of completion, and that was a problem.
+,  I remember wrestling (oops, pardon me, *dealing*) with this exact issue a few years back when we were building a distributed processing pipeline for genomic data. We needed the speed of asynchronous operations but the deterministic order of the results was absolutely crucial for downstream analysis, a common stumbling block when dealing with `futures`. The standard `futures` implementation doesn't guarantee the order of completion, and that was a problem.
 
 The core challenge, as I see it, is reconciling the non-deterministic nature of concurrent execution with the need for strictly ordered results. `FuturesOrdered`, as you likely know, is designed for asynchronous tasks where the order of *initiation* matters, not the order of completion. It returns results as they become available, which often leads to out-of-sequence output. This is great for some use cases, not so great for scenarios where, say, your data processing stages depend on strict sequencing.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-does-aws-lightsail-function-with-php-8"
 ---
 
-Okay, let's unpack that. I've spent a fair bit of time working with both AWS Lightsail and various iterations of PHP, and PHP 8 definitely introduces some nuances worth discussing. It's not just about dropping a PHP 8 codebase onto a Lightsail instance and expecting it to magically work; there are considerations around configuration, performance, and specific features that require a careful approach. Let me walk you through my experience and the things I've learned along the way.
+, let's unpack that. I've spent a fair bit of time working with both AWS Lightsail and various iterations of PHP, and PHP 8 definitely introduces some nuances worth discussing. It's not just about dropping a PHP 8 codebase onto a Lightsail instance and expecting it to magically work; there are considerations around configuration, performance, and specific features that require a careful approach. Let me walk you through my experience and the things I've learned along the way.
 
 Essentially, AWS Lightsail provides pre-configured virtual private servers (vps), which simplifies the process of launching and managing applications. You get a straightforward environment without the complexity of the full aws ec2 infrastructure. When it comes to PHP 8, the core challenge isn’t necessarily *if* it will run—it will, given a compatible environment—but rather *how well* it will run and how to leverage its features optimally. I remember one particular project where we migrated a legacy PHP 7 application to PHP 8 running on a Lightsail instance, and the performance gains, particularly with the JIT compiler in PHP 8, were substantial, provided everything was configured correctly.
 

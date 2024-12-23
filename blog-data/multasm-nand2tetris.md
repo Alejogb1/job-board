@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "multasm-nand2tetris"
 ---
 
-Alright so you're wrestling with `mult.asm` on Nand2Tetris right I know that feeling It's like that first real assembly hurdle where things get a bit less about copying straight from the book and more about actual thinking I've been there trust me
+so you're wrestling with `mult.asm` on Nand2Tetris right I know that feeling It's like that first real assembly hurdle where things get a bit less about copying straight from the book and more about actual thinking I've been there trust me
 
 Let me tell you about the first time I hit this wall It was back in my university days we were all working through the Nand2Tetris course and I was feeling pretty cocky I'd breezed through the earlier chapters thought I had the assembly stuff down pat Then came the multiplication challenge This wasn't just an exercise it felt like a personal vendetta the machine was actively trying to make me fail It took me like a whole weekend of head scratching and whiteboard diagrams to get it even remotely working properly
 

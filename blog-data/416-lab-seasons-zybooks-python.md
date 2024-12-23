@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "416-lab-seasons-zybooks-python"
 ---
 
-Okay so 416 lab seasons zybooks python yeah I've been there man like seriously been there This zybooks stuff it's a rite of passage I tell ya especially those lab seasons They aren't exactly "fun" but you learn a lot through suffering I guess
+ so 416 lab seasons zybooks python yeah I've been there man like seriously been there This zybooks stuff it's a rite of passage I tell ya especially those lab seasons They aren't exactly "fun" but you learn a lot through suffering I guess
 
 First off 416 is probably the course or lab identifier itself you know how zybooks does it They like to segment everything in to little identifiable bits And lab seasons well those are usually like iterative steps on a single major problem You start with a basic version then they add more complexities each season So if you are having problems understanding the core problem I think you should go back to the beginning of the season and really understand that version of the problem or else you will always be confused later
 
@@ -31,7 +31,7 @@ class Stack:
     def is_empty(self):
         #TODO implement is_empty logic here
 ```
-See they give you this and you're like "Okay yeah I know what a stack is" but then you get into the weeds and it becomes like climbing a mountain in flip-flops You're just slipping and sliding everywhere. The push was usually simple but I always messed up the pop because I would return the item instead of deleting it and then the is_empty was easy but sometimes I forget to use it in the pop method which gives me a lot of errors on the zybooks unit test and that’s why you must always pay a lot of attention to the tests given because they are very important and you will need to make changes in your code to make them pass
+See they give you this and you're like " yeah I know what a stack is" but then you get into the weeds and it becomes like climbing a mountain in flip-flops You're just slipping and sliding everywhere. The push was usually simple but I always messed up the pop because I would return the item instead of deleting it and then the is_empty was easy but sometimes I forget to use it in the pop method which gives me a lot of errors on the zybooks unit test and that’s why you must always pay a lot of attention to the tests given because they are very important and you will need to make changes in your code to make them pass
 
 Here’s my "fixed" version of the season one logic:
 
@@ -60,7 +60,7 @@ class Stack:
         return len(self.items) == 0
 ```
 
-Season two then came around and said “Okay now we want you to handle multiple types of data” like integers strings objects you name it and you also need to add more tests on the code from season one for like edge cases and empty scenarios which is pretty annoying because I already did that but still needed to make small changes on what I thought it was perfect which made me cry inside a little and then you really had to start thinking about error handling and all those pesky corner cases
+Season two then came around and said “ now we want you to handle multiple types of data” like integers strings objects you name it and you also need to add more tests on the code from season one for like edge cases and empty scenarios which is pretty annoying because I already did that but still needed to make small changes on what I thought it was perfect which made me cry inside a little and then you really had to start thinking about error handling and all those pesky corner cases
 
 I recall having a lot of problems when testing the pop when the stack was empty I kept getting errors and then after a while I understood I had to add a check to the is_empty method in my pop method because if not you would be making calls in a list that does not have any items that was the main error it was just giving errors and errors. I even got a runtime error during one of my tries which I have to say that it has happened only a few times in my whole python career I am still not proud of that
 

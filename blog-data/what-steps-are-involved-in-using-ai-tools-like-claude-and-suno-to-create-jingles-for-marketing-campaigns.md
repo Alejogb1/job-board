@@ -4,7 +4,7 @@ date: "2024-12-03"
 id: "what-steps-are-involved-in-using-ai-tools-like-claude-and-suno-to-create-jingles-for-marketing-campaigns"
 ---
 
-Okay so you wanna make jingles with AI right super cool  I've been playing around with Claude and Suno lately and it's a wild ride let me tell you
+ so you wanna make jingles with AI right super cool  I've been playing around with Claude and Suno lately and it's a wild ride let me tell you
 
 First things first you gotta have a solid idea  not just any jingle will do you need something catchy memorable something that sticks in people's heads like that one annoying song you can't get out of your head yeah that one  Think about your target audience what vibe are you going for are we talking upbeat pop or something more mellow and chill  You know the whole branding thing 
 
@@ -13,7 +13,7 @@ Once you've got that killer concept you can start feeding it to the AI  I usuall
 Claude is amazing for the lyrical parts  it's really good at generating creative text  Suno on the other hand is all about the music  it can generate melodies harmonies rhythms pretty much anything you can imagine musically  I've had some great success pairing them together Claude gets the words flowing Suno makes them sing
 
 
-Here's where it gets fun the iterative process  you're gonna get some output that's awesome some that's okay and some that's like what even was that  Don't worry it's all part of the process  You gotta tweak your prompts experiment with different keywords styles  It's a bit like sculpting you're chiseling away at the rough draft until you get something you love
+Here's where it gets fun the iterative process  you're gonna get some output that's awesome some that's  and some that's like what even was that  Don't worry it's all part of the process  You gotta tweak your prompts experiment with different keywords styles  It's a bit like sculpting you're chiseling away at the rough draft until you get something you love
 
 Example 1 - Claude for Lyrics
 

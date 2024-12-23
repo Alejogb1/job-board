@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "ambiguous-clock-in-event-control"
 ---
 
-Alright so this "ambiguous clock in event control" thing yeah I've been there done that bought the t-shirt and probably wrote a poorly documented library about it back in the day Let's break this down in my own way I'm assuming we're talking about scenarios where you have multiple things happening in your system that are time based and it's not entirely clear when those things *actually* happened or how they relate to each other timing wise.
+so this "ambiguous clock in event control" thing yeah I've been there done that bought the t-shirt and probably wrote a poorly documented library about it back in the day Let's break this down in my own way I'm assuming we're talking about scenarios where you have multiple things happening in your system that are time based and it's not entirely clear when those things *actually* happened or how they relate to each other timing wise.
 
 This happens all the time when you're dealing with anything remotely real-time or distributed I remember once working on a distributed logging system it was a mess to debug the system would often say an event happened at x time on one server but at x + 2 seconds on a different one It was like time decided to go on a holiday without telling us. The data was basically useless for understanding the timeline and order of events. You can spend hours staring at logs and still not figure out what happened first it is a common issue.
 

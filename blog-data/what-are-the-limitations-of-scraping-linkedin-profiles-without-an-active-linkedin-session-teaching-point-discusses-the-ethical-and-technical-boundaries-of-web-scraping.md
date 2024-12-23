@@ -4,7 +4,7 @@ date: "2024-12-12"
 id: "what-are-the-limitations-of-scraping-linkedin-profiles-without-an-active-linkedin-session-teaching-point-discusses-the-ethical-and-technical-boundaries-of-web-scraping"
 ---
 
-Okay so scraping LinkedIn without actually being logged in yeah that's a whole thing. It's not a free for all data party. Basically LinkedIn does not want you poking around if you're not a registered and active user. They put up walls man. Lots of walls.
+ so scraping LinkedIn without actually being logged in yeah that's a whole thing. It's not a free for all data party. Basically LinkedIn does not want you poking around if you're not a registered and active user. They put up walls man. Lots of walls.
 
 First big issue is access. Unauthenticated scraping means you're seen as a generic web visitor not a user which translates to way less data visibility. They serve up severely stripped down versions of profiles if they serve them up at all. The public facing parts yeah you might get those but forget seeing all the good stuff like past positions detailed skill lists endorsements connections and a whole lot more of the juicy bits you actually want.
 

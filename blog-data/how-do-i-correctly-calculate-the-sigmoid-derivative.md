@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-correctly-calculate-the-sigmoid-derivative"
 ---
 
-Alright, let's tackle this. I've seen more than a few developers stumble over the sigmoid derivative, and it’s often not because the calculus itself is inherently difficult but because of how it's applied within practical contexts, particularly in backpropagation algorithms. It's one of those foundational bits that, if you don’t grasp it cleanly, can lead to frustrating debugging sessions later on.
+Alright,  I've seen more than a few developers stumble over the sigmoid derivative, and it’s often not because the calculus itself is inherently difficult but because of how it's applied within practical contexts, particularly in backpropagation algorithms. It's one of those foundational bits that, if you don’t grasp it cleanly, can lead to frustrating debugging sessions later on.
 
 The sigmoid function, typically represented as σ(x) = 1 / (1 + e^(-x)), is widely used in neural networks due to its smooth, differentiable nature and its ability to squash values between 0 and 1. However, when we're training a network, we don’t just need the sigmoid output; we need its derivative – the rate of change of the sigmoid output with respect to its input – to apply gradient descent and update the network's weights effectively.
 

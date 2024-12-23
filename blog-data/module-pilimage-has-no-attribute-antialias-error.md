@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "module-pilimage-has-no-attribute-antialias-error"
 ---
 
-Okay so you're getting that `module 'PIL.Image' has no attribute 'antialias'` right Yeah I've been there trust me I've wrestled with that particular beast more than once and it's usually down to a PIL version mismatch or just plain old misunderstanding how things have evolved in the Pillow land
+ so you're getting that `module 'PIL.Image' has no attribute 'antialias'` right Yeah I've been there trust me I've wrestled with that particular beast more than once and it's usually down to a PIL version mismatch or just plain old misunderstanding how things have evolved in the Pillow land
 
 First things first let's clarify a bit PIL the Python Imaging Library is the ancestor and Pillow is the maintained actively forked version Pillow is what you want to be using and the `antialias` thing is precisely why You probably have an old PIL version lurking somewhere maybe you inherited some code or haven't updated in ages and it's biting you now
 

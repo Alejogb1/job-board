@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-switching-to-windows-containers-cause-a-no-matching-manifest-error-when-pulling-a-linuxamd64-library"
 ---
 
-Alright, let's tackle this. It's a situation I've bumped into more times than I'd care to recount, especially during the transition periods when folks were dipping their toes into Windows containerization. The "no matching manifest" error when you're trying to pull a Linux/amd64 image on a Windows container host is, at its core, a fundamental architectural mismatch. We're talking about operating system kernels and instruction sets here—not just a simple configuration oversight.
+Alright,  It's a situation I've bumped into more times than I'd care to recount, especially during the transition periods when folks were dipping their toes into Windows containerization. The "no matching manifest" error when you're trying to pull a Linux/amd64 image on a Windows container host is, at its core, a fundamental architectural mismatch. We're talking about operating system kernels and instruction sets here—not just a simple configuration oversight.
 
 The crux of the problem is that Docker images are intrinsically tied to the architecture and operating system they're built for. A Linux container image, specifically one built for the amd64 instruction set, contains binaries compiled to run *directly* on a Linux kernel using amd64 instructions. Windows containers, on the other hand, run on a Windows kernel. There's no magic translation layer or emulation at play; the operating system and instruction set *must* match for the container to function.
 

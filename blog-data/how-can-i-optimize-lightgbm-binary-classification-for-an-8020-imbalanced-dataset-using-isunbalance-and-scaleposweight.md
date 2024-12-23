@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-optimize-lightgbm-binary-classification-for-an-8020-imbalanced-dataset-using-isunbalance-and-scaleposweight"
 ---
 
-Okay, let’s delve into handling that tricky imbalance issue with LightGBM. I've certainly faced this head-on in previous projects, specifically a fraud detection system we were developing years ago. We consistently saw a 98/2 imbalance, and believe me, ignoring it resulted in a model that was about as useful as a chocolate teapot. The core problem here, as you likely already appreciate, is that a model trained on imbalanced data tends to be biased towards the majority class, which in your case, is the negative class in your binary scenario.
+, let’s delve into handling that tricky imbalance issue with LightGBM. I've certainly faced this head-on in previous projects, specifically a fraud detection system we were developing years ago. We consistently saw a 98/2 imbalance, and believe me, ignoring it resulted in a model that was about as useful as a chocolate teapot. The core problem here, as you likely already appreciate, is that a model trained on imbalanced data tends to be biased towards the majority class, which in your case, is the negative class in your binary scenario.
 
 Now, regarding your specific question, both `is_unbalance` and `scale_pos_weight` in LightGBM are designed to tackle this, but they achieve this through different mechanisms, and it’s essential to understand these nuances to make the most appropriate choice. They’re not interchangeable, nor should you blindly assume they always work best in isolation.
 

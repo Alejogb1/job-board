@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-tensor-of-an-unsupported-type-errors"
 ---
 
-Okay, let's tackle this. It's a common frustration, and I've certainly banged my head against the wall trying to debug those “Tensor of an unsupported type” errors more times than I care to remember. Usually, it boils down to a fundamental mismatch between what your deep learning framework (whether that's TensorFlow, PyTorch, or something else) expects as input for a given operation and the actual data type of the tensor you're passing. These frameworks are quite picky about data types for performance reasons, and if there’s a discrepancy, it throws that error as a safeguard.
+,  It's a common frustration, and I've certainly banged my head against the wall trying to debug those “Tensor of an unsupported type” errors more times than I care to remember. Usually, it boils down to a fundamental mismatch between what your deep learning framework (whether that's TensorFlow, PyTorch, or something else) expects as input for a given operation and the actual data type of the tensor you're passing. These frameworks are quite picky about data types for performance reasons, and if there’s a discrepancy, it throws that error as a safeguard.
 
 Let me give you a few common scenarios I’ve run into over the years, and then we can delve into some code examples to illustrate what’s happening and how to fix it.
 

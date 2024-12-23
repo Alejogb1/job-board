@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "how-can-online-rl-techniques-optimize-parameter-efficiency-in-large-scale-ai-systems"
 ---
 
-Okay so you wanna talk about online RL and making huge AI models learn faster right  like using less data and less compute that's a big deal  everyone's chasing that efficiency dragon these days  especially with these monster models  we're talking billions of parameters  it's crazy
+ so you wanna talk about online RL and making huge AI models learn faster right  like using less data and less compute that's a big deal  everyone's chasing that efficiency dragon these days  especially with these monster models  we're talking billions of parameters  it's crazy
 
 The core idea is  instead of training your model on a massive dataset all at once which is super expensive and slow you train it incrementally using online RL techniques  think of it like teaching a dog new tricks  you don't show them all the tricks at once  you teach one  reinforce it then move to the next  that's kinda what online RL does  it's learning and improving constantly as new data comes in
 

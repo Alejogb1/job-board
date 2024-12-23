@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-the-oracle-cloud-ubuntu-20-connection-refusing"
 ---
 
-Okay, let's tackle this. I've definitely seen my share of head-scratching connection refusals, particularly when dealing with cloud instances. The Oracle Cloud Infrastructure (oci) combined with Ubuntu 20 can occasionally present a few unique challenges, and 'connection refused' is often the symptom, not the root cause. Let's break down why this might be happening and, more importantly, how to diagnose and resolve it. From my experience, these issues usually boil down to a handful of suspects, which I'll detail here with examples.
+,  I've definitely seen my share of head-scratching connection refusals, particularly when dealing with cloud instances. The Oracle Cloud Infrastructure (oci) combined with Ubuntu 20 can occasionally present a few unique challenges, and 'connection refused' is often the symptom, not the root cause. Let's break down why this might be happening and, more importantly, how to diagnose and resolve it. From my experience, these issues usually boil down to a handful of suspects, which I'll detail here with examples.
 
 First, let's discard the simple things: are you using the correct public ip address? I've certainly tripped myself up with outdated ip lists before. Also ensure you are using the proper ssh key. These sound like basic things, but it's essential to check before moving to more complex potential problems. This initial step often prevents a more prolonged investigation.
 

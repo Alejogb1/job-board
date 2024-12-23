@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-does-nodejs-asynchronous-behavior-differ-between-scripts-and-runkit"
 ---
 
-Okay, let's tackle this. It’s a question I've certainly bumped into more than once, especially when debugging seemingly identical code acting differently across environments. We're focusing here on the nuanced distinctions in how Node.js handles asynchronous operations, specifically when comparing a standard script execution to a RunKit notebook environment.
+,  It’s a question I've certainly bumped into more than once, especially when debugging seemingly identical code acting differently across environments. We're focusing here on the nuanced distinctions in how Node.js handles asynchronous operations, specifically when comparing a standard script execution to a RunKit notebook environment.
 
 The core of the matter lies not just in the v8 engine's interpretation of JavaScript, which remains consistent across both platforms, but rather in the *surrounding execution context*. In a traditional Node.js script run from the command line (let's call this "standard script"), you have a clear entry point, a defined execution lifecycle, and typically no external interference unless you explicitly set it up (like timers or external events). In contrast, RunKit provides an interactive, sometimes-ephemeral environment that is designed to be more exploratory. This key difference impacts how asynchronous operations are handled, particularly concerning the event loop and microtasks.
 

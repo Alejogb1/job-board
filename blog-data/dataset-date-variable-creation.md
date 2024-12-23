@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "dataset-date-variable-creation"
 ---
 
-Alright so you're asking about creating date variables in a dataset I get it This is a bread and butter task for data manipulation and I've definitely been through this rodeo more times than I care to admit Let me break it down for you and give you some pointers based on my personal experience messing with this stuff over the years
+so you're asking about creating date variables in a dataset I get it This is a bread and butter task for data manipulation and I've definitely been through this rodeo more times than I care to admit Let me break it down for you and give you some pointers based on my personal experience messing with this stuff over the years
 
 First off the question is pretty broad like "dataset" what kind of dataset are we talking about Here is a point that I usually find out a lot of questions here are in that level of abstraction That is fine though because I can infer some info For the sake of this I'm going to assume you're dealing with something like a CSV file or a pandas DataFrame cause that's the most common scenario I’ve seen in my experience Now date variables can come in different shapes and sizes strings numbers Unix timestamps even Sometimes they’re already in a date format but are not ideal for what you want to do So it’s important to understand what you have first and what do you want to have afterwards
 

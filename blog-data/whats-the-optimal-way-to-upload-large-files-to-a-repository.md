@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "whats-the-optimal-way-to-upload-large-files-to-a-repository"
 ---
 
-Alright, let's tackle this. The "optimal" way, as with most things in engineering, isn't a single, universally applicable solution. It’s a balancing act of several factors: reliability, speed, resource consumption, and, crucially, the constraints of the system you're working with. I've personally been through the wringer with large file uploads on more than one occasion, especially back when I was developing a system for handling medical imaging data – believe me, those files can be *massive*. We quickly realized that the naive approaches simply wouldn't cut it.
+Alright,  The "optimal" way, as with most things in engineering, isn't a single, universally applicable solution. It’s a balancing act of several factors: reliability, speed, resource consumption, and, crucially, the constraints of the system you're working with. I've personally been through the wringer with large file uploads on more than one occasion, especially back when I was developing a system for handling medical imaging data – believe me, those files can be *massive*. We quickly realized that the naive approaches simply wouldn't cut it.
 
 The most rudimentary method is often a single, direct upload. While simple to implement, it's incredibly fragile for large files. A network hiccup, a brief server outage, or even a browser crash mid-upload can mean starting the whole process again from scratch. That's unacceptable when we're talking about gigabytes of data. So, the first vital step towards optimality involves breaking the large file into smaller, manageable chunks. This concept is known as chunking or multi-part upload.
 

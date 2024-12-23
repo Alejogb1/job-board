@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-a-loss-function-incentivize-keyword-use-in-recursive-neural-networks"
 ---
 
-Okay, let's tackle this one. I remember a particularly hairy project a few years back involving sequence-to-sequence translation for highly technical documents. We were consistently missing key terms—essentially, the 'keywords'—that were crucial for accurate and meaningful output. This led us down the rabbit hole of how to specifically incentivize keyword usage within the recursive network’s learning process. It’s not a trivial problem, and the solution isn’t always obvious, but it’s definitely achievable by carefully crafting your loss function.
+, let's tackle this one. I remember a particularly hairy project a few years back involving sequence-to-sequence translation for highly technical documents. We were consistently missing key terms—essentially, the 'keywords'—that were crucial for accurate and meaningful output. This led us down the rabbit hole of how to specifically incentivize keyword usage within the recursive network’s learning process. It’s not a trivial problem, and the solution isn’t always obvious, but it’s definitely achievable by carefully crafting your loss function.
 
 The core idea here revolves around augmenting the typical cross-entropy loss, which drives most sequence-to-sequence models, with an additional term that specifically penalizes or rewards keyword usage. The standard cross-entropy loss focuses on how well the model predicts the next token in a sequence given the previous ones. It doesn't inherently understand the importance of specific vocabulary items unless they're statistically frequent. Thus, we need to guide it.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-the-elasticsearch-grails-plugin-throwing-an-index-not-found-exception"
 ---
 
-Okay, let’s tackle this. It's not uncommon to encounter an "index not found" exception with the Elasticsearch Grails plugin, and while the error message itself seems straightforward, the underlying causes can sometimes be a bit nuanced. I've been down this road a few times, especially during the early adoption days of the plugin with some rather complex domain models, and it almost always comes down to a mismatch between your application's assumptions and the actual state of your Elasticsearch cluster.
+, let’s tackle this. It's not uncommon to encounter an "index not found" exception with the Elasticsearch Grails plugin, and while the error message itself seems straightforward, the underlying causes can sometimes be a bit nuanced. I've been down this road a few times, especially during the early adoption days of the plugin with some rather complex domain models, and it almost always comes down to a mismatch between your application's assumptions and the actual state of your Elasticsearch cluster.
 
 The core issue revolves around the fact that Elasticsearch, unlike a relational database, doesn't automatically create indices when you try to write to them. The Grails plugin, while incredibly convenient, essentially wraps the Elasticsearch java client. Therefore, it's your responsibility to ensure the index exists before attempting to index documents. That exception, "index not found," is Elasticsearch yelling that it can’t find the place to put the data you’re trying to send. It's less about a problem with the plugin itself and more about how we're setting up and using the system.
 

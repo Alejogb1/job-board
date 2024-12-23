@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "master-table-database-definition-sql"
 ---
 
-Okay so you're asking about creating a master table in a database using SQL right Been there done that a bunch of times Let me spill the beans based on my history fighting with these things
+ so you're asking about creating a master table in a database using SQL right Been there done that a bunch of times Let me spill the beans based on my history fighting with these things
 
 First off "master table" isn't exactly a SQL term per se Its more like a concept We're usually talking about a table that holds core reference data stuff that other tables will likely link to Think of things like users products categories the building blocks of your data model This isn't your typical transaction table where you're logging every single purchase it's more foundational
 
@@ -55,7 +55,7 @@ You wanna talk about a real pain I had to deal with It was when I was working on
 
 I also tried a JSON column to save some time but I regretted it Its fine for simple structures but for complex data with a lot of querying it does not scale well I had to move it to a proper structure later and it was a pain to migrate It's just an extra headache you don't need I swear sometimes I feel like I'm constantly learning the same lessons over and over (and over and over).
 
-Okay a bit of a side tangent here but there is something really important that a lot of people forget about when using these master tables which is how to deal with deletion If you have foreign keys with `ON DELETE RESTRICT` you can't just delete something from the master table that's being used elsewhere You'll either need to delete the referencing entries first or use `ON DELETE CASCADE` (but be careful with that its a double-edged sword) or you could also go with `ON DELETE SET NULL` depending on your situation There are many ways of handling this there is no best solution it depends on what you are trying to accomplish
+ a bit of a side tangent here but there is something really important that a lot of people forget about when using these master tables which is how to deal with deletion If you have foreign keys with `ON DELETE RESTRICT` you can't just delete something from the master table that's being used elsewhere You'll either need to delete the referencing entries first or use `ON DELETE CASCADE` (but be careful with that its a double-edged sword) or you could also go with `ON DELETE SET NULL` depending on your situation There are many ways of handling this there is no best solution it depends on what you are trying to accomplish
 
 Here's a basic example with a `categories` master table and a `products` table referencing it:
 

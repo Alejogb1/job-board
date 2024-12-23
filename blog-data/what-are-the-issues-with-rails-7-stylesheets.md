@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-are-the-issues-with-rails-7-stylesheets"
 ---
 
-Okay, let’s tackle this. I’ve seen my share of stylesheet issues over the years, particularly as Rails has evolved, and Rails 7 presents some unique considerations that are worth discussing. It's not about fundamental flaws but more about understanding the changes and how they can impact your projects if not handled correctly.
+, let’s tackle this. I’ve seen my share of stylesheet issues over the years, particularly as Rails has evolved, and Rails 7 presents some unique considerations that are worth discussing. It's not about fundamental flaws but more about understanding the changes and how they can impact your projects if not handled correctly.
 
 First, let’s remember that Rails 7 defaults to using cssbundling-rails with esbuild for handling CSS. This is a significant shift from the traditional asset pipeline, and while it brings speed and modern JavaScript tooling into the mix, it requires a different mental model. The problems I've frequently encountered tend to cluster around these areas: build process complexity, integration with existing stylesheets, and developer tooling conflicts.
 

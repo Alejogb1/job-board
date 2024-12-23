@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-pin-a-plane-to-specific-altitude-using-maplibre-gl-js"
 ---
 
-Okay, let's tackle this. I recall working on a flight simulation project a few years back where we needed precisely this functionality – keeping a plane icon locked to a specific altitude within a MapLibre GL JS environment. It’s a bit more involved than simply setting the lat/long, as you're dealing with the 3D space implications.
+,  I recall working on a flight simulation project a few years back where we needed precisely this functionality – keeping a plane icon locked to a specific altitude within a MapLibre GL JS environment. It’s a bit more involved than simply setting the lat/long, as you're dealing with the 3D space implications.
 
 The challenge stems from how MapLibre GL JS handles positioning of features, particularly when you introduce elevation data. By default, a feature's coordinates are treated as 2D unless explicitly told otherwise. To accurately represent the plane's altitude, we need to manipulate the `translate` and, potentially, the `pitch` of the layer. We will need to use the `transformRequest` callback effectively to intercept the loading of terrain tiles to figure out the terrain altitude at a specific point.
 

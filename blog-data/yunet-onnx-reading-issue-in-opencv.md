@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "yunet-onnx-reading-issue-in-opencv"
 ---
 
-Okay so you're having a problem with YUNet ONNX models and OpenCV right? Seen this rodeo before. I've wrestled with similar situations more times than I'd like to admit and it's always something slightly obscure. Let's unpack this and see what's going on.
+ so you're having a problem with YUNet ONNX models and OpenCV right? Seen this rodeo before. I've wrestled with similar situations more times than I'd like to admit and it's always something slightly obscure. Let's unpack this and see what's going on.
 
 First off YUNet is a face detection model right? Based on my past experiences it’s often implemented using ONNX for portability and OpenCV is usually the go to for any kind of computer vision tasks so that makes perfect sense that you’re trying to put these two things together. I'm gonna assume you've already downloaded a proper ONNX model and have OpenCV installed correctly. If not thats step one obviously go download the model if you have not and `pip install opencv-python` or whatever your package manager uses.
 

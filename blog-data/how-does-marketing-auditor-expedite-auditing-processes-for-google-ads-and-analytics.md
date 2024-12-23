@@ -4,7 +4,7 @@ date: "2024-12-03"
 id: "how-does-marketing-auditor-expedite-auditing-processes-for-google-ads-and-analytics"
 ---
 
-Okay so you wanna know how Marketing Auditor speeds things up for Google Ads and Analytics right  Yeah it's a game changer honestly  Before I used it auditing was like wading through a swamp of spreadsheets and reports  Now its like  smooth sailing  mostly
+ so you wanna know how Marketing Auditor speeds things up for Google Ads and Analytics right  Yeah it's a game changer honestly  Before I used it auditing was like wading through a swamp of spreadsheets and reports  Now its like  smooth sailing  mostly
 
 
 The biggest win is automation  I mean seriously  it automates so much of the grunt work  stuff that used to take me hours now takes minutes or even seconds  Imagine this  you're trying to check for things like  are your ads showing up on the right search terms  are your keywords effectively targeted   are you spending your budget in the most efficient way possible   are all your tracking pixels correctly firing  Are your conversion funnels leaky?  

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "where-are-jetbrains-toolbox-app-installed-executables-located"
 ---
 
-Okay, so executable locations with the JetBrains Toolbox App—that’s a question I’ve encountered more than once, especially when setting up custom IDE configurations or needing to interact directly with the underlying tools. I recall vividly a situation a few years back, during a project overhaul, where the CI/CD pipeline was misbehaving, and it eventually traced back to inconsistencies in the configured path variables for a particular IntelliJ plugin build. Resolving that required a deep dive into how Toolbox manages installations, and that experience solidified my understanding.
+, so executable locations with the JetBrains Toolbox App—that’s a question I’ve encountered more than once, especially when setting up custom IDE configurations or needing to interact directly with the underlying tools. I recall vividly a situation a few years back, during a project overhaul, where the CI/CD pipeline was misbehaving, and it eventually traced back to inconsistencies in the configured path variables for a particular IntelliJ plugin build. Resolving that required a deep dive into how Toolbox manages installations, and that experience solidified my understanding.
 
 The core thing to grasp here is that the Toolbox app doesn't install executables into a single, static location like some other software installers do. Instead, it maintains them within a specific directory structure that is managed by the application itself. This design has several advantages, including allowing you to install multiple versions of the same IDE side by side and simplifies the management of updates.
 

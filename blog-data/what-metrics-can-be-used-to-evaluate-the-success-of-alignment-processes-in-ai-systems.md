@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "what-metrics-can-be-used-to-evaluate-the-success-of-alignment-processes-in-ai-systems"
 ---
 
-Okay so you wanna know how to measure if we're actually aligning AI right yeah  like making sure it does what we want not accidentally turn evil or something  It's a HUGE deal  a really really big deal  everyone's kinda freaking out about it  and rightfully so
+ so you wanna know how to measure if we're actually aligning AI right yeah  like making sure it does what we want not accidentally turn evil or something  It's a HUGE deal  a really really big deal  everyone's kinda freaking out about it  and rightfully so
 
 The problem is there's no single perfect answer  it's super complex  we're basically inventing the metrics as we go along  Think about it  we're trying to measure something we don't fully understand how it works yet  It's like trying to measure the size of a shadow before you even know what's casting it  kinda wild right
 

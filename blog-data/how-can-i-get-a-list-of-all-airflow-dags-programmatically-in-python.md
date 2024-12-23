@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-get-a-list-of-all-airflow-dags-programmatically-in-python"
 ---
 
-Alright, let's tackle this. It's a question I’ve bumped into several times, particularly during those larger deployments where tracking dependencies and overall job flow becomes critical. Programmatically accessing your Airflow dag list is not just a matter of curiosity; it's fundamental for automation, monitoring, and, frankly, maintaining sanity in complex environments. We're going to explore how to do this with the Python API, focusing on precision and practicality.
+Alright,  It's a question I’ve bumped into several times, particularly during those larger deployments where tracking dependencies and overall job flow becomes critical. Programmatically accessing your Airflow dag list is not just a matter of curiosity; it's fundamental for automation, monitoring, and, frankly, maintaining sanity in complex environments. We're going to explore how to do this with the Python API, focusing on precision and practicality.
 
 From my own experiences, I recall a large-scale migration project a few years back where we were shifting hundreds of daily batch processes into Airflow. Dynamically generating dashboards to visualize these DAGs, rather than relying on the web UI alone, was crucial for stakeholder buy-in and faster issue resolution. So, trust me, this seemingly simple task has substantial benefits.
 

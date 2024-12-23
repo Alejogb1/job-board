@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-implement-a-value-decrease-constraint-in-google-or-tools-scip-python"
 ---
 
-Okay, let's talk about value decrease constraints in Google or-tools scip, something I've definitely bumped into more than once during various optimization projects. It’s a common need: you often find yourself needing to ensure certain decision variables only ever decrease, and not increase, across different stages or conditions in your model. Let's get into how to do that practically in Python, along with some examples.
+, let's talk about value decrease constraints in Google or-tools scip, something I've definitely bumped into more than once during various optimization projects. It’s a common need: you often find yourself needing to ensure certain decision variables only ever decrease, and not increase, across different stages or conditions in your model. Let's get into how to do that practically in Python, along with some examples.
 
 The core issue is that standard linear programming solvers, like the underlying engine in scip, don't inherently understand a "decreasing value" concept; they look at constraints purely in terms of equations and inequalities. We need to explicitly encode that behavior through carefully chosen constraints. The general pattern I use is to essentially force subsequent variables to be less than or equal to their predecessors. This approach works well for integer, continuous, and binary variables.
 

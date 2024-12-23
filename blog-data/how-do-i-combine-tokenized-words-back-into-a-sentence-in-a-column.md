@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-combine-tokenized-words-back-into-a-sentence-in-a-column"
 ---
 
-Alright, let's tackle this. I've definitely bumped into this problem a few times, especially back when I was knee-deep in natural language processing projects for a market research firm. You've got a column containing tokenized words, and the goal is to stitch those tokens back into coherent sentences. It's a seemingly straightforward task, but there are a few nuanced pitfalls to avoid if you want consistently reliable results. The basic concept, at its core, involves reversing the tokenization process. But we need to account for things like punctuation, spacing, and sometimes even the quirks of different tokenizers.
+Alright,  I've definitely bumped into this problem a few times, especially back when I was knee-deep in natural language processing projects for a market research firm. You've got a column containing tokenized words, and the goal is to stitch those tokens back into coherent sentences. It's a seemingly straightforward task, but there are a few nuanced pitfalls to avoid if you want consistently reliable results. The basic concept, at its core, involves reversing the tokenization process. But we need to account for things like punctuation, spacing, and sometimes even the quirks of different tokenizers.
 
 First, let’s solidify the core idea. We're starting with something that looks like this in a dataframe column, let's call it `tokenized_column`:
 

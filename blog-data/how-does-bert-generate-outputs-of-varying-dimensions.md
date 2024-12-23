@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-does-bert-generate-outputs-of-varying-dimensions"
 ---
 
-Okay, let’s tackle the topic of how BERT manages to produce outputs of different dimensions; it's a common point of confusion, and I've definitely spent my fair share of time debugging models that behaved unexpectedly in this regard. My first real encounter with this issue was when I was building a classification model using BERT for document categorization. It initially threw me for a loop because the output seemed inconsistent until I delved deeper into the architecture. Let me break it down, hopefully clearing the fog.
+, let’s tackle the topic of how BERT manages to produce outputs of different dimensions; it's a common point of confusion, and I've definitely spent my fair share of time debugging models that behaved unexpectedly in this regard. My first real encounter with this issue was when I was building a classification model using BERT for document categorization. It initially threw me for a loop because the output seemed inconsistent until I delved deeper into the architecture. Let me break it down, hopefully clearing the fog.
 
 The core mechanism behind BERT's ability to generate outputs of varying dimensions stems from its flexibility in leveraging the contextualized representations it produces. Unlike simpler models that might have a fixed output dimension tied directly to the input length, BERT generates a sequence of hidden states for each input token. It's not about squeezing everything into a fixed size box; instead, it's about generating a dynamic representation that downstream tasks can then tailor to their specific requirements.
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "import-in-the-middle-esm-modules-problem"
 ---
 
-Okay so import-in-the-middle ESM modules yeah I've been down that rabbit hole more times than I'd like to admit Let me break down what I think you're probably running into and how I've tackled it in the past
+ so import-in-the-middle ESM modules yeah I've been down that rabbit hole more times than I'd like to admit Let me break down what I think you're probably running into and how I've tackled it in the past
 
 First things first when you say "import-in-the-middle" I'm assuming you're hitting a scenario where module A imports module B and then module C imports both A and B but you need to somehow intercept or modify B before it gets to C right That's the classic dance of dependency management gone a little sideways especially when we're dealing with ESM modules and their lovely strictness
 

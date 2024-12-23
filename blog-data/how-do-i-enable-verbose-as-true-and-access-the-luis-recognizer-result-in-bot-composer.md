@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-enable-verbose-as-true-and-access-the-luis-recognizer-result-in-bot-composer"
 ---
 
-Alright, let's delve into this. I recall wrestling (okay, *engaging*) with this exact scenario back in 2019 while working on a multi-lingual customer service bot for a client. They needed very detailed intent recognition information, well beyond what the standard Composer setup provided. It quickly became apparent that verbose mode was the key, and accessing the LUIS data required a little more plumbing.
+Alright, let's delve into this. I recall wrestling (, *engaging*) with this exact scenario back in 2019 while working on a multi-lingual customer service bot for a client. They needed very detailed intent recognition information, well beyond what the standard Composer setup provided. It quickly became apparent that verbose mode was the key, and accessing the LUIS data required a little more plumbing.
 
 The standard Bot Composer interface, by default, abstracts away some of the lower-level details. While beneficial for rapid prototyping, it does mean you need to dive slightly deeper to enable verbose responses and extract the raw LUIS output. The challenge isn’t really about ‘enabling’ a global verbose flag as much as it’s about instructing specific LUIS recognizer instances within your bot to provide that expanded data and then accessing it programmatically.
 

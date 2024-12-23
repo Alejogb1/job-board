@@ -8,7 +8,7 @@ dude so i just watched this awesome talk on extended mind transformers and my br
 
 the whole point of the video was showing how to make language models way better at using external knowledge  think of it like giving your chatbot a super-powered memory that it can actually use effectively  most chatbots kinda just shove everything into the prompt which is like, giving a kid a whole library and expecting them to only read the right book – a recipe for disaster
 
-okay so first off there's this super relatable thing she mentions – the problem with current methods  she calls out long context and retrieval augmented generation (RAG)  remember how she says long context is like trying to stuff a whole encyclopedia into the prompt  that's exactly it it's expensive slow and the model gets overwhelmed with irrelevant info  it's like trying to cook a gourmet meal with all the ingredients in a giant pile  
+ so first off there's this super relatable thing she mentions – the problem with current methods  she calls out long context and retrieval augmented generation (RAG)  remember how she says long context is like trying to stuff a whole encyclopedia into the prompt  that's exactly it it's expensive slow and the model gets overwhelmed with irrelevant info  it's like trying to cook a gourmet meal with all the ingredients in a giant pile  
 
 she also points out that RAG, while better, makes decisions about what's relevant *before* the model even starts thinking  it's like picking your ingredients before you even know what you're cooking  this is a visual cue – she shows a graphic of  'pre-generation selection'  it's all very upfront and doesn't let the model make those choices dynamically
 

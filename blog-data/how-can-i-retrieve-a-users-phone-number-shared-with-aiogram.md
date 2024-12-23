@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-retrieve-a-users-phone-number-shared-with-aiogram"
 ---
 
-Alright, let's tackle this. The question of retrieving a user's phone number via AIOgram, while seemingly straightforward, can get a little nuanced depending on *how* that number was shared. It’s not simply about pulling it from some readily available attribute; privacy and user consent are paramount, and AIOgram respects this. Let me walk you through what I’ve seen and how I've handled it in past projects.
+Alright,  The question of retrieving a user's phone number via AIOgram, while seemingly straightforward, can get a little nuanced depending on *how* that number was shared. It’s not simply about pulling it from some readily available attribute; privacy and user consent are paramount, and AIOgram respects this. Let me walk you through what I’ve seen and how I've handled it in past projects.
 
 First, understand that AIOgram, unlike some older frameworks, doesn't automatically give you a user's phone number the moment they interact with your bot. You actually need the user to *explicitly* share it. This is done using Telegram’s contact request mechanism, generally through a custom keyboard. Let's break down the most common way this works, then we can look at some code examples.
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "can-a-container-inside-a-grouping-be-augmented-in-yang"
 ---
 
-Okay so you're asking if you can tweak a container within a grouping in YANG right that's the gist yeah I've been there done that got the t-shirt a few times let me tell you it's not as straightforward as you might hope but definitely doable
+ so you're asking if you can tweak a container within a grouping in YANG right that's the gist yeah I've been there done that got the t-shirt a few times let me tell you it's not as straightforward as you might hope but definitely doable
 
 first things first let's get the terminology straight we're talking about YANG the data modeling language not some ancient greek deity for those of you who might be new to this the grouping is like a reusable building block we define it once then apply it in multiple places it's all about avoiding repetition in your models keeps things tidy but the catch comes when we need a bit of a twist a customization for a specific use of that grouping container we're referring to a specific data node structure holding other data items not the metal thing you see on cargo ships so now the core question can you enhance the contents of a container already declared within a grouping the short answer is yes but it needs some careful planning it's not like just shoving extra fields in hope it works there are rules we have to follow it's not chaotic programming
 

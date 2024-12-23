@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-project-terrain-onto-a-surface-using-directx"
 ---
 
-Okay, let's tackle this. I've certainly navigated the terrain projection problem in DirectX a few times over the years, particularly back when I was knee-deep in a large-scale terrain rendering project using DirectX 11. It’s a fascinating challenge that often requires a nuanced approach, and the specific solution depends quite a bit on the underlying setup of your terrain data and the surface you’re projecting onto.
+,  I've certainly navigated the terrain projection problem in DirectX a few times over the years, particularly back when I was knee-deep in a large-scale terrain rendering project using DirectX 11. It’s a fascinating challenge that often requires a nuanced approach, and the specific solution depends quite a bit on the underlying setup of your terrain data and the surface you’re projecting onto.
 
 Essentially, you're trying to map points from a 2D terrain heightmap onto a 3D surface, which itself might be a complex mesh or a relatively simple plane. The core process involves several key steps: retrieving terrain height data, establishing a correspondence between the 2D terrain coordinates and the 3D surface coordinates, and then using this correspondence to manipulate the target surface. This typically boils down to transforming the vertices of your target surface based on the sampled heightmap data.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-much-memory-does-mobilenet-use"
 ---
 
-Alright, let's tackle this. Memory usage in neural networks, especially on resource-constrained devices like mobile phones, is a critical concern. I've personally spent a fair chunk of time optimizing model deployments for edge devices, and MobileNet is a common player in that arena. So, “how much memory does MobileNet use?” isn't a simple one-number answer; it's nuanced and depends on several factors. It's less about a fixed quota and more about a calculated balance, like optimizing a power grid.
+Alright,  Memory usage in neural networks, especially on resource-constrained devices like mobile phones, is a critical concern. I've personally spent a fair chunk of time optimizing model deployments for edge devices, and MobileNet is a common player in that arena. So, “how much memory does MobileNet use?” isn't a simple one-number answer; it's nuanced and depends on several factors. It's less about a fixed quota and more about a calculated balance, like optimizing a power grid.
 
 The primary drivers of memory consumption for a MobileNet model, or really any neural network, are the model's architecture (how many layers and parameters it has), the data type used for weights and activations, and of course, whether you are considering inference (forward pass) or training (which includes backpropagation). We'll focus here on inference memory footprint, as that's the usual concern on mobile devices.
 

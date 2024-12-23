@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-causes-altair-chart-syntax-errors-when-deployed-in-streamlit"
 ---
 
-Alright, let's tackle this. I've certainly seen my share of head-scratching moments with Altair and Streamlit integrations, and it's rarely a single culprit. Debugging these issues often feels like peeling back layers of an onion. Let me share my experience and what I’ve found to be the common pitfalls.
+Alright,  I've certainly seen my share of head-scratching moments with Altair and Streamlit integrations, and it's rarely a single culprit. Debugging these issues often feels like peeling back layers of an onion. Let me share my experience and what I’ve found to be the common pitfalls.
 
 The core issue with Altair chart syntax errors in a Streamlit deployment generally revolves around how Streamlit handles the rendering and transmission of these complex visualizations within a web application context. It’s not just about the Altair code itself—though that's always a primary suspect—but how that code interacts with Streamlit’s architecture.
 

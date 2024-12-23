@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-use-word2vec-for-word-embedding-of-sentences"
 ---
 
-Okay, let's tackle this. I recall a project some years back, dealing with large volumes of customer feedback. We needed to move beyond simple keyword matching and understand the *semantic* context of their complaints. That's where leveraging word embeddings, specifically something like Word2Vec, became critical, but applying it directly to sentences presents some interesting challenges, and it’s not as straightforward as one might initially think.
+,  I recall a project some years back, dealing with large volumes of customer feedback. We needed to move beyond simple keyword matching and understand the *semantic* context of their complaints. That's where leveraging word embeddings, specifically something like Word2Vec, became critical, but applying it directly to sentences presents some interesting challenges, and it’s not as straightforward as one might initially think.
 
 The core concept of Word2Vec is, as I’m sure you’re aware, to map individual words into a dense vector space, capturing their semantic relationships. Words that appear in similar contexts have vectors that are closer together in this space. However, sentences, being sequences of words, don't directly translate to these vector representations. We need to go beyond single words to handle the entire sentence. There are several ways we tackled this, and I’ll walk you through the common ones and some considerations for each.
 

@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "what-are-the-computational-costs-of-using-python-based-nlp-libraries-such-as-pattern-for-processing-search-snippets-in-real-time"
 ---
 
-Okay so you wanna know about the cost of using Python NLP libraries like Pattern for real-time search snippet processing right  That's a pretty big question actually  It's not a simple answer like "oh it's cheap" or "oh it's expensive"  It really depends on a bunch of stuff  Let's break it down
+ so you wanna know about the cost of using Python NLP libraries like Pattern for real-time search snippet processing right  That's a pretty big question actually  It's not a simple answer like "oh it's cheap" or "oh it's expensive"  It really depends on a bunch of stuff  Let's break it down
 
 First off what do we mean by "computational cost"  Are we talking about money  Probably not directly unless you're paying for cloud computing resources  We're mostly talking about time and resources your computer uses  Things like CPU cycles memory usage and even power consumption  All these add up especially when you're processing lots of snippets quickly
 

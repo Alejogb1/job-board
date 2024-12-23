@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-debug-a-node-app-in-intellij-with-an-aws-profile"
 ---
 
-well, alright then, let's talk about debugging node apps in intellij while juggling aws profiles. i've been down this road more times than i care to remember, and it can definitely feel like you're chasing a ghost at times. it's one of those things that seems straightforward on paper, but the devil is in the details of configuration, environment variables, and aws sdk quirks. so, i will just give you my personal experience and a way i made it work, and you may find it useful.
+well, then, let's talk about debugging node apps in intellij while juggling aws profiles. i've been down this road more times than i care to remember, and it can definitely feel like you're chasing a ghost at times. it's one of those things that seems straightforward on paper, but the devil is in the details of configuration, environment variables, and aws sdk quirks. so, i will just give you my personal experience and a way i made it work, and you may find it useful.
 
 first off, the core problem usually boils down to this: your intellij debugger needs to be pointed at the correct process, and that process needs to have the correct aws credentials to interact with aws services. pretty simple stated, not so simple in practice. when you're running locally, typically, you would be relying on your default aws profile, but when debugging a specific app running within a process spawned by intellij, things get a little bit complicated. you have to make sure the correct aws profile is loaded by the app that is being debugged.
 

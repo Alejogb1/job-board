@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "dbt-external-tables-not-being-executed"
 ---
 
-Okay so you're having trouble with dbt external tables not running that's a classic I’ve been there trust me It usually boils down to a few common culprits I've debugged this exact thing more times than I care to admit
+ so you're having trouble with dbt external tables not running that's a classic I’ve been there trust me It usually boils down to a few common culprits I've debugged this exact thing more times than I care to admit
 
 First things first lets talk about the basics of how dbt handles external tables Generally dbt uses a `schema.yml` file to describe your external tables The important part is the `external` config section in that file This tells dbt the file format where the data lives its location and crucially how to access it
 
@@ -32,7 +32,7 @@ Now if it's not the `schema.yml` which is usually the problem lets go deeper Her
 
 I remember back in 2019 working on a massive data migration project we were using Google Cloud Storage for our data lake and I spent two whole days because the service account we were using for dbt was missing `storage.object.get` permission on the bucket The error message was something cryptic like 'access denied' I mean who writes these error messages really right We wasted so much time because of that
 
-Okay so you've checked the yaml file and the permissions are sorted so where else could things go wrong? Ah right another frequent offender the infamous "data not found" error it’s almost always a location mismatch. dbt looks at the location in the `schema.yml` and if that location is wrong in any way even if a little bit then it fails without telling you the exact place it fails This means the location in `schema.yml` *must exactly match* where your data is stored. And it needs to be the correct bucket region too. It's so trivial but I can’t tell you how many times I've made this error in particular
+ so you've checked the yaml file and the permissions are sorted so where else could things go wrong? Ah right another frequent offender the infamous "data not found" error it’s almost always a location mismatch. dbt looks at the location in the `schema.yml` and if that location is wrong in any way even if a little bit then it fails without telling you the exact place it fails This means the location in `schema.yml` *must exactly match* where your data is stored. And it needs to be the correct bucket region too. It's so trivial but I can’t tell you how many times I've made this error in particular
 
 ```sql
 -- A sample dbt model file using the external table

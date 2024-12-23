@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "42-factorial-calculation-large-numbers"
 ---
 
-Okay so you're asking about calculating 42 factorial specifically dealing with the large numbers that result That's a classic one I've bumped into that a few times myself
+ so you're asking about calculating 42 factorial specifically dealing with the large numbers that result That's a classic one I've bumped into that a few times myself
 
 Right off the bat 42 factorial is enormous We are talking about a number so big it won't fit into your standard integer variable types in most programming languages like int or long It's gonna overflow and you'll get gibberish or a zero result and that's no good
 
@@ -18,7 +18,7 @@ The fundamental problem here isn't the factorial calculation itself its how you 
 
 **Solution Approaches**
 
-Alright let's look at how to actually do this correctly and what options you have
+let's look at how to actually do this correctly and what options you have
 
 1 **Using Built in Big Integer Libraries:**
 

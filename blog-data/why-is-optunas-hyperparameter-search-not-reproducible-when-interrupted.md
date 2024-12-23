@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-optunas-hyperparameter-search-not-reproducible-when-interrupted"
 ---
 
-Okay, let's tackle this. I've spent more hours than I care to recall debugging hyperparameter optimization workflows, and the issue of interrupted Optuna runs lacking full reproducibility is, unfortunately, not uncommon. It's not a fundamental flaw in Optuna itself, but rather an interaction with how optimization algorithms function under the hood, combined with the inherent stochasticity involved. Let’s break down why this happens and how to address it.
+,  I've spent more hours than I care to recall debugging hyperparameter optimization workflows, and the issue of interrupted Optuna runs lacking full reproducibility is, unfortunately, not uncommon. It's not a fundamental flaw in Optuna itself, but rather an interaction with how optimization algorithms function under the hood, combined with the inherent stochasticity involved. Let’s break down why this happens and how to address it.
 
 The core problem revolves around the state management of the search process. When you begin an Optuna optimization, several moving parts are in play. The most critical for our discussion are the underlying sampling algorithm (like TPE, CMA-ES, or Random), the internal random number generator, and, of course, the state of the study – which includes the history of trials, their parameters, and associated objective values. Typically, these are serialized during saves or checkpoints.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-did-my-vertex-ai-endpoint-prediction-fail"
 ---
 
-Alright, let's tackle this. I've seen this exact scenario play out more times than I care to remember, and the 'why' behind a failed Vertex AI endpoint prediction can unfortunately stem from a variety of sources. It's rarely a single, glaring issue, but rather a confluence of things, often lurking beneath the surface. My experience has taught me to approach these problems methodically, and that’s what I’ll walk you through here.
+Alright,  I've seen this exact scenario play out more times than I care to remember, and the 'why' behind a failed Vertex AI endpoint prediction can unfortunately stem from a variety of sources. It's rarely a single, glaring issue, but rather a confluence of things, often lurking beneath the surface. My experience has taught me to approach these problems methodically, and that’s what I’ll walk you through here.
 
 First off, it's critical to understand that a Vertex AI endpoint, regardless of the underlying model, essentially functions as an exposed api. That means data flows in, is processed, and results come out. If something goes sideways in that flow, a failure is usually the result, and pinpointing the exact point of failure becomes the crucial task. Broadly speaking, the failure often boils down to three main categories: input data mismatches, model or endpoint configuration issues, and underlying infrastructure problems, though we rarely see the latter. Let’s break those down.
 

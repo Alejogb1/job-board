@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-can-i-get-integer-output-from-continuous-action-ppo-rl"
 ---
 
-Okay, let's tackle this. I've certainly been down this road before, especially when trying to apply reinforcement learning to robotics control where discrete actions, such as gear shifts or actuator positions, are often preferable to a continuous space. The challenge, as you’ve discovered, is that Proximal Policy Optimization (PPO) inherently deals with continuous action spaces – usually outputting actions as real numbers or vectors, often floating-point values. To bridge that gap and get usable integer outputs, we need to introduce some intelligent discretization and mapping mechanisms.
+,  I've certainly been down this road before, especially when trying to apply reinforcement learning to robotics control where discrete actions, such as gear shifts or actuator positions, are often preferable to a continuous space. The challenge, as you’ve discovered, is that Proximal Policy Optimization (PPO) inherently deals with continuous action spaces – usually outputting actions as real numbers or vectors, often floating-point values. To bridge that gap and get usable integer outputs, we need to introduce some intelligent discretization and mapping mechanisms.
 
 The core issue arises because PPO, at its heart, learns a policy function that directly outputs the parameters of a probability distribution over the action space. In the case of continuous spaces, this distribution is typically a Gaussian (or similar). This produces actions that can take any value within a specified range, and these are seldom integers. To transform this, we need a pipeline that performs the following:
 

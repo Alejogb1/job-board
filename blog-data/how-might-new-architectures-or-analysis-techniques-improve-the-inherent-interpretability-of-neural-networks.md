@@ -4,7 +4,7 @@ date: "2024-12-11"
 id: "how-might-new-architectures-or-analysis-techniques-improve-the-inherent-interpretability-of-neural-networks"
 ---
 
-Okay so you wanna make neural networks easier to understand right  like peek inside their black boxy brains and see what's actually going on  That's a HUGE deal  everyone's talking about it  its kinda the next big thing after making them actually work well
+ so you wanna make neural networks easier to understand right  like peek inside their black boxy brains and see what's actually going on  That's a HUGE deal  everyone's talking about it  its kinda the next big thing after making them actually work well
 
 The problem is  these things are ridiculously complex  millions sometimes billions of parameters all interacting in ways we barely grasp  It's like trying to understand a city by looking at a single grain of sand  you just can't get the whole picture
 

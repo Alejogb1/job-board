@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-blazor-components-determine-if-an-event-handler-is-asynchronous"
 ---
 
-Alright, let's tackle this. It’s a detail that can easily slip under the radar if you’re not paying close attention to Blazor’s render cycle, but it’s critical for understanding how things flow within the component lifecycle. From my own experiences, I've seen the pitfalls of handling asynchronous operations incorrectly, leading to UI glitches and unpredictable behavior. I've spent the better part of the last decade working on large-scale, component-driven applications, so this isn’t just theoretical for me – it's been practical, real, and at times, quite frustrating when you get it wrong.
+Alright,  It’s a detail that can easily slip under the radar if you’re not paying close attention to Blazor’s render cycle, but it’s critical for understanding how things flow within the component lifecycle. From my own experiences, I've seen the pitfalls of handling asynchronous operations incorrectly, leading to UI glitches and unpredictable behavior. I've spent the better part of the last decade working on large-scale, component-driven applications, so this isn’t just theoretical for me – it's been practical, real, and at times, quite frustrating when you get it wrong.
 
 So, the core question is how does Blazor internally determine if an event handler is asynchronous? The answer isn't always immediately obvious from the component's code itself, and the distinction is primarily made through the return type of the event handler. Let’s break it down:
 

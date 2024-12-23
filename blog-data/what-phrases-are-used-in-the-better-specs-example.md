@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-phrases-are-used-in-the-better-specs-example"
 ---
 
-Okay, let's tackle this. It's a valid query, and it highlights a critical aspect of writing effective software specifications: understanding the language we use and its implications. I’ve spent years working through complex systems, and the language we adopt in specs has always been a cornerstone of smooth collaboration and successful deployments.
+,  It's a valid query, and it highlights a critical aspect of writing effective software specifications: understanding the language we use and its implications. I’ve spent years working through complex systems, and the language we adopt in specs has always been a cornerstone of smooth collaboration and successful deployments.
 
 From what I've observed, the so-called "Better Specs" approach usually doesn't involve inventing entirely new language; rather, it refines how we use existing phrases and structures. It's about clarity, precision, and avoiding ambiguity. You won't find magic bullet phrases, but rather a collection of conventions, combined thoughtfully to create something much more useful. Let’s consider some of the common categories and then I'll dive into some examples.
 

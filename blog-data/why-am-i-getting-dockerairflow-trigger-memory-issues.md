@@ -18,7 +18,7 @@ Here's the breakdown of the core issues i've seen:
 
 **4. External Services/Data:** The code you’re executing might interact with external databases or services that themselves have memory constraints or performance bottlenecks, indirectly causing issues. If a database query is taking a while to resolve, or your code is frequently having to re-query the database, this can contribute to both memory and overall performance issues. Network connections themselves, if poorly configured, can cause an application to hold on to open sockets that consume memory.
 
-Okay, let's get practical with code. I’m going to show you three small snippets in python, using the standard `docker` and `airflow` libraries, that demonstrate some key concepts here. This assumes basic familiarity with python, docker and airflow.
+, let's get practical with code. I’m going to show you three small snippets in python, using the standard `docker` and `airflow` libraries, that demonstrate some key concepts here. This assumes basic familiarity with python, docker and airflow.
 
 **Snippet 1: Inefficient Data Handling**
 

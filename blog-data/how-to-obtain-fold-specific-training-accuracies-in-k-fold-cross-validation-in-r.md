@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-obtain-fold-specific-training-accuracies-in-k-fold-cross-validation-in-r"
 ---
 
-Okay, let's tackle this. I remember back on the 'Project Nightingale' initiative, we had a real need for granular performance metrics within our model validation process. We were using k-fold cross-validation quite extensively, but the standard aggregated accuracy wasn't cutting it. We needed to see *exactly* how well the model was performing on each fold to diagnose any inconsistencies. So, here's how we went about it, explained in a way that I hope demystifies things.
+,  I remember back on the 'Project Nightingale' initiative, we had a real need for granular performance metrics within our model validation process. We were using k-fold cross-validation quite extensively, but the standard aggregated accuracy wasn't cutting it. We needed to see *exactly* how well the model was performing on each fold to diagnose any inconsistencies. So, here's how we went about it, explained in a way that I hope demystifies things.
 
 The crux of the matter is that standard implementations of k-fold cross-validation often only give you the average performance across all folds. This can mask significant variations. To get those fold-specific accuracies, you need to essentially "peel back" the layers of abstraction that these functions provide. The approach generally involves manually setting up the folds, training a model within each fold's training data, and then evaluating that specific model against the corresponding test data. This is a tad more work, but the insights gained are well worth it.
 

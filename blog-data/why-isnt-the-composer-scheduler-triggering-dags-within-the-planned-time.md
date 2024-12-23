@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-isnt-the-composer-scheduler-triggering-dags-within-the-planned-time"
 ---
 
-Okay, let's unpack the common culprit behind seemingly phantom DAG scheduling failures in Google Cloud Composer. I’ve seen this pattern surface more times than I care to recall, especially during those late-night support sessions when a critical pipeline decides to take an unscheduled vacation. It’s rarely ever one single smoking gun, more often a confluence of factors. We’ll break down the usual suspects.
+, let's unpack the common culprit behind seemingly phantom DAG scheduling failures in Google Cloud Composer. I’ve seen this pattern surface more times than I care to recall, especially during those late-night support sessions when a critical pipeline decides to take an unscheduled vacation. It’s rarely ever one single smoking gun, more often a confluence of factors. We’ll break down the usual suspects.
 
 The most prevalent reason, in my experience, stems from a misunderstanding of how Composer’s scheduler interacts with the DAG definition itself and the airflow configuration. It’s not enough to set a `schedule_interval` in the DAG file and expect it to just magically appear at the designated time. There’s a crucial dance happening behind the scenes involving several components. Let’s take a look at some scenarios I’ve encountered and how I’ve approached resolving them.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-cant-i-obtain-a-jwt-token-during-password-reset-using-devise-and-jwt"
 ---
 
-Okay, let's unpack this. I've seen this specific scenario pop up more times than I care to count, and it’s usually down to a fundamental misunderstanding of how password reset flows interact with token-based authentication. The short answer is: you're trying to shoehorn a token into a process where it’s not inherently designed to fit. Let me explain, drawing from a few similar projects I've encountered.
+, let's unpack this. I've seen this specific scenario pop up more times than I care to count, and it’s usually down to a fundamental misunderstanding of how password reset flows interact with token-based authentication. The short answer is: you're trying to shoehorn a token into a process where it’s not inherently designed to fit. Let me explain, drawing from a few similar projects I've encountered.
 
 Fundamentally, password reset is a *stateful* process. Devise, at its core, tracks this state using its own database mechanisms — typically, a reset password token stored in the user record, along with associated timestamps. This reset process is designed to operate independently of a stateless token mechanism like JWT. Think of it this way: JWTs are primarily used for authentication *after* a user has been confirmed and verified. Password resets are part of the pre-authentication or initial access lifecycle. Trying to generate a JWT directly during the reset process is akin to trying to pay for groceries with a receipt before you've actually paid.
 

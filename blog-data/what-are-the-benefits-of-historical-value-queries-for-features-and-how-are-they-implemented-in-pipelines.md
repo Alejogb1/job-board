@@ -4,12 +4,12 @@ date: "2024-12-10"
 id: "what-are-the-benefits-of-historical-value-queries-for-features-and-how-are-they-implemented-in-pipelines"
 ---
 
-Okay so you wanna talk about historical value queries for features right  like super cool stuff we can do with data  I'm totally on board  It's basically using past data to make better predictions or decisions in the present  think of it like having a crystal ball but instead of the future it shows you really useful patterns from the past
+ so you wanna talk about historical value queries for features right  like super cool stuff we can do with data  I'm totally on board  It's basically using past data to make better predictions or decisions in the present  think of it like having a crystal ball but instead of the future it shows you really useful patterns from the past
 
 The big win here is context  a lot of machine learning models are kinda dumb they just see the current data point and that's it  they don't know the story behind it  Historical queries add that story  They let you ask questions like "how has this feature behaved over time" or "what were the typical values a month ago" or even "was there a sudden spike in this value recently that might be important"
 
 
-This adds a crazy amount of richness to your models  Imagine you're predicting customer churn  Just looking at their current activity is okay but if you know they were super active for the last six months and then suddenly stopped that's a HUGE signal that they're about to churn  That's the power of historical context
+This adds a crazy amount of richness to your models  Imagine you're predicting customer churn  Just looking at their current activity is  but if you know they were super active for the last six months and then suddenly stopped that's a HUGE signal that they're about to churn  That's the power of historical context
 
 
 Implementation wise it's pretty straightforward in a data pipeline you usually have some kind of data store  could be a database like Postgres or a data lake like S3  You query this store  but instead of just getting the current value of a feature you get a time series of that feature  So instead of just getting "user's current balance" you get "user's balance over the last year"

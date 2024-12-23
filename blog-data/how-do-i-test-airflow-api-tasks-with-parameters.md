@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-test-airflow-api-tasks-with-parameters"
 ---
 
-Alright, let's tackle this. Testing Airflow API tasks, particularly when they involve parameters, can initially feel a bit like navigating a maze. I've definitely spent my share of late nights debugging these scenarios. The good news is, with the right approach, it's entirely manageable and, dare I say, even elegant. The trick lies in understanding how Airflow manages parameters and how best to simulate their behavior in a testing environment.
+Alright,  Testing Airflow API tasks, particularly when they involve parameters, can initially feel a bit like navigating a maze. I've definitely spent my share of late nights debugging these scenarios. The good news is, with the right approach, it's entirely manageable and, dare I say, even elegant. The trick lies in understanding how Airflow manages parameters and how best to simulate their behavior in a testing environment.
 
 The core challenge stems from the fact that API tasks within Airflow often rely on a context populated during runtime. Parameters that define the behavior of these tasks are frequently injected through this context. So, directly instantiating your task within a unit test often leads to a 'missing context' error or similar frustrations. We need to bypass this by creating a controllable testing context.
 

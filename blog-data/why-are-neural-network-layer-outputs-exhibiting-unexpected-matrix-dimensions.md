@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-are-neural-network-layer-outputs-exhibiting-unexpected-matrix-dimensions"
 ---
 
-Okay, let's unpack this. I've seen this particular headache surface more than a few times in my years, especially when building custom architectures or fine-tuning pre-trained models. The unexpected dimensions in neural network layer outputs usually stem from a mismatch between how we’ve configured our layers, the data we’re feeding in, and the mathematical operations happening behind the scenes. It's less about the neural network "misbehaving" and more about subtle errors in our design or assumptions.
+, let's unpack this. I've seen this particular headache surface more than a few times in my years, especially when building custom architectures or fine-tuning pre-trained models. The unexpected dimensions in neural network layer outputs usually stem from a mismatch between how we’ve configured our layers, the data we’re feeding in, and the mathematical operations happening behind the scenes. It's less about the neural network "misbehaving" and more about subtle errors in our design or assumptions.
 
 The core of the issue usually boils down to three main areas: improper understanding of the layer's operation (specifically matrix multiplication and transformations), incorrect data preprocessing and feeding, or a mismatch in explicit dimension definitions, especially concerning batch sizes. Let’s delve into these one by one.
 

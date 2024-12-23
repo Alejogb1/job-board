@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "how-to-write-a-test-bench-verilog-tutorial"
 ---
 
-Okay so you wanna dive into test benches in Verilog right I get it Been there done that a million times Feels like yesterday I was pulling my hair out with the same problem Back in my uni days we had this as a required course ughh
+ so you wanna dive into test benches in Verilog right I get it Been there done that a million times Feels like yesterday I was pulling my hair out with the same problem Back in my uni days we had this as a required course ughh
 
 So lets cut the fluff Test benches are not rocket science theyre really just Verilog modules designed to *test* your other Verilog modules Your design usually the thing you actually care about is the Device Under Test or DUT for short The test bench is the environment you create to see if your DUT behaves as intended Think of it like a science experiment where your DUT is the subject and your test bench is the lab equipment
 
@@ -69,7 +69,7 @@ module adder_tb();
 endmodule
 ```
 
-Okay so what did we do here First we declared inputs as registers `reg` because in a test bench inputs need to be driven You cant directly assign values to wires inside a test bench You also declare the output as a wire like you would in any other module because its still driven by the DUT
+ so what did we do here First we declared inputs as registers `reg` because in a test bench inputs need to be driven You cant directly assign values to wires inside a test bench You also declare the output as a wire like you would in any other module because its still driven by the DUT
 
 Then we instantiated the `adder` module we're testing This part should be familiar if youve done any verilog before The dot notation is just port mapping its important to get this right
 
@@ -156,7 +156,7 @@ endmodule
 
 Now notice a few things we introduced a clock generation using an `always` block This is very common in test benches for synchronous circuits The reset signal is asserted then deasserted after some time The `repeat` statement allows us to run the simulation for a fixed number of clock cycles instead of manually setting up each test case
 
-Also note that the `always` block for clock generation is a non-blocking assignment which we should be wary about as this can create race conditions but in test benches this is okay
+Also note that the `always` block for clock generation is a non-blocking assignment which we should be wary about as this can create race conditions but in test benches this is 
 
 Now lets talk about more advanced techniques
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-set-up-laravel-nova-to-run-on-a-subdomain"
 ---
 
-Okay, let's tackle this. Setting up Laravel Nova on a subdomain can initially feel a little intricate, but it’s absolutely manageable with the proper approach. I've personally navigated this setup several times in previous projects, facing similar challenges, and I can certainly guide you through the process. The key lies in understanding the interplay between your server configuration, your Laravel application, and Nova's routing.
+,  Setting up Laravel Nova on a subdomain can initially feel a little intricate, but it’s absolutely manageable with the proper approach. I've personally navigated this setup several times in previous projects, facing similar challenges, and I can certainly guide you through the process. The key lies in understanding the interplay between your server configuration, your Laravel application, and Nova's routing.
 
 The core issue isn’t about Nova being inherently difficult to configure on a subdomain; it's about how you correctly direct web traffic to the Nova panel specifically. Essentially, we're manipulating the routes that Laravel uses for our application. When you install Nova normally, it assumes you're running it at the root level of your main domain. We need to specifically tell it—and your server—that the Nova panel lives at a subdomain address instead.
 

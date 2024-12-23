@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-isnt-gcp-container-scanning-triggered-by-artifact-pushes"
 ---
 
-Okay, let's unpack this. The question of why gcp's container scanning isn't *always* triggered immediately by artifact pushes is nuanced, and it's something I've dealt with firsthand in a few different projects. Back in my days at 'Cyberdyne Solutions' (fictional, of course), we ran into this exact issue when transitioning to a fully automated ci/cd pipeline. We'd push container images, expecting immediate security scan results, only to find they were delayed, sometimes significantly, and on occasion, not happening at all.
+, let's unpack this. The question of why gcp's container scanning isn't *always* triggered immediately by artifact pushes is nuanced, and it's something I've dealt with firsthand in a few different projects. Back in my days at 'Cyberdyne Solutions' (fictional, of course), we ran into this exact issue when transitioning to a fully automated ci/cd pipeline. We'd push container images, expecting immediate security scan results, only to find they were delayed, sometimes significantly, and on occasion, not happening at all.
 
 The first thing to understand is that gcp's artifact registry (formerly container registry) and container analysis are separate, asynchronous services. Container registry is primarily a storage solution, optimized for fast and reliable image storage and retrieval. Container analysis, on the other hand, is a security service focused on analyzing the contents of those images for vulnerabilities. These two services communicate via a pub/sub mechanism, which forms the core of the non-immediate trigger we're seeing. Think of it as an event-driven system, not a real-time, synchronous call.
 

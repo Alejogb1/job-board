@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "declare-database-using-code-example"
 ---
 
-Okay so like you wanna declare a database using code right been there done that many times So lets get this straight it's not about just waving your hands and poof a database appears We're talking actual code here not some magic trick
+ so like you wanna declare a database using code right been there done that many times So lets get this straight it's not about just waving your hands and poof a database appears We're talking actual code here not some magic trick
 
 First off what kind of database are we talking about This changes everything You could be dealing with a relational database like PostgreSQL MySQL or something more document oriented like MongoDB or even a graph database like Neo4j And there are in-memory databases too like Redis for super fast operations So the code and the way you interact will differ greatly depending on what you wanna do
 
@@ -142,4 +142,4 @@ And if you are into graph databases "Graph Databases" by Ian Robinson is a must 
 
 So yeah its not just a matter of copy pasting code but understanding the code behind what you're trying to achieve database design and architecture it is not for the faint of heart but if you do it right you can achieve scalable and robust systems and databases It is quite a deep rabbit hole but once you learn the basics it becomes a whole lot easier its like riding a bike… a very complicated high tech bike with a lot of gears and some rockets attached but still a bike you know what I mean?
 
-Okay I am out have fun coding those databases
+ I am out have fun coding those databases

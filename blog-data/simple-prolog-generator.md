@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "simple-prolog-generator"
 ---
 
-Okay so a simple Prolog generator right Been there done that Got my hands dirty with this kind of thing way back when we were still arguing about whether tabs or spaces were the real deal You know the usual programmer debates Anyway lets talk Prolog generators because I've wrestled with this beast before and lived to tell the tale
+ so a simple Prolog generator right Been there done that Got my hands dirty with this kind of thing way back when we were still arguing about whether tabs or spaces were the real deal You know the usual programmer debates Anyway lets talk Prolog generators because I've wrestled with this beast before and lived to tell the tale
 
 So you want a program that spits out Prolog code programmatically Makes sense Its a powerful thing to have especially when you are doing some sort of metaprogramming or trying to generate a large knowledge base dynamically I've actually used this in a project where I was trying to model a complex scheduling problem with lots of constraints and writing the entire Prolog by hand was just not feasible
 
@@ -29,7 +29,7 @@ clause2 = generate_prolog_clause_string_concat("likes", "mary", "pizza")
 print(clause1)  #Output: parent(john,mary).
 print(clause2)  #Output: likes(mary,pizza).
 ```
-Okay this works I mean it gets the job done in terms of outputting basic Prolog clauses but man oh man is this thing prone to errors Its hard to debug and the code gets really ugly when you start dealing with nested structures or more complex terms It also doesnt handle special characters properly So its not a great option in the long run I mean you could escape all the characters you want but why would you want to do that
+ this works I mean it gets the job done in terms of outputting basic Prolog clauses but man oh man is this thing prone to errors Its hard to debug and the code gets really ugly when you start dealing with nested structures or more complex terms It also doesnt handle special characters properly So its not a great option in the long run I mean you could escape all the characters you want but why would you want to do that
 
 The problem here is that you are treating the code as just plain text and you are not really thinking of it as a structured thing which it actually is So this approach is very susceptible to syntax errors and it doesn't really scale well so I wouldn't recommend that anyone actually uses this for anything but a very very very small task
 

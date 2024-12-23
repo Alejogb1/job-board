@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-azure-ml-executablenotfound-when-running-dot"
 ---
 
-Okay, let's tackle this Azure ML `ExecutableNotFound` situation when trying to use `dot`. It’s a frustrating error, I know, and I've certainly spent my share of time debugging similar issues in past projects. It usually boils down to a few core reasons, and it's rarely a problem with azure ml itself, but rather with how the environment is set up.
+, let's tackle this Azure ML `ExecutableNotFound` situation when trying to use `dot`. It’s a frustrating error, I know, and I've certainly spent my share of time debugging similar issues in past projects. It usually boils down to a few core reasons, and it's rarely a problem with azure ml itself, but rather with how the environment is set up.
 
 First, let’s clarify what `dot` refers to here. It's part of Graphviz, an open-source graph visualization software. Azure ML environments, being sandboxed and curated, don't inherently come pre-loaded with tools like Graphviz. When your pipeline tries to execute a python script that uses the `graphviz` library (which, under the hood, needs the `dot` executable), you can get this error if `dot` isn't present or accessible in the execution environment. This was exactly what hit me about two years ago when deploying a complex model that required visualizing decision trees, for example.
 

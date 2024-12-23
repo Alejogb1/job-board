@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-cross-domain-access-to-remote-server-files-be-achieved"
 ---
 
-Alright, let's tackle this. Cross-domain access to remote server files—it’s a classic problem with a few robust solutions, and, having spent a fair bit of time battling these issues, I've got a few approaches that consistently prove effective. Back in my early days working on a distributed system for a financial institution, we hit this very problem hard when integrating disparate legacy systems. I recall countless late nights debugging CORS issues and wrestling with complex permission models. So, I'm speaking from firsthand, somewhat battle-scarred experience here.
+Alright,  Cross-domain access to remote server files—it’s a classic problem with a few robust solutions, and, having spent a fair bit of time battling these issues, I've got a few approaches that consistently prove effective. Back in my early days working on a distributed system for a financial institution, we hit this very problem hard when integrating disparate legacy systems. I recall countless late nights debugging CORS issues and wrestling with complex permission models. So, I'm speaking from firsthand, somewhat battle-scarred experience here.
 
 The core challenge, fundamentally, stems from the same-origin policy implemented by web browsers. This policy is a security mechanism designed to prevent malicious scripts on one website from accessing sensitive data on another. Simply put, a script running on `example.com` is restricted from making requests to, say, `api.anotherdomain.net` unless specific permissions are granted. Thankfully, there are several methods to bypass this restriction safely, each with its own use case and complexities. Let’s unpack them.
 

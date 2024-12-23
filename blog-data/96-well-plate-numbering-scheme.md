@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "96-well-plate-numbering-scheme"
 ---
 
-Okay so you're asking about 96 well plate numbering it's a classic biotech thing I've been there done that probably messed it up a few times early in my career
+ so you're asking about 96 well plate numbering it's a classic biotech thing I've been there done that probably messed it up a few times early in my career
 
 First off let's establish the basics a 96 well plate is arranged in a 8x12 grid you have 8 rows typically labeled A through H and 12 columns labeled 1 through 12 So A1 is the top left well and H12 is the bottom right
 
@@ -33,7 +33,7 @@ print(row_index_to_letter(0))   #Output: A
 print(row_index_to_letter(7))   #Output: H
 ```
 
-Okay so `ord()` gives you the ASCII value of a character and `chr()` does the opposite thing the conversion from a letter to a number is made easy by them you can see the output of example usage right below this code block it works like it should
+ so `ord()` gives you the ASCII value of a character and `chr()` does the opposite thing the conversion from a letter to a number is made easy by them you can see the output of example usage right below this code block it works like it should
 
 Now column numbers are already numerical so that's easy but you might want them to be 0-based for array indexing just remember that column '1' is really column 0 in your programming world So here's a full conversion between well string and numerical coordinates:
 

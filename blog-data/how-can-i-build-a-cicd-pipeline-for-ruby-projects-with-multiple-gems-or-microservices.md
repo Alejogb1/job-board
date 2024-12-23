@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-build-a-cicd-pipeline-for-ruby-projects-with-multiple-gems-or-microservices"
 ---
 
-Okay, let's tackle this. Building a robust ci/cd pipeline for ruby projects, particularly when you're dealing with multiple gems or microservices, is a challenge I've faced firsthand in a few different iterations over the years. It’s less about finding the *one* perfect solution and more about assembling the correct building blocks for your specific scenario. Here's how I approach it, combining practical experience with some best practices.
+,  Building a robust ci/cd pipeline for ruby projects, particularly when you're dealing with multiple gems or microservices, is a challenge I've faced firsthand in a few different iterations over the years. It’s less about finding the *one* perfect solution and more about assembling the correct building blocks for your specific scenario. Here's how I approach it, combining practical experience with some best practices.
 
 First, forget the notion of treating all pipelines identically. A single monolithic pipeline trying to handle multiple microservices is, in my experience, a recipe for inefficiency and eventual pain. Instead, think about breaking down your workflow into component parts, each with its dedicated pipeline. The key is managing the interdependencies gracefully.
 

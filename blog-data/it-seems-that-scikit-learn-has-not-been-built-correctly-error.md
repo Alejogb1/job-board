@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "it-seems-that-scikit-learn-has-not-been-built-correctly-error"
 ---
 
-Alright so you're hitting a wall with scikit-learn right Got it Been there done that more times than I care to admit The "not built correctly" error is usually a sign something went wrong during the installation or compile phase it's a real pain I know
+so you're hitting a wall with scikit-learn right Got it Been there done that more times than I care to admit The "not built correctly" error is usually a sign something went wrong during the installation or compile phase it's a real pain I know
 
 First things first let's break down the most common reasons you might see this problem From my experience it's almost always one of these issues so let's cover them one by one and let's see what can help you with this
 
@@ -77,7 +77,7 @@ pip install scikit-learn
 
 **Problem 3: Weird Binary Issues**
 
-Okay this one is a bit more rare but I have run into it before Sometimes when scikit-learn gets compiled for your particular machine something can go wrong with the C/C++ extensions that scikit-learn relies on This is like getting your car engine back with a couple of parts that have the wrong shape and it simply will not work
+ this one is a bit more rare but I have run into it before Sometimes when scikit-learn gets compiled for your particular machine something can go wrong with the C/C++ extensions that scikit-learn relies on This is like getting your car engine back with a couple of parts that have the wrong shape and it simply will not work
 
 **How to fix it**
 

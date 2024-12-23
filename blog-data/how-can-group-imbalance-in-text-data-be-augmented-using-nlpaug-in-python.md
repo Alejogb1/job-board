@@ -100,7 +100,7 @@ data = pd.DataFrame({
         "This is a fantastic product!",
         "I love it so much.",
         "It works perfectly as expected.",
-        "Okay, it's fine I guess.",
+        ", it's fine I guess.",
         "It could be better.",
         "I'm not very impressed.",
         "It was a complete waste of money.",

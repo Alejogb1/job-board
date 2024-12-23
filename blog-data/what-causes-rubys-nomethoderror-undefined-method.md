@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-causes-rubys-nomethoderror-undefined-method"
 ---
 
-Okay, let’s tackle this. I remember back in the late aughts, struggling with Ruby on Rails and getting bombarded with `NoMethodError: undefined method` errors. It felt like a rite of passage. It's not exactly a complicated error, but the root causes can be surprisingly diverse, and tracking them down is crucial for writing robust Ruby code. Essentially, a `NoMethodError` means that you’re trying to call a method on an object, but that object simply doesn’t have a method with the name you’re using. This seemingly simple explanation masks a multitude of potential pitfalls, and debugging effectively often involves understanding the different contexts where this error can arise.
+, let’s tackle this. I remember back in the late aughts, struggling with Ruby on Rails and getting bombarded with `NoMethodError: undefined method` errors. It felt like a rite of passage. It's not exactly a complicated error, but the root causes can be surprisingly diverse, and tracking them down is crucial for writing robust Ruby code. Essentially, a `NoMethodError` means that you’re trying to call a method on an object, but that object simply doesn’t have a method with the name you’re using. This seemingly simple explanation masks a multitude of potential pitfalls, and debugging effectively often involves understanding the different contexts where this error can arise.
 
 One of the most common culprits is simply a typo in the method name. We’ve all been there, quickly typing away and accidentally misspell a crucial method call. For instance, if I intend to use `.length` on an array but accidentally type `.lenght`, Ruby will dutifully tell me that such a method doesn't exist.
 

@@ -4,13 +4,13 @@ date: "2024-12-13"
 id: "convertto-securestring-key-not-valid-state-powershell"
 ---
 
-Okay so you're wrestling with `ConvertTo-SecureString` throwing a "key not valid state" error in PowerShell right been there done that got the t-shirt and probably several debugging scars to match Let me break this down from my trenches because this isn't some esoteric corner case this is a common pain point when you're diving into secure handling of credentials or sensitive data in PowerShell scripts Especially when moving things between machines or user contexts
+ so you're wrestling with `ConvertTo-SecureString` throwing a "key not valid state" error in PowerShell right been there done that got the t-shirt and probably several debugging scars to match Let me break this down from my trenches because this isn't some esoteric corner case this is a common pain point when you're diving into secure handling of credentials or sensitive data in PowerShell scripts Especially when moving things between machines or user contexts
 
 First off lets get this out of the way `ConvertTo-SecureString` uses data protection API (DPAPI) under the hood DPAPI keys are tied to the user account and the machine So if you're trying to decrypt a secure string created by another user or on a different computer that "key not valid state" error is exactly what you would expect It means the system can't use the existing key to decrypt the payload
 
 In my early days I stumbled into this headfirst when I was trying to automate database backups and password rotations across our infrastructure I was generating secure strings on my dev machine and then deploying scripts to our servers only to have them fail spectacularly Because the service accounts running those scripts had no clue what to do with the secure strings created in my user context Fun times not really
 
-Okay so the quick fix lets talk about what I've learned after a fair few hours of banging my head against the monitor
+ so the quick fix lets talk about what I've learned after a fair few hours of banging my head against the monitor
 
 **The Problem**
 
@@ -33,7 +33,7 @@ $plainText =  [System.Runtime.InteropServices.Marshal]::PtrToStringAuto([System.
 Write-Host "This is how the decrypted output look like: $plainText"
 ```
 
-Okay lets be real printing passwords to console is a very bad practice but this code should give you the idea that it works and you can decrypt it with the same secure key on same or different machine with the right credentials This approach provides the portability you want you just have to handle the key secure as well as this code is a simplified example and should not be used in real production scenarios
+ lets be real printing passwords to console is a very bad practice but this code should give you the idea that it works and you can decrypt it with the same secure key on same or different machine with the right credentials This approach provides the portability you want you just have to handle the key secure as well as this code is a simplified example and should not be used in real production scenarios
 
 2.  **Encryption at Rest Using Symmetric Keys** Another good option if you need a persistent solution is to encrypt the string to a file using a symmetric key This approach involves an encryption key and an initialization vector which you'd ideally store securely or retrieve via secret management system. Think of it like having a safe where the safe itself needs its key
 
@@ -91,7 +91,7 @@ Here are some resources I found helpful when I was facing these issues These are
 
 **A Little Bit of Humor**
 
-Okay I guess if I must crack a joke here you go I once spent 3 days debugging a script only to find out the password was being passed as "password" It was really enlightening I guess I have to thank the guy for making me feel so smart
+ I guess if I must crack a joke here you go I once spent 3 days debugging a script only to find out the password was being passed as "password" It was really enlightening I guess I have to thank the guy for making me feel so smart
 
 **Conclusion**
 

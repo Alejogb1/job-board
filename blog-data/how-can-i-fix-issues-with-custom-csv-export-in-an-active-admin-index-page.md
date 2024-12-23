@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-fix-issues-with-custom-csv-export-in-an-active-admin-index-page"
 ---
 
-Let's tackle this. I've definitely been down that rabbit hole of custom csv exports in Active Admin, especially when things aren't behaving as expected. It's a surprisingly common issue, often stemming from a subtle interplay between the framework’s defaults and the specific data you're trying to wrangle. More often than not, the default settings work well until they don't – usually, when you require more intricate formatting or specific data selection. It’s about extending Active Admin’s core functionality in a manner that’s both robust and maintainable.
+ I've definitely been down that rabbit hole of custom csv exports in Active Admin, especially when things aren't behaving as expected. It's a surprisingly common issue, often stemming from a subtle interplay between the framework’s defaults and the specific data you're trying to wrangle. More often than not, the default settings work well until they don't – usually, when you require more intricate formatting or specific data selection. It’s about extending Active Admin’s core functionality in a manner that’s both robust and maintainable.
 
 My experience usually starts with what *appears* to be a simple request: "Just export this specific set of columns to csv." However, data almost always presents its own set of challenges. For example, I recall one project where we were dealing with user data, some of which was nested within jsonb columns. The basic Active Admin csv export would, naturally, only return the stringified json blob rather than the actual extracted values we needed for analysis. This required a more nuanced approach, which I'll elaborate on.
 

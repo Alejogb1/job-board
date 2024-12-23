@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-add-libvips-to-a-rails-7-docker-image"
 ---
 
-Alright, let's tackle this. Getting `libvips` working smoothly in a Rails 7 Docker environment can definitely feel like a bit of a puzzle sometimes, but it's a common enough issue. I've had my fair share of encounters with image processing dependencies and containerization, so let me walk you through the process based on what I've found works well. We're going to focus on a solid, repeatable approach rather than quick hacks.
+Alright,  Getting `libvips` working smoothly in a Rails 7 Docker environment can definitely feel like a bit of a puzzle sometimes, but it's a common enough issue. I've had my fair share of encounters with image processing dependencies and containerization, so let me walk you through the process based on what I've found works well. We're going to focus on a solid, repeatable approach rather than quick hacks.
 
 The core challenge, as you might have guessed, revolves around ensuring that `libvips` and its development headers are present during the image build phase, and then that the shared libraries are also available at runtime. Rails, with its reliance on gems like `ruby-vips`, assumes these prerequisites are in place. Let’s break this down into a few key areas.
 

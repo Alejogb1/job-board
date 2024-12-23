@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "bitwise-or-in-verilog-circuit"
 ---
 
-Okay so bitwise OR in Verilog yeah seen that rodeo a few times lets break it down real simple and I’ll throw in some stuff I’ve learned the hard way
+ so bitwise OR in Verilog yeah seen that rodeo a few times lets break it down real simple and I’ll throw in some stuff I’ve learned the hard way
 
 First things first bitwise OR is a fundamental logic operation it takes two or more inputs and outputs a 1 if *any* of the inputs are 1 otherwise it outputs a 0 It’s about as basic as it gets in digital logic circuits You'd think it’s a no-brainer and it usually is but there are some things to be mindful of especially when you start thinking about actual hardware implementation and all that entails.
 

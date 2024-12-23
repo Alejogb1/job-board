@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "bundler-you-must-use-bundler-2-or-greater-with-this-lockfile"
 ---
 
-Okay so you're hitting the dreaded "bundler version mismatch with lockfile" error It's a classic and yeah I've been there more times than I care to remember Especially back when I was juggling projects across a bunch of different ruby versions and gemsets it was a constant headache Let me tell you my first time with this issue was awful I was working on this old rails app for a client it was like rails 3.2 or something like that and we were deploying with capistrano which if you remember that thing was a beast in itself And I had this lockfile from a previous developer using bundler 1 something something and I was on bundler 2 and bam total breakage on production deployment night We had to roll back and then spend like half a day just untangling the mess it was not pretty
+ so you're hitting the dreaded "bundler version mismatch with lockfile" error It's a classic and yeah I've been there more times than I care to remember Especially back when I was juggling projects across a bunch of different ruby versions and gemsets it was a constant headache Let me tell you my first time with this issue was awful I was working on this old rails app for a client it was like rails 3.2 or something like that and we were deploying with capistrano which if you remember that thing was a beast in itself And I had this lockfile from a previous developer using bundler 1 something something and I was on bundler 2 and bam total breakage on production deployment night We had to roll back and then spend like half a day just untangling the mess it was not pretty
 
 Anyways back to the topic so this error basically means your `Gemfile.lock` expects a specific version of bundler to resolve dependencies It's like having a detailed instruction manual for a puzzle but only a certain tool works to put it together Your `Gemfile.lock` tells bundler exactly which versions of gems are needed so you get consistent behaviour across different environments If you try to use a newer bundler than what the lockfile wants things can go wrong because newer versions might resolve dependencies slightly differently and lead to different installed gem versions This is because newer versions of bundler might have different ways to handle gem dependencies so the lockfile will become "invalid" for that particular bundler version it doesn't know how to "read" that lockfile created with different rules and with a different interpretation of the gem dependency graph this is to put it simply
 
@@ -39,7 +39,7 @@ Third step once you know which version of bundler you want and which version you
 
 Alternatively you can upgrade to the latest version of bundler and regenerate your `Gemfile.lock` this can lead to issues as the gem versions might be different than expected and it is not recommended if you don't know the exact ramifications of that update this solution is a bit more involved and could potentially break things so please backup your project before making this changes.
 
-Okay so code examples I'll give you three scenarios
+ so code examples I'll give you three scenarios
 
 Scenario one you have bundler 2 installed and you need to install gems for a project that wants bundler 1.x
 
@@ -74,7 +74,7 @@ gem install bundler:1.5.2
 bundle _1.5.2_ install # This will install using 1.5.2 but you can change it
 ```
 
-Okay so now for the "why" all this happens well bundler needs a consistent way to resolve dependencies between gems and this is not only ruby related most package managers in other languages face similar issues To ensure that the gem environment works on each machine and is the same in every deploy bundler creates the `Gemfile.lock` file which records the exact versions of gems used at the moment the lockfile was created If the `Gemfile.lock` uses bundler 1 and you are using bundler 2 they might resolve the dependencies differently and cause unexpected errors and that's why the error appears.
+ so now for the "why" all this happens well bundler needs a consistent way to resolve dependencies between gems and this is not only ruby related most package managers in other languages face similar issues To ensure that the gem environment works on each machine and is the same in every deploy bundler creates the `Gemfile.lock` file which records the exact versions of gems used at the moment the lockfile was created If the `Gemfile.lock` uses bundler 1 and you are using bundler 2 they might resolve the dependencies differently and cause unexpected errors and that's why the error appears.
 
 The problem with bundler in old projects is that it doesn't do a great job of self documenting and this leads to this situation where people get lost in the version management I mean I get it sometimes it feels like we are all just trying to keep up with the latest version of everything it’s like upgrading software to stay ahead of the bugs but in reality you end up chasing your own tail (here is my joke don't say I didn't warn you)
 

@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-is-a-database-replica-not-working-in-test-environment"
 ---
 
-Alright, let's tackle this. I’ve seen this scenario play out more than a few times, especially when dealing with intricate replication setups. It's never just a simple 'on/off' switch; diagnosing why a replica fails in a test environment often requires a methodical, step-by-step investigation. I’ll share my experience, focusing on the common pitfalls I’ve encountered and how to address them.
+Alright,  I’ve seen this scenario play out more than a few times, especially when dealing with intricate replication setups. It's never just a simple 'on/off' switch; diagnosing why a replica fails in a test environment often requires a methodical, step-by-step investigation. I’ll share my experience, focusing on the common pitfalls I’ve encountered and how to address them.
 
 First, let's establish that a database replica's primary function is to maintain a copy of data from a primary database. This secondary database is usually intended for read operations, reporting, or as a failover option. When it fails to replicate in a test environment, the root cause rarely boils down to a single, glaring error. It's typically a combination of factors interacting in a way that disrupts the replication process.
 

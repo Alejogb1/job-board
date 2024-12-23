@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-a-file-not-found-exception-in-docker"
 ---
 
-Okay, let's tackle this. I've definitely spent more time than I’d like to admit tracking down "file not found" exceptions within Docker containers, and they’re rarely as simple as a typo. They can stem from a variety of places, and it’s always crucial to systematically check through the possibilities. It’s not uncommon, and through experience, I’ve learned to anticipate the usual suspects.
+,  I've definitely spent more time than I’d like to admit tracking down "file not found" exceptions within Docker containers, and they’re rarely as simple as a typo. They can stem from a variety of places, and it’s always crucial to systematically check through the possibilities. It’s not uncommon, and through experience, I’ve learned to anticipate the usual suspects.
 
 Fundamentally, a "file not found" exception within Docker means the process inside your container can’t locate a file it expects to exist at a specified path. The core of the problem often lies with how file paths are handled across different environments, especially the divide between your host machine and the containerized environment.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-causes-the-unknown-classes-userwarning-when-using-multilabelbinarizer"
 ---
 
-Okay, let's tackle this. I remember wrestling with this particular `UserWarning` back in my early days working on a large-scale content classification project. It’s frustrating, but the underlying cause usually boils down to a subtle mismatch between the data you're feeding into `MultiLabelBinarizer` and how it's expecting that data to be structured. So, let’s unpack it step-by-step.
+,  I remember wrestling with this particular `UserWarning` back in my early days working on a large-scale content classification project. It’s frustrating, but the underlying cause usually boils down to a subtle mismatch between the data you're feeding into `MultiLabelBinarizer` and how it's expecting that data to be structured. So, let’s unpack it step-by-step.
 
 Essentially, the "unknown class(es)" warning from `sklearn.preprocessing.MultiLabelBinarizer` surfaces when you try to transform data that contains labels which the binarizer hasn't seen during its `fit()` phase. It's a safeguard, a heads-up that you're introducing categories during the `transform()` stage that weren’t part of the initial universe defined when you called `fit()`. Think of it as the binarizer learning a vocabulary (or in this case, a set of known labels) initially, and then, later on, you present it with words (labels) it doesn't recognize.
 

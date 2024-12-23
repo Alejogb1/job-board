@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-sailsjs-blueprints-be-updated-without-using-a-primary-key"
 ---
 
-Okay, let's tackle this. It’s a question that definitely surfaces once you start pushing Sails.js beyond its initial scaffolding. I've personally bumped into this situation during a project where we were migrating legacy data, where relationships were identified by unique combinations of fields rather than a conventional primary key, and frankly, relying solely on Sails.js’ default blueprint routes felt limiting.
+,  It’s a question that definitely surfaces once you start pushing Sails.js beyond its initial scaffolding. I've personally bumped into this situation during a project where we were migrating legacy data, where relationships were identified by unique combinations of fields rather than a conventional primary key, and frankly, relying solely on Sails.js’ default blueprint routes felt limiting.
 
 The core issue lies in the way Sails.js blueprints are structured – they inherently expect a primary key to uniquely identify a record for operations like update or delete. By default, this is an auto-incrementing integer id, often named `id`. When you deviate from this model, direct usage of `/model/id` routes won’t work. We need a way to tell Sails.js, "Hey, this set of attributes is *how* I identify this record."
 

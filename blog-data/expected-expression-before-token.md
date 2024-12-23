@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "expected-expression-before-token"
 ---
 
-Okay so you hit the dreaded "expected expression before token" error right I know that one way too well Been there done that got the t-shirt and probably a few scars too let me tell you a bit about my journey with this particular compiler grievance and how i've handled it in the past
+ so you hit the dreaded "expected expression before token" error right I know that one way too well Been there done that got the t-shirt and probably a few scars too let me tell you a bit about my journey with this particular compiler grievance and how i've handled it in the past
 
 First things first this error usually means the compiler saw something it wasn't expecting Like a variable where it wanted an operator or a semicolon when it expected a curly brace Stuff like that Its the kind of thing that makes you double check every single line of code several times and by the end you just feel a bit defeated but we will beat this together dont worry
 
@@ -88,6 +88,6 @@ Now about further reading if you want to dive deeper into compiler theory and un
 *   "Modern Compiler Implementation in C" by Andrew Appel this book provides a more practical approach to compiler construction If you prefer hands-on learning this might be a very good option
 *   The documentation for the specific compiler you are using I would recommend you to read the documentation of your compiler you would be surprised by how much useful information you can find in there This documentation is the final authority in your situation
 
-And please be mindful about the fact that most of the time the compiler is correct and you are wrong. Okay this might sound a bit harsh so i will tone it down a bit. Most of the time the compiler is interpreting what you are writing exactly the way it was programmed to do so and it is you who is not writing things in the correct manner. It is not personal its just the way these things work.
+And please be mindful about the fact that most of the time the compiler is correct and you are wrong.  this might sound a bit harsh so i will tone it down a bit. Most of the time the compiler is interpreting what you are writing exactly the way it was programmed to do so and it is you who is not writing things in the correct manner. It is not personal its just the way these things work.
 
 So take a deep breath debug your code line by line if you need to make sure you have a very good understanding of the syntax and be meticulous when you write your code so you wont end up with this error again. Happy coding and I wish you good luck! And i wish you find the semicolon that made your life miserable.

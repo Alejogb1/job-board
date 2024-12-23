@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "jax-random-normal-generator-implementation"
 ---
 
-Okay so you're asking about JAX and its random normal generation stuff right Been there done that Let me tell you I've wrestled with this thing enough times to know a thing or two or maybe three
+ so you're asking about JAX and its random normal generation stuff right Been there done that Let me tell you I've wrestled with this thing enough times to know a thing or two or maybe three
 
 First off JAX random number generation isn't your typical NumPy random module It's a whole different ballgame It's all about purity and reproducibility when you are working with JAX you aren't messing around with global states and mutable randomness No siree This has its advantages like easier parallelisation and deterministic computations but it takes a bit of getting used to if you are coming from standard NumPy
 
@@ -12,7 +12,7 @@ Essentially JAX uses a concept called "key" Think of it as a seed but on steroid
 
 Now to the good stuff normal distributions. To get a normal random array you use `jax.random.normal` This is where the key comes in If you don't use it you will end up getting the same set of random numbers each time You need to split the key to get different random values. I cannot emphasize how important that is I have seen so many people spend hours debugging this exact thing believe me it happened to me
 
-Okay so the very basics. Here is a snippet to create a simple array of random numbers taken from a normal distribution
+ so the very basics. Here is a snippet to create a simple array of random numbers taken from a normal distribution
 
 ```python
 import jax
@@ -35,7 +35,7 @@ print(normal_array2)
 
 See how we split the key before generating each array? If you run this multiple times you will get different outputs for `normal_array` and `normal_array2` but if you reuse `key1` or `key2` without splitting again you will get the same numbers each time I wasted a whole day before figuring this out because of some lazy copying and pasting.
 
-Now you might wonder okay so what about more complex cases where I need different kinds of randomness in my program? That's where the magic of key splitting comes in again Let's say you have a complex simulation with multiple random components each one needs its own source of randomness You wouldn't want all random numbers to come from the same key split right? The key to solving the issue is to split again and again for each random process
+Now you might wonder  so what about more complex cases where I need different kinds of randomness in my program? That's where the magic of key splitting comes in again Let's say you have a complex simulation with multiple random components each one needs its own source of randomness You wouldn't want all random numbers to come from the same key split right? The key to solving the issue is to split again and again for each random process
 
 Let me give you an example Imagine a situation where you have a function that needs to generate random weights and biases for a simple linear model using normal distribution.
 

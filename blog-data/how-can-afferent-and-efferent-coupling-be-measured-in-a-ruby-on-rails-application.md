@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-afferent-and-efferent-coupling-be-measured-in-a-ruby-on-rails-application"
 ---
 
-Okay, let's tackle this. Measuring afferent and efferent coupling in a Rails application isn't just an academic exercise; it's fundamental to building maintainable and evolvable software. I've seen first-hand the chaos that uncontrolled coupling can unleash in a large project, so this is a topic near to my heart. It’s all about understanding the dependencies between your classes and modules.
+,  Measuring afferent and efferent coupling in a Rails application isn't just an academic exercise; it's fundamental to building maintainable and evolvable software. I've seen first-hand the chaos that uncontrolled coupling can unleash in a large project, so this is a topic near to my heart. It’s all about understanding the dependencies between your classes and modules.
 
 Essentially, afferent coupling (Ca) describes how many other classes or modules depend *on* a given class, and efferent coupling (Ce) describes how many other classes or modules a given class *depends on*. High afferent coupling can indicate a class that is too central and potentially too difficult to change without breaking other parts of the system. High efferent coupling suggests a class that's doing too much itself, and thus might violate the single responsibility principle.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-is-the-proper-return-type-result-for-a-rust-trait-method"
 ---
 
-Alright, let's tackle this. I’ve seen a fair share of confusion around return types in Rust traits, especially when error handling enters the picture, so I understand why this question comes up frequently. It's not always immediately obvious what the best approach is. The 'proper' return type, particularly when dealing with potentially fallible operations inside a trait method, often boils down to `Result<T, E>`, but it's the specifics within that construct that demand careful consideration.
+Alright,  I’ve seen a fair share of confusion around return types in Rust traits, especially when error handling enters the picture, so I understand why this question comes up frequently. It's not always immediately obvious what the best approach is. The 'proper' return type, particularly when dealing with potentially fallible operations inside a trait method, often boils down to `Result<T, E>`, but it's the specifics within that construct that demand careful consideration.
 
 Having spent a few years knee-deep in Rust projects, I recall a particularly challenging situation while working on a distributed data pipeline. We had several different data source implementations, each adhering to a common trait for fetching data. Initially, we’d just used simple returns, assuming operations would always succeed, which, of course, led to rather spectacular runtime failures. The lesson learned then was: `Result<T, E>` is frequently, and perhaps *usually*, the most appropriate return type for a trait method that can potentially fail.
 

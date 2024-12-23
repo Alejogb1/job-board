@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-improve-the-frame-rate-of-image-prediction-live-streams-in-flask"
 ---
 
-Okay, let's tackle frame rate optimization for image prediction streams in Flask. I've spent a fair amount of time on similar challenges over the years, particularly when building real-time vision systems for robotics demos. The issue usually boils down to inefficiencies at various points in your pipeline, and a systematic approach is the key. Let's dive into the common bottlenecks and actionable fixes.
+, let's tackle frame rate optimization for image prediction streams in Flask. I've spent a fair amount of time on similar challenges over the years, particularly when building real-time vision systems for robotics demos. The issue usually boils down to inefficiencies at various points in your pipeline, and a systematic approach is the key. Let's dive into the common bottlenecks and actionable fixes.
 
 First, forget about that "single silver bullet" approach; there isn't one. Instead, consider this a multi-faceted problem. We need to examine where our resources are being tied up most intensely. We often start with a basic Flask setup, which is great for prototyping but frequently falls short for performance when dealing with continuous streams of processed images.
 

@@ -4,7 +4,7 @@ date: "2024-12-05"
 id: "how-can-the-legal-and-ethical-complexities-of-high-profile-ai-cases-like-the-bytedance-intern-drama-influence-ai-policy"
 ---
 
-Okay so you wanna talk about the ByteDance thing and how that messy situation spills over into how we make rules for AI right  Yeah totally wild stuff  It's like a crazy rollercoaster of legal stuff ethical dilemmas and tech drama all rolled into one giant ball of confusion  And it’s a huge deal because it shows us just how unprepared we are for the messy real-world applications of AI
+ so you wanna talk about the ByteDance thing and how that messy situation spills over into how we make rules for AI right  Yeah totally wild stuff  It's like a crazy rollercoaster of legal stuff ethical dilemmas and tech drama all rolled into one giant ball of confusion  And it’s a huge deal because it shows us just how unprepared we are for the messy real-world applications of AI
 
 
 First off the ByteDance drama  I'm assuming you mean the whole thing with the intern and the AI system  If not please correct me  But basically it highlighted the problems that can arise when you have powerful AI systems in the hands of large companies  They promised confidentiality but the system kinda spilled the beans  That's a huge breach of trust a legal nightmare and a massive ethical fail

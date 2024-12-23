@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-reference-an-external-file-in-a-shell-script-using-bashoperator"
 ---
 
-Alright, let's tackle this. Referencing external files within a shell script executed by Airflow's BashOperator is something I've often found myself doing, particularly when dealing with configuration management or complex workflows. It's not always straightforward, especially if you’re transitioning from simpler scripts or if you're not particularly familiar with how Airflow manages task execution contexts.
+Alright,  Referencing external files within a shell script executed by Airflow's BashOperator is something I've often found myself doing, particularly when dealing with configuration management or complex workflows. It's not always straightforward, especially if you’re transitioning from simpler scripts or if you're not particularly familiar with how Airflow manages task execution contexts.
 
 The core challenge here lies in understanding the environment in which your shell script is being executed. BashOperator executes scripts within the context of the Airflow worker, which might be quite different from your local machine or development environment. Consequently, relying on relative paths or assumptions about the current working directory will almost always lead to frustration.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-my-tensorflow-keras-model-returning-a-nan-nan-output"
 ---
 
-Okay, let's tackle this. Seeing a `[nan nan]` output from your tensorflow keras model is a frustrating experience, and I've certainly been there. It's often not a single, obvious cause, but rather a constellation of issues that can lead to the dreaded 'not a number' result. My experience has shown me that pinpointing the exact culprit requires a methodical approach, a bit like debugging a complex system rather than trying to guess the answer. Let me walk you through the common reasons and how to address them, drawing from my past projects that suffered similar fates.
+,  Seeing a `[nan nan]` output from your tensorflow keras model is a frustrating experience, and I've certainly been there. It's often not a single, obvious cause, but rather a constellation of issues that can lead to the dreaded 'not a number' result. My experience has shown me that pinpointing the exact culprit requires a methodical approach, a bit like debugging a complex system rather than trying to guess the answer. Let me walk you through the common reasons and how to address them, drawing from my past projects that suffered similar fates.
 
 The root of `nan` outputs invariably lies in numerical instability. That's a fancy way of saying the calculations are going off the rails and producing values that the computer can't represent meaningfully. It's not just about 'bad' data or model architecture, although those certainly play their part.
 

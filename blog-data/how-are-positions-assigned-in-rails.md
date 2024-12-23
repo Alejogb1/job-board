@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-are-positions-assigned-in-rails"
 ---
 
-Okay, let's tackle position assignments in Rails. This isn't something that's immediately apparent, especially when you're just starting out, but understanding it is crucial for building robust and well-ordered applications. I’ve encountered this thorny area quite a few times, particularly when dealing with user interfaces that require drag-and-drop functionality or list reordering. It can feel a bit like unraveling a complex puzzle, but once you grasp the underlying mechanisms, it becomes quite manageable.
+, let's tackle position assignments in Rails. This isn't something that's immediately apparent, especially when you're just starting out, but understanding it is crucial for building robust and well-ordered applications. I’ve encountered this thorny area quite a few times, particularly when dealing with user interfaces that require drag-and-drop functionality or list reordering. It can feel a bit like unraveling a complex puzzle, but once you grasp the underlying mechanisms, it becomes quite manageable.
 
 Essentially, when we talk about 'position' in a Rails application, we are referring to a numerical value, typically an integer, that dictates the relative ordering of records within a set. This is very commonly used with lists, categories, or any other structure where the sequence of items is significant. It's not necessarily inherent to the database itself – while some databases offer mechanisms for sequencing records, rails typically handles this logic at the application level using database columns. Let's delve into how this is handled, specifically by thinking about a scenario I encountered a few years back with a content management system.
 

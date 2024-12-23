@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-lstms-with-multiple-embeddings-and-numerical-data-effectively-model-time-series"
 ---
 
-Okay, let's tackle this. I've actually spent a fair bit of time building forecasting models, and incorporating multi-modal data into lstms is something I've consistently found quite valuable. It's not just about throwing everything at the network; there's definitely a nuanced approach to get it working effectively.
+,  I've actually spent a fair bit of time building forecasting models, and incorporating multi-modal data into lstms is something I've consistently found quite valuable. It's not just about throwing everything at the network; there's definitely a nuanced approach to get it working effectively.
 
 The core issue here revolves around the heterogeneous nature of your input. We're not dealing with a single, uniform data type. You have text represented as embeddings, alongside numerical time-series data. The challenge lies in ensuring that these disparate inputs contribute meaningfully to the model's understanding of temporal patterns. A naive approach of just concatenating everything and feeding it to an lstm won't cut it; we need a more structured methodology.
 

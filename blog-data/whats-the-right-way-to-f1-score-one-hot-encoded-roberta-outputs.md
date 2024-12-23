@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "whats-the-right-way-to-f1-score-one-hot-encoded-roberta-outputs"
 ---
 
-Okay, let's tackle this. I've seen my fair share of confusion around evaluating one-hot encoded outputs from models like Roberta, especially when the goal is a precise F1 score. It's a classic situation where the mechanics of evaluation can be as tricky as the model itself, and I've definitely spent some late nights debugging these things in the past.
+,  I've seen my fair share of confusion around evaluating one-hot encoded outputs from models like Roberta, especially when the goal is a precise F1 score. It's a classic situation where the mechanics of evaluation can be as tricky as the model itself, and I've definitely spent some late nights debugging these things in the past.
 
 The core issue, as you're likely experiencing, lies in the transformation from model outputs – typically probabilities or logits – to the discrete class predictions required for F1 calculation. Roberta, when used for multi-class classification tasks, often produces a tensor with dimensions like `[batch_size, num_classes]`, where each entry represents the likelihood of a particular class. But F1 score operates on actual, hard predictions, not probabilities. Let me walk you through how I usually handle this, including some code examples.
 

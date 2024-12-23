@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-specify-tag-query-parameters-when-using-restclient-in-a-ruby-on-rails-api"
 ---
 
-Okay, let's tackle this. I've personally grappled with tag-based querying via rest apis more times than i care to remember, and trust me, it’s more nuanced than it first appears. Specifying tag parameters with `restclient` in a rails api can indeed get a bit fiddly, particularly when you start dealing with multiple tags and varied api expectations. The key here lies in understanding how to correctly form the uri and handle the parameter encoding, along with gracefully handling potential error conditions.
+,  I've personally grappled with tag-based querying via rest apis more times than i care to remember, and trust me, it’s more nuanced than it first appears. Specifying tag parameters with `restclient` in a rails api can indeed get a bit fiddly, particularly when you start dealing with multiple tags and varied api expectations. The key here lies in understanding how to correctly form the uri and handle the parameter encoding, along with gracefully handling potential error conditions.
 
 My go-to approach involves building the query string piece by piece before making the actual request. Let me illustrate this with a scenario from a project I worked on a while back; we had to fetch articles based on multiple tags from a third-party api. It was a classic case of "give me all articles tagged with 'ruby' and 'rails' ". We started with a very basic setup, and it evolved quite a bit from there, as these things always do.
 

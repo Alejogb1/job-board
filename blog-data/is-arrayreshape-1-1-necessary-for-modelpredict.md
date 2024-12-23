@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "is-arrayreshape-1-1-necessary-for-modelpredict"
 ---
 
-Let's tackle this. Having spent a fair amount of time deploying machine learning models, specifically with python's scientific stack, I've definitely encountered the 'reshape(-1, 1)' conundrum, and it’s worth clarifying when it becomes absolutely essential. The short answer is: it's *often* necessary when feeding data into a scikit-learn model's `predict()` method, but not always and the reason revolves around how the model was trained and how scikit-learn expects inputs to be structured. It's more about conformity with the input requirements than any inherent magic.
+ Having spent a fair amount of time deploying machine learning models, specifically with python's scientific stack, I've definitely encountered the 'reshape(-1, 1)' conundrum, and it’s worth clarifying when it becomes absolutely essential. The short answer is: it's *often* necessary when feeding data into a scikit-learn model's `predict()` method, but not always and the reason revolves around how the model was trained and how scikit-learn expects inputs to be structured. It's more about conformity with the input requirements than any inherent magic.
 
 The core problem stems from the distinction between single-sample predictions and predictions on a batch of samples. `scikit-learn` models, during training (`model.fit()`) and typically during prediction (`model.predict()`), expect a 2d numpy array (or a compatible sparse matrix representation) where:
 

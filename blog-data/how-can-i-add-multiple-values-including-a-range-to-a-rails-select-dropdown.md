@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-add-multiple-values-including-a-range-to-a-rails-select-dropdown"
 ---
 
-Okay, let's tackle this. It's something I've definitely had to navigate a few times in past projects, and while the standard `options_for_select` approach is fine for simple cases, things get a little more interesting when you need ranges and multiple values. We're going to move beyond basic key-value pairs and delve into how we can construct the data structure to make this work effectively in a Rails form.
+,  It's something I've definitely had to navigate a few times in past projects, and while the standard `options_for_select` approach is fine for simple cases, things get a little more interesting when you need ranges and multiple values. We're going to move beyond basic key-value pairs and delve into how we can construct the data structure to make this work effectively in a Rails form.
 
 I recall a project where we were building an e-commerce platform, and we needed to allow users to filter products based on price, but not just single price points, rather, price *ranges*. We couldn't have them manually input, and wanted to pre-define some common price brackets. It wasn't immediately obvious how to stuff those price ranges into a single select dropdown, but a little data massaging got the job done.
 

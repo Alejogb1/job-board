@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-my-program-not-behaving-asynchronously"
 ---
 
-Alright, let's tackle this. I've seen this scenario play out more times than I care to count, and it’s usually less about some mystical force and more about subtle missteps in how asynchronous operations are handled. The frustration is real – you expect things to happen concurrently, but instead, it feels like your program is stubbornly marching along one step at a time. So, let’s break down why your program might not be behaving asynchronously, using some specific cases from my own past projects for context.
+Alright,  I've seen this scenario play out more times than I care to count, and it’s usually less about some mystical force and more about subtle missteps in how asynchronous operations are handled. The frustration is real – you expect things to happen concurrently, but instead, it feels like your program is stubbornly marching along one step at a time. So, let’s break down why your program might not be behaving asynchronously, using some specific cases from my own past projects for context.
 
 The core of asynchronous programming lies in the ability to initiate a task and, crucially, *not wait* for it to complete before moving on to the next operation. If your program isn’t exhibiting this behavior, it likely means that somewhere along the line, you're either blocking the main thread or incorrectly managing the asynchronous operations themselves.
 

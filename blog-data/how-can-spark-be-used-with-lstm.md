@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-spark-be-used-with-lstm"
 ---
 
-Okay, let's delve into integrating Spark with Long Short-Term Memory networks (LSTMs). I’ve had my fair share of encounters with this particular pairing, both in research and production environments, and it's definitely a powerful combination when wielded correctly. It isn’t just about slapping them together; there's a nuanced approach needed to truly leverage their strengths.
+, let's delve into integrating Spark with Long Short-Term Memory networks (LSTMs). I’ve had my fair share of encounters with this particular pairing, both in research and production environments, and it's definitely a powerful combination when wielded correctly. It isn’t just about slapping them together; there's a nuanced approach needed to truly leverage their strengths.
 
 The core challenge, as I've found, isn't so much about making an LSTM *run* on Spark—we can do that, trivially, by wrapping the training within a Spark task. The actual complexity surfaces when we try to truly *parallelize* the LSTM training and data preprocessing across our Spark cluster. This means addressing the inherently sequential nature of LSTMs, which process data in temporal order, and figuring out how to distribute those computations while maintaining data integrity and model accuracy.
 

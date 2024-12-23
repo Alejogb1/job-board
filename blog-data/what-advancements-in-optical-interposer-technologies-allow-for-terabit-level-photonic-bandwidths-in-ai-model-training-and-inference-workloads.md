@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "what-advancements-in-optical-interposer-technologies-allow-for-terabit-level-photonic-bandwidths-in-ai-model-training-and-inference-workloads"
 ---
 
-Okay so you wanna know about super-fast light stuff for AI right  like terabit speeds  thats wild  It's all about optical interposers the name itself sounds kinda sci-fi  but its basically a tiny little bridge between chips that uses light instead of electricity to send data  think of it like a superhighway for information  but instead of cars its photons zooming around
+ so you wanna know about super-fast light stuff for AI right  like terabit speeds  thats wild  It's all about optical interposers the name itself sounds kinda sci-fi  but its basically a tiny little bridge between chips that uses light instead of electricity to send data  think of it like a superhighway for information  but instead of cars its photons zooming around
 
 So what makes these things so fast  well a few key things  first theres the sheer speed of light  duh  electricity is slow compared to that its like comparing a snail to a rocket ship  Second  you can pack way more data into light signals than electrical signals  its like having way more lanes on that superhighway  Third  we're getting way better at making these optical components smaller and more efficient  it's nano-scale engineering at its finest  Think of it like miniaturizing the whole highway system  making it super compact and efficient  thats a huge deal for AI which needs massive amounts of data shuffling around all the time
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-a-local-rails-workstations-time-differ-from-the-servers"
 ---
 
-Okay, let’s tackle this one. From my experience, dealing with inconsistent time across development environments and production servers is a recurring headache, and it usually stems from a few common culprits. It's not something isolated to rails, but the framework’s reliance on server time for various operations makes the issue particularly noticeable. Let's break down the why and how to address it.
+, let’s tackle this one. From my experience, dealing with inconsistent time across development environments and production servers is a recurring headache, and it usually stems from a few common culprits. It's not something isolated to rails, but the framework’s reliance on server time for various operations makes the issue particularly noticeable. Let's break down the why and how to address it.
 
 First, understand that the time on your local workstation and a remote server are independent entities. They're driven by their own internal clocks and configurations. The most common causes for discrepancies revolve around how these clocks are set and maintained:
 
@@ -16,7 +16,7 @@ First, understand that the time on your local workstation and a remote server ar
 
 **4. Virtualization or Containerization Issues:** If your server is running in a virtual machine (VM) or container, time synchronization can become more complex. The VM’s clock might not synchronize with the host machine, or containers can start with incorrect times if not properly configured. This can create a situation where the virtual environment reports a different time than the host server and this different than your local workstation, adding layers of complexity to the issue. This is especially true if the container isn't correctly configured to use NTP within its environment.
 
-Okay, enough with the theory; let’s move on to practical solutions. Here are some code snippets that demonstrate how to address these points within a rails context, but these principles are applicable across many other development workflows.
+, enough with the theory; let’s move on to practical solutions. Here are some code snippets that demonstrate how to address these points within a rails context, but these principles are applicable across many other development workflows.
 
 **Snippet 1: Correcting Time Zone Issues in Rails**
 

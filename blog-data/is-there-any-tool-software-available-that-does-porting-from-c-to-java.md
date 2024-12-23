@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "is-there-any-tool-software-available-that-does-porting-from-c-to-java"
 ---
 
-Okay so you're asking about tools for porting C code to Java right Been there done that a few times too many honestly It's a messy business but definitely something I've had to deal with in my past projects let me tell you I wouldn't wish it on my worst enemy well maybe just some of my former colleagues not saying names obviously
+ so you're asking about tools for porting C code to Java right Been there done that a few times too many honestly It's a messy business but definitely something I've had to deal with in my past projects let me tell you I wouldn't wish it on my worst enemy well maybe just some of my former colleagues not saying names obviously
 
 So the short answer is yes there are tools that attempt to do this but they aren't magic wands and the results aren't always pretty They mostly operate by analyzing the C code and try to construct equivalent Java code This isn’t like a compiler that just spits out bytecode it’s a translation process that's subject to a whole lot of interpretation and it's where it gets really complicated I've had some real head scratchers and "why is this even a thing" moments during my time playing with these tools.
 

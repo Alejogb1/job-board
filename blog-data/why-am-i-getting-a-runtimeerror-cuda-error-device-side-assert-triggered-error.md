@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-a-runtimeerror-cuda-error-device-side-assert-triggered-error"
 ---
 
-Okay, let’s unpack that `RuntimeError: CUDA error: device-side assert triggered` issue. I’ve certainly seen my share of those during my time building accelerated computing applications. It’s a particularly frustrating error because it often doesn't point directly to the source of the problem, demanding a bit of detective work to uncover the root cause.
+, let’s unpack that `RuntimeError: CUDA error: device-side assert triggered` issue. I’ve certainly seen my share of those during my time building accelerated computing applications. It’s a particularly frustrating error because it often doesn't point directly to the source of the problem, demanding a bit of detective work to uncover the root cause.
 
 Fundamentally, this error means that an assertion you or a library you're using put into the CUDA code failed *on the GPU itself*. This isn't an issue with your Python or high-level code directly; it’s an issue that has happened within the low-level CUDA execution. These asserts are there to catch conditions that the programmer knew were errors, things that shouldn't logically occur, such as memory out-of-bounds access, or invalid inputs to a kernel. These checks are usually in place for debugging, to help flag issues early on rather than allowing silent, catastrophic behavior. However, when we hit one, it means there's a fundamental flaw in how the code is interacting with the GPU.
 

@@ -4,11 +4,11 @@ date: "2024-12-13"
 id: "request-content-was-evicted-inspector-cache-chrome"
 ---
 
-Alright so you're hitting that "request content was evicted from inspector cache in chrome" error right Yeah I've seen that little beast pop up more times than I care to admit It's a classic chrome devtools quirk and honestly it's not always super intuitive what's going on
+so you're hitting that "request content was evicted from inspector cache in chrome" error right Yeah I've seen that little beast pop up more times than I care to admit It's a classic chrome devtools quirk and honestly it's not always super intuitive what's going on
 
 First off don't panic It usually doesn't mean your code is fundamentally broken It's more about how chrome manages its resources while you're debugging especially when things get a bit heavy on the network side
 
-Basically what happens is Chrome's DevTools caches network requests to speed up inspections and provide this cool history But it's not an infinite cache you know It's a finite space with a finite eviction policy When you see that message "request content was evicted" it literally means chrome said "okay this thing is old or not super important I'm gonna make some room"
+Basically what happens is Chrome's DevTools caches network requests to speed up inspections and provide this cool history But it's not an infinite cache you know It's a finite space with a finite eviction policy When you see that message "request content was evicted" it literally means chrome said " this thing is old or not super important I'm gonna make some room"
 
 Usually this happens when you have a lot of network requests going on or particularly large responses maybe big json payloads or bulky images if that's the case Chrome starts cleaning house to save memory It's a sensible move from their perspective but a pain in the neck for us sometimes
 

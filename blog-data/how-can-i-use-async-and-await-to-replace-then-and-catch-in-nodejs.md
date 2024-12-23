@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-use-async-and-await-to-replace-then-and-catch-in-nodejs"
 ---
 
-Okay, let’s tackle this. I've definitely been in the trenches with asynchronous javascript – more times than I care to recall, actually – and the move from `.then()` and `.catch()` to `async`/`await` was a significant improvement in my workflow and the readability of my codebase. It's not just about syntactic sugar; it fundamentally alters how you reason about and debug asynchronous operations. Let me walk you through it, drawing from past projects and the pain points I've personally encountered.
+, let’s tackle this. I've definitely been in the trenches with asynchronous javascript – more times than I care to recall, actually – and the move from `.then()` and `.catch()` to `async`/`await` was a significant improvement in my workflow and the readability of my codebase. It's not just about syntactic sugar; it fundamentally alters how you reason about and debug asynchronous operations. Let me walk you through it, drawing from past projects and the pain points I've personally encountered.
 
 The core issue stems from how promises are designed. Using `.then()` and `.catch()` introduces nested callbacks, leading to what is often called "callback hell" or "promise chaining hell". While manageable for simple cases, these structures can become incredibly difficult to follow and debug as the complexity increases. `async`/`await` was introduced precisely to mitigate these challenges by allowing us to write asynchronous code that appears more synchronous.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-access-dagrunconf-values-and-pass-them-to-an-sshoperator-command"
 ---
 
-Alright, let's tackle this. I've bumped into this scenario more times than I care to count over the years, primarily when orchestrating complex infrastructure deployments via Airflow. The need to dynamically feed configuration parameters into SSH commands, drawn directly from a `dag_run.conf`, is a common requirement. The key is understanding how Airflow structures its contexts and templating engine, and then applying that knowledge strategically.
+Alright,  I've bumped into this scenario more times than I care to count over the years, primarily when orchestrating complex infrastructure deployments via Airflow. The need to dynamically feed configuration parameters into SSH commands, drawn directly from a `dag_run.conf`, is a common requirement. The key is understanding how Airflow structures its contexts and templating engine, and then applying that knowledge strategically.
 
 At its core, the `dag_run.conf` allows you to supply custom configuration parameters when manually triggering a DAG or through the API. These parameters become accessible to your tasks as part of the Jinja templating context. Now, when using `SSHOperator`, you need to leverage this templating capability to inject those values into the command you intend to execute.
 

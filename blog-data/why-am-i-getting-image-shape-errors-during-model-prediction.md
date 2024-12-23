@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-image-shape-errors-during-model-prediction"
 ---
 
-Okay, let's tackle this. It’s a scenario I’ve seen countless times, and frankly, it’s one of those persistent headaches when working with image-based machine learning. You're feeding your model data during prediction, and it's spitting out shape mismatch errors. Frustrating, definitely, but usually not insurmountable with some methodical debugging.
+,  It’s a scenario I’ve seen countless times, and frankly, it’s one of those persistent headaches when working with image-based machine learning. You're feeding your model data during prediction, and it's spitting out shape mismatch errors. Frustrating, definitely, but usually not insurmountable with some methodical debugging.
 
 The core issue, invariably, stems from a discrepancy between the expected input shape that your model was trained on, and the actual shape of the images you’re providing during prediction. This isn't always immediately obvious, especially when data pipelines become complex or when dealing with pre-trained models. Let’s break down the most common culprits and how to address them.
 

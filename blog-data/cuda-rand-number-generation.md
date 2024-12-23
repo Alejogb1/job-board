@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "cuda-rand-number-generation"
 ---
 
-Alright so you’re asking about CUDA random number generation eh Been there done that probably more times than I care to admit. Let me tell you it’s not as straightforward as a simple `random()` call you’d find in say Python or Javascript. You’re dealing with parallel computation here and that changes everything. You can't just blindly generate random numbers in parallel without thinking about potential issues like repeatability and statistical quality. Believe me I’ve stumbled on these problems hard back in my early CUDA days.
+so you’re asking about CUDA random number generation eh Been there done that probably more times than I care to admit. Let me tell you it’s not as straightforward as a simple `random()` call you’d find in say Python or Javascript. You’re dealing with parallel computation here and that changes everything. You can't just blindly generate random numbers in parallel without thinking about potential issues like repeatability and statistical quality. Believe me I’ve stumbled on these problems hard back in my early CUDA days.
 
 I remember vividly this project it was a computational fluid dynamics thing where we needed a ton of random numbers to simulate turbulent flows. I just tossed `rand()` calls in my kernel all willy nilly. Man was that a disaster. The results were all over the place the simulation didn’t converge and everything looked weird. Took me like two days of head scratching and coffee guzzling to figure out that my “random” numbers were basically synchronized garbage. Different threads were getting correlated random sequences and that messed everything up. I learned my lesson that day trust me.
 

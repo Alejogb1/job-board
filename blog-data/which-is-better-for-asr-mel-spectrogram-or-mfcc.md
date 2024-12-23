@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "which-is-better-for-asr-mel-spectrogram-or-mfcc"
 ---
 
-Okay, let's unpack this. It’s a debate I’ve seen crop up many times, and frankly, the "better" option between Mel-spectrograms and MFCCs for automatic speech recognition (asr) isn't always clear cut. The answer, like most things in signal processing, heavily depends on context, and it’s often more about understanding their differences than declaring one outright superior. Having spent years working on speech applications, I've seen both approaches used successfully (and unsuccessfully), and I'll try to distill my experience.
+, let's unpack this. It’s a debate I’ve seen crop up many times, and frankly, the "better" option between Mel-spectrograms and MFCCs for automatic speech recognition (asr) isn't always clear cut. The answer, like most things in signal processing, heavily depends on context, and it’s often more about understanding their differences than declaring one outright superior. Having spent years working on speech applications, I've seen both approaches used successfully (and unsuccessfully), and I'll try to distill my experience.
 
 Fundamentally, both Mel-spectrograms and MFCCs are attempts to extract meaningful features from raw audio that can be fed into machine learning models. Raw audio is just a sequence of amplitude values over time, and directly using these raw values usually doesn't yield great performance. The goal is to move towards a representation that captures phonetic information while discarding irrelevant noise and redundant data.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "does-manually-triggering-a-dag-force-it-to-execute-according-to-its-utc-schedule"
 ---
 
-Alright, let's tackle this. I've seen this exact situation unfold more times than I care to recall, usually in the wee hours after someone's rushed deployment. The short answer, and I want to stress this, is no. Manually triggering a dag in a workflow orchestration tool, like airflow for instance, does *not* force it to execute based on its defined utc schedule. It’s a common misunderstanding, and it stems from the way these tools decouple scheduling logic from execution.
+Alright,  I've seen this exact situation unfold more times than I care to recall, usually in the wee hours after someone's rushed deployment. The short answer, and I want to stress this, is no. Manually triggering a dag in a workflow orchestration tool, like airflow for instance, does *not* force it to execute based on its defined utc schedule. It’s a common misunderstanding, and it stems from the way these tools decouple scheduling logic from execution.
 
 To break this down further, think of a dag as a blueprint. That blueprint contains the logic of your workflow, detailing what tasks need to be executed and in what order. It also includes, crucially, a schedule. This schedule, often expressed as a cron expression or predefined interval, tells the scheduler *when* to create a dag run – an instance of that blueprint being executed. When you manually trigger a dag, you're essentially saying "execute this *now*", bypassing the scheduler's logic entirely.
 

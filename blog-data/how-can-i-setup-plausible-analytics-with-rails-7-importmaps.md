@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-setup-plausible-analytics-with-rails-7-importmaps"
 ---
 
-Okay, let's delve into this. The intersection of Rails 7's importmaps and a third-party analytics service like Plausible can present a few interesting integration points, and I’ve certainly navigated similar scenarios in past projects. Instead of simply dropping a traditional script tag into your layout, which, while it works, doesn't fully leverage the benefits of importmaps, we can achieve a more modular and maintainable setup. The core idea here is to treat Plausible's script as an external dependency that we manage through importmaps.
+, let's delve into this. The intersection of Rails 7's importmaps and a third-party analytics service like Plausible can present a few interesting integration points, and I’ve certainly navigated similar scenarios in past projects. Instead of simply dropping a traditional script tag into your layout, which, while it works, doesn't fully leverage the benefits of importmaps, we can achieve a more modular and maintainable setup. The core idea here is to treat Plausible's script as an external dependency that we manage through importmaps.
 
 First, let's acknowledge the general architecture at play. Rails 7 with importmaps aims to avoid the complexities of node.js-based bundlers for front-end assets in simpler web applications. It allows us to import JavaScript directly from URLs or local files, effectively managing dependencies via an `importmap.rb` file. Plausible, on the other hand, provides a lightweight javascript snippet for tracking user events. Integrating them involves making that snippet accessible as a module within the importmap context.
 

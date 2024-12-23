@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "where-are-rails-form-views-located"
 ---
 
-Okay, let’s tackle this one. It’s not as straightforward as just pointing at a single directory, because the location of Rails form views depends heavily on the context within your application's architecture. Over the years, I’ve encountered numerous scenarios, from straightforward projects to complex multi-tenant systems, and the way forms are handled evolves with the project's demands. Let's break it down from a practical standpoint.
+, let’s tackle this one. It’s not as straightforward as just pointing at a single directory, because the location of Rails form views depends heavily on the context within your application's architecture. Over the years, I’ve encountered numerous scenarios, from straightforward projects to complex multi-tenant systems, and the way forms are handled evolves with the project's demands. Let's break it down from a practical standpoint.
 
 Fundamentally, Rails form views reside within the `app/views` directory, but their *specific* location is determined by the controller and the action being executed. If you’re using the standard conventions, you’ll find them neatly organized into subfolders that mirror your controllers. For instance, if you have a `UsersController` managing user-related actions, then the form views related to that controller will typically live under `app/views/users/`. Specifically, if you’re looking for the form view for the `new` action (which commonly renders a new user creation form) you’ll often find it at `app/views/users/new.html.erb` (or whatever your templating engine is configured for).
 

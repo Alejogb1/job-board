@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-display-attachments-in-an-edit-view-using-rails-6-active-storage"
 ---
 
-Okay, let's tackle this. From my experience, handling attachments in edit views with Rails’ Active Storage can sometimes feel like navigating a labyrinth if you're not careful, especially when juggling existing files and new uploads simultaneously. I've seen it trip up even experienced developers, often leading to awkward user experiences, so I want to break down a robust and logical approach to this problem.
+,  From my experience, handling attachments in edit views with Rails’ Active Storage can sometimes feel like navigating a labyrinth if you're not careful, especially when juggling existing files and new uploads simultaneously. I've seen it trip up even experienced developers, often leading to awkward user experiences, so I want to break down a robust and logical approach to this problem.
 
 The core challenge is ensuring that your users can view existing attachments, remove them if desired, and also add new ones during the editing process, all while maintaining data integrity and a clean user interface. Let’s consider a scenario. A few years ago, I was working on a content management system for a small publishing house, and a big hurdle was precisely this: handling images and documents associated with articles during the editing phase. It involved multiple image uploads and pdf attachments that needed to be easily managed during revisions. We learned a few crucial things that I'll be sharing.
 

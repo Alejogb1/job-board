@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-optimizeriter-missing-from-the-restored-checkpoint"
 ---
 
-Okay, let's tackle this. It's a problem I’ve seen pop up more than a few times, particularly when dealing with complex models and intricate training pipelines. The issue of `optimizer.iter` seeming to vanish upon restoring from a checkpoint isn't actually about it being *missing* in the literal sense, but rather it's about the way checkpointing mechanisms in deep learning frameworks generally handle, or don’t handle, the iterator state associated with optimizers. I recall one project, a large-scale image segmentation task, where we hit this head-on; the restored model would suddenly behave as if it was in the initial epoch, despite having a checkpoint indicating later training iterations. The frustration was real, I can assure you.
+,  It's a problem I’ve seen pop up more than a few times, particularly when dealing with complex models and intricate training pipelines. The issue of `optimizer.iter` seeming to vanish upon restoring from a checkpoint isn't actually about it being *missing* in the literal sense, but rather it's about the way checkpointing mechanisms in deep learning frameworks generally handle, or don’t handle, the iterator state associated with optimizers. I recall one project, a large-scale image segmentation task, where we hit this head-on; the restored model would suddenly behave as if it was in the initial epoch, despite having a checkpoint indicating later training iterations. The frustration was real, I can assure you.
 
 What's fundamentally happening is that when you save a checkpoint using common functions provided in frameworks like TensorFlow or PyTorch, you're usually capturing the state of the model's weights, biases, and potentially some optimizer parameters like learning rate. The iteration counter, represented by the `optimizer.iter` attribute in some implementations (though it might be named differently depending on the library), is inherently transient. It's tied to the current execution context of the training loop, the flow of data, and the progression of the optimizer over batches. It's not considered a fundamental part of the long-term state that needs to be preserved for model restoration purposes. Thus, this information is often left out, by design.
 
@@ -14,7 +14,7 @@ Imagine if `optimizer.iter` *was* automatically restored. It could introduce sub
 
 Furthermore, most optimizers are designed to work with the model's *state* rather than with absolute iteration numbers. What matters for convergence is the accumulated gradients, the adaptive learning rates within algorithms like Adam, or the momentum updates. These are encoded in the parameters being saved, and the next iteration builds on that, not on a specific pre-defined `iter` number.
 
-Okay, now, let's illustrate this with a few code examples, focusing on TensorFlow and PyTorch. I've constructed simple scenarios so the core issue is clear:
+, now, let's illustrate this with a few code examples, focusing on TensorFlow and PyTorch. I've constructed simple scenarios so the core issue is clear:
 
 **Example 1: TensorFlow (using `tf.train.Checkpoint`)**
 

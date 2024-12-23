@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-fetch-and-display-server-data-on-button-click-using-react-node-and-express"
 ---
 
-Okay, let's tackle this. It's a common scenario, and I've seen it play out countless times in projects, each with its nuances. I remember a particularly frustrating instance a few years back when a client wanted real-time data updates on a dashboard; it highlighted just how crucial a well-structured data fetching system is. Here, we're looking at triggering a data retrieval from a backend upon a button click in a React frontend, facilitated by a Node.js/Express.js backend. The key is to understand the asynchronous nature of this interaction and handle it effectively.
+,  It's a common scenario, and I've seen it play out countless times in projects, each with its nuances. I remember a particularly frustrating instance a few years back when a client wanted real-time data updates on a dashboard; it highlighted just how crucial a well-structured data fetching system is. Here, we're looking at triggering a data retrieval from a backend upon a button click in a React frontend, facilitated by a Node.js/Express.js backend. The key is to understand the asynchronous nature of this interaction and handle it effectively.
 
 Essentially, the process involves several steps: First, we need a button in our React component that triggers a function. Second, this function should make an HTTP request to our Express server. Third, the Express server should process the request, fetch the data (whether from a database, another service, or statically), and send it back. Finally, the React component receives the data and updates the UI to display it. It's simpler in concept than it sometimes feels in practice, I assure you.
 

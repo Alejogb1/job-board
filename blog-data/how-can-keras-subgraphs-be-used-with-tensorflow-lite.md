@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-keras-subgraphs-be-used-with-tensorflow-lite"
 ---
 
-Okay, let’s tackle this. I’ve had my share of projects where integrating Keras models into mobile or embedded devices via TensorFlow Lite was crucial, and the nuances of subgraphs often surfaced. It’s not always immediately obvious how to handle those more complex model architectures. Here’s a breakdown of my experience and what I've learned along the way, focusing on a technical but still accessible perspective.
+, let’s tackle this. I’ve had my share of projects where integrating Keras models into mobile or embedded devices via TensorFlow Lite was crucial, and the nuances of subgraphs often surfaced. It’s not always immediately obvious how to handle those more complex model architectures. Here’s a breakdown of my experience and what I've learned along the way, focusing on a technical but still accessible perspective.
 
 First off, it's essential to understand *why* you might even have subgraphs in the first place. Typically, these aren't explicitly created, but they arise organically during complex model construction, especially if you’re using the functional api in Keras, or have models with multiple inputs and outputs. In essence, a subgraph in this context refers to a portion of your neural network that can be treated as an independent unit or component within the larger model. This is particularly relevant for modular designs, pre-trained feature extractors, or scenarios where a single model serves multiple related tasks. If you’re thinking in computational graph terms, a subgraph is a smaller graph nested within the larger computational graph of your entire network.
 

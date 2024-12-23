@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "are-negative-values-in-pytorch-dice-loss-normal"
 ---
 
-Okay, let's tackle this one. The question of negative values in PyTorch's Dice loss, specifically, is something I've encountered more than once during my time working with segmentation models. It's not inherently "normal" in the sense that you *want* negative Dice loss, but understanding *why* it can happen and what it indicates is crucial for effective model training.
+, let's tackle this one. The question of negative values in PyTorch's Dice loss, specifically, is something I've encountered more than once during my time working with segmentation models. It's not inherently "normal" in the sense that you *want* negative Dice loss, but understanding *why* it can happen and what it indicates is crucial for effective model training.
 
 Before diving deep, let's clarify what the Dice coefficient actually measures. At its core, it's a statistic used to evaluate the similarity between two sets, typically applied to assess overlap between a predicted mask and a ground truth mask in the context of image segmentation. It ranges from 0 to 1, where 1 signifies perfect overlap and 0 indicates no overlap. The Dice *loss*, often used in machine learning, is generally calculated as 1 minus the Dice coefficient. Logically, this would lead to loss values between 0 (perfect prediction) and 1 (no overlap). However, the subtle details of how we compute this in practice can sometimes introduce the possibility of negative values, and that’s what we’re really exploring here.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-are-time-steps-mapped-to-output-shape-in-an-rnn"
 ---
 
-Right, let's tackle this. It's a fundamental aspect of recurrent neural networks, and one I've seen trip up a few people over the years, including myself in the early days, dealing with some seriously gnarly sequence data. So, let's get into the mechanics of how time steps map to output shapes in an rnn, and break down exactly what's going on.
+Right,  It's a fundamental aspect of recurrent neural networks, and one I've seen trip up a few people over the years, including myself in the early days, dealing with some seriously gnarly sequence data. So, let's get into the mechanics of how time steps map to output shapes in an rnn, and break down exactly what's going on.
 
 Fundamentally, an rnn’s architecture is designed to process sequential data, where the order of the inputs matters. The “time steps” you’re referring to are essentially the individual elements of that sequence. Think of it as a sentence: each word is a time step. Or, in the case of time-series data, each data point in your sequence is a time step. The rnn processes each of these time steps sequentially, maintaining an internal ‘hidden state’ that encodes information from previous time steps. This hidden state is what gives rnn's their memory, and it is what contributes to the complexities of output shape.
 
@@ -22,7 +22,7 @@ This is the case where you have an output at *every* time step, and the output s
 
 This is the more complex scenario, where you have a variable length output sequence that may or may not be the same as your input. This is a typical setup in tasks like machine translation. This is commonly implemented using an encoder-decoder model. The encoder is an rnn that summarizes the input into a single context vector, and the decoder is another rnn that generates the output sequence step-by-step, often using techniques like attention mechanism.
 
-Okay, let’s put some code to these concepts, using python and `pytorch` as an illustration:
+, let’s put some code to these concepts, using python and `pytorch` as an illustration:
 
 ```python
 # Example 1: Many-to-One (Sequence Classification)

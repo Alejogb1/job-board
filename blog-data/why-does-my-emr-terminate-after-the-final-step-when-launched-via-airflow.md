@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-my-emr-terminate-after-the-final-step-when-launched-via-airflow"
 ---
 
-Okay, let's tackle this EMR termination puzzle after your final Airflow step. This is something I've seen, and debugged, more times than I care to count, and usually, it boils down to a combination of understanding how EMR lifecycles work and the specifics of your Airflow configuration. It's rarely a single 'aha!' moment, but rather a methodical process of elimination.
+, let's tackle this EMR termination puzzle after your final Airflow step. This is something I've seen, and debugged, more times than I care to count, and usually, it boils down to a combination of understanding how EMR lifecycles work and the specifics of your Airflow configuration. It's rarely a single 'aha!' moment, but rather a methodical process of elimination.
 
 From my experience, often when an EMR cluster launched via Airflow unexpectedly terminates immediately after its final step, it points to a problem with the cluster's perceived purpose or a lack of instruction for it to stick around. Let’s break it down: the core issue is that EMR, by design, is quite ephemeral. If it doesn't have a reason to stay active – a job to run or a directive to keep itself going – it will shut down to conserve resources. Airflow, as an orchestrator, needs to specifically instruct EMR on its desired state, and sometimes the interplay isn't as intuitive as we'd like.
 

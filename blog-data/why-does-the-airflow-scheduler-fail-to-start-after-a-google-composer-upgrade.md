@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-the-airflow-scheduler-fail-to-start-after-a-google-composer-upgrade"
 ---
 
-Okay, let's unpack the often-frustrating scenario of an Airflow scheduler refusing to start post-Composer upgrade. I've personally been through this rodeo a few times, and it's rarely a single, straightforward cause. Usually, it’s a confluence of configuration discrepancies and subtle dependency clashes that manifest only after an upgrade – a kind of 'perfect storm' scenario. Let's analyze this from a few different angles and touch on the crucial debugging steps I've found to be effective.
+, let's unpack the often-frustrating scenario of an Airflow scheduler refusing to start post-Composer upgrade. I've personally been through this rodeo a few times, and it's rarely a single, straightforward cause. Usually, it’s a confluence of configuration discrepancies and subtle dependency clashes that manifest only after an upgrade – a kind of 'perfect storm' scenario. Let's analyze this from a few different angles and touch on the crucial debugging steps I've found to be effective.
 
 First and foremost, it's essential to recognize that Composer upgrades are not always perfectly atomic. They involve a carefully orchestrated sequence of changes across the underlying infrastructure, including Kubernetes, Google Cloud Storage, Cloud SQL, and, of course, the Airflow deployment itself. These changes, while well-intentioned, can introduce unexpected incompatibilities. The scheduler, being a core component, is usually the first to suffer if something goes awry.
 

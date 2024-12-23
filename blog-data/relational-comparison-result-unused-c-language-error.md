@@ -4,9 +4,9 @@ date: "2024-12-13"
 id: "relational-comparison-result-unused-c-language-error"
 ---
 
-Alright so you got hit with the "relational comparison result unused" right Classic I've seen that one pop up more times than I've had lukewarm coffee during all-nighters let me tell you
+so you got hit with the "relational comparison result unused" right Classic I've seen that one pop up more times than I've had lukewarm coffee during all-nighters let me tell you
 
-Okay so basically the compiler a picky little thing if you ask me is throwing a fit because you wrote an expression that involves a comparison like is a greater than b or is x equal to y but you didn't actually use the result of that comparison The C compiler is all about explicit actions it's like "Hey you computed something a true or false thing and now you're just letting it hang out there like it's some useless piece of trash I'm gonna warn you about it"
+ so basically the compiler a picky little thing if you ask me is throwing a fit because you wrote an expression that involves a comparison like is a greater than b or is x equal to y but you didn't actually use the result of that comparison The C compiler is all about explicit actions it's like "Hey you computed something a true or false thing and now you're just letting it hang out there like it's some useless piece of trash I'm gonna warn you about it"
 
 Now it's not technically an error it's a warning which means your code still compiles but the compiler is sending you a very strong message that says "Dude you probably messed up somewhere" And in my experience 99.9% of the time it means exactly that You missed something or your logic has a flaw
 
@@ -75,7 +75,7 @@ int main() {
 
 In this `while` loop we have an additional comparison that serves no purpose The `i < 15;` is a statement that is just evaluating if `i` is less than 15 without actually using this result The program continues and prints out the numbers correctly but it gets an extra evaluation that does not serve a purpose
 
-Alright so how do we fix this whole thing well it depends on what you were *intending* to do but mostly you need to actually use the result of the comparison You can use it in an `if` statement a `while` loop or even to assign it to a boolean variable
+so how do we fix this whole thing well it depends on what you were *intending* to do but mostly you need to actually use the result of the comparison You can use it in an `if` statement a `while` loop or even to assign it to a boolean variable
 
 So the general rule is pay attention to those warnings The compiler is trying to tell you something its like your code is whispering "I feel lost and abandoned please use me"
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "which-bpmn-gateway-do-i-have-to-use"
 ---
 
-Okay so you're asking about BPMN gateways a classic headache if you haven't spent enough time wrestling with process flows Trust me I've been there done that got the t-shirt and probably a few scars too Let's break this down without the fancy business jargon just straight up technical talk
+ so you're asking about BPMN gateways a classic headache if you haven't spent enough time wrestling with process flows Trust me I've been there done that got the t-shirt and probably a few scars too Let's break this down without the fancy business jargon just straight up technical talk
 
 First off it's not about picking *a* gateway it's about picking *the right* gateway for the specific branching logic you need BPMN doesn't just throw a bunch of gates at you and say "go nuts" each one has a distinct purpose and misunderstanding that purpose is like trying to debug code without knowing the language You'll just be flailing around
 

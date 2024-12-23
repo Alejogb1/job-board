@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-wget-download-jpg-files-between-docker-containers"
 ---
 
-Alright, let's tackle this. The question of `wget` downloading `.jpg` files between Docker containers isn't as straightforward as it initially seems, and it’s definitely a scenario I've encountered more than once during my time building microservices. The short answer is: yes, absolutely, `wget` can download `.jpg` files between Docker containers, *provided* you’ve correctly configured the network and the container serving the files is actually accessible. However, the "how" of it is where things get interesting and, frankly, where many developers stumble.
+Alright,  The question of `wget` downloading `.jpg` files between Docker containers isn't as straightforward as it initially seems, and it’s definitely a scenario I've encountered more than once during my time building microservices. The short answer is: yes, absolutely, `wget` can download `.jpg` files between Docker containers, *provided* you’ve correctly configured the network and the container serving the files is actually accessible. However, the "how" of it is where things get interesting and, frankly, where many developers stumble.
 
 The core issue revolves around container networking and the visibility of services within that network. Docker containers, by default, exist within their own isolated network namespace. This means a container doesn't inherently know how to find or communicate with another container unless you explicitly define the networking. Think of it like separate offices within a large building; they don't automatically know about each other; you need to set up a communication system.
 

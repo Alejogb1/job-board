@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-isnt-fullcalendars-agendaweek-view-functioning-correctly"
 ---
 
-Okay, let's get into this. I recall back in 2018, leading a team building a resource scheduling tool, we stumbled across this exact issue with FullCalendar's agendaWeek view. It seemed straightforward initially, but we ran into some frustrating snags that required quite a bit of investigation. The problem usually isn't that the agendaWeek view isn’t *functioning*, per se, but rather that it isn't behaving as one might expect, particularly when dealing with edge cases or non-standard data structures.
+, let's get into this. I recall back in 2018, leading a team building a resource scheduling tool, we stumbled across this exact issue with FullCalendar's agendaWeek view. It seemed straightforward initially, but we ran into some frustrating snags that required quite a bit of investigation. The problem usually isn't that the agendaWeek view isn’t *functioning*, per se, but rather that it isn't behaving as one might expect, particularly when dealing with edge cases or non-standard data structures.
 
 Typically, when the agendaWeek view is misbehaving, the root cause often boils down to one of three common culprits: incorrect date formatting, event rendering conflicts, or improper resource handling, if you're using a resource-based version. Let me elaborate on each of these, with some code examples to help clarify what I’ve observed.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-call-c-async-methods-from-a-loop-and-return-results-to-the-original-thread"
 ---
 
-Okay, let's tackle this. I recall a particularly challenging project involving real-time data processing where I had to juggle numerous asynchronous operations within a loop. It wasn't pretty at first, but I learned a few crucial techniques that made all the difference. The core issue, as you’ve correctly identified, is how to execute asynchronous C# methods from within a loop and then gather the results back on the originating thread without blocking or creating a complete mess of threading issues. It’s more nuanced than just firing and forgetting tasks.
+,  I recall a particularly challenging project involving real-time data processing where I had to juggle numerous asynchronous operations within a loop. It wasn't pretty at first, but I learned a few crucial techniques that made all the difference. The core issue, as you’ve correctly identified, is how to execute asynchronous C# methods from within a loop and then gather the results back on the originating thread without blocking or creating a complete mess of threading issues. It’s more nuanced than just firing and forgetting tasks.
 
 The naive approach, attempting to just `.Wait()` or `.Result` inside the loop, is the quickest route to a deadlock or, at the very least, a significant performance bottleneck. We need to be smarter about it. The primary tool we need here is `async`/`await` in conjunction with `Task.WhenAll` or a similar pattern if you’re dealing with results sequentially. Let’s break it down.
 

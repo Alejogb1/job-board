@@ -4,11 +4,11 @@ date: "2024-12-13"
 id: "allure-attachment-test-automation-reporting"
 ---
 
-Okay so you're asking about allure attachments in test automation reporting specifically the tricky parts I've been around the block a few times with this so let's dive in real quick
+ so you're asking about allure attachments in test automation reporting specifically the tricky parts I've been around the block a few times with this so let's dive in real quick
 
 First things first you gotta understand allure isn't just some magic black box that spits out pretty reports it's a framework that needs data and that data primarily comes from attachments you're adding during your tests Think of it like this if your test is a detective then the attachments are the evidence they collect about what went wrong or right during the investigation If you fail to gather evidence your reports aren't gonna be worth much right
 
-Alright let me tell you a story about a time I was fighting with this stuff I was working on this massive e-commerce platform remember these days people actually had to write code rather than ask ai to do it and we had a crapton of end-to-end tests written in selenium god bless those poor things The issue was the allure reports they were beautiful but they lacked the juicy bits no one could ever know what exactly went wrong we had some screenshots sure but they were after the test failed not during The core issue was I wasn't being proactive with my attachments I was just catching the failure screenshot and that's all I had to work with for debugging a massive test suite that ran for 4 hours That drove me absolutely nuts
+let me tell you a story about a time I was fighting with this stuff I was working on this massive e-commerce platform remember these days people actually had to write code rather than ask ai to do it and we had a crapton of end-to-end tests written in selenium god bless those poor things The issue was the allure reports they were beautiful but they lacked the juicy bits no one could ever know what exactly went wrong we had some screenshots sure but they were after the test failed not during The core issue was I wasn't being proactive with my attachments I was just catching the failure screenshot and that's all I had to work with for debugging a massive test suite that ran for 4 hours That drove me absolutely nuts
 
 The big revelation came after reading this paper on observability in automated testing which is somewhere in the depths of IEEE's digital archives you know the usual suspects I really do recommend checking it out it will change the way you test I started thinking what if i attached EVERYTHING I mean every relevant piece of information during the test execution not just on failure Why not dump the html source the browser logs api responses the whole nine yards It might be overkill I know but when a test fails you really do appreciate having all the data right in front of you
 
@@ -84,7 +84,7 @@ Notice something This code attaches both the request and response information to
 
 The key point here is to attach context not just data. So I started attaching data about the user the environment and the test parameters everything which might be relevant to debug an issue
 
-Now I hear you saying ‘Okay that's a lot of attachments’ yes it is i know it can slow your tests and yes you gotta be smart about it. I started implementing conditional attachments for example only attaching detailed api responses if the test fails and when it passes only attach a summary response or log
+Now I hear you saying ‘ that's a lot of attachments’ yes it is i know it can slow your tests and yes you gotta be smart about it. I started implementing conditional attachments for example only attaching detailed api responses if the test fails and when it passes only attach a summary response or log
 
 The second hurdle which i had to tackle was how to make the attachments human readable. No one wants to dig through raw json objects or random strings That's when I started creating custom attachment functions each one designed to generate the information i needed in a presentable format For instance I made custom json formatting functions i started to add headers to my files that contained info about test step time and also the file path for easy debugging. The other thing I did was using some markdown i was able to add tables and lists within my text attachments to present data in a well formatted way
 

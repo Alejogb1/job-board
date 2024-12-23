@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "mpi-allreduce-distributed-memory-explanation"
 ---
 
-Okay so you're asking about `MPI_Allreduce` in distributed memory systems right Been there done that a bunch of times I mean like seriously too many times to count. It's a fundamental thing if you're dabbling in parallel computing with MPI. I've banged my head against this one enough to practically write a textbook about it myself so I'll break it down for you.
+ so you're asking about `MPI_Allreduce` in distributed memory systems right Been there done that a bunch of times I mean like seriously too many times to count. It's a fundamental thing if you're dabbling in parallel computing with MPI. I've banged my head against this one enough to practically write a textbook about it myself so I'll break it down for you.
 
 First up let's be clear We're not talking about shared memory here. This is all about distributed memory systems where each process has its own private memory and they can only talk to each other using messages. So you've got a bunch of computers or cores each running a copy of your program each with its own chunk of data. Now `MPI_Allreduce` is your go-to guy when you need to combine data from all processes and then distribute the result back to everyone. Think of it as a global reduction across your entire distributed system followed by a broadcast all in one go.
 
@@ -48,7 +48,7 @@ So what's going on here? The key parts are:
 
 You can use different datatypes like `MPI_FLOAT`, `MPI_DOUBLE` if you want. And there are other predefined operations like `MPI_MAX`, `MPI_MIN`, `MPI_PROD` etc.
 
-Okay now let's look at something a bit more involved say you want to compute the average. `MPI_Allreduce` alone wont get you the average directly. You have to do it in two steps because you need to divide the sum by the number of processes.
+ now let's look at something a bit more involved say you want to compute the average. `MPI_Allreduce` alone wont get you the average directly. You have to do it in two steps because you need to divide the sum by the number of processes.
 
 ```c++
 #include <mpi.h>

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-extract-all-possible-two-character-combinations-from-a-string"
 ---
 
-Okay, let's tackle this. I remember facing a similar challenge a few years back while working on a genomic sequence analysis project. We needed to examine overlapping di-nucleotide patterns, and the sheer volume of data meant efficiency was paramount. The question of extracting all two-character combinations from a string, while seemingly simple, requires some careful thought to optimize for performance and handle edge cases properly.
+,  I remember facing a similar challenge a few years back while working on a genomic sequence analysis project. We needed to examine overlapping di-nucleotide patterns, and the sheer volume of data meant efficiency was paramount. The question of extracting all two-character combinations from a string, while seemingly simple, requires some careful thought to optimize for performance and handle edge cases properly.
 
 The fundamental approach involves iterating through the string using a sliding window of size two. This means for a string 'abcde', you'd generate 'ab', 'bc', 'cd', and 'de'. The process isn't difficult to conceptualize, but the devil, as they say, is in the implementation details. We need to consider aspects such as string immutability and the trade-offs between various data structures for storing and returning the combinations.
 

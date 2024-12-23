@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-syntax-errors-with-bootstrap-imports"
 ---
 
-Okay, let's tackle this bootstrap import issue, a problem I've seen more than a few times in my years building web applications. It's usually not a fault of bootstrap itself, but rather how its imports are handled in your specific project setup. Before diving into solutions, let's contextualize the problem a bit. When you encounter syntax errors relating to bootstrap imports, it often points to a mismatch between how you're trying to use bootstrap's css and javascript components and how your bundler, compiler, or development environment is configured to interpret those instructions. We're going to cover some common culprits and ways to troubleshoot them.
+, let's tackle this bootstrap import issue, a problem I've seen more than a few times in my years building web applications. It's usually not a fault of bootstrap itself, but rather how its imports are handled in your specific project setup. Before diving into solutions, let's contextualize the problem a bit. When you encounter syntax errors relating to bootstrap imports, it often points to a mismatch between how you're trying to use bootstrap's css and javascript components and how your bundler, compiler, or development environment is configured to interpret those instructions. We're going to cover some common culprits and ways to troubleshoot them.
 
 First off, let's consider the environment. Specifically, the build process. Over the last decade, I've worked with everything from simple html/css/js setups to complex modular applications built with modern frameworks. The way bootstrap is incorporated changes drastically between each approach. For example, a bare-bones setup might involve a straightforward `<link>` tag in the `<head>` of your html page to pull in the bootstrap css from a CDN and a `<script>` tag to load the javascript, and that is entirely valid. However, if you're using a bundler like webpack, parcel or rollup or even a framework like react, angular or vue, the import process is much more nuanced, and incorrect configuration can lead to the errors you’re seeing.
 
@@ -42,7 +42,7 @@ The `css-loader` helps resolve the css file while the `style-loader` actually pu
 
 **Scenario 2: Partial CSS imports**
 
-Now, you might be thinking, "Okay, I understand not importing the entire css file into javascript, but what if I just want individual components?" This is where the second most common issue arises. Bootstrap's components, especially the javascript components, often have dependencies. Simply importing one component’s javascript or css often won’t work because its functionality relies on other bootstrap code. For example, let’s say we want to import a specific javascript module for the modal:
+Now, you might be thinking, ", I understand not importing the entire css file into javascript, but what if I just want individual components?" This is where the second most common issue arises. Bootstrap's components, especially the javascript components, often have dependencies. Simply importing one component’s javascript or css often won’t work because its functionality relies on other bootstrap code. For example, let’s say we want to import a specific javascript module for the modal:
 
 ```javascript
 // This will potentially cause an error if dependencies are missing

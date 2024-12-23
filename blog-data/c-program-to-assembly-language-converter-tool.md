@@ -4,9 +4,9 @@ date: "2024-12-13"
 id: "c-program-to-assembly-language-converter-tool"
 ---
 
-Okay so you're asking about a C program to assembly converter tool right Been there done that tons of times actually. This is one of those things that sounds way simpler than it is at first glance. Like oh a simple translation program how hard can it be? Famous last words I tell you.
+ so you're asking about a C program to assembly converter tool right Been there done that tons of times actually. This is one of those things that sounds way simpler than it is at first glance. Like oh a simple translation program how hard can it be? Famous last words I tell you.
 
-Look I've been messing with compilers and low-level stuff since back when dinosaurs roamed the earth. Alright maybe not dinosaurs but close enough. In the late 90s for a college project I actually did something similar. It wasn't exactly a full C to assembly tool since we had limited time so it was more like a toy version handling a subset of C. Trust me when I say the rabbit hole goes deep.
+Look I've been messing with compilers and low-level stuff since back when dinosaurs roamed the earth. maybe not dinosaurs but close enough. In the late 90s for a college project I actually did something similar. It wasn't exactly a full C to assembly tool since we had limited time so it was more like a toy version handling a subset of C. Trust me when I say the rabbit hole goes deep.
 
 See the core issue is the gap between the high-level abstraction of C and the low-level nitty-gritty details of assembly language. C lets you think in terms of variables loops functions. Assembly is all about registers memory locations flags and individual machine instructions. You gotta bridge that.
 

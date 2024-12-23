@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "python-canopen-library-example"
 ---
 
-Alright so you’re asking about `python-canopen` right Been there done that probably more times than I care to admit Look I’ve wrestled with CANopen a fair bit and `python-canopen` is well its a tool lets just say it’s a tool that requires understanding the ins and outs to avoid a world of pain
+so you’re asking about `python-canopen` right Been there done that probably more times than I care to admit Look I’ve wrestled with CANopen a fair bit and `python-canopen` is well its a tool lets just say it’s a tool that requires understanding the ins and outs to avoid a world of pain
 
 See I started my CANopen journey back in like 2015 we were building this automated test rig for industrial motor controllers think huge noisy things whirring and clanking not exactly your friendly desktop setup Anyway we needed a way to command these controllers and get feedback in real time CANopen seemed like the best option at the time and python well python was my language of choice So `python-canopen` was the answer or so I thought
 
@@ -33,7 +33,7 @@ node.nmt.state = 'PRE-OPERATIONAL'
 print("CANopen network setup complete")
 ```
 
-Okay so here the first part is CAN bus setup It can be a `virtualcan` or whatever you need to make the connection with the physical CAN network Next we create a network object which is our primary handler for everything related to the CANopen network We connect this network object to the previously created CAN bus object And last we create our node with a certain node ID and after that we set the node to a `PRE-OPERATIONAL` state This is our first minimal CANopen connection
+ so here the first part is CAN bus setup It can be a `virtualcan` or whatever you need to make the connection with the physical CAN network Next we create a network object which is our primary handler for everything related to the CANopen network We connect this network object to the previously created CAN bus object And last we create our node with a certain node ID and after that we set the node to a `PRE-OPERATIONAL` state This is our first minimal CANopen connection
 
 Now you'll notice I'm using `BaseNode402` This is because most of the time you’re dealing with servo drives or frequency converters following the CiA402 profile if you are not I suggest you read the `CiA301` standard documentation which you will need to understand more than the code itself This `BaseNode402` simplifies a lot of the common operations like setting the operation mode moving the motor and reading feedback but if your device is different you should inherit this class and overwrite the behaviour of it You could even implement your own `Node` class for special devices You'll want to check your device's EDS file (electronic data sheet) this is absolutely crucial This file details all the communication parameters object dictionary entries and supported services for that specific device Its like the instruction manual but for your CANopen communication and its a must have if you want to communicate effectively
 

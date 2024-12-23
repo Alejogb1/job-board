@@ -31,7 +31,7 @@ in the code above, we're making use of openzeppelin's contracts. i've used this 
 
 you might be wondering, why do we need this `_votesAddress` variable to be an `address`? because that's how contracts interact with each other within the ethereum virtual machine, or evm. in the evm, every contract has a unique address. when you want one contract to talk to another, you have to know the address of the contract you want to interact with.
 
-okay, let's talk about how to practically use that address, like inside the constructor, it's the best place in my opinion. i've had my share of mistakes in the past where i tried to update variables after the construction phase only to find out that it makes things a bit more complex that it has to be.
+, let's talk about how to practically use that address, like inside the constructor, it's the best place in my opinion. i've had my share of mistakes in the past where i tried to update variables after the construction phase only to find out that it makes things a bit more complex that it has to be.
 
 ```solidity
 // SPDX-License-Identifier: MIT

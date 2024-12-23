@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-bypass-cross-origin-issues-in-firefox-with-cypress"
 ---
 
-Okay, let's tackle this. I've been down the cross-origin rabbit hole more times than I care to remember, particularly when trying to get Cypress to play nicely with applications that span multiple domains. Firefox, while generally a fantastic browser, sometimes throws an extra curveball in this arena compared to Chromium-based browsers. Here's how I've approached bypassing those pesky cross-origin restrictions, informed by some hard-won experience.
+,  I've been down the cross-origin rabbit hole more times than I care to remember, particularly when trying to get Cypress to play nicely with applications that span multiple domains. Firefox, while generally a fantastic browser, sometimes throws an extra curveball in this arena compared to Chromium-based browsers. Here's how I've approached bypassing those pesky cross-origin restrictions, informed by some hard-won experience.
 
 First, understand that the core issue stems from the same-origin policy – a fundamental security mechanism in web browsers. This policy prevents a script from accessing resources from a different origin (domain, protocol, or port) than the one from which it originated. Cypress, operating in an iframe and needing to interact with your application, frequently bumps up against this when your app makes calls to external resources or redirects to other domains.
 

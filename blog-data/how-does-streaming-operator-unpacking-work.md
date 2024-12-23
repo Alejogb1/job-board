@@ -4,9 +4,9 @@ date: "2024-12-13"
 id: "how-does-streaming-operator-unpacking-work"
 ---
 
-Alright so you wanna know how streaming operator unpacking works right I've been wrestling with this particular beast for what feels like an eternity let me tell you a story or maybe it’s just a long explanation
+so you wanna know how streaming operator unpacking works right I've been wrestling with this particular beast for what feels like an eternity let me tell you a story or maybe it’s just a long explanation
 
-Okay first off before we dive deep into the guts of it lets just make sure we are on the same page we are talking about streaming unpacking specifically related to things like iterators generators or similar data streams right not some weird custom protocol magic stuff That means were in the realm of languages like python javascript or maybe even c++ with its streams library If not then what follows may not be that relevant to you I am assuming python for the code example because I am mostly comfortable with that although the concept is almost universal
+ first off before we dive deep into the guts of it lets just make sure we are on the same page we are talking about streaming unpacking specifically related to things like iterators generators or similar data streams right not some weird custom protocol magic stuff That means were in the realm of languages like python javascript or maybe even c++ with its streams library If not then what follows may not be that relevant to you I am assuming python for the code example because I am mostly comfortable with that although the concept is almost universal
 
 So unpacking is this nifty thing where instead of dealing with a whole sequence or an iterator as a single blob of data we can pull apart its individual elements and assign them to separate variables Its not new though it has been around for a while since the early days of computer science where one had to juggle single bits of information So if I have a stream like a generator that spits out numbers from one to five its often more convenient to receive those numbers in separate variables rather than as one single iterator object That iterator object is a handle to access things one by one rather than the actual things themselves It's about convenience and making code less cluttered less like a big dump of data to handle all at once
 

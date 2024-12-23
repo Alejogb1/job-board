@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "lightgbm-warning-no-further-splits-best-gain"
 ---
 
-Okay so you’re hitting that "lightgbm warning no further splits best gain" thing right Been there fought that got the t-shirt And probably a few gray hairs too Let me tell you about that beast it’s a common one and not as mysterious as it sounds
+ so you’re hitting that "lightgbm warning no further splits best gain" thing right Been there fought that got the t-shirt And probably a few gray hairs too Let me tell you about that beast it’s a common one and not as mysterious as it sounds
 
 So first off we're dealing with LightGBM which if you don’t know is a gradient boosting framework It’s powerful its fast but like any powerful tool it can throw a few curveballs and this "no further splits best gain" warning is one of them.  Its pretty much lightgbm politely saying "hey i've tried my best and i think im done trying to find a way to split further"
 

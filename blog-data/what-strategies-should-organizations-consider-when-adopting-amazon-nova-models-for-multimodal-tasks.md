@@ -4,7 +4,7 @@ date: "2024-12-05"
 id: "what-strategies-should-organizations-consider-when-adopting-amazon-nova-models-for-multimodal-tasks"
 ---
 
-Okay so you wanna know about using Amazon Nova for multimodal stuff right  That's a cool question  It's like the wild west out there with all these new models popping up  and Nova's definitely one to keep an eye on  It's got this whole big language model thing going on but it's also smart about images and videos and audio  which is a pretty huge deal
+ so you wanna know about using Amazon Nova for multimodal stuff right  That's a cool question  It's like the wild west out there with all these new models popping up  and Nova's definitely one to keep an eye on  It's got this whole big language model thing going on but it's also smart about images and videos and audio  which is a pretty huge deal
 
 So strategies right  Let's break it down  First off you gotta think about your data  Nova's a hungry beast it needs a LOT of data to train properly  and it's not just any data  we're talking multimodal data  meaning images paired with text videos with transcripts audio with captions  the whole shebang  Think about building a good dataset  maybe check out some papers on data augmentation techniques for multimodal data  There's some good stuff out there on that  like "A Survey on Multimodal Machine Learning"  which gives a good overview of the current state  And you know make sure your data is cleaned properly  no garbage in garbage out  that's a golden rule in ML
 

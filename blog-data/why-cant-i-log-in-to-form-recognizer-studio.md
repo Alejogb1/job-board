@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-cant-i-log-in-to-form-recognizer-studio"
 ---
 
-Alright, let's tackle this. It's frustrating when tools you rely on for development or data processing suddenly decide to lock you out. Form recognizer studio login issues aren't uncommon, and the root cause can stem from a variety of places. I've certainly had my share of late-night debugging sessions with this exact problem back when we were heavily using it for invoice processing a few years ago. It usually boils down to a few key culprits, and I'll walk through them, referencing experiences I've had along the way and offering some practical solutions, along with code examples where relevant.
+Alright,  It's frustrating when tools you rely on for development or data processing suddenly decide to lock you out. Form recognizer studio login issues aren't uncommon, and the root cause can stem from a variety of places. I've certainly had my share of late-night debugging sessions with this exact problem back when we were heavily using it for invoice processing a few years ago. It usually boils down to a few key culprits, and I'll walk through them, referencing experiences I've had along the way and offering some practical solutions, along with code examples where relevant.
 
 The first thing to always double-check, and it might seem basic, but authentication problems are typically at the heart of these issues. Form recognizer studio, like many Azure services, leverages azure active directory (aad) for authentication and authorization. The most common hiccup is incorrect or expired credentials. This isn't just your username and password; we’re talking about the principal—the specific user, service principal, or managed identity—that’s attempting to connect.
 

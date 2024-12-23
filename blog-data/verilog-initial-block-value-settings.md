@@ -4,9 +4,9 @@ date: "2024-12-13"
 id: "verilog-initial-block-value-settings"
 ---
 
-Alright so you're asking about Verilog initial blocks and how values are set I get it been there done that more times than I care to remember its a classic gotcha spot for newcomers and honestly even for some of us who've been at it for years
+so you're asking about Verilog initial blocks and how values are set I get it been there done that more times than I care to remember its a classic gotcha spot for newcomers and honestly even for some of us who've been at it for years
 
-Okay so the deal with `initial` blocks in Verilog is that they execute only once at the very beginning of simulation Basically theyre used to set up initial conditions for your design or to perform some one-time initialization stuff Think of it like setting the stage before the main act starts The key thing to understand is that they're *not* synthesizable which means they only work for simulation not for actual hardware
+ so the deal with `initial` blocks in Verilog is that they execute only once at the very beginning of simulation Basically theyre used to set up initial conditions for your design or to perform some one-time initialization stuff Think of it like setting the stage before the main act starts The key thing to understand is that they're *not* synthesizable which means they only work for simulation not for actual hardware
 
 Now lets dive into value settings within these blocks You can set register or reg type variables not wires which makes sense right because wires are connections not storage You can directly assign values using the `=` operator just like in C or Java or whatever other language you are familiar with
 
@@ -23,7 +23,7 @@ endmodule
 ```
 This simple example is nothing fancy just like setting up the first step in a design. Here we declare an 8-bit register `my_reg` and inside the initial block we assign the value `8'hAA` to it which is just a hexadecimal representation of `10101010` if you were wondering.
 
-Okay lets talk about more complex cases Initial blocks can include multiple statements they all execute in the order they appear within the begin end block and this can be useful for setting different values across multiple registers This behavior is sequential within a single `initial` block.
+ lets talk about more complex cases Initial blocks can include multiple statements they all execute in the order they appear within the begin end block and this can be useful for setting different values across multiple registers This behavior is sequential within a single `initial` block.
 
 Now here is an example that is more practical than the previous one
 

@@ -4,7 +4,7 @@ date: "2024-12-10"
 id: "what-strategies-improve-resource-allocation-during-high-frequency-data-ingestion-scenarios"
 ---
 
-Okay so you wanna talk about stuffing tons of data into a system really fast  right  like seriously fast  think firehose  not a gentle stream  This is a fun problem  a real head-scratcher  but also super rewarding when you crack it  Resource allocation is the key  gotta make sure your database your servers your whole shebang doesn't melt down under the pressure
+ so you wanna talk about stuffing tons of data into a system really fast  right  like seriously fast  think firehose  not a gentle stream  This is a fun problem  a real head-scratcher  but also super rewarding when you crack it  Resource allocation is the key  gotta make sure your database your servers your whole shebang doesn't melt down under the pressure
 
 The first thing that pops into my head is **parallel processing**  Think of it like having a team of workers instead of one  Each worker grabs a chunk of the data and processes it simultaneously  This massively cuts down processing time  It's like magic  but it's just good old fashioned computer science  You can achieve this using tools like Apache Kafka  or even just clever threading in your application code
 

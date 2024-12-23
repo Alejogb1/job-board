@@ -4,7 +4,7 @@ date: "2024-11-16"
 id: "how-to-visualize-sorting-algorithms"
 ---
 
-okay so you wanna hear about this video i watched it was like a total mind-melt about sorting algorithms right  the whole point was to show how different ways of sorting data work and why some are way faster than others  it wasn't just some dry lecture either oh no it was all done with these super cute little animations of these blocks bouncing around and changing colors it was like watching a really geeky but strangely hypnotic dance-off between algorithms
+ so you wanna hear about this video i watched it was like a total mind-melt about sorting algorithms right  the whole point was to show how different ways of sorting data work and why some are way faster than others  it wasn't just some dry lecture either oh no it was all done with these super cute little animations of these blocks bouncing around and changing colors it was like watching a really geeky but strangely hypnotic dance-off between algorithms
 
 first off the setup was genius it started with this total mess a bunch of random numbered blocks all jumbled up it was like looking into a toddler's toy box after a hurricane  and then BAM the video started showing how different algorithms would sort these blocks into perfect order  that visual representation was a game changer made it so much easier to grasp the concepts
 

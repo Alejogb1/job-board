@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "class-invariants-in-python"
 ---
 
-Okay so class invariants in Python right yeah I've been down this road before plenty of times it's one of those things that seems simple at first but then you start building more complex systems and it bites you in the rear more often than you'd like. Let me tell you my story.
+ so class invariants in Python right yeah I've been down this road before plenty of times it's one of those things that seems simple at first but then you start building more complex systems and it bites you in the rear more often than you'd like. Let me tell you my story.
 
 So back in the day I was working on this data processing system a big one you know taking in tons of data reshaping it running it through a bunch of algorithms. We're talking terabytes a day. We had this class representing data points called `DataPoint` real straightforward stuff.  It had attributes like `timestamp` `value` and `sensor_id`. Now initially things were fine but then we started seeing weird anomalies in the output garbage data things that didn't make any sense.  Turns out we had bugs where sometimes `timestamp` would be in the future or `value` would be negative when it absolutely shouldn't be.  These were classic invariant violations.
 

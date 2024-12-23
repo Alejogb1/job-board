@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-doesnt-a-generator-function-using-h5py-close-properly"
 ---
 
-Okay, let’s unpack this generator function + h5py closing conundrum, because I’ve definitely spent more than a few late nights tracking down similar resource leak issues. It’s a combination of Python's generator mechanics and h5py's file handling, which can sometimes lead to unexpected behaviors if you’re not aware of the underlying processes.
+, let’s unpack this generator function + h5py closing conundrum, because I’ve definitely spent more than a few late nights tracking down similar resource leak issues. It’s a combination of Python's generator mechanics and h5py's file handling, which can sometimes lead to unexpected behaviors if you’re not aware of the underlying processes.
 
 The core problem isn't that h5py itself is faulty, but rather the way generators interact with resources like file handles. When you use a generator function, it doesn't execute all its code upfront. Instead, it pauses at each `yield` statement, preserving its state. This is the magic of generators – they let you work with potentially massive datasets in a memory-efficient way by processing them incrementally. However, this deferred execution also means that the part of your code *after* the yield, specifically the h5py file closing, might not be executed in the way you expect.
 

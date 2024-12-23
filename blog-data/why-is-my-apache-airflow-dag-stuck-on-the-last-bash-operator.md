@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-my-apache-airflow-dag-stuck-on-the-last-bash-operator"
 ---
 
-Okay, let's tackle this. It's a situation I've certainly encountered a few times, and frustrating as it is, there are usually clear reasons why an Airflow DAG can get hung up on that last BashOperator. It's rarely a bug in Airflow itself, but more often a combination of factors in the way the task is defined and executed.
+,  It's a situation I've certainly encountered a few times, and frustrating as it is, there are usually clear reasons why an Airflow DAG can get hung up on that last BashOperator. It's rarely a bug in Airflow itself, but more often a combination of factors in the way the task is defined and executed.
 
 One particular project comes to mind, an old ETL pipeline I inherited. It was constantly getting stalled, seemingly at random, but always after the final bash command. Initially, it appeared as if the operator was simply not completing. This led to a lengthy debugging session that uncovered a few recurring issues, which are quite typical.
 

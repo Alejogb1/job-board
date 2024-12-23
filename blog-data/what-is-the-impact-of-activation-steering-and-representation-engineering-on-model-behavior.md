@@ -4,7 +4,7 @@ date: "2024-12-11"
 id: "what-is-the-impact-of-activation-steering-and-representation-engineering-on-model-behavior"
 ---
 
-Okay so you wanna talk about activation steering and representation engineering right  pretty cool stuff actually  I've been digging into this lately its like the next level of tweaking your models you know beyond just fiddling with hyperparameters  it's about directly shaping how the model learns and what it learns about
+ so you wanna talk about activation steering and representation engineering right  pretty cool stuff actually  I've been digging into this lately its like the next level of tweaking your models you know beyond just fiddling with hyperparameters  it's about directly shaping how the model learns and what it learns about
 
 So activation steering  think of it like this  your neural network is a bunch of neurons firing away right  each neuron has an activation level representing its confidence in whatever it's detecting  activation steering is all about influencing these activations directly  we're not changing the architecture or the training data itself  we're subtly guiding the network's internal processes during inference or even training
 

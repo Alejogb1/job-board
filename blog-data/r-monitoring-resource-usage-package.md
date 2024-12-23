@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "r-monitoring-resource-usage-package"
 ---
 
-Okay so you're asking about a resource monitoring package right I've been down this rabbit hole more times than I care to remember Let me tell you about it from my perspective and some of the gotchas I've encountered over the years
+ so you're asking about a resource monitoring package right I've been down this rabbit hole more times than I care to remember Let me tell you about it from my perspective and some of the gotchas I've encountered over the years
 
 First things first yeah there are tons of ways to monitor resource usage It really depends on what you're trying to achieve and the context of your project Are you profiling a single application or trying to track usage across a cluster of servers or are you in some embedded system? Each has its own set of tools and challenges
 

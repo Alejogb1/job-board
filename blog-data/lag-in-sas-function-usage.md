@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "lag-in-sas-function-usage"
 ---
 
-Okay so lag in SAS function usage right been there done that got the t-shirt or more accurately the slightly frayed keyboard I’ve smashed in frustration over slow SAS jobs So yeah I get it you’re running some SAS code and the LAG function is making things feel like molasses in January it’s a classic problem and let me tell you I’ve wrestled with this beast more times than I care to admit
+ so lag in SAS function usage right been there done that got the t-shirt or more accurately the slightly frayed keyboard I’ve smashed in frustration over slow SAS jobs So yeah I get it you’re running some SAS code and the LAG function is making things feel like molasses in January it’s a classic problem and let me tell you I’ve wrestled with this beast more times than I care to admit
 
 First things first when we say lag we’re talking about accessing values from previous rows right It’s a common need in time series analysis or anytime you need to compare a current observation to what came before But the way SAS handles it sometimes well it’s not exactly a speed demon especially if you’re dealing with large datasets or complex logic and the problems start there so let me take you back to the dark ages of my early SAS days I was building this complex financial model for a client a monster of a dataset millions of records you know the type and I naively thought hey LAG should do the trick right
 
@@ -22,7 +22,7 @@ data want;
 run;
 ```
 
-This looks innocuous enough and for a small dataset it works okay but as the dataset grows it really starts to show the limitations of the LAG function. The issue is every time the LAG function is called the sas process has to keep tracking which row it was which increases the operation cost exponentially. In fact it is so bad that I suspect the SAS developers thought no one would ever run this on huge datasets (but here we are right?).
+This looks innocuous enough and for a small dataset it works  but as the dataset grows it really starts to show the limitations of the LAG function. The issue is every time the LAG function is called the sas process has to keep tracking which row it was which increases the operation cost exponentially. In fact it is so bad that I suspect the SAS developers thought no one would ever run this on huge datasets (but here we are right?).
 
 So one thing I discovered is sometimes we might not actually need the LAG function directly we can use some data step logic to achieve the same result. What do I mean by that? Well think about how you usually implement loops in code in other languages. You don’t have to call a lag function each time you can just save the previous value to some variable then reuse it right? well in SAS it is the same thing.
 

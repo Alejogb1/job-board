@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-resnet50-failing-to-identify-image-errors"
 ---
 
-Okay, let's unpack this. The seemingly straightforward issue of a ResNet50 model struggling with image errors actually has quite a few layers. It's not a problem of the model being inherently bad – far from it. ResNet50 is a robust architecture, but its strengths might not always align with the specific types of errors you’re trying to detect. I've seen similar scenarios play out in a few projects, particularly when dealing with unusual imaging artifacts, and the solutions often require a nuanced approach.
+, let's unpack this. The seemingly straightforward issue of a ResNet50 model struggling with image errors actually has quite a few layers. It's not a problem of the model being inherently bad – far from it. ResNet50 is a robust architecture, but its strengths might not always align with the specific types of errors you’re trying to detect. I've seen similar scenarios play out in a few projects, particularly when dealing with unusual imaging artifacts, and the solutions often require a nuanced approach.
 
 First off, let’s be clear on what we mean by "image errors." This could refer to anything from compression artifacts and noise to more complex aberrations like lens distortions or blur. The key point is that these errors often exist outside the scope of what ResNet50 was originally trained to recognize: objects, scenes, and patterns that are typically “clean” and well-defined. ImageNet, the dataset most often used to pre-train ResNet50, doesn't focus heavily on the types of imperfections you might be interested in identifying. This inherent bias in the training data is a crucial factor to consider.
 

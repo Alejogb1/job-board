@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-pause-vb-program-execution-until-a-button-is-clicked"
 ---
 
-Let's tackle this. Pausing a VB application until a button click is, shall we say, a common requirement, and there are several ways to skin this particular cat. Having been in this game for a while, I've encountered this scenario more times than I care to count, often when building interactive tools where user input is a critical part of the workflow. I remember back in the early days, when we were pushing the boundaries of what was possible with VB6 and later VB.NET. We didn’t always have elegant async options, and the methods we relied on were more…direct.
+ Pausing a VB application until a button click is, shall we say, a common requirement, and there are several ways to skin this particular cat. Having been in this game for a while, I've encountered this scenario more times than I care to count, often when building interactive tools where user input is a critical part of the workflow. I remember back in the early days, when we were pushing the boundaries of what was possible with VB6 and later VB.NET. We didn’t always have elegant async options, and the methods we relied on were more…direct.
 
 The core principle here revolves around temporarily relinquishing control of the application’s main thread until the button click event occurs. This keeps the application responsive rather than freezing. One might immediately consider a simple loop with a flag, but that’s usually a bad idea. It consumes CPU resources and locks up the UI. We need a better way.
 

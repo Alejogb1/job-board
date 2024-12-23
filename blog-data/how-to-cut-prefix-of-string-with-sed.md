@@ -4,11 +4,11 @@ date: "2024-12-13"
 id: "how-to-cut-prefix-of-string-with-sed"
 ---
 
-Alright so you need to chop off the start of a string using sed right I've been there done that way too many times lets break it down and make sure you nail this thing
+so you need to chop off the start of a string using sed right I've been there done that way too many times lets break it down and make sure you nail this thing
 
-Okay so first things first sed short for stream editor is a real swiss army knife when it comes to text manipulation its command line power is insane and i rely on it daily not gonna lie its a crucial tool in my arsenal for anything text processing especially when scripting up automations or handling log files I mean you know a lot of people go with awk but for me sed is my go-to I've had enough fights with awk's syntax to last me a lifetime but hey thats just my personal preference
+ so first things first sed short for stream editor is a real swiss army knife when it comes to text manipulation its command line power is insane and i rely on it daily not gonna lie its a crucial tool in my arsenal for anything text processing especially when scripting up automations or handling log files I mean you know a lot of people go with awk but for me sed is my go-to I've had enough fights with awk's syntax to last me a lifetime but hey thats just my personal preference
 
-Okay enough of the rambling lets get to the meat of the matter how to actually cut that prefix from your string using sed the basic idea is to use sed's substitute command which is written like this `s/old/new/` where `old` is the text you want to replace and `new` is what you're replacing it with or if you want to delete it just leave new part empty like `s/old//` easy right
+ enough of the rambling lets get to the meat of the matter how to actually cut that prefix from your string using sed the basic idea is to use sed's substitute command which is written like this `s/old/new/` where `old` is the text you want to replace and `new` is what you're replacing it with or if you want to delete it just leave new part empty like `s/old//` easy right
 
 Now lets talk patterns sed uses regular expressions or regex for pattern matching which is a whole other can of worms but for prefix deletion we really only need basic stuff like the caret `^` symbol which anchors the match to the beginning of the line which is crucial for cutting prefixes or the dot `.` to match any character or `*` to match zero or more of the preceding character
 
@@ -58,7 +58,7 @@ images/logo.png
 
 See how easy it is i once messed up this on a production server and thought I would get fired but thank god i had a backup of the file i've learned my lesson now always test your commands first before deploying to production servers or you will have a very bad time specially at 3 am
 
-Okay I think that covers most of the common cases for prefix removal with sed. Remember the basic syntax `s/old/new/` and the use of `^` to anchor to the beginning of the line and you're pretty much set. Regex can seem scary at first but honestly you only need to know a few basic things to use it for text manipulation.
+ I think that covers most of the common cases for prefix removal with sed. Remember the basic syntax `s/old/new/` and the use of `^` to anchor to the beginning of the line and you're pretty much set. Regex can seem scary at first but honestly you only need to know a few basic things to use it for text manipulation.
 
 One thing you might run into is situations with different operating systems different sed versions and all sorts of oddities when dealing with bash scripting. So its always important to test your script in the environment it will be running in before going live always always always
 

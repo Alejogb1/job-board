@@ -4,13 +4,13 @@ date: "2024-12-13"
 id: "acqueries-c-database-access"
 ---
 
-Okay so you're asking about accessing databases in C# right Been there done that more times than I care to admit Let's break this down like we're debugging some ancient spaghetti code
+ so you're asking about accessing databases in C# right Been there done that more times than I care to admit Let's break this down like we're debugging some ancient spaghetti code
 
 First thing's first you've got options for how you wanna connect to your database The big boys are ADO NET and Entity Framework ADO NET is kinda like the old school manual transmission way of doing things You're handling the connection opening closing and command execution yourself It's flexible and you have very precise control but its more work upfront Entity Framework is the automatic transmission its an ORM Object-Relational Mapper that does a lot of heavy lifting It takes your c# objects and maps them to database tables its convenient and quicker for standard CRUD operations but can be less performant if you don't know what your doing So its kinda of a trade of more flexibility for more work and more performance for less control
 
 I remember vividly way back when I was building this inventory management system for a friend's electronics shop I went all in on ADO NET at first thinking I was hot stuff and could handle everything myself Turns out writing all that SQL and managing connection objects became a nightmare really fast I spent almost a day debugging a simple insert statement because I forgot to close the connection properly It was a rookie move but a good learning experience
 
-Let's see some code snippets alright lets look at an ADO NET example that goes against my experiences and you know what not recommended for production use but still an example alright here we go lets suppose you are using SQL Server
+Let's see some code snippets lets look at an ADO NET example that goes against my experiences and you know what not recommended for production use but still an example here we go lets suppose you are using SQL Server
 
 ```csharp
 using System.Data.SqlClient;

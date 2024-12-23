@@ -27,7 +27,7 @@ so first he needed the scenes the guts of the game  he started with openai's com
 }
 ```
 
-and this is where things get REALLY interesting  the prompt was a behemoth  it worked okay but it was clunky and expensive  so he fine-tuned a model  this is where you take existing data—in this case 50 examples of his scene json—and train an ai model on it  the magic?  he drastically simplified the prompt for the fine-tuned model  took out all the json structure details  just gave it descriptive text  he basically bet that the model would learn the structure from the training data  and guess what? it worked like a charm  a dollar or two later he had a way more efficient and reliable system
+and this is where things get REALLY interesting  the prompt was a behemoth  it worked  but it was clunky and expensive  so he fine-tuned a model  this is where you take existing data—in this case 50 examples of his scene json—and train an ai model on it  the magic?  he drastically simplified the prompt for the fine-tuned model  took out all the json structure details  just gave it descriptive text  he basically bet that the model would learn the structure from the training data  and guess what? it worked like a charm  a dollar or two later he had a way more efficient and reliable system
 
 ```python
 # simplified prompt for fine-tuned model

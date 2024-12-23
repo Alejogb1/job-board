@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "difference-between-viewport-size-and-screen-size"
 ---
 
-Okay so you’re asking about viewport size versus screen size right Been there done that probably a million times Let me break it down for you with a little bit of my history thrown in
+ so you’re asking about viewport size versus screen size right Been there done that probably a million times Let me break it down for you with a little bit of my history thrown in
 
 See I’ve been neck deep in web dev since dial-up was a thing Remember waiting minutes for a single image to load Yeah that was my jam Back then we had less to worry about the complexities that come with modern responsive design viewport vs screen size was way simpler We had screens and we had a browser window that was mostly the same size So it was a breeze
 
@@ -107,4 +107,4 @@ To sum it all up screen size is your hardware and viewport size is the area you'
 
 As for resources I recommend "Responsive Web Design with HTML5 and CSS" by Ben Frain it's a classic that will teach you all the concepts It is a must have for anyone in front end web development. Also read the W3C specifications documentation for the "Viewport meta tag" you will always find updated info there and that's the source of truth. Avoid random blogs there's too much noise and misinformation
 
-Oh and one last thing you know why browsers can be so confusing sometimes Because they have way too much chrome! *ba dum tss* Okay I am out.
+Oh and one last thing you know why browsers can be so confusing sometimes Because they have way too much chrome! *ba dum tss*  I am out.

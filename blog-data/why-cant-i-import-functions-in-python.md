@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-cant-i-import-functions-in-python"
 ---
 
-Okay, let's tackle this. It’s a common frustration, and I've certainly spent my share of evenings debugging import errors. It often feels like the simplest thing— just wanting to use code you wrote somewhere else— becomes a strange labyrinth. The underlying mechanisms are generally quite logical, but the symptoms can vary widely. I’ll walk you through the common culprits and some strategies I’ve found effective over the years, drawing from my past experiences.
+,  It’s a common frustration, and I've certainly spent my share of evenings debugging import errors. It often feels like the simplest thing— just wanting to use code you wrote somewhere else— becomes a strange labyrinth. The underlying mechanisms are generally quite logical, but the symptoms can vary widely. I’ll walk you through the common culprits and some strategies I’ve found effective over the years, drawing from my past experiences.
 
 First, let's clarify what "importing" really entails. At its core, Python's import mechanism is about making code from one file (a module) available for use in another. When you write `import my_module` or `from my_module import my_function`, Python needs to locate `my_module.py` (or a package represented by a folder containing an `__init__.py` file) and execute it. The result is essentially that the variables, functions, and classes defined within `my_module` become accessible in the current scope of the importer. This process breaks down for a few recurring reasons.
 

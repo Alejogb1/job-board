@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-download-a-trained-model-from-azure-automl-to-plot-feature-importance"
 ---
 
-Alright, let's tackle this. It's a common scenario, and frankly, one I've personally debugged a few times. Extracting a trained AutoML model from Azure and then plotting feature importance – it's less straightforward than simply hitting a 'download' button, but definitely doable. We need to get into the specifics of how AutoML stores models and then leverage that knowledge to extract and analyze them.
+Alright,  It's a common scenario, and frankly, one I've personally debugged a few times. Extracting a trained AutoML model from Azure and then plotting feature importance – it's less straightforward than simply hitting a 'download' button, but definitely doable. We need to get into the specifics of how AutoML stores models and then leverage that knowledge to extract and analyze them.
 
 The first hurdle you'll encounter is that Azure AutoML doesn't always give you a nice, neat single model file like you might find with, say, a hand-trained scikit-learn model. It packages its models into a more complex, often pipeline-based, structure. This is because AutoML often combines preprocessing steps (feature engineering, scaling) with the actual model itself. This pipeline approach is great for consistent deployment, but it makes extracting just the model a bit more involved.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-manage-secrets-in-github-codespaces-when-developing-locally-with-vs-code-dev-containers"
 ---
 
-Okay, let's tackle this. I’ve had my share of headaches dealing with secrets in development environments, particularly when transitioning between local dev containers and cloud-based platforms like GitHub Codespaces. It's a pain point many developers run into, and there isn’t a one-size-fits-all solution; it often demands a blend of techniques. My experiences, especially with a large microservices project a while back, really hammered home the importance of doing this correctly. So, let’s break down the approaches I’ve found most effective, and why.
+,  I’ve had my share of headaches dealing with secrets in development environments, particularly when transitioning between local dev containers and cloud-based platforms like GitHub Codespaces. It's a pain point many developers run into, and there isn’t a one-size-fits-all solution; it often demands a blend of techniques. My experiences, especially with a large microservices project a while back, really hammered home the importance of doing this correctly. So, let’s break down the approaches I’ve found most effective, and why.
 
 The core challenge, as you’ve likely discovered, is avoiding the hardcoding of sensitive information directly into your codebase or container configurations. Committing secrets to version control is, frankly, a disaster waiting to happen. What works smoothly in one environment might not translate to another, leading to deployment issues and, worse, security vulnerabilities. We need a system that allows us to use different secrets locally and in Codespaces, and does so securely.
 

@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-is-the-input-shape-incompatible-with-my-dense-layer-in-keras"
 ---
 
-Okay, let's tackle this. It’s a situation I've seen countless times, and it generally stems from a misunderstanding of how data flows through a neural network, specifically concerning the interaction between the input data's shape and the expected input shape of a dense layer in Keras (now part of TensorFlow). It's a common stumbling block, and understanding the underlying mechanics will save you a lot of debugging time.
+,  It’s a situation I've seen countless times, and it generally stems from a misunderstanding of how data flows through a neural network, specifically concerning the interaction between the input data's shape and the expected input shape of a dense layer in Keras (now part of TensorFlow). It's a common stumbling block, and understanding the underlying mechanics will save you a lot of debugging time.
 
 The essence of the problem lies in the way dense layers, also known as fully connected layers, operate. Essentially, a dense layer performs a matrix multiplication between the input tensor and its weights, adds a bias, and then applies an activation function. The critical bit here is the shape compatibility required for that matrix multiplication. The number of features in your incoming data (the last dimension of your input tensor) *must* match the number of input units defined when you created your dense layer.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-grep-for-patterns-excluding-nnnn"
 ---
 
-Alright, let's tackle this. I remember back in '08, dealing with a very similar situation while parsing through network configuration files. We needed to isolate specific patterns but exclude those that matched a particular date format, specifically "nn/nn". It's a common enough requirement, and understanding how to wield `grep` effectively in these cases is critical for any systems-level work. The trick, as is often the case, lies in combining `grep`'s powerful pattern matching with its negative lookahead capabilities.
+Alright,  I remember back in '08, dealing with a very similar situation while parsing through network configuration files. We needed to isolate specific patterns but exclude those that matched a particular date format, specifically "nn/nn". It's a common enough requirement, and understanding how to wield `grep` effectively in these cases is critical for any systems-level work. The trick, as is often the case, lies in combining `grep`'s powerful pattern matching with its negative lookahead capabilities.
 
 Let’s begin by dissecting the core issue. When you want to find patterns in text using `grep`, you typically provide a regular expression as the search pattern. When you need to *exclude* a specific sub-pattern, things get a bit more nuanced. In this case, excluding "nn/nn," where 'n' represents any digit, requires a regular expression that matches what you *do* want while making sure to avoid what you *don't*. Simply put, it’s about specifying what you want *and* what you explicitly don’t want.
 

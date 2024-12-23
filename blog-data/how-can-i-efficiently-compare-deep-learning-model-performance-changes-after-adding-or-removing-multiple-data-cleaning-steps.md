@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-efficiently-compare-deep-learning-model-performance-changes-after-adding-or-removing-multiple-data-cleaning-steps"
 ---
 
-Okay, let's unpack this. I've certainly been in that boat, many times, trying to decipher the impact of various data cleaning permutations on model performance. It’s rarely a straightforward path, and simply looking at final evaluation metrics can be misleading. Instead, we need a systematic approach. Over the years, I've refined a method that leans heavily on statistical rigor while staying practical in a development environment. It's not about finding the absolute "best" set of cleaning steps, but rather understanding *how* these changes influence the model's behavior and performance.
+, let's unpack this. I've certainly been in that boat, many times, trying to decipher the impact of various data cleaning permutations on model performance. It’s rarely a straightforward path, and simply looking at final evaluation metrics can be misleading. Instead, we need a systematic approach. Over the years, I've refined a method that leans heavily on statistical rigor while staying practical in a development environment. It's not about finding the absolute "best" set of cleaning steps, but rather understanding *how* these changes influence the model's behavior and performance.
 
 The first critical point is to understand that changes can manifest in subtle ways. A marginal increase in overall accuracy, for example, might mask significant variations in performance across different subgroups within your data. Therefore, it is essential to conduct thorough testing that is not merely limited to aggregated performance statistics.
 

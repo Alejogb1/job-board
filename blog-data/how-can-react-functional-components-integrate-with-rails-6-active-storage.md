@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-react-functional-components-integrate-with-rails-6-active-storage"
 ---
 
-Okay, let's unpack this. Integrating React functional components with Rails 6 Active Storage is a common challenge, and one I've certainly encountered a few times in projects past. It's not inherently difficult, but it requires a solid understanding of how both systems handle data, particularly file uploads. We need to bridge the gap between React's component-driven approach and Rails' backend file management with Active Storage. Let's break it down into practical steps.
+, let's unpack this. Integrating React functional components with Rails 6 Active Storage is a common challenge, and one I've certainly encountered a few times in projects past. It's not inherently difficult, but it requires a solid understanding of how both systems handle data, particularly file uploads. We need to bridge the gap between React's component-driven approach and Rails' backend file management with Active Storage. Let's break it down into practical steps.
 
 First off, remember that Active Storage in Rails 6 is designed to handle the server-side aspects of file uploads—storage, transformations, and metadata management. React, on the other hand, focuses on building interactive user interfaces. Our job is to orchestrate communication between the two. This typically involves making http requests from React to Rails, and correctly managing the data payload so Rails can process it with Active Storage. The trickiest part often lies in formatting the request with the correct multipart/form-data encoding, which is essential for transmitting file data.
 

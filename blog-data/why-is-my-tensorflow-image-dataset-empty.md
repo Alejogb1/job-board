@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-my-tensorflow-image-dataset-empty"
 ---
 
-Alright, let's tackle this. I've seen this scenario play out more times than I care to count, and the "empty TensorFlow image dataset" is often less about tensorflow itself being broken and more about the journey of getting the data into the right format and the pipeline correctly configured. Let me walk you through my past experiences, detailing the common culprits and how I've addressed them, along with some practical code snippets to illustrate these points.
+Alright,  I've seen this scenario play out more times than I care to count, and the "empty TensorFlow image dataset" is often less about tensorflow itself being broken and more about the journey of getting the data into the right format and the pipeline correctly configured. Let me walk you through my past experiences, detailing the common culprits and how I've addressed them, along with some practical code snippets to illustrate these points.
 
 First off, we’re dealing with an issue of data input, and that typically boils down to one of a few root causes: problems with file paths, issues with file loading or processing logic, or, less frequently, incorrect batching or preprocessing steps. Let’s start with the most common.
 

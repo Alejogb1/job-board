@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-mochachai-tests-read-and-process-data-line-by-line"
 ---
 
-Okay, let's tackle this. It's not an uncommon requirement, and I've certainly found myself in a similar position before—specifically, while building a data processing pipeline that required meticulous verification at each stage. In that project, I needed to validate transformed CSV data, line by line, against expected values after different transformations. This meant my tests had to be able to read input files as streams and process each row. Here’s how to achieve this with Mocha and Chai, leveraging Node.js's file system capabilities.
+,  It's not an uncommon requirement, and I've certainly found myself in a similar position before—specifically, while building a data processing pipeline that required meticulous verification at each stage. In that project, I needed to validate transformed CSV data, line by line, against expected values after different transformations. This meant my tests had to be able to read input files as streams and process each row. Here’s how to achieve this with Mocha and Chai, leveraging Node.js's file system capabilities.
 
 The core challenge here is asynchronous behavior. Node's file operations are inherently asynchronous, and so our tests need to manage this while ensuring that Mocha's test runner doesn't prematurely conclude before the file is fully processed. We'll use Node's `readline` module, which is ideal for reading files line by line without loading the entire file into memory at once—crucial for larger files.
 

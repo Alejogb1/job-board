@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "is-there-numerical-instability-in-pytorchs-layernorm"
 ---
 
-Okay, let's tackle this. The question of numerical instability within pytorch's `layerNorm` is a nuanced one, and it’s something I’ve encountered firsthand in my work, particularly when training large-scale transformer models. It's not a binary yes or no answer, but more of a 'depends on the context,' particularly on the specific configurations and data you're using.
+,  The question of numerical instability within pytorch's `layerNorm` is a nuanced one, and it’s something I’ve encountered firsthand in my work, particularly when training large-scale transformer models. It's not a binary yes or no answer, but more of a 'depends on the context,' particularly on the specific configurations and data you're using.
 
 From my experience, the core `layerNorm` operation itself, as implemented in pytorch, isn't inherently numerically unstable in the same way that, say, naive softmax implementations can be. The issue usually stems from how `layerNorm` interacts with other components of a neural network, especially when dealing with very large or very small values. This can manifest during training as gradient explosion or vanishing, or lead to subtle but significant inaccuracies during inference.
 

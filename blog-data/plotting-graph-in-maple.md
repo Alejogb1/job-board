@@ -4,11 +4,11 @@ date: "2024-12-13"
 id: "plotting-graph-in-maple"
 ---
 
-Okay so plotting graphs in Maple right I've been there done that many many times like seriously this feels like a flashback to my undergrad days
+ so plotting graphs in Maple right I've been there done that many many times like seriously this feels like a flashback to my undergrad days
 
 First thing first you're probably looking at a few different scenarios right plotting functions maybe data points or a combination I've struggled with all of them and let me tell you Maple syntax can be quirky at times especially if you're used to Python or MATLAB it's a different beast
 
-Alright lets dive in assuming you wanna plot a simple function like y equals x squared or something you'd start with something like this:
+lets dive in assuming you wanna plot a simple function like y equals x squared or something you'd start with something like this:
 
 ```maple
 plot(x^2, x = -5..5);
@@ -35,7 +35,7 @@ Y := [1, 3, 2, 4, 3];
 plot(zip((x, y) -> [x, y], X, Y), style = point);
 ```
 
-Okay this snippet needs a bit of explanation `X` and `Y` are two lists representing my x and y values respectively the `zip((x, y) -> [x, y], X, Y)` part is how you take the elements of those lists and turn them into pairs of coordinates think of it like zipping two zippers together Each pair becomes a point the `style = point` bit tells Maple you want a scatter plot instead of a line which would be the default behavior
+ this snippet needs a bit of explanation `X` and `Y` are two lists representing my x and y values respectively the `zip((x, y) -> [x, y], X, Y)` part is how you take the elements of those lists and turn them into pairs of coordinates think of it like zipping two zippers together Each pair becomes a point the `style = point` bit tells Maple you want a scatter plot instead of a line which would be the default behavior
 
 I mean who does not love a good scatter plot Am I right Its like a whole universe in scattered points you know So you will need to use it sooner or later
 
@@ -55,7 +55,7 @@ plot(x^3, x = -3..3, title = "My cool plot", labels = ["x-axis", "y-axis"]);
 
 This should be pretty self-explanatory `title` adds a title to the top of your plot and `labels` specifies labels for the x and y axis Maple offers a lot of customizability for these things fonts sizes colors you name it if you are interested you can dive deep into the docs its pretty extensive
 
-Alright now lets go through some common issues and things you might run into when you are plotting.
+now lets go through some common issues and things you might run into when you are plotting.
 
 One big problem is the domain like I said earlier If you are plotting a function and you don't specify the domain or you give it the wrong domain your plot can look incomplete or just misleading Maple may not pick what you want by default this is where the first line of debugging should go
 
@@ -71,4 +71,4 @@ For Maple specific documentation there is “Programming in Maple” by Michael 
 
 And I have seen some people recommend books like "Maple Programming Guide" by various authors depending on the versions but to be honest you'll find pretty much the same information on the Maple documentation itself which is more up to date so it’s better to just use the documentation
 
-Alright I think that's pretty much it for plotting graphs in Maple for a techy person. If you get any specific errors just paste them and we'll tackle it as a community like all of us stackoverflow users would do
+I think that's pretty much it for plotting graphs in Maple for a techy person. If you get any specific errors just paste them and we'll tackle it as a community like all of us stackoverflow users would do

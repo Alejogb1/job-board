@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-use-a-filesystemwatcher-in-a-layered-architecture"
 ---
 
-Alright, let's tackle this. I've grappled with file system monitoring in layered architectures more times than I care to count, and it's rarely as straightforward as the tutorials suggest. The key challenge isn't just *using* a `FileSystemWatcher`, it's doing it cleanly without creating a tangled mess of dependencies and breaking your carefully crafted separation of concerns. Over the years, I've found that a pragmatic, event-driven approach, coupled with careful encapsulation, generally works best.
+Alright,  I've grappled with file system monitoring in layered architectures more times than I care to count, and it's rarely as straightforward as the tutorials suggest. The key challenge isn't just *using* a `FileSystemWatcher`, it's doing it cleanly without creating a tangled mess of dependencies and breaking your carefully crafted separation of concerns. Over the years, I've found that a pragmatic, event-driven approach, coupled with careful encapsulation, generally works best.
 
 The core issue revolves around where the `FileSystemWatcher` lives and how it communicates changes back to the higher layers of your application. If you directly instantiate the watcher in your business logic or presentation layers, you're setting yourself up for tight coupling and testing nightmares. Ideally, the `FileSystemWatcher` itself should be tucked away within an infrastructure layer, acting as a kind of "data source" for your application, much like a database or an external api.
 

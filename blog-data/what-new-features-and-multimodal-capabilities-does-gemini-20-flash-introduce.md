@@ -4,7 +4,7 @@ date: "2024-12-12"
 id: "what-new-features-and-multimodal-capabilities-does-gemini-20-flash-introduce"
 ---
 
-Okay so Gemini 2.0 Flash right lets dive in its like Google finally decided to crank up the speed dial on their AI models you know what Im saying? Its not just about being faster though its the whole shebang of multimodal understanding and responsiveness that seems to be getting a serious upgrade Think of it like this the original Gemini was a pretty solid all-rounder but now Flash is like that all-rounder hitting the gym every single day and learning new martial arts on the side
+ so Gemini 2.0 Flash right lets dive in its like Google finally decided to crank up the speed dial on their AI models you know what Im saying? Its not just about being faster though its the whole shebang of multimodal understanding and responsiveness that seems to be getting a serious upgrade Think of it like this the original Gemini was a pretty solid all-rounder but now Flash is like that all-rounder hitting the gym every single day and learning new martial arts on the side
 
 First and foremost the big buzz is around speed Its all about that latency reduction which is seriously crucial for interactive apps you know like when you're chatting with a bot or generating ideas live You don't want to be sitting there twiddling your thumbs waiting for a response that's just not cool Flash is designed to be a whole lot snappier theyve optimized the model architecture for speed so its not just brute force processing its clever engineering to get those inferences out in a flash pun totally intended
 

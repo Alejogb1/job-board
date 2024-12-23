@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-trigger-airflow-dags-using-a-post-request"
 ---
 
-Okay, let's talk about triggering Airflow DAGs with POST requests. It’s a topic I've navigated quite a few times over the years, particularly during my stint building a high-throughput data ingestion platform for a large e-commerce operation. We needed to orchestrate a series of complex data transformations based on upstream system events, and polling simply wasn’t cutting it. So, moving to a push model using the Airflow API became essential.
+, let's talk about triggering Airflow DAGs with POST requests. It’s a topic I've navigated quite a few times over the years, particularly during my stint building a high-throughput data ingestion platform for a large e-commerce operation. We needed to orchestrate a series of complex data transformations based on upstream system events, and polling simply wasn’t cutting it. So, moving to a push model using the Airflow API became essential.
 
 The short answer: Airflow's REST API allows you to trigger DAG runs via http POST requests. However, it isn’t quite as straightforward as sending a simple request to a url. You'll need to authenticate and construct the request body properly. The key aspect here is interacting correctly with the Airflow API endpoint and understanding how to pass configuration parameters.
 

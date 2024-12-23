@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-subset-plots-with-rs-pairs-function"
 ---
 
-Alright, let's tackle this. Subsetting plots created with R's `pairs` function isn't always immediately obvious, and I’ve definitely spent more time than I care to recall figuring out the exact combinations of arguments to get what I needed back in my early days building statistical models for ecological analysis. The `pairs` function itself is incredibly powerful for visualizing relationships between multiple variables, but sometimes you only need to focus on specific pairings, not the whole shebang. Here's how I’ve approached this over the years, along with some code examples to solidify the techniques.
+Alright,  Subsetting plots created with R's `pairs` function isn't always immediately obvious, and I’ve definitely spent more time than I care to recall figuring out the exact combinations of arguments to get what I needed back in my early days building statistical models for ecological analysis. The `pairs` function itself is incredibly powerful for visualizing relationships between multiple variables, but sometimes you only need to focus on specific pairings, not the whole shebang. Here's how I’ve approached this over the years, along with some code examples to solidify the techniques.
 
 The core issue stems from the fact that `pairs` is designed to produce a matrix of scatterplots, using combinations of variables across your entire dataset if you provide it with a matrix or data frame. You don't have direct arguments within `pairs` itself to explicitly select which variable combinations to display; instead, you have to be a bit clever in how you supply the data and modify the call.
 

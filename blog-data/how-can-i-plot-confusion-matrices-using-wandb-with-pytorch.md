@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-can-i-plot-confusion-matrices-using-wandb-with-pytorch"
 ---
 
-Okay, let’s tackle this. I've plotted my fair share of confusion matrices, and integrating them with Wandb (Weights & Biases) for Pytorch workflows is something I’ve refined over time. Let me walk you through it, drawing from my experiences and best practices.
+, let’s tackle this. I've plotted my fair share of confusion matrices, and integrating them with Wandb (Weights & Biases) for Pytorch workflows is something I’ve refined over time. Let me walk you through it, drawing from my experiences and best practices.
 
 Plotting confusion matrices is crucial for understanding the performance of a classification model, going beyond basic accuracy metrics. Wandb offers excellent tools to log and visualize these matrices, allowing for better error analysis and model improvement. The trick is in formatting your data correctly and then using Wandb's APIs effectively. Let me illustrate with code snippets and explanations, using a scenario based on my time working on a medical imaging project.
 

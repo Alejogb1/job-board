@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-cuda-kernel-errors-about-device-side-assertions"
 ---
 
-Alright, let's tackle this. Device-side assertions in CUDA kernels, particularly when they manifest as errors, can indeed be frustrating. I've definitely spent my fair share of late nights debugging these, and they almost always point to some subtle issue lurking within the parallel execution environment. It's rarely a problem with cuda itself but more often with the way we've structured our parallel computations or memory access patterns.
+Alright,  Device-side assertions in CUDA kernels, particularly when they manifest as errors, can indeed be frustrating. I've definitely spent my fair share of late nights debugging these, and they almost always point to some subtle issue lurking within the parallel execution environment. It's rarely a problem with cuda itself but more often with the way we've structured our parallel computations or memory access patterns.
 
 In my experience, these errors essentially mean that the checks you've embedded within your kernel code, using `assert()` or equivalent mechanisms, have failed during execution on the GPU device. These assertions are invaluable for catching boundary conditions, detecting out-of-bounds memory access attempts, or identifying other potential errors that are difficult to debug in a massively parallel setting. They act as a crucial safeguard. When one of these triggers, the kernel execution is usually halted, and you get that dreaded error message which, while often cryptic, gives you some clue about the location of the failed check.
 

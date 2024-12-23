@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-are-openai-carracing-v1-observations-all-zeros"
 ---
 
-Okay, let's delve into why you might encounter all-zero observations with OpenAI's CarRacing-v1 environment. This isn't an uncommon head-scratcher, and I've certainly seen my share of developers (and even myself, once upon a time) staring blankly at screens full of zeros. It usually boils down to a misunderstanding of how the environment's state is presented, rather than a bug in the environment itself. My experience, particularly during a project attempting to train an autonomous driving agent a few years back, forced me to become quite familiar with this specific nuance.
+, let's delve into why you might encounter all-zero observations with OpenAI's CarRacing-v1 environment. This isn't an uncommon head-scratcher, and I've certainly seen my share of developers (and even myself, once upon a time) staring blankly at screens full of zeros. It usually boils down to a misunderstanding of how the environment's state is presented, rather than a bug in the environment itself. My experience, particularly during a project attempting to train an autonomous driving agent a few years back, forced me to become quite familiar with this specific nuance.
 
 The core issue stems from the fact that the CarRacing-v1 environment, by default, does not directly provide a visual observation like a raw pixel array when you access it immediately after a reset. Instead, it offers a somewhat more abstract representation of the game state, one that needs to be actively captured and utilized for training. The initial observation is indeed filled with zeros because the simulator hasn't had a chance to render a new frame given the first environment action hasn’t been taken.
 

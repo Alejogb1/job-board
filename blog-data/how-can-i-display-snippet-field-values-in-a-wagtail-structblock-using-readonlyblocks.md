@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-display-snippet-field-values-in-a-wagtail-structblock-using-readonlyblocks"
 ---
 
-Okay, let's tackle this. I remember a particularly tricky project involving a content-heavy news site that needed very specific editorial control, and the core of the issue was precisely this: displaying complex snippet data within wagtail’s `StructBlock` using `ReadOnlyBlock` functionalities. It’s not entirely straightforward, but with a bit of clarity, we can nail it down. The challenge, as you’ve probably discovered, is that `ReadOnlyBlock`s aren't designed to directly process model data, particularly snippets which need a bit more massaging to render usefully.
+,  I remember a particularly tricky project involving a content-heavy news site that needed very specific editorial control, and the core of the issue was precisely this: displaying complex snippet data within wagtail’s `StructBlock` using `ReadOnlyBlock` functionalities. It’s not entirely straightforward, but with a bit of clarity, we can nail it down. The challenge, as you’ve probably discovered, is that `ReadOnlyBlock`s aren't designed to directly process model data, particularly snippets which need a bit more massaging to render usefully.
 
 The basic problem stems from `ReadOnlyBlock`'s primary function: presenting static text or values pre-defined within a block definition. It doesn't dynamically fetch data from database models like our snippets. This is great for things like section headers or divider lines, but inadequate for the richness and relations involved with snippets. Thus, we have to intervene to pre-process the data from our snippet field before feeding it to the `ReadOnlyBlock`.
 

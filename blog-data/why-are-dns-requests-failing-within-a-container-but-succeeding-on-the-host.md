@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-are-dns-requests-failing-within-a-container-but-succeeding-on-the-host"
 ---
 
-Okay, let's tackle this. It's a situation I've seen crop up countless times across various projects, and the reasons are usually buried somewhere in the network configuration. When a container can't resolve domain names, but the host it's running on can, we're dealing with a networking stack discrepancy, and there are a few common culprits.
+,  It's a situation I've seen crop up countless times across various projects, and the reasons are usually buried somewhere in the network configuration. When a container can't resolve domain names, but the host it's running on can, we're dealing with a networking stack discrepancy, and there are a few common culprits.
 
 From what I've experienced, the most frequent issues boil down to either a problem with the container's network configuration itself, a firewall interference, or a misalignment with the host's resolver settings. It might appear simple on the surface, but the devil’s always in the detail when it comes to container networking.
 

@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-create-dashboards-with-reports-in-laravel-api"
 ---
 
-Okay, let’s tackle this. Dashboards and reports, when served through a Laravel API, involve a few key elements: data aggregation, efficient data retrieval, and effective presentation. I’ve certainly built my share of these over the years, and the approach I've found most reliable combines careful model design, query optimization, and a structured API endpoint strategy. Let’s dive into how this works in practice.
+, let’s tackle this. Dashboards and reports, when served through a Laravel API, involve a few key elements: data aggregation, efficient data retrieval, and effective presentation. I’ve certainly built my share of these over the years, and the approach I've found most reliable combines careful model design, query optimization, and a structured API endpoint strategy. Let’s dive into how this works in practice.
 
 Fundamentally, the challenge isn't just about pushing data from your database to a frontend client; it’s about doing so in a manner that’s performant and meaningful. I remember one project where we initially just pulled all the records and processed them in the frontend. Needless to say, things ground to a halt as data volume grew. We learned quickly that the heavy lifting needs to happen on the server side.
 

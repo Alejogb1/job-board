@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-bitcoins-merkle-tree-be-verified-and-developed"
 ---
 
-Okay, let’s tackle this. I've seen a few implementations go sideways over the years, so I'm glad to walk through a structured approach to verifying and developing bitcoin’s Merkle tree. It's a critical component for the system’s scalability and security, so getting it correct is paramount.
+, let’s tackle this. I've seen a few implementations go sideways over the years, so I'm glad to walk through a structured approach to verifying and developing bitcoin’s Merkle tree. It's a critical component for the system’s scalability and security, so getting it correct is paramount.
 
 Fundamentally, a merkle tree is a data structure used to efficiently verify data integrity. In the context of bitcoin, it’s used to summarise transactions within a block. Rather than broadcasting every transaction to every node, a single merkle root is included in the block header. This root summarises all transactions in a way that allows anyone to prove a specific transaction exists without needing the entire transaction list.
 

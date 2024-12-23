@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-promtail-send-logs-from-a-specific-container"
 ---
 
-Okay, let's talk about getting logs out of specific containers using Promtail. It's a problem I've definitely encountered, particularly back during my days architecting a microservices platform where granular log collection was paramount for debugging and monitoring. It's not just about getting *all* the logs; pinpointing the source is often half the battle.
+, let's talk about getting logs out of specific containers using Promtail. It's a problem I've definitely encountered, particularly back during my days architecting a microservices platform where granular log collection was paramount for debugging and monitoring. It's not just about getting *all* the logs; pinpointing the source is often half the battle.
 
 The short answer, is absolutely, Promtail *can* send logs from specific containers. It’s designed to be flexible in how it discovers and targets log sources. It doesn't just blindly scrape everything in sight. The core mechanism enabling this is its powerful configuration language and its ability to leverage labels provided by container orchestration systems like Kubernetes or Docker Swarm.
 

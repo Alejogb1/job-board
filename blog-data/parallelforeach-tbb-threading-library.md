@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "parallelforeach-tbb-threading-library"
 ---
 
-Okay so you're asking about `parallel_for_each` from the Intel Threading Building Blocks TBB library yeah I've been there done that got the t-shirt and probably a few compiler warnings too let's unpack this
+ so you're asking about `parallel_for_each` from the Intel Threading Building Blocks TBB library yeah I've been there done that got the t-shirt and probably a few compiler warnings too let's unpack this
 
 First off `parallel_for_each` it's a beast it's like the workhorse of TBB when you need to apply the same operation to a collection of items in parallel It's all about efficiency avoiding those nasty bottlenecks and making full use of your multi-core processor instead of the usual single-thread slow poke approach I've spent years wrestling with these things and seen the good bad and the ugly believe me
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-notify-users-via-email-when-a-button-is-clicked"
 ---
 
-Okay, let's dive into the specifics of triggering email notifications upon a button click. It’s a common requirement, and while it might seem straightforward, the devil’s often in the details. I've seen my fair share of pitfalls with implementations of this over the years, ranging from security concerns to performance bottlenecks. So, let me break down my approach, honed through multiple projects where this was a core functionality.
+, let's dive into the specifics of triggering email notifications upon a button click. It’s a common requirement, and while it might seem straightforward, the devil’s often in the details. I've seen my fair share of pitfalls with implementations of this over the years, ranging from security concerns to performance bottlenecks. So, let me break down my approach, honed through multiple projects where this was a core functionality.
 
 First, understand that the immediate click of a button on a user's browser shouldn't directly trigger an email sending. That's inefficient and presents a security risk, potentially exposing credentials. The correct approach involves decoupling the user’s action from the actual email sending process. The button click should trigger an action on your *server*, which then takes care of dispatching the email. The user’s front-end remains agnostic to the intricacies of email configuration.
 

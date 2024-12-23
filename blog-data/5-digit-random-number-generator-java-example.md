@@ -4,9 +4,9 @@ date: "2024-12-13"
 id: "5-digit-random-number-generator-java-example"
 ---
 
-Alright so you need a 5 digit random number generator in java right Been there done that got the t-shirt and probably a few obscure stack traces to go with it lets dive in
+so you need a 5 digit random number generator in java right Been there done that got the t-shirt and probably a few obscure stack traces to go with it lets dive in
 
-Okay first things first you want a range from 10000 to 99999 inclusive no tricks no funny business that's the standard 5-digit number territory Now Java offers a few ways to do this lets just be upfront about it
+ first things first you want a range from 10000 to 99999 inclusive no tricks no funny business that's the standard 5-digit number territory Now Java offers a few ways to do this lets just be upfront about it
 
 **Method 1 Straight Up Math Random**
 

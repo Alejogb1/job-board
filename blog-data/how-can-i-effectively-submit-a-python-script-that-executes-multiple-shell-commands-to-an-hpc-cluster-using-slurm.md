@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-effectively-submit-a-python-script-that-executes-multiple-shell-commands-to-an-hpc-cluster-using-slurm"
 ---
 
-Alright, let's tackle this. I’ve been down this road more times than I care to count, often late at night with a looming deadline and a cluster that seems to have a mind of its own. The challenge of orchestrating complex workflows involving shell commands through a job scheduler like Slurm is definitely a familiar one. It's about more than just firing off commands; it's about doing it reliably, efficiently, and in a way that allows you to scale your work without becoming a system admin in the process.
+Alright,  I’ve been down this road more times than I care to count, often late at night with a looming deadline and a cluster that seems to have a mind of its own. The challenge of orchestrating complex workflows involving shell commands through a job scheduler like Slurm is definitely a familiar one. It's about more than just firing off commands; it's about doing it reliably, efficiently, and in a way that allows you to scale your work without becoming a system admin in the process.
 
 Submitting a Python script that executes multiple shell commands to a High-Performance Computing (HPC) cluster using Slurm requires a layered approach. Fundamentally, Slurm manages resources—allocating nodes, cpus, memory, and time—to individual jobs. Your Python script essentially becomes the driver, orchestrating operations within the allocated resources. The key is constructing the script to interact properly with both the Slurm scheduler and the underlying shell environment.
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "static-struct-c-programming-usage"
 ---
 
-Alright so static structs in C right Been there done that got the t-shirt probably even contributed to the stack overflow thread that asked the same question back in the day kidding but not really I’ve been wrestling with C for a good chunk of my life you know that kind of relationship where you love it and hate it in equal measure and static structures those little devils have been a recurring theme let’s get into the nitty gritty
+so static structs in C right Been there done that got the t-shirt probably even contributed to the stack overflow thread that asked the same question back in the day kidding but not really I’ve been wrestling with C for a good chunk of my life you know that kind of relationship where you love it and hate it in equal measure and static structures those little devils have been a recurring theme let’s get into the nitty gritty
 
 First off let’s clear the air static here means something quite specific in C context its not your everyday unchanging type of static that you find in say a physics equation and when used with structures in C the static keyword changes the structure’s linkage and scope not its content itself just like all static keywords in C it regulates visibility not immutability
 

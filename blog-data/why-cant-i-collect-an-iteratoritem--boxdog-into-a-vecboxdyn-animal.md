@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-cant-i-collect-an-iteratoritem--boxdog-into-a-vecboxdyn-animal"
 ---
 
-Okay, let's tackle this. I've seen this sort of frustration many times, especially when developers are coming to grips with Rust's ownership system and trait objects. It’s not uncommon to expect an iterator of `Box<Dog>` to neatly transform into a `Vec<Box<dyn Animal>>`, but the compiler throws a wrench into the works, and for good reason.
+,  I've seen this sort of frustration many times, especially when developers are coming to grips with Rust's ownership system and trait objects. It’s not uncommon to expect an iterator of `Box<Dog>` to neatly transform into a `Vec<Box<dyn Animal>>`, but the compiler throws a wrench into the works, and for good reason.
 
 The core issue lies in how Rust handles type erasure and memory layout with trait objects, specifically when boxed. To understand this, we first have to appreciate that `Dog` is a concrete type, with a known size at compile time, and `Box<Dog>` is just a pointer to memory holding that `Dog`. However, `dyn Animal` is a *trait object*, which means it’s essentially a pointer, not just to the data, but also to a virtual table (vtable) of the concrete type's methods that implement the `Animal` trait. This vtable is what enables runtime polymorphism.
 

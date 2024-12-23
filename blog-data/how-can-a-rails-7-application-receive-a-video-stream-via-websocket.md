@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-a-rails-7-application-receive-a-video-stream-via-websocket"
 ---
 
-Alright, let's tackle this. I remember a project back in 2021, building a real-time surveillance system—that was a deep dive into precisely this challenge: getting video streamed into a Rails app via WebSockets. It’s certainly not the simplest setup, but completely achievable with some careful planning. You wouldn’t directly push raw video bytes through WebSockets and expect magic; that’s going to lead to performance nightmares. What we need is a strategy.
+Alright,  I remember a project back in 2021, building a real-time surveillance system—that was a deep dive into precisely this challenge: getting video streamed into a Rails app via WebSockets. It’s certainly not the simplest setup, but completely achievable with some careful planning. You wouldn’t directly push raw video bytes through WebSockets and expect magic; that’s going to lead to performance nightmares. What we need is a strategy.
 
 First off, let's break down the core concepts involved. We’re aiming for a real-time, or near-real-time, transmission. This implies a need to handle the video feed efficiently. Simply put, we aren't sending an entire video file every frame, but rather, encoded chunks of data which our client application, running in the browser, can reconstruct back into a viewable video. The approach i've found to be the most robust involves a process of segmentation, encoding, and then stream forwarding.
 

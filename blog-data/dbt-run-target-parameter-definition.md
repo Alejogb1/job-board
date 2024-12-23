@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "dbt-run-target-parameter-definition"
 ---
 
-Okay so dbt run target parameter yeah I've wrestled with that beast more times than I care to admit Let's break it down simple and techy like we do around here
+ so dbt run target parameter yeah I've wrestled with that beast more times than I care to admit Let's break it down simple and techy like we do around here
 
 So you're asking about the `--target` parameter when you're firing off `dbt run` or any other dbt command right It's fundamental but it can be a real pain if you don't grasp its function so let's clear the confusion
 

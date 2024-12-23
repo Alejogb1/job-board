@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "failed-to-resolve-xposed-module-api"
 ---
 
-Okay so you're hitting that "failed to resolve xposed module api" wall right Been there done that got the t-shirt and a few stress-induced gray hairs Let me tell you it's a right of passage for anyone dabbling in Xposed module development I've spent way too much time staring at logcat wondering what fresh hell I've unleashed on my poor test device
+ so you're hitting that "failed to resolve xposed module api" wall right Been there done that got the t-shirt and a few stress-induced gray hairs Let me tell you it's a right of passage for anyone dabbling in Xposed module development I've spent way too much time staring at logcat wondering what fresh hell I've unleashed on my poor test device
 
 First off let's get the basic stuff out of the way This error basically means your module can't find the necessary Xposed API classes when the Xposed framework is trying to load it It's like trying to build a Lego castle without the instruction manual and half the bricks are missing
 

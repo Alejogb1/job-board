@@ -58,7 +58,7 @@ if (user.role == "admin"){
 
 You can find more details on RBAC in various books on security architecture and design search for books on security design patterns
 
-And then there's regular security testing and vulnerability scanning  you need to actively look for weaknesses in your systems before attackers do  This includes penetration testing  vulnerability assessments and regular security audits  You're not just hoping everything is okay you're actively finding and fixing problems
+And then there's regular security testing and vulnerability scanning  you need to actively look for weaknesses in your systems before attackers do  This includes penetration testing  vulnerability assessments and regular security audits  You're not just hoping everything is  you're actively finding and fixing problems
 
 Here's a basic example of a simple vulnerability scanner in Python  Note that this is a very simplified example for illustrative purposes only  Real-world scanners are much more complex
 

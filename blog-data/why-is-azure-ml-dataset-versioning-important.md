@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-is-azure-ml-dataset-versioning-important"
 ---
 
-Okay, let’s talk dataset versioning in Azure machine learning; something I've definitely learned the hard way over several projects. It's not always the first thing people think about when starting with ml, but it quickly becomes vital as projects mature. I recall one particularly chaotic project where we were constantly battling data drift issues, and much of that could have been mitigated with a solid versioning strategy in place from the get-go.
+, let’s talk dataset versioning in Azure machine learning; something I've definitely learned the hard way over several projects. It's not always the first thing people think about when starting with ml, but it quickly becomes vital as projects mature. I recall one particularly chaotic project where we were constantly battling data drift issues, and much of that could have been mitigated with a solid versioning strategy in place from the get-go.
 
 So, to get to the crux of it, dataset versioning in azure ml, or frankly anywhere in the ml lifecycle, is crucial for a number of interrelated reasons, and fundamentally it boils down to reproducibility, traceability, and efficient collaboration.
 

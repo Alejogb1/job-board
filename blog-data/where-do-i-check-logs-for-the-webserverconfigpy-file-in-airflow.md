@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "where-do-i-check-logs-for-the-webserverconfigpy-file-in-airflow"
 ---
 
-Okay, let's tackle this. When dealing with Airflow, particularly configurations loaded via `webserver_config.py`, the logging picture isn't always straightforward. I’ve spent my share of late nights debugging similar issues – once with a custom authenticator that was misbehaving in production, believe me, I remember that one vividly. Pinpointing where those configuration settings, and their associated errors, end up logging often requires a bit of investigative work.
+,  When dealing with Airflow, particularly configurations loaded via `webserver_config.py`, the logging picture isn't always straightforward. I’ve spent my share of late nights debugging similar issues – once with a custom authenticator that was misbehaving in production, believe me, I remember that one vividly. Pinpointing where those configuration settings, and their associated errors, end up logging often requires a bit of investigative work.
 
 Essentially, `webserver_config.py` is processed during the Airflow webserver's startup, and the logs reflecting its execution primarily land in the webserver's own log output. You're not going to find a separate log file dedicated solely to configuration parsing, unfortunately. The approach is, therefore, to look within the webserver's logs for indications of issues originating from your `webserver_config.py` file.
 

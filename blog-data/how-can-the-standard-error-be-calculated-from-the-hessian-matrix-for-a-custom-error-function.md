@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-the-standard-error-be-calculated-from-the-hessian-matrix-for-a-custom-error-function"
 ---
 
-Okay, let's tackle this. I've actually dealt with this exact scenario a few times, particularly when optimizing complex machine learning models with custom loss functions. It’s a step that's often overlooked, but crucial for understanding the uncertainty around your parameter estimates.
+,  I've actually dealt with this exact scenario a few times, particularly when optimizing complex machine learning models with custom loss functions. It’s a step that's often overlooked, but crucial for understanding the uncertainty around your parameter estimates.
 
 The core challenge here revolves around deriving the standard errors of parameter estimates when you’re not using a standard loss function, like mean squared error (mse) or cross-entropy. With those, you often get standard error calculations baked into the optimization algorithms or statistical packages. However, when you roll your own, you’re on your own. The Hessian matrix, in such cases, becomes our primary tool for extracting that information.
 

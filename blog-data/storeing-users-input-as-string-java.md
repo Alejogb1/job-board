@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "storeing-users-input-as-string-java"
 ---
 
-Okay so storing user input as a string in Java yeah I've been there done that more times than I can count I mean seriously this is like the bread and butter of any interactive app or system you build
+ so storing user input as a string in Java yeah I've been there done that more times than I can count I mean seriously this is like the bread and butter of any interactive app or system you build
 
 First things first we're talking about taking whatever a user types usually via the console or a GUI and then capturing that as a sequence of characters that Java understands that sequence needs to be a string no big surprises there
 

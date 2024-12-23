@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-use-the-same-docker-image-for-multiple-users-with-their-login"
 ---
 
-Okay, let's unpack this interesting challenge. I remember back at Stellar Dynamics Corp., we faced a very similar situation. We had multiple data scientists who needed isolated environments to run their experiments, but maintaining separate images for each user was proving a logistical nightmare. So, how do you effectively use a single docker image for multiple users while still keeping their data and sessions isolated? It’s achievable, and it largely hinges on understanding how docker, user management within containers, and volume mounting interact.
+, let's unpack this interesting challenge. I remember back at Stellar Dynamics Corp., we faced a very similar situation. We had multiple data scientists who needed isolated environments to run their experiments, but maintaining separate images for each user was proving a logistical nightmare. So, how do you effectively use a single docker image for multiple users while still keeping their data and sessions isolated? It’s achievable, and it largely hinges on understanding how docker, user management within containers, and volume mounting interact.
 
 The core issue is that a docker image, by its nature, is a read-only template. Once you instantiate a container from that image, it operates within a self-contained environment. However, each user should ideally have their own persistent data storage and configuration. Therefore, the challenge is not about modifying the image itself, but rather how to leverage volumes and user context within a container lifecycle.
 

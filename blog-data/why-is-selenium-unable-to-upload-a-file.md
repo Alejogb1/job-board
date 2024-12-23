@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-selenium-unable-to-upload-a-file"
 ---
 
-Okay, let's unpack this. I've encountered this exact scenario more times than I care to remember, and it's never quite as straightforward as one hopes. The core of the issue isn’t that Selenium *can't* upload a file, but rather that it doesn't interact with file input elements in the same way a human does. We're not directly triggering the system's file selection dialog. Instead, we're manipulating the underlying html. This subtle difference creates significant hurdles and necessitates a specific approach.
+, let's unpack this. I've encountered this exact scenario more times than I care to remember, and it's never quite as straightforward as one hopes. The core of the issue isn’t that Selenium *can't* upload a file, but rather that it doesn't interact with file input elements in the same way a human does. We're not directly triggering the system's file selection dialog. Instead, we're manipulating the underlying html. This subtle difference creates significant hurdles and necessitates a specific approach.
 
 My experience with web automation spans quite some time, and this particular problem arose most vividly during a large-scale data migration project. We were using Selenium to automate data import into a legacy web application. Several times, these import processes involved file uploads via standard `<input type="file">` elements. Simply sending a file path to the element using `sendKeys()` as one might initially expect doesn't work consistently, particularly across browsers and operating systems. We quickly learned the intricacies of file uploads and needed to adapt.
 

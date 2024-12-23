@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-a-wagtail-panel-efficiently-manage-self-referential-many-to-many-relationships-with-a-through-model"
 ---
 
-Okay, let's tackle this. It's a scenario I've certainly navigated more than once, and the nuances of managing self-referential many-to-many relationships in Wagtail, particularly with a through model, definitely demand a careful approach. My experience has primarily been within large, content-heavy sites that required complex content interlinking, so I've had to iterate through several strategies to get this process right.
+,  It's a scenario I've certainly navigated more than once, and the nuances of managing self-referential many-to-many relationships in Wagtail, particularly with a through model, definitely demand a careful approach. My experience has primarily been within large, content-heavy sites that required complex content interlinking, so I've had to iterate through several strategies to get this process right.
 
 The fundamental challenge stems from the inherent complexity of many-to-many relationships. When you add the "self-referential" aspect – where an instance of a model can relate to other instances of the same model – it introduces a level of indirection. And when you then add a "through" model to explicitly define the relationship, things become even more involved. The standard Wagtail panels don't quite handle these complex scenarios out-of-the-box.
 

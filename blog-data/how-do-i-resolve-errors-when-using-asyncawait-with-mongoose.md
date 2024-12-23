@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-resolve-errors-when-using-asyncawait-with-mongoose"
 ---
 
-Alright, let's tackle this. From my experience, especially back in the days when we were heavily relying on node v8 alongside older mongoose versions, async/await and mongoose could sometimes feel like they were locked in a cage match. The apparent simplicity of async/await would clash with mongoose's asynchronous nature in ways that weren't always immediately obvious, leaving us scratching our heads at seemingly random errors. Let me share some insights, and you'll find that with a bit of understanding, these issues become quite manageable.
+Alright,  From my experience, especially back in the days when we were heavily relying on node v8 alongside older mongoose versions, async/await and mongoose could sometimes feel like they were locked in a cage match. The apparent simplicity of async/await would clash with mongoose's asynchronous nature in ways that weren't always immediately obvious, leaving us scratching our heads at seemingly random errors. Let me share some insights, and you'll find that with a bit of understanding, these issues become quite manageable.
 
 The core problem often stems from the fact that mongoose's methods return promises, but understanding *how* these promises behave, and *when* exactly they resolve or reject, is crucial. A common mistake, especially for folks transitioning from callback-based programming, is expecting immediate results from mongoose queries when, in fact, these operations are asynchronous. Neglecting to handle promise rejections correctly, especially within async functions, can lead to unhandled promise rejections, application crashes, or simply unexpected behavior.
 

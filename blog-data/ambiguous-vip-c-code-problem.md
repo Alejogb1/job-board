@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "ambiguous-vip-c-code-problem"
 ---
 
-Okay I see the "ambiguous vip c++ code problem" question yeah I've been there done that got the t-shirt multiple times let's break this down you're probably dealing with some kind of virtual inheritance mess or maybe a funky mix of template classes with multiple inheritance it's usually one of those situations they tend to cause these specific problems I've got a scar or two from similar fights believe me
+ I see the "ambiguous vip c++ code problem" question yeah I've been there done that got the t-shirt multiple times let's break this down you're probably dealing with some kind of virtual inheritance mess or maybe a funky mix of template classes with multiple inheritance it's usually one of those situations they tend to cause these specific problems I've got a scar or two from similar fights believe me
 
 So you've got this ambiguous member access right the compiler's basically throwing its hands up saying "hey which one am I supposed to use" it’s like it doesn’t know where to look it happens when you have multiple base classes and those classes share members with the same name and without proper disambiguation the compiler just gets confused it's understandable honestly but still frustrating when you're trying to build something and it just keeps giving you the same errors repeatedly.
 

@@ -4,13 +4,13 @@ date: "2024-12-13"
 id: "access-to-pixel-values-of-a-tif-image-using-itk"
 ---
 
-Okay so you wanna get at those sweet pixel values in a TIFF using ITK right Been there done that got the t-shirt and maybe a few debugging scars to prove it Let me tell you this isn't exactly rocket science but it's got a few wrinkles you gotta iron out I've wrestled with this beast on several occasions mostly back in my medical imaging days where everything was either a DICOM or some weird proprietary TIFF variant But yeah I've got the scars let's talk TIFF pixels in ITK
+ so you wanna get at those sweet pixel values in a TIFF using ITK right Been there done that got the t-shirt and maybe a few debugging scars to prove it Let me tell you this isn't exactly rocket science but it's got a few wrinkles you gotta iron out I've wrestled with this beast on several occasions mostly back in my medical imaging days where everything was either a DICOM or some weird proprietary TIFF variant But yeah I've got the scars let's talk TIFF pixels in ITK
 
 First off ITK is brilliant for image processing don't get me wrong but sometimes it feels like it's designed for academics and less for us folks who just need to get the job done You're not wrong thinking it should be simpler But hey that's the price of power right It's definitely not a simple pixel access method compared to other libraries like PIL but it does make your life simpler when it comes to image processing operations especially on medical images which are often complex and large
 
 So the core idea here is to use ITK's image reader to load the TIFF then we'll iterate through the pixels like we're going through a very large array Sounds simple right And it mostly is If you've got a basic grasp of ITK it'll be cake but let's walk through it because hey I wish someone had done this for me when I was banging my head against the wall
 
-Okay code snippet one This is the foundational stuff This is how you load a TIFF and get the basic image object that ITK loves
+ code snippet one This is the foundational stuff This is how you load a TIFF and get the basic image object that ITK loves
 
 ```cpp
 #include "itkImage.h"
@@ -105,7 +105,7 @@ Now this next snippet is the fun part getting the pixel values This is where thi
 
 See the `image->GetPixel(pixelIndex)` bit This is ITK's way of accessing a pixel using an `IndexType` object We're manually iterating through the image with nested loops but instead of direct array indexing we make a index object representing a position in the image which is a vector with the number of dimensions of the image Remember `unsigned int Dimension = 2;` up there if you want 3D data this would have been `unsigned int Dimension = 3;` and the loops below should increase by one dimension too
 
-Okay this gives us each pixel value but what if you need to do something *more* with them Like modify them manipulate them you know the whole nine yards Well here's a sneak peek into how you might do that
+ this gives us each pixel value but what if you need to do something *more* with them Like modify them manipulate them you know the whole nine yards Well here's a sneak peek into how you might do that
 
 ```cpp
 // continuation from the previous code block

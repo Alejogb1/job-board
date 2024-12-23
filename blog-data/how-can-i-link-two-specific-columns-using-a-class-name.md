@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-link-two-specific-columns-using-a-class-name"
 ---
 
-Alright, let's tackle this. It's a fairly common scenario, linking column data based on a shared class, and I've seen it pop up in various forms over my career. Typically, it stems from situations where you're working with dynamically generated tables or tabular data within a web application, or perhaps even data manipulation within a scripting environment where traditional relational joins are not feasible. What we are essentially aiming for is a functional relationship based on the presence of a particular class instead of a conventional database foreign key.
+Alright,  It's a fairly common scenario, linking column data based on a shared class, and I've seen it pop up in various forms over my career. Typically, it stems from situations where you're working with dynamically generated tables or tabular data within a web application, or perhaps even data manipulation within a scripting environment where traditional relational joins are not feasible. What we are essentially aiming for is a functional relationship based on the presence of a particular class instead of a conventional database foreign key.
 
 The challenge, as I've discovered through several less-than-ideal attempts, is not simply about *finding* elements with the same class, but establishing a coherent association, a mapping between two *specific* columns, and doing so efficiently. This involves a bit more than just selector-based manipulations. We need a clear strategy to tie the relevant pieces together.
 

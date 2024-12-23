@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "can-i-start-a-process-with-the-run-command-in-a-dockerfile"
 ---
 
-Okay, let's unpack this. The question of using `RUN` to start a process within a Dockerfile is deceptively simple, and the nuances can trip up even experienced developers. It's something I’ve battled with myself on several occasions, especially early in my Docker journey – trying to get background services to behave inside containers. Let me explain, based on what I've learned, and then we can look at some practical examples.
+, let's unpack this. The question of using `RUN` to start a process within a Dockerfile is deceptively simple, and the nuances can trip up even experienced developers. It's something I’ve battled with myself on several occasions, especially early in my Docker journey – trying to get background services to behave inside containers. Let me explain, based on what I've learned, and then we can look at some practical examples.
 
 The short answer is: no, not in the way you might initially expect or intend. The `RUN` instruction in a Dockerfile executes commands during the *image build process*, not when the container is eventually *running*. These commands happen in an intermediate container and their results, such as installed packages or compiled code, become part of the final image layer. It's essential to understand that these containers used during the image build process are *transient*. They exist only long enough to execute the specified command and are then discarded. That is fundamental; a `RUN` command does not, and should not, start a process that persists once the image is built and a container is launched from that image.
 

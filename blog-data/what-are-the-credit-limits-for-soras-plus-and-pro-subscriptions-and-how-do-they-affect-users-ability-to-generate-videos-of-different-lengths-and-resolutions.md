@@ -4,7 +4,7 @@ date: "2024-12-12"
 id: "what-are-the-credit-limits-for-soras-plus-and-pro-subscriptions-and-how-do-they-affect-users-ability-to-generate-videos-of-different-lengths-and-resolutions"
 ---
 
-Okay, so you're curious about Sora's Plus and Pro plans, specifically how their `credit limits` affect video generation, right?  That's a really smart question, because it gets to the heart of the value proposition of each tier.  It's not just about features, but about *how much* you can actually *use* those features. Let's dive in!
+, so you're curious about Sora's Plus and Pro plans, specifically how their `credit limits` affect video generation, right?  That's a really smart question, because it gets to the heart of the value proposition of each tier.  It's not just about features, but about *how much* you can actually *use* those features. Let's dive in!
 
 First off,  I don't have access to Sora's exact, up-to-the-minute pricing and credit details.  Those things change! But I can give you a *reasoning-based* approach to understanding how this probably works. Think of it like this:  Sora is likely using a system where generating videos consumes `credits`.  Longer videos, higher resolutions (like `4K` vs. `1080p`), and more complex scenes probably require more processing power, and thus more credits.
 

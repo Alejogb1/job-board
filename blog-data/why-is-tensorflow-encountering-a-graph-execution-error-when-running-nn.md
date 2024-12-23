@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-tensorflow-encountering-a-graph-execution-error-when-running-nn"
 ---
 
-Okay, let's tackle this TensorFlow 'nn' graph execution error. It's a common sticking point, and I've debugged similar issues more times than I care to remember. When you see TensorFlow throw a graph execution error related to `nn`, it’s rarely a single, isolated problem. Instead, it’s often the symptom of an underlying configuration issue, a subtle mismatch in tensor shapes, incorrect data types, or an unexpected value within a gradient calculation. Let's break down why this happens and how to address it, drawing from a few of my past experiences.
+, let's tackle this TensorFlow 'nn' graph execution error. It's a common sticking point, and I've debugged similar issues more times than I care to remember. When you see TensorFlow throw a graph execution error related to `nn`, it’s rarely a single, isolated problem. Instead, it’s often the symptom of an underlying configuration issue, a subtle mismatch in tensor shapes, incorrect data types, or an unexpected value within a gradient calculation. Let's break down why this happens and how to address it, drawing from a few of my past experiences.
 
 First, let’s talk about what TensorFlow's `nn` module is. It essentially contains a collection of neural network operations – layers, activation functions, loss functions, and so on. When you build a model in TensorFlow, you're essentially creating a computational graph. This graph defines the series of mathematical operations to be executed. If any node in this graph encounters a problem during execution, you'll see an error. Now, that error message can sometimes be less than perfectly informative, hence why we need to do a bit of diagnostic work.
 

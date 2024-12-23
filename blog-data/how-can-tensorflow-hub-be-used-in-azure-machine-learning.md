@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-tensorflow-hub-be-used-in-azure-machine-learning"
 ---
 
-Okay, let's delve into this. I recall a project a few years back, where we were building a complex image classification pipeline within azure machine learning (aml). We were struggling with inconsistent results across different models trained from scratch. that’s when we realized the value of leveraging pre-trained models from TensorFlow hub. Integrating hub modules within aml turned out to be a game-changer for us, improving both development speed and overall performance. So, how *can* you actually use TensorFlow hub in azure machine learning? Let's break it down.
+, let's delve into this. I recall a project a few years back, where we were building a complex image classification pipeline within azure machine learning (aml). We were struggling with inconsistent results across different models trained from scratch. that’s when we realized the value of leveraging pre-trained models from TensorFlow hub. Integrating hub modules within aml turned out to be a game-changer for us, improving both development speed and overall performance. So, how *can* you actually use TensorFlow hub in azure machine learning? Let's break it down.
 
 The core idea is simple: you're using pre-trained model components (often called modules) available on TensorFlow hub to bypass the extensive training needed for building models from ground zero. Think of it as plug-and-play for deep learning. In aml, you can load these modules into your experiments and use them as a foundation for your custom models or as stand-alone components. The challenge often revolves around creating a robust and streamlined workflow that fits within the aml ecosystem.
 

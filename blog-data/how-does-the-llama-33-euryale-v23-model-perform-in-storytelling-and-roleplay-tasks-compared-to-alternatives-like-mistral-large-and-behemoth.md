@@ -68,7 +68,7 @@ Key Insight:  The "best" model is subjective and depends heavily on your priorit
 Behemoth, due to its scale, is likely to require significantly more computational resources compared to Llama or Mistral. If you have limited resources, Llama or Mistral might be better suited to your needs.
 
 
-Now, I know you might be thinking, "Okay, this is all very general.  Can you give me some *specific* examples?"  Unfortunately, I can't.  Generating examples requires actually running the models, and that's something I can't do directly.  Plus, the output can vary wildly from one run to the next.
+Now, I know you might be thinking, ", this is all very general.  Can you give me some *specific* examples?"  Unfortunately, I can't.  Generating examples requires actually running the models, and that's something I can't do directly.  Plus, the output can vary wildly from one run to the next.
 
 
 But hopefully, this discussion has given you a better framework for thinking about how these models compare. Remember, the key is to experiment and find the model that best suits *your* needs and preferences.  Happy storytelling!

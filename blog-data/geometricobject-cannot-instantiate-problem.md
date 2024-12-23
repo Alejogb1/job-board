@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "geometricobject-cannot-instantiate-problem"
 ---
 
-Alright so geometricobject cannot instantiate right typical Friday afternoon stuff I've seen this a million times feels like
+so geometricobject cannot instantiate right typical Friday afternoon stuff I've seen this a million times feels like
 
 First off when you say "geometricobject" I'm assuming we're talking about some abstract base class or an interface designed to represent different types of geometric shapes like circles squares maybe even more complex stuff right This is pretty common in object oriented programming when we need a hierarchy of related classes that share a common interface
 

@@ -4,7 +4,7 @@ date: "2024-12-12"
 id: "how-does-gemini-20-flashs-context-window-size-impact-its-performance-in-real-world-tasks"
 ---
 
-Okay so like Gemini 2.0 Flash context window right thats the thing everyone's buzzing about right lets dive in its like the brain of the model how much it can remember before it starts forgetting stuff its basically short term memory for the AI
+ so like Gemini 2.0 Flash context window right thats the thing everyone's buzzing about right lets dive in its like the brain of the model how much it can remember before it starts forgetting stuff its basically short term memory for the AI
 
 Think of it like this you're trying to explain a really complicated story to someone and they keep forgetting the beginning bits while you're still in the middle its frustrating right the context window is like that person's memory the bigger the window the more of the story they can keep in mind while you're still talking
 

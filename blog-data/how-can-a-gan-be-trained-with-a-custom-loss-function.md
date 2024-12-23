@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-a-gan-be-trained-with-a-custom-loss-function"
 ---
 
-Okay, let’s tackle this one. It’s a question I’ve seen pop up quite a bit, and it usually indicates someone is moving beyond the standard GAN implementations and venturing into the real world of complex, domain-specific tasks. I remember back in '18, working on a project involving medical image synthesis. The standard binary cross-entropy loss just wasn’t cutting it; we needed to enforce specific image characteristics for diagnostic purposes, which meant custom loss landscapes. So, let's break down how you can approach this.
+, let’s tackle this one. It’s a question I’ve seen pop up quite a bit, and it usually indicates someone is moving beyond the standard GAN implementations and venturing into the real world of complex, domain-specific tasks. I remember back in '18, working on a project involving medical image synthesis. The standard binary cross-entropy loss just wasn’t cutting it; we needed to enforce specific image characteristics for diagnostic purposes, which meant custom loss landscapes. So, let's break down how you can approach this.
 
 The core idea is that a generative adversarial network, or GAN, isn’t intrinsically tied to a specific loss function. The most common setup uses binary cross-entropy, particularly for the discriminator’s loss, because we’re essentially trying to distinguish between ‘real’ and ‘fake’ data. However, you have full control over that, as long as you can compute a scalar loss value and provide gradients to both the generator and discriminator. We are ultimately trying to minimize a loss. The architecture of a gan is set; what will change with each gan model is the input data and the loss function.
 

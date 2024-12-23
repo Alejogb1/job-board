@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "cant-open-pivottable-source-file-excel-error"
 ---
 
-Okay so you’re having that classic "can't open pivot table source file" error in Excel right Been there man I've seen it all probably debugged this exact issue more times than I've had hot meals It’s annoying I get it
+ so you’re having that classic "can't open pivot table source file" error in Excel right Been there man I've seen it all probably debugged this exact issue more times than I've had hot meals It’s annoying I get it
 
 First off let’s ditch the fancy explanations and get into the nitty-gritty because let’s be honest most of the stuff online just repeats the same vague nonsense So I'm going to break this down into a few probable causes and then suggest solutions based on my past misadventures you could say
 
@@ -34,7 +34,7 @@ Sometimes it’s not you it’s them the excel app might be having a bad day rig
 
 **Solution Time Let's Fix This**
 
-Okay so we've diagnosed it let's get to the fixing part I'm going to provide a few code snippets to illustrate the things that you have to do they are not a solution but will assist you in understanding the nature of the fix
+ so we've diagnosed it let's get to the fixing part I'm going to provide a few code snippets to illustrate the things that you have to do they are not a solution but will assist you in understanding the nature of the fix
 
 **Snippet 1: Checking file paths with VBA**
 

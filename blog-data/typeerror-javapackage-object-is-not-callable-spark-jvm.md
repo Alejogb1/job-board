@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "typeerror-javapackage-object-is-not-callable-spark-jvm"
 ---
 
-Okay so you're hitting the classic `TypeError javapackage object is not callable` in your Spark JVM environment right Been there done that got the t-shirt probably still have the coffee stains on it to prove it this one's a beast but it's usually a pretty straightforward root cause
+ so you're hitting the classic `TypeError javapackage object is not callable` in your Spark JVM environment right Been there done that got the t-shirt probably still have the coffee stains on it to prove it this one's a beast but it's usually a pretty straightforward root cause
 
 Let me break it down for you from the trenches of my past Spark debugging adventures I've seen this pop up more times than I care to admit so listen up and you'll get out of this mess in no time
 
@@ -14,7 +14,7 @@ Now this problem in Spark with its jvm bridge usually comes down to how you're t
 
 More specifically it happens if you’re directly trying to access the java packages themselves and not classes inside them I've spent countless hours debugging in Jupyter notebooks on this you wouldn't believe the amount of coffee I drank trying to sort this out back in the day I mean what else is a guy supposed to do except try everything and make sure he didn't copy the line by accident and then do it again cause he might have missed something and again cause he is now suspicious of himself
 
-Okay let's get to the nitty-gritty you’re likely trying to do something like this in PySpark
+ let's get to the nitty-gritty you’re likely trying to do something like this in PySpark
 
 ```python
 from pyspark.sql import SparkSession
@@ -92,4 +92,4 @@ Now the underlying problem is usually a misunderstanding of the jvm interface wi
 
 Also understand that often times it is not you that is making mistakes in many situations it is the library you're using that is making the mistakes I once spent two whole weeks debugging a system that turns out that had a bug in the jvm library of the framework I was using and was an error that affected no one before me I guess I was special like that you can say that it was a unique experience
 
-Okay I think we covered all the bases here Remember the key is to access the classes not the packages and you will be fine Good luck and happy coding
+ I think we covered all the bases here Remember the key is to access the classes not the packages and you will be fine Good luck and happy coding

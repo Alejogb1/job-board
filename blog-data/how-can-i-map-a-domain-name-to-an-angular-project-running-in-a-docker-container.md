@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-map-a-domain-name-to-an-angular-project-running-in-a-docker-container"
 ---
 
-Okay, let's tackle this. I've seen this scenario play out more times than I can count, and it always boils down to a few key components that need to play nice together. Mapping a domain name to an Angular application running inside a Docker container isn’t particularly complex, but it requires a good understanding of networking, web servers, and containerization. I remember back when I was first wrestling with this on a cloud-based application we were building, it felt like a magic trick. Over time, though, it’s just become a solid workflow.
+,  I've seen this scenario play out more times than I can count, and it always boils down to a few key components that need to play nice together. Mapping a domain name to an Angular application running inside a Docker container isn’t particularly complex, but it requires a good understanding of networking, web servers, and containerization. I remember back when I was first wrestling with this on a cloud-based application we were building, it felt like a magic trick. Over time, though, it’s just become a solid workflow.
 
 Essentially, what we're aiming for is to route HTTP or HTTPS traffic coming into a server (or more specifically, to the public ip of the server) with a specific domain name to the particular Docker container that holds your angular application. There are a couple of ways to accomplish this, and the specific solution will depend on the environment you're deploying in, but the core principle is consistent: we need a reverse proxy.
 

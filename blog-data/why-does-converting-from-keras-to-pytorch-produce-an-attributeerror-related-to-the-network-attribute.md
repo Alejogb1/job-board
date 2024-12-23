@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-converting-from-keras-to-pytorch-produce-an-attributeerror-related-to-the-network-attribute"
 ---
 
-Okay, let's tackle this. It's a frustrating one, I've certainly been there. The 'network' attribute AttributeError when moving from Keras to PyTorch, specifically, usually pops up when dealing with models that have been serialized in a particular way within Keras and aren't being handled correctly when we try to translate them to PyTorch. The core issue lies in how Keras and PyTorch handle model architecture representation and storage – they are fundamentally different.
+,  It's a frustrating one, I've certainly been there. The 'network' attribute AttributeError when moving from Keras to PyTorch, specifically, usually pops up when dealing with models that have been serialized in a particular way within Keras and aren't being handled correctly when we try to translate them to PyTorch. The core issue lies in how Keras and PyTorch handle model architecture representation and storage – they are fundamentally different.
 
 Keras, especially the original tensorflow.keras, often encapsulates much of its model information within a ‘network’ attribute or similar internal structures, particularly when dealing with compiled models or those loaded from saved files (`.h5` formats, for example). PyTorch, on the other hand, typically doesn’t use this attribute structure; its models are structured around `nn.Module` instances, and the architectural details are encoded directly within the layers and operations defined within that structure.
 

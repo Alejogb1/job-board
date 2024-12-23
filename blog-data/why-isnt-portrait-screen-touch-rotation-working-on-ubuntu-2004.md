@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-isnt-portrait-screen-touch-rotation-working-on-ubuntu-2004"
 ---
 
-Okay, let's tackle this. I remember a particularly frustrating project back in 2021 where we were deploying interactive kiosks with portrait-oriented touchscreens running Ubuntu 20.04. It seemed straightforward enough, but the touch input was consistently misaligned – a classic case of the screen rotation not playing nice with the touch input. It’s a problem that has a few layers to it, and there are specific reasons why it might not just “work” out of the box.
+,  I remember a particularly frustrating project back in 2021 where we were deploying interactive kiosks with portrait-oriented touchscreens running Ubuntu 20.04. It seemed straightforward enough, but the touch input was consistently misaligned – a classic case of the screen rotation not playing nice with the touch input. It’s a problem that has a few layers to it, and there are specific reasons why it might not just “work” out of the box.
 
 The core issue lies in the way Ubuntu, and linux systems in general, handle display rotation and touch input separately. The rotation you set through, say, the gnome settings or via `xrandr`, affects how the graphics are rendered on the screen. However, the touch input, handled by the kernel through the input subsystem (think drivers and the like), often doesn’t automatically re-calibrate to the rotated coordinates. It's essentially sending the coordinates based on the *physical* orientation of the device, not how the display content is *rotated*. This discrepancy leads to that frustrating off-by-a-factor-of-90-degrees or mirrored feeling when you try to interact with a rotated portrait screen.
 

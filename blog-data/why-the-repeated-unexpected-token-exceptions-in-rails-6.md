@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-the-repeated-unexpected-token-exceptions-in-rails-6"
 ---
 
-Alright, let's tackle this. I've seen the "unexpected token" errors in Rails 6 enough times to feel your pain, and it usually boils down to a few common culprits, often hiding in plain sight. It’s rarely a singular, mystical bug; instead, it's more about nuanced interplay between how Rails, webpacker, and potentially your specific codebase are configured. Let me break it down from my experiences and what I've come to understand.
+Alright,  I've seen the "unexpected token" errors in Rails 6 enough times to feel your pain, and it usually boils down to a few common culprits, often hiding in plain sight. It’s rarely a singular, mystical bug; instead, it's more about nuanced interplay between how Rails, webpacker, and potentially your specific codebase are configured. Let me break it down from my experiences and what I've come to understand.
 
 First off, let’s acknowledge that ‘unexpected token’ isn’t particularly specific. This error usually means that the JavaScript parser, most commonly part of webpacker's pipeline in Rails 6, encountered something it wasn't expecting in the code it was trying to interpret. This could range from a syntax error in your javascript to problems in how webpacker is processing or transpiling it. Based on my experience, the most frequent instigators usually fall into the following areas:
 

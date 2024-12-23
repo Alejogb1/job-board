@@ -4,7 +4,7 @@ date: "2024-12-05"
 id: "how-does-dynamic-4-bit-quantization-improve-model-efficiency-without-compromising-performance"
 ---
 
-Okay so you wanna know about this dynamic 4-bit quantization thing right  It's pretty cool actually makes models way smaller and faster without totally screwing up how well they work  It's all about how we represent the numbers the model uses  Normally you use 32-bit floating point numbers  those are huge  think of them like really detailed pictures  lots of info  but also lots of storage space and processing power needed
+ so you wanna know about this dynamic 4-bit quantization thing right  It's pretty cool actually makes models way smaller and faster without totally screwing up how well they work  It's all about how we represent the numbers the model uses  Normally you use 32-bit floating point numbers  those are huge  think of them like really detailed pictures  lots of info  but also lots of storage space and processing power needed
 
 Dynamic 4-bit quantization is like using a super efficient compression algorithm for those numbers  instead of 32 bits per number you only use 4  that's a massive reduction 8 times smaller  Think going from a massive high-res image to a tiny thumbnail  You lose some detail sure  but the thumbnail still gets the main idea across right
 

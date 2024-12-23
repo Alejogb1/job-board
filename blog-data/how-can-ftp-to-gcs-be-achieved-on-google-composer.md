@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-can-ftp-to-gcs-be-achieved-on-google-composer"
 ---
 
-Okay, let's tackle this. Funny enough, I remember a project a few years back where we had a legacy system still churning out data via FTP, and the mandate was to get everything into Google Cloud Storage (GCS) as quickly and reliably as possible. We ended up using Google Composer, and it wasn’t completely straightforward, but we got there. Here’s the breakdown of how you can achieve FTP to GCS transfers on Composer, drawing on some of the practical lessons I picked up along the way.
+,  Funny enough, I remember a project a few years back where we had a legacy system still churning out data via FTP, and the mandate was to get everything into Google Cloud Storage (GCS) as quickly and reliably as possible. We ended up using Google Composer, and it wasn’t completely straightforward, but we got there. Here’s the breakdown of how you can achieve FTP to GCS transfers on Composer, drawing on some of the practical lessons I picked up along the way.
 
 The core challenge isn’t just moving files; it’s about orchestrating that movement securely and reliably within a scalable environment. Composer, being a managed Apache Airflow service, is perfectly suited for this kind of task. Airflow’s DAG (Directed Acyclic Graph) structure allows us to define the workflow as a sequence of operations, each one represented by an operator. We’ll use this to orchestrate the FTP download and GCS upload.
 

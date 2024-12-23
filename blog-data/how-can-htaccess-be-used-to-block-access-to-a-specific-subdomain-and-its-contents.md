@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-htaccess-be-used-to-block-access-to-a-specific-subdomain-and-its-contents"
 ---
 
-Okay, let's tackle this. It's a scenario I've encountered more times than I'd like to remember, especially back in my early days managing web infrastructure. Locking down a subdomain using `.htaccess` is a pretty straightforward process, but it's important to understand the nuances to get it right. Misconfigurations here can unintentionally take down parts of your site, which, as we all know, is far from ideal.
+,  It's a scenario I've encountered more times than I'd like to remember, especially back in my early days managing web infrastructure. Locking down a subdomain using `.htaccess` is a pretty straightforward process, but it's important to understand the nuances to get it right. Misconfigurations here can unintentionally take down parts of your site, which, as we all know, is far from ideal.
 
 The core of what we're doing involves leveraging Apache's mod_rewrite module. This module allows us to intercept incoming requests and redirect, block, or modify them based on a set of defined rules. `.htaccess` files, residing in your web directories, are the configuration mechanisms that inform this process. When a request comes in, Apache checks these `.htaccess` files, starting from the root directory and moving down to the directory of the requested resource. This order is important.
 

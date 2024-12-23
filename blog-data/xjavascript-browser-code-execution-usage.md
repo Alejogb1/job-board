@@ -4,9 +4,9 @@ date: "2024-12-13"
 id: "xjavascript-browser-code-execution-usage"
 ---
 
-Okay so you're asking about JavaScript browser code execution basically how that whole thing works right? Been there done that probably more times than I care to admit I mean I practically lived in the browser dev tools back in the day.
+ so you're asking about JavaScript browser code execution basically how that whole thing works right? Been there done that probably more times than I care to admit I mean I practically lived in the browser dev tools back in the day.
 
-Alright so picture this it's like the early 2010s I'm working on this really ambitious web app think like a proto-social media platform where everything happens client-side. We're talking heavy AJAX dynamic content updates the whole nine yards and that's when I first really wrestled with the intricacies of browser JavaScript execution.
+so picture this it's like the early 2010s I'm working on this really ambitious web app think like a proto-social media platform where everything happens client-side. We're talking heavy AJAX dynamic content updates the whole nine yards and that's when I first really wrestled with the intricacies of browser JavaScript execution.
 
 The browser's a complex beast you know first it gets the HTML document from the server that's like the structural blueprint of the page. Then the browser parses that HTML creates a Document Object Model or DOM. Think of it as a tree structure representation of the HTML content. After the DOM is there that is when things start to get interesting.
 

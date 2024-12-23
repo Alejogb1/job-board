@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "6121-change-order-of-elements-function-list"
 ---
 
-Alright so you're asking about how to change the order of elements in a list pretty basic stuff really I've been dealing with this since before Python was cool back when we were all still arguing about which lisp dialect was the true king I'm guessing you're encountering this because you need to rearrange data perhaps for sorting or display or maybe you're just trying to implement a specific algorithm that requires elements to be in a specific sequence that's where we've all been before trust me
+so you're asking about how to change the order of elements in a list pretty basic stuff really I've been dealing with this since before Python was cool back when we were all still arguing about which lisp dialect was the true king I'm guessing you're encountering this because you need to rearrange data perhaps for sorting or display or maybe you're just trying to implement a specific algorithm that requires elements to be in a specific sequence that's where we've all been before trust me
 
 Here's the deal there are multiple ways to skin this cat and the best one really depends on what you actually need to do So lets tackle the common ones I've seen people use and of course the ones that I've used myself
 

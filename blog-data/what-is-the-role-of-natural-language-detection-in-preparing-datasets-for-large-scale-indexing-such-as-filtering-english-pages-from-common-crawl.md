@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "what-is-the-role-of-natural-language-detection-in-preparing-datasets-for-large-scale-indexing-such-as-filtering-english-pages-from-common-crawl"
 ---
 
-Okay so you want to know about natural language detection in making huge datasets for searching like that Common Crawl thing right  It's a big deal actually way bigger than you might think at first  Imagine you've got petabytes of raw web data  Complete chaos  Just a massive soup of everything ever scraped from the internet  To make it useful you need to organize it somehow  That's where natural language detection comes in
+ so you want to know about natural language detection in making huge datasets for searching like that Common Crawl thing right  It's a big deal actually way bigger than you might think at first  Imagine you've got petabytes of raw web data  Complete chaos  Just a massive soup of everything ever scraped from the internet  To make it useful you need to organize it somehow  That's where natural language detection comes in
 
 Think of it like this you're building a massive library but instead of books you've got random scraps of paper in every language under the sun some are readable some are gibberish  You can't just shove everything onto the shelves can you  You need to sort them first by language then maybe by topic or author  Natural language detection is like your super-powered librarian sorting through this colossal mess with amazing speed and accuracy
 

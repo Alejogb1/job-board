@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-cant-i-open-a-docx-from-microsoft-graph-sdk"
 ---
 
-Alright, let's tackle this. It's a common hurdle, and from my experience, the inability to directly open a .docx file fetched using the Microsoft Graph SDK often stems from a misunderstanding of how the API handles file retrieval versus how a browser or application expects to consume it. This isn't some inherent flaw in the SDK itself, but rather a characteristic of its design and the nature of network data transfer.
+Alright,  It's a common hurdle, and from my experience, the inability to directly open a .docx file fetched using the Microsoft Graph SDK often stems from a misunderstanding of how the API handles file retrieval versus how a browser or application expects to consume it. This isn't some inherent flaw in the SDK itself, but rather a characteristic of its design and the nature of network data transfer.
 
 Typically, when you fetch a file via the Graph API, you're receiving a stream of bytes, not a readily openable file. It's the raw data, and it needs proper handling before any software can interpret it as a valid .docx. In my years of working with APIs, I've encountered similar scenarios with numerous other file formats. The key is always understanding the underlying representation and the required transformations.
 

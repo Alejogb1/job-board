@@ -17,7 +17,7 @@ Similarly we can look at how a user's sentiment changes over time  Are they beco
 Think about it like this  Imagine a Discord server dedicated to a particular game  We could use sentiment analysis to identify the most helpful players the ones whose advice and tips consistently get positive reactions  We could also spot potential troublemakers the ones consistently spreading negativity or starting arguments  This data could be incredibly valuable for moderators for example helping them focus their efforts  rather than chasing shadows they have clear metrics guiding them
 
 
-Okay so code time  Let's break this down into Python snippets assuming you're using the VADER (Valence Aware Dictionary and sEntiment Reasoner) lexicon  it's a pretty popular choice for sentiment analysis  You can find info on it in the book "Natural Language Processing with Python"  a great starting point
+ so code time  Let's break this down into Python snippets assuming you're using the VADER (Valence Aware Dictionary and sEntiment Reasoner) lexicon  it's a pretty popular choice for sentiment analysis  You can find info on it in the book "Natural Language Processing with Python"  a great starting point
 
 First we need to install the necessary library
 
@@ -50,7 +50,7 @@ Now let's scale this up.  Imagine we have a list of messages from a Discord user
 messages = [
     "This is great",
     "I hate this",
-    "It's okay",
+    "It's ",
     "I'm so happy",
     "This is terrible"
 ]
@@ -61,7 +61,7 @@ for message in messages:
     user_sentiment[message] = scores['compound']
 
 print(user_sentiment)
-#Example output:  {'This is great': 0.4404, 'I hate this': -0.4767, 'It's okay': 0.0, 'I'm so happy': 0.6249, 'This is terrible': -0.6249}
+#Example output:  {'This is great': 0.4404, 'I hate this': -0.4767, 'It's ': 0.0, 'I'm so happy': 0.6249, 'This is terrible': -0.6249}
 
 average_sentiment = sum(user_sentiment.values()) / len(user_sentiment)
 print(f"Average sentiment: {average_sentiment}")

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-deep-learning-train-sets-be-improved-to-reduce-errors-in-classification"
 ---
 
-Alright, let's tackle this. The question of improving deep learning training sets to reduce classification errors is a multifaceted one, and honestly, it’s something I've spent a good chunk of my career navigating. I remember back in '16, working on a plant disease detection system using convolutional neural networks, we thought we had everything nailed down. High accuracy on our validation set, deployment ready, or so we believed. Turns out, the real-world images we started getting were nothing like our meticulously curated training data. The classification errors were, well, humbling. It forced a deep dive into understanding not just the *how* of deep learning, but critically, the *what* of our training data.
+Alright,  The question of improving deep learning training sets to reduce classification errors is a multifaceted one, and honestly, it’s something I've spent a good chunk of my career navigating. I remember back in '16, working on a plant disease detection system using convolutional neural networks, we thought we had everything nailed down. High accuracy on our validation set, deployment ready, or so we believed. Turns out, the real-world images we started getting were nothing like our meticulously curated training data. The classification errors were, well, humbling. It forced a deep dive into understanding not just the *how* of deep learning, but critically, the *what* of our training data.
 
 There isn't one single magic bullet; instead, it’s a combination of strategies that work in tandem to create a robust and accurate classifier. Let's consider some core areas.
 

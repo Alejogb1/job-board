@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-the-error-the-called-function-should-be-payable-when-sending-a-value-with-my-solidity-contract"
 ---
 
-Okay, let's unpack this. I've certainly seen my share of `The called function should be payable` errors over the years, and it usually boils down to a mismatch between how you're attempting to send ether to a function and how that function is actually defined in your smart contract. It's a common stumbling block for those new to Solidity, and even experienced developers can get tripped up by it. So, let’s delve into what's happening under the hood.
+, let's unpack this. I've certainly seen my share of `The called function should be payable` errors over the years, and it usually boils down to a mismatch between how you're attempting to send ether to a function and how that function is actually defined in your smart contract. It's a common stumbling block for those new to Solidity, and even experienced developers can get tripped up by it. So, let’s delve into what's happening under the hood.
 
 The core issue revolves around the concept of *payable* functions in Solidity. By default, functions in Solidity contracts are designed to reject any incoming ether. This is a security feature; it prevents unintended or malicious transfers of funds to functions that aren't designed to handle them. When you try to send ether to a non-payable function, the EVM (Ethereum Virtual Machine) throws this error, letting you know that the function's signature doesn't allow it to receive value. A *payable* modifier explicitly tells the compiler, and more importantly, the EVM, that this specific function is designed to accept ether during its execution.
 

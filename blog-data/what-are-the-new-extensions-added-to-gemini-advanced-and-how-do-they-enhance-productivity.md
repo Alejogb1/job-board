@@ -6,7 +6,7 @@ id: "what-are-the-new-extensions-added-to-gemini-advanced-and-how-do-they-enhanc
 
 Hey so you wanna know about the new Gemini Advanced extensions right  cool  I've been playing around with them a lot lately and wow  they're a game changer  honestly  before I get into the specifics lemme just say  this isn't your grandpappy's AI assistant anymore  we're talking serious productivity boosts here  like I'm actually getting more done now  it's kinda insane
 
-Okay  so the big thing  the absolute showstopper  is the enhanced plugin ecosystem  think of plugins as little power-ups for Gemini  they let you tap into all sorts of external services and tools directly from within the Gemini interface  no more switching windows  no more copy-pasting  it's all seamless  it's magical  almost  almost
+  so the big thing  the absolute showstopper  is the enhanced plugin ecosystem  think of plugins as little power-ups for Gemini  they let you tap into all sorts of external services and tools directly from within the Gemini interface  no more switching windows  no more copy-pasting  it's all seamless  it's magical  almost  almost
 
 One of the coolest new additions is the direct integration with  get this  your entire coding workflow  yeah  you heard me right  you can now write code generate code debug code  all from within Gemini  no more juggling IDEs and chatbots  it's all happening in one place   It's like having a super smart coding buddy always at your side  
 

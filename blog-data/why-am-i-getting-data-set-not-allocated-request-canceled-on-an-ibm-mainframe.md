@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-data-set-not-allocated-request-canceled-on-an-ibm-mainframe"
 ---
 
-Okay, let's unpack this. Receiving a “data set not allocated, request canceled” error on an IBM mainframe can be frustrating, I've definitely been in that situation before, many times in fact, usually during late-night production deployments. The core issue stems from the mainframe’s resource allocation system and a failure in obtaining the necessary storage space or access for your data set. It isn't a single point of failure, but a symptom stemming from several potential underlying causes. Think of it less as a single error and more as an umbrella term for problems with how your JCL (Job Control Language) or program requests resources.
+, let's unpack this. Receiving a “data set not allocated, request canceled” error on an IBM mainframe can be frustrating, I've definitely been in that situation before, many times in fact, usually during late-night production deployments. The core issue stems from the mainframe’s resource allocation system and a failure in obtaining the necessary storage space or access for your data set. It isn't a single point of failure, but a symptom stemming from several potential underlying causes. Think of it less as a single error and more as an umbrella term for problems with how your JCL (Job Control Language) or program requests resources.
 
 My experience typically points to a few main areas of investigation. Primarily, inadequate space specification, insufficient privileges, or a data set that is already in use by another job or user are the most common culprits. Let's delve into each of these.
 

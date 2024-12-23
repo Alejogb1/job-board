@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "accessdynamiclanguagecom-data-structure-usage"
 ---
 
-Okay so you're asking about using data structures with dynamic languages right I've been there man trust me it's a wild west out there when you jump from a statically typed world into something like Python or JavaScript or Ruby I spent a few years early in my career battling this stuff trying to optimize things in a Python project that was just exploding with data and slow query times
+ so you're asking about using data structures with dynamic languages right I've been there man trust me it's a wild west out there when you jump from a statically typed world into something like Python or JavaScript or Ruby I spent a few years early in my career battling this stuff trying to optimize things in a Python project that was just exploding with data and slow query times
 
 Let's get real first a dynamic language's flexible nature is both its blessing and its curse You can throw anything anywhere but that freedom can bite you hard when it comes to performance or maintainability because unlike say in Java or C++ the data types are not checked at compile time it's all runtime which means issues pop up only after you run the darn thing it's like debugging in the dark sometimes
 
@@ -91,4 +91,4 @@ Now for a bit of advice and a little bad joke I had to do some code golfing when
 
 Now for some useful resources to learn more I'd recommend "Introduction to Algorithms" by Thomas H Cormen et al this book is your go to bible when dealing with data structure algorithms and complexity issues and another great book is "High Performance Python" by Micha Gorelick and Ian Ozsvald this one is all about using Python efficiently especially when dealing with data this book helped me a lot so check them out
 
-Okay so to summarize choose the right data structure for the job think about your operations if you are doing lots of lookups use dictionaries or sets if you want order then use lists use data classes or named tuples to structure your data avoid deep nesting when possible and remember that optimizing is always a process and you might have to refactor your data as your project grows because it probably will so you should expect that but with the proper data structure things will be way simpler
+ so to summarize choose the right data structure for the job think about your operations if you are doing lots of lookups use dictionaries or sets if you want order then use lists use data classes or named tuples to structure your data avoid deep nesting when possible and remember that optimizing is always a process and you might have to refactor your data as your project grows because it probably will so you should expect that but with the proper data structure things will be way simpler

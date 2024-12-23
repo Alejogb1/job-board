@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-my-cosmosdb-container-failing-to-start-in-an-azure-ado-pipeline-with-a-ubuntu-build-agent-using-testcontainers"
 ---
 
-Alright, let's tackle this. Container initialization failures, especially in an Azure DevOps pipeline context using Testcontainers, can be a real head-scratcher at first glance. I've definitely seen my fair share of these, particularly when CosmosDB is in the mix. The fact that it's a Ubuntu build agent adds another layer we should carefully consider. Here’s a breakdown based on experiences I've had working on similar projects, which should provide some solid troubleshooting paths for your situation.
+Alright,  Container initialization failures, especially in an Azure DevOps pipeline context using Testcontainers, can be a real head-scratcher at first glance. I've definitely seen my fair share of these, particularly when CosmosDB is in the mix. The fact that it's a Ubuntu build agent adds another layer we should carefully consider. Here’s a breakdown based on experiences I've had working on similar projects, which should provide some solid troubleshooting paths for your situation.
 
 First off, let's dissect the core components. We have a CosmosDB container being orchestrated through Testcontainers within an Azure DevOps pipeline running on a Ubuntu build agent. The fundamental problem is not necessarily with the CosmosDB itself, but rather the environment in which it’s trying to run. The key things that I would investigate from a systems perspective are connectivity, resource constraints, and specific container-related settings.
 

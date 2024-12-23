@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-postgresql-gorm-v2-migrator-panicking"
 ---
 
-Alright, let's tackle this. Panic situations with PostgreSQL and gorm's migrator, especially v2, aren't exactly a picnic, but they often stem from a predictable set of causes. I've certainly had my share of late-night debugging sessions because of this particular issue back in my days leading the data infrastructure team at [fictional company name]. It usually boils down to a misalignment between your code's expectations and the database's reality, specifically concerning schema definitions.
+Alright,  Panic situations with PostgreSQL and gorm's migrator, especially v2, aren't exactly a picnic, but they often stem from a predictable set of causes. I've certainly had my share of late-night debugging sessions because of this particular issue back in my days leading the data infrastructure team at [fictional company name]. It usually boils down to a misalignment between your code's expectations and the database's reality, specifically concerning schema definitions.
 
 The heart of the problem, in my experience, is often related to how gorm's automigration works. While wonderfully convenient, automigration inherently relies on reflection and assumptions about the database schema. When these assumptions fail, you see that dreaded panic. We’re not talking about a silent failure here, gorm quite literally screams, which is at least helpful. Three scenarios particularly stick out from my experience, and I’ll provide code snippets to illustrate them.
 

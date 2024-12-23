@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-do-i-have-issues-running-a-gpt-j-6b-demo-on-colab"
 ---
 
-Let's tackle this. You're facing a common hurdle when trying to get a large language model like GPT-J-6B up and running on a platform like Google Colab. I've seen this exact scenario play out countless times, and it almost always boils down to a handful of core issues. It's less about anything inherently "wrong" with your approach and more about understanding the resource constraints and configuration specifics involved. Let's break it down.
+ You're facing a common hurdle when trying to get a large language model like GPT-J-6B up and running on a platform like Google Colab. I've seen this exact scenario play out countless times, and it almost always boils down to a handful of core issues. It's less about anything inherently "wrong" with your approach and more about understanding the resource constraints and configuration specifics involved. Let's break it down.
 
 First and foremost, we're talking about a sizeable model. GPT-J-6B, even as a 'smaller' large language model, requires a significant amount of memory (both RAM and GPU memory) to operate effectively. Google Colab offers free tiers with limitations on resources that can be quite constraining when running such models. The primary bottleneck you’re likely hitting is the lack of sufficient memory. Typically, Colab’s free tier provides about 12-13GB of RAM and access to a GPU (often a T4 or K80) with comparable memory limits. While the T4 might seem decent, it's often not enough to load the entire GPT-J-6B model along with necessary auxiliary libraries and the input/output data.
 

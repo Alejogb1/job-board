@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-data-be-correctly-inserted-read-and-deleted-in-a-solidity-smart-contract"
 ---
 
-Okay, let’s tackle this. It's a fundamental question, and getting it wrong in a smart contract can lead to catastrophic results. I've personally witnessed the fallout from poorly managed data operations in a few projects – it's never a pretty sight, and it often involves a fair bit of debugging and rollback headaches. Let's break down the insertion, reading, and deletion of data within Solidity smart contracts, avoiding the common pitfalls.
+, let’s tackle this. It's a fundamental question, and getting it wrong in a smart contract can lead to catastrophic results. I've personally witnessed the fallout from poorly managed data operations in a few projects – it's never a pretty sight, and it often involves a fair bit of debugging and rollback headaches. Let's break down the insertion, reading, and deletion of data within Solidity smart contracts, avoiding the common pitfalls.
 
 Essentially, you're dealing with storage, which is persistent between function calls and transactions within a contract. Solidity provides various data types that influence how data is stored and accessed. Let's consider some common scenarios and how best to manage them.
 

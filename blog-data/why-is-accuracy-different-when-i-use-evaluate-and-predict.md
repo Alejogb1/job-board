@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-accuracy-different-when-i-use-evaluate-and-predict"
 ---
 
-Okay, let's tackle this. I've seen this issue surface multiple times in various machine learning projects, and it always boils down to subtle differences in how these functions operate under the hood. It’s not some grand conspiracy; rather, it's a consequence of the different goals each method is designed to achieve, and the data they typically process. In my experience, understanding the context in which each is used is paramount.
+,  I've seen this issue surface multiple times in various machine learning projects, and it always boils down to subtle differences in how these functions operate under the hood. It’s not some grand conspiracy; rather, it's a consequence of the different goals each method is designed to achieve, and the data they typically process. In my experience, understanding the context in which each is used is paramount.
 
 When you're dealing with `evaluate()`, think of it as a rigorous, often data-set focused check-up. This function, commonly used in deep learning libraries like TensorFlow/Keras, or scikit-learn for other machine learning models, is typically provided with both the *input features* and the *corresponding true labels* for a given data set. It calculates the loss and any relevant metrics (like accuracy, precision, recall, etc.) based on the *entire data set*, usually in batches for memory efficiency. Crucially, it’s designed to give you a performance evaluation for the model’s state at a particular point in its training or after it's been trained. The calculation is performed with access to this *ground truth*, that is, the correct answers.
 

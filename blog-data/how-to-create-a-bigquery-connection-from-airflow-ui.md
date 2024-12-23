@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-create-a-bigquery-connection-from-airflow-ui"
 ---
 
-Okay, let’s tackle connecting to BigQuery from the Airflow ui. I’ve wrangled this particular beast a few times, and while the process is conceptually straightforward, a few practical considerations tend to crop up, so let's get into the details.
+, let’s tackle connecting to BigQuery from the Airflow ui. I’ve wrangled this particular beast a few times, and while the process is conceptually straightforward, a few practical considerations tend to crop up, so let's get into the details.
 
 It's not merely about clicking a button; it's about establishing a robust, secure, and manageable connection that Airflow can reliably leverage for data orchestration. Typically, when I approach this, I'm mindful of a few key aspects: authentication, connection configuration, and best practices for security. Let’s break down how I’ve handled this in past projects, specifically from the perspective of initiating everything from the Airflow ui itself.
 
@@ -21,7 +21,7 @@ To configure this in Airflow’s UI, navigate to the "Admin" section and select 
 
 Once you have all those parameters set, clicking “Test” is highly recommended. This will trigger a validation process ensuring Airflow can establish a connection using the supplied credentials. It’s a good sanity check to confirm everything is configured properly before you move forward. If you're dealing with network restrictions, or are behind some kind of proxy, you'll need to add additional settings within airflow.cfg. For example, a `proxy_host` setting.
 
-Okay, let’s dive into some practical examples.
+, let’s dive into some practical examples.
 
 **Example 1: Simple Query Execution**
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "what-is-the-difference-between-edge-and-ridge-detection"
 ---
 
-Alright so you're asking about edge detection versus ridge detection pretty common confusion if you're just diving into computer vision stuff I've been there trust me I remember when I thought a gradient was just something on a hill man good times
+so you're asking about edge detection versus ridge detection pretty common confusion if you're just diving into computer vision stuff I've been there trust me I remember when I thought a gradient was just something on a hill man good times
 
 Let me break it down for you like I'm explaining it to a past version of myself that somehow managed to get a Raspberry Pi to boot up without setting it on fire first
 
@@ -18,13 +18,13 @@ Imagine a long bright worm crawling across a dark background Ridge detection wou
 
 I mean I've been burned by this confusion so many times I swear the number of hours I spent trying to use Canny on a bunch of blood vessel scans before I finally realized I needed ridge detection I could probably build a whole new computer with all that lost brainpower
 
-Okay lets get to the meat of it a little more technically
+ lets get to the meat of it a little more technically
 
 **Edge Detection**
 
 Edge detectors are basically high pass filters that amplify changes in pixel intensity One of the simplest way to think of it is with gradients. The gradient of an image at a particular pixel points in the direction of the greatest change in intensity and its magnitude corresponds to the rate of change
 
-You’d usually use something like a Sobel operator or a Laplacian operator to approximate the gradients. Then you apply some threshold to say “Okay this pixel has a significant change in intensity it’s part of an edge.” The Canny edge detector is a super common one too It’s a slightly more sophisticated one because it does some extra noise reduction and hysteresis thresholding
+You’d usually use something like a Sobel operator or a Laplacian operator to approximate the gradients. Then you apply some threshold to say “ this pixel has a significant change in intensity it’s part of an edge.” The Canny edge detector is a super common one too It’s a slightly more sophisticated one because it does some extra noise reduction and hysteresis thresholding
 
 Let’s see some Python code using OpenCV because lets be honest we are all using Python here:
 

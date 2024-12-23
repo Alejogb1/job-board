@@ -4,9 +4,9 @@ date: "2024-12-13"
 id: "how-to-declare-and-use-1d-and-2d-byte-arrays-in-verilog"
 ---
 
-Okay so you wanna juggle byte arrays in Verilog right I've been there trust me It's not exactly Python with its easy lists but it's doable and yeah you gotta be careful about how you set things up especially when you're pushing them into hardware
+ so you wanna juggle byte arrays in Verilog right I've been there trust me It's not exactly Python with its easy lists but it's doable and yeah you gotta be careful about how you set things up especially when you're pushing them into hardware
 
-Alright first let's tackle the 1D byte array a simple case I've used this countless times for things like FIFO buffers or just storing small data packets Basically you declare a reg type with a width equal to your byte and then you define an array of them this is the usual way to simulate a byte array
+first let's tackle the 1D byte array a simple case I've used this countless times for things like FIFO buffers or just storing small data packets Basically you declare a reg type with a width equal to your byte and then you define an array of them this is the usual way to simulate a byte array
 
 ```verilog
 module one_dimensional_byte_array (
@@ -39,7 +39,7 @@ See that's the typical 1D array declaration `reg [7:0] byte_array [0:ARRAY_SIZE-
 
 Now when you need to read or write you do it via indexed access like `byte_array[wr_ptr]` or `byte_array[rd_ptr]` the example is a simplified version of FIFO but the main idea of array declaration and access is there. Pay attention the `wr_ptr` and `rd_ptr` should not exceed the boundaries of your array you probably will have to implement some overflow control logic that’s beyond the scope here but just a heads up. Also notice that arrays in Verilog are static meaning their size is fixed at compile time you can not change their size on the fly.
 
-Okay moving on to 2D byte arrays now things get a little more interesting this isn’t like C where you can simply declare `int arr[rows][cols]` in Verilog we are still dealing with arrays of registers but we think of them conceptually as a 2D matrix. I mostly used these for image processing applications where each pixel is represented by a byte or for memory structures.
+ moving on to 2D byte arrays now things get a little more interesting this isn’t like C where you can simply declare `int arr[rows][cols]` in Verilog we are still dealing with arrays of registers but we think of them conceptually as a 2D matrix. I mostly used these for image processing applications where each pixel is represented by a byte or for memory structures.
 
 ```verilog
 module two_dimensional_byte_array (

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-a-tensorflow-model-be-passed-as-an-argument-to-a-training-loop"
 ---
 
-Okay, let’s explore this. From the perspective of someone who’s spent considerable time architecting and debugging TensorFlow-based systems, the question of passing a TensorFlow model as an argument to a training loop isn't just a theoretical exercise; it's a pattern I've utilized many times to achieve flexibility and modularity in large projects. It's not just possible; it's often a crucial design element for building reusable and adaptable training infrastructure.
+, let’s explore this. From the perspective of someone who’s spent considerable time architecting and debugging TensorFlow-based systems, the question of passing a TensorFlow model as an argument to a training loop isn't just a theoretical exercise; it's a pattern I've utilized many times to achieve flexibility and modularity in large projects. It's not just possible; it's often a crucial design element for building reusable and adaptable training infrastructure.
 
 When we talk about passing a ‘model’ in this context, it’s essential to be precise about what we mean. We aren't talking about serializing the model and passing a string or a binary representation; we're directly passing a TensorFlow model *object* — specifically, an instance of a `tf.keras.Model` or a custom class that inherits from it, or a similar class within another specific tensorflow library (e.g., the TFX API). This is crucial because TensorFlow handles the computations on the defined graph contained within the model itself and we need to maintain its integrity.
 

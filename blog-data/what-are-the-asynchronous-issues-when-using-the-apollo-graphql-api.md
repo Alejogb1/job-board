@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-are-the-asynchronous-issues-when-using-the-apollo-graphql-api"
 ---
 
-Okay, let's tackle this. I recall a project back in my early days where we were transitioning from a monolithic REST architecture to a microservices setup using GraphQL with Apollo. That's where I really got intimate with the nuances of asynchrony. It wasn't a simple "plug-and-play" situation, and we definitely encountered some head-scratching moments.
+,  I recall a project back in my early days where we were transitioning from a monolithic REST architecture to a microservices setup using GraphQL with Apollo. That's where I really got intimate with the nuances of asynchrony. It wasn't a simple "plug-and-play" situation, and we definitely encountered some head-scratching moments.
 
 The core challenge with Apollo, particularly when dealing with network requests and state management, boils down to understanding and properly handling asynchronous operations. GraphQL itself is synchronous in its declaration – you define your schema, queries, mutations—but the *execution* of these operations frequently involves network calls, which are inherently asynchronous. Apollo, as a client library, manages these asynchronous requests but it's the developer’s responsibility to deal with the potential pitfalls that emerge.
 

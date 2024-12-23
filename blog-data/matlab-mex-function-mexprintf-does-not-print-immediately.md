@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "matlab-mex-function-mexprintf-does-not-print-immediately"
 ---
 
-Okay so you're hitting that classic mexPrintf buffering problem eh I've been there I think every MATLAB mex dev has honestly Let me tell you my story with this thing it's a rite of passage honestly
+ so you're hitting that classic mexPrintf buffering problem eh I've been there I think every MATLAB mex dev has honestly Let me tell you my story with this thing it's a rite of passage honestly
 
 Back in the day I was working on this hardcore real-time audio processing thing with MATLAB we had to squeeze every last millisecond of performance out of the thing We had this custom algorithm running inside a mex function it was some heavy DSP stuff you know complex numbers FFTs filtering the whole shebang
 
@@ -93,4 +93,4 @@ A couple more things to keep in mind that are always a pain for new people to ME
 
 And finally some advice for good resources to read up on these topics. If you want to dig into the nitty gritty details of standard I/O you can check out the classic "Advanced Programming in the UNIX Environment" by W. Richard Stevens it has more than you ever need to know on the topic of system level I/O operations. Also some good reading materials about MEX API are in MATLAB documentation but they are a bit dry so be sure to find other tutorials and forum posts about MEX function development.
 
-Okay so to summarize you're hitting the buffered I/O issue of mexPrintf The standard solution is to use `fflush(stdout)` immediately after the `mexPrintf` calls if that is not enough use `mexEvalString` along with `drawnow` or as a last resource use your own debug logging system. Good luck and happy debugging its one of the hardest problems in programming but its also one of the most rewarding
+ so to summarize you're hitting the buffered I/O issue of mexPrintf The standard solution is to use `fflush(stdout)` immediately after the `mexPrintf` calls if that is not enough use `mexEvalString` along with `drawnow` or as a last resource use your own debug logging system. Good luck and happy debugging its one of the hardest problems in programming but its also one of the most rewarding

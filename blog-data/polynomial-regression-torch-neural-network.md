@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "polynomial-regression-torch-neural-network"
 ---
 
-Okay so you wanna fit a polynomial using PyTorch and a neural net eh I've been down this road more times than I can count like way way back when I was still rocking a Pentium III and coding on a CRT monitor so let's get into it
+ so you wanna fit a polynomial using PyTorch and a neural net eh I've been down this road more times than I can count like way way back when I was still rocking a Pentium III and coding on a CRT monitor so let's get into it
 
 First things first yeah you can totally do polynomial regression with a neural network it might seem like overkill I know since polynomial regression is a classic example of linear algebra done right but this way we can get practice making and fitting a very simple network I mean we could just use sklearn's polynomial features and a linear regression model but where is the fun in that
 

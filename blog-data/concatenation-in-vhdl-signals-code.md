@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "concatenation-in-vhdl-signals-code"
 ---
 
-Okay so you're asking about concatenating signals in VHDL right Yeah I've been there done that got the t-shirt probably spilled coffee on the keyboard doing it a few times too Lets dig in shall we
+ so you're asking about concatenating signals in VHDL right Yeah I've been there done that got the t-shirt probably spilled coffee on the keyboard doing it a few times too Lets dig in shall we
 
 I've seen so many fresh VHDL devs trip over this I mean I tripped over it when I was starting out its a rite of passage I guess Back in my early FPGA days I was working on a custom image processing pipeline you know the kind that needs insane amounts of parallel processing I had all these separate pixel data paths for different color components red green and blue each represented by an 8 bit signal Now I needed to combine them into a single 24-bit signal for further processing or to send it off to a display controller and of course me being the genius I was initially tried to manually bit-shift and add them yeah disaster area code looked like a drunk snake
 
@@ -66,7 +66,7 @@ In short there’s a lot to watch out for here when writing code in VHDL especia
 
 Also if you are new I'd recommend not going to the advanced stuff right away just get used to simple concatenations first and learn about vhdl types.
 
-Oh and a little joke I heard once a boolean walks into a bar the bartender asks him what he wants he says "I'll take an or" you know because it can be either a true or false haha ah ah alright back to code.
+Oh and a little joke I heard once a boolean walks into a bar the bartender asks him what he wants he says "I'll take an or" you know because it can be either a true or false haha ah ah back to code.
 
 And I’ve had my share of mistakes believe me including those fun ones where you forget you're concatenating and think you're doing math and you get some really weird looking outputs you think your logic is wrong but its just a concatenation issue so take it slow.
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "parameterized-module-verilog-parameters"
 ---
 
-Okay so you're asking about parameterized modules in Verilog parameters right I've been there man oh boy have I been there Let me tell you about this one project back in my university days we were building this ridiculously complex ALU thing for a computer architecture course and yeah parameters in Verilog were our best friend but also our worst enemy initially
+ so you're asking about parameterized modules in Verilog parameters right I've been there man oh boy have I been there Let me tell you about this one project back in my university days we were building this ridiculously complex ALU thing for a computer architecture course and yeah parameters in Verilog were our best friend but also our worst enemy initially
 
 It all started so simple you know a basic adder module right I'm talking like this:
 
@@ -14,7 +14,7 @@ module adder (input [7:0] a, input [7:0] b, output [7:0] sum);
 endmodule
 ```
 
-Easy peasy lemon squeezy right?  8-bit adder done and dusted But then professor says "Okay now make it a 16-bit adder" And then a 32-bit adder and then a 64-bit one I swear he was doing this just to torture us We were copy pasting modifying and breaking our fingers just to get every size working and it's not really efficient right Every time it's a new size a new module? That was not gonna fly
+Easy peasy lemon squeezy right?  8-bit adder done and dusted But then professor says " now make it a 16-bit adder" And then a 32-bit adder and then a 64-bit one I swear he was doing this just to torture us We were copy pasting modifying and breaking our fingers just to get every size working and it's not really efficient right Every time it's a new size a new module? That was not gonna fly
 
 That's when parameters walked in and gave us a much-needed rescue. So here's how we made the thing parameterized
 
@@ -40,7 +40,7 @@ See we're passing `#16` when we're instantiating the module so the `WIDTH` is no
 
 The real magic though started when we needed a ripple carry adder vs. a carry-lookahead adder We'd have different implementations for different architectures and needed to swap them in and out so to speak and parameters helped us create reusable components
 
-Okay so you might be asking about the difference between `parameter` and `localparam` You see `parameter` can be overridden at instantiation time like above `localparam` on the other hand once defined is a constant it cannot be changed outside the scope. We used `localparam` for things like internal state machine definitions it gave better readability and safety. If you want things not to be accidentally changed in a given module `localparam` is what you want. It works like `const` in other programming languages
+ so you might be asking about the difference between `parameter` and `localparam` You see `parameter` can be overridden at instantiation time like above `localparam` on the other hand once defined is a constant it cannot be changed outside the scope. We used `localparam` for things like internal state machine definitions it gave better readability and safety. If you want things not to be accidentally changed in a given module `localparam` is what you want. It works like `const` in other programming languages
 
 Let's go back to our adder story. So we had the basic adder but then we needed a subtractor too You can get it out of the adder with little tweaks, with addition of invert and proper handling of the carry bit. But we needed to control that logic using a new parameter
 
@@ -81,12 +81,12 @@ We took it further with a `select` parameter to handle logic operations. It's li
 
 I think I need a drink now. I've written way too much today.
 
-Okay so here are some recommendations on resources that can help you further
+ so here are some recommendations on resources that can help you further
 
 *   **"Digital Design: Principles and Practices" by John F. Wakerly:** This book is a classic It's not super Verilog-specific but it gives you a really solid foundation in digital design concepts which is key to understanding *why* parameters are so useful in the first place.
 
 *   **"SystemVerilog for Design" by Stuart Sutherland:** This goes much further into the more modern aspects of Verilog so after you grasp the basics you will want to look at this book.
 
-*   **IEEE 1364-2005 Verilog Standard:** Okay this one is not fun to read but it is the specification that defines the standard of the language. If you really want to understand the deep details there is nothing better than the standard document itself.
+*   **IEEE 1364-2005 Verilog Standard:**  this one is not fun to read but it is the specification that defines the standard of the language. If you really want to understand the deep details there is nothing better than the standard document itself.
 
 I hope this is detailed enough and addresses your question let me know if you have other questions I will be happy to help

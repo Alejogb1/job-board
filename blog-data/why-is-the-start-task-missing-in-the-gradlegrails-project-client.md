@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-the-start-task-missing-in-the-gradlegrails-project-client"
 ---
 
-Okay, let's dissect this. Missing 'start' tasks within a Gradle/Grails project, particularly within a specific submodule like ':client', is a situation I’ve encountered quite a few times in my years. It’s less about a singular error and more about a confluence of factors related to how Gradle manages tasks based on project structure and plugin configurations. It's not an uncommon head-scratcher, but it’s usually traceable back to a few key areas.
+, let's dissect this. Missing 'start' tasks within a Gradle/Grails project, particularly within a specific submodule like ':client', is a situation I’ve encountered quite a few times in my years. It’s less about a singular error and more about a confluence of factors related to how Gradle manages tasks based on project structure and plugin configurations. It's not an uncommon head-scratcher, but it’s usually traceable back to a few key areas.
 
 Let's break it down practically. First, we need to understand that the 'start' task, particularly within the context of a Grails application, isn't a built-in, universally present Gradle task. It's typically introduced by a plugin – specifically, the grails plugin. Now, when we see it missing in `:client`, the key question becomes: "Is that module supposed to be a standalone, runnable Grails app, or is it a dependent module?". The answer to that fundamentally changes where to look.
 

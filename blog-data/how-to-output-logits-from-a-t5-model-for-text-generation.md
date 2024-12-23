@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-output-logits-from-a-t5-model-for-text-generation"
 ---
 
-Alright, let's tackle this. I’ve been down this road a few times, specifically in projects dealing with controlled text generation where analyzing the model's confidence is paramount. The typical T5 output, be it through `generate()` or a standard forward pass, often yields generated text, or perhaps token ids directly. However, accessing the logits—the raw, pre-softmax outputs of the model—requires a slightly different approach. I'll walk you through how I've handled it, focusing on the practical aspects.
+Alright,  I’ve been down this road a few times, specifically in projects dealing with controlled text generation where analyzing the model's confidence is paramount. The typical T5 output, be it through `generate()` or a standard forward pass, often yields generated text, or perhaps token ids directly. However, accessing the logits—the raw, pre-softmax outputs of the model—requires a slightly different approach. I'll walk you through how I've handled it, focusing on the practical aspects.
 
 The critical understanding here is that we need to modify the way the model's forward pass is executed or hook into intermediate calculations, bypassing the standard `generate()` method that handles softmax application by default. Usually, when using transformers from Hugging Face, the forward function returns the `logits` along with other outputs like `past_key_values`, which the generator function uses. This means, in a sense, the logits are there, but you have to know how to retrieve them before they’re transformed into a probability distribution.
 

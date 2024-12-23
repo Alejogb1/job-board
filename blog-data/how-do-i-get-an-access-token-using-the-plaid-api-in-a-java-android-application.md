@@ -16,7 +16,7 @@ implementation 'com.plaid.link:link-sdk-android:latest'
 
 Replace `latest` with the specific version you’re targeting. At the time of writing, it's wise to double-check for the most recent stable release on Plaid's documentation pages. Beyond the SDK, you’ll need to configure the link token which provides initialization data for Plaid link module.
 
-Okay, so now to illustrate this process, let’s start with the initialization within our `MainActivity`. Suppose, our backend endpoint `/get-link-token` provides the necessary link token for initializing the Plaid Link module. Assuming we have a helper class, `NetworkManager`, that handles networking requests, it would fetch the link token. This code snippet would go into `MainActivity`:
+, so now to illustrate this process, let’s start with the initialization within our `MainActivity`. Suppose, our backend endpoint `/get-link-token` provides the necessary link token for initializing the Plaid Link module. Assuming we have a helper class, `NetworkManager`, that handles networking requests, it would fetch the link token. This code snippet would go into `MainActivity`:
 
 ```java
 import android.os.Bundle;

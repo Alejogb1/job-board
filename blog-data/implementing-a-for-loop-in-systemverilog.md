@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "implementing-a-for-loop-in-systemverilog"
 ---
 
-Okay so you wanna loop in SystemVerilog right been there done that got the t-shirt and probably spilled coffee on it too more times than I'd like to admit Let's break this down it's not rocket science but it's got its quirks
+ so you wanna loop in SystemVerilog right been there done that got the t-shirt and probably spilled coffee on it too more times than I'd like to admit Let's break this down it's not rocket science but it's got its quirks
 
 See SystemVerilog isn't your average C++ or Python it's hardware description language at its core so looping isn't like banging out some quick iterations it's about describing hardware that will do the looping for you that's a big difference and a big mindset shift
 
@@ -41,7 +41,7 @@ module for_loop_example (
 endmodule
 ```
 
-Okay few things. First the `integer i` bit is the standard way to define a loop counter variable here We use `@(*)` because this is combinational logic. This loop is not happening in time it will create a circuit and the variable "i" will change continuously with respect to whatever inputs the circuit has (nothing in this case but the value will be different if the code was inside a bigger module and inputs existed).
+ few things. First the `integer i` bit is the standard way to define a loop counter variable here We use `@(*)` because this is combinational logic. This loop is not happening in time it will create a circuit and the variable "i" will change continuously with respect to whatever inputs the circuit has (nothing in this case but the value will be different if the code was inside a bigger module and inputs existed).
 
 Second, the `output_data[i] = i;` part does what it says its gonna assign a value to the output array it will assign zero to `output_data[0]` one to `output_data[1]` and so on.
 

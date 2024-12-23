@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-isnt-the-activemq-artemis-master-node-recognizing-the-slave-node-in-the-replicated-cluster"
 ---
 
-Okay, let’s tackle this. I've spent a fair amount of time knee-deep in message broker configurations, and a failure for an ActiveMQ Artemis master to recognize its slave is a classic headache. It's usually not a single dramatic failure, but rather a cascade of subtle configuration misalignments or network gremlins. Let me break down the most common culprits, drawing from situations I've encountered myself.
+, let’s tackle this. I've spent a fair amount of time knee-deep in message broker configurations, and a failure for an ActiveMQ Artemis master to recognize its slave is a classic headache. It's usually not a single dramatic failure, but rather a cascade of subtle configuration misalignments or network gremlins. Let me break down the most common culprits, drawing from situations I've encountered myself.
 
 First off, let’s dismiss the obvious: a disconnected network cable. While unlikely in a well-managed environment, it’s a check worth doing. Assuming our network layer is solid, the problem typically lies in these areas: address binding, cluster configurations, and resource limitations.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-override-a-method-in-a-ruby-gem"
 ---
 
-Alright, let's tackle this. Overriding methods in a Ruby gem, while not something you'd ideally do regularly, is occasionally necessary when you hit a particular corner case or need specific behavior that wasn't foreseen by the gem's maintainers. I've definitely found myself in this situation more than once, especially when dealing with older or less actively maintained projects. The key here is understanding Ruby's object model and leveraging its flexibility while maintaining best practices, like keeping our changes isolated and easy to track.
+Alright,  Overriding methods in a Ruby gem, while not something you'd ideally do regularly, is occasionally necessary when you hit a particular corner case or need specific behavior that wasn't foreseen by the gem's maintainers. I've definitely found myself in this situation more than once, especially when dealing with older or less actively maintained projects. The key here is understanding Ruby's object model and leveraging its flexibility while maintaining best practices, like keeping our changes isolated and easy to track.
 
 The direct method of modification—changing the gem's source code—is generally a very bad idea. Any gem update will wipe out your changes, potentially introducing instability, and making your project extremely difficult to maintain. So, we need to be smarter about this. We’ll focus on techniques that use Ruby's dynamic nature to our advantage without fundamentally altering the gem itself.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-use-docker-run-to-run-an-image-from-gha-or-local-cache"
 ---
 
-Okay, let's tackle this. Getting `docker run` to use cached images efficiently, whether from GitHub Actions (gha) or your local environment, is a common pain point, and I’ve definitely spent my fair share of time optimizing this. It’s less about a single magic command and more about understanding Docker’s layer caching mechanism and how it interacts with different contexts. So, let's break it down.
+,  Getting `docker run` to use cached images efficiently, whether from GitHub Actions (gha) or your local environment, is a common pain point, and I’ve definitely spent my fair share of time optimizing this. It’s less about a single magic command and more about understanding Docker’s layer caching mechanism and how it interacts with different contexts. So, let's break it down.
 
 Fundamentally, Docker uses layers to build and store images. Each instruction in a Dockerfile creates a new layer. These layers are cached, and Docker reuses them whenever possible to speed up subsequent builds and runs. The core principle to efficient caching lies in structuring your Dockerfile so that frequently changing instructions are at the bottom, and static instructions sit at the top. The `docker run` command itself doesn't directly interact with these caches; rather, it relies on the image being present, and that image, in turn, is the result of cached build layers.
 

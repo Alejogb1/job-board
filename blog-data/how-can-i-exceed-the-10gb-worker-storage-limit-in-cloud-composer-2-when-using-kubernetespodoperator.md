@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-exceed-the-10gb-worker-storage-limit-in-cloud-composer-2-when-using-kubernetespodoperator"
 ---
 
-Okay, let's tackle this. I’ve been down this road myself, more times than I care to remember, and it's a common pain point when scaling workflows on Cloud Composer. The 10GB limit on worker storage for the `KubernetesPodOperator` can feel restrictive, especially when dealing with larger datasets or complex processing pipelines. It's not a hard limit in the sense that there's no workaround; it's more about understanding how Kubernetes volumes and resource requests interact within the Cloud Composer ecosystem.
+,  I’ve been down this road myself, more times than I care to remember, and it's a common pain point when scaling workflows on Cloud Composer. The 10GB limit on worker storage for the `KubernetesPodOperator` can feel restrictive, especially when dealing with larger datasets or complex processing pipelines. It's not a hard limit in the sense that there's no workaround; it's more about understanding how Kubernetes volumes and resource requests interact within the Cloud Composer ecosystem.
 
 The core issue stems from how Cloud Composer’s underlying GKE cluster provisions worker nodes. Each worker gets a default persistent disk with 10GB of storage, and that's where your pod’s workspace is typically mounted. When your `KubernetesPodOperator` tasks exceed this limit, things can get messy – tasks failing, pods being evicted due to lack of disk space, and generally a frustrating experience. Here’s how I’ve addressed this in various projects, focusing on the core concepts of volume management and data handling:
 

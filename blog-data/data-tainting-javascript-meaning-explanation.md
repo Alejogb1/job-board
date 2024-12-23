@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "data-tainting-javascript-meaning-explanation"
 ---
 
-Okay so data tainting in Javascript right I've been there done that got the t-shirt and probably a few obscure error messages etched into my brain It’s a pain I mean a real headache but let’s break it down in simple terms for anyone who's pulling their hair out over this thing
+ so data tainting in Javascript right I've been there done that got the t-shirt and probably a few obscure error messages etched into my brain It’s a pain I mean a real headache but let’s break it down in simple terms for anyone who's pulling their hair out over this thing
 
 Basically data tainting or origin tainting as it's sometimes called is a browser security mechanism It's there to stop your scripts from doing things that could potentially mess with a user’s data or be a security risk Think of it like a bouncer at a club they only let in people or in this case data that has the right ID If your script tries to access data that comes from a different origin different domain port or protocol the browser will flag it as tainted The browser is saying “Hey buddy this data isn't from your neck of the woods I'm not letting you touch it”
 
@@ -31,7 +31,7 @@ img.onload = () => {
 
 This example would likely result in an error because the image is coming from a different origin. The `getImageData` function is trying to access the image data and the browser says No way Jose that’s tainted and blocks access. I've seen this a million times mostly due to people forgetting where the resources are actually hosted and the error always comes as a surprise.
 
-So what do you do to actually fix this? You have to get the proper approvals. It's not like you can just bypass the rules you need to tell the server to say it’s okay for the data to be accessed. That’s done with CORS which is Cross Origin Resource Sharing. CORS is a set of headers that the server adds to the response indicating whether it is okay to share the data or not
+So what do you do to actually fix this? You have to get the proper approvals. It's not like you can just bypass the rules you need to tell the server to say it’s  for the data to be accessed. That’s done with CORS which is Cross Origin Resource Sharing. CORS is a set of headers that the server adds to the response indicating whether it is  to share the data or not
 
 Here’s a very simple way to set up CORS on the server side if you have control over it.
 
@@ -60,7 +60,7 @@ Now in the previous case we had the problem of trying to load an image via a dif
 
 If the server is not properly configured for CORS you will get an error. The browser is trying to help you. It's trying to be a good internet citizen but it might be a bit of a pain. But then again most software is a pain am I right?
 
-Alright lets assume a scenario that has bitten me in the behind in the past where you are trying to grab the data from a fetched response. Lets see how that is done.
+lets assume a scenario that has bitten me in the behind in the past where you are trying to grab the data from a fetched response. Lets see how that is done.
 
 ```javascript
 async function fetchMyData() {

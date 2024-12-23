@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-create-custom-shapes-in-qt-by-combining-multiple-basic-shapes"
 ---
 
-Okay, let’s tackle this. I've spent quite a bit of time, particularly in my early days building some rather complex medical imaging software, dealing with exactly this challenge: constructing custom shapes from Qt's primitives. It’s a foundational problem, and the good news is that Qt provides a very powerful mechanism to achieve this through `QPainterPath` and a few other related classes. It’s not as complicated as it initially seems, but there are some key concepts that are important to grasp to get the best results.
+, let’s tackle this. I've spent quite a bit of time, particularly in my early days building some rather complex medical imaging software, dealing with exactly this challenge: constructing custom shapes from Qt's primitives. It’s a foundational problem, and the good news is that Qt provides a very powerful mechanism to achieve this through `QPainterPath` and a few other related classes. It’s not as complicated as it initially seems, but there are some key concepts that are important to grasp to get the best results.
 
 Essentially, when we talk about creating custom shapes by combining basic shapes in Qt, we’re discussing a process of path construction. `QPainterPath` is your friend here; it's a container of graphical primitives like lines, rectangles, ellipses, and more complex curves (think Bézier curves). These primitives, when added to a path sequentially, form the outline of a potentially intricate shape. Once your path is fully defined, you can then use a `QPainter` instance to fill it, stroke its outline, or perform other manipulations.
 

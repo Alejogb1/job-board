@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-load-a-pretrained-model-and-use-it-to-train-on-a-small-dataset"
 ---
 
-Alright, let's tackle this. Having spent a good chunk of my career navigating the nuances of machine learning pipelines, this is a scenario I've encountered more times than I can count. Loading a pretrained model and adapting it to a smaller, specialized dataset is a crucial technique, particularly when computational resources or data availability are constraints. It’s a balancing act: leveraging existing knowledge while fine-tuning to capture specifics of your new data. Here's how I approach it, focusing on common pitfalls and practical strategies.
+Alright,  Having spent a good chunk of my career navigating the nuances of machine learning pipelines, this is a scenario I've encountered more times than I can count. Loading a pretrained model and adapting it to a smaller, specialized dataset is a crucial technique, particularly when computational resources or data availability are constraints. It’s a balancing act: leveraging existing knowledge while fine-tuning to capture specifics of your new data. Here's how I approach it, focusing on common pitfalls and practical strategies.
 
 The fundamental idea is transfer learning. Instead of training a model from scratch, which requires vast amounts of data and computational power, you’re using a model that has already learned a wealth of features from a large, generalized dataset. This usually comes in the form of pre-trained weights. The process generally involves a few key steps: selecting a suitable pretrained model, adapting the architecture if necessary, loading the pretrained weights, and then fine-tuning it on your smaller dataset.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-isnt-the-model-improving-after-500000-training-steps-in-the-custom-openai-gym-environment"
 ---
 
-Alright, let's tackle this. It’s not unusual to hit a plateau after a significant number of training steps, even in a well-designed environment. I've personally experienced this exact scenario when working on a reinforcement learning project for robotic navigation, a custom OpenAI Gym setup, where we were trying to train an agent to navigate a complex warehouse layout. The agent simply wouldn't surpass a certain level of performance, despite racking up hundreds of thousands of training iterations. Frustration, understandably, sets in at that point. It’s time to methodically analyze where the bottleneck might be.
+Alright,  It’s not unusual to hit a plateau after a significant number of training steps, even in a well-designed environment. I've personally experienced this exact scenario when working on a reinforcement learning project for robotic navigation, a custom OpenAI Gym setup, where we were trying to train an agent to navigate a complex warehouse layout. The agent simply wouldn't surpass a certain level of performance, despite racking up hundreds of thousands of training iterations. Frustration, understandably, sets in at that point. It’s time to methodically analyze where the bottleneck might be.
 
 First and foremost, the sheer number of training steps, 500,000 in this case, doesn’t guarantee improvement. It indicates a good starting point, but it’s entirely possible that the algorithm has converged to a local minimum, or that the reward signal is not informative enough, or even that the environment itself is problematic. We need to unpack these possibilities.
 

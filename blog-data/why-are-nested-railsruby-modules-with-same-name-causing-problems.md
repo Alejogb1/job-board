@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-are-nested-railsruby-modules-with-same-name-causing-problems"
 ---
 
-Okay, let's tackle this one. I remember a particularly frustrating debugging session a few years back involving a rather sprawling Rails application. We had multiple teams contributing, and, perhaps unsurprisingly, a naming collision surfaced that caused some real head-scratching. Specifically, we encountered issues with nested modules sharing the same name, and believe me, it's a pitfall that's easier to fall into than you might initially think.
+, let's tackle this one. I remember a particularly frustrating debugging session a few years back involving a rather sprawling Rails application. We had multiple teams contributing, and, perhaps unsurprisingly, a naming collision surfaced that caused some real head-scratching. Specifically, we encountered issues with nested modules sharing the same name, and believe me, it's a pitfall that's easier to fall into than you might initially think.
 
 The root of the problem, as you've probably already suspected, lies within Ruby's namespace resolution. When you define a module, you’re essentially creating a named scope for constants – classes, other modules, and so on. Nesting modules creates a hierarchical structure. Now, things get tricky when you have nested modules with the same name, because Ruby starts its search for constants from the innermost scope and works its way outwards. If it finds a match at an inner level, it stops searching, irrespective of whether there’s another one at a higher level that was actually intended.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-check-a-range-between-two-dates-using-rails-6"
 ---
 
-Alright, let's tackle this. Checking if a date falls within a specific range is a common task, and Rails 6 provides some nice tools to make it relatively painless. I’ve seen this pop up countless times, particularly when dealing with things like scheduling systems, event management, or any application where temporal constraints matter. I remember once, back when I was managing a rather complex inventory system, we had to handle special pricing periods – this kind of date range check was the cornerstone of that functionality. Let me break down how I typically approach this problem, aiming for clarity and efficiency.
+Alright,  Checking if a date falls within a specific range is a common task, and Rails 6 provides some nice tools to make it relatively painless. I’ve seen this pop up countless times, particularly when dealing with things like scheduling systems, event management, or any application where temporal constraints matter. I remember once, back when I was managing a rather complex inventory system, we had to handle special pricing periods – this kind of date range check was the cornerstone of that functionality. Let me break down how I typically approach this problem, aiming for clarity and efficiency.
 
 The core concept involves leveraging the built-in `Date` or `DateTime` objects and their comparison methods. Rails encourages the use of these objects and provides additional tools to make handling date ranges more intuitive. When dealing with database queries, active record offers specific methods to simplify these operations significantly.
 

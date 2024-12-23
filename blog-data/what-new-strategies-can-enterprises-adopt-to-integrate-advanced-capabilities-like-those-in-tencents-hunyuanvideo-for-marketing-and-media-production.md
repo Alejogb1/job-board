@@ -117,7 +117,7 @@ endpoint = "https://sentimentanalysis.com/analyze"
 video_comments = [
   "This video was awesome",
   "I hated this video",
-  "It was okay I guess"
+  "It was  I guess"
 ]
 
 data = {

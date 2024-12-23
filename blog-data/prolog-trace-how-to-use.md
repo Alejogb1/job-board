@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "prolog-trace-how-to-use"
 ---
 
-Okay so you're asking about Prolog tracing right been there done that a few times tracing in Prolog can feel like navigating a maze with a blindfold especially when you're dealing with some real complex rules
+ so you're asking about Prolog tracing right been there done that a few times tracing in Prolog can feel like navigating a maze with a blindfold especially when you're dealing with some real complex rules
 
 Look I remember back in the day probably around '08 I was working on this automated theorem prover thing yeah early AI before it was cool and oh man the recursion was deep so so deep tracing was my only friend and a very temperamental friend at that we weren't always on the same page
 
@@ -119,7 +119,7 @@ This code will save the output in `trace_output.txt`. Now you have your debuggin
 
 You know what debugging in Prolog is kind of like a really intricate puzzle box you know the answer is in there somewhere but you have to look at the tiny gears and levers to understand how everything works. It can be frustrating sometimes but when you finally figure it out its extremely rewarding. I mean I once spent three whole days debugging a program and the issue was a missing base case in a recursion I almost pulled my hair out but it made me a better programmer so I guess I should thank Prolog for that or not lol
 
-Okay so to summarize what have we covered today tracing is your best friend in prolog. First we have the plain `trace/0` mode to see everything then we have the specific `trace/1` to trace predicates then we have `spy/1` to breakpoint on predicates finally we talked about `debug/0` to see variable bindings and lastly we saved the trace to a file for later inspection.
+ so to summarize what have we covered today tracing is your best friend in prolog. First we have the plain `trace/0` mode to see everything then we have the specific `trace/1` to trace predicates then we have `spy/1` to breakpoint on predicates finally we talked about `debug/0` to see variable bindings and lastly we saved the trace to a file for later inspection.
 
 Now some resources to dive deeper I would definitely recommend 'Programming in Prolog' by Clocksin and Mellish it's like the bible for Prolog programmers and the tracing parts are very well explained also 'The Art of Prolog' by Sterling and Shapiro it has a more advanced view on debugging techniques. Also any good online course or tutorial that includes specific sections on debugging using tracing will do the trick. I also found that looking at open source projects using Prolog and trying to understand their code with a trace was a great way to learn.
 

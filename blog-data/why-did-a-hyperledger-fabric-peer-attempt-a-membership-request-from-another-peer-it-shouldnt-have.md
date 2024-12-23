@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-did-a-hyperledger-fabric-peer-attempt-a-membership-request-from-another-peer-it-shouldnt-have"
 ---
 
-Alright, let's tackle this. I've seen this scenario play out more times than I care to remember, and it's almost always a subtle interplay of configuration nuances and network state complexities within Hyperledger Fabric. To answer why a peer might attempt a membership request from another peer it shouldn't, we have to dig into several potential causes, each rooted in the distributed nature of the platform and its reliance on a robust membership service.
+Alright,  I've seen this scenario play out more times than I care to remember, and it's almost always a subtle interplay of configuration nuances and network state complexities within Hyperledger Fabric. To answer why a peer might attempt a membership request from another peer it shouldn't, we have to dig into several potential causes, each rooted in the distributed nature of the platform and its reliance on a robust membership service.
 
 My experience, particularly during a large-scale deployment for a supply chain network a few years back, taught me that these seemingly inexplicable peer interactions often boil down to issues with the gossip protocol, misconfigured channel definitions, or, more rarely, certificate expiration or misconfiguration. It's never just one thing, usually a cascade. Let's break it down into common culprits.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-maskhide-airflow-config-parameters"
 ---
 
-Okay, let's tackle this. I've definitely been down this road before, particularly when scaling airflow deployments across various teams with varying degrees of access. Exposing configuration parameters directly, especially things like database connection strings or api keys, is a definite non-starter for any production environment. It's a security headache waiting to happen. Let's break down some reliable strategies, focusing on both the 'how' and the 'why'.
+,  I've definitely been down this road before, particularly when scaling airflow deployments across various teams with varying degrees of access. Exposing configuration parameters directly, especially things like database connection strings or api keys, is a definite non-starter for any production environment. It's a security headache waiting to happen. Let's break down some reliable strategies, focusing on both the 'how' and the 'why'.
 
 First, it's crucial to understand that airflow's configuration, by default, isn't inherently secure. It relies on a configuration file, typically `airflow.cfg`, and environment variables, all of which can be vulnerable if not handled carefully. The goal, therefore, is to decouple the actual values from these accessible locations and introduce an abstraction layer.
 

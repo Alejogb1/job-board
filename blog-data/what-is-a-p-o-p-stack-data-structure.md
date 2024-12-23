@@ -4,13 +4,13 @@ date: "2024-12-13"
 id: "what-is-a-p-o-p-stack-data-structure"
 ---
 
-Okay so you wanna know about pop stacks right Been there done that got the t-shirt literally I actually spilled coffee on one once code was fine surprisingly but the keyboard was a mess Anyway a pop stack or sometimes just called a stack yeah its a pretty fundamental data structure in computer science its basically a way to organize data where you can only add or remove items from one end this end is what we call the top think of it like a stack of plates the last plate you put on is the first one you take off thats it
+ so you wanna know about pop stacks right Been there done that got the t-shirt literally I actually spilled coffee on one once code was fine surprisingly but the keyboard was a mess Anyway a pop stack or sometimes just called a stack yeah its a pretty fundamental data structure in computer science its basically a way to organize data where you can only add or remove items from one end this end is what we call the top think of it like a stack of plates the last plate you put on is the first one you take off thats it
 
 It follows a LIFO or Last-In-First-Out principle This means the last element you push onto the stack will be the first one you pop off It's a really simple concept actually but very powerful you can use them in many areas like function call management parsing expressions undo redo mechanisms compiler design etc its just everywhere really
 
 I remember back in the day when I was a newbie I spent like a whole day debugging a simple recursive function I had a stack overflow error and I was clueless the error message is a big clue right there but at the time my brain was just mush it was all because I was using a simple loop instead of properly unwinding my recursive calls and yes the function call stack is implemented as a stack under the hood so learning about this really helped me understand how recursion works and why its important to have a base case and be aware of your call stack depth yeah good times
 
-Okay lets get into some code so here is how you'd typically implement it in Python for instance its quite straightforward
+ lets get into some code so here is how you'd typically implement it in Python for instance its quite straightforward
 
 ```python
 class Stack:
@@ -193,7 +193,7 @@ int main() {
 }
 ```
 
-Okay this implementation is a bit more involved its using a linked list to represent the stack We create a `Node` struct to store the data and a pointer to the next node and the `Stack` struct which holds a pointer to the top of the stack push adds a new node to the top pop removes the top node and returns its data and peek returns the data of the top node without removing it this example also includes basic error handling if the stack is empty or memory allocation failed and a basic way to free memory which is an important part when doing C development. I remember one time having memory leaks everywhere in my C code that was because I was not freeing stuff properly like my dad always said "clean up your room after playing son" memory management is that kind of chore that needs to be done otherwise it becomes a mess.
+ this implementation is a bit more involved its using a linked list to represent the stack We create a `Node` struct to store the data and a pointer to the next node and the `Stack` struct which holds a pointer to the top of the stack push adds a new node to the top pop removes the top node and returns its data and peek returns the data of the top node without removing it this example also includes basic error handling if the stack is empty or memory allocation failed and a basic way to free memory which is an important part when doing C development. I remember one time having memory leaks everywhere in my C code that was because I was not freeing stuff properly like my dad always said "clean up your room after playing son" memory management is that kind of chore that needs to be done otherwise it becomes a mess.
 
 So yeah thats about it for stacks its a fairly simple data structure but its used almost everywhere if you want to go deep on data structures and algorithms I can recommend some great books "Introduction to Algorithms" by Thomas H Cormen et al is a bible for algorithms and a good complement is "Algorithms" by Robert Sedgewick and Kevin Wayne those two books cover all that you need to know about data structures and algorithms not to mention "Data Structures and Algorithms in Java" by Michael T. Goodrich et al (the Java one is language specific though but still relevant) these are my go-to's when i need something concrete you can also check some online courses from Stanford MIT or some websites that have open courseware.
 

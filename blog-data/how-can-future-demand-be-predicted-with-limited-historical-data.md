@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-future-demand-be-predicted-with-limited-historical-data"
 ---
 
-Okay, let's tackle this. Predictive modeling with limited historical data – a situation I've encountered more times than I care to recall. It's a challenge, not a brick wall, but you have to approach it with a specific toolkit. You can't just throw a complex neural network at a handful of data points and hope for magic. That's a recipe for overfitting, and worse, completely unreliable predictions. Instead, you've got to blend various techniques and be extremely judicious with your model selection.
+,  Predictive modeling with limited historical data – a situation I've encountered more times than I care to recall. It's a challenge, not a brick wall, but you have to approach it with a specific toolkit. You can't just throw a complex neural network at a handful of data points and hope for magic. That's a recipe for overfitting, and worse, completely unreliable predictions. Instead, you've got to blend various techniques and be extremely judicious with your model selection.
 
 The crux of the problem, as I see it, is that with limited data, you're inherently more vulnerable to noise. Any single unusual event in your dataset can unduly influence your model. This requires a strategy that prioritizes robustness over complexity. Here's how I’ve often approached this situation in practice.
 

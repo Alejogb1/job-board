@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "why-is-signhash-from-rsacng-dotnetcore-different-from-boncycastle-running-in"
 ---
 
-Alright let's dive into this signhash discrepancy between RSACng and Bouncy Castle on .NET Core it's a classic head-scratcher that I’ve personally wrestled with more times than I’d like to admit
+let's dive into this signhash discrepancy between RSACng and Bouncy Castle on .NET Core it's a classic head-scratcher that I’ve personally wrestled with more times than I’d like to admit
 
 So you’re seeing different output right Specifically when generating a signature with `RSACng` in .NET Core and then trying to verify it using Bouncy Castle it’s failing or vice-versa This isn’t a bug per se but more a difference in how the two libraries handle the underlying mechanics of RSA signing particularly with regards to padding and encoding of the data prior to the actual signing operation
 

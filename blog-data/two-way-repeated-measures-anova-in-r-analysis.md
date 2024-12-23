@@ -4,13 +4,13 @@ date: "2024-12-13"
 id: "two-way-repeated-measures-anova-in-r-analysis"
 ---
 
-Okay so you're wrestling with a two way repeated measures ANOVA in R yeah I've been there done that got the t shirt and probably a few stress induced grey hairs from it lets dive right in
+ so you're wrestling with a two way repeated measures ANOVA in R yeah I've been there done that got the t shirt and probably a few stress induced grey hairs from it lets dive right in
 
 First things first you need to understand what you're dealing with a two way repeated measures ANOVA is for when you have two within subject factors basically two things you're measuring repeatedly on the same individuals its not some free for all ANOVA party it has strict requirements about what data is needed for the analysis
 
 You are right that this isnt your basic ANOVA scenario you cannot just chuck your data into any `aov()` or `anova()` function and expect a correct answer you'll end up with garbage output at least that is what happened to me when I tried and that output made absolutely no sense no wonder I hated stats in undergrad now i love it
 
-Okay let's get practical the most common package for repeated measures ANOVA in R is `ez` it handles the heavy lifting of setting up the model and gives you the ANOVA table that you need we can also use `rstatix` which is also very good
+ let's get practical the most common package for repeated measures ANOVA in R is `ez` it handles the heavy lifting of setting up the model and gives you the ANOVA table that you need we can also use `rstatix` which is also very good
 
 You need to install it first if you dont have it already with
 
@@ -141,7 +141,7 @@ print(effect_size_complexity)
 ```
 You can do much more complex stuff but I am not going to get into that now you get the point
 
-Okay this is where things get a little bit tricky and a lot of people get stuck and I did too that is the assumption checks for repeated measures ANOVA. You need to check things like sphericity and normality for the differences among your within-subject conditions. `ez` provides a way to check sphericity using Mauchly's test and you can find that in the `model_ez` output under the `Sphericity Corrections` part. If that assumption is violated (p < 0.05) you may need to apply corrections like the Greenhouse-Geisser or Huynh-Feldt corrections which you can specify in the `ezANOVA` function using the `correction` parameter. If not specified by default it uses the GG correction but I like to see it explicit there.
+ this is where things get a little bit tricky and a lot of people get stuck and I did too that is the assumption checks for repeated measures ANOVA. You need to check things like sphericity and normality for the differences among your within-subject conditions. `ez` provides a way to check sphericity using Mauchly's test and you can find that in the `model_ez` output under the `Sphericity Corrections` part. If that assumption is violated (p < 0.05) you may need to apply corrections like the Greenhouse-Geisser or Huynh-Feldt corrections which you can specify in the `ezANOVA` function using the `correction` parameter. If not specified by default it uses the GG correction but I like to see it explicit there.
 However if you want to check for normality I think it is best to use separate functions rather than the `ez` output for me `rstatix` has been my go to:
 ```R
 normality_test <- data %>%
@@ -153,8 +153,8 @@ You can see each groups normality by this function
 
 For more information on sphericity you can check Maxwell & Delaney's book on "Designing Experiments and Analyzing Data" they have an excellent section on this topic with practical examples
 
-Okay and one more thing if your data does not meet assumptions you may need to do transformations to the data for the analysis or consider alternatives to parametric analysis such as Friedman's test or similar nonparametric procedures
+ and one more thing if your data does not meet assumptions you may need to do transformations to the data for the analysis or consider alternatives to parametric analysis such as Friedman's test or similar nonparametric procedures
 
 Just a final note as a word of caution be very careful with your data you must understand very well what is the design of your experiment is before analyzing it because the slightest misunderstanding can lead to a lot of headache for example I recall having a data where subjects were tested twice and I was trying to analyze it using repeated measures ANOVA and it was completely wrong because it was not repeated measure ANOVA it was another test, lets just say I wasted a lot of time troubleshooting that error.
 
-Okay you asked for a techy tone that is it hope this helps you and now you have all the information you need to solve your problem if you are struggling again please post the code and the data and what have you tried.
+ you asked for a techy tone that is it hope this helps you and now you have all the information you need to solve your problem if you are struggling again please post the code and the data and what have you tried.

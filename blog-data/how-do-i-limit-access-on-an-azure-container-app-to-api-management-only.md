@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-limit-access-on-an-azure-container-app-to-api-management-only"
 ---
 
-Okay, let's tackle this. I've seen this scenario play out a few times, and it's a common requirement when you're trying to create a secure and well-defined access layer for your microservices, particularly when using Azure Container Apps. The aim, as you’ve stated, is to restrict direct access to your container app and instead funnel all traffic through your Azure API Management (APIM) instance. This pattern helps with rate limiting, authentication, authorization, and many other crucial aspects of a robust api landscape.
+,  I've seen this scenario play out a few times, and it's a common requirement when you're trying to create a secure and well-defined access layer for your microservices, particularly when using Azure Container Apps. The aim, as you’ve stated, is to restrict direct access to your container app and instead funnel all traffic through your Azure API Management (APIM) instance. This pattern helps with rate limiting, authentication, authorization, and many other crucial aspects of a robust api landscape.
 
 The crux of the issue lies in understanding how to leverage Azure’s networking and identity features to effectively block direct access, while simultaneously allowing your APIM service to reach the container app. We achieve this primarily through a combination of network restrictions and authentication controls. It's not a single switch; rather, it’s a carefully orchestrated setup involving a few moving parts.
 

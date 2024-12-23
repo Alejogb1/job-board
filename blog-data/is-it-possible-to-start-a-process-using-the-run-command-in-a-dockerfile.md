@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "is-it-possible-to-start-a-process-using-the-run-command-in-a-dockerfile"
 ---
 
-Okay, let's tackle this. I've seen this particular point trip up many a developer, and it's understandable. The core issue revolves around the fundamental lifecycle of a Docker container build versus its runtime. The short answer is: yes, technically you *can* start a process using `RUN` in a Dockerfile, but it's crucial to understand that the process will **not** persist when the container is run from the resulting image. This often leads to confusion, and in my experience, it's where many debugging hours are spent.
+,  I've seen this particular point trip up many a developer, and it's understandable. The core issue revolves around the fundamental lifecycle of a Docker container build versus its runtime. The short answer is: yes, technically you *can* start a process using `RUN` in a Dockerfile, but it's crucial to understand that the process will **not** persist when the container is run from the resulting image. This often leads to confusion, and in my experience, it's where many debugging hours are spent.
 
 Let’s unpack why and how that is, drawing from past projects where I’ve had to navigate this exact situation. Imagine building an image for a web application. You might be tempted to use `RUN` to start the server during the image build process, thinking that the server will then automatically be running when a container is created from that image. You might see something along these lines:
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-limit-the-maximum-size-of-a-recyclerview"
 ---
 
-Alright, let's tackle this. I've actually run into this exact scenario multiple times, particularly when dealing with dynamically generated lists that could potentially overwhelm the UI if left unchecked. The core problem, as you've posed, is limiting the maximum size of a `recyclerview`. It's less about restricting the *data source* and more about ensuring the recyclerview doesn’t render an endless scroll of elements, which can become a performance nightmare very quickly. I've seen apps grind to a halt because they tried to render thousands of items simultaneously.
+Alright,  I've actually run into this exact scenario multiple times, particularly when dealing with dynamically generated lists that could potentially overwhelm the UI if left unchecked. The core problem, as you've posed, is limiting the maximum size of a `recyclerview`. It's less about restricting the *data source* and more about ensuring the recyclerview doesn’t render an endless scroll of elements, which can become a performance nightmare very quickly. I've seen apps grind to a halt because they tried to render thousands of items simultaneously.
 
 When we talk about limiting the 'size' of a `recyclerview`, we typically mean limiting the number of *visible items*, not necessarily the *data source* that's feeding it. The recyclerview itself is designed to be efficient; it recycles views as they scroll off-screen. However, rendering a vast number of them initially can still create lag and slow down user interactions. We can mitigate this in several ways, mostly by controlling the initial data we feed the adapter or by imposing constraints on the adapter itself.
 

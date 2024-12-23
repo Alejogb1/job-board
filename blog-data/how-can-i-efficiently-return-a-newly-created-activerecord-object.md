@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-efficiently-return-a-newly-created-activerecord-object"
 ---
 
-Okay, let's tackle this. I’ve spent my share of time wrestling with ActiveRecord object creation workflows, and getting the newly minted record back efficiently is something I've optimized in various projects. It's more than just calling `.save` and moving on; there are subtle nuances to consider, especially when performance is a concern.
+,  I’ve spent my share of time wrestling with ActiveRecord object creation workflows, and getting the newly minted record back efficiently is something I've optimized in various projects. It's more than just calling `.save` and moving on; there are subtle nuances to consider, especially when performance is a concern.
 
 The core challenge with returning a newly created ActiveRecord object efficiently boils down to avoiding unnecessary database queries. After you invoke `.save`, ActiveRecord, by default, is designed to refresh the object from the database, ensuring you have the most up-to-date values, including those auto-populated or modified by database triggers. This behavior, while robust, adds an extra query which can be redundant in many situations. My approach, refined over the years, prioritizes only re-querying the database when absolutely needed.
 

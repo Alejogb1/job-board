@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-time-be-modeled-effectively-using-domain-driven-design"
 ---
 
-Okay, let's tackle this. Time. It's a tricky beast to model, especially when you move beyond simple timestamps. I remember a project a few years back, a scheduling application for a multinational logistics company. We started with a very naive approach, thinking `datetime` objects would solve everything. Quickly, we ran into a whirlwind of issues: time zones, recurring events, exceptions to schedules, and all those edge cases that inevitably arise in real-world scenarios. It became clear we needed a more structured approach, and that's where Domain-Driven Design (DDD) proved invaluable.
+,  Time. It's a tricky beast to model, especially when you move beyond simple timestamps. I remember a project a few years back, a scheduling application for a multinational logistics company. We started with a very naive approach, thinking `datetime` objects would solve everything. Quickly, we ran into a whirlwind of issues: time zones, recurring events, exceptions to schedules, and all those edge cases that inevitably arise in real-world scenarios. It became clear we needed a more structured approach, and that's where Domain-Driven Design (DDD) proved invaluable.
 
 The crux of effective time modeling in DDD lies in recognizing that time isn't just a primitive data type; it's deeply entwined with your business domain. Therefore, the way you model time should directly reflect the specific needs and constraints of that domain. Ignoring this often leads to anemic models, fragile logic, and ultimately, painful maintenance cycles.
 

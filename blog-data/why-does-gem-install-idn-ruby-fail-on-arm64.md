@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-gem-install-idn-ruby-fail-on-arm64"
 ---
 
-Alright, let's tackle this. I've seen this exact situation pop up more than once, particularly when we started migrating more infrastructure to arm64-based systems a few years back. The `gem install idn-ruby` failure on arm64 is a nuanced problem, and it doesn't usually stem from a single, easily identifiable culprit. It's usually a confluence of factors related to native extensions and the specific way those extensions are compiled.
+Alright,  I've seen this exact situation pop up more than once, particularly when we started migrating more infrastructure to arm64-based systems a few years back. The `gem install idn-ruby` failure on arm64 is a nuanced problem, and it doesn't usually stem from a single, easily identifiable culprit. It's usually a confluence of factors related to native extensions and the specific way those extensions are compiled.
 
 Essentially, `idn-ruby` depends on `libidn`, a C library that provides support for internationalized domain names (idns). This means that the `idn-ruby` gem isn’t pure ruby; it requires compiling native code during its installation. When you're on an architecture like x86_64, the pre-compiled gems available on rubygems.org are typically built to work without issue. But with arm64, we often find that those pre-built binaries aren't available, or if they are, they’re incompatible. So, the gem installer falls back to trying to compile the native extension on the fly.
 

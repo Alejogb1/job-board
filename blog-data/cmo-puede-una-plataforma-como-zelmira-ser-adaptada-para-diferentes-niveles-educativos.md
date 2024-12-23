@@ -4,7 +4,7 @@ date: "2024-12-12"
 id: "cmo-puede-una-plataforma-como-zelmira-ser-adaptada-para-diferentes-niveles-educativos"
 ---
 
-Okay so adapting a platform like Zelmira for different educational levels that's a complex but doable problem it's not just about slapping on a new skin it's a deeper rethink of how we present and interact with information let's break it down into areas that would need attention
+ so adapting a platform like Zelmira for different educational levels that's a complex but doable problem it's not just about slapping on a new skin it's a deeper rethink of how we present and interact with information let's break it down into areas that would need attention
 
 first off complexity of content the core content itself needs to be graduated a kindergarten level kid can't grapple with the same abstract concepts a university student would obviously so we need to think modular content creation we're talking creating small reusable learning units think of them like components in react each unit focused on a single core idea or skill these units would be tagged with difficulty level metadata something like `level: kindergarten`, `level: grade_5`, `level: undergraduate` this allows the platform to intelligently pull and present the right content for a given learner's profile we can even go further by automatically adapting content as students master each module or if they are failing behind
 

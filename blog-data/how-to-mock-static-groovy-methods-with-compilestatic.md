@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-mock-static-groovy-methods-with-compilestatic"
 ---
 
-Alright, let's tackle this. Mocking static methods in groovy, especially when you're leveraging `@CompileStatic`, can introduce some interesting challenges. It's something I've seen crop up several times over the years, especially when migrating legacy groovy codebases to be more compile-time safe. It's not always intuitive, and some of the typical mocking strategies you might use in dynamic groovy simply won't work.
+Alright,  Mocking static methods in groovy, especially when you're leveraging `@CompileStatic`, can introduce some interesting challenges. It's something I've seen crop up several times over the years, especially when migrating legacy groovy codebases to be more compile-time safe. It's not always intuitive, and some of the typical mocking strategies you might use in dynamic groovy simply won't work.
 
 The core problem stems from `@CompileStatic`'s primary objective: enforcing static type checking and, in the process, generating bytecode that directly invokes static methods, bypassing groovy's dynamic method dispatch. This means that frameworks like spock or mockito, which usually rely on manipulating the runtime method lookup process, need a different approach. Traditional interception mechanisms often find themselves ineffective because the method calls are resolved at compile time, not runtime.
 

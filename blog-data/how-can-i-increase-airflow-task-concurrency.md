@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-increase-airflow-task-concurrency"
 ---
 
-Okay, let’s tackle this. Task concurrency in Airflow is a topic I've spent a good amount of time optimizing over the years, especially when scaling up data pipelines. I've had to navigate scenarios where we were initially bottlenecked, not by the processing power of the individual tasks themselves, but by the sheer volume and scheduling limitations of the Airflow environment. Increasing concurrency isn’t a one-size-fits-all solution; it requires a careful understanding of your environment, your workflows, and the underlying configuration. Let me walk you through a few key areas and some code examples that have served me well in the past.
+, let’s tackle this. Task concurrency in Airflow is a topic I've spent a good amount of time optimizing over the years, especially when scaling up data pipelines. I've had to navigate scenarios where we were initially bottlenecked, not by the processing power of the individual tasks themselves, but by the sheer volume and scheduling limitations of the Airflow environment. Increasing concurrency isn’t a one-size-fits-all solution; it requires a careful understanding of your environment, your workflows, and the underlying configuration. Let me walk you through a few key areas and some code examples that have served me well in the past.
 
 First, it's crucial to differentiate between *task* concurrency and *dag* concurrency. The question specifies task concurrency, so I'll focus primarily on that. This refers to the number of task instances that can be actively executing *at the same time*, across all dags. This is fundamentally controlled by the Airflow executor, and its configuration. Understanding the executor is where we need to start.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-neural-network-hyperparameters-be-optimized-and-their-sensitivity-analyzed"
 ---
 
-Alright, let's tackle this. I remember a particularly grueling project back at 'InnovateSoft' where we were building a predictive maintenance model for heavy machinery. The performance was lackluster, and after much investigation, it boiled down to poor hyperparameter choices for our neural network. The whole ordeal really solidified for me the importance of rigorous hyperparameter optimization and sensitivity analysis. Let me share some insights I gained from that experience and other projects since.
+Alright,  I remember a particularly grueling project back at 'InnovateSoft' where we were building a predictive maintenance model for heavy machinery. The performance was lackluster, and after much investigation, it boiled down to poor hyperparameter choices for our neural network. The whole ordeal really solidified for me the importance of rigorous hyperparameter optimization and sensitivity analysis. Let me share some insights I gained from that experience and other projects since.
 
 Hyperparameter optimization, at its core, is the process of finding the optimal set of parameters *that define the neural network architecture itself*, rather than the network's *weights and biases* that are learned during training. Think of it like fine-tuning an engine. You can have all the right parts (weights and biases), but unless they're configured correctly (hyperparameters), you won't get peak performance. Typical hyperparameters include things like the learning rate, number of layers, number of neurons per layer, batch size, activation functions, and regularization parameters.
 

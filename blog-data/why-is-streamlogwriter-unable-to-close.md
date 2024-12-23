@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-streamlogwriter-unable-to-close"
 ---
 
-Alright, let's tackle this. I've actually bumped into this particular `StreamLogWriter` close issue several times over the years, particularly when working with legacy logging systems that were, shall we say, less than elegant. It's almost always tied to the lifecycle of the underlying stream or subtle concurrency issues, and frankly, the symptoms can be quite frustrating if you're not familiar with the common culprits.
+Alright,  I've actually bumped into this particular `StreamLogWriter` close issue several times over the years, particularly when working with legacy logging systems that were, shall we say, less than elegant. It's almost always tied to the lifecycle of the underlying stream or subtle concurrency issues, and frankly, the symptoms can be quite frustrating if you're not familiar with the common culprits.
 
 The core problem with a `StreamLogWriter` (or any similar class that wraps a stream for writing) not closing properly typically boils down to the way the *underlying stream* is being managed. This isn't necessarily a problem with `StreamLogWriter` itself, but rather its reliance on an external resource—the stream—that might be held open longer than expected. Essentially, a `close()` call on a `StreamLogWriter` will generally delegate a `close()` call to the underlying stream. If that underlying stream isn't closing, the `StreamLogWriter` is, effectively, stuck.
 

@@ -4,13 +4,13 @@ date: "2024-12-13"
 id: "rapidminer-results-time-export"
 ---
 
-Okay so you’re wrestling with RapidMiner and the dreaded time export eh been there done that a few times and its always a bit of a head scratcher So you want to get your results out of RapidMiner with accurate time information and it’s proving to be more stubborn than a cat trying to get out of a bath I get it
+ so you’re wrestling with RapidMiner and the dreaded time export eh been there done that a few times and its always a bit of a head scratcher So you want to get your results out of RapidMiner with accurate time information and it’s proving to be more stubborn than a cat trying to get out of a bath I get it
 
 First off let's talk about what's happening under the hood because sometimes knowing the why makes the how a little less infuriating RapidMiner is all about data transformations right It does a lot of its calculations and data processing inside its own operators that manage its own internal representation of data and time This internal clock often works differently than the way you expect to see time formatted in lets say a spreadsheet or a csv file especially when it comes to representing timezones and different formats So you pull the data and it looks different than what you intended it’s not like the data is lost its just a matter of reformatting it
 
 A common pitfall I’ve seen myself and others make is not being explicit about the formatting of the date and time when exporting So you end up with these weird integer representations of timestamps or dates that just look like a big mess of numbers I remember back in 2015 i was trying to do some predictive maintenance stuff for a manufacturing plant the data was perfect in RapidMiner inside the operator but then when i exported to csv for other team to do the analysis the timestamps were all screwed up i had like 15 hour difference from what i had in rapidminer then i found it out that i forgot to specify the timezone export that is when i started to be explicit about date time formats after that i wrote a whole function to deal with it never again I tell you it took me a whole weekend to reprocess that whole 10 million data point set so always be careful
 
-Alright lets dive into some code and I mean actual RapidMiner process snippets not some pseudocode stuff I hope that your RapidMiner experience is as good as mine now that is the main reason why im answering this question and hopefully i will teach you a thing or two
+lets dive into some code and I mean actual RapidMiner process snippets not some pseudocode stuff I hope that your RapidMiner experience is as good as mine now that is the main reason why im answering this question and hopefully i will teach you a thing or two
 
 First lets look at the common scenario of getting date-time in a usable format for lets say a CSV export The key operator you're going to become best friends with here is `Format Dates` Here’s a typical workflow snippet you might use in the process:
 
@@ -31,7 +31,7 @@ First lets look at the common scenario of getting date-time in a usable format f
 </process>
 ```
 
-Okay so what's happening here
+ so what's happening here
 `Read CSV` reads the csv file and infers the time column as date `Format Dates` operator is where the magic happens you specify the `date format` parameter using `yyyy-MM-dd HH:mm:ss` this ensures that your date-time output will be in the year-month-day hour-minute-second format and the `Write CSV` operator outputs the data into the path specified
 
 Now let's say you've got timestamps in Unix epoch time which is another common scenario and you want to transform those to human-readable dates we need a slightly different approach and this one I’ve seen quite a few times while working with server logs or data streams  `Generate Attributes` and then the `Format Dates` operators will be our best friends here:
@@ -60,7 +60,7 @@ Now let's say you've got timestamps in Unix epoch time which is another common s
 
 Here `Read CSV` reads in the csv with unix timestamps, it’s very important to specify numerical on the `column types` for this column `Generate Attributes` then creates a new attribute called `time` using the built in function `date_from_unix_epoch` this function converts your unix timestamp to an internal RapidMiner date format now is where `Format Dates` comes into play so i specified the time format as `yyyy-MM-dd HH:mm:ss z` this not only will format the output but will also show the correct timezone (z) and finally we have the `Write CSV` that writes into the specified path
 
-Okay now lets talk about dealing with time zones because this was the trickiest thing for me at the beginning RapidMiner internally handles timezones to some extent but when it comes to exporting you need to be explicit again because the export operations are like "well if you didn’t tell me what timezone i should use i will use my own"
+ now lets talk about dealing with time zones because this was the trickiest thing for me at the beginning RapidMiner internally handles timezones to some extent but when it comes to exporting you need to be explicit again because the export operations are like "well if you didn’t tell me what timezone i should use i will use my own"
 
 ```xml
 <process key="Process3">

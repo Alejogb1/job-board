@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-process-json-logs-using-grafanaloki"
 ---
 
-Okay, let’s dive in. I've spent considerable time architecting logging solutions, and processing json logs with Grafana and Loki is something I've tackled more than once. It's a very practical challenge when you move beyond simple text logs, which many systems now do. You’re dealing with structured data, which can be fantastic for richer analysis, but it also demands a different approach. Here's how I’ve gone about it successfully, breaking it down into practical steps.
+, let’s dive in. I've spent considerable time architecting logging solutions, and processing json logs with Grafana and Loki is something I've tackled more than once. It's a very practical challenge when you move beyond simple text logs, which many systems now do. You’re dealing with structured data, which can be fantastic for richer analysis, but it also demands a different approach. Here's how I’ve gone about it successfully, breaking it down into practical steps.
 
 The core of this hinges on Loki’s ability to parse log lines, and that parsing flexibility is where the power really lies. Loki, unlike some traditional logging systems, does not index the log message content itself; instead, it indexes *labels* that you apply to those logs. This means when dealing with json, you need to extract relevant fields and promote them to labels for efficient querying. The process involves two primary stages: the log pipeline configuration in Promtail (or another agent you might be using), and then the query language (LogQL) within Grafana.
 

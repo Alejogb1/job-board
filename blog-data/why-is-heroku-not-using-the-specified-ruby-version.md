@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-heroku-not-using-the-specified-ruby-version"
 ---
 
-Okay, let's tackle this. I've certainly seen my share of "unexpected ruby versions" on Heroku deployments. It's a common hiccup, and usually stems from a few core issues. We can unpack this systematically. My experience with it actually goes back to a particularly stubborn legacy app we were migrating – quite the headache at the time.
+,  I've certainly seen my share of "unexpected ruby versions" on Heroku deployments. It's a common hiccup, and usually stems from a few core issues. We can unpack this systematically. My experience with it actually goes back to a particularly stubborn legacy app we were migrating – quite the headache at the time.
 
 The first thing to understand is how Heroku manages Ruby versions. It relies heavily on your application's `Gemfile` and, crucially, the associated `Gemfile.lock`. This lock file is *the* source of truth for dependency versions, including Ruby itself. Heroku reads the `ruby` declaration specified inside, not just what might be in a `.ruby-version` file or environment variable – though those can certainly affect your local setup. Essentially, if there's no explicit ruby version in your gemfile or lockfile, Heroku defaults to a version its platform currently supports which may not be your desired target, leading to unexpected outcomes.
 

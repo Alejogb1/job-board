@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-handle-tokens-with-multiple-roles-in-aspnet"
 ---
 
-Alright, let's tackle this. Handling tokens with multiple roles in ASP.NET, especially when you're aiming for something beyond the basic out-of-the-box solution, can indeed present some interesting challenges. I recall a particularly memorable project a few years back, building a multi-tenant SaaS platform where users could have various roles within multiple organizations. The standard single-role approach wouldn’t cut it; we needed something far more flexible and robust.
+Alright,  Handling tokens with multiple roles in ASP.NET, especially when you're aiming for something beyond the basic out-of-the-box solution, can indeed present some interesting challenges. I recall a particularly memorable project a few years back, building a multi-tenant SaaS platform where users could have various roles within multiple organizations. The standard single-role approach wouldn’t cut it; we needed something far more flexible and robust.
 
 The crux of the issue lies in how ASP.NET typically manages claims-based authorization. By default, it often assumes a single 'role' claim, which is a very limited perspective when you have a diverse user base. So, let’s delve into how we can move beyond that limitation and create a system that handles multiple roles efficiently.
 

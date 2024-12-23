@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-can-i-add-environment-variables-to-an-aws-lightsail-nodejs-instance"
 ---
 
-Alright, let's tackle this. I've been down this road plenty of times, wrestling with environment variables on various cloud platforms, Lightsail included. It’s a common stumbling block, and getting it sorted correctly is crucial for secure and maintainable deployments. The challenge isn't the concept itself – environment variables are fairly straightforward – but how different systems manage them. In Lightsail’s case, there isn't a dedicated, GUI-based configuration panel for this, so we need to dive a little deeper, focusing on the instance's operating system itself.
+Alright,  I've been down this road plenty of times, wrestling with environment variables on various cloud platforms, Lightsail included. It’s a common stumbling block, and getting it sorted correctly is crucial for secure and maintainable deployments. The challenge isn't the concept itself – environment variables are fairly straightforward – but how different systems manage them. In Lightsail’s case, there isn't a dedicated, GUI-based configuration panel for this, so we need to dive a little deeper, focusing on the instance's operating system itself.
 
 My approach typically involves a three-pronged strategy: first, setting them directly within the instance’s environment, then employing a `.env` file for easier management, and finally, showcasing a method using systemd for persistent variables when the application is managed as a system service. Let's break these down one by one, using Node.js as our focal point.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-calculate-remaining-payments-using-a-sas-do-loop"
 ---
 
-Okay, let's tackle this. I recall a particularly tricky project back in my days with a financial analytics firm where we were dealing with a high volume of loan data, needing to project remaining payments across various loan types. Leveraging SAS's do loop effectively became absolutely crucial for both speed and accuracy. What initially looked like a straightforward task quickly revealed its nuances, particularly when factoring in variable interest rates and principal-only payments.
+,  I recall a particularly tricky project back in my days with a financial analytics firm where we were dealing with a high volume of loan data, needing to project remaining payments across various loan types. Leveraging SAS's do loop effectively became absolutely crucial for both speed and accuracy. What initially looked like a straightforward task quickly revealed its nuances, particularly when factoring in variable interest rates and principal-only payments.
 
 The core challenge, as I understand it, is to iterate through a loan's payment schedule, keeping track of outstanding principal, interest, and the number of payments remaining. The standard approach, and frankly the most efficient within SAS, is indeed to use a `do` loop in conjunction with conditional logic. Let me break this down with a couple of practical examples, drawing from my own past experiences.
 

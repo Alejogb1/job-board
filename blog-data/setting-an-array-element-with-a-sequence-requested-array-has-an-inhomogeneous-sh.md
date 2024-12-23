@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "setting-an-array-element-with-a-sequence-requested-array-has-an-inhomogeneous-sh"
 ---
 
-Okay I've seen this one before it's a classic array mutation headache isn't it You've got an array probably a NumPy array since you're talking about shape "inhomogeneous sh" which I'm assuming is short for shape and you're trying to stuff a sequence into a single element but the sequence has a different shape or maybe even a different dimensionality than the element itself Right
+ I've seen this one before it's a classic array mutation headache isn't it You've got an array probably a NumPy array since you're talking about shape "inhomogeneous sh" which I'm assuming is short for shape and you're trying to stuff a sequence into a single element but the sequence has a different shape or maybe even a different dimensionality than the element itself Right
 
 Been there done that I remember back in my early days I was working on some image processing project I needed to embed some kind of feature vectors representing patches from other images into a large grid array Think of it as a matrix that's supposed to hold little patches of images and somehow i ended up trying to put a 3D array of pixels into a cell that expected a flat vector yeah you can guess how that went
 
@@ -82,4 +82,4 @@ Let me give you an advice about resources This isn't something you'll find in a 
 
 Oh and before I forget I was once so deep into a similar problem that I actually forgot what day it was. My wife asked me what day it is and I answered "It's 2D Tuesday of course" yeah data science does things to you sometimes
 
-Okay I think that's everything for your question let me know if you have other doubts or need more code snippets or anything Cheers
+ I think that's everything for your question let me know if you have other doubts or need more code snippets or anything Cheers

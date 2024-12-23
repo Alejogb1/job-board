@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-am-i-getting-typeerror-inputs-to-a-layer-should-be-tensors-got-none"
 ---
 
-Okay, let’s tackle this `TypeError: Inputs to a layer should be tensors. Got: None`. It’s a common head-scratcher, and frankly, I've spent more than my share of late nights debugging this exact error during various deep learning projects. Let's dissect it from the ground up, not just to fix it, but also to understand its root causes. This isn't some theoretical quirk; it's very much an error born out of how tensor-based frameworks, like TensorFlow or PyTorch, operate.
+, let’s tackle this `TypeError: Inputs to a layer should be tensors. Got: None`. It’s a common head-scratcher, and frankly, I've spent more than my share of late nights debugging this exact error during various deep learning projects. Let's dissect it from the ground up, not just to fix it, but also to understand its root causes. This isn't some theoretical quirk; it's very much an error born out of how tensor-based frameworks, like TensorFlow or PyTorch, operate.
 
 The core issue, as the error message plainly states, is that a layer within your neural network is expecting a tensor—a multi-dimensional array of numerical data—but it's receiving `None` instead. Think of it like this: you're trying to pass a null pointer to a function that requires a valid memory address containing data. The layer cannot perform any calculations if it gets `None`. This usually doesn’t happen in a single step, but rather when tensors either haven’t been properly initialized or aren't propagated correctly within the computational graph.
 

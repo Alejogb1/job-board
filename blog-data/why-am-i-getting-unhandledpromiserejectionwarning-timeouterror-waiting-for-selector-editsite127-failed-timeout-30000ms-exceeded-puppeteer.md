@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-am-i-getting-unhandledpromiserejectionwarning-timeouterror-waiting-for-selector-editsite127-failed-timeout-30000ms-exceeded-puppeteer"
 ---
 
-alright, let's tackle this. seeing that `unhandledpromiserejectionwarning: timeouterror: waiting for selector `#editsite127` failed: timeout 30000ms exceeded` tells me a lot about what's going on here. it's a classic puppeteer timeout issue. i've been there, believe me, spent many nights staring at that exact message on my screen.
+alright,  seeing that `unhandledpromiserejectionwarning: timeouterror: waiting for selector `#editsite127` failed: timeout 30000ms exceeded` tells me a lot about what's going on here. it's a classic puppeteer timeout issue. i've been there, believe me, spent many nights staring at that exact message on my screen.
 
 first off, the core of the problem is that your puppeteer script is trying to find an element with the id `#editsite127` on a page, and it's not finding it within the specified 30-second timeout. when you see `unhandledpromiserejectionwarning` it means that you are not handling the error that occurs when puppeteer's `page.waitforselector()` fails. let's dissect this further, step by step.
 

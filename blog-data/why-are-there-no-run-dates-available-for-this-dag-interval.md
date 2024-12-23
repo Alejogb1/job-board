@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-are-there-no-run-dates-available-for-this-dag-interval"
 ---
 
-Alright, let's tackle this. The absence of run dates for a specific dag interval, especially when you'd expect them to be there, is a classic gotcha in the world of workflow orchestration. I’ve seen this trip up even seasoned engineers, including myself, back when I was heavily involved in scaling out a multi-tenant data processing platform. So, rather than approach this as a theoretical exercise, let me draw on some of those experiences, because, frankly, the reasons are usually less esoteric than they initially appear.
+Alright,  The absence of run dates for a specific dag interval, especially when you'd expect them to be there, is a classic gotcha in the world of workflow orchestration. I’ve seen this trip up even seasoned engineers, including myself, back when I was heavily involved in scaling out a multi-tenant data processing platform. So, rather than approach this as a theoretical exercise, let me draw on some of those experiences, because, frankly, the reasons are usually less esoteric than they initially appear.
 
 Fundamentally, a dag (directed acyclic graph) interval represents a scheduled time range within which a workflow *should* execute. When no run dates are generated for that interval, it signals a discrepancy between the scheduler's understanding of the dag's configuration and the expected behavior. We can generally group the reasons into a few key categories: scheduling configuration issues, upstream dependency problems, and the often-overlooked realm of data dependencies.
 

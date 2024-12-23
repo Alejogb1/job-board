@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-routes-be-applied-to-racks"
 ---
 
-Okay, let’s tackle this. The question of whether routes can be applied directly to racks isn't as straightforward as it might initially seem, and it really depends on how we're defining "routes" and "racks" within our infrastructure context. We often jump to immediate conclusions, but a careful examination reveals a more nuanced picture, as I’ve learned from years of managing network and server infrastructure.
+, let’s tackle this. The question of whether routes can be applied directly to racks isn't as straightforward as it might initially seem, and it really depends on how we're defining "routes" and "racks" within our infrastructure context. We often jump to immediate conclusions, but a careful examination reveals a more nuanced picture, as I’ve learned from years of managing network and server infrastructure.
 
 In my early days managing a fairly large scale data center for a now defunct online video platform, we faced a similar challenge when trying to isolate and manage traffic flows. We had initially considered binding logical routes, designed for application traffic, to physical rack locations directly. The immediate desire was to create a sort of 'physical VLAN', where servers on specific racks inherently received traffic based on their geographical location. This, however, proved to be problematic, and we had to re-think the approach. It's a good reminder that sometimes, the initial, most direct intuition doesn't always translate to practical efficacy.
 

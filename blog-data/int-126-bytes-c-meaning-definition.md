@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "int-126-bytes-c-meaning-definition"
 ---
 
-Okay so like you're asking about `int 126 bytes c` right Let's break this down because it looks like a common misunderstanding especially for folks new to systems programming or maybe coming from higher-level languages It's definitely not what it seems at first glance
+ so like you're asking about `int 126 bytes c` right Let's break this down because it looks like a common misunderstanding especially for folks new to systems programming or maybe coming from higher-level languages It's definitely not what it seems at first glance
 
 First off there isn't a standard C data type called `int` that's 126 bytes big An `int` in C its size is completely architecture-dependent and the C standard does not enforce it to be a specific size Most commonly on 32-bit architectures it's 4 bytes and on 64-bit architectures it's also often 4 bytes but it can also be 8 bytes if the architecture defines it to be so It's never going to be 126 bytes that I've ever seen
 

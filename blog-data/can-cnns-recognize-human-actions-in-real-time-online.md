@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-cnns-recognize-human-actions-in-real-time-online"
 ---
 
-Okay, let's dive into this. It's a question I've spent a fair amount of time dealing with over the past decade, specifically when I was working on a project involving real-time analysis of factory floor activities—keeping track of worker movements and tool interactions. So, can convolutional neural networks (cnns) recognize human actions in real-time, online? The short answer is yes, but with several critical caveats. Let’s unpack that a bit.
+, let's dive into this. It's a question I've spent a fair amount of time dealing with over the past decade, specifically when I was working on a project involving real-time analysis of factory floor activities—keeping track of worker movements and tool interactions. So, can convolutional neural networks (cnns) recognize human actions in real-time, online? The short answer is yes, but with several critical caveats. Let’s unpack that a bit.
 
 The core challenge lies in the inherent nature of "real-time" and "online," which, in this context, essentially means processing and classifying data as it arrives, with minimal latency. Traditional cnn architectures, particularly those trained on static images, are not inherently optimized for handling the temporal dynamics essential to action recognition. You’re not just looking at a single frame of someone standing; you need to see the sequence of movements—the lifting, pushing, walking, etc. This introduces a need to consider the temporal dimension, something a standard cnn is ill-equipped to handle alone.
 

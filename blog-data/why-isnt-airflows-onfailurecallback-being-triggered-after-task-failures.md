@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-isnt-airflows-onfailurecallback-being-triggered-after-task-failures"
 ---
 
-Okay, let's tackle this. I’ve seen this tripping up a few teams, and it's almost always down to a subtle misunderstanding of how Airflow handles task states and the lifecycle of those callbacks. So, instead of diving headfirst into the code, I think it’s best we first explore the landscape of task states within Airflow.
+,  I’ve seen this tripping up a few teams, and it's almost always down to a subtle misunderstanding of how Airflow handles task states and the lifecycle of those callbacks. So, instead of diving headfirst into the code, I think it’s best we first explore the landscape of task states within Airflow.
 
 Airflow task instances move through various states: `scheduled`, `queued`, `running`, `success`, `failed`, `skipped`, `up_for_retry`, and a few others. The key here is that the `on_failure_callback` specifically triggers when a task instance enters the `failed` state *after* all its retry attempts, if applicable, have been exhausted. It's not a catch-all for every error that might occur within a task's execution. This often leads to confusion because people assume that any task that doesn't complete successfully automatically triggers the `on_failure_callback`. It’s not that simple, unfortunately.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-tftensor-objects-be-used-as-python-booleans-within-tensorflow-graph-execution"
 ---
 
-Alright, let's tackle this. It's a question that’s tripped up quite a few developers, myself included, back in the early days of TensorFlow 1.x, when graph execution was even more explicit. So, can `tf.Tensor` objects be used as Python booleans within a TensorFlow graph? The short answer, and it's a *qualified* short answer, is no, not directly. They can't participate in standard Python boolean logic as you’d expect. However, there are ways to get the desired behavior *within* the TensorFlow graph itself. Understanding the distinction is key.
+Alright,  It's a question that’s tripped up quite a few developers, myself included, back in the early days of TensorFlow 1.x, when graph execution was even more explicit. So, can `tf.Tensor` objects be used as Python booleans within a TensorFlow graph? The short answer, and it's a *qualified* short answer, is no, not directly. They can't participate in standard Python boolean logic as you’d expect. However, there are ways to get the desired behavior *within* the TensorFlow graph itself. Understanding the distinction is key.
 
 The core issue stems from the fact that `tf.Tensor` objects are symbolic representations of operations *within* the TensorFlow computational graph. They aren't concrete values until the graph is executed and a numerical result is produced. Think of them as blueprints, not the actual building. Python's boolean operations operate on actual boolean values (True/False). So when you try something like:
 

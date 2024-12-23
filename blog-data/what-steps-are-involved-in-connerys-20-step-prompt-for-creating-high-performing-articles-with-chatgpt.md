@@ -4,7 +4,7 @@ date: "2024-12-03"
 id: "what-steps-are-involved-in-connerys-20-step-prompt-for-creating-high-performing-articles-with-chatgpt"
 ---
 
-Okay so Connery's 20-step thing right its pretty intense but I've been messing around with it and it's actually kinda cool  I'm not gonna list all 20 steps verbatim because that's boring but I'll give you the gist and some coding examples to show you what's up
+ so Connery's 20-step thing right its pretty intense but I've been messing around with it and it's actually kinda cool  I'm not gonna list all 20 steps verbatim because that's boring but I'll give you the gist and some coding examples to show you what's up
 
 First off its all about iterative refinement you don't just chuck a prompt at ChatGPT and expect gold  It's more like sculpting think of it like you're working with clay you gotta keep shaping and reshaping until you get the thing just right  Connery emphasizes this a lot
 

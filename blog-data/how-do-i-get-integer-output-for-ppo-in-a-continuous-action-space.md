@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-get-integer-output-for-ppo-in-a-continuous-action-space"
 ---
 
-Okay, let's tackle this. I remember back in '18, I was working on a reinforcement learning project involving robotic arm control. We were using Proximal Policy Optimization (PPO) with a continuous action space—think joint angles and velocities—and, like you, we needed to translate those continuous actions into discrete, executable commands for the actual hardware. It's a common challenge, and while PPO itself operates on continuous outputs, the real world often demands integers. Here’s how we approached it, and some thoughts based on that experience.
+,  I remember back in '18, I was working on a reinforcement learning project involving robotic arm control. We were using Proximal Policy Optimization (PPO) with a continuous action space—think joint angles and velocities—and, like you, we needed to translate those continuous actions into discrete, executable commands for the actual hardware. It's a common challenge, and while PPO itself operates on continuous outputs, the real world often demands integers. Here’s how we approached it, and some thoughts based on that experience.
 
 The core issue, as you've recognized, isn't inherent to PPO itself. PPO outputs a probability distribution over a continuous action space, typically parameterized by means and standard deviations for each action dimension. The problem arises when you need to interpret those values as discrete choices. Simply rounding the output is often inadequate because it ignores the uncertainty expressed by the distribution, leading to jerky, suboptimal behavior.
 

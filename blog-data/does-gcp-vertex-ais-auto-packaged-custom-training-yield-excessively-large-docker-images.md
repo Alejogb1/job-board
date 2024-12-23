@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "does-gcp-vertex-ais-auto-packaged-custom-training-yield-excessively-large-docker-images"
 ---
 
-Okay, let's tackle this. I’ve spent a fair amount of time wrangling with custom training pipelines on Vertex AI, and the issue of image size, particularly with auto-packaging, is definitely something I've encountered firsthand. It's a nuanced problem, not a straightforward 'yes' or 'no,' but rather a matter of understanding *why* those images can become bulky, and what strategies we have at our disposal to address it.
+,  I’ve spent a fair amount of time wrangling with custom training pipelines on Vertex AI, and the issue of image size, particularly with auto-packaging, is definitely something I've encountered firsthand. It's a nuanced problem, not a straightforward 'yes' or 'no,' but rather a matter of understanding *why* those images can become bulky, and what strategies we have at our disposal to address it.
 
 From what I've seen, the 'excessively large' tag isn't inherently a flaw in Vertex AI's auto-packaging mechanism itself. Instead, it's often a consequence of the default approach the system takes when it builds those container images. By default, it’s designed to be inclusive, err on the side of caution, and include everything potentially needed for your custom training job. This includes all your specified dependencies and, often, a bit more. Think of it like packing for a long trip; it’s easy to overpack “just in case.”
 

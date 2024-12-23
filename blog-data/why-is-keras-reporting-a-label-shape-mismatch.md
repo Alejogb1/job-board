@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-keras-reporting-a-label-shape-mismatch"
 ---
 
-Alright, let's tackle this. I've definitely been down this road more times than I care to remember, that infuriating "label shape mismatch" error in Keras. It’s almost a rite of passage, frankly. Usually, it isn’t some deeply buried flaw in Keras itself, but rather a discrepancy in how the labels are prepared compared to what the model expects. And it’s usually one of a few common culprits.
+Alright,  I've definitely been down this road more times than I care to remember, that infuriating "label shape mismatch" error in Keras. It’s almost a rite of passage, frankly. Usually, it isn’t some deeply buried flaw in Keras itself, but rather a discrepancy in how the labels are prepared compared to what the model expects. And it’s usually one of a few common culprits.
 
 First, let’s unpack the basics. When you train a neural network in Keras, you’re essentially feeding it pairs of data: input data and corresponding labels. The network learns to associate the input data patterns with these labels. Now, keras models expect that those labels will match the output shape it generates from the layers preceding the final output layer. If your labels don't line up with the required shape – bingo, you've got a mismatch.
 

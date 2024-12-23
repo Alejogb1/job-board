@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-is-the-capacity-of-a-smart-contract-for-holding-nfts"
 ---
 
-Okay, let's unpack the capacity question concerning smart contracts and nfts. It's a deceptively simple query that often masks a landscape of nuanced limitations and practical considerations. From my own experiences, particularly with the early ethereum-based nft projects back in 2017/2018, I've seen firsthand the evolution of this challenge. We didn't have all the fancy tooling and optimized contracts we have today. So, capacity wasn’t just about how many nfts a contract *could* hold theoretically, but how many it could manage efficiently, without causing gas price explosions or making user interaction a painfully slow process.
+, let's unpack the capacity question concerning smart contracts and nfts. It's a deceptively simple query that often masks a landscape of nuanced limitations and practical considerations. From my own experiences, particularly with the early ethereum-based nft projects back in 2017/2018, I've seen firsthand the evolution of this challenge. We didn't have all the fancy tooling and optimized contracts we have today. So, capacity wasn’t just about how many nfts a contract *could* hold theoretically, but how many it could manage efficiently, without causing gas price explosions or making user interaction a painfully slow process.
 
 The core misunderstanding usually stems from the notion of a “limit” in the traditional database sense. Smart contracts don’t have a pre-defined, hard cap on the number of nfts they can manage in the same way a relational database might have a limit on table rows. It's more accurate to think of capacity in terms of the *cost and complexity* associated with managing a growing collection of nft ownership records.
 

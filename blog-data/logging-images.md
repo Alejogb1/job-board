@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "logging-images"
 ---
 
-Okay so logging images right I’ve been there done that got the t-shirt and a few gray hairs along the way It sounds simple but it quickly spirals into a data management and performance pit I remember this one time back in 2012 when I was messing around with some early computer vision stuff for a prototype automated sorting system We were using a prototype camera setup pushing frames at like 30fps and we thought hey let’s just log everything because why not Turns out why not was a really good question
+ so logging images right I’ve been there done that got the t-shirt and a few gray hairs along the way It sounds simple but it quickly spirals into a data management and performance pit I remember this one time back in 2012 when I was messing around with some early computer vision stuff for a prototype automated sorting system We were using a prototype camera setup pushing frames at like 30fps and we thought hey let’s just log everything because why not Turns out why not was a really good question
 
 First things first you’re going to need to figure out how you want to store these things Images are not text they're binary blobs And shoving binary data into a regular text log file is just asking for trouble it leads to corrupted files it takes a lot of resources to convert to strings and back and it's frankly a nightmare to debug
 

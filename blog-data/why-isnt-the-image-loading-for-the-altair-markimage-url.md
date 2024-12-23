@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-isnt-the-image-loading-for-the-altair-markimage-url"
 ---
 
-Okay, let's tackle this. I remember a particularly frustrating project a few years back, working on a dashboard visualization tool. We were using Altair extensively, and ran into the very problem you’re describing – images refusing to load when specified within a `mark_image` call. The symptoms were always the same: an empty space or a broken image icon where a beautiful, data-driven graphic should've been. The underlying reason, as it usually is with these things, wasn't immediately obvious, but it boiled down to a few common culprits. Let’s unpack those, along with practical fixes.
+,  I remember a particularly frustrating project a few years back, working on a dashboard visualization tool. We were using Altair extensively, and ran into the very problem you’re describing – images refusing to load when specified within a `mark_image` call. The symptoms were always the same: an empty space or a broken image icon where a beautiful, data-driven graphic should've been. The underlying reason, as it usually is with these things, wasn't immediately obvious, but it boiled down to a few common culprits. Let’s unpack those, along with practical fixes.
 
 First, let’s clarify what `mark_image` is for in Altair. It’s a powerful method to incorporate raster graphics (like png, jpg, etc.) into your visualizations, often to add contextual information or branding. The basic premise is straightforward; you provide a url string pointing to the image resource, and Altair, along with its underlying vega-lite engine, should render it. However, the devil is often in the details.
 

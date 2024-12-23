@@ -4,7 +4,7 @@ date: "2024-12-12"
 id: "what-are-the-anticipated-features-of-gemini-3-and-how-might-they-improve-multimodal-capabilities"
 ---
 
-okay so gemini 3 right thats the buzz word right now like everyone's itching to see what google's cooking up next after gemini and gemini 1.5 pro it’s kinda like waiting for the next marvel movie you know the hype is real
+ so gemini 3 right thats the buzz word right now like everyone's itching to see what google's cooking up next after gemini and gemini 1.5 pro it’s kinda like waiting for the next marvel movie you know the hype is real
 
 first things first we gotta think about the whole multimodal thing that's where gemini's been making waves it's not just about text anymore we're talking images video audio code all that jazz all at once gemini 1.5 pro upped the ante big time with its crazy context window but for gemini 3 i'm expecting even more of that plus some seriously refined capabilities
 
@@ -22,7 +22,7 @@ now lets talk implementation i suspect the api is gonna become even more flexibl
 
 and data privacy and security i hope that remains a priority as we see increasing capabilities and adoption we need models that are trustworthy that prioritize user privacy and that are transparent about how they're being used i think there will be a need for some kind of a "model explainability" interface so we have some idea how gemini reached a certain conclusion and not just blindly follow it
 
-okay lets get down to some code snippets to illustrate some of these concepts i mean code is king right
+ lets get down to some code snippets to illustrate some of these concepts i mean code is king right
 
 **snippet 1: enhanced image understanding**
 

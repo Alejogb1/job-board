@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-interpret-the-output-of-modelsummary"
 ---
 
-Okay, let's dive into `model.summary()`. I've spent a fair amount of time working with various neural network architectures, and interpreting `model.summary()` output is a fundamental skill. It’s often the first diagnostic step when something's not quite behaving as expected, and frankly, it's crucial for both debugging and understanding the architecture of your model. So, let me walk you through it from a practical perspective.
+, let's dive into `model.summary()`. I've spent a fair amount of time working with various neural network architectures, and interpreting `model.summary()` output is a fundamental skill. It’s often the first diagnostic step when something's not quite behaving as expected, and frankly, it's crucial for both debugging and understanding the architecture of your model. So, let me walk you through it from a practical perspective.
 
 The `model.summary()` method, typically associated with libraries like Keras in TensorFlow or PyTorch, provides a textual overview of a neural network. The output isn’t arbitrary; it's structured to give you critical information about your model's layers, parameter counts, and overall architecture. What you're seeing is a table, typically with the following columns:
 

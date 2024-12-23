@@ -4,9 +4,9 @@ date: "2024-12-13"
 id: "matchdata-ruby-regex-explanation"
 ---
 
-Alright so you're asking about `MatchData` in Ruby regex and how it works right Been there done that countless times I've wrestled with regex like a toddler trying to assemble a nuclear reactor yeah it's not pretty I'll try to lay out everything I know about `MatchData` and how to extract information from it especially for beginners
+so you're asking about `MatchData` in Ruby regex and how it works right Been there done that countless times I've wrestled with regex like a toddler trying to assemble a nuclear reactor yeah it's not pretty I'll try to lay out everything I know about `MatchData` and how to extract information from it especially for beginners
 
-Okay so you fire off a regular expression operation in Ruby using something like `=~` or `match` and if it finds a match it doesn’t just throw back a true or false you get a `MatchData` object Think of it like a detailed report of the matching process It's basically a treasure trove of information about what exactly got matched and where it occurred in the target string
+ so you fire off a regular expression operation in Ruby using something like `=~` or `match` and if it finds a match it doesn’t just throw back a true or false you get a `MatchData` object Think of it like a detailed report of the matching process It's basically a treasure trove of information about what exactly got matched and where it occurred in the target string
 
 Let's break it down first the basic match which will produce match data you can use
 
@@ -43,7 +43,7 @@ end
 
 Notice the `(?<username>\w+)` and `(?<email>[\w@\.]+)` here the `?<>` part gives a name to the capture group so you can access them like a hash using symbols you can access them by `:username` or `:email` and it makes it easy to keep track of your captures and easier to understand your code Also if you still want to use the index you can the index `1` and `2` would give you `john` and `john@example.com` respectively
 
-Alright now you want to do some more advanced things so `MatchData` has other methods beside `[]` to make our life easier Lets say you need the position of the matches inside the main string `MatchData` gives us `offset`
+now you want to do some more advanced things so `MatchData` has other methods beside `[]` to make our life easier Lets say you need the position of the matches inside the main string `MatchData` gives us `offset`
 
 ```ruby
 str = "find the word word here"
@@ -87,7 +87,7 @@ You get the entire match at the beginning and then each captured group as elemen
 
 Also important to remember if no match is found you wont get `MatchData` it will be `nil` You **must** check for this if you intend to manipulate the `MatchData` object because calling any of its methods without doing so will lead to an error.
 
-Okay let's talk about common gotchas I have seen people run into This is where I usually shake my head and say ah young padawan
+ let's talk about common gotchas I have seen people run into This is where I usually shake my head and say ah young padawan
 
 First beginners often forget that numeric indexes start with 1 for captures not 0 that 0 gives you the whole thing You know it's not always intuitive if you come from another language it is a common source of errors I've seen people debug for hours because they kept missing this
 

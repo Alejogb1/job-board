@@ -4,13 +4,13 @@ date: "2024-12-13"
 id: "mathematica-substitution-code-explanation"
 ---
 
-Okay so you're asking about substitution in Mathematica right Been there done that man Let me tell you substitution can be a real headache if you're not careful but also incredibly powerful once you nail it I've wrestled with this beast for years trust me I've seen it all So let's dive in
+ so you're asking about substitution in Mathematica right Been there done that man Let me tell you substitution can be a real headache if you're not careful but also incredibly powerful once you nail it I've wrestled with this beast for years trust me I've seen it all So let's dive in
 
 First thing you gotta understand is that Mathematica is symbolic Its core strength is manipulating expressions not just crunching numbers You're not dealing with variables in the programming sense where they hold a value but rather symbols that can stand for anything You substitute one thing for another to transform or simplify the expression
 
 The basic workhorse is `/.` which is short for `ReplaceAll` It's the operator you'll use most often When you use `/.` you're telling Mathematica find this pattern and replace it with that pattern Think of it like find and replace in a text editor but for symbolic expressions This pattern matching thing can get tricky but its the crux of it all
 
-Okay let's get some code examples going because talking is cheap
+ let's get some code examples going because talking is cheap
 
 ```mathematica
 expr = a x^2 + b x + c;

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-images-be-resized-for-optimal-performance-in-deep-learning-models"
 ---
 
-Okay, let's talk image resizing for deep learning. It's something I’ve dealt with extensively, especially back during my stint working on a mobile-first computer vision application. I distinctly remember the headaches of balancing image quality, model accuracy, and of course, battery drain. So, it's not just about shrinking pixels; it's a nuanced process that can have a profound impact on the success of a deep learning model.
+, let's talk image resizing for deep learning. It's something I’ve dealt with extensively, especially back during my stint working on a mobile-first computer vision application. I distinctly remember the headaches of balancing image quality, model accuracy, and of course, battery drain. So, it's not just about shrinking pixels; it's a nuanced process that can have a profound impact on the success of a deep learning model.
 
 The core issue, as I see it, stems from the tension between maintaining essential image features relevant to the task at hand, while reducing computational load and memory consumption. Raw image data can often be massive, and feeding that directly to a deep network is not only inefficient but can lead to slower training times and decreased overall model performance. This is particularly true when we're dealing with resource-constrained devices, but even on high-end hardware, there are performance gains to be had with effective resizing strategies.
 

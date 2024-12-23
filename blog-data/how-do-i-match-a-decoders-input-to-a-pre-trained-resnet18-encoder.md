@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-match-a-decoders-input-to-a-pre-trained-resnet18-encoder"
 ---
 
-Alright, let's tackle this. I remember a particularly knotty project from a few years back—medical image segmentation, as a matter of fact—where we faced this exact challenge: connecting a custom decoder to a ResNet18 encoder. The devil, as they often say, is in the details. It's not simply a matter of slapping them together and hoping for the best; a careful consideration of feature map sizes and data flow is crucial for a successful integration. I'll walk you through how I approach this, along with some real code examples.
+Alright,  I remember a particularly knotty project from a few years back—medical image segmentation, as a matter of fact—where we faced this exact challenge: connecting a custom decoder to a ResNet18 encoder. The devil, as they often say, is in the details. It's not simply a matter of slapping them together and hoping for the best; a careful consideration of feature map sizes and data flow is crucial for a successful integration. I'll walk you through how I approach this, along with some real code examples.
 
 The core issue arises from the structural differences between encoders and decoders, especially when the encoder is a pre-trained network like ResNet18, which is primarily designed for classification tasks. Its convolutional layers reduce spatial dimensions, making the task of mapping this output to a decoder that requires upsampled, high-resolution feature maps somewhat complex. The fundamental problem then, is resolving this spatial mismatch.
 

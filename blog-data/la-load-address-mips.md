@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "la-load-address-mips"
 ---
 
-Okay so you're asking about load addresses in MIPS specifically right Yeah I've been there done that got the T-shirt and probably a few compiler errors to go with it Let's break this down
+ so you're asking about load addresses in MIPS specifically right Yeah I've been there done that got the T-shirt and probably a few compiler errors to go with it Let's break this down
 
 First off `la` in MIPS assembly is the load address pseudo-instruction It's basically a convenient way for us to get the memory address of something into a register MIPS itself is a RISC architecture which means it tries to keep things simple and that simplicity can sometimes feel a little… verbose Let me just say MIPS was probably designed by engineers who love parentheses a little too much Anyway `la` isn't a single instruction it's a shortcut a macro if you will The assembler will convert it into a sequence of actual MIPS instructions
 

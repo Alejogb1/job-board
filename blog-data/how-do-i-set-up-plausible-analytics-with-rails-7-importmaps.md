@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-set-up-plausible-analytics-with-rails-7-importmaps"
 ---
 
-Okay, let's tackle this. Integrating Plausible Analytics with a Rails 7 application using Importmaps, it's a setup I've navigated before, and frankly, it's not as straightforward as just dropping a script tag into your layout, due to how Importmaps manage dependencies. I remember struggling with this on a project a couple of years back when we were migrating from Webpacker, and the key is understanding how Importmaps handle external libraries and how to hook into that pipeline. Let's break it down.
+,  Integrating Plausible Analytics with a Rails 7 application using Importmaps, it's a setup I've navigated before, and frankly, it's not as straightforward as just dropping a script tag into your layout, due to how Importmaps manage dependencies. I remember struggling with this on a project a couple of years back when we were migrating from Webpacker, and the key is understanding how Importmaps handle external libraries and how to hook into that pipeline. Let's break it down.
 
 The core challenge lies in the fact that Importmaps don't directly process JavaScript files; they simply map module specifiers to their corresponding locations. Unlike Webpacker, which bundles all your assets together, Importmaps rely on the browser's native module loading capabilities. This means Plausible's script, which you typically include via a `<script>` tag, needs to be handled differently.
 

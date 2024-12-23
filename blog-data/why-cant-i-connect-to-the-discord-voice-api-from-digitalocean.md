@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-cant-i-connect-to-the-discord-voice-api-from-digitalocean"
 ---
 
-Okay, let’s unpack this. It's not uncommon to encounter connectivity issues when trying to interact with the Discord voice api, especially when doing so from cloud providers like DigitalOcean. I’ve personally seen these problems crop up countless times over the years, and they often stem from a few common culprits, each requiring a slightly different approach to resolve. It's never a straightforward 'this is *the* problem', but rather a process of systematic elimination.
+, let’s unpack this. It's not uncommon to encounter connectivity issues when trying to interact with the Discord voice api, especially when doing so from cloud providers like DigitalOcean. I’ve personally seen these problems crop up countless times over the years, and they often stem from a few common culprits, each requiring a slightly different approach to resolve. It's never a straightforward 'this is *the* problem', but rather a process of systematic elimination.
 
 Let’s first establish the landscape we're working with. Discord’s voice api relies on udp for the actual audio transmission, while the signaling, things like connecting to a channel, is primarily done over websockets over tcp. DigitalOcean, like most cloud providers, operates within its network, and this is where potential complications can arise. A big thing to consider is that not all traffic is treated the same, and firewalls and other network configurations can block traffic, sometimes unintentionally.
 

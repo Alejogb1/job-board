@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-you-cancel-an-async-operation-returning-a-cancellable-type"
 ---
 
-Okay, let’s delve into the intricacies of canceling asynchronous operations that yield a cancellable type. This isn't as straightforward as flipping a switch; it requires a nuanced understanding of the underlying mechanics. I've been down this road a few times, notably when working on a large-scale data processing pipeline where we had to deal with numerous concurrent tasks that sometimes needed to be gracefully halted.
+, let’s delve into the intricacies of canceling asynchronous operations that yield a cancellable type. This isn't as straightforward as flipping a switch; it requires a nuanced understanding of the underlying mechanics. I've been down this road a few times, notably when working on a large-scale data processing pipeline where we had to deal with numerous concurrent tasks that sometimes needed to be gracefully halted.
 
 The primary challenge stems from the fact that an asynchronous operation, by its very nature, might be executing in a separate thread or context. Directly terminating it without proper coordination can lead to resource leaks or inconsistent application states. This is where the concept of a "cancellable type" becomes crucial. Essentially, such a type provides a standardized mechanism to signal to an operation that it should terminate gracefully. The specific implementation might vary, but the core principle remains consistent: we need a way to communicate the cancellation request and the asynchronous operation needs to actively monitor this signal.
 

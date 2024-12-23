@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-a-invalidargumenterror-condition-x--y-did-not-hold"
 ---
 
-Okay, let's unpack this `InvalidArgumentError: Condition x == y did not hold` situation. I've seen this error pop up more times than I care to recall, and it's almost always a sign that something went astray during the tensor operations within a machine learning framework like TensorFlow or PyTorch. This isn’t a problem specific to one library though; the underlying principle is common across any system that relies on conditional checks during numerical computations.
+, let's unpack this `InvalidArgumentError: Condition x == y did not hold` situation. I've seen this error pop up more times than I care to recall, and it's almost always a sign that something went astray during the tensor operations within a machine learning framework like TensorFlow or PyTorch. This isn’t a problem specific to one library though; the underlying principle is common across any system that relies on conditional checks during numerical computations.
 
 The error essentially tells you that a condition you specified, usually an equality, inequality, or membership check, wasn't met as expected during the execution of your computational graph. Think of it as a safeguard built into the system; if the values don't match up as they should, the operation is aborted to prevent incorrect results or more significant errors down the line. Instead of continuing with invalid data, these frameworks will flag the inconsistency.
 

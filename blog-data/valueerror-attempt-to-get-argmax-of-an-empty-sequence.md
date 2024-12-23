@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "valueerror-attempt-to-get-argmax-of-an-empty-sequence"
 ---
 
-Okay so "ValueError attempt to get argmax of an empty sequence" right Been there done that got the t-shirt or you know the debugging log that nearly set my screen on fire.
+ so "ValueError attempt to get argmax of an empty sequence" right Been there done that got the t-shirt or you know the debugging log that nearly set my screen on fire.
 
 This isn't a rare error it's a classic facepalm moment for anyone working with sequences and trying to find a maximum.  It means exactly what it says your code tried to use argmax on something that's empty an empty list a numpy array with no elements a pandas series with zilch absolutely nothing there.  `argmax` function's job is to tell you where the biggest thing is and well if there isn't anything there is no biggest thing. It cannot find the biggest element of nothing it simply doesn't compute
 

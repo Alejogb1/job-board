@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "search-h-header-file-not-available"
 ---
 
-Okay so you're banging your head against the wall because you're getting the "search.h" not found error right I've been there trust me I've spent countless nights fueled by lukewarm coffee wrestling with similar issues it's like some kind of cruel right of passage for anyone getting serious with C/C++
+ so you're banging your head against the wall because you're getting the "search.h" not found error right I've been there trust me I've spent countless nights fueled by lukewarm coffee wrestling with similar issues it's like some kind of cruel right of passage for anyone getting serious with C/C++
 
 First things first that `search.h` file it's not a standard header you won't find it chilling in your compiler's usual include directories like `stdio.h` or `stdlib.h` No sir not gonna happen. I remember when I was trying to build this weird embedded system project back in university I thought the same thing I was trying to use some binary search function for memory indexing and I was like where the hell is `search.h` I even tried to `sudo apt-get install search-dev` I know I know total noob move back then.
 
@@ -12,7 +12,7 @@ So what's the deal you ask Well it usually belongs to a specific library or proj
 
 Let's say for example that you're dealing with a project that needs fast lookup of a set of identifiers The author decided to implement a custom hash table and put the whole thing in a header file named `search.h`. They could have done better with namespaces but well… here we are.
 
-Alright first thing you gotta do is to figure out where the actual header file is You need to locate it in the project folder structure if the project you are using is not your own. Sometimes it's just in a `include` directory in other times it might be buried deep within some subfolder. Use your file explorer or the command line I’m not your mom. Once you have the header the trick is to make sure your compiler knows where to find it. You typically tell the compiler to look for header files in a specific location using the `-I` flag during compilation.
+first thing you gotta do is to figure out where the actual header file is You need to locate it in the project folder structure if the project you are using is not your own. Sometimes it's just in a `include` directory in other times it might be buried deep within some subfolder. Use your file explorer or the command line I’m not your mom. Once you have the header the trick is to make sure your compiler knows where to find it. You typically tell the compiler to look for header files in a specific location using the `-I` flag during compilation.
 
 For example if your `search.h` file is located in directory named `/my_project/include` your compilation command would look something like this:
 
@@ -22,7 +22,7 @@ g++ -I/my_project/include main.cpp -o my_program
 
 Here `main.cpp` is your actual source file that's trying to use `search.h`. The `-I/my_project/include` says "hey compiler look in this `/my_project/include` directory for include files". This is the most common mistake developers make I know I did it myself a lot back in the day I was like what is going on why is it not finding my file I had to get someone to explain it to me this basic thing. It's like when you hide your car keys from yourself and then cannot find them you should leave them in a normal place not a hidden one and the compiler expects to find it in a normal location.
 
-Okay now let's say you can't find where the hell this file is or you are the one that has to create it and maybe you need to implement it yourself here is what I would do I’ll use some dummy implementation for the examples I’m gonna provide. This is not an actual production code ready implementation I should be careful to state this but you know it's just a demo.
+ now let's say you can't find where the hell this file is or you are the one that has to create it and maybe you need to implement it yourself here is what I would do I’ll use some dummy implementation for the examples I’m gonna provide. This is not an actual production code ready implementation I should be careful to state this but you know it's just a demo.
 
 First let's do a simple binary search function. We need to create our own `search.h` file and then use it in our `main.cpp` Here's what `search.h` looks like:
 
@@ -101,7 +101,7 @@ And then run:
 This will compile and link the code and you will get an output that will display "Element found at index: 5".
 So this is a simple example of how one would create their custom search header file and how to use it. This is very useful if you do not have access to the correct search file.
 
-Okay let's spice things up a bit let's say that your header file implements a basic linear search algorithm or something more simpler even. Here’s how `search.h` might look then:
+ let's spice things up a bit let's say that your header file implements a basic linear search algorithm or something more simpler even. Here’s how `search.h` might look then:
 
 ```c++
 #ifndef SEARCH_H
@@ -180,7 +180,7 @@ One thing to keep in mind is if you have both a `search.h` and `search.cpp` you 
 
 Now if you’re feeling adventurous and the `search.h` is not in the correct place check your makefiles or build configuration files maybe you have a custom include path in there. I once forgot that I had a custom makefile and was scratching my head for hours because the header was right in front of my eyes but the compiler was not picking it up. I felt like a total idiot but you know we have to make mistakes to learn. This was not a good feeling but you learn from mistakes.
 
-Okay okay one more thing before I bore you to death you gotta check the source code if you have access to it and see how the author is using it. Sometimes the `search.h` is not used directly but rather there is a wrapper around it. If you see any typedefs or aliases you may need to keep track of those too. The compiler doesn't like surprises and it expects a particular setup to work.
+  one more thing before I bore you to death you gotta check the source code if you have access to it and see how the author is using it. Sometimes the `search.h` is not used directly but rather there is a wrapper around it. If you see any typedefs or aliases you may need to keep track of those too. The compiler doesn't like surprises and it expects a particular setup to work.
 
 Finally I would recommend you to read the following books to really get better with C and C++ for these kind of problems. I usually get back to these books when something like this happens so I feel like I have to mention them. First read "C Programming Language" by Brian Kernighan and Dennis Ritchie it is an old book but it explains very well C concepts. Then "Effective C++" by Scott Meyers will teach you to properly use C++ and good practices and "Modern C++ Design" by Andrei Alexandrescu is excellent if you want to learn how to write complex C++ projects.
 

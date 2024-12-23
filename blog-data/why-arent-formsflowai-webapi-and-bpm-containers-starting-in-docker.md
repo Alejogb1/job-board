@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-arent-formsflowai-webapi-and-bpm-containers-starting-in-docker"
 ---
 
-Okay, let's unpack this. The issue of Formsflow.ai WebAPI and BPM containers failing to start in a Docker environment is, unfortunately, a fairly common stumbling block I’ve encountered several times in my past work, particularly when setting up complex workflow systems. It’s rarely one single culprit, but rather a confluence of potential problems that need methodical examination. Let me share what I’ve learned and how I approach debugging this.
+, let's unpack this. The issue of Formsflow.ai WebAPI and BPM containers failing to start in a Docker environment is, unfortunately, a fairly common stumbling block I’ve encountered several times in my past work, particularly when setting up complex workflow systems. It’s rarely one single culprit, but rather a confluence of potential problems that need methodical examination. Let me share what I’ve learned and how I approach debugging this.
 
 The first thing I always check is the container logs. The output from `docker logs <container_id or container_name>` is your best friend here. Don't just glance at it; read it *carefully*. Look for exceptions, errors, and warnings. These logs often reveal the root cause – sometimes a simple misconfiguration or a missing dependency. I’ve seen instances where the problem was as elementary as an incorrect environment variable pointing to the wrong database host or missing credentials. Sometimes the issues are more nuanced.
 

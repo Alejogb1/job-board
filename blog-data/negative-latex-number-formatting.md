@@ -4,13 +4,13 @@ date: "2024-12-13"
 id: "negative-latex-number-formatting"
 ---
 
-Okay so you're hitting that classic LaTeX number formatting wall yeah? Been there done that like a million times It’s always some sneaky little detail that throws everything off so let me break down what I think you’re getting at and give you the lowdown on how I’ve personally battled with negative numbers in LaTeX and how I got my formatting to behave
+ so you're hitting that classic LaTeX number formatting wall yeah? Been there done that like a million times It’s always some sneaky little detail that throws everything off so let me break down what I think you’re getting at and give you the lowdown on how I’ve personally battled with negative numbers in LaTeX and how I got my formatting to behave
 
 First things first what do you *mean* by “negative number formatting” in LaTeX? There are tons of things that can go wrong you could be seeing things like misplaced minus signs weird spacing around negatives or maybe you're getting errors because LaTeX doesn’t know how to interpret negative inputs properly So let's assume you are facing one of the most common issues when generating tables or trying to format math inline where the minus sign is either too far from the number or too close or simply not correctly aligned in tables
 
-Alright so when dealing with simple math mode the `-` sign is usually fine but for tables or anything more complex this is where the fun starts Let’s say you're building a table and those negative values look like they’re floating off into space or crammed into the column beside them Well here’s the thing the standard table environments in LaTeX are just not the best at handling the visual aspects of spacing automatically
+so when dealing with simple math mode the `-` sign is usually fine but for tables or anything more complex this is where the fun starts Let’s say you're building a table and those negative values look like they’re floating off into space or crammed into the column beside them Well here’s the thing the standard table environments in LaTeX are just not the best at handling the visual aspects of spacing automatically
 
-Okay so picture this back in the day when I was a fresh grad student working on my thesis I had to create tables for this huge dataset and everything was perfect except the darn negative numbers were all over the place some were tight against the number some had this gigantic space it looked like a kid did it and it was a nightmare to fix manually This was way before I knew about the `siunitx` package that’s when I realised using vanilla latex to handle numeric formatting could be a real pit of despair
+ so picture this back in the day when I was a fresh grad student working on my thesis I had to create tables for this huge dataset and everything was perfect except the darn negative numbers were all over the place some were tight against the number some had this gigantic space it looked like a kid did it and it was a nightmare to fix manually This was way before I knew about the `siunitx` package that’s when I realised using vanilla latex to handle numeric formatting could be a real pit of despair
 
 First naive approach I tried was just manually adding `\` `thinspaces` and `\` `hspaces` which was a terrible idea because it was not scalable and would change depending on the numbers and that was just so bad and inconsistent and my supervisor would have definitely killed me if I had to do it on all the tables So I looked for a different approach and found out that there were packages that were designed to specifically solve this
 
@@ -44,7 +44,7 @@ I could use `l` `c` and `r` as column types but then the numbers would be messy 
 
 There are others like `dcolumn` but I have been using `siunitx` for a long time because it works well enough for everything I want to do but `dcolumn` might be worth taking a look for some other edge cases that `siunitx` does not handle that well
 
-Okay but sometimes you might not want to do that and maybe you are working with inline math or text and not tables well then there is this little trick too
+ but sometimes you might not want to do that and maybe you are working with inline math or text and not tables well then there is this little trick too
 
 ```latex
 \documentclass{article}
@@ -62,7 +62,7 @@ Also we can use $\num{-5}$ with \texttt{siunitx}
 \end{document}
 ```
 
-The example shows how the basic LaTeX handling can be okay if the minus sign is correctly rendered but some people like it when the minus sign is rendered with the same font as the number in that case `$\text{-5}$` is good enough because the default minus sign is a dash so to make it more consistent we can use the minus symbol in text mode using the `\text` command or alternatively a simple parenthesis is enough. Using `siunitx` in inline text is also a good option to handle most cases using the `\num` command
+The example shows how the basic LaTeX handling can be  if the minus sign is correctly rendered but some people like it when the minus sign is rendered with the same font as the number in that case `$\text{-5}$` is good enough because the default minus sign is a dash so to make it more consistent we can use the minus symbol in text mode using the `\text` command or alternatively a simple parenthesis is enough. Using `siunitx` in inline text is also a good option to handle most cases using the `\num` command
 
 And finally something I did more recently was while I was working on some financial report the currency values also came into place and LaTeX had me sweating a little because a negative value in accounting is not written as -1000 but usually as (1000) with parenthesis
 

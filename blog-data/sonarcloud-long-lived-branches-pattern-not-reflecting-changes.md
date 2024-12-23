@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "sonarcloud-long-lived-branches-pattern-not-reflecting-changes"
 ---
 
-Okay so you're having issues with SonarCloud not picking up changes on your long-lived branches right I've been there man believe me This is a classic source control and analysis sync headache and it bites deep if you don't get it sorted early On a project way back when I was neck deep in Java microservices a good 5 years ago we had this same exact issue Long-lived branches were just not getting updated analysis even though we were pushing code like crazy It was infuriating so I get the pain Let's dissect this and I'll try to give you the real meat and potatoes of what I've seen work not some fluffy marketing nonsense
+ so you're having issues with SonarCloud not picking up changes on your long-lived branches right I've been there man believe me This is a classic source control and analysis sync headache and it bites deep if you don't get it sorted early On a project way back when I was neck deep in Java microservices a good 5 years ago we had this same exact issue Long-lived branches were just not getting updated analysis even though we were pushing code like crazy It was infuriating so I get the pain Let's dissect this and I'll try to give you the real meat and potatoes of what I've seen work not some fluffy marketing nonsense
 
 First off let's make sure we understand the core concept SonarCloud is looking at your source code and comparing it against what it last saw on that particular branch It uses the commit history to track changes and identify what's new If it misses changes it usually means the analysis is not getting triggered correctly or is not correctly picking up the latest commits I've personally found this can have multiple culprits
 

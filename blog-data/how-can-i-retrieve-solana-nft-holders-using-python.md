@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-retrieve-solana-nft-holders-using-python"
 ---
 
-Okay, let's tackle this. It's a request that surfaces often, and having personally worked on several NFT marketplace integrations, I've encountered various challenges in getting this information reliably. Retrieving Solana NFT holders with Python involves interacting with the Solana blockchain, which, while efficient, doesn't provide a single, straightforward call to get a list of all holders of a given NFT mint. Instead, we need to employ a combination of methods and understand the underlying data structures.
+,  It's a request that surfaces often, and having personally worked on several NFT marketplace integrations, I've encountered various challenges in getting this information reliably. Retrieving Solana NFT holders with Python involves interacting with the Solana blockchain, which, while efficient, doesn't provide a single, straightforward call to get a list of all holders of a given NFT mint. Instead, we need to employ a combination of methods and understand the underlying data structures.
 
 The core challenge stems from how Solana handles NFTs. Unlike some other blockchains, Solana doesn't maintain an explicit 'list of holders' for each NFT. Ownership is determined by the state of accounts on the blockchain. An NFT is essentially a token, and the token account that holds it defines ownership. Thus, our approach must revolve around finding these token accounts.
 

@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "is-activation-a-function-or-layer-in-neural-networks"
 ---
 
-Okay, let's tackle this one. I've spent a good chunk of my career elbows-deep in neural network architectures, and the distinction between activation functions and layers is a common point of confusion, even for folks who’ve been at it for a while. It’s not a binary thing; it depends on how we define “layer” in a given context.
+, let's tackle this one. I've spent a good chunk of my career elbows-deep in neural network architectures, and the distinction between activation functions and layers is a common point of confusion, even for folks who’ve been at it for a while. It’s not a binary thing; it depends on how we define “layer” in a given context.
 
 From my experience, working on projects ranging from image recognition to natural language processing, I’ve encountered both perspectives. Sometimes, the activation function is treated as an integral part of a layer, a sort of “post-processing” step applied immediately after the linear transformation. Other times, it's viewed as a separate, independent entity, a modular component that can be plugged into different places in the network.
 

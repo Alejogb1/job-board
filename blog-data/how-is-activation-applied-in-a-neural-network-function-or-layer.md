@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-is-activation-applied-in-a-neural-network-function-or-layer"
 ---
 
-Okay, let’s unpack this. It’s a question I’ve seen trip up folks new to neural networks, and honestly, even a few seasoned practitioners now and then. The ambiguity often stems from how libraries tend to abstract things away, but the core concept is fairly straightforward once you peel back the layers.
+, let’s unpack this. It’s a question I’ve seen trip up folks new to neural networks, and honestly, even a few seasoned practitioners now and then. The ambiguity often stems from how libraries tend to abstract things away, but the core concept is fairly straightforward once you peel back the layers.
 
 The short, technical answer is that activation functions are *functions*, not layers, although they’re often discussed and implemented in the context of layers. I've seen the misconception that they're a standalone 'layer' lead to some convoluted network designs early in my career. The best way to approach this is to understand their purpose first and then look at where they fit within the bigger picture of neural network computations.
 

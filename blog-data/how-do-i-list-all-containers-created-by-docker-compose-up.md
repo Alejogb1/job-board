@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-list-all-containers-created-by-docker-compose-up"
 ---
 
-Okay, let's tackle this. Funny enough, this is a question that takes me back a bit. I remember a particularly challenging deployment a few years ago where I needed to meticulously track down container lifecycles managed by docker-compose. It quickly became apparent that knowing *exactly* how to list the spawned containers was crucial. The 'docker ps' command alone isn’t sufficient; you need that added layer of understanding about the relationship docker-compose creates.
+,  Funny enough, this is a question that takes me back a bit. I remember a particularly challenging deployment a few years ago where I needed to meticulously track down container lifecycles managed by docker-compose. It quickly became apparent that knowing *exactly* how to list the spawned containers was crucial. The 'docker ps' command alone isn’t sufficient; you need that added layer of understanding about the relationship docker-compose creates.
 
 The core issue here is understanding that `docker-compose up` doesn’t simply launch containers with random names. It prefixes them, linking them directly back to the project and service definition within your `docker-compose.yml` file. This prefixing mechanism is key to correctly identifying containers belonging to a specific compose setup.
 

@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-are-tensorflow-modelpredict-accuracy-results-different-from-training"
 ---
 
-Okay, let's tackle this. I’ve seen this issue pop up countless times in various machine learning projects, and it's often more nuanced than a simple “bug in the code.” The discrepancy between training accuracy and prediction accuracy in TensorFlow, or any machine learning framework for that matter, can stem from several interwoven factors. We’re not just talking about a single cause, but rather a confluence of potential issues, many related to the fundamental differences in how models are trained versus how they are deployed for inference.
+,  I’ve seen this issue pop up countless times in various machine learning projects, and it's often more nuanced than a simple “bug in the code.” The discrepancy between training accuracy and prediction accuracy in TensorFlow, or any machine learning framework for that matter, can stem from several interwoven factors. We’re not just talking about a single cause, but rather a confluence of potential issues, many related to the fundamental differences in how models are trained versus how they are deployed for inference.
 
 First, let's establish that the “training accuracy” we see reported is typically an *average* performance across a batch or an epoch of training data, with the model actively adjusting its parameters using backpropagation. On the flip side, “prediction accuracy” is assessed on new, unseen data, and the model's parameters are fixed. This fundamental difference already hints at the potential for divergence.
 

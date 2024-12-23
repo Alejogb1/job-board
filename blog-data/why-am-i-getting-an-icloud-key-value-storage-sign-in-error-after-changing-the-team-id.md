@@ -18,7 +18,7 @@ so, what’s the fix? well, there's no magic bullet, but here’s the common app
 
 **1. the brute force – container deletion:**
 
-this is the most direct way. we essentially force the system to recreate the container with the new team id. this means that all the data from the previous container will be gone. if you have crucial user data, *you absolutely must back it up first*, perhaps by syncing it somewhere else or letting the user know the issue. this method is more suitable if you are okay losing data stored in kvstore, and that might be the case. here’s how it could look like in code (assuming you are using swift here):
+this is the most direct way. we essentially force the system to recreate the container with the new team id. this means that all the data from the previous container will be gone. if you have crucial user data, *you absolutely must back it up first*, perhaps by syncing it somewhere else or letting the user know the issue. this method is more suitable if you are  losing data stored in kvstore, and that might be the case. here’s how it could look like in code (assuming you are using swift here):
 
 ```swift
 import cloudkit

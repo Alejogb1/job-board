@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "is-custom-training-or-pre-trained-better-for-bert"
 ---
 
-Okay, let’s tackle this. I've spent my fair share of time elbow-deep in transformer models, and the question of custom training versus leveraging pre-trained models for BERT is a perennial one. It's not a simple black-and-white answer; it really depends on the specific task, the data you have available, and the computational resources at your disposal. From my experience, both approaches offer benefits and drawbacks, and the optimal choice often involves a nuanced balancing act.
+, let’s tackle this. I've spent my fair share of time elbow-deep in transformer models, and the question of custom training versus leveraging pre-trained models for BERT is a perennial one. It's not a simple black-and-white answer; it really depends on the specific task, the data you have available, and the computational resources at your disposal. From my experience, both approaches offer benefits and drawbacks, and the optimal choice often involves a nuanced balancing act.
 
 Let's break down the fundamental differences. Pre-trained BERT models, generally obtained from sources like the Hugging Face Transformers library, are trained on vast amounts of text data (like books and Wikipedia). They learn general representations of language that are remarkably effective at a wide variety of natural language processing (NLP) tasks. Think of it as having a highly educated linguist, ready to adapt to your specific needs. These pre-trained models are immensely useful as they circumvent the need to train a model from scratch, saving significant time and resources.
 

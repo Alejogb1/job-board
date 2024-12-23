@@ -4,7 +4,7 @@ date: "2024-12-03"
 id: "how-can-notebooklm-assist-in-high-fantasy-worldbuilding"
 ---
 
-Okay so you want to use NotebookLM for worldbuilding right super cool idea I've been messing around with LLMs for this kind of thing lately its pretty awesome  I'm thinking high fantasy so lots of magic mythical creatures crazy geography  NotebookLM is perfect for this because it lets you build on your ideas iteratively  you know like a real notebook you keep adding to and refining  unlike some other models that just give you a one-shot thing  
+ so you want to use NotebookLM for worldbuilding right super cool idea I've been messing around with LLMs for this kind of thing lately its pretty awesome  I'm thinking high fantasy so lots of magic mythical creatures crazy geography  NotebookLM is perfect for this because it lets you build on your ideas iteratively  you know like a real notebook you keep adding to and refining  unlike some other models that just give you a one-shot thing  
 
 The way I'd approach this is to start with a core concept  maybe a specific magical system or a key character or even just a feeling you want the world to evoke  say you're going for a dark and gritty high fantasy world with a focus on necromantic magic then you'd start with something like this in NotebookLM
 

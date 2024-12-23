@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "maximum-haskell-value"
 ---
 
-Alright so you're asking about getting the maximum value in Haskell right Been there done that so many times
+so you're asking about getting the maximum value in Haskell right Been there done that so many times
 
 First off let's be clear you're not gonna get "maximum" in some absolute sense like an integer that's bigger than every other integer Haskell like most languages has limits You're asking how to find the biggest element within some data structure or a set of values thats what its about right
 
@@ -52,7 +52,7 @@ mostExpensiveProduct = maximumBy (comparing productPrice) products -- output Pro
 
 So `comparing productPrice` makes a function that compares products by their price it basically constructs the comparison function for you.
 
-Okay lets say you are dealing with something completely different You are working with monads and you want to find the "maximum" within a monadic context like for example `Maybe` lets say you have a `Maybe Int` and want the biggest element or `Nothing` if its empty This one is easy if you use the `optional` monad transformer from `transformers`
+ lets say you are dealing with something completely different You are working with monads and you want to find the "maximum" within a monadic context like for example `Maybe` lets say you have a `Maybe Int` and want the biggest element or `Nothing` if its empty This one is easy if you use the `optional` monad transformer from `transformers`
 
 ```haskell
 import Control.Monad.Trans.Maybe (MaybeT)

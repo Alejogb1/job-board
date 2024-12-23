@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-interpret-precision-recall-and-f1-score-in-a-custom-spacy-tagger"
 ---
 
-Okay, let’s get into this. Instead of jumping straight into formulas, let’s consider the practical implications first, something that's been baked into my brain from a few past projects. Specifically, I remember one involved a highly specific named entity recognition task for legal documents. We needed to identify particular clauses and document types with extremely high accuracy, where misclassifying a “contract amendment” as just “contract” could have serious consequences. This isn’t a playground; this is about ensuring the robustness of models we deploy.
+, let’s get into this. Instead of jumping straight into formulas, let’s consider the practical implications first, something that's been baked into my brain from a few past projects. Specifically, I remember one involved a highly specific named entity recognition task for legal documents. We needed to identify particular clauses and document types with extremely high accuracy, where misclassifying a “contract amendment” as just “contract” could have serious consequences. This isn’t a playground; this is about ensuring the robustness of models we deploy.
 
 Now, regarding precision, recall, and the F1-score, these are foundational metrics used to evaluate the performance of classification models, including the custom spaCy tagger you're working with. They are particularly important when you're not just looking at overall accuracy (which can be misleading, especially with imbalanced datasets). Each metric provides a unique lens on the model’s performance, and understanding them separately is vital to improving your model.
 

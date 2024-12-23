@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "probability-tensor-contains-inf-nan-or-0-pytorch-error"
 ---
 
-Okay so you've got a probability tensor in PyTorch throwing up inf nan or zero issues right Been there done that a few times myself let me tell you this ain't exactly uncommon when you're dealing with probabilities especially if you're doing something complex or close to the edge
+ so you've got a probability tensor in PyTorch throwing up inf nan or zero issues right Been there done that a few times myself let me tell you this ain't exactly uncommon when you're dealing with probabilities especially if you're doing something complex or close to the edge
 
 First thing first let's break down why this happens In short it's often numerical instability You know how computers store numbers right They use a finite representation and when you start doing tons of operations like multiplying small probabilities together or taking the log of very small numbers things go sideways you get those inf nan and zero values that just muck up your calculations
 

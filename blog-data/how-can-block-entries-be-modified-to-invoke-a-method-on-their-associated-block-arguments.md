@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-block-entries-be-modified-to-invoke-a-method-on-their-associated-block-arguments"
 ---
 
-Okay, let's tackle this. I've actually run into this exact scenario a couple of times, notably back when I was deep in building a custom event processing system for a large-scale financial application. The need to not just *pass* arguments into a block, but also to *manipulate* those arguments based on the block's context before execution, is surprisingly common. It’s a more advanced use-case than typical block handling, but it can be extremely powerful.
+,  I've actually run into this exact scenario a couple of times, notably back when I was deep in building a custom event processing system for a large-scale financial application. The need to not just *pass* arguments into a block, but also to *manipulate* those arguments based on the block's context before execution, is surprisingly common. It’s a more advanced use-case than typical block handling, but it can be extremely powerful.
 
 The core issue we're addressing here is how to modify arguments that are going to be supplied to a block, before that block is actually invoked. This modification often needs to happen in the context where the block is *being* used, not where it's defined. We can't alter the original block’s definition; that's against fundamental principles of block immutability. Instead, we manipulate data during the call chain before the block gets activated.
 

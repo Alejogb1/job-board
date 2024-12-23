@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "generate-files-and-download-as-zip-using-rubyzip"
 ---
 
-Okay so you want to generate files dynamically and then zip them up and offer that as a download to the user right I've been there trust me it's a common task especially when you're building web applications that need to deliver a bunch of generated stuff at once let me tell you about the dark days before I really figured this out oh the things I tried
+ so you want to generate files dynamically and then zip them up and offer that as a download to the user right I've been there trust me it's a common task especially when you're building web applications that need to deliver a bunch of generated stuff at once let me tell you about the dark days before I really figured this out oh the things I tried
 
 Basically the core issue here is you have some data you want to represent as files maybe text maybe JSON maybe images doesnt matter much for the zip part You could write these to disk first sure then bundle them up but that's slow and clutters your filesystem especially if it's all temporary stuff that the user needs to download once and then its gone So a more efficient approach is to create these files in memory and then add them to a zip archive that you then stream to the user
 

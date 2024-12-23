@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "verilog-question-mark-operator"
 ---
 
-Okay so the question mark operator in Verilog eh I've been down that rabbit hole more times than I care to admit Let me tell you it's a handy tool but like any sharp instrument it can cut you if you're not careful I've seen codebases where this thing was abused to the point of unreadability so tread lightly folks
+ so the question mark operator in Verilog eh I've been down that rabbit hole more times than I care to admit Let me tell you it's a handy tool but like any sharp instrument it can cut you if you're not careful I've seen codebases where this thing was abused to the point of unreadability so tread lightly folks
 
 First off lets get the basics down The question mark operator aka the ternary operator its shorthand for an if-else statement Its syntax looks like this condition ? value_if_true : value_if_false Simple right
 

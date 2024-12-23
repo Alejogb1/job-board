@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-plot-training-loss-from-polyphony-rnn-training-run-in-python"
 ---
 
-Okay, let's talk about extracting and visualizing that training loss from your Polyphony RNN. It’s a common sticking point, and I've certainly spent my fair share of time debugging similar scenarios back when I was deep in a music generation project a few years ago. The core challenge often isn't in running the model, but in making sense of its internal states and, more specifically, its progress during training.
+, let's talk about extracting and visualizing that training loss from your Polyphony RNN. It’s a common sticking point, and I've certainly spent my fair share of time debugging similar scenarios back when I was deep in a music generation project a few years ago. The core challenge often isn't in running the model, but in making sense of its internal states and, more specifically, its progress during training.
 
 The process revolves around three main stages: data collection, data processing, and finally, visualization. I’ve seen folks stumble at each one of these, so let’s break it down systematically.
 

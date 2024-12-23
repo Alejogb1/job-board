@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-neural-networks-accurately-forecast-5000-future-values"
 ---
 
-Okay, let’s unpack this question about neural networks and forecasting a relatively long sequence of 5000 future values. It's a problem I've certainly encountered in several past projects, and frankly, it's not quite as straightforward as simply throwing a model at the data. The answer is nuanced; it’s not a clear-cut yes or no. While neural networks *can* generate 5000 predictions, the *accuracy* and *reliability* of those predictions degrade significantly as we move further into the future.
+, let’s unpack this question about neural networks and forecasting a relatively long sequence of 5000 future values. It's a problem I've certainly encountered in several past projects, and frankly, it's not quite as straightforward as simply throwing a model at the data. The answer is nuanced; it’s not a clear-cut yes or no. While neural networks *can* generate 5000 predictions, the *accuracy* and *reliability* of those predictions degrade significantly as we move further into the future.
 
 My own experience, particularly working on a system to predict stock market trends (which we wisely abandoned, due to its intrinsic difficulty, haha) and later refining energy consumption forecasts, taught me some crucial lessons about the practical limits of long-range forecasting. In short, the real world introduces stochasticity and chaos that neural nets, however powerful, struggle to completely overcome, especially over extended periods.
 

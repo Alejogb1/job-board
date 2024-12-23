@@ -121,7 +121,7 @@ texts = [
     "I'm not satisfied at all.",
     "The service was excellent.",
     "Terrible experience.",
-    "It is okay, I suppose."
+    "It is , I suppose."
 ] * 20
 labels = [1, 0, 1, 0, 0.5] * 20  # 1 for positive, 0 for negative, 0.5 for neutral
 

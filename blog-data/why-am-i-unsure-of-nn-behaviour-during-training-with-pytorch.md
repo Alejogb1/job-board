@@ -60,7 +60,7 @@ class SimpleCNN(nn.Module):
         return x
 ```
 
-this simple cnn is alright for simple problems, but might not do the job for more complex scenarios. too few parameters and you underfit, too many and you overfit or training takes ages. also the type of layers matter, for example, convolutional layers are good for images, recurrent layers for sequences, etc. pay close attention to the activation functions you are using. did you check the exploding/vanishing gradients issue? for that usually batch normalization is recommended as well. this is where a good understanding of the literature comes in very useful.
+this simple cnn is for simple problems, but might not do the job for more complex scenarios. too few parameters and you underfit, too many and you overfit or training takes ages. also the type of layers matter, for example, convolutional layers are good for images, recurrent layers for sequences, etc. pay close attention to the activation functions you are using. did you check the exploding/vanishing gradients issue? for that usually batch normalization is recommended as well. this is where a good understanding of the literature comes in very useful.
 
 **training process issues**
 

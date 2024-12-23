@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-implement-a-dbcontext-interface-in-ddd"
 ---
 
-Okay, let's get into it. There's a lot of conceptual overlap—and sometimes confusion—when bridging the principles of domain-driven design (ddd) and concrete technologies like entity framework core's `dbcontext`. The key is to realize that `dbcontext` itself isn't your domain model, but rather an infrastructure concern. My own journey, particularly when I was scaling a financial reporting platform a few years back, forced me to confront this head-on, leading to some important architectural decisions that I'll share.
+, let's get into it. There's a lot of conceptual overlap—and sometimes confusion—when bridging the principles of domain-driven design (ddd) and concrete technologies like entity framework core's `dbcontext`. The key is to realize that `dbcontext` itself isn't your domain model, but rather an infrastructure concern. My own journey, particularly when I was scaling a financial reporting platform a few years back, forced me to confront this head-on, leading to some important architectural decisions that I'll share.
 
 The core idea is that the domain layer, following ddd principles, should be agnostic of any specific data access mechanism. It deals with pure business logic, entities, value objects, aggregates, and domain services. `dbcontext`, on the other hand, belongs squarely to the infrastructure layer – it’s the *how* not the *what*. We need to carefully abstract the data persistence mechanism so that our domain model is not coupled to it.
 

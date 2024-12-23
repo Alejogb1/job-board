@@ -4,7 +4,7 @@ date: "2024-12-03"
 id: "what-future-dashboard-features-could-combine-ai-agent-activity-github-contributions-and-discord-updates"
 ---
 
-Okay so you wanna mash up AI agent stuff GitHub contributions and Discord chatter into some killer dashboard right  Totally doable and actually pretty cool idea  Let's brainstorm some features and I'll throw in some code snippets to get you started
+ so you wanna mash up AI agent stuff GitHub contributions and Discord chatter into some killer dashboard right  Totally doable and actually pretty cool idea  Let's brainstorm some features and I'll throw in some code snippets to get you started
 
 
 First off we need a solid backend  Think something scalable and flexible maybe a microservice architecture using something like gRPC for inter-service communication  You could spin up separate services for each data source  one for the AI agent another for GitHub and a third for Discord  Each service would be responsible for fetching and preprocessing its respective data  We can then use a central service to aggregate and present everything on the dashboard

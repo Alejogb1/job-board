@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-execute-gsutil-commands-from-airflow-using-a-python-callable"
 ---
 
-Okay, let's tackle this. I’ve certainly been down this road a few times, especially back when we were migrating petabytes of data into Google Cloud Storage. Executing `gsutil` commands from Airflow using a Python callable might seem straightforward at first, but there are nuances that, if overlooked, can lead to brittle pipelines. It’s not just about slapping a subprocess call together; we need to consider error handling, logging, and most importantly, ensuring the process runs reliably and securely within the Airflow environment.
+,  I’ve certainly been down this road a few times, especially back when we were migrating petabytes of data into Google Cloud Storage. Executing `gsutil` commands from Airflow using a Python callable might seem straightforward at first, but there are nuances that, if overlooked, can lead to brittle pipelines. It’s not just about slapping a subprocess call together; we need to consider error handling, logging, and most importantly, ensuring the process runs reliably and securely within the Airflow environment.
 
 Fundamentally, we're talking about orchestrating an external process from within Python. The core mechanism is, of course, `subprocess`, but how we wrap it into a Python callable that Airflow can use is where the devil resides, as they say. Specifically, you want to encapsulate this external process so that it integrates nicely with Airflow's task lifecycle and its ability to monitor and manage tasks.
 

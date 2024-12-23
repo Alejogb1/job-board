@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-move-containerized-projects-to-their-own-net-core-project"
 ---
 
-Okay, let's tackle this. I remember a particularly challenging project back in '18 where we had a sprawling monolith of a .net framework application, and the mandate was to containerize and modernize, piece by piece. Part of that process involved breaking specific functionalities into their own, discrete .net core services, each living within its own container. It wasn't a trivial task, but definitely achievable with a structured approach. So, you’re looking at moving containerized projects into their own .net core projects? It's a good move for modularity and scalability. Here's how I’ve approached this, based on my experiences.
+,  I remember a particularly challenging project back in '18 where we had a sprawling monolith of a .net framework application, and the mandate was to containerize and modernize, piece by piece. Part of that process involved breaking specific functionalities into their own, discrete .net core services, each living within its own container. It wasn't a trivial task, but definitely achievable with a structured approach. So, you’re looking at moving containerized projects into their own .net core projects? It's a good move for modularity and scalability. Here's how I’ve approached this, based on my experiences.
 
 The fundamental concept revolves around decoupling. You're essentially taking a piece of your application, which might currently be bundled with everything else inside a container, and giving it its own .net core identity. This requires meticulous planning and a deep understanding of your application's architecture. Here are the core steps:
 

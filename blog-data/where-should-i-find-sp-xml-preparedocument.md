@@ -4,9 +4,9 @@ date: "2024-12-13"
 id: "where-should-i-find-sp-xml-preparedocument"
 ---
 
-Okay so you're wrestling with `sp_xml_preparedocument` right I've been there it's like that one SQL Server stored procedure you never quite forget once you've dealt with it
+ so you're wrestling with `sp_xml_preparedocument` right I've been there it's like that one SQL Server stored procedure you never quite forget once you've dealt with it
 
-Alright listen up because I've spent way too many late nights debugging this thing than I'd like to admit First things first `sp_xml_preparedocument` isn’t something you find just lying around in the database like a random table its a system stored procedure It lives within the SQL Server engine itself meaning its part of the core functionality So its not like you can `SELECT * FROM sp_xml_preparedocument` that's a no go
+listen up because I've spent way too many late nights debugging this thing than I'd like to admit First things first `sp_xml_preparedocument` isn’t something you find just lying around in the database like a random table its a system stored procedure It lives within the SQL Server engine itself meaning its part of the core functionality So its not like you can `SELECT * FROM sp_xml_preparedocument` that's a no go
 
 When people ask about finding it usually what they actually mean is how do they actually use it where do you even invoke this beast You're not going to be hunting for its physical file on your disk drive Its accessed by calling it with a specific set of parameters like any other stored procedure or system function
 
@@ -72,4 +72,4 @@ If you want to really dive deeper into XML handling in SQL Server I'd recommend 
 
 Oh and by the way I always make sure to double check my XML formatting because if you have malformed XML `sp_xml_preparedocument` will throw errors and that’s always fun to debug. I once spent three hours debugging an issue only to find a missing closing tag. It was a character one character out of place three hours lost but thats life of a developer
 
-Okay now you got the basics of `sp_xml_preparedocument` and some things around it Remember the important thing is to manage your document handles properly especially `sp_xml_removedocument` If you follow that simple rule you will be a much better programmer.
+ now you got the basics of `sp_xml_preparedocument` and some things around it Remember the important thing is to manage your document handles properly especially `sp_xml_removedocument` If you follow that simple rule you will be a much better programmer.

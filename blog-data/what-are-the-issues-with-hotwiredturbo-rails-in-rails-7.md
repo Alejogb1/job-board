@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-are-the-issues-with-hotwiredturbo-rails-in-rails-7"
 ---
 
-Okay, let's talk about `@hotwired/turbo-rails` in Rails 7, specifically the challenges I've encountered and how I've addressed them. It's a powerful tool, no doubt, but like any technology, it presents its own set of interesting puzzles. I’ve spent a fair amount of time working with it, going back to when it was brand new, and I’ve got a few scars to show for it.
+, let's talk about `@hotwired/turbo-rails` in Rails 7, specifically the challenges I've encountered and how I've addressed them. It's a powerful tool, no doubt, but like any technology, it presents its own set of interesting puzzles. I’ve spent a fair amount of time working with it, going back to when it was brand new, and I’ve got a few scars to show for it.
 
 The core of Turbo's appeal lies in its ability to accelerate page interactions through selective DOM updates via websockets and server-rendered html fragments. However, the transition to this approach wasn’t always frictionless. Here’s a breakdown of what I've faced:
 

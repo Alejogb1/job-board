@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-the-nested-fixture-nil-in-rails"
 ---
 
-Alright, let's tackle this. I remember back in the early days of one project, a fairly complex e-commerce platform, we ran into this particular conundrum with nested fixtures. The feeling of head-scratching was quite real, and it’s something that surfaces for many, so let’s clarify why a nested fixture can often appear as `nil` in Rails tests, particularly when dealing with associations. It isn’t a straightforward bug, but rather a consequence of how fixtures are loaded and how Rails manages associations during test execution.
+Alright,  I remember back in the early days of one project, a fairly complex e-commerce platform, we ran into this particular conundrum with nested fixtures. The feeling of head-scratching was quite real, and it’s something that surfaces for many, so let’s clarify why a nested fixture can often appear as `nil` in Rails tests, particularly when dealing with associations. It isn’t a straightforward bug, but rather a consequence of how fixtures are loaded and how Rails manages associations during test execution.
 
 The primary reason why you might encounter a `nil` nested fixture stems from the order in which fixtures are loaded and the deferred association processing. Rails loads fixtures in a specific sequence, determined by the order in which they appear in the `test/fixtures` directory or explicitly declared in your test setup. Now, here's the critical point: Rails loads the data into each table sequentially but *doesn't* immediately resolve associations. Instead, it's a deferred process handled during the execution of your test.
 

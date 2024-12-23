@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-use-contains-with-an-array-of-structs-in-swiftui"
 ---
 
-Okay, let's tackle this. I remember distinctly a project a while back, a data visualization app, where we needed to filter a complex dataset represented by an array of custom structs. Performance was paramount, so we had to be meticulous with how we implemented these filters. The naive approach of looping was immediately discarded as unsustainable. The question of using `.contains` efficiently with arrays of structs in SwiftUI is far more nuanced than it first appears. It isn't a straightforward comparison like you might have with simple value types.
+,  I remember distinctly a project a while back, a data visualization app, where we needed to filter a complex dataset represented by an array of custom structs. Performance was paramount, so we had to be meticulous with how we implemented these filters. The naive approach of looping was immediately discarded as unsustainable. The question of using `.contains` efficiently with arrays of structs in SwiftUI is far more nuanced than it first appears. It isn't a straightforward comparison like you might have with simple value types.
 
 The core issue here is that `.contains` by default relies on the `Equatable` protocol, and structs, while they can conform to it, don't automatically do so based on structural equality (i.e., field-by-field comparison). If you simply try to use `.contains` with a struct array without conforming to `Equatable`, you'll get a compile error telling you that your struct doesn't satisfy the requirement. The Swift standard library cannot know, implicitly, what constitutes equality between two instances of your custom type. So, we need to explicitly define it.
 

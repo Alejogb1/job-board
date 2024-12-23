@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-derive-an-account-address-from-a-private-key-or-seed-phrase"
 ---
 
-Alright, let's tackle this. I've certainly encountered this issue countless times across various blockchain projects. The process of deriving an account address from a private key or seed phrase is fundamental, and understanding it is critical for any serious work in decentralized technologies. It’s a multilayered operation involving cryptographic hashing and elliptic curve mathematics, so let's break it down step-by-step without getting lost in the overly complex theoretical minutiae.
+Alright,  I've certainly encountered this issue countless times across various blockchain projects. The process of deriving an account address from a private key or seed phrase is fundamental, and understanding it is critical for any serious work in decentralized technologies. It’s a multilayered operation involving cryptographic hashing and elliptic curve mathematics, so let's break it down step-by-step without getting lost in the overly complex theoretical minutiae.
 
 The core idea revolves around using your private key (or seed phrase) to generate a public key, and then hashing that public key to obtain your account address. The key point is that this is a *one-way* function. You can easily go from private key to address, but you cannot reverse it. This irreversibility is a foundational principle of modern cryptography and ensures the security of your assets.
 

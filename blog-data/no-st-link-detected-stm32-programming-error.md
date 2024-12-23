@@ -4,11 +4,11 @@ date: "2024-12-13"
 id: "no-st-link-detected-stm32-programming-error"
 ---
 
-Okay so you're hitting the "no st-link detected" error right? Classic. Seen this one a few times more than I'd like. Been wrestling with STM32s since back when you had to solder everything by hand seriously almost had to build my own debugger at one point. Okay maybe not that far but you get the picture I've had my fair share of ST-Link headaches.
+ so you're hitting the "no st-link detected" error right? Classic. Seen this one a few times more than I'd like. Been wrestling with STM32s since back when you had to solder everything by hand seriously almost had to build my own debugger at one point.  maybe not that far but you get the picture I've had my fair share of ST-Link headaches.
 
 First off lets' get this straight this isn't some mystical voodoo thing. It's usually a pretty straightforward issue and it’s almost never a problem with the ST-Link hardware itself like some people immediately think. Don't go throwing out your debugger yet alright?
 
-Okay lets' break this down step by step. It usually comes down to a couple of common problems. Most likely culprit one is the connection. I mean the actual physical stuff. Check your wires. And I mean REALLY check them. Are they connected to the right pins? The SWCLK and SWDIO pins need to be hooked up to the right places. I've seen folks accidentally swap them before and yeah that will definitely cause "no ST-Link detected". And also you are using the correct pins on the ST-Link itself right? Not all ST-Links are created equal and some pinouts vary especially if you have an older clone.
+ lets' break this down step by step. It usually comes down to a couple of common problems. Most likely culprit one is the connection. I mean the actual physical stuff. Check your wires. And I mean REALLY check them. Are they connected to the right pins? The SWCLK and SWDIO pins need to be hooked up to the right places. I've seen folks accidentally swap them before and yeah that will definitely cause "no ST-Link detected". And also you are using the correct pins on the ST-Link itself right? Not all ST-Links are created equal and some pinouts vary especially if you have an older clone.
 
 Also are you sure you're powering up the target board? The ST-Link usually does not provide the power to the target processor. Are you sure that VDD pin is connected and have power supply and ground? Its amazing how often I've seen that happen. You're staring at the code trying to debug and the whole thing isn't even on. Like trying to drive a car with no fuel.
 

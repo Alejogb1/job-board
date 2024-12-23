@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-rails-tables-be-filtered"
 ---
 
-Okay, let's talk about filtering data in Rails. It's a core operation, and while Rails provides a lot of convenience, understanding the underlying mechanisms is crucial for performance and maintainability, especially as your application scales. I've seen this go south countless times, from simple blog applications to complex inventory systems, so I'm coming at this with a good bit of battle-tested experience.
+, let's talk about filtering data in Rails. It's a core operation, and while Rails provides a lot of convenience, understanding the underlying mechanisms is crucial for performance and maintainability, especially as your application scales. I've seen this go south countless times, from simple blog applications to complex inventory systems, so I'm coming at this with a good bit of battle-tested experience.
 
 Essentially, filtering in Rails involves querying your database based on specific conditions. The most common tool for this is the ActiveRecord query interface, which lets you build SQL queries abstractly through Ruby methods. However, the simplicity can be deceptive; improper use can lead to inefficiencies, most notably in the form of n+1 query problems or overly complex queries that impact performance.
 

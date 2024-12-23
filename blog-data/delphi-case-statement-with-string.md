@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "delphi-case-statement-with-string"
 ---
 
-Okay so delphi case statement with strings right been there done that got the t-shirt Let me tell you this ain't exactly a walk in the park like some other languages I've seen Yeah some folks might say use a bunch of `if then else` but trust me that road leads to spaghetti code madness faster than you can say "compiler error" and we all know that’s not a good look
+ so delphi case statement with strings right been there done that got the t-shirt Let me tell you this ain't exactly a walk in the park like some other languages I've seen Yeah some folks might say use a bunch of `if then else` but trust me that road leads to spaghetti code madness faster than you can say "compiler error" and we all know that’s not a good look
 
 So here’s the deal Delphi’s `case` statement is primarily designed for ordinal types integers characters enums that sort of jazz Strings however they are like that one cousin you have who doesn’t quite fit in at family gatherings Not directly compatible with `case` So you can't just drop in a string and expect it to work you need to get a little creative You have options though not as many as i would like but they get the job done
 
@@ -191,7 +191,7 @@ end;
 
 ```
 
-It works alright but be careful because `TStringList` is really powerful and has a lot of stuff inside that you might not need. So for a simple use case like this it’s probably an overkill but for complex cases that's a really nice option to have.
+It works but be careful because `TStringList` is really powerful and has a lot of stuff inside that you might not need. So for a simple use case like this it’s probably an overkill but for complex cases that's a really nice option to have.
 
 So there you have it three approaches to tackle the Delphi `case` statement and string problem. The hash approach is quick and easy but can be a headache The dictionary/lookup method is more robust and less prone to collisions The string list method works as a good middle ground.
 

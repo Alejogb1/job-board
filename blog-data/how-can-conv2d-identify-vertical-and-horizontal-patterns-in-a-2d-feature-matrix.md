@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-conv2d-identify-vertical-and-horizontal-patterns-in-a-2d-feature-matrix"
 ---
 
-Alright, let's tackle this. I've spent quite a bit of time working with convolutional neural networks (CNNs), and this question about how `Conv2D` operations identify patterns, especially vertical and horizontal ones, is fundamental to understanding how they work. It's more than just applying filters, it's about how the math of convolution interacts with the structure of the feature maps.
+Alright,  I've spent quite a bit of time working with convolutional neural networks (CNNs), and this question about how `Conv2D` operations identify patterns, especially vertical and horizontal ones, is fundamental to understanding how they work. It's more than just applying filters, it's about how the math of convolution interacts with the structure of the feature maps.
 
 The key to understanding this lies in the concept of learnable kernels, or filters, within the `Conv2D` layer. These kernels are small matrices of weights which, during the training process, are adjusted based on the patterns present in the training data. Think of these kernels as tiny pattern detectors. They're designed to activate strongly when a specific pattern is present within the portion of the input they're looking at.
 

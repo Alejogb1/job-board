@@ -4,13 +4,13 @@ date: "2024-12-13"
 id: "lckmx-lock-sql-server"
 ---
 
-Alright so you're hitting a classic deadlock issue in SQL Server right I've been there trust me It's like banging your head against a wall trying to figure out why your queries are just hanging there doing absolutely nothing
+so you're hitting a classic deadlock issue in SQL Server right I've been there trust me It's like banging your head against a wall trying to figure out why your queries are just hanging there doing absolutely nothing
 
 Let's break this down I see you mentioned `lck_m_x` that's the specific wait type in SQL Server indicating a lock acquired in exclusive mode on a memory object Now memory objects can be all sorts of things but in most situations where you're having deadlock problems they're typically related to data access or rather the resources SQL Server uses to manage data access Think indexes tables and so on
 
 Been there done that Had this happen back when I was working on a large data migration project years ago We were doing some heavy inserts and updates on a table with a bunch of indexes and I remember clearly the day everything just seemed to freeze up the application started timing out users complained like it was the end of the world And of course the error logs were just filled with deadlocks related to this `lck_m_x` thing So it's not just you trust me it's a fairly common issue especially in busy environments
 
-Okay first things first understand this a deadlock occurs when two or more processes or threads each hold locks on resources that the others need This creates a circular dependency where neither process can proceed because each is waiting for the other to release a lock
+ first things first understand this a deadlock occurs when two or more processes or threads each hold locks on resources that the others need This creates a circular dependency where neither process can proceed because each is waiting for the other to release a lock
 
 To address this you need to analyze your execution plans and your code to identify which resources are being locked and in what order SQL Server will resolve deadlocks by choosing one process as the "victim" rolling it back and freeing up the resources so the other process can finish the victim process will be chosen based on it's cost and will be returned an error
 

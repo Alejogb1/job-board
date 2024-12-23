@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-do-task-groups-fail-when-another-task-from-the-same-group-fails"
 ---
 
-Okay, let's dive into task group failures; I've definitely seen my share of these over the years. It's not uncommon to see cascading failures where one task stumbling brings down a whole group, and there's usually a nuanced set of reasons behind it, not just a single point of failure. It’s more about how we design these task groups, especially regarding dependency management and fault tolerance.
+, let's dive into task group failures; I've definitely seen my share of these over the years. It's not uncommon to see cascading failures where one task stumbling brings down a whole group, and there's usually a nuanced set of reasons behind it, not just a single point of failure. It’s more about how we design these task groups, especially regarding dependency management and fault tolerance.
 
 When I first joined a project to develop a high-throughput data processing pipeline some years ago, we ran into this issue frequently. Our pipeline was designed around the idea of processing large batches of data, and these were broken down into smaller tasks grouped together. Initially, our approach was rather naïve. We assumed that if one task failed, the rest could continue. We quickly learned that this wasn't always the case, and a single failure could indeed bring down an entire processing batch, leaving a huge backlog. It wasn't a code bug per se, but more of a problem in our resource management and error handling strategies.
 

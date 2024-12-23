@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-access-image-inspection-properties-in-an-azure-container-registry"
 ---
 
-Alright, let's tackle this. It's a question that, believe it or not, I've spent a fair bit of time on in previous projects. Back when we were shifting our microservices to a more containerized setup, the need to programmatically inspect image properties within our Azure Container Registry (acr) became pretty crucial for things like security scanning and automated compliance checks. So, let me share what I've learned over time.
+Alright,  It's a question that, believe it or not, I've spent a fair bit of time on in previous projects. Back when we were shifting our microservices to a more containerized setup, the need to programmatically inspect image properties within our Azure Container Registry (acr) became pretty crucial for things like security scanning and automated compliance checks. So, let me share what I've learned over time.
 
 Accessing image inspection properties in an acr isn't a single, straightforward operation. It involves interacting with the acr apis, primarily through the Azure CLI, but also through other available tools and libraries depending on your needs. At its core, what you're retrieving is a set of metadata associated with each image, things like its creation time, operating system, size, and crucially, any discovered vulnerabilities or security findings (if you've configured vulnerability scanning, that is).
 

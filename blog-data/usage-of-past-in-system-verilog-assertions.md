@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "usage-of-past-in-system-verilog-assertions"
 ---
 
-Okay so you're asking about using `past` in SystemVerilog assertions right? Yeah I’ve been down that road a few times let me tell you. It's one of those things that seems simple on the surface but gets complex real quick once you start digging. Especially when you're dealing with real-world design bugs that are timing-sensitive.
+ so you're asking about using `past` in SystemVerilog assertions right? Yeah I’ve been down that road a few times let me tell you. It's one of those things that seems simple on the surface but gets complex real quick once you start digging. Especially when you're dealing with real-world design bugs that are timing-sensitive.
 
 So let me break it down from my experience. The `past` operator in SystemVerilog assertions basically lets you look back in time it allows you to access the value of a signal in previous clock cycles. This is crucial for verifying temporal properties you know things that happen over time and sequence. Imagine you’re validating a handshake protocol you need to make sure that `req` signal is asserted a cycle before the `ack` signal. You can't do that directly without some way of looking back.
 

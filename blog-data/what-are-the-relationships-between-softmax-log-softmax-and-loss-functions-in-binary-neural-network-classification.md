@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-are-the-relationships-between-softmax-log-softmax-and-loss-functions-in-binary-neural-network-classification"
 ---
 
-Okay, let's delve into the interplay between softmax, log-softmax, and loss functions within the context of binary neural network classification. This is a territory I've navigated quite a bit over the years, particularly during a project involving real-time medical image analysis where precision was paramount. We were initially struggling with instability in the training process until we refined our output layer strategy. The details of that experience will probably color my explanation, but that's usually how practical knowledge develops.
+, let's delve into the interplay between softmax, log-softmax, and loss functions within the context of binary neural network classification. This is a territory I've navigated quite a bit over the years, particularly during a project involving real-time medical image analysis where precision was paramount. We were initially struggling with instability in the training process until we refined our output layer strategy. The details of that experience will probably color my explanation, but that's usually how practical knowledge develops.
 
 It’s often not enough to just apply these functions without understanding their underlying mechanics and, crucially, their interdependencies. Let’s break this down:
 

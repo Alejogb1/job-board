@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-create-a-neural-network-diagram"
 ---
 
-Okay, let’s get into this. Thinking back to a project I tackled a few years ago involving image classification— specifically identifying different types of manufacturing defects— the need for a clear, digestible neural network diagram became paramount very quickly. It wasn’t just about documenting what we’d built, but more about the ability to communicate the complex interactions within the model to the wider team, and crucially, to make troubleshooting more straightforward.
+, let’s get into this. Thinking back to a project I tackled a few years ago involving image classification— specifically identifying different types of manufacturing defects— the need for a clear, digestible neural network diagram became paramount very quickly. It wasn’t just about documenting what we’d built, but more about the ability to communicate the complex interactions within the model to the wider team, and crucially, to make troubleshooting more straightforward.
 
 Creating a useful neural network diagram is less about artistic flair and more about clarity and conveying key information. It's not just a box-and-arrow exercise; it's about representing the flow of data, the types of operations being performed, and the key architectural decisions that make up your model. I've seen many diagrams that are effectively useless due to overcomplication or a failure to include the essential details. So, here's how I approach it, generally, and some code examples that will make things concrete.
 

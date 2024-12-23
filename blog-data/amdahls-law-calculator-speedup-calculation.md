@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "amdahls-law-calculator-speedup-calculation"
 ---
 
-Okay so you wanna talk about Amdahl's Law right Speedup calculations classic stuff Been there done that got the t-shirt and probably a few grey hairs from debugging performance bottlenecks over the years lets dive in
+ so you wanna talk about Amdahl's Law right Speedup calculations classic stuff Been there done that got the t-shirt and probably a few grey hairs from debugging performance bottlenecks over the years lets dive in
 
 First off Amdahl's Law is your go to for figuring out how much faster your code can realistically get if you parallelize some of it it's not some magic bullet that'll make everything instantly zoom along it's a constraint a reality check that's why it's so useful
 
@@ -16,7 +16,7 @@ So `1 - P` is the serial portion the part that's stuck running sequentially it's
 
 I've seen this a million times in the wild you think you're gonna get like a 10x speedup by using 10 cores only to get something like 3x its like reality is hitting you with a very blunt object
 
-Okay lets get to the code so you can see it in action I'll throw in a couple of different versions so you have some variety
+ lets get to the code so you can see it in action I'll throw in a couple of different versions so you have some variety
 
 ```python
 def amdahl_speedup(parallel_fraction, num_processors):

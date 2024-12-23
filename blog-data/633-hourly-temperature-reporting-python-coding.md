@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "633-hourly-temperature-reporting-python-coding"
 ---
 
-Alright so hourly temperature reporting with Python yeah I’ve been down that rabbit hole a few times Let me tell you it's not as straightforward as it sounds when you actually need to make it robust and reliable I've seen so many junior devs just slap together something that works for a few hours then crashes and burns when it hits a real world edge case
+so hourly temperature reporting with Python yeah I’ve been down that rabbit hole a few times Let me tell you it's not as straightforward as it sounds when you actually need to make it robust and reliable I've seen so many junior devs just slap together something that works for a few hours then crashes and burns when it hits a real world edge case
 
 Ok so you're looking at hourly reporting right That means you need to read in temperature data from somewhere process it then output it hourly Simple right Not quite The devil as always is in the details I've learned this the hard way trust me I once had a sensor logging data every 5 seconds which was fine for testing until I got a thousand readings a minute and my system choked Turns out I needed some serious aggregation logic
 

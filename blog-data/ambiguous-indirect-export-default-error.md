@@ -4,9 +4,9 @@ date: "2024-12-13"
 id: "ambiguous-indirect-export-default-error"
 ---
 
-Okay so you're hitting the "ambiguous indirect export default" thing yeah I've been there more times than I care to admit Man that one's a classic pain in the rear
+ so you're hitting the "ambiguous indirect export default" thing yeah I've been there more times than I care to admit Man that one's a classic pain in the rear
 
-Alright let's break this down from a position of been-there-done-that I remember back in my early days working on this big React project that was supposed to be the next big thing before it totally fizzled out because of over-engineering you know the type We had a sprawling component library and the whole "export default" thing was causing all sorts of chaos It was like trying to herd cats Seriously
+let's break this down from a position of been-there-done-that I remember back in my early days working on this big React project that was supposed to be the next big thing before it totally fizzled out because of over-engineering you know the type We had a sprawling component library and the whole "export default" thing was causing all sorts of chaos It was like trying to herd cats Seriously
 
 The core issue as you might be kinda seeing is when you're trying to export a module's default export indirectly through another module It's like trying to pass a message through three people one person mumbles then other one misshears it and the third one tells it totally wrong to the recepient Javascript kinda freaks out at this indirectness because it doesn't know what the heck the actual underlying default export is supposed to be
 

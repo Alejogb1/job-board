@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-dynamic-aasm-states-be-reloaded"
 ---
 
-Okay, let's tackle this one. I’ve certainly navigated the choppy waters of dynamic state machine reloading before, and it’s not always a walk in the park. The ability to adjust AASM (Acts As State Machine) states on the fly, without completely restarting the application, is crucial for maintaining smooth operations and adaptability, especially in long-running processes or systems that need to respond to changing configurations. The simple solution would be to completely reload the application, but that's not always feasible or desirable and can cause disruptions to existing workflows.
+, let's tackle this one. I’ve certainly navigated the choppy waters of dynamic state machine reloading before, and it’s not always a walk in the park. The ability to adjust AASM (Acts As State Machine) states on the fly, without completely restarting the application, is crucial for maintaining smooth operations and adaptability, especially in long-running processes or systems that need to respond to changing configurations. The simple solution would be to completely reload the application, but that's not always feasible or desirable and can cause disruptions to existing workflows.
 
 When I first encountered this, it was in a large-scale financial trading system, where market conditions and trading strategies changed regularly. We had these complex state machines governing order execution, and a hard restart for every little adjustment was simply unacceptable. We needed a surgical approach, something more nuanced. The challenge lies in the fact that AASM, at its core, expects a fixed definition of states and transitions when the class is initially loaded. Dynamic alterations require more thought.
 

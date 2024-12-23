@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "binary-yes-or-no"
 ---
 
-Okay so binary yes or no right I've been wrestling with that fundamental beast for what feels like forever literally since my early days tinkering with Z80s back in the late 80s that wasn’t easy I tell you getting those clock cycles just right
+ so binary yes or no right I've been wrestling with that fundamental beast for what feels like forever literally since my early days tinkering with Z80s back in the late 80s that wasn’t easy I tell you getting those clock cycles just right
 
 So first off yeah a binary choice is the absolute bedrock of everything digital This isn't some abstract concept we're talking the on or off the 1 or 0 the true or false the yes or no everything boils down to this at the very lowest level Now you might think it's simple and it is conceptually but the implications are vast especially when you start building anything complex
 

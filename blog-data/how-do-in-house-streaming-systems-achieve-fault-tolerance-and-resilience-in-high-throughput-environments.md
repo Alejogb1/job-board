@@ -4,7 +4,7 @@ date: "2024-12-10"
 id: "how-do-in-house-streaming-systems-achieve-fault-tolerance-and-resilience-in-high-throughput-environments"
 ---
 
-Okay so you wanna know about fault tolerance and resilience in in-house streaming systems right  the high throughput kinda stuff  It's a big deal  like seriously big  Imagine Netflix crashing during Stranger Things finale that's the kind of pressure these systems are under constantly
+ so you wanna know about fault tolerance and resilience in in-house streaming systems right  the high throughput kinda stuff  It's a big deal  like seriously big  Imagine Netflix crashing during Stranger Things finale that's the kind of pressure these systems are under constantly
 
 First off  let's be clear  there's no single silver bullet  It's all about layering different techniques  It's like building a really strong castle you need moats drawbridges thick walls and maybe even some dragons for good measure  Except our dragons are automated failover mechanisms
 

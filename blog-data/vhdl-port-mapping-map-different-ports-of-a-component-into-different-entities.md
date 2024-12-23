@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "vhdl-port-mapping-map-different-ports-of-a-component-into-different-entities"
 ---
 
-Okay so you wanna map VHDL ports from a component to different entities thats a classic yeah I get it. Been there done that got the scars to prove it. Let me tell you kid not the easiest thing but definitely doable. Its a bit like trying to untangle a mess of wires behind your computer but hey someone has to do it right
+ so you wanna map VHDL ports from a component to different entities thats a classic yeah I get it. Been there done that got the scars to prove it. Let me tell you kid not the easiest thing but definitely doable. Its a bit like trying to untangle a mess of wires behind your computer but hey someone has to do it right
 
 First off lets get the terminology straight we're talking about VHDL right Very High Speed Integrated Circuit Hardware Description Language you knew that I know but gotta make sure we’re all on the same page. We have a component a declared module and we want to use it in different places with different connections that's port mapping in a nutshell. You’ve got your component with its formal ports and then you've got your entities where you instantiate the component and those entities might have their own ports and you want to connect em up right different ports for different entities not a problem I tell ya.
 

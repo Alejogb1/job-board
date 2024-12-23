@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-are-the-best-practices-for-using-entity-framework-core-with-domain-driven-design"
 ---
 
-Okay, let's tackle this. I’ve seen my share of developers, myself included initially, stumble when trying to marry the elegance of domain-driven design (ddd) with the practicality of entity framework core (ef core). It's a powerful combination, but it requires careful consideration to avoid common pitfalls. I recall a particularly frustrating project a few years back where we tried to shoehorn our entire domain model into ef core entities directly. Let's just say the performance suffered, and the maintenance became a nightmare. That experience really drove home the need for clear separation and well-defined boundaries.
+,  I’ve seen my share of developers, myself included initially, stumble when trying to marry the elegance of domain-driven design (ddd) with the practicality of entity framework core (ef core). It's a powerful combination, but it requires careful consideration to avoid common pitfalls. I recall a particularly frustrating project a few years back where we tried to shoehorn our entire domain model into ef core entities directly. Let's just say the performance suffered, and the maintenance became a nightmare. That experience really drove home the need for clear separation and well-defined boundaries.
 
 At its core, the challenge lies in the fact that ddd focuses on modeling the *business* domain, whereas ef core is an *infrastructure* concern, specifically around data persistence. Therefore, best practices center around preventing persistence concerns from leaking into your domain model. Here are the key areas where I've found a solid approach to be indispensable:
 

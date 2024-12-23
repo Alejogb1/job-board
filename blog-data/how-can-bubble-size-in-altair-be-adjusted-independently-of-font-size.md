@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-bubble-size-in-altair-be-adjusted-independently-of-font-size"
 ---
 
-Okay, let's tackle this. It's a common frustration when you’re visualizing data with Altair and bubble charts, finding that the bubble size is tied to the font size, especially when you want more control over the visual hierarchy. I’ve bumped into this exact scenario more than a few times during data analysis projects, particularly when working on geographic visualizations where you might want large bubbles to indicate high values, regardless of the label size. The key here lies in understanding how Altair generates these charts and then leveraging its encoding capabilities to break that connection.
+,  It's a common frustration when you’re visualizing data with Altair and bubble charts, finding that the bubble size is tied to the font size, especially when you want more control over the visual hierarchy. I’ve bumped into this exact scenario more than a few times during data analysis projects, particularly when working on geographic visualizations where you might want large bubbles to indicate high values, regardless of the label size. The key here lies in understanding how Altair generates these charts and then leveraging its encoding capabilities to break that connection.
 
 The core issue stems from Altair’s default behavior of scaling bubble sizes based on an underlying data value which, when you introduce text labels, can inadvertently scale based on the font size of that label in some default rendering contexts, which is almost never what you want. To decouple them, we need to explicitly define the bubble size using a separate data field and encoding, effectively overriding any automatic scaling that might occur based on the font or text.
 

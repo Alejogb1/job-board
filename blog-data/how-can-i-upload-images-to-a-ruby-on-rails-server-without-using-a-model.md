@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-upload-images-to-a-ruby-on-rails-server-without-using-a-model"
 ---
 
-Alright, let's tackle this. I've seen this particular challenge crop up more times than I care to count, especially when you're dealing with scenarios that don't quite fit the usual model-centric rails paradigm. The key here is understanding that while rails often nudges you towards database-backed models, it doesn't force you. Uploading images without a model is perfectly achievable, and quite frankly, can be more efficient in certain cases, particularly with smaller projects or specific API endpoints that aren't directly linked to persistent data entities.
+Alright,  I've seen this particular challenge crop up more times than I care to count, especially when you're dealing with scenarios that don't quite fit the usual model-centric rails paradigm. The key here is understanding that while rails often nudges you towards database-backed models, it doesn't force you. Uploading images without a model is perfectly achievable, and quite frankly, can be more efficient in certain cases, particularly with smaller projects or specific API endpoints that aren't directly linked to persistent data entities.
 
 Essentially, we're bypassing the active record layer and working directly with the file upload functionality provided by rack, the underlying server interface of rails. This implies we'll be handling the multipart/form-data content ourselves. My experience working with a legacy system that had a custom file management layer highlighted the importance of understanding the underlying mechanisms— it saved us a lot of refactoring headaches.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-generate-10000-random-numbers-from-chainlink-vrf-v2"
 ---
 
-Okay, let's tackle this. Generating 10,000 random numbers using Chainlink VRF V2 is a task that requires a good understanding of how VRF works and its limitations, especially regarding on-chain computations. From my experience, having implemented a lottery system using VRF a few years back, I recall facing a similar challenge, albeit with slightly smaller sets. The core issue is that generating such a large quantity of random numbers directly in a single transaction is impractical due to gas limits and computational costs on the ethereum network. We need to approach it strategically.
+,  Generating 10,000 random numbers using Chainlink VRF V2 is a task that requires a good understanding of how VRF works and its limitations, especially regarding on-chain computations. From my experience, having implemented a lottery system using VRF a few years back, I recall facing a similar challenge, albeit with slightly smaller sets. The core issue is that generating such a large quantity of random numbers directly in a single transaction is impractical due to gas limits and computational costs on the ethereum network. We need to approach it strategically.
 
 The main constraint we have here is the gas limit for a single ethereum transaction. On-chain generation of 10,000 numbers, each requiring a cryptographic calculation, would not only be incredibly expensive but would almost certainly exceed block gas limits. Thus, the immediate approach is not to create them all within a single call, but to use a strategy of either multiple requests or some form of off-chain pre-generation that's verifiable on-chain.
 

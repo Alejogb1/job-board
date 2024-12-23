@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-is-cloud-composers-webserver-always-unhealthy"
 ---
 
-Alright, let's tackle this. I've definitely seen this "always unhealthy" webserver issue pop up a few times with Cloud Composer, and it can be frustrating. It's rarely a single smoking gun, more like a confluence of factors. It's important to approach this systematically, examining each potential culprit before getting too deep into the weeds. My experience has taught me that the most common reasons revolve around resource constraints, network configurations, or specific settings within the Composer environment itself.
+Alright,  I've definitely seen this "always unhealthy" webserver issue pop up a few times with Cloud Composer, and it can be frustrating. It's rarely a single smoking gun, more like a confluence of factors. It's important to approach this systematically, examining each potential culprit before getting too deep into the weeds. My experience has taught me that the most common reasons revolve around resource constraints, network configurations, or specific settings within the Composer environment itself.
 
 First off, the "unhealthy" status isn’t always indicative of complete webserver failure. Often, it means the health checks performed by Google’s monitoring systems are failing. These checks aren't particularly complex; they’re essentially just pings to the webserver’s health endpoint. If that endpoint doesn’t respond correctly within the defined timeframe, it flags the server as unhealthy. Let's break down the usual suspects:
 

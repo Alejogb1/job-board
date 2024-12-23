@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-do-i-create-hyperlinks-with-a-formula-or-rollup"
 ---
 
-Okay so you wanna create hyperlinks using a formula or rollup right Been there done that trust me Its a pretty common thing you run into when you’re dealing with any kind of database like system I’ve spent countless nights staring at a screen trying to get this exact thing to work so I can sympathize lets dive in
+ so you wanna create hyperlinks using a formula or rollup right Been there done that trust me Its a pretty common thing you run into when you’re dealing with any kind of database like system I’ve spent countless nights staring at a screen trying to get this exact thing to work so I can sympathize lets dive in
 
 First lets tackle why you would want to do this A static link is fine if you have like one thing but if you have a list of records and those records have fields that dynamically create the destination you need a formula or a rollup. Simple as that This often happens when you need to construct urls from unique ids or record names or a combination of things You know like product ids on an ecommerce site or a specific user profile on a internal tool
 

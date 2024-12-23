@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-a-contract-convert-a-given-gwei-amount-to-ethusd-without-recalculating-conversion-formulas-each-time"
 ---
 
-Alright, let's tackle this. I’ve definitely been down this road before, and it’s a common stumbling block when working with smart contracts and real-world data. We're aiming for a system where a smart contract can convert a given amount of gwei to its equivalent value in ETH, and then to USD, without performing redundant calculations each time. Think about it: having to recompute those conversion rates within the contract every operation would be incredibly gas-inefficient, and prone to external price fluctuations. So, let’s break this down, practically.
+Alright,  I’ve definitely been down this road before, and it’s a common stumbling block when working with smart contracts and real-world data. We're aiming for a system where a smart contract can convert a given amount of gwei to its equivalent value in ETH, and then to USD, without performing redundant calculations each time. Think about it: having to recompute those conversion rates within the contract every operation would be incredibly gas-inefficient, and prone to external price fluctuations. So, let’s break this down, practically.
 
 The primary challenge here isn't the conversion itself – that's simple math. The real issue is how to get the current ETH/USD exchange rate *into* the contract reliably and cost-effectively. Smart contracts, by design, can't directly access external data sources. We can’t just call an API from inside a solidity contract. This is where oracles become essential. Oracles act as bridges, bringing external data into the blockchain ecosystem. We'll rely on that to feed us the relevant exchange rate.
 

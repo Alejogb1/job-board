@@ -7,7 +7,7 @@ id: "how-sambanova-achieves-1000-tokenssecond-llm-processing"
 dude so this video was *wild*  it was all about this company sambanova and their insane AI platform  basically they're showing off how they can blast through a thousand tokens per second using llama 3 that's like  *ridiculously* fast for an llm think about it  most stuff chugs along at a snail's pace compared to that.  the whole point was to showcase their tech and how it makes using massive language models super efficient for businesses and stuff.  they went pretty deep into the techy stuff too which i loved
 
 
-okay so let's break this down  five key moments or takeaways right
+ so let's break this down  five key moments or takeaways right
 
 
 1. **the thousand-tokens-per-second speed demon:** this was the main event the whole video centered around their achievement of processing over a thousand tokens per second using llama 3 that's lightning fast and the visuals of their benchmark comparisons hammering home this point were especially memorable.  they were *significantly* faster than other providers which is a big deal

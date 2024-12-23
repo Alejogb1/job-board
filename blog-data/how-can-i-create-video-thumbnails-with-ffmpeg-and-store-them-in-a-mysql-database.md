@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-create-video-thumbnails-with-ffmpeg-and-store-them-in-a-mysql-database"
 ---
 
-Alright, let's tackle this. Creating video thumbnails and managing them within a database is a fairly common requirement, and ffmpeg is definitely the right tool for the job. I’ve spent more than a few late nights wrestling (okay, *working*) with similar pipelines, so I can offer some practical guidance. The key here is to think of this as a two-step process: generating the thumbnail with ffmpeg and then storing it in the MySQL database.
+Alright,  Creating video thumbnails and managing them within a database is a fairly common requirement, and ffmpeg is definitely the right tool for the job. I’ve spent more than a few late nights wrestling (, *working*) with similar pipelines, so I can offer some practical guidance. The key here is to think of this as a two-step process: generating the thumbnail with ffmpeg and then storing it in the MySQL database.
 
 Let's start with ffmpeg. It's incredibly flexible, but for thumbnails, we're typically focusing on a few core functionalities. Specifically, we want to extract a single frame from a video, resize it if necessary, and encode it into a standard image format like jpeg or png. My go-to approach usually involves using a combination of `-ss`, `-vframes`, `-vf`, and of course `-y` to overwrite existing files. The `-ss` flag allows you to specify the point in time you want to grab the frame. The `-vframes` flag lets you indicate the number of frames you wish to extract (in our case just one), and the `-vf` allows for frame filtering, such as scaling.
 
@@ -31,7 +31,7 @@ ffmpeg -ss 30 -i input_video.mp4 -vframes 1 -vf "scale=iw*0.5:ih*0.5" -y output_
 ```
 Here we are using `iw*0.5:ih*0.5` to scale the image to half the width and half the height, and save it as a png.
 
-Okay, so now we have a thumbnail image. The next challenge is how to store this in a MySQL database. We're going to be working with a `blob` type for storing the image data itself. There are a few approaches here: either saving the path of the image in the database and storing the image on the file system, or storing the actual binary content of the image in the database itself, inside a `blob` column. I tend to favor storing the blob in database to avoid potential issues regarding file-system synchronization and permissions, assuming that the size of the thumbnail image is not excessively huge (which it really shouldn't be).
+, so now we have a thumbnail image. The next challenge is how to store this in a MySQL database. We're going to be working with a `blob` type for storing the image data itself. There are a few approaches here: either saving the path of the image in the database and storing the image on the file system, or storing the actual binary content of the image in the database itself, inside a `blob` column. I tend to favor storing the blob in database to avoid potential issues regarding file-system synchronization and permissions, assuming that the size of the thumbnail image is not excessively huge (which it really shouldn't be).
 
 For this, you'll need a database structure like this:
 

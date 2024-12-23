@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-do-capybara-feature-specs-fail-when-using-turbo-drive"
 ---
 
-Okay, let's tackle this one. Capybara feature specs failing with Turbo Drive is a pain point I've encountered more than a few times, and it stems from a fundamental difference in how these two technologies operate. It's not always immediately apparent, so I understand the frustration. Essentially, the issue arises from the mismatch in Capybara’s assumptions about page transitions and the way Turbo Drive handles them.
+, let's tackle this one. Capybara feature specs failing with Turbo Drive is a pain point I've encountered more than a few times, and it stems from a fundamental difference in how these two technologies operate. It's not always immediately apparent, so I understand the frustration. Essentially, the issue arises from the mismatch in Capybara’s assumptions about page transitions and the way Turbo Drive handles them.
 
 Let me walk you through it. Capybara, by default, operates under the assumption that navigating to a new page involves a full page reload. It waits for the browser to fully load the new document and all its assets before proceeding with subsequent actions in your test. That’s pretty straightforward.
 

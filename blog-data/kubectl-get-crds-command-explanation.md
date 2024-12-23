@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "kubectl-get-crds-command-explanation"
 ---
 
-Alright so you're asking about `kubectl get crds` right I've been there trust me It's one of those things that seems simple enough on the surface but gets kinda deep the moment you start actually using it on a regular basis Let's break it down from my own experiences
+so you're asking about `kubectl get crds` right I've been there trust me It's one of those things that seems simple enough on the surface but gets kinda deep the moment you start actually using it on a regular basis Let's break it down from my own experiences
 
 First off `kubectl get crds` is your gateway into the world of Custom Resource Definitions in Kubernetes You know how Kubernetes has built-in resources like pods deployments services etc well CRDs let you extend that and define your own resource types It's like building your own Lego bricks for your Kubernetes cluster and the `kubectl get crds` command is how you see all those bricks you've built or are available
 
@@ -27,7 +27,7 @@ The `NAME` column shows the fully qualified name of the CRD This is important be
 
 The `CREATED AT` column well it's pretty self-explanatory it’s the timestamp when that CRD was first added to your cluster This can be useful for debugging or just keeping track of when things were deployed I learned that the hard way because I made a lot of deployments and I didn't remember when I created what so this command really helped me
 
-You might be thinking alright I have the list but what about the details Well you can get more info with a combination of the command and the `-o yaml` or `-o json` flags For example if you want to see the full definition of a CRD in YAML format you would use
+You might be thinking I have the list but what about the details Well you can get more info with a combination of the command and the `-o yaml` or `-o json` flags For example if you want to see the full definition of a CRD in YAML format you would use
 
 ```bash
 kubectl get crds applications.apps.example.com -o yaml
@@ -53,7 +53,7 @@ kubectl get crds -o json | jq '.items[] | select(.spec.names.kind == "Applicatio
 
 That command will output the name of the CRD where the `kind` name is equal to Application This is just a small example of what you can do and you can filter based on anything that's in the output of the `get crds` command
 
-And just a quick little joke for the road why did the Kubernetes pod keep restarting? because it didn't understand the `restartPolicy: Always` flag so always check your yaml people haha okay moving on
+And just a quick little joke for the road why did the Kubernetes pod keep restarting? because it didn't understand the `restartPolicy: Always` flag so always check your yaml people haha  moving on
 
 Now as for resources to learn more I would recommend not just relying on the Kubernetes documentation that can get a bit overwhelming sometimes I've personally found that "Kubernetes in Action" by Marko Luksa is a great book for understanding all the Kubernetes concepts and it does delve quite deep into Custom Resources and CRDs also the official kubernetes docs are pretty good but it can be overwhelming at first I'd recommend focusing on the "Custom Resources" part specifically which will get you what you are looking for Another good resource is the Kubernetes API reference this is important because it is very specific to the versions you use This reference is important as well because all the field names and the expected data type are in that reference So that would be my recommendations for you
 

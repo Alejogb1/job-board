@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-bytesize-not-defined-for-a-hash-object-when-using-devise-and-omniauth-facebook"
 ---
 
-Okay, let's unpack this. I've definitely run into this peculiar `bytesize` issue myself, specifically when combining Devise, OmniAuth, and particularly Facebook authentication. It's one of those problems that initially makes you scratch your head, but the root cause, once understood, stems from the subtle ways these libraries handle data. Essentially, the problem boils down to a mix of how Ruby handles strings, how `OmniAuth` parses authentication responses, and how `Devise` interacts with user attributes.
+, let's unpack this. I've definitely run into this peculiar `bytesize` issue myself, specifically when combining Devise, OmniAuth, and particularly Facebook authentication. It's one of those problems that initially makes you scratch your head, but the root cause, once understood, stems from the subtle ways these libraries handle data. Essentially, the problem boils down to a mix of how Ruby handles strings, how `OmniAuth` parses authentication responses, and how `Devise` interacts with user attributes.
 
 The core issue is not that a `Hash` inherently lacks a `bytesize` method (it doesn’t), but that you are attempting to invoke `bytesize` on a Hash object, often unintentionally, during the authentication process. This typically happens when the authentication data, especially that coming from OmniAuth providers like Facebook, is not properly sanitized or transformed into a string format before Devise attempts to use it, specifically when dealing with attributes during model creation or updates.
 

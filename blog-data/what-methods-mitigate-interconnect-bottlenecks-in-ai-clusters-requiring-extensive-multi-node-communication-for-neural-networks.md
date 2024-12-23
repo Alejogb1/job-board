@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "what-methods-mitigate-interconnect-bottlenecks-in-ai-clusters-requiring-extensive-multi-node-communication-for-neural-networks"
 ---
 
-Okay so you're asking about speeding up AI clusters right  like when you've got a massive neural net spread across a bunch of computers and the talking between them is slowing everything down a total nightmare  Yeah I get it  It's a huge problem  Basically your fancy GPUs are sitting around twiddling their thumbs waiting for data which is super inefficient
+ so you're asking about speeding up AI clusters right  like when you've got a massive neural net spread across a bunch of computers and the talking between them is slowing everything down a total nightmare  Yeah I get it  It's a huge problem  Basically your fancy GPUs are sitting around twiddling their thumbs waiting for data which is super inefficient
 
 The main culprit is the interconnect  think of it as the highway system between your computers  if it's clogged everything grinds to a halt  So we need better highways  faster data transfer better routing fewer traffic jams  right
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-are-exponential-recursive-async-functions-in-nodejs-using-request-causing-socket-errors"
 ---
 
-Okay, let's tackle this. The question about exponential recursive async functions using `request` in Node.js leading to socket errors is something I’ve definitely seen crop up in various projects over the years. It usually doesn't manifest immediately, which makes it all the more insidious. I remember back in my early days working on a data aggregation service, we had a process that looked deceptively straightforward, but ended up bringing the whole thing down after a few hours of continuous operation.
+,  The question about exponential recursive async functions using `request` in Node.js leading to socket errors is something I’ve definitely seen crop up in various projects over the years. It usually doesn't manifest immediately, which makes it all the more insidious. I remember back in my early days working on a data aggregation service, we had a process that looked deceptively straightforward, but ended up bringing the whole thing down after a few hours of continuous operation.
 
 Fundamentally, the problem isn't with async functions themselves, nor is it *specifically* about `request` – though `request`'s legacy implementation and its heavy reliance on the underlying http/https modules certainly contribute. The root cause is the interplay between unbounded recursion, asynchronous operations, and the finite resources available to Node.js and, more critically, the operating system.
 

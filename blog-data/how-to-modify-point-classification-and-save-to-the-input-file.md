@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-modify-point-classification-and-save-to-the-input-file"
 ---
 
-Okay, let's tackle this. I remember one particularly challenging project back in '14 involving a massive point cloud dataset from a LiDAR scan of a historical site. We were tasked with classifying these points—separating vegetation from architectural elements, essentially—and then updating the original data with these classifications. The problem, as you might imagine, wasn't simply about implementing a classification algorithm; it was about handling the data modification efficiently and accurately.
+,  I remember one particularly challenging project back in '14 involving a massive point cloud dataset from a LiDAR scan of a historical site. We were tasked with classifying these points—separating vegetation from architectural elements, essentially—and then updating the original data with these classifications. The problem, as you might imagine, wasn't simply about implementing a classification algorithm; it was about handling the data modification efficiently and accurately.
 
 When it comes to modifying point classifications and saving back to the input file, there’s a whole ecosystem of considerations to navigate. It’s not merely swapping values; it's often about ensuring data integrity, maintaining spatial relationships, and choosing the correct file formats and libraries. My approach, born from those days of debugging complex workflows, always starts with understanding the nature of the data and the tools at hand.
 

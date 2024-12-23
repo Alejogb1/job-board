@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-my-fastapi-application-run-locally-but-not-in-a-container"
 ---
 
-Okay, let's tackle this. It’s a scenario I’ve personally debugged more times than I care to remember. That feeling when your FastAPI app purrs like a kitten on your localhost but throws a tantrum when containerized? Yeah, been there. It usually boils down to a few core discrepancies between your development environment and the isolated world of a container. Let me break down the common culprits, drawing from experiences battling these issues in past projects, complete with some practical examples.
+,  It’s a scenario I’ve personally debugged more times than I care to remember. That feeling when your FastAPI app purrs like a kitten on your localhost but throws a tantrum when containerized? Yeah, been there. It usually boils down to a few core discrepancies between your development environment and the isolated world of a container. Let me break down the common culprits, drawing from experiences battling these issues in past projects, complete with some practical examples.
 
 The fundamental reason you’re experiencing this discrepancy lies in the differences between your local environment – where you likely have all sorts of implicit dependencies and configurations – and the container environment, which is by design, isolated and explicit. Think of it as the difference between a comfortable, well-worn workshop and a brand new, pristine construction site. The tools might be the same, but the set-up is radically different.
 

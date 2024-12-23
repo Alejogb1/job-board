@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-my-keras-model-receiving-an-input-shape-incompatible-with-the-expected-shape-none-1-9"
 ---
 
-Okay, let’s tackle this. Shape mismatches in Keras, particularly when involving a `(None, 1, 9)` input, are a common source of frustration, and I've seen it crop up more times than I can count across different projects. It's usually a result of how the data is preprocessed or how layers are defined within the model itself. Let me break this down based on what I've encountered in past work, and we'll look at some practical code snippets to illustrate the issues and solutions.
+, let’s tackle this. Shape mismatches in Keras, particularly when involving a `(None, 1, 9)` input, are a common source of frustration, and I've seen it crop up more times than I can count across different projects. It's usually a result of how the data is preprocessed or how layers are defined within the model itself. Let me break this down based on what I've encountered in past work, and we'll look at some practical code snippets to illustrate the issues and solutions.
 
 The key here is that the `(None, 1, 9)` shape indicates a few things. The `None` dimension signifies that Keras is expecting batches of data, where the batch size can vary during training (and it's why you typically don’t specify it explicitly during model definition). The `1` represents a single channel or feature at that particular stage in your data processing. Finally, the `9` indicates that you have nine values within each of these single feature sets.
 

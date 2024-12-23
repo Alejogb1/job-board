@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-can-useeffect-work-with-axios-and-asyncawait"
 ---
 
-Alright, let's tackle this. I've seen this pattern trip up more than a few developers, and it's understandable why. The interaction between react's `useEffect`, asynchronous operations like `axios` calls, and the `async/await` syntax can feel a little counterintuitive at first glance. I recall one particular project back at "Quantum Dynamics," where we were pulling in vast datasets for real-time analytics. The initial implementations were a chaotic mix of promises and side effects, leading to race conditions and intermittent data inconsistencies. Let’s clarify how to handle this correctly, drawing from those hard-won lessons.
+Alright,  I've seen this pattern trip up more than a few developers, and it's understandable why. The interaction between react's `useEffect`, asynchronous operations like `axios` calls, and the `async/await` syntax can feel a little counterintuitive at first glance. I recall one particular project back at "Quantum Dynamics," where we were pulling in vast datasets for real-time analytics. The initial implementations were a chaotic mix of promises and side effects, leading to race conditions and intermittent data inconsistencies. Let’s clarify how to handle this correctly, drawing from those hard-won lessons.
 
 The core issue stems from `useEffect`’s synchronous nature. It expects a function that either returns nothing (effectively `undefined`) or a cleanup function. Directly using an `async` function inside `useEffect` is problematic because it inherently returns a promise, not `undefined` or a cleanup function. This confuses react's lifecycle machinery, potentially leading to unexpected behaviors and memory leaks.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-write-to-an-alias-in-elastic-search-from-kubernetes-using-the-logging-operator"
 ---
 
-Okay, let's tackle this. I've certainly been down this road before – the need to route logs from a Kubernetes cluster into Elasticsearch, particularly leveraging aliases, can be a bit tricky if not approached methodically. Specifically using the logging-operator adds another layer, but its flexibility really shines once you understand how it all fits together.
+,  I've certainly been down this road before – the need to route logs from a Kubernetes cluster into Elasticsearch, particularly leveraging aliases, can be a bit tricky if not approached methodically. Specifically using the logging-operator adds another layer, but its flexibility really shines once you understand how it all fits together.
 
 So, you're looking at sending logs into Elasticsearch, and instead of writing directly to specific indices (which are time-based and rollover, and not ideal for consistent querying), you want to target an alias. This alias acts as a pointer to one or more concrete indices. Using aliases decouples your application's query patterns from the underlying index structure, simplifying maintenance tasks like index rotations and migrations. I remember a project where we initially wrote logs directly to indices named after the timestamp. We quickly ran into issues when trying to switch index patterns or when needing to reindex. Learning to embrace aliases saved a great deal of headaches for us.
 

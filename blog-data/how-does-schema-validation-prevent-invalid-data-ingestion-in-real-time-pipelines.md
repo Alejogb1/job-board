@@ -4,7 +4,7 @@ date: "2024-12-10"
 id: "how-does-schema-validation-prevent-invalid-data-ingestion-in-real-time-pipelines"
 ---
 
-Okay so you wanna know how schema validation keeps your real-time data pipelines from choking on bad data right  It's a big deal  Imagine a tsunami of messy data crashing into your system  Chaos ensues  Applications crash dashboards lie numbers are wrong everything's a mess  Schema validation is your life raft  it's that crucial step that ensures your data conforms to a predefined structure before it even gets near your precious applications
+ so you wanna know how schema validation keeps your real-time data pipelines from choking on bad data right  It's a big deal  Imagine a tsunami of messy data crashing into your system  Chaos ensues  Applications crash dashboards lie numbers are wrong everything's a mess  Schema validation is your life raft  it's that crucial step that ensures your data conforms to a predefined structure before it even gets near your precious applications
 
 Think of it like this you're building a house  You wouldn't just start piling bricks randomly right You'd have blueprints a plan a schema  Schema validation is like having an inspector on site constantly checking if each brick is placed correctly according to the plan  If a brick is the wrong size or shape the inspector stops the construction  That's exactly what schema validation does it stops bad data from entering your system
 

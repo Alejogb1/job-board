@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "syntaxerror-ambiguous-indirect-export-default-error-when-importing-my-own-clas"
 ---
 
-Okay so you're hitting that `SyntaxError: ambiguous indirect export default` right been there done that got the t-shirt let me tell you this one's a classic head scratcher especially when you're trying to import your own stuff its like your code's turning on you
+ so you're hitting that `SyntaxError: ambiguous indirect export default` right been there done that got the t-shirt let me tell you this one's a classic head scratcher especially when you're trying to import your own stuff its like your code's turning on you
 
 First things first let's break down what's probably going on see this error it means that somewhere in your module export chain something is going sideways Javascript module system it's a beast sometimes specifically when you're using `export default`
 

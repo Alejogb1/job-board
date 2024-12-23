@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-an-aggregate-root-contain-other-aggregate-roots"
 ---
 
-Okay, let’s dive into the somewhat thorny question of whether an aggregate root can contain other aggregate roots. From my experience, this is a point where a lot of domain-driven design (ddd) implementations can go off the rails, and it's crucial to get this concept solid.
+, let’s dive into the somewhat thorny question of whether an aggregate root can contain other aggregate roots. From my experience, this is a point where a lot of domain-driven design (ddd) implementations can go off the rails, and it's crucial to get this concept solid.
 
 Let’s start with a crucial clarification: the very purpose of an aggregate root is to define a transactional consistency boundary. It's the entry point for accessing and modifying entities within that boundary, enforcing invariants and ensuring data integrity within its scope. When you hear “aggregate root,” think of it as the *single* entity in a given aggregate that can be directly referenced from *outside* that aggregate. It’s the guardian, the gatekeeper, if you will.
 

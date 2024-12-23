@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "hello-world-in-prolog"
 ---
 
-Okay so you wanna dive into Prolog right Alright I've been there done that probably more than a few times Lets get this 'hello world' thing sorted in a way that even your cat could probably understand eventually
+ so you wanna dive into Prolog right I've been there done that probably more than a few times Lets get this 'hello world' thing sorted in a way that even your cat could probably understand eventually
 
 First off Prolog isn't your typical procedural language no `print()` no `console log` you're gonna be wrestling with logic facts and rules not just telling the computer what to do step by step Think of it like this instead of giving the computer an instruction list you are giving it a knowledge base and asking it questions
 
@@ -20,7 +20,7 @@ hello_world :-
     nl.
 ```
 
-Okay lets break it down `hello_world` is what we call a predicate a fancy word for something that can be true or false it's like a function but a little different in logic land The `:-` means 'if' but in this specific context it's more like the definition of what happens when we call the `hello_world` predicate
+ lets break it down `hello_world` is what we call a predicate a fancy word for something that can be true or false it's like a function but a little different in logic land The `:-` means 'if' but in this specific context it's more like the definition of what happens when we call the `hello_world` predicate
 
 So when you query prolog with `hello_world` it will execute the write part and then the new line part simple right?
 

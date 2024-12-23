@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-doesnt-azure-cli-recognize-my-az-ml-data-create-command"
 ---
 
-Okay, let's tackle this. It's a situation I've seen a fair number of times, and it usually boils down to a few key areas. The `az ml data create` command, specifically, is a component within the Azure Machine Learning (ML) extension of the Azure CLI. When it's not recognized, it typically indicates an issue with either the extension itself, the way your environment is configured, or sometimes, how you're interacting with the command structure.
+,  It's a situation I've seen a fair number of times, and it usually boils down to a few key areas. The `az ml data create` command, specifically, is a component within the Azure Machine Learning (ML) extension of the Azure CLI. When it's not recognized, it typically indicates an issue with either the extension itself, the way your environment is configured, or sometimes, how you're interacting with the command structure.
 
 Back when I was setting up a new MLOps pipeline for a financial risk analysis project, I ran into a similar problem. We were heavily relying on custom datasets stored in Azure Blob Storage, and, like you, I expected `az ml data create` to smoothly ingest this data into our AML workspace. When it threw the error, it pointed to something missing or a configuration that was subtly off. So, let's break down the possibilities and how we can fix them, going beyond just the basic checks.
 

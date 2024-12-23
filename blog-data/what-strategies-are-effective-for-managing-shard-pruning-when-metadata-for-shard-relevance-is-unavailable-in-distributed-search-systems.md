@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "what-strategies-are-effective-for-managing-shard-pruning-when-metadata-for-shard-relevance-is-unavailable-in-distributed-search-systems"
 ---
 
-Okay so you're asking about shard pruning without knowing what shards are relevant right  that's a tough one in distributed search  think of it like having a giant library spread across many many rooms  you need to find a specific book but you don't have a map showing which room it's in thats the metadata problem  so how do you efficiently search without wasting time in irrelevant rooms
+ so you're asking about shard pruning without knowing what shards are relevant right  that's a tough one in distributed search  think of it like having a giant library spread across many many rooms  you need to find a specific book but you don't have a map showing which room it's in thats the metadata problem  so how do you efficiently search without wasting time in irrelevant rooms
 
 The brute force approach is obviously to check every single room which is super inefficient  especially if you have thousands or millions of shards which is typical in these systems  that's why we need clever strategies  and it all boils down to making educated guesses
 

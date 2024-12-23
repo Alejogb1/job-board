@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-save-a-pytorch-model-and-then-load-it-in-a-new-file"
 ---
 
-Alright, let's tackle this. I've been through this cycle more times than I care to count, and getting model saving and loading robustly right is crucial in any serious pytorch project. It's not just about dumping weights and grabbing them later; we need to consider things like architecture preservation, potential device conflicts, and even subtle issues related to different python environments. This is a bread-and-butter task, but it has a few nuances worth understanding.
+Alright,  I've been through this cycle more times than I care to count, and getting model saving and loading robustly right is crucial in any serious pytorch project. It's not just about dumping weights and grabbing them later; we need to consider things like architecture preservation, potential device conflicts, and even subtle issues related to different python environments. This is a bread-and-butter task, but it has a few nuances worth understanding.
 
 My experience spans several projects, from a large-scale distributed training setup for image recognition, where model checkpointing was essential to avoid losing progress during long training runs, to a more recent deep reinforcement learning project where I had to reload my policy networks to continue training after an interruption. In both cases, the underlying mechanics were the same, though the deployment scenarios were very different.
 

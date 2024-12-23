@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-is-the-start-date-for-the-dag-run"
 ---
 
-Okay, let's get into it. The question of determining the start date for a dag run isn't as straightforward as simply looking at a timestamp; it's nuanced and depends heavily on the specific orchestration tool in use and its underlying configuration. I’ve personally spent countless hours debugging scheduling issues in airflow, and even with seemingly simple setups, the intricacies can be quite revealing. It’s never *just* the time, is it?
+, let's get into it. The question of determining the start date for a dag run isn't as straightforward as simply looking at a timestamp; it's nuanced and depends heavily on the specific orchestration tool in use and its underlying configuration. I’ve personally spent countless hours debugging scheduling issues in airflow, and even with seemingly simple setups, the intricacies can be quite revealing. It’s never *just* the time, is it?
 
 The core problem lies in distinguishing between the *logical* execution date, which represents the theoretical start time of a dag according to its schedule, and the *actual* execution start time, which is when the underlying system begins processing the tasks within the dag. These are often different, and misunderstanding this difference is where many issues originate.
 

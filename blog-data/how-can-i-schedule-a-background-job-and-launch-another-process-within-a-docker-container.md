@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-schedule-a-background-job-and-launch-another-process-within-a-docker-container"
 ---
 
-Okay, let's tackle this. I've certainly navigated this terrain countless times, particularly when dealing with complex microservices architectures. The challenge of scheduling a background task *and* launching a separate process inside a docker container isn't unusual, and there are various ways to approach it. The specifics, naturally, depend on the level of control and observability you need. Let’s explore the common and robust techniques I've found most effective.
+,  I've certainly navigated this terrain countless times, particularly when dealing with complex microservices architectures. The challenge of scheduling a background task *and* launching a separate process inside a docker container isn't unusual, and there are various ways to approach it. The specifics, naturally, depend on the level of control and observability you need. Let’s explore the common and robust techniques I've found most effective.
 
 First, it's crucial to understand that a docker container, at its core, runs a single primary process, typically defined by the `CMD` or `ENTRYPOINT` instruction in the Dockerfile. Everything else is generally orchestrated around that. Directly attempting to use traditional tools like `cron` inside the container as the primary process often proves problematic due to signal handling and process management complexities within the containerized environment. It can lead to zombies, unexpected behaviors, and debugging nightmares. This is a lesson learned from a particularly hairy project where we initially tried to run everything inside one monolithic container. It was… not ideal.
 

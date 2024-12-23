@@ -14,7 +14,7 @@ Now, `AddImplication` is slightly different. It models a conditional statement: 
 
 The real power of these constructs comes from combining them within a larger model. It allows you to express fairly intricate logical dependencies that go far beyond basic linear constraints, something that the manufacturing scheduling project relied on heavily.
 
-Okay, let's dive into some code examples, each using a different context to illustrate a practical use case. These examples assume you're working with a constraint solver library like Google OR-Tools, which is pretty common, but the principles will apply across most similar libraries.
+, let's dive into some code examples, each using a different context to illustrate a practical use case. These examples assume you're working with a constraint solver library like Google OR-Tools, which is pretty common, but the principles will apply across most similar libraries.
 
 **Example 1: Machine Selection**
 

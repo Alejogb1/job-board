@@ -20,7 +20,7 @@ Transparency is key here  If the AI is gonna show ads it needs to be super clear
 This whole thing reminds me of some research papers I read  There's a lot of work on persuasive technology and how ads influence user behavior  Check out some papers on the ethical implications of AI and advertising  Maybe look up stuff on the psychology of persuasion  You'll find tons on how subtle manipulation can impact people's choices  It's fascinating and terrifying at the same time
 
 
-Okay let's get a little more technical  How can we actually deal with these issues  Well  programming is key  We can build AI that's more transparent and less likely to push ads  We can also make AI that's better at understanding user intent and filtering out ads that aren't relevant
+ let's get a little more technical  How can we actually deal with these issues  Well  programming is key  We can build AI that's more transparent and less likely to push ads  We can also make AI that's better at understanding user intent and filtering out ads that aren't relevant
 
 
 Here's a little code example in Python to illustrate how we can flag ads  It's basic but it gets the idea across

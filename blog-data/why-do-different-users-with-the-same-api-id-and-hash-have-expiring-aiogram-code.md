@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-do-different-users-with-the-same-api-id-and-hash-have-expiring-aiogram-code"
 ---
 
-Okay, let's tackle this. The issue of expiring aiogram code, even when users share the same API ID and hash, is actually more common than one might initially think. It points to a fundamental misunderstanding about how aiogram, and indeed, most asynchronous frameworks, operate in the context of multiple user sessions. I've personally run into this exact scenario during a project involving a Telegram bot meant for a small community; the frustration was real, and the fix wasn't immediately apparent.
+,  The issue of expiring aiogram code, even when users share the same API ID and hash, is actually more common than one might initially think. It points to a fundamental misunderstanding about how aiogram, and indeed, most asynchronous frameworks, operate in the context of multiple user sessions. I've personally run into this exact scenario during a project involving a Telegram bot meant for a small community; the frustration was real, and the fix wasn't immediately apparent.
 
 The core problem isn't necessarily the api id and hash themselves; those are more analogous to a shared login credential. They're a gatekeeper, granting access to the telegram api. The real problem surfaces in how each user's *session* is handled, specifically with how the aiogram library structures its internal event loop and state management. Let's break down what’s happening:
 

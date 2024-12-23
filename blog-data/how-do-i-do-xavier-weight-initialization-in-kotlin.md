@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-do-xavier-weight-initialization-in-kotlin"
 ---
 
-Alright, let's tackle this. Xavier initialization in Kotlin – it's something I've certainly encountered more than once, particularly back when I was deep into experimenting with various neural network architectures. It's a subtle but crucial step in training deep learning models, and getting it just 'so' can dramatically impact convergence. So, rather than diving directly into code, let's first recap *why* it's so important and then explore a few ways to do this effectively in Kotlin.
+Alright,  Xavier initialization in Kotlin – it's something I've certainly encountered more than once, particularly back when I was deep into experimenting with various neural network architectures. It's a subtle but crucial step in training deep learning models, and getting it just 'so' can dramatically impact convergence. So, rather than diving directly into code, let's first recap *why* it's so important and then explore a few ways to do this effectively in Kotlin.
 
 Fundamentally, Xavier initialization, sometimes referred to as Glorot initialization, is all about setting the initial weights of your neural network in a way that keeps the variance of activations roughly the same across layers. This prevents the dreaded vanishing or exploding gradient problems during backpropagation, which can effectively stall your training process. If the initial weights are too small, activations shrink and gradients become miniscule, leading to slow learning. Too large, and you end up with unstable learning and potentially diverging gradients. The goal is balance.
 

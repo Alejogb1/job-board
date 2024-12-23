@@ -4,13 +4,13 @@ date: "2024-12-13"
 id: "b-c-concatenation-operator-usage"
 ---
 
-Okay so you're asking about the C++ concatenation operator specifically right Been there done that tons of times Let me tell you my experiences maybe they will help you out too
+ so you're asking about the C++ concatenation operator specifically right Been there done that tons of times Let me tell you my experiences maybe they will help you out too
 
 So first off what we actually mean by "concatenation operator" in C++ is usually the plus operator `+` when dealing with strings Specifically that `std::string` type we use a lot Not just plain old C-style char arrays Those are a whole different beast and we'll try to avoid that here cause they are just asking for buffer overflows and segmentation faults you know the drill The plus operator `+` for `std::string` is well designed that makes it really easier
 
 See you can’t just smash two char arrays like that you need to be extremely careful with memory allocation and string length calculations things can get really messy fast Especially when you have other things to do with real business logic that is not fiddling memory management details We are here to solve problems not debug memory leaks right
 
-Okay so you're probably wondering how does this really work let’s say you got two strings:
+ so you're probably wondering how does this really work let’s say you got two strings:
 
 ```cpp
 #include <iostream>
@@ -63,7 +63,7 @@ int main() {
 
 This outputs "This is a string concatenation". It’s pretty easy and convenient to use but be aware that string literals are char arrays behind the scenes.
 
-Okay so far so good right. One thing I have to mention is that if you’re concatenating many strings in a loop that's where performance can suffer a bit because of the memory allocation and copy operations involved The good news is we have other ways to do this that are more efficient. I am not going to go into details in this answer cause your question is simply about plus operator but I’ll give you a pointer in the resources section. Let’s just say I had a big string that grew slowy in a loop at some point in the past. It was doing memory allocation every single loop it was terribly slow. I spent days looking to fix that. In my case a single operation was not slow but the repeated operations slowed down the overall process. When I finally used a different technique to avoid many memory allocation and copy operations the speed went up 10 times! Seriously a big difference.
+ so far so good right. One thing I have to mention is that if you’re concatenating many strings in a loop that's where performance can suffer a bit because of the memory allocation and copy operations involved The good news is we have other ways to do this that are more efficient. I am not going to go into details in this answer cause your question is simply about plus operator but I’ll give you a pointer in the resources section. Let’s just say I had a big string that grew slowy in a loop at some point in the past. It was doing memory allocation every single loop it was terribly slow. I spent days looking to fix that. In my case a single operation was not slow but the repeated operations slowed down the overall process. When I finally used a different technique to avoid many memory allocation and copy operations the speed went up 10 times! Seriously a big difference.
 
 So to recap the plus `+` operator and the `+=` operator are your friends for basic string concatenation with std::string They abstract away all the complicated stuff about memory management and you should only use c style char arrays in specific low level situations and always with caution because it is easy to introduce security bugs. I have seen many cases when that simple string concatenation operation was a gateway for security issues.
 

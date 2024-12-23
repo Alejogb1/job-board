@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "is-it-possible-to-run-windows-containers-with-gui-support"
 ---
 
-Okay, let’s talk about running Windows containers with graphical user interfaces. It’s a topic I’ve spent a fair amount of time tackling, particularly in a previous project where we needed to containerize some legacy Windows applications that absolutely relied on their GUI for interaction. It's not a completely straightforward process, and it involves understanding a few fundamental concepts that deviate quite significantly from typical server-based container usage.
+, let’s talk about running Windows containers with graphical user interfaces. It’s a topic I’ve spent a fair amount of time tackling, particularly in a previous project where we needed to containerize some legacy Windows applications that absolutely relied on their GUI for interaction. It's not a completely straightforward process, and it involves understanding a few fundamental concepts that deviate quite significantly from typical server-based container usage.
 
 The core challenge stems from the way Windows containers are fundamentally designed. Initially, the focus was almost exclusively on server workloads—applications that operated without a user interface. The container runtime, Docker for Windows (or now more broadly, container engines compatible with the Windows kernel), wasn’t inherently set up to handle the complexities of windowing systems, graphic drivers, and user interaction that a GUI requires. However, the landscape has evolved. It's certainly feasible now, but it's not as simple as just building a Dockerfile and expecting a full-fledged GUI application to pop up like a browser window on your host.
 

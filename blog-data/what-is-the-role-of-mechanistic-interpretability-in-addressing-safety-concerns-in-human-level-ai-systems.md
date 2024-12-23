@@ -4,7 +4,7 @@ date: "2024-12-11"
 id: "what-is-the-role-of-mechanistic-interpretability-in-addressing-safety-concerns-in-human-level-ai-systems"
 ---
 
-Okay so you wanna talk about making sure super smart AIs don't accidentally kill us all right  That's a BIG deal  Mechanistic interpretability is basically like cracking open the AI's brain and seeing how its gears turn  Instead of just looking at what it *does* we want to understand *why* it does it at a really deep level  Think reverse engineering but for something way more complex than a toaster
+ so you wanna talk about making sure super smart AIs don't accidentally kill us all right  That's a BIG deal  Mechanistic interpretability is basically like cracking open the AI's brain and seeing how its gears turn  Instead of just looking at what it *does* we want to understand *why* it does it at a really deep level  Think reverse engineering but for something way more complex than a toaster
 
 The problem is current AIs are kinda like black boxes  You feed them stuff they spit out answers and we're mostly just guessing why  This is a HUGE safety concern because if we don't understand the reasoning behind a decision especially a critical one we can't really trust it or know how to fix potential problems
 

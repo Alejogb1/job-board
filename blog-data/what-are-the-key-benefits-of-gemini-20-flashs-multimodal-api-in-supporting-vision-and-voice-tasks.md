@@ -4,7 +4,7 @@ date: "2024-12-12"
 id: "what-are-the-key-benefits-of-gemini-20-flashs-multimodal-api-in-supporting-vision-and-voice-tasks"
 ---
 
-Okay lets dive into Gemini 2.0 Flash and its multimodal magic specifically how it handles vision and voice stuff its kinda fascinating if you think about it like a super powered swiss army knife for AI
+ lets dive into Gemini 2.0 Flash and its multimodal magic specifically how it handles vision and voice stuff its kinda fascinating if you think about it like a super powered swiss army knife for AI
 
 So first off multimodal think of it like a party where vision voice text and maybe even other senses are all invited before you had models that were specialized like a single purpose tool like a hammer for nails this is more like a full tool kit so Gemini 2.0 Flash being multimodal means it can process multiple types of data concurrently this is HUGE because real world scenarios rarely come in a single format you know
 
@@ -28,7 +28,7 @@ And finally it's about resource efficiency we are talking about one model doing 
 
 Now I should mention this whole idea of models understanding context has its basis in the idea of embodied cognition and multimodal deep learning you should probably look up some research in these fields if you are interested in the fundamental aspects for example research papers exploring attention mechanisms in multimodal models would be a good starting point maybe explore some works around multimodal transformers that is where a lot of this is based
 
-Okay lets look at some pseudo code to get a feel for it these arent real code snippets you can actually run but they illustrate the concepts:
+ lets look at some pseudo code to get a feel for it these arent real code snippets you can actually run but they illustrate the concepts:
 
 **Example 1: Image and Voice Captioning**
 

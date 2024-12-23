@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-use-a-graphql-playground-to-query-loopring-nfts"
 ---
 
-Okay, let's get into this. I recall a particularly challenging project some time back involving Loopring's layer-2 scaling solution. We were tasked with building a custom marketplace aggregator, and naturally, querying the chain for NFTs was paramount. A GraphQL playground became indispensable, and through that experience, I gained a fairly comprehensive understanding of how to leverage it for Loopring NFTs. I’ll try to break it down for you, focusing on the core practicalities, and then provide some concrete examples.
+, let's get into this. I recall a particularly challenging project some time back involving Loopring's layer-2 scaling solution. We were tasked with building a custom marketplace aggregator, and naturally, querying the chain for NFTs was paramount. A GraphQL playground became indispensable, and through that experience, I gained a fairly comprehensive understanding of how to leverage it for Loopring NFTs. I’ll try to break it down for you, focusing on the core practicalities, and then provide some concrete examples.
 
 First things first, understanding that Loopring is an ethereum layer-2 scaling solution is critical. It doesn't store NFT data exactly like the base ethereum layer. Instead, you're interacting with Loopring's APIs which have their own GraphQL endpoint. You won’t be directly hitting the Ethereum blockchain using a standard Ethereum GraphQL client for this. The key is understanding where Loopring stores its NFT data and how it exposes it for querying.
 

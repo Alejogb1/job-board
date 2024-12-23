@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-are-lazy-async-properties-considered-problematic-and-how-can-parent-child-relationships-in-classes-be-maintained-despite-them"
 ---
 
-Okay, let's tackle this. I remember a particularly challenging project back in '15; we were building a highly scalable microservices architecture, and lazy-loaded properties became… shall we say, a point of contention. It’s a topic where, while the initial convenience is attractive, the long-term implications can be quite sticky, especially when parent-child relationships are in play.
+,  I remember a particularly challenging project back in '15; we were building a highly scalable microservices architecture, and lazy-loaded properties became… shall we say, a point of contention. It’s a topic where, while the initial convenience is attractive, the long-term implications can be quite sticky, especially when parent-child relationships are in play.
 
 The core problem with lazy async properties stems from a few interrelated issues: unpredictable timing of asynchronous operations, potential for race conditions, and the complexity they add to debugging, especially within object hierarchies. In essence, a seemingly simple optimization can unravel into a complex web of concurrency concerns. When you have a parent object relying on a lazily initialized property in a child object, the situation can rapidly escalate.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-integrate-an-svm-classifier-into-a-cnn"
 ---
 
-Alright, let's tackle this. It’s a problem I’ve seen crop up quite a few times, especially back when we were experimenting with hybrid architectures for medical image analysis. The core challenge is that a Convolutional Neural Network (CNN) excels at feature extraction from raw data, while a Support Vector Machine (SVM) is excellent at classification, particularly when dealing with high-dimensional data, even if that data isn't inherently spatial. So, combining them isn’t about just sticking one after the other; it’s about carefully considering the output of the CNN and how to feed that into the SVM.
+Alright,  It’s a problem I’ve seen crop up quite a few times, especially back when we were experimenting with hybrid architectures for medical image analysis. The core challenge is that a Convolutional Neural Network (CNN) excels at feature extraction from raw data, while a Support Vector Machine (SVM) is excellent at classification, particularly when dealing with high-dimensional data, even if that data isn't inherently spatial. So, combining them isn’t about just sticking one after the other; it’s about carefully considering the output of the CNN and how to feed that into the SVM.
 
 Essentially, the integration process involves treating the CNN as a sophisticated feature extractor, and the SVM as the final classification layer. We aren’t replacing any fundamental parts of either network directly, but rather leveraging the strengths of both. The typical approach involves the following steps:
 

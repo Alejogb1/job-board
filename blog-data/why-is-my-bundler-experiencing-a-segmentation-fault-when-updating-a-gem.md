@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-my-bundler-experiencing-a-segmentation-fault-when-updating-a-gem"
 ---
 
-Okay, let's unpack this. Segmentation faults with bundler, particularly during gem updates, are notoriously frustrating because they’re often an indicator of problems far deeper than what the error message suggests. I remember encountering something similar back on a project involving a complex rails monolith a few years back—that experience is definitely shaping how i’ll approach this explanation. It’s rarely a fault directly within bundler’s core code; rather, it’s usually caused by interactions with native extensions within the gem, or by lower-level issues that bubble up.
+, let's unpack this. Segmentation faults with bundler, particularly during gem updates, are notoriously frustrating because they’re often an indicator of problems far deeper than what the error message suggests. I remember encountering something similar back on a project involving a complex rails monolith a few years back—that experience is definitely shaping how i’ll approach this explanation. It’s rarely a fault directly within bundler’s core code; rather, it’s usually caused by interactions with native extensions within the gem, or by lower-level issues that bubble up.
 
 A segmentation fault, in essence, is the operating system’s way of saying that a program has attempted to access a memory location that it is not allowed to access. When this occurs within the context of a gem update, several potential culprits can be at play. Let's break down the primary causes.
 

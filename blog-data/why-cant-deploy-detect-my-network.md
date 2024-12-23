@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-cant-deploy-detect-my-network"
 ---
 
-Okay, let's tackle this. The challenge of deployments failing to detect a network is something I've seen more times than I care to count, and it's rarely ever a single, straightforward issue. It’s a multi-faceted problem that usually stems from a combination of factors, each demanding careful investigation. We need to peel back the layers, starting with the basic premise that a deployment process, whether it's a containerized application, a virtual machine, or even a simple script, needs to have a route to your network for connectivity.
+,  The challenge of deployments failing to detect a network is something I've seen more times than I care to count, and it's rarely ever a single, straightforward issue. It’s a multi-faceted problem that usually stems from a combination of factors, each demanding careful investigation. We need to peel back the layers, starting with the basic premise that a deployment process, whether it's a containerized application, a virtual machine, or even a simple script, needs to have a route to your network for connectivity.
 
 From my experience, especially dealing with cloud deployments and intricate internal network setups, the root cause often sits squarely in the configuration space, rather than some inherent limitation of the deployment process itself. One of my first projects out of grad school involved deploying a distributed analytics platform onto a cloud infrastructure, and we kept running into network detection issues. It taught me some hard lessons. What I found most useful, time and time again, is breaking the problem down into manageable pieces.
 

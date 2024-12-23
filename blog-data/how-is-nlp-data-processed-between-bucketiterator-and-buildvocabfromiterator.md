@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-is-nlp-data-processed-between-bucketiterator-and-buildvocabfromiterator"
 ---
 
-Okay, let's delve into the data flow between `BucketIterator` and `build_vocab_from_iterator` in the context of natural language processing (NLP). I've spent a fair bit of time wrangling with this specific process, particularly when dealing with variable-length sequences in some legacy codebases I've inherited, so I'm quite familiar with the nuances involved. Instead of starting with the absolute fundamentals, let’s jump straight into a scenario where things can get a bit tricky.
+, let's delve into the data flow between `BucketIterator` and `build_vocab_from_iterator` in the context of natural language processing (NLP). I've spent a fair bit of time wrangling with this specific process, particularly when dealing with variable-length sequences in some legacy codebases I've inherited, so I'm quite familiar with the nuances involved. Instead of starting with the absolute fundamentals, let’s jump straight into a scenario where things can get a bit tricky.
 
 Picture this: you've got a corpus of text where sentences vary drastically in length. Maybe you're working with customer reviews, where some are just a few words, and others are lengthy paragraphs. The goal, naturally, is to prepare this data for a neural network, and that’s where `BucketIterator` and `build_vocab_from_iterator` become indispensable, particularly if you're leveraging frameworks like PyTorch or similar.
 

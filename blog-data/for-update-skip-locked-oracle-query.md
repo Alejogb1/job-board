@@ -4,13 +4,13 @@ date: "2024-12-13"
 id: "for-update-skip-locked-oracle-query"
 ---
 
-Okay so you're asking about `UPDATE SKIP LOCKED` in Oracle yeah alright I get it I've been there more times than I care to admit it’s a real headache when you’re dealing with concurrency
+ so you're asking about `UPDATE SKIP LOCKED` in Oracle yeah I get it I've been there more times than I care to admit it’s a real headache when you’re dealing with concurrency
 
 Let me tell you I’ve wrestled with this particular beast back in my days at DataCorp we had a system that processed financial transactions think stock trades and payments stuff that absolutely needed to be spot on with no screw-ups it was a multi-threaded java app hitting a massive Oracle database and if one thread got stuck on a row then everything else would just bottleneck and back up it was a total nightmare
 
 Initially we were using your standard `SELECT ... FOR UPDATE` and if one process had locked the row others would just hang there waiting and waiting I mean we had timeouts but it just meant lots of failed jobs and angry calls from the trading floor. We needed a way to just skip over rows that were locked instead of just sitting there like a stunned muppet and that’s when we stumbled upon `SKIP LOCKED` it was a real game changer let me tell you
 
-Okay so for the uninitiated `SKIP LOCKED` essentially tells the database “hey if this row is already locked by someone else just move on don’t wait for it” It’s particularly useful in scenarios like the one I just described where many processes are trying to update the same table and you can’t afford for one to get stuck and halt the whole operation
+ so for the uninitiated `SKIP LOCKED` essentially tells the database “hey if this row is already locked by someone else just move on don’t wait for it” It’s particularly useful in scenarios like the one I just described where many processes are trying to update the same table and you can’t afford for one to get stuck and halt the whole operation
 
 It’s not a magical fix-all solution though you need to think carefully about how you apply it because there are implications of potentially skipping updates.
 

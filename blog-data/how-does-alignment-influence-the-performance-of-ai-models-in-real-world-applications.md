@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "how-does-alignment-influence-the-performance-of-ai-models-in-real-world-applications"
 ---
 
-Okay so you wanna know about alignment and how it messes with AI performance right  Its a huge deal like seriously huge  We build these amazing models theyre supposed to do cool stuff but sometimes they go totally off the rails  Alignment is all about making sure the AI does what we actually want it to do not what it *thinks* it should do or what it accidentally does because its a complex beast  Its like training a dog you dont just throw a ball and hope it fetches the right thing you gotta teach it what fetch means and how to do it properly
+ so you wanna know about alignment and how it messes with AI performance right  Its a huge deal like seriously huge  We build these amazing models theyre supposed to do cool stuff but sometimes they go totally off the rails  Alignment is all about making sure the AI does what we actually want it to do not what it *thinks* it should do or what it accidentally does because its a complex beast  Its like training a dog you dont just throw a ball and hope it fetches the right thing you gotta teach it what fetch means and how to do it properly
 
 Think of it this way you build a model to translate languages awesome right  But then it starts hallucinating facts or translating things in a way that makes no sense  Thats misalignment its not understanding the goals its trying to achieve  Its focusing on something else like maximizing the length of its output or maybe it got stuck on a weird pattern in the data it was trained on  Its all a bit chaotic honestly
 

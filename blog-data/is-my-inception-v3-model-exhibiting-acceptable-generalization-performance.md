@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "is-my-inception-v3-model-exhibiting-acceptable-generalization-performance"
 ---
 
-Okay, let's unpack this. Generalization performance of an Inception V3 model, or indeed any machine learning model, isn't a simple yes/no answer; it’s more nuanced than that. It requires a careful examination of various metrics and, frankly, a solid understanding of the data it’s trained and tested on. I’ve seen this issue crop up more times than I care to remember, often requiring a deep dive into both the model architecture and the dataset. I'll share some of my experiences and provide some actionable guidance.
+, let's unpack this. Generalization performance of an Inception V3 model, or indeed any machine learning model, isn't a simple yes/no answer; it’s more nuanced than that. It requires a careful examination of various metrics and, frankly, a solid understanding of the data it’s trained and tested on. I’ve seen this issue crop up more times than I care to remember, often requiring a deep dive into both the model architecture and the dataset. I'll share some of my experiences and provide some actionable guidance.
 
 The question itself, “is my Inception v3 model exhibiting acceptable generalization performance?”, suggests an inherent concern about overfitting or underfitting, the two classic pitfalls. Let's talk through what that means in practical terms.
 

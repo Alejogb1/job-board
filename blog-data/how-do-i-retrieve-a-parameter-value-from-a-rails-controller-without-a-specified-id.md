@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-retrieve-a-parameter-value-from-a-rails-controller-without-a-specified-id"
 ---
 
-Alright, let's tackle this. I recall a project back in '18, migrating an older Rails 3 app to Rails 5, where we stumbled upon this exact scenario. We had several legacy routes that were configured to pass parameters without a typical resource id, and we needed a reliable way to retrieve those values within our controllers. It’s more common than one might think, especially when dealing with custom actions or specific query parameters outside of standard RESTful routing.
+Alright,  I recall a project back in '18, migrating an older Rails 3 app to Rails 5, where we stumbled upon this exact scenario. We had several legacy routes that were configured to pass parameters without a typical resource id, and we needed a reliable way to retrieve those values within our controllers. It’s more common than one might think, especially when dealing with custom actions or specific query parameters outside of standard RESTful routing.
 
 The core issue, as I understand it, is that you're looking to extract a parameter value from within a Rails controller action when that value isn’t a standard route parameter like `:id`, which Rails handles automatically based on your routes. Instead, it’s likely part of the query string or maybe a parameter passed in the request body.
 

@@ -21,7 +21,7 @@ Then there's the research aspect  Universities are research powerhouses so your 
 Finally user education  A key part of any strong AI policy is a plan to educate all stakeholders  Students faculty staff  Everyone needs to understand the basics of AI its capabilities limitations and ethical considerations  Think about workshops training programs and easy-to-understand documentation  The more informed your community is the better.
 
 
-Okay now about finding resources  I wouldn’t focus on looking for ready-to-go templates  That's unrealistic for a field that's changing so fast  What you'll probably want to find is a solid framework to build upon and resources that provide guidance on the key issues I mentioned
+ now about finding resources  I wouldn’t focus on looking for ready-to-go templates  That's unrealistic for a field that's changing so fast  What you'll probably want to find is a solid framework to build upon and resources that provide guidance on the key issues I mentioned
 
 
 Instead of links let me give you some search terms and book/paper suggestions  For data privacy look up papers on differential privacy or federated learning.  These techniques help protect sensitive data while still allowing AI systems to learn  A good starting point for algorithmic bias would be to look into fairness-aware machine learning  There are tons of papers on this  For intellectual property think about searching for resources on AI licensing and open source AI  These topics are really crucial to navigating the legal aspects of AI

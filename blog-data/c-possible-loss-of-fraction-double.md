@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "c-possible-loss-of-fraction-double"
 ---
 
-Alright so you're asking about potential loss of precision when dealing with doubles in C# specifically the fractional part yeah I've been there seen that had the t-shirt and the coffee stains to prove it lol. This isn't some arcane wizardry its basic floating point math but it bites you when you least expect it and makes you question your entire existence as a programmer.
+so you're asking about potential loss of precision when dealing with doubles in C# specifically the fractional part yeah I've been there seen that had the t-shirt and the coffee stains to prove it lol. This isn't some arcane wizardry its basic floating point math but it bites you when you least expect it and makes you question your entire existence as a programmer.
 
 Let's break it down doubles in C# like most languages are represented using the IEEE 754 standard its a binary format so inherently not all decimal numbers can be perfectly represented they are usually approximated a lot of numbers with simple decimal representation like 0.1 or even 0.3 will not be represented exactly in memory thats the crux of the issue a classic programming nightmare if you ask me.
 

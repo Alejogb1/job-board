@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-my-model-training-on-a-tpu-vm-abort-with-a-core-dump"
 ---
 
-Alright, let's tackle this. Core dumps during TPU training can be notoriously tricky, but having seen my fair share of them over the years (including a particularly frustrating project involving a complex, multi-modal model that kept crashing mid-training—good times, those), I've developed a reasonable understanding of the common culprits and debugging strategies. So, let's break down why a TPU VM might decide to abruptly terminate and generate a core dump during model training.
+Alright,  Core dumps during TPU training can be notoriously tricky, but having seen my fair share of them over the years (including a particularly frustrating project involving a complex, multi-modal model that kept crashing mid-training—good times, those), I've developed a reasonable understanding of the common culprits and debugging strategies. So, let's break down why a TPU VM might decide to abruptly terminate and generate a core dump during model training.
 
 At its core, a core dump, or core file, is a snapshot of a process's memory at the moment it crashes. In the context of TPU VMs, this typically means that the training process encountered a critical error, leading to an unrecoverable state and subsequent termination by the operating system. These dumps are immensely valuable because they essentially give us a post-mortem view into the process's state, pinpointing where things went south.
 

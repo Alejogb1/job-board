@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-do-swift-5-ios-tableviewcell-items-overlap-horizontally"
 ---
 
-Okay, let's tackle this persistent layout issue—horizontal overlap in `UITableViewCell` items on iOS with Swift 5. It's a common frustration, and I've spent more than a few late nights tracking down the root causes. I remember one particular project, an e-commerce app, where the product descriptions kept bleeding into the price labels—absolute chaos. So, let me share what I've learned, breaking it down into manageable chunks with some practical examples.
+, let's tackle this persistent layout issue—horizontal overlap in `UITableViewCell` items on iOS with Swift 5. It's a common frustration, and I've spent more than a few late nights tracking down the root causes. I remember one particular project, an e-commerce app, where the product descriptions kept bleeding into the price labels—absolute chaos. So, let me share what I've learned, breaking it down into manageable chunks with some practical examples.
 
 The core issue typically stems from how `UITableViewCell` manages its content and how we, as developers, configure its layout. Cells are essentially view containers, and like any view, they operate within constraints and frame dimensions. When elements overlap, it's almost always due to a misconfiguration of these aspects. Think of it as a carefully orchestrated ballet; one wrong move, and everything is out of sync.
 

@@ -4,7 +4,7 @@ date: "2024-12-11"
 id: "what-progress-has-been-made-in-mechanistic-interpretability-over-the-last-five-years"
 ---
 
-Okay so mechanistic interpretability right super cool area  massive progress last five years  like whoa  feels like things exploded  before it was mostly hand wavy stuff  lots of "we think this part does this" now we're actually getting into the nitty gritty  tracing information flow  seeing how individual neurons or groups of neurons interact  it's nuts
+ so mechanistic interpretability right super cool area  massive progress last five years  like whoa  feels like things exploded  before it was mostly hand wavy stuff  lots of "we think this part does this" now we're actually getting into the nitty gritty  tracing information flow  seeing how individual neurons or groups of neurons interact  it's nuts
 
 Remember like five years ago  most interpretability was just looking at activation patterns  heatmaps  gradcam that kind of thing  useful for getting a general idea but not really explaining *why* a model behaved a certain way  it was like looking at the outside of a car and guessing how the engine worked
 

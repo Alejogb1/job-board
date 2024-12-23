@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-iterate-through-a-2d-array-with-variable-length-inner-arrays"
 ---
 
-Okay, let's tackle this. I've certainly encountered this challenge more times than i'd care to remember, especially when dealing with datasets from various external sources or processing irregularly structured data. Iterating through a 2D array where the inner arrays have different lengths isn't as straightforward as a regular square matrix; however, with a few common approaches, it becomes very manageable. The key lies in not assuming all rows are equal in size.
+,  I've certainly encountered this challenge more times than i'd care to remember, especially when dealing with datasets from various external sources or processing irregularly structured data. Iterating through a 2D array where the inner arrays have different lengths isn't as straightforward as a regular square matrix; however, with a few common approaches, it becomes very manageable. The key lies in not assuming all rows are equal in size.
 
 My experience with this often stems from handling data coming in from, say, custom simulation environments. Think of it: you might simulate particles interacting in a space, and each simulation step outputs an array of particle positions, but the number of particles might change step by step. That's where you'd quickly run into needing to iterate across such structures. The naive nested loop method, where you assume equal row lengths, will invariably fall short and lead to out-of-bounds errors.
 

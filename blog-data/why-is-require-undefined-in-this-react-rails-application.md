@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-require-undefined-in-this-react-rails-application"
 ---
 
-Okay, let's tackle this one. I've seen this particular head-scratcher pop up more times than I'd care to count, often in the thick of a late-night debugging session. The issue of `require` being undefined in a React application bootstrapped within a Rails environment can seem initially bewildering, but it usually boils down to a fundamental difference in how modules are handled between the server-side Rails and client-side React worlds. It's not a bug so much as a mismatch in expectations about how code is structured and loaded.
+, let's tackle this one. I've seen this particular head-scratcher pop up more times than I'd care to count, often in the thick of a late-night debugging session. The issue of `require` being undefined in a React application bootstrapped within a Rails environment can seem initially bewildering, but it usually boils down to a fundamental difference in how modules are handled between the server-side Rails and client-side React worlds. It's not a bug so much as a mismatch in expectations about how code is structured and loaded.
 
 The crux of the problem lies in JavaScript module systems. Rails, by default, uses Sprockets or Webpacker (depending on your version) to manage assets, which historically handled JavaScript with a server-side mindset, where things like CommonJS `require` were often used within Rails' asset pipeline. React, especially when built with tools like create-react-app or using a modern bundling setup, leans heavily on modern JavaScript module systems like ES Modules (`import/export`).
 

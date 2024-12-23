@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "how-do-alignment-processes-mitigate-unintended-biases-in-ai-generated-outputs"
 ---
 
-Okay so you wanna know how we stop AI from being a total jerk right  like making up stuff or just being plain biased  It's a big deal  We're talking about algorithms shaping our world  and if they're biased well that's a problem  Alignment is the key word here  it's all about making sure the AI does what we actually want it to do  not what it *thinks* we want it to do which can be wildly different sometimes
+ so you wanna know how we stop AI from being a total jerk right  like making up stuff or just being plain biased  It's a big deal  We're talking about algorithms shaping our world  and if they're biased well that's a problem  Alignment is the key word here  it's all about making sure the AI does what we actually want it to do  not what it *thinks* we want it to do which can be wildly different sometimes
 
 Think of it like training a dog  You don't just throw a ball and hope it learns to fetch  you gotta show it what fetching is reward good behavior correct bad behavior  it's a process  AI alignment is similar  we gotta carefully guide the AI's learning process so it develops the right kind of behavior  and that means addressing bias head-on
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "r-garbage-collection-memory-management"
 ---
 
-Okay so you're asking about garbage collection and if it's memory management That's a common question especially if you're new to lower-level systems or maybe you've been coding in higher-level languages for a while and are starting to dive deeper I've been around the block a few times with this stuff so let me lay it out for you like you'd see it in a real codebase
+ so you're asking about garbage collection and if it's memory management That's a common question especially if you're new to lower-level systems or maybe you've been coding in higher-level languages for a while and are starting to dive deeper I've been around the block a few times with this stuff so let me lay it out for you like you'd see it in a real codebase
 
 First off yes garbage collection is definitely a form of memory management but it's a *specific* *automatic* kind You gotta think of it like this You got your program running it needs to store data in RAM right That RAM is a finite resource we call that memory The operating system generally manages which parts of the memory are given to your program and the process itself then can have its own management logic to how it uses allocated memory and that's where your garbage collection comes into play
 

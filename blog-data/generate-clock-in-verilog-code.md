@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "generate-clock-in-verilog-code"
 ---
 
-Okay so you want a clock generator in Verilog right I've been there man I mean everyone's been there if you've ever touched an FPGA or ASIC for more than five minutes It's like the hello world of hardware description languages
+ so you want a clock generator in Verilog right I've been there man I mean everyone's been there if you've ever touched an FPGA or ASIC for more than five minutes It's like the hello world of hardware description languages
 
 So first off let's get this straight a clock isn't just some magical thing that happens it's a signal a very specific oscillating signal that we use to synchronize operations in digital circuits. Think of it as the heartbeat of your system Without it everything's just a bunch of logic gates doing their thing randomly and that's not useful at all. You need that rhythm to make things happen in the correct sequence.
 

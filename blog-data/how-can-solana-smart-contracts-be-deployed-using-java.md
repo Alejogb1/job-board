@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-solana-smart-contracts-be-deployed-using-java"
 ---
 
-Okay, let’s dive into this. Deploying Solana smart contracts – more accurately, Solana programs – using Java isn’t a direct "compile-to-solana" operation. It's a bit more nuanced than that, and it’s something I tackled a few years back when we were experimenting with different development ecosystems on our team. We found ourselves needing a Java backend for some heavy processing tasks and wanted to tie it directly into our Solana-based application. So, while Solana programs themselves are written in Rust or C++, you don't use Java *to write* the programs directly. Instead, you use Java as a *client* to interact with them.
+, let’s dive into this. Deploying Solana smart contracts – more accurately, Solana programs – using Java isn’t a direct "compile-to-solana" operation. It's a bit more nuanced than that, and it’s something I tackled a few years back when we were experimenting with different development ecosystems on our team. We found ourselves needing a Java backend for some heavy processing tasks and wanted to tie it directly into our Solana-based application. So, while Solana programs themselves are written in Rust or C++, you don't use Java *to write* the programs directly. Instead, you use Java as a *client* to interact with them.
 
 The core concept revolves around the Solana JSON RPC API. This api exposes methods that allow you to communicate with the Solana network, including deploying programs, sending transactions, and querying account data. Think of your Java application as a highly capable agent communicating with Solana. Your java code will prepare instructions and transactions that the Solana network understands and executes.
 

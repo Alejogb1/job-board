@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "when-deploying-a-java-chaincode-on-hyperledger-fabric-should-i-upload-source-code-or-compiled-jar-files"
 ---
 
-Okay, let's talk about this. I remember back in my early days with Fabric, I made this exact mistake, deploying source code instead of the compiled jar – twice, actually. The sheer headache it caused taught me a thing or two. So, the short answer, unequivocally, is: you *absolutely* should be deploying compiled jar files when working with Java chaincode on Hyperledger Fabric. And let me explain why, going deeper than just a simple recommendation.
+, let's talk about this. I remember back in my early days with Fabric, I made this exact mistake, deploying source code instead of the compiled jar – twice, actually. The sheer headache it caused taught me a thing or two. So, the short answer, unequivocally, is: you *absolutely* should be deploying compiled jar files when working with Java chaincode on Hyperledger Fabric. And let me explain why, going deeper than just a simple recommendation.
 
 The fundamental reason boils down to how Hyperledger Fabric executes chaincode. Fabric doesn’t have a built-in java compiler within the peer nodes. It operates under the principle of containerization and expects to execute a ready-to-run artifact. Uploading source code, such as `.java` files, requires an intermediary compilation step *within* the Fabric network, which it isn't equipped to handle. The chaincode execution environment leverages Docker containers; these containers need a packaged artifact that the container runtime can readily launch, not source code requiring a full development toolchain.
 

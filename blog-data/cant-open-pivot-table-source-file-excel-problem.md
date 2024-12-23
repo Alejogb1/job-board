@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "cant-open-pivot-table-source-file-excel-problem"
 ---
 
-Alright so you’re having trouble with an Excel pivot table not opening its source file right I get it I've been there done that bought the t-shirt and probably even written a script to fix it myself a few times This ain't my first rodeo with Excel and its quirky ways believe me
+so you’re having trouble with an Excel pivot table not opening its source file right I get it I've been there done that bought the t-shirt and probably even written a script to fix it myself a few times This ain't my first rodeo with Excel and its quirky ways believe me
 
 Let me break down what's probably happening and how you can approach this because pivot table source file issues in Excel are like a right of passage for anyone working with data Seriously
 
@@ -12,7 +12,7 @@ First up lets talk common culprits because 90 percent of the time its one of the
 
 **1 Path Problems**
 
-Okay so your pivot table was linked to a specific file right Maybe that file got moved renamed or deleted Excel doesn't just automatically update that reference its gonna keep looking for the file in the exact same location it was originally told about if the path is not right its not going to work Its like telling a GPS to go to a house that's not there anymore the GPS will not work You need to check and double check that this file is where it is supposed to be based on the pivot table's reference. I've seen this happen countless times when people move things around in their shared drives without updating the Excel file and suddenly the pivots become like "where did my data go?" haha it's not funny when it happens but its kind of funny when its not you who has to fix it
+ so your pivot table was linked to a specific file right Maybe that file got moved renamed or deleted Excel doesn't just automatically update that reference its gonna keep looking for the file in the exact same location it was originally told about if the path is not right its not going to work Its like telling a GPS to go to a house that's not there anymore the GPS will not work You need to check and double check that this file is where it is supposed to be based on the pivot table's reference. I've seen this happen countless times when people move things around in their shared drives without updating the Excel file and suddenly the pivots become like "where did my data go?" haha it's not funny when it happens but its kind of funny when its not you who has to fix it
 
 **2 File Format Issues**
 
@@ -20,9 +20,9 @@ Another big one is file format inconsistencies You have a pivot table referencin
 
 **3 Corrupted File**
 
-Alright sometimes the source file itself is simply messed up could be due to power outages random crashes or just plain bad luck It happens Your file can be corrupted in some way or another I saw this a lot when working with older Excel versions on shared machines where multiple users were saving on top of each other You can tell if it was not well saved If that's the case you're gonna have a tough time even opening the source file directly let alone having the pivot table access it properly Its almost impossible to fix the source file sometimes the corruption is so bad so you might need to find a backup for it this is more of a backup and restore problem and not a pivot table problem by itself
+sometimes the source file itself is simply messed up could be due to power outages random crashes or just plain bad luck It happens Your file can be corrupted in some way or another I saw this a lot when working with older Excel versions on shared machines where multiple users were saving on top of each other You can tell if it was not well saved If that's the case you're gonna have a tough time even opening the source file directly let alone having the pivot table access it properly Its almost impossible to fix the source file sometimes the corruption is so bad so you might need to find a backup for it this is more of a backup and restore problem and not a pivot table problem by itself
 
-Okay so those are the main culprits now let's talk about how we fix this
+ so those are the main culprits now let's talk about how we fix this
 
 **Step 1 Verify the Source Path**
 
@@ -56,7 +56,7 @@ This snippet opens a message box showing the path of the source data for the piv
 
 **Step 2 Check and Correct File Format**
 
-Alright now you need to double-check that the file extension matches what excel is expecting if it does not match you have to convert the source file to the correct extension This is an example of how you can open a file and save it with the correct extension if they are not the same You can use this script in the VBA editor too just copy paste the following code:
+now you need to double-check that the file extension matches what excel is expecting if it does not match you have to convert the source file to the correct extension This is an example of how you can open a file and save it with the correct extension if they are not the same You can use this script in the VBA editor too just copy paste the following code:
 
 ```vba
 Sub ConvertFileFormat()

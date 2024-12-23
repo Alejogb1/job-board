@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-create-a-custom-multi-agent-environment-for-deep-reinforcement-learning-and-maddpg"
 ---
 
-Okay, let's tackle this. I've built my fair share of multi-agent environments, and getting them working smoothly with algorithms like maddpg isn't always a walk in the park. It usually involves more careful design than you might initially expect. Setting up a custom environment requires understanding several key pieces: state representation, action spaces, reward functions, transition dynamics, and ultimately, integrating that into a reinforcement learning framework like stable-baselines3. In my experience, you often start with a somewhat naive implementation and then need to iterate to get the behavior you want.
+,  I've built my fair share of multi-agent environments, and getting them working smoothly with algorithms like maddpg isn't always a walk in the park. It usually involves more careful design than you might initially expect. Setting up a custom environment requires understanding several key pieces: state representation, action spaces, reward functions, transition dynamics, and ultimately, integrating that into a reinforcement learning framework like stable-baselines3. In my experience, you often start with a somewhat naive implementation and then need to iterate to get the behavior you want.
 
 Let's first look at the components needed for building your environment:
 

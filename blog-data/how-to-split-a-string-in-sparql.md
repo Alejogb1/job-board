@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "how-to-split-a-string-in-sparql"
 ---
 
-Okay so you're asking about splitting strings in SPARQL right? Been there done that a few times it's not exactly a walk in the park if you're coming from say a Javascript or Python background where string handling is super straightforward SPARQL is more about data retrieval than complex string manipulation but we can still get it done
+ so you're asking about splitting strings in SPARQL right? Been there done that a few times it's not exactly a walk in the park if you're coming from say a Javascript or Python background where string handling is super straightforward SPARQL is more about data retrieval than complex string manipulation but we can still get it done
 
 First off SPARQL natively doesn't have a `split` function like you'd find in other languages No one thought this would be a problem when they designed SPARQL I guess so we're kind of left to hack our way around it using the functions that it does provide Which yeah means more complexity not really the best experience if you ask me But it is what it is we work with what we have right?
 
@@ -123,7 +123,7 @@ Just to make things clear the only thing I changed here was the separator from c
 
 **Important Considerations and Optimizations**
 
-Okay a few things to keep in mind with this method
+ a few things to keep in mind with this method
 
 *   **Performance:** These recursive queries can get slow especially with very long strings or many splits It might become a problem but it is usually fine for smaller datasets in those cases you might want to optimize the way you store or get data from the database itself to avoid that
 *   **Error Handling:** You'll want to add some error handling to deal with unexpected input such as strings without delimiters Or maybe if the separator is not exactly what you expect You could do that with simple filters checking if the regex matches at all or similar checks

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "rsync-skipping-non-regular-file-command-explanation"
 ---
 
-Okay so you're having an issue with rsync skipping stuff that ain't regular files right I've been there man oh boy have I been there Let me break it down for you based on my years of banging my head against the keyboard trying to get rsync to do what I want
+ so you're having an issue with rsync skipping stuff that ain't regular files right I've been there man oh boy have I been there Let me break it down for you based on my years of banging my head against the keyboard trying to get rsync to do what I want
 
 First things first rsync by default it's all about regular files Regular files think your text docs your images your source code the typical stuff that takes up space on a drive When rsync encounters something that is NOT a regular file it basically says "Nope not touching that" and moves on That's the skipping you're seeing
 

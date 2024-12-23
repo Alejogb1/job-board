@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-equality-constraints-be-implemented-for-a-rust-trait-variant-that-uses-the-intot-trait"
 ---
 
-Okay, let's unpack this. Implementing equality constraints when using `Into<T>` within a Rust trait variant is a challenge I've bumped into a few times, particularly when building polymorphic data structures. It's not straightforward, and the compiler doesn't always make it obvious why things aren't just "working." The core issue stems from the fact that `Into<T>` is inherently a conversion trait, not an equality trait. It tells us *how* to transform one type to another, but not if two values are inherently equal based on some shared property when converted.
+, let's unpack this. Implementing equality constraints when using `Into<T>` within a Rust trait variant is a challenge I've bumped into a few times, particularly when building polymorphic data structures. It's not straightforward, and the compiler doesn't always make it obvious why things aren't just "working." The core issue stems from the fact that `Into<T>` is inherently a conversion trait, not an equality trait. It tells us *how* to transform one type to another, but not if two values are inherently equal based on some shared property when converted.
 
 Let’s say we have a trait, `Transformable`, with variants that rely on `Into<T>`:
 

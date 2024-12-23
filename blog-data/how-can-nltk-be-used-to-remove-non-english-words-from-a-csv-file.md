@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-nltk-be-used-to-remove-non-english-words-from-a-csv-file"
 ---
 
-Alright, let's tackle this. I've actually bumped into this exact scenario a few times over the years, particularly when dealing with datasets that were cobbled together from various sources—think user-generated content aggregated from all corners of the internet. Cleaning up the text data became a crucial first step, and getting rid of non-English words, or rather, words that aren't likely to be English, is definitely part of that process.
+Alright,  I've actually bumped into this exact scenario a few times over the years, particularly when dealing with datasets that were cobbled together from various sources—think user-generated content aggregated from all corners of the internet. Cleaning up the text data became a crucial first step, and getting rid of non-English words, or rather, words that aren't likely to be English, is definitely part of that process.
 
 The challenge, of course, isn't quite as straightforward as a simple dictionary lookup. Languages evolve, new words are constantly being introduced, and relying on a static list would leave us with significant gaps. We also have to consider things like proper nouns, which might not be in the standard nltk dictionaries, or words that have been 'english-ized', for lack of a better term, that started as loan words. Therefore, we need a nuanced approach that combines a few techniques. We'll be using nltk's language identification capabilities and then filtering based on that.
 
@@ -117,7 +117,7 @@ if __name__ == '__main__':
     clean_csv_text_column('test.csv', 'cleaned_text.csv', 'review')
 ```
 
-In this revised code, `remove_non_english_words` now tokenizes, and then only keeps the tokens that are present in the english word list, then rejoins it back into a string. `clean_csv_text_column` applies this function to the specified column. This technique retains the overall structure of the text, removing only the explicitly identifiable non-English words. It works well if you are okay with some potential noise, like a low frequency of untracked words that didn't get dropped by the nltk dictionary.
+In this revised code, `remove_non_english_words` now tokenizes, and then only keeps the tokens that are present in the english word list, then rejoins it back into a string. `clean_csv_text_column` applies this function to the specified column. This technique retains the overall structure of the text, removing only the explicitly identifiable non-English words. It works well if you are  with some potential noise, like a low frequency of untracked words that didn't get dropped by the nltk dictionary.
 
 There is also a third option which involves training your own language detector. I did this once when dealing with heavily domain-specific text, using a combination of a naive bayes model and a language corpus. For the sake of brevity, I'll sketch out the general idea rather than provide a complete code example, as training such a model is quite involved. We would use a library like scikit-learn to train a classifier using a dataset where the text language is labelled. This model would have the ability to learn patterns that aren't present in the standard dictionaries. After that, we could use this model to label the language of the word or sentence and then proceed as above with the filtering or removal. This is an advanced technique and only necessary when you're hitting limits with the existing methods.
 

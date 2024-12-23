@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "is-epoch-loss-increasing"
 ---
 
-Okay, let's talk about epoch loss and when it starts to misbehave. It's a scenario I’ve definitely seen a few times in my career, and it’s often not as straightforward as “it’s increasing, therefore it’s bad.” Let’s unpack it. Typically, during the training of a neural network, we expect the loss function to decrease with each passing epoch. It's the fundamental signal that our model is learning. However, encountering a situation where the epoch loss *increases* isn't necessarily a catastrophic failure; it's more of a 'flag' prompting further investigation.
+, let's talk about epoch loss and when it starts to misbehave. It's a scenario I’ve definitely seen a few times in my career, and it’s often not as straightforward as “it’s increasing, therefore it’s bad.” Let’s unpack it. Typically, during the training of a neural network, we expect the loss function to decrease with each passing epoch. It's the fundamental signal that our model is learning. However, encountering a situation where the epoch loss *increases* isn't necessarily a catastrophic failure; it's more of a 'flag' prompting further investigation.
 
 First, we should define what we mean by epoch loss. It's the average loss calculated across all the training samples within a single pass through the complete training dataset. If that value goes up over an epoch, it means the model is, in a sense, getting *worse* at its task during that particular training cycle. Not ideal, but let's explore the common causes.
 

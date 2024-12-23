@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "highp-shader-code-precision-meaning"
 ---
 
-Okay so highp shader code precision alright I've been down this rabbit hole a bunch let me tell you my personal experience it's not exactly a picnic
+ so highp shader code precision I've been down this rabbit hole a bunch let me tell you my personal experience it's not exactly a picnic
 
 See back in my early days I was messing around with this mobile game project it involved some pretty intensive fragment shaders I was aiming for smooth gradients and some fancy post-processing effects everything looked fine on my development machine a beast of a workstation but then I deployed it on some older android phones it was an absolute dumpster fire Banding all over the place colors were visibly stepping and the overall look was just plain awful That's when I realized the precision of shader variables had significant consequences
 
@@ -12,7 +12,7 @@ So you're basically asking about `highp` right In GLSL or similar shading langua
 
 `lowp` uses the fewest bits to store a value which leads to memory savings and often faster processing particularly on mobile GPUs but that comes with the trade-off that the range of values that can be represented accurately is limited You can get precision issues especially when dealing with larger number values or subtle changes in values `mediump` is kind of the middle ground it offers a balance between accuracy and performance It's generally fine for many use cases like calculating texture coordinates and colors but can still run into trouble with specific computations Then we have `highp` this one uses the most bits to represent a value offering the highest accuracy and range I've found that `highp` floats are usually represented as 32-bit floating point numbers which means you have a ton of precision and you're less likely to encounter artifacts related to lack of precision but its more memory consumption and a little slower operations
 
-Okay let's get to some code examples
+ let's get to some code examples
 
 Example 1: Simple Gradient issue without Highp
 
@@ -28,7 +28,7 @@ void main() {
 }
 ```
 
-Now try run this on older mobile devices you will see banding if not you might be a little luckier with the GPU that is in use this shader calculates a simple horizontal gradient based on the x-coordinate of the fragment Now with mediump its okay-ish on some devices but on a large scale or larger resolutions it can lead to noticeable banding This is because the available precision is insufficient to accurately represent the small changes in color intensity across the gradient that you intended
+Now try run this on older mobile devices you will see banding if not you might be a little luckier with the GPU that is in use this shader calculates a simple horizontal gradient based on the x-coordinate of the fragment Now with mediump its -ish on some devices but on a large scale or larger resolutions it can lead to noticeable banding This is because the available precision is insufficient to accurately represent the small changes in color intensity across the gradient that you intended
 
 Example 2: The same example using highp
 
@@ -80,6 +80,6 @@ Resource wise I'd recommend checking out some more serious resources instead of 
 
 Also while it's a bit old now "Real-Time Rendering" by Tomas Akenine-Moller et al is very handy for a broad understanding of graphics principles including practical implications of precision in rendering but be aware that these book might be more theory wise rather than directly practical use
 
-Alright hopefully that clears it up for you From my experience messing around with these settings can make a huge difference in terms of look and feel of your renders It’s not just about making it work; it’s about making it work well on all devices which can be hard to maintain but it's our job as dev
+hopefully that clears it up for you From my experience messing around with these settings can make a huge difference in terms of look and feel of your renders It’s not just about making it work; it’s about making it work well on all devices which can be hard to maintain but it's our job as dev
 
-Oh and you know why I don't trust atoms They make up everything haha okay okay i’ll get going
+Oh and you know why I don't trust atoms They make up everything haha   i’ll get going

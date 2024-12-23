@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-can-intermediate-layers-be-replaced-in-keras-functional-model"
 ---
 
-Okay, let's tackle this. I've seen this specific scenario come up more times than I care to count, often in contexts involving model surgery for transfer learning or implementing specific architectural innovations. So, replacing intermediate layers in a Keras functional model isn't about some mystical operation; it's about understanding the model's graph structure and how to manipulate it effectively. The 'functional' part of a Keras functional model is key here – it means we’re explicitly building a directed acyclic graph of layers, as opposed to a sequential pile.
+,  I've seen this specific scenario come up more times than I care to count, often in contexts involving model surgery for transfer learning or implementing specific architectural innovations. So, replacing intermediate layers in a Keras functional model isn't about some mystical operation; it's about understanding the model's graph structure and how to manipulate it effectively. The 'functional' part of a Keras functional model is key here – it means we’re explicitly building a directed acyclic graph of layers, as opposed to a sequential pile.
 
 At its core, a Keras functional model isn't just a sequence of layers like you might see in a sequential model. Instead, each layer takes one or more tensors as input and outputs another tensor (or sometimes multiple tensors). This interconnectedness allows for sophisticated architectures like skip connections, inception modules, and custom layer manipulations. When you want to replace an intermediate layer, you're essentially trying to sever a connection in this graph and re-route it with your modified layer or alternative processing path.
 

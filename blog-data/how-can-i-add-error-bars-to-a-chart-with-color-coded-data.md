@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-add-error-bars-to-a-chart-with-color-coded-data"
 ---
 
-Alright, let's tackle this. I remember dealing with a particularly nasty dataset back in the late 2000s, during my work on a distributed sensor network. We had temperature readings coming in from various locations, each with its own set of error margins depending on sensor calibration and environmental conditions. Plotting those results without indicating uncertainty felt, well, irresponsible. So, adding error bars to color-coded data wasn't just an aesthetic choice; it was critical for conveying the full picture.
+Alright,  I remember dealing with a particularly nasty dataset back in the late 2000s, during my work on a distributed sensor network. We had temperature readings coming in from various locations, each with its own set of error margins depending on sensor calibration and environmental conditions. Plotting those results without indicating uncertainty felt, well, irresponsible. So, adding error bars to color-coded data wasn't just an aesthetic choice; it was critical for conveying the full picture.
 
 The core challenge when dealing with error bars in a color-coded context stems from effectively visually representing both the categorical variation (colors) and the numerical uncertainty (error bars) without creating visual clutter. It’s about making sure that your data's signal isn't drowned out by the noise of error representation.
 

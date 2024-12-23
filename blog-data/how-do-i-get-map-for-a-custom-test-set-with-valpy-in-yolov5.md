@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-get-map-for-a-custom-test-set-with-valpy-in-yolov5"
 ---
 
-Okay, let's tackle this. I've certainly been down this road more than once—modifying YOLOv5's `val.py` to evaluate custom datasets, especially when you need to go beyond the default validation split. It's a common enough scenario, and while the basic mechanics are there, tweaking it requires a clear understanding of the process. So, let’s break it down and I'll share some of what I've learned through experience.
+,  I've certainly been down this road more than once—modifying YOLOv5's `val.py` to evaluate custom datasets, especially when you need to go beyond the default validation split. It's a common enough scenario, and while the basic mechanics are there, tweaking it requires a clear understanding of the process. So, let’s break it down and I'll share some of what I've learned through experience.
 
 First off, the core issue you're facing is that `val.py` by default looks to the data configuration file (like `data/coco128.yaml` or similar) to define the path to your validation data. We want to override that, pointing it instead to our bespoke test dataset, while keeping the model and other parameters the same. This involves a bit of direct intervention in the script's logic. It's not a terribly difficult fix, but understanding the rationale behind the modification is key. The default setup is efficient for standard cases, but real-world projects invariably require flexibility like this.
 

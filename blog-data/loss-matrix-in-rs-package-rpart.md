@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "loss-matrix-in-rs-package-rpart"
 ---
 
-Okay so you're asking about the loss matrix in `rpart` from the R package right I get it this is something that trips up a lot of folks including my past self trust me I’ve been there done that and probably debugged more `rpart` trees than I’ve had hot meals ok maybe not but its up there
+ so you're asking about the loss matrix in `rpart` from the R package right I get it this is something that trips up a lot of folks including my past self trust me I’ve been there done that and probably debugged more `rpart` trees than I’ve had hot meals ok maybe not but its up there
 
 So `rpart` uses this thing called a loss matrix basically it tells the algorithm how to penalize misclassifications if you are doing classification that is If you just let it run with defaults it assumes all errors are equal which might be fine sometimes but what if misclassifying one class is way more costly than another say you are classifying spam and ham I mean it's pretty annoying when you miss spam but when you classify important business email as spam that's a nightmare or in medical diagnosis where a false negative is usually way worse than a false positive You can use a loss matrix to tell `rpart` that
 
@@ -51,7 +51,7 @@ print(tree)
 
 Note the `parms = list(loss = loss_matrix)` this is where the magic happens. This tells `rpart` to use that specific loss matrix. You may wonder how `rpart` uses this well basically it tries to minimize the overall expected cost which is the sum of the costs for each classification multiplied by its probabilities.
 
-Okay so here is the funny part one time I was so deep into `rpart` I started dreaming in decision trees. it was a nightmare. Ok no more jokes back to code
+ so here is the funny part one time I was so deep into `rpart` I started dreaming in decision trees. it was a nightmare. Ok no more jokes back to code
 
 Now lets try another example with three classes. This is going to get a bit trickier but we will get through it
 

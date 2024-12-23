@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-make-a-pytorch-lightning-module-have-injected-nested-models"
 ---
 
-Okay, let's tackle this one. It's something I've personally wrestled with on several projects, particularly those requiring complex, modular architectures. The challenge, as you're likely discovering, lies in properly integrating nested models into a pytorch lightning module while maintaining the framework's structure and benefits. It's not as straightforward as simply instantiating models and expecting lightning to magically handle everything.
+, let's tackle this one. It's something I've personally wrestled with on several projects, particularly those requiring complex, modular architectures. The challenge, as you're likely discovering, lies in properly integrating nested models into a pytorch lightning module while maintaining the framework's structure and benefits. It's not as straightforward as simply instantiating models and expecting lightning to magically handle everything.
 
 I've seen it go wrong in several ways: incorrect gradient tracking, unexpected parameter updates, and just plain chaos when trying to access and manipulate these nested components. The key here is to understand how pytorch lightning expects to interact with models, specifically the parameters and training flow. We need to leverage its mechanisms to ensure that the nested models are treated as legitimate, contributing parts of the overall module.
 

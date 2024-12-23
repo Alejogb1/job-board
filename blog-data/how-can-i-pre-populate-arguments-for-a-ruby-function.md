@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-pre-populate-arguments-for-a-ruby-function"
 ---
 
-Okay, let’s explore this. I’ve encountered this scenario countless times over the years, usually when needing to streamline calls to a function that always requires the same set of foundational arguments, or when building internal tooling that needs defaults but also flexibility. The core idea is to pre-set certain parameters without hardcoding them into the function itself, maintaining adaptability while promoting code conciseness. There's a surprisingly elegant set of solutions in ruby for this.
+, let’s explore this. I’ve encountered this scenario countless times over the years, usually when needing to streamline calls to a function that always requires the same set of foundational arguments, or when building internal tooling that needs defaults but also flexibility. The core idea is to pre-set certain parameters without hardcoding them into the function itself, maintaining adaptability while promoting code conciseness. There's a surprisingly elegant set of solutions in ruby for this.
 
 Pre-populating function arguments isn't strictly a language feature as much as it is a set of patterns achievable with ruby's flexibility. What we are essentially doing is creating a higher-order function, one that returns a new function with some of its arguments already applied. This allows you to create more specialized variants of an existing function.
 

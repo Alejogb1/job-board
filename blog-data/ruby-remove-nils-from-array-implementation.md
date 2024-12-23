@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "ruby-remove-nils-from-array-implementation"
 ---
 
-Okay so you're asking about removing nils from a Ruby array right yeah I've been there done that many times in my career It's a pretty common task actually especially when you're dealing with data that might have missing or incomplete values Lets just jump right in
+ so you're asking about removing nils from a Ruby array right yeah I've been there done that many times in my career It's a pretty common task actually especially when you're dealing with data that might have missing or incomplete values Lets just jump right in
 
 I remember this one project back in my early days building this inventory management system you know classic crud stuff. We were getting data from various sources some APIs some from csv files and some god knows where. The problem was that the data wasn't always clean. Sometimes we'd get fields that were supposed to be numbers or strings but they'd come as nil. Which is a common occurrence I know right It was messing up our calculations and views causing all sorts of UI headaches.
 

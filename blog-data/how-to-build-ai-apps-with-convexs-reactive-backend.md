@@ -7,7 +7,7 @@ id: "how-to-build-ai-apps-with-convexs-reactive-backend"
 dude so i just watched this crazy talk about this platform called convex and it's totally blowing my mind like seriously it's this whole backend-as-a-service thing but with a seriously cool twist  they're basically trying to automate all the boring backend stuff that nobody wants to deal with  you know  like gluing databases to apis managing data formats dealing with caching  all that jazz  it's all about freeing up devs to focus on the actual app and not get bogged down in plumbing  think of it as a supercharged firebase but way more ambitious
 
 
-okay so the whole spiel started with this guy saying they *accidentally* built an ai platform  which is hilarious  but it's true  they were aiming for a super streamlined backend system and it ended up being perfect for generative ai apps  which is a total happy accident  right  he mentions that half a dev team’s time is spent on backend busywork that users don’t even see – that’s a huge problem that convex aims to solve
+ so the whole spiel started with this guy saying they *accidentally* built an ai platform  which is hilarious  but it's true  they were aiming for a super streamlined backend system and it ended up being perfect for generative ai apps  which is a total happy accident  right  he mentions that half a dev team’s time is spent on backend busywork that users don’t even see – that’s a huge problem that convex aims to solve
 
 
 one of the key visual cues was this super simple react code snippet he flashed on screen –  something like this

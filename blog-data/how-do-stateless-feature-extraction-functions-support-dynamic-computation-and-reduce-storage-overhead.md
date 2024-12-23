@@ -4,7 +4,7 @@ date: "2024-12-10"
 id: "how-do-stateless-feature-extraction-functions-support-dynamic-computation-and-reduce-storage-overhead"
 ---
 
-Okay so you wanna know about stateless feature extraction and how it rocks for dynamic stuff and saves space right  Lets dive in its actually pretty cool
+ so you wanna know about stateless feature extraction and how it rocks for dynamic stuff and saves space right  Lets dive in its actually pretty cool
 
 Imagine you have a giant pile of data like a mountain of images or sensor readings  You need to pull out useful bits  features  think things like edges in images or frequencies in signals  Normally youd build some complex thing that remembers stuff  state  about previous data points  like "oh I saw a similar edge before"  Thats stateful  and it gets messy fast  takes up tons of space because you are storing all that memory about the past  and is slow as molasses in January  because you have to constantly check this memory  
 

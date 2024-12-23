@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-docker-compose-specify-a-containers-network-as-the-host-network"
 ---
 
-Alright, let's tackle this. Specifying a container's network as the host network using Docker Compose is a topic I've frequently encountered in my time, particularly when dealing with applications requiring very low-latency communication or direct access to host resources. It's less common than bridge networks, sure, but crucial in specific use cases. Let me walk you through it, drawing from a situation I remember vividly from a previous project.
+Alright,  Specifying a container's network as the host network using Docker Compose is a topic I've frequently encountered in my time, particularly when dealing with applications requiring very low-latency communication or direct access to host resources. It's less common than bridge networks, sure, but crucial in specific use cases. Let me walk you through it, drawing from a situation I remember vividly from a previous project.
 
 We were building a real-time sensor data processing system. The sensors were sending UDP packets directly to specific ports on the server, and we quickly realized that relying on port mapping with a bridge network introduced unacceptable delays and complexity. We needed direct, unfiltered access to the host network interface.
 

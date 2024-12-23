@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-keras-layers-outputs-be-combined-with-tensorflow-operations"
 ---
 
-Okay, let's unpack this. I've encountered this exact scenario numerous times across various deep learning projects, and the answer, thankfully, is a resounding yes. Keras, sitting comfortably atop TensorFlow, is designed to be flexible in this way. It's not a walled garden; rather, it offers layers as composable building blocks that can seamlessly interact with the lower-level TensorFlow operations.
+, let's unpack this. I've encountered this exact scenario numerous times across various deep learning projects, and the answer, thankfully, is a resounding yes. Keras, sitting comfortably atop TensorFlow, is designed to be flexible in this way. It's not a walled garden; rather, it offers layers as composable building blocks that can seamlessly interact with the lower-level TensorFlow operations.
 
 Think back to the time I was tasked with building a custom attention mechanism for an image captioning model. We had a Keras convolutional base, producing feature maps, but we needed to manipulate those maps using some specific tensor operations to generate the attention weights before passing them on. That's a classic instance where mixing Keras layer outputs with TensorFlow ops becomes essential. It's not an uncommon need at all.
 

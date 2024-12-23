@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-run-functions-after-usestate-is-set-and-use-the-new-state-value"
 ---
 
-Alright, let's tackle this. I've seen this dance play out countless times in react projects, especially when developers are just getting their feet wet with hooks. The problem of executing code *after* a `useState` update and using the *new* value isn’t always immediately obvious, but there’s a very logical pattern to follow once you understand how React’s rendering lifecycle works.
+Alright,  I've seen this dance play out countless times in react projects, especially when developers are just getting their feet wet with hooks. The problem of executing code *after* a `useState` update and using the *new* value isn’t always immediately obvious, but there’s a very logical pattern to follow once you understand how React’s rendering lifecycle works.
 
 The crux of the issue is that `useState`’s setter is asynchronous. It doesn’t immediately modify the state; instead, it schedules a re-render, at which point the state will be updated. Attempting to access the new state value immediately after the setter will only give you the old value. Think of it as submitting a request to react to update, and you're only going to see the effect once the update is processed and rendered.
 

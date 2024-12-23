@@ -4,7 +4,7 @@ date: "2024-12-07"
 id: "what-methods-can-be-used-to-route-ai-generated-tasks-to-specific-individuals-or-teams-for-review"
 ---
 
-Okay so you wanna know how to get those AI generated tasks to the right people right  like imagine a robot making a bunch of stuff and you need to make sure the right humans check it  that's a cool problem  lots of ways to skin this cat
+ so you wanna know how to get those AI generated tasks to the right people right  like imagine a robot making a bunch of stuff and you need to make sure the right humans check it  that's a cool problem  lots of ways to skin this cat
 
 First off  think about how you're even *making* these AI tasks  are we talking some fancy workflow automation system or is it more like a bunch of scripts spitting out stuff  that totally changes things  If its a full on system  then probably that system already has some routing built in  you know  like assigning tasks based on skills or team membership  that’s the easy path  check your system's docs  there's gotta be something on task assignment
 

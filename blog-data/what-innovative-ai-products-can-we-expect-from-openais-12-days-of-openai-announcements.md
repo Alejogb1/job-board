@@ -4,7 +4,7 @@ date: "2024-12-05"
 id: "what-innovative-ai-products-can-we-expect-from-openais-12-days-of-openai-announcements"
 ---
 
-Okay so OpenAI's 12 Days of OpenAI thing right  super hyped I'm totally buzzing  expecting some crazy stuff  like seriously game changing AI innovations  we're talking next level stuff  not just incremental improvements  we need a paradigm shift you know what I mean  the kind of thing that makes you go whoa  like seriously whoa
+ so OpenAI's 12 Days of OpenAI thing right  super hyped I'm totally buzzing  expecting some crazy stuff  like seriously game changing AI innovations  we're talking next level stuff  not just incremental improvements  we need a paradigm shift you know what I mean  the kind of thing that makes you go whoa  like seriously whoa
 
 
 First off  I reckon we'll see some killer improvements to their existing models  DALL-E 2 probably getting a major upgrade  maybe better image generation  faster processing  more diverse styles  think photorealistic  anime  watercolor  all seamlessly blended  imagine the possibilities  insane  Also ChatGPT  needs some serious boosts  better reasoning capabilities  contextual understanding   ability to handle really complex prompts without going off the rails   think less hallucination more factual accuracy  that's a big one

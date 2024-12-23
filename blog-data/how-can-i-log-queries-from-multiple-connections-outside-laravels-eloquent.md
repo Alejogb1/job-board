@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-log-queries-from-multiple-connections-outside-laravels-eloquent"
 ---
 
-Okay, let's tackle this. I've faced this exact challenge a few times over the years, particularly when dealing with legacy systems or when needing to integrate with databases that aren't directly managed by Eloquent. The standard Laravel query log won't catch these external connections, so you need to employ a bit of a different approach. The key here is to understand that we're essentially hooking into the underlying database driver layer, irrespective of Eloquent.
+,  I've faced this exact challenge a few times over the years, particularly when dealing with legacy systems or when needing to integrate with databases that aren't directly managed by Eloquent. The standard Laravel query log won't catch these external connections, so you need to employ a bit of a different approach. The key here is to understand that we're essentially hooking into the underlying database driver layer, irrespective of Eloquent.
 
 My first major encounter with this was back when we were migrating a complex reporting application. It had its own custom data access layer, using a mix of direct PDO connections and some ODBC magic for connecting to an ancient mainframe. Laravel was being integrated piece by piece, and we needed visibility into *all* queries, not just the Eloquent-generated ones. The solution involved a combination of custom loggers and some clever wrapping.
 

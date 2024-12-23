@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-can-i-iterate-through-solidity-mappings"
 ---
 
-Okay, let's tackle this. It's a common stumbling block, and I've definitely been there, trying to figure out the best way to loop through data stored in Solidity mappings. Unlike arrays or structs, mappings aren’t inherently iterable, which can cause some initial confusion. It stems from how mappings are fundamentally designed for key-value lookups, optimized for accessing values based on their associated keys rather than maintaining an ordered sequence of entries.
+,  It's a common stumbling block, and I've definitely been there, trying to figure out the best way to loop through data stored in Solidity mappings. Unlike arrays or structs, mappings aren’t inherently iterable, which can cause some initial confusion. It stems from how mappings are fundamentally designed for key-value lookups, optimized for accessing values based on their associated keys rather than maintaining an ordered sequence of entries.
 
 So, the direct answer is: you can't iterate through a mapping directly, not without some extra work. Solidity's inherent design doesn't allow for this functionality, because a mapping’s keys don’t have a defined order, and iterating over them would make things less efficient and difficult to predict within the EVM. Think about it – if you could iterate, how would you define a first or last element, given that mappings are essentially hash tables under the hood? The core structure doesn’t support it.
 

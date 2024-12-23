@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "what-are-the-challenges-of-streaming-up-to-18000-snippets-from-a-search-engine-to-an-nlp-server-for-real-time-processing"
 ---
 
-Okay so you wanna stream 18000 snippets from a search engine to an NLP server for real-time processing right  That's ambitious  Real ambitious  Let's break it down  because boy oh boy are there challenges
+ so you wanna stream 18000 snippets from a search engine to an NLP server for real-time processing right  That's ambitious  Real ambitious  Let's break it down  because boy oh boy are there challenges
 
 First off  18000 snippets thats a LOT of data  We're talking bandwidth  serious bandwidth  Think gigabits per second potentially depending on snippet size  Your network infrastructure needs to be beefy  Seriously beefy  Think dedicated high-speed lines redundant connections  the works  Otherwise you'll be bottlenecked before you even start processing  And network latency is gonna be your enemy  Every millisecond counts when you're aiming for real-time  So you need low latency connections  
 

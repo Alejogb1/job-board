@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-efficiently-create-a-term-frequency-matrix-from-a-pandas-dataframe"
 ---
 
-Okay, let's tackle this. I've spent more time than I care to recall elbow-deep in text analysis pipelines, and generating term frequency matrices is a staple. It's surprisingly nuanced, especially when aiming for *efficiency* with larger pandas dataframes. So, let's break down how to do this effectively.
+,  I've spent more time than I care to recall elbow-deep in text analysis pipelines, and generating term frequency matrices is a staple. It's surprisingly nuanced, especially when aiming for *efficiency* with larger pandas dataframes. So, let's break down how to do this effectively.
 
 The core task, as you know, involves transforming a collection of text documents—represented as rows in a dataframe column—into a matrix where each row corresponds to a document and each column represents the frequency of a term across those documents. My typical starting point hinges on acknowledging that “efficient” can mean different things in practice. For smaller datasets, brute force might be acceptable, but once you're working with hundreds of thousands of rows or larger, a more optimized approach is essential. Over the years, I’ve often found myself needing to adapt this process depending on the specific nuances of the data. One project in particular, involved analysing customer feedback from numerous sources—emails, reviews, chats—and the sheer volume made optimizing term frequency matrix generation crucial for timely insights.
 
@@ -50,7 +50,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 import string
 
 # Example dataframe (same data as before)
-data = {'text': ["This is the first document, okay?",
+data = {'text': ["This is the first document, ?",
                  "This document is the second one!.",
                  "and this is the third document.",
                  "Is this the First document again?"]}

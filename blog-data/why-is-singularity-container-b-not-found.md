@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-singularity-container-b-not-found"
 ---
 
-Okay, let's tackle this. "Singularity container 'B' not found"—that's a classic error, and frankly, one I've seen more times than I care to remember over the years. It usually points to a few specific culprits, and based on my experience, let's break down why this might happen, along with some solutions I’ve used. It's rarely just a random hiccup.
+,  "Singularity container 'B' not found"—that's a classic error, and frankly, one I've seen more times than I care to remember over the years. It usually points to a few specific culprits, and based on my experience, let's break down why this might happen, along with some solutions I’ve used. It's rarely just a random hiccup.
 
 The most common reason you’re facing this issue is, simply put, the container image isn’t where Singularity is looking for it. Singularity, unlike some other container solutions, doesn't have a central registry that it automatically pulls from unless explicitly instructed. Instead, it operates on the principle of a file-based system, primarily working with `.sif` (Singularity Image Format) files. Think of it like trying to run an executable – it needs to be in a directory, accessible, and have the correct permissions.
 

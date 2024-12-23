@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-yolov4-failing-on-azure-ml-with-a-no-such-file-or-directory-error"
 ---
 
-Okay, let's tackle this. I’ve seen this specific "No such file or directory" issue with YOLOv4 and Azure ML enough times that it's practically a familiar face at this point. It's a common head-scratcher, primarily stemming from subtle differences in how environments and dependencies are managed in the cloud compared to local setups. This isn't just about the model itself; it's often the infrastructure around it that throws a spanner in the works.
+,  I’ve seen this specific "No such file or directory" issue with YOLOv4 and Azure ML enough times that it's practically a familiar face at this point. It's a common head-scratcher, primarily stemming from subtle differences in how environments and dependencies are managed in the cloud compared to local setups. This isn't just about the model itself; it's often the infrastructure around it that throws a spanner in the works.
 
 The "no such file or directory" error, in this context, almost always points towards one of these core problems: an incorrect path reference, mismanaged dependencies, or issues with the containerization process itself during Azure ML execution. We need to look at each of these areas methodically.
 

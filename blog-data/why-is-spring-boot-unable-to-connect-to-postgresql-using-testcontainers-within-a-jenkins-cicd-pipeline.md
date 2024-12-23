@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-spring-boot-unable-to-connect-to-postgresql-using-testcontainers-within-a-jenkins-cicd-pipeline"
 ---
 
-Alright, let's tackle this. I've seen this exact scenario play out more times than I care to count, and the devil, as they say, is often in the details. The frustration of a failing Spring Boot-PostgreSQL connection in a Jenkins pipeline using Testcontainers is incredibly common, and it usually boils down to subtle configuration issues rather than a fundamental flaw in any of the technologies themselves. I recall a project a few years back where we spent the better part of a day chasing down a similar bug; it's a learning experience you tend not to forget.
+Alright,  I've seen this exact scenario play out more times than I care to count, and the devil, as they say, is often in the details. The frustration of a failing Spring Boot-PostgreSQL connection in a Jenkins pipeline using Testcontainers is incredibly common, and it usually boils down to subtle configuration issues rather than a fundamental flaw in any of the technologies themselves. I recall a project a few years back where we spent the better part of a day chasing down a similar bug; it's a learning experience you tend not to forget.
 
 The core problem, and it's multi-faceted, often centers around the network environment where your tests are executing within the Jenkins pipeline. Testcontainers, fantastic as it is for local development, orchestrates docker containers using docker's networking capabilities. However, that networking isn't always seamlessly transported into a CI/CD environment, and jenkins's own architecture, especially when using agents or docker-in-docker, adds layers of complexity.
 

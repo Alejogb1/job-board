@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-obtain-the-correct-yolor-pre-trained-weights"
 ---
 
-Okay, let's tackle this. Obtaining the correct pre-trained weights for YOLOR, or *You Only Learn One Representation*, can feel a bit like navigating a maze, especially with the variety of sources and variations out there. From my experience, I've seen projects derailed by mismatched weights more often than I'd like to recall. There’s no single, universal download link; it's more about understanding the different versions and where to source them from reliably.
+,  Obtaining the correct pre-trained weights for YOLOR, or *You Only Learn One Representation*, can feel a bit like navigating a maze, especially with the variety of sources and variations out there. From my experience, I've seen projects derailed by mismatched weights more often than I'd like to recall. There’s no single, universal download link; it's more about understanding the different versions and where to source them from reliably.
 
 My first encounter with YOLOR was on a computer vision project involving real-time object tracking, back when the official repository was still quite new. We initially struggled with a set of weights that seemed to work fine on the sample images but crashed and burned on our custom dataset. It wasn’t a problem with the architecture itself, but rather an issue of compatibility. So, let's get into the specifics.
 

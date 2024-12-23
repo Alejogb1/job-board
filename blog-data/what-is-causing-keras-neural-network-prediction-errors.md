@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-is-causing-keras-neural-network-prediction-errors"
 ---
 
-Okay, let’s unpack this. I’ve definitely seen my share of baffling Keras prediction errors throughout the years. It's rarely a single smoking gun but usually a combination of factors interacting in subtle ways. I've spent countless hours debugging these issues, and it's led me to develop a fairly systematic approach, which I’m happy to share.
+, let’s unpack this. I’ve definitely seen my share of baffling Keras prediction errors throughout the years. It's rarely a single smoking gun but usually a combination of factors interacting in subtle ways. I've spent countless hours debugging these issues, and it's led me to develop a fairly systematic approach, which I’m happy to share.
 
 First and foremost, it's important to understand that "prediction errors" is a broad category. We're talking about the discrepancy between the predicted output of your neural network and the true, or expected, value. This can stem from issues during training, during data preparation, or even inherent limitations in the model's architecture itself.
 

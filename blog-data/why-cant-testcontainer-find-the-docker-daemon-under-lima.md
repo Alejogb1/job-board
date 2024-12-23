@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-cant-testcontainer-find-the-docker-daemon-under-lima"
 ---
 
-Okay, let's tackle this. It's a situation I've certainly encountered enough times to have a few battle scars. The problem of Testcontainers seemingly failing to locate the Docker daemon when running under Lima is less about a straightforward bug and more about the intricacies of how these tools interact with virtualized environments. Fundamentally, Testcontainers relies on being able to communicate directly with the Docker daemon, and Lima, acting as a lightweight virtualization solution, creates a layer of abstraction that can disrupt this direct communication path.
+,  It's a situation I've certainly encountered enough times to have a few battle scars. The problem of Testcontainers seemingly failing to locate the Docker daemon when running under Lima is less about a straightforward bug and more about the intricacies of how these tools interact with virtualized environments. Fundamentally, Testcontainers relies on being able to communicate directly with the Docker daemon, and Lima, acting as a lightweight virtualization solution, creates a layer of abstraction that can disrupt this direct communication path.
 
 The core issue stems from the way Lima sets up its virtual machine (VM) and exposes the Docker daemon. Lima typically operates by creating a separate Docker environment *inside* its VM. This is crucial: the Docker daemon accessible inside the Lima VM is not the same as the Docker daemon running on your host operating system, which is usually where Testcontainers expects to find it. Consequently, your tests executing outside of the Lima VM cannot directly connect to the Docker daemon running within. It's a network boundary problem primarily.
 

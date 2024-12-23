@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-get-logits-from-t5-without-using-labels"
 ---
 
-Okay, so you're looking to extract logits from a T5 model, specifically without providing labels during inference. This is a common need, especially when exploring model behavior or building custom loss functions outside the standard text generation paradigm. I recall one project where I had to do something similar to analyze the token probabilities in an adversarial setting, and the standard methods just weren't cutting it. Let me walk you through how it’s done, drawing from that experience and some other projects I've tackled.
+, so you're looking to extract logits from a T5 model, specifically without providing labels during inference. This is a common need, especially when exploring model behavior or building custom loss functions outside the standard text generation paradigm. I recall one project where I had to do something similar to analyze the token probabilities in an adversarial setting, and the standard methods just weren't cutting it. Let me walk you through how it’s done, drawing from that experience and some other projects I've tackled.
 
 At its core, T5 generates output by predicting the next token given a sequence, essentially assigning probabilities to a vocabulary of possible tokens. These probabilities are derived from logits, the raw, unnormalized scores from the model's final linear layer. By default, when we use transformers library or similar inference patterns, these logits are usually processed further via softmax or a similar function to get actual probability distribution and then the argmax is taken to get the prediction. What we need to do is tap into that raw output before the softmax is applied.
 

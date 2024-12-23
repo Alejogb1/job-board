@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-perform-linear-regression-with-a-rolling-window"
 ---
 
-Okay, let's tackle this. I've actually had to implement rolling window linear regression more times than I care to remember, usually in situations involving time-series data where the underlying relationships shift over time. There isn’t one magic bullet, but understanding the core concepts and variations is key to getting it working reliably.
+,  I've actually had to implement rolling window linear regression more times than I care to remember, usually in situations involving time-series data where the underlying relationships shift over time. There isn’t one magic bullet, but understanding the core concepts and variations is key to getting it working reliably.
 
 Essentially, what we're aiming for is to apply linear regression repeatedly, but each time on a subset of the data defined by a sliding or rolling window. This allows us to capture localized trends rather than assuming a single, static relationship across the entire dataset. A standard linear regression assumes a constant relationship, but a time-series could have different relationships at different times.
 

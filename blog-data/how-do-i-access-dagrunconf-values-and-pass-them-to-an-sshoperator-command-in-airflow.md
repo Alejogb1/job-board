@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-access-dagrunconf-values-and-pass-them-to-an-sshoperator-command-in-airflow"
 ---
 
-Okay, let's dive into this, because I've certainly been down that particular rabbit hole a few times. The core challenge here, as you've pointed out, is accessing those `dag_run.conf` values within your Airflow tasks, specifically when you need to dynamically pass parameters to an `SSHOperator` command. It's not inherently intuitive, but with a bit of understanding of Jinja templating and Airflow's context variables, it becomes quite manageable.
+, let's dive into this, because I've certainly been down that particular rabbit hole a few times. The core challenge here, as you've pointed out, is accessing those `dag_run.conf` values within your Airflow tasks, specifically when you need to dynamically pass parameters to an `SSHOperator` command. It's not inherently intuitive, but with a bit of understanding of Jinja templating and Airflow's context variables, it becomes quite manageable.
 
 My first experience with this wasn’t on a greenfield project. It was a legacy system where scheduled jobs depended on configuration data passed into the workflow, which then needed to be used in shell scripts executed on remote machines. We had a lot of hard-coded values scattered across various dag files, making them difficult to maintain and scale. It became evident that we needed a more dynamic way to manage configuration, and that's how I really got to grips with using `dag_run.conf`.
 

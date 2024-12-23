@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-doesnt-dockerairflownginx-reverse-proxy-work"
 ---
 
-Okay, let's talk about why setting up a Dockerized Airflow environment behind an Nginx reverse proxy can sometimes feel like chasing a ghost. I’ve spent my share of late nights debugging exactly this scenario, and it usually boils down to a few key areas that are easy to overlook. It’s rarely a single, catastrophic error, but rather a confluence of configuration mishaps. Let's break it down.
+, let's talk about why setting up a Dockerized Airflow environment behind an Nginx reverse proxy can sometimes feel like chasing a ghost. I’ve spent my share of late nights debugging exactly this scenario, and it usually boils down to a few key areas that are easy to overlook. It’s rarely a single, catastrophic error, but rather a confluence of configuration mishaps. Let's break it down.
 
 First off, understand that this setup introduces complexity on several layers: the docker network, airflow's internal webserver, and the nginx proxy. Each one of these requires careful configuration, and when they don’t play nicely together, you'll likely end up with some variation of "connection refused" or "502 Bad Gateway" errors. It's not a fundamentally broken approach, far from it, but it requires meticulous attention to detail.
 

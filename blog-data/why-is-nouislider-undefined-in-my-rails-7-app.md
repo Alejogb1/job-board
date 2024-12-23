@@ -20,7 +20,7 @@ Here’s a breakdown of common pitfalls:
 
 4.  **Asset Pipeline Errors:** Sometimes, the asset pipeline itself might fail to properly compile or include the necessary javascript. This is less common with standard packages but possible with certain configurations or gem conflicts. These failures can be hard to identify but are normally obvious once you know where to look. Check your server logs or javascript console for more details.
 
-Okay, enough theory, let's move to some actionable solutions and code snippets. Here's how I've solved this in previous projects:
+, enough theory, let's move to some actionable solutions and code snippets. Here's how I've solved this in previous projects:
 
 **Example 1: Using importmaps (Rails 7 default approach)**
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-check-if-a-date-falls-within-a-range-using-rails-6"
 ---
 
-Okay, let’s tackle this one. It's a common scenario in web development, and Rails 6 offers some robust and straightforward ways to determine if a date falls within a specified range. I've dealt with date range validation countless times, from booking systems to complex reporting tools, and the approaches we'll explore have proven reliable and efficient. Let's dive in, looking at a few methods and code snippets to illustrate.
+, let’s tackle this one. It's a common scenario in web development, and Rails 6 offers some robust and straightforward ways to determine if a date falls within a specified range. I've dealt with date range validation countless times, from booking systems to complex reporting tools, and the approaches we'll explore have proven reliable and efficient. Let's dive in, looking at a few methods and code snippets to illustrate.
 
 The core concept revolves around Ruby's `Date` and `DateTime` classes, coupled with Rails' built-in support for date and time handling. When you have a date range, it's typically represented by two points: a start date and an end date. Your goal is then to ascertain if a given date falls chronologically between these two points, inclusively or exclusively.
 

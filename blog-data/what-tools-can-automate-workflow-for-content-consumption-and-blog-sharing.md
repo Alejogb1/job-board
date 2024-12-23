@@ -47,7 +47,7 @@ For deeper analysis think about NLP  natural language processing  you can check 
 
 **Phase 2 Content Curation and Enhancement**
 
-Okay you've got your filtered articles  now what  you can't just blast them all out raw  you need to add value  your own spin  your own insights
+ you've got your filtered articles  now what  you can't just blast them all out raw  you need to add value  your own spin  your own insights
 
 One thing I like to do is use a tool like Readability  it cleans up articles removes ads and makes them super easy to read  this makes grabbing the main points easier and you can easily adapt content for your audience
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-sberts-final-results-be-better-understood"
 ---
 
-Okay, let's tackle this. It's something I spent a good chunk of time on, back when I was optimizing a semantic search engine for a large, text-heavy knowledge base. The short answer, and I always prefer to start there, is: yes, sbert's final results can absolutely be understood better, but it requires going a level deeper than simply accepting the black box output.
+,  It's something I spent a good chunk of time on, back when I was optimizing a semantic search engine for a large, text-heavy knowledge base. The short answer, and I always prefer to start there, is: yes, sbert's final results can absolutely be understood better, but it requires going a level deeper than simply accepting the black box output.
 
 SBERT, or Sentence-BERT, is a powerful transformer-based model for creating sentence embeddings that are useful for semantic similarity tasks. At its heart, it utilizes a Siamese or triplet network architecture trained on sentence pairs or triplets. The goal is that sentences with similar meanings will map to embeddings that are close in the embedding space, typically through cosine similarity. However, the final output—these embeddings—while powerful, can feel abstract. The key to making them more understandable lies in dissecting the intermediate steps and interpreting the final embedding within the context of the training data and the task at hand.
 

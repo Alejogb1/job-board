@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "do-unnecessary-constraints-in-constraintlayout-impact-performance"
 ---
 
-Okay, let's tackle this one. I've certainly seen my share of tangled `ConstraintLayout` setups over the years, and the question of whether unnecessary constraints can bog things down is valid. It's something I've had to debug on numerous occasions – performance analysis on mobile apps can get quite granular.
+, let's tackle this one. I've certainly seen my share of tangled `ConstraintLayout` setups over the years, and the question of whether unnecessary constraints can bog things down is valid. It's something I've had to debug on numerous occasions – performance analysis on mobile apps can get quite granular.
 
 In short, yes, absolutely. Unnecessary constraints *can* impact performance, although it's not usually a dramatic, application-crashing kind of hit. Instead, we're talking about potentially subtle increases in layout time, which, if multiplied across many views or complex hierarchies, can noticeably affect frame rates and user experience. Let me elaborate.
 

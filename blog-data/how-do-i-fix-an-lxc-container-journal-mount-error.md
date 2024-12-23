@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-fix-an-lxc-container-journal-mount-error"
 ---
 
-Let's tackle this. I’ve certainly been down that rabbit hole with LXC container journal mount errors more times than I care to recall. It’s a frustrating issue, usually rearing its head when you’re expecting smooth sailing and the logs are crucial for debugging. Let me walk you through my typical approach, distilled from a few particularly memorable evenings.
+ I’ve certainly been down that rabbit hole with LXC container journal mount errors more times than I care to recall. It’s a frustrating issue, usually rearing its head when you’re expecting smooth sailing and the logs are crucial for debugging. Let me walk you through my typical approach, distilled from a few particularly memorable evenings.
 
 The error itself, at its core, stems from the container’s inability to properly mount the host's journal directory. This prevents the container from logging information to the host’s journald system, which is used by many services, making tracking errors and general system activity within that container practically impossible. The first step always involves understanding *why* this is occurring; it's rarely a one-size-fits-all fix. Often, it comes down to discrepancies in how the container and the host are configured to handle systemd, or permission issues surrounding the journal directory.
 

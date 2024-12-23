@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-cant-ruby-load-the-ruby2d-library"
 ---
 
-Let's tackle this. The apparent inability of Ruby to load the `ruby2d` library often stems from a confluence of reasons, and while the error messages can seem cryptic at times, the underlying causes usually fall into a few common buckets. I’ve personally debugged similar issues on several projects involving graphical elements, and it usually comes down to dependency mismatches, environmental inconsistencies, or the way the gem itself is set up.
+ The apparent inability of Ruby to load the `ruby2d` library often stems from a confluence of reasons, and while the error messages can seem cryptic at times, the underlying causes usually fall into a few common buckets. I’ve personally debugged similar issues on several projects involving graphical elements, and it usually comes down to dependency mismatches, environmental inconsistencies, or the way the gem itself is set up.
 
 First, it’s essential to understand how Ruby and its gems interact. When you run `require 'ruby2d'`, Ruby isn't just magically pulling code out of thin air. Instead, it's relying on its gem path, which specifies where to find installed gems. If `ruby2d` isn't located in one of those paths, or if the required dependencies aren't satisfied, the load will fail.
 

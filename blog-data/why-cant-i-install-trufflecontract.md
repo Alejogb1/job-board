@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-cant-i-install-trufflecontract"
 ---
 
-Okay, let's tackle this. It’s a problem I’ve seen rear its head a few times, often leading developers down a rabbit hole they'd rather avoid. The inability to install `@truffle/contract` isn't typically a singular issue, but rather a confluence of factors that can sometimes be tricky to diagnose. Let’s break down the potential roadblocks.
+,  It’s a problem I’ve seen rear its head a few times, often leading developers down a rabbit hole they'd rather avoid. The inability to install `@truffle/contract` isn't typically a singular issue, but rather a confluence of factors that can sometimes be tricky to diagnose. Let’s break down the potential roadblocks.
 
 First off, let's establish what `@truffle/contract` actually is. It’s a core component of the Truffle suite, primarily designed to abstract away the complexities of interacting with deployed Ethereum smart contracts. It provides a convenient interface for creating JavaScript objects representing those contracts, handling encoding, decoding, and transaction management. If it fails to install, it directly hinders your ability to build or test anything that relies on contract interactions within your Truffle projects.
 

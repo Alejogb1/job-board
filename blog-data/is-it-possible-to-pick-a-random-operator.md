@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "is-it-possible-to-pick-a-random-operator"
 ---
 
-Okay so picking a random operator yeah I've been down that rabbit hole before it's not as straightforward as you might think at first glance especially when you get into the weeds of different programming languages and their operator handling
+ so picking a random operator yeah I've been down that rabbit hole before it's not as straightforward as you might think at first glance especially when you get into the weeds of different programming languages and their operator handling
 
 Let me tell you a story back in the day when I was messing with some esoteric scripting language thing it basically had a syntax that was like a mashup of everything you'd ever seen but I needed to do some dynamic operation generation and I was looking at just randomly pulling operators
 

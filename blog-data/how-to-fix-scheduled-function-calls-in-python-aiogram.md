@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-fix-scheduled-function-calls-in-python-aiogram"
 ---
 
-Alright, let's tackle this. I remember a particularly thorny incident a few years back involving a high-volume telegram bot I was managing, built with aiogram. Scheduled functions, or rather, their *failure* to execute reliably, became a significant source of headaches. The problem often isn't with the scheduler *itself* but with how we're integrating it into the asynchronous framework aiogram provides. Here's what I've learned, and how to approach these issues, focusing on pragmatic solutions over abstract theory.
+Alright,  I remember a particularly thorny incident a few years back involving a high-volume telegram bot I was managing, built with aiogram. Scheduled functions, or rather, their *failure* to execute reliably, became a significant source of headaches. The problem often isn't with the scheduler *itself* but with how we're integrating it into the asynchronous framework aiogram provides. Here's what I've learned, and how to approach these issues, focusing on pragmatic solutions over abstract theory.
 
 The core problem, as I've frequently seen, lies in the interaction between aiogram's asynchronous event loop and traditional, blocking scheduling mechanisms. Simple timers like `time.sleep()` are a no-go because they freeze the event loop and prevent other handlers from processing incoming messages, rendering your bot unresponsive. Similarly, naive implementations using `schedule` or similar libraries often fail within the async context because they weren't designed for aiogram's environment. The consequence is missed scheduled calls, unexpected delays, or outright crashes if not handled properly.
 

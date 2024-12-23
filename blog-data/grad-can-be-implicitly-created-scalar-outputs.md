@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "grad-can-be-implicitly-created-scalar-outputs"
 ---
 
-Okay so you're asking about implicit gradient creation for scalar outputs yeah I've wrestled with that beast a few times in my day it's not always as straightforward as it seems especially when you start digging into the nitty-gritty details of autodiff libraries and how they handle different tensor operations
+ so you're asking about implicit gradient creation for scalar outputs yeah I've wrestled with that beast a few times in my day it's not always as straightforward as it seems especially when you start digging into the nitty-gritty details of autodiff libraries and how they handle different tensor operations
 
 Right off the bat yes gradients can be implicitly created for scalar outputs That's like fundamental to how backpropagation works in deep learning at its core what we do is compute a loss which is typically a single number a scalar representing how bad our model is performing we then use this scalar to figure out how to adjust the weights and biases of our model using gradient descent
 
@@ -70,7 +70,7 @@ In the third example which does not have any loss function we directly create a 
 
 Basically what happens when you call `backward()` on a scalar it automatically computes the gradient of that scalar with respect to all the tensors that contributed to its calculation That's why it's called implicit the gradient calculation process goes through the computation graph tracing back to all the nodes and tensors that were involved and applies the chain rule to figure out all the partial derivates that compose the gradient
 
-Okay now that we have the examples down let's talk about why this works and what is behind the scenes I am not going to get all the way deep in to the automatic differentiation (also known as autodiff) I am just going to point the surface of the ice berg here and give some resources that you can consult if you want to dive deeper
+ now that we have the examples down let's talk about why this works and what is behind the scenes I am not going to get all the way deep in to the automatic differentiation (also known as autodiff) I am just going to point the surface of the ice berg here and give some resources that you can consult if you want to dive deeper
 
 So behind the scene autodiff libraries build this thing called a computation graph or computational graph basically this is a data structure representing your operations as nodes and your tensors as edges When you operate on tensors it records all the operations in this graph and also all the derivates that those operations involve
 

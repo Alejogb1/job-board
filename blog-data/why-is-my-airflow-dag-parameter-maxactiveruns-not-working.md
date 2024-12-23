@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-is-my-airflow-dag-parameter-maxactiveruns-not-working"
 ---
 
-Okay, let’s tackle this one. I’ve seen this particular frustration pop up more times than I care to count, and it almost always boils down to understanding a few nuanced aspects of how Airflow schedules and limits task execution. It’s a common stumbling block, and not something instantly obvious from a quick read-through of the documentation, which, although thorough, can sometimes leave a gap when translating theory into actual operational scenarios.
+, let’s tackle this one. I’ve seen this particular frustration pop up more times than I care to count, and it almost always boils down to understanding a few nuanced aspects of how Airflow schedules and limits task execution. It’s a common stumbling block, and not something instantly obvious from a quick read-through of the documentation, which, although thorough, can sometimes leave a gap when translating theory into actual operational scenarios.
 
 The issue isn't that `max_active_runs` isn't *working*, per se, but rather it's often misunderstood how it interacts with other Airflow components, particularly the scheduler and the various types of task instances within a dag run. My experience, particularly a rather memorable incident while scaling a large data pipeline last year, has given me a very pragmatic understanding of this. In that particular case, we were seeing an overflow of dag runs consuming resources, even though we’d specified a `max_active_runs` value which we believed should be keeping things in check. We quickly learned it's far more complex than simply setting a single parameter and expecting everything to behave.
 

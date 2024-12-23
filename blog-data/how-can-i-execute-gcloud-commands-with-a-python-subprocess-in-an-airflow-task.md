@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-execute-gcloud-commands-with-a-python-subprocess-in-an-airflow-task"
 ---
 
-Okay, let's tackle this. I've seen this pattern crop up quite a few times, particularly when needing to integrate with Google Cloud Platform within an Airflow pipeline. Launching `gcloud` commands via python's `subprocess` module can indeed be a bit nuanced, and there are definitely best practices to consider. I'll break down the process and offer some practical examples based on my experience, along with some helpful resources you should check out.
+,  I've seen this pattern crop up quite a few times, particularly when needing to integrate with Google Cloud Platform within an Airflow pipeline. Launching `gcloud` commands via python's `subprocess` module can indeed be a bit nuanced, and there are definitely best practices to consider. I'll break down the process and offer some practical examples based on my experience, along with some helpful resources you should check out.
 
 Essentially, the core challenge lies in the fact that `gcloud` commands often require a specific environment, especially for authentication. Simply calling `subprocess.run()` with a `gcloud` command might not work out of the box, primarily due to discrepancies between the user context under which your Airflow scheduler runs and the required gcloud environment.
 

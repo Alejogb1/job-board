@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "c-to-c-translator-available"
 ---
 
-Okay so you're asking about a c to c++ translator a real classic I've been in this game for a while and trust me this is a rabbit hole I've been down more than once
+ so you're asking about a c to c++ translator a real classic I've been in this game for a while and trust me this is a rabbit hole I've been down more than once
 
 First things first there's no magic button that flawlessly converts C to C++ and that's the long and short of it If someone tells you otherwise they're probably selling you snake oil or a really really buggy piece of software I've tried a bunch of these "automatic" converters back in the day let's just say I spent more time fixing the mess they created than I would have spent just rewriting the code myself
 

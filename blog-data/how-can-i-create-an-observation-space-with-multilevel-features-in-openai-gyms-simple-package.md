@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-create-an-observation-space-with-multilevel-features-in-openai-gyms-simple-package"
 ---
 
-Alright, let's tackle this. I remember wrestling with a similar issue back in my days working on multi-agent simulations. The challenge, as you’ve pointed out, is effectively representing complex environments where the observations aren't just a single, flat vector, but instead have nested, hierarchical structures. OpenAI Gym’s `simple` package, while wonderfully straightforward for many tasks, does require a little bit of finesse to handle these more elaborate observation spaces.
+Alright,  I remember wrestling with a similar issue back in my days working on multi-agent simulations. The challenge, as you’ve pointed out, is effectively representing complex environments where the observations aren't just a single, flat vector, but instead have nested, hierarchical structures. OpenAI Gym’s `simple` package, while wonderfully straightforward for many tasks, does require a little bit of finesse to handle these more elaborate observation spaces.
 
 The core problem isn't inherently with gym itself, but rather with how we define the `observation_space` attribute of our custom environment. With simple environments, you'd typically use `gym.spaces.Box` or `gym.spaces.Discrete` to represent things like sensor readings or a position on a grid. But when your observation is itself composed of different types of data, perhaps one part being numerical and another categorical, these single-type space definitions become inadequate. We need a composite space, specifically a `gym.spaces.Dict`.
 

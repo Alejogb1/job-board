@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-prevent-activeadmin-from-infinitely-redirecting-after-a-session-timeout"
 ---
 
-Okay, let's tackle this. I've certainly seen my share of infinite redirect loops, especially within the context of authentication and session management – it's a particularly sticky problem when dealing with frameworks like ActiveAdmin, which builds upon Rails’ authentication system. You've correctly identified the core issue: a session timeout occurs, and ActiveAdmin, or rather, the underlying authentication mechanisms, get caught in a loop trying to re-authenticate.
+,  I've certainly seen my share of infinite redirect loops, especially within the context of authentication and session management – it's a particularly sticky problem when dealing with frameworks like ActiveAdmin, which builds upon Rails’ authentication system. You've correctly identified the core issue: a session timeout occurs, and ActiveAdmin, or rather, the underlying authentication mechanisms, get caught in a loop trying to re-authenticate.
 
 The problem isn't necessarily a bug in ActiveAdmin itself, but rather a confluence of factors around how authentication is handled, particularly when a session expires. When a request comes in after the timeout, the application sees an invalid session. The expected response is to redirect to the login page. But if, for some reason, the check to determine whether a user *is* logged in, or a redirect to the login page itself, is subject to the same expired session issue, we have a cycle. The application constantly tries to re-authenticate, fails, and tries again, leading to an infinite loop.
 

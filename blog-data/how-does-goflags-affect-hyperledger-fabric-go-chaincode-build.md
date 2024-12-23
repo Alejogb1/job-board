@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-does-goflags-affect-hyperledger-fabric-go-chaincode-build"
 ---
 
-Okay, let's dive into how `GOFLAGS` influences the build process for Hyperledger Fabric Go chaincode. It's a topic that, in my experience, often trips up newcomers and even seasoned developers if they don’t pay close attention. It's definitely not something you can just gloss over, having seen a fair share of deployments fail because of it.
+, let's dive into how `GOFLAGS` influences the build process for Hyperledger Fabric Go chaincode. It's a topic that, in my experience, often trips up newcomers and even seasoned developers if they don’t pay close attention. It's definitely not something you can just gloss over, having seen a fair share of deployments fail because of it.
 
 I remember back when we were implementing a supply chain tracking system on Fabric v1.4, we ran into quite a perplexing build issue. The chaincode built fine locally on our development machines, but it kept failing during the deployment pipeline in our staging environment. Hours of debugging led us to the subtle but critical role of `GOFLAGS`. It's an environment variable used during the Go build process, and it allows you to inject specific compiler flags. This, in the context of chaincode, can either enhance or completely break your build.
 

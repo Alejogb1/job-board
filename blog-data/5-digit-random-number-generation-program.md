@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "5-digit-random-number-generation-program"
 ---
 
-Alright so you want to generate a 5 digit random number yeah I’ve been down that road more times than I can count honestly it’s surprisingly not as straightforward as some beginners might think I've seen plenty of newbies fumble around with this thinking `random.nextInt(99999)` will cut it but oh boy that gets you into some weird stuff mostly numbers that are not quite five digits it can be a real pain in the rear
+so you want to generate a 5 digit random number yeah I’ve been down that road more times than I can count honestly it’s surprisingly not as straightforward as some beginners might think I've seen plenty of newbies fumble around with this thinking `random.nextInt(99999)` will cut it but oh boy that gets you into some weird stuff mostly numbers that are not quite five digits it can be a real pain in the rear
 
 Let me tell you about this one time back in my early days I was working on a data entry system and it needed unique identifiers for each record I was under the gun to get it out and I was just using java's `java.util.Random` thingy thinking it would be fine. I just whipped up some code something along the lines of this
 
@@ -27,7 +27,7 @@ And it kind of worked for a while until I started seeing those pesky numbers tha
 
 The naive solution that most newbies try is what I showed you but it has its problems because `random.nextInt(n)` returns a random number between `0` and `n-1` so if you do `random.nextInt(99999)` it can return a number between 0 and 99998.
 
-So my next try I remember this like it was yesterday I said to myself okay I know what's going on here I need to set some boundaries so I started looking around I knew I needed to specify a lower bound and a higher bound I did some quick thinking and I thought let’s just go ahead and use `random.nextInt(max - min) + min` so for 5 digit numbers that would mean I’d be using `random.nextInt(99999 - 10000) + 10000` at the time I thought this would get me what I needed. I think I ended up making something like this
+So my next try I remember this like it was yesterday I said to myself  I know what's going on here I need to set some boundaries so I started looking around I knew I needed to specify a lower bound and a higher bound I did some quick thinking and I thought let’s just go ahead and use `random.nextInt(max - min) + min` so for 5 digit numbers that would mean I’d be using `random.nextInt(99999 - 10000) + 10000` at the time I thought this would get me what I needed. I think I ended up making something like this
 
 ```java
 import java.util.Random;

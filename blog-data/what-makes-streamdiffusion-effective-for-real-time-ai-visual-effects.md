@@ -14,7 +14,7 @@ Another key aspect is model optimization  The original Stable Diffusion models a
 
 Then there's the whole pipeline thing  You cant just run the model directly  you need to integrate it with your video processing workflow  This could involve custom code using libraries like PyTorch or TensorFlow  or utilizing pre-built tools  and frameworks dedicated to AI video processing  its a bit of a mixed bag really  some of the workflows are super straightforward  others are more complex  depending on what you're doing and how much control you need  I recommend checking out some open source projects and seeing how they’re doing it  Github's your best friend here
 
-Okay so code snippets I promised you some right  
+ so code snippets I promised you some right  
 
 Here’s a basic example using PyTorch  This is super simplified  it just shows the general idea not a complete real-time system:
 

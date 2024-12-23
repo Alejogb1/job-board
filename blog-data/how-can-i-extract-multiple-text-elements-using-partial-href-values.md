@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-extract-multiple-text-elements-using-partial-href-values"
 ---
 
-Okay, let's tackle this. I recall a particularly gnarly project back in 2018, a scraping endeavor for a legacy e-commerce site – you wouldn't believe the markup they were using – where we faced precisely this issue. Extracting multiple text elements based on partial `href` values is a common scraping hurdle, and it demands a blend of precise selection and robust error handling. Fundamentally, we’re talking about situations where the anchor tags don't have unique, easily predictable `href` attributes, and we need to leverage substring matching to target our desired content. It's more intricate than just simple `querySelector` usage.
+,  I recall a particularly gnarly project back in 2018, a scraping endeavor for a legacy e-commerce site – you wouldn't believe the markup they were using – where we faced precisely this issue. Extracting multiple text elements based on partial `href` values is a common scraping hurdle, and it demands a blend of precise selection and robust error handling. Fundamentally, we’re talking about situations where the anchor tags don't have unique, easily predictable `href` attributes, and we need to leverage substring matching to target our desired content. It's more intricate than just simple `querySelector` usage.
 
 The core problem stems from the structure of many websites. Rather than having perfect, predictable `href` patterns, we often encounter links like `/product/detail/12345`, `/product/detail/67890`, etc. If you only want product names from a subset of these pages, perhaps where the identifier begins with `1` or `2`, you can't simply target by full `href`. So, partial matching becomes essential.
 

@@ -8,7 +8,7 @@ yo dude so i just watched this awesome talk about outlines this library for maki
 
 the whole point of the talk was basically this llms are kinda dumb they spit out words but they don’t really *get* the structure of what they're saying  remy the guy presenting  showed how you ask an llm for flight info from an email and it just throws a json decode error at you  like wtf right  the whole point of computing is that things have consistent apis you can rely on but llms are all over the place  so outlines is the solution – it lets you tell the llm exactly what structure you want the answer to have so you get reliable results every time  it's like adding a brain implant to the dumb llm
 
-okay so five key moments that totally stuck with me
+ so five key moments that totally stuck with me
 
 1. **the json decode error problem:** this was the killer opening  remy hammered home how frustrating it is when an llm promises structured data but delivers gibberish instead it's the biggest reason why we can't trust them to do serious stuff easily like taking data and putting it into a database
 2. **the power of structured generation:** this is where outlines shines it's not just about generating text it’s about guiding the llm to generate text *in a specific format*  like json or by using regex this turns unreliable word salad into neatly packaged data points  imagine you need a list of email addresses from a thousand emails  forget regex hell just use outlines and tell it to give you a json array of those addresses – simple clean and efficient
@@ -18,7 +18,7 @@ okay so five key moments that totally stuck with me
 
 there were some really cool visuals too the memes were great especially the one about the chaotic attempts to get valid json from an llm  and then the graphs showing the huge accuracy jump and almost zero overhead with outlines versus other methods – those were very persuasive
 
-okay  let's get to the nitty-gritty  two key concepts  regex and json schema
+  let's get to the nitty-gritty  two key concepts  regex and json schema
 
 **regular expressions (regex):**  think of regex as a pattern-matching superpower  it lets you define patterns of characters that you want to search for within text   for example  `\b[A-Z]{3}\b`  would find any three-capitalized-letter words –perfect for airport codes  in outlines you give it the regex and it tells the llm "only generate text that matches this pattern"  no more sifting through endless text to extract your information  elegant
 

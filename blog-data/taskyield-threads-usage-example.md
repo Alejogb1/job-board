@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "taskyield-threads-usage-example"
 ---
 
-Okay so you're asking about `taskyield` and threads especially how to use it right I've been around the block a few times with this stuff and yeah it's a bit of a tricky area if you're not careful lets dive in
+ so you're asking about `taskyield` and threads especially how to use it right I've been around the block a few times with this stuff and yeah it's a bit of a tricky area if you're not careful lets dive in
 
 First off forget everything you thought you knew about simple thread programming `taskyield` isn't about making threads faster or doing some magic it's about *cooperative multitasking* within a single thread its a way to give up control of the execution without completely ending it
 

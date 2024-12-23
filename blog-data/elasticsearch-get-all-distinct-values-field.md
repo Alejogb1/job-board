@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "elasticsearch-get-all-distinct-values-field"
 ---
 
-Okay so you're asking about how to get all the distinct values of a field in Elasticsearch got it been there done that several times lets dive in I remember back in my early days working on a massive data ingestion project for a social media platform oh man the things we tried the sheer amount of data being pumped in was insane anyway one of the first things we realized was how crucial it was to be able to quickly and efficiently get unique values for various fields it was like trying to find a specific grain of sand on a beach but way way more complex
+ so you're asking about how to get all the distinct values of a field in Elasticsearch got it been there done that several times lets dive in I remember back in my early days working on a massive data ingestion project for a social media platform oh man the things we tried the sheer amount of data being pumped in was insane anyway one of the first things we realized was how crucial it was to be able to quickly and efficiently get unique values for various fields it was like trying to find a specific grain of sand on a beach but way way more complex
 
 So lets get this out of the way right now elasticsearch isnt a relational database you cant just fire off a `SELECT DISTINCT` query you need to think a little differently its more like a sophisticated document store where everything is essentially json at the core its all about how you index your data and how you query it later we're gonna talk aggregations its your best friend here
 
@@ -29,7 +29,7 @@ This is the simple version replace `"your_field_name"` with your actual field na
 
 **What about Size Limits**
 
-Okay so maybe you have a field with a ton of distinct values like tags for example or usernames maybe even ip addresses if you dont set the size limit it defaults to 10 and you'll miss unique values from the tail end this is a common gotcha that I have seen even myself fallen for numerous times so we need to set the size parameter explicitly in terms to be sure that it lists ALL unique values in a field.
+ so maybe you have a field with a ton of distinct values like tags for example or usernames maybe even ip addresses if you dont set the size limit it defaults to 10 and you'll miss unique values from the tail end this is a common gotcha that I have seen even myself fallen for numerous times so we need to set the size parameter explicitly in terms to be sure that it lists ALL unique values in a field.
 
 ```json
 {

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "which-tokenizer-is-suitable-for-modifying-flairdatasentence-to-handle-chinese-text"
 ---
 
-Alright, let's tackle this. I remember back in the early days of my NLP work, particularly with flair, I encountered this precise challenge – needing to adapt flair’s sentence handling to the nuances of Chinese. It's not a straightforward plug-and-play scenario, and if you're facing it now, you're on the right track to ask this. The standard flair.data.Sentence object, by default, is tailored for tokenization based on spaces, which of course, is inadequate for Chinese, where words aren’t separated by spaces.
+Alright,  I remember back in the early days of my NLP work, particularly with flair, I encountered this precise challenge – needing to adapt flair’s sentence handling to the nuances of Chinese. It's not a straightforward plug-and-play scenario, and if you're facing it now, you're on the right track to ask this. The standard flair.data.Sentence object, by default, is tailored for tokenization based on spaces, which of course, is inadequate for Chinese, where words aren’t separated by spaces.
 
 The core issue here stems from the different writing systems and their underlying principles. English, and many other languages, use spaces as word delimiters. Chinese, however, relies on character sequences, and the segmentation into words (which is what tokenization essentially does) needs a more sophisticated approach. Simply put, flair's default tokenizers are insufficient for our needs in this context, therefore, we need to leverage a tokenizer that is inherently designed to handle Chinese.
 

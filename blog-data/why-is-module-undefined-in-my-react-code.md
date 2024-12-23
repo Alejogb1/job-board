@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-module-undefined-in-my-react-code"
 ---
 
-Alright, let's tackle this. It's a familiar sting, that "module is not defined" error in React; I've seen it crop up more times than I care to remember. The reasons, while seemingly straightforward at the core, can stem from a constellation of interconnected issues, each requiring a slightly different lens for diagnosis. It's rarely a case of outright forgetting something; usually, it’s a subtle conflict in how your build process interprets and handles javascript modules.
+Alright,  It's a familiar sting, that "module is not defined" error in React; I've seen it crop up more times than I care to remember. The reasons, while seemingly straightforward at the core, can stem from a constellation of interconnected issues, each requiring a slightly different lens for diagnosis. It's rarely a case of outright forgetting something; usually, it’s a subtle conflict in how your build process interprets and handles javascript modules.
 
 The fundamental reason “module” is undefined in the browser environment is that it's typically not a global variable readily accessible, especially in the context of modern javascript module systems. Browsers, by default, do not inherently understand the `module.exports` or `export` syntax common in Node.js or other module environments. Instead, they rely on either legacy script tags or more advanced bundlers and module loaders. You're seeing this error because your code, likely written to leverage such module conventions, is being executed in a context where that module structure doesn't exist.
 

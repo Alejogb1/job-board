@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-isnt-the-google-cloud-connection-listed-in-airflow"
 ---
 
-Okay, let's dive into this. The absence of a Google Cloud connection in Airflow, while often perplexing, usually boils down to a handful of common culprits. From my experience debugging countless Airflow setups, particularly those interfacing with GCP, I've found that the root cause isn't typically an intrinsic flaw in either Airflow or the Google Cloud Platform, but rather a misconfiguration or a lack of proper environment setup. Let me break down some typical scenarios and how to address them, including some code examples that should help solidify things.
+, let's dive into this. The absence of a Google Cloud connection in Airflow, while often perplexing, usually boils down to a handful of common culprits. From my experience debugging countless Airflow setups, particularly those interfacing with GCP, I've found that the root cause isn't typically an intrinsic flaw in either Airflow or the Google Cloud Platform, but rather a misconfiguration or a lack of proper environment setup. Let me break down some typical scenarios and how to address them, including some code examples that should help solidify things.
 
 Firstly, the most frequent offender is the simple failure to properly install the necessary provider packages. Airflow employs a plug-in architecture; it doesn't natively understand every service out of the box. For GCP interactions, specifically, you need the `apache-airflow-providers-google` package. If this isn't installed in the Airflow environment – and this includes both the webserver *and* the worker nodes – then, naturally, the relevant connection types won’t appear in the UI or be usable in your DAGs.
 

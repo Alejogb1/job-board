@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-spree-commerce-failing-to-connect-to-examplecom-port-4000"
 ---
 
-Okay, let's unpack this connectivity issue with Spree and `example.com` on port 4000. I've seen this sort of thing pop up more often than I care to remember over the years, and it usually boils down to a few common culprits. Back when I was working on that e-commerce project for a national retailer, we had a similar head-scratcher trying to connect to their internal inventory API. We eventually resolved it, and I'll use that experience to structure our approach here.
+, let's unpack this connectivity issue with Spree and `example.com` on port 4000. I've seen this sort of thing pop up more often than I care to remember over the years, and it usually boils down to a few common culprits. Back when I was working on that e-commerce project for a national retailer, we had a similar head-scratcher trying to connect to their internal inventory API. We eventually resolved it, and I'll use that experience to structure our approach here.
 
 The core problem – Spree failing to connect to a service – implies a network-related issue. It's rarely, in my experience, a problem residing directly within Spree's code itself unless we're talking about very specific application logic gone awry. The connection failure you're seeing isn't isolated to Spree as it would appear as a generic connectivity issue. Let's systematically investigate some of the potential causes, and then I’ll illustrate these with working code examples.
 

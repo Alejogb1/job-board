@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-calculate-true-positive-rate-tar-at-a-false-alarm-rate-far-of-01-in-python"
 ---
 
-Alright, let's tackle this. It's a fairly common scenario when dealing with classification models, and getting that precise measure of performance, the true positive rate at a very low false alarm rate, is crucial. I've certainly been down this road a few times myself, especially working on some earlier systems involved in network intrusion detection where false positives had to be minimized to the extreme.
+Alright,  It's a fairly common scenario when dealing with classification models, and getting that precise measure of performance, the true positive rate at a very low false alarm rate, is crucial. I've certainly been down this road a few times myself, especially working on some earlier systems involved in network intrusion detection where false positives had to be minimized to the extreme.
 
 Essentially, what you’re asking for is to pinpoint the sensitivity of your model when you're operating under a highly stringent specificity constraint. It’s not just about overall accuracy; it's about how well your model identifies the positive cases when you’re particularly cautious about misclassifying the negatives. We’ll unpack this with code, focusing on the mechanics rather than diving into deep theoretical underpinnings, though I’ll point you to excellent resources at the end for that.
 

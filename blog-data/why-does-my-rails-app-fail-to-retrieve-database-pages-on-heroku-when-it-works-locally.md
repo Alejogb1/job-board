@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-my-rails-app-fail-to-retrieve-database-pages-on-heroku-when-it-works-locally"
 ---
 
-Okay, let's dive into this. The "works locally, fails on Heroku" scenario with database page retrieval is a classic head-scratcher, and I've debugged this particular issue more times than I'd care to count. It usually boils down to discrepancies between your local environment and the production environment on Heroku, but the devil is always in the details. Let me break down the common causes and offer some practical troubleshooting steps based on my experience.
+, let's dive into this. The "works locally, fails on Heroku" scenario with database page retrieval is a classic head-scratcher, and I've debugged this particular issue more times than I'd care to count. It usually boils down to discrepancies between your local environment and the production environment on Heroku, but the devil is always in the details. Let me break down the common causes and offer some practical troubleshooting steps based on my experience.
 
 One of the first things I’d always suspect is database configuration. Locally, you might be running SQLite or a simple PostgreSQL instance, but on Heroku, you’re almost certainly using the Heroku Postgres add-on. The connection details *must* match exactly, and even a seemingly minor difference in the database URL can lead to these retrieval errors. I once spent half a day chasing a typo in a `DATABASE_URL` environment variable.
 

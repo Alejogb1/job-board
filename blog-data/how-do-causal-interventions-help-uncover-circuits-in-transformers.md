@@ -4,7 +4,7 @@ date: "2024-12-11"
 id: "how-do-causal-interventions-help-uncover-circuits-in-transformers"
 ---
 
-Okay so you wanna know about causal interventions and how they help us peek under the hood of these transformer things right  Transformers are kinda like black boxes we feed them stuff and they spit out answers but understanding *why* they spit out those answers that's the hard part  That's where causal interventions come in
+ so you wanna know about causal interventions and how they help us peek under the hood of these transformer things right  Transformers are kinda like black boxes we feed them stuff and they spit out answers but understanding *why* they spit out those answers that's the hard part  That's where causal interventions come in
 
 Think of it like this imagine you're a doctor trying to figure out how the human body works you can't just observe people and expect to understand everything  You need to experiment you need to intervene  Maybe you give someone a medication and see how their blood pressure changes or you stimulate a nerve and watch their muscles twitch  That's essentially what causal interventions are all about in the world of transformers
 

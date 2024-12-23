@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-save-a-gensim-doc2vec-model-to-google-drive"
 ---
 
-Alright, let's tackle this. Saving a gensim doc2vec model to Google Drive—it’s a process I've streamlined quite a few times over the years, often finding myself tweaking the approach for different projects. I remember specifically a large-scale text analysis project, where we were processing millions of documents and retraining the model periodically. The need for reliable saving and loading to cloud storage became critical. The core challenge isn't in the gensim model itself, but rather in the interface between your local environment, gensim's model saving mechanisms, and the Google Drive api.
+Alright,  Saving a gensim doc2vec model to Google Drive—it’s a process I've streamlined quite a few times over the years, often finding myself tweaking the approach for different projects. I remember specifically a large-scale text analysis project, where we were processing millions of documents and retraining the model periodically. The need for reliable saving and loading to cloud storage became critical. The core challenge isn't in the gensim model itself, but rather in the interface between your local environment, gensim's model saving mechanisms, and the Google Drive api.
 
 The essence of the solution lies in a combination of several steps: serializing the model from gensim, temporarily storing it locally, interacting with the google drive api, and then ensuring your processes can reliably access that data later. Gensim, as you're likely aware, can save models to disk as compressed binary files, and we'll utilize that capability.
 

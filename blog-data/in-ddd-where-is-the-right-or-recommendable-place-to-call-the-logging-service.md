@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "in-ddd-where-is-the-right-or-recommendable-place-to-call-the-logging-service"
 ---
 
-Okay, let's tackle this. I've had my share of intricate domain models, and the question of where to place logging always crops up. It's a deceptively simple question, one that can significantly impact maintainability and clarity if not addressed thoughtfully within a Domain-Driven Design (DDD) context. Instead of a rigid answer, we need to consider the principles of DDD and how logging aligns with them.
+,  I've had my share of intricate domain models, and the question of where to place logging always crops up. It's a deceptively simple question, one that can significantly impact maintainability and clarity if not addressed thoughtfully within a Domain-Driven Design (DDD) context. Instead of a rigid answer, we need to consider the principles of DDD and how logging aligns with them.
 
 The core principle to remember is that our domain model should be focused purely on the business logic. It shouldn't be cluttered with infrastructure concerns like logging. The domain layer is about expressing the rules and behaviors of the problem space, not about *how* those operations are recorded or monitored. Therefore, *the domain entities and value objects themselves should generally not directly call a logging service.* This separation of concerns is paramount for testability and maintainability.
 

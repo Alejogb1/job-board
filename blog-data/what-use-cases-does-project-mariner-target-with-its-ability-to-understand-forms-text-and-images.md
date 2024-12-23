@@ -4,7 +4,7 @@ date: "2024-12-12"
 id: "what-use-cases-does-project-mariner-target-with-its-ability-to-understand-forms-text-and-images"
 ---
 
-alright so project mariner yeah that's a cool one we're talking about a system that kinda gets it all forms text images the whole shebang like a digital sponge soaking up information let's break down where that kind of capability really shines you know the juicy use cases where mariner isn't just cool tech but actually makes a difference
+so project mariner yeah that's a cool one we're talking about a system that kinda gets it all forms text images the whole shebang like a digital sponge soaking up information let's break down where that kind of capability really shines you know the juicy use cases where mariner isn't just cool tech but actually makes a difference
 
 first off think automation like the super mundane stuff no one wants to do picture this you've got mountains of invoices scattered across a desk or maybe they're lurking in some digital abyss mariner comes in and boom it extracts all the important bits amounts dates invoice numbers supplier info all that jazz it's not just grabbing text either it's understanding the context a specific date field is a date it's not just random characters it knows that specific amount field is well an amount this is a huge time saver for finance teams and accountants no more manual data entry which honestly is the bane of everyone's existence plus there's less chance of human error you can hook that info into accounting software databases everything gets updated automatically and its all clean and crisp think a robot accountant but way more chill
 

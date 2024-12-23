@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-can-i-predict-soccer-matches-from-sample-data"
 ---
 
-Okay, let's unpack the predictive modeling of soccer outcomes. It's a topic that initially seems straightforward, but the intricacies of data, model selection, and interpretation quickly reveal its complexity. I've spent quite a few late nights in the past wrestling (oops, nearly slipped into banned territory there!) with this, often starting from relatively sparse datasets and evolving toward more robust systems. It's certainly not as simple as just throwing some stats into an algorithm and expecting accurate results.
+, let's unpack the predictive modeling of soccer outcomes. It's a topic that initially seems straightforward, but the intricacies of data, model selection, and interpretation quickly reveal its complexity. I've spent quite a few late nights in the past wrestling (oops, nearly slipped into banned territory there!) with this, often starting from relatively sparse datasets and evolving toward more robust systems. It's certainly not as simple as just throwing some stats into an algorithm and expecting accurate results.
 
 The challenge with predicting soccer, or any sport for that matter, is that the outcomes aren't purely deterministic; chance and human factors play a considerable role. Our goal isn't to create an infallible oracle, but to build a probabilistic model that can assess the relative likelihood of different outcomes given available information.
 

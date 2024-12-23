@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-can-i-switch-to-a-child-frame-in-a-shadow-root-using-selenium"
 ---
 
-Okay, let's dive into this. I remember dealing with this exact issue back in my time at *InnovateTech Solutions*, when we were automating tests for a component library built with web components. Shadow doms, specifically when nested, can throw a spanner in the works for traditional Selenium locators. It's not straightforward, but it's definitely solvable.
+, let's dive into this. I remember dealing with this exact issue back in my time at *InnovateTech Solutions*, when we were automating tests for a component library built with web components. Shadow doms, specifically when nested, can throw a spanner in the works for traditional Selenium locators. It's not straightforward, but it's definitely solvable.
 
 The core issue revolves around the fact that a shadow root encapsulates its content, preventing direct access by typical selenium methods. Traditional methods like `driver.findElement(By.id("someId"))` will not penetrate the shadow boundary. Instead, we need a strategy that involves traversing the shadow dom tree step by step. Essentially, we need to access the shadow host element and then, recursively, the child elements within the shadow root.
 

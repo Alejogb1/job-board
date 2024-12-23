@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-overlay-images-with-preserved-size-and-position-in-jetpack-compose"
 ---
 
-Okay, let's tackle this one. Image overlays, particularly maintaining precise size and position in Compose, are something I've dealt with extensively, especially in mobile game UI development a few years back. We needed to render character sprites over backgrounds without constant recalculations and weird scaling. It wasn't as straightforward as it initially seemed. Let's get into the details.
+, let's tackle this one. Image overlays, particularly maintaining precise size and position in Compose, are something I've dealt with extensively, especially in mobile game UI development a few years back. We needed to render character sprites over backgrounds without constant recalculations and weird scaling. It wasn't as straightforward as it initially seemed. Let's get into the details.
 
 The core challenge isn't just about layering; it's about ensuring the overlay maintains its intended dimensions and relative positioning despite varying screen sizes or parent layout constraints. Compose offers several tools to accomplish this, but understanding how they interact is key to avoiding common pitfalls. Fundamentally, we're going to be using `Box` to stack elements, and leveraging modifiers like `offset`, `size`, and potentially `layout` modifiers for more control. However, `Modifier.size` alone might not always give us the pixel-perfect control we need, especially when dealing with different device densities. So, let's break it down.
 

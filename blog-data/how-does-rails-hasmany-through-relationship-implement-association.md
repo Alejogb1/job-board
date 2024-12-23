@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-does-rails-hasmany-through-relationship-implement-association"
 ---
 
-Okay, let's tackle this. It's a topic I've spent a fair bit of time navigating, both in greenfield projects and while untangling some rather complex legacy codebases. When we talk about `has_many :through` in Rails, we're really delving into a powerful mechanism for managing many-to-many relationships through an intermediary join table, and it's far from a simple shortcut. It's a fundamental component of relational database design, meticulously abstracted within the Active Record framework.
+,  It's a topic I've spent a fair bit of time navigating, both in greenfield projects and while untangling some rather complex legacy codebases. When we talk about `has_many :through` in Rails, we're really delving into a powerful mechanism for managing many-to-many relationships through an intermediary join table, and it's far from a simple shortcut. It's a fundamental component of relational database design, meticulously abstracted within the Active Record framework.
 
 Essentially, `has_many :through` establishes a connection between two models, but not directly. Instead, it introduces a third, usually simpler, model to act as a bridge. This intermediary model contains foreign keys referencing both of the primary models, thus forming the join table. This avoids data redundancy and helps to normalize database structure, a best practice I've always stressed with my teams. It provides a way of associating records where multiple instances of one model can link to multiple instances of another.
 

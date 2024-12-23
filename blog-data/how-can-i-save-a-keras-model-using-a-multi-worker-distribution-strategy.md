@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-save-a-keras-model-using-a-multi-worker-distribution-strategy"
 ---
 
-Let's tackle this. Saving a Keras model when employing a multi-worker distribution strategy introduces nuances that aren't present in single-worker setups. I’ve certainly seen my fair share of headaches in similar situations, particularly when we scaled up our image recognition model several years ago. We weren’t using Keras back then – it was a custom TensorFlow setup – but the core issues regarding distributed saving still apply.
+ Saving a Keras model when employing a multi-worker distribution strategy introduces nuances that aren't present in single-worker setups. I’ve certainly seen my fair share of headaches in similar situations, particularly when we scaled up our image recognition model several years ago. We weren’t using Keras back then – it was a custom TensorFlow setup – but the core issues regarding distributed saving still apply.
 
 The primary challenge arises from the fact that in a multi-worker setup, the model weights are typically being updated simultaneously across different devices or machines. This means that a simple, single call to `model.save()` on one worker might not capture the complete, up-to-date state of the model. Trying to use the saved model then results in incomplete or, worse, corrupted models. It's crucial to understand how Keras handles distributed training and how we need to accommodate the peculiarities that arise.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-a-valueerror-after-changing-the-number-of-classes-in-keras"
 ---
 
-Okay, so encountering a `ValueError` after modifying the class count in a Keras model is a fairly common issue, and I've definitely spent some time debugging these in past projects. It usually boils down to a mismatch between the model's expected output shape and the actual output shape you're providing. Let's unpack this systematically, looking at the typical culprits and how to address them.
+, so encountering a `ValueError` after modifying the class count in a Keras model is a fairly common issue, and I've definitely spent some time debugging these in past projects. It usually boils down to a mismatch between the model's expected output shape and the actual output shape you're providing. Let's unpack this systematically, looking at the typical culprits and how to address them.
 
 First, remember that Keras models, especially those built for classification, are highly sensitive to the dimensions of the data they're processing, and the very last layer (usually a dense layer with softmax or sigmoid activation) directly corresponds to the number of classes in your problem. When you adjust the number of classes, you're essentially changing the fundamental architecture of that final layer and how it interacts with both your loss function and evaluation metrics. Here's the typical breakdown of the problem:
 

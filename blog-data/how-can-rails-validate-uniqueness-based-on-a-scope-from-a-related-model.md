@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-rails-validate-uniqueness-based-on-a-scope-from-a-related-model"
 ---
 
-Okay, let's tackle this. It's a common scenario, and I remember having to debug a particularly thorny instance of this issue back at *AcmeCorp* a few years ago. We had a complex user hierarchy, and ensuring uniqueness across a specific subset of users related to another table proved… challenging, to say the least. What we're talking about here isn't just standard uniqueness; it's uniqueness within a specific context defined by a related model, often called a *scoped uniqueness*.
+,  It's a common scenario, and I remember having to debug a particularly thorny instance of this issue back at *AcmeCorp* a few years ago. We had a complex user hierarchy, and ensuring uniqueness across a specific subset of users related to another table proved… challenging, to say the least. What we're talking about here isn't just standard uniqueness; it's uniqueness within a specific context defined by a related model, often called a *scoped uniqueness*.
 
 To be clear, standard uniqueness validation in rails, achieved with `validates :attribute_name, uniqueness: true`, only guarantees uniqueness within the scope of the table itself. We need to go further to encompass a scope derived from another model's associations.
 
@@ -28,7 +28,7 @@ In this basic setup, the `scope: :team_id` tells rails to ensure `name` is uniqu
 
 **Example 2: Using a Method to Derive the Scope**
 
-Okay, things get more interesting when your 'scope' isn't directly a foreign key. Imagine we have `User` and `Group` models. A user can belong to multiple groups through a join table called `Membership`. Let's say, we want to ensure that a user has at most one ‘admin’ type of membership per group. Let’s model the `Membership` model:
+, things get more interesting when your 'scope' isn't directly a foreign key. Imagine we have `User` and `Group` models. A user can belong to multiple groups through a join table called `Membership`. Let's say, we want to ensure that a user has at most one ‘admin’ type of membership per group. Let’s model the `Membership` model:
 
 ```ruby
 class Membership < ApplicationRecord

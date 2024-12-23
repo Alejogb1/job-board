@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-use-an-azureml-pipeline-to-directly-pass-the-input-dataset-to-a-command-step"
 ---
 
-Okay, let's tackle this. I've spent quite a bit of time working with Azure Machine Learning pipelines, and passing datasets directly into command steps – without going through intermediate steps that create materialised files—is definitely a common challenge. There are multiple ways to achieve this, some more elegant than others, and it depends quite heavily on the specific requirements of your workflow.
+,  I've spent quite a bit of time working with Azure Machine Learning pipelines, and passing datasets directly into command steps – without going through intermediate steps that create materialised files—is definitely a common challenge. There are multiple ways to achieve this, some more elegant than others, and it depends quite heavily on the specific requirements of your workflow.
 
 Firstly, let's clarify what we’re trying to do. We want to take a registered Azureml dataset and have that data available directly as input to a script that is executed within a command step in an Azureml pipeline. The critical point here is "directly." We want to avoid unnecessary writes of the dataset to persistent storage (like a datastore) before the command step runs. That write operation can introduce significant delays, especially for large datasets. It's also less efficient if the next step expects the data in memory.
 

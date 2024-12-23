@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-text-be-vectorized-using-tensors-with-multiple-label-columns"
 ---
 
-Okay, let’s tackle this. Thinking back, I recall working on a complex sentiment analysis project a few years ago. We weren't dealing with simple single-label classifications; we had a dataset with various nuanced sentiment dimensions – like ‘joy,’ ‘anger,’ ‘sadness,’ and ‘surprise,’ all present to varying degrees in a single text snippet. It quickly became apparent that treating these as independent binary labels was inadequate. We needed a more nuanced approach, and that involved effective text vectorization when paired with multi-label targets.
+, let’s tackle this. Thinking back, I recall working on a complex sentiment analysis project a few years ago. We weren't dealing with simple single-label classifications; we had a dataset with various nuanced sentiment dimensions – like ‘joy,’ ‘anger,’ ‘sadness,’ and ‘surprise,’ all present to varying degrees in a single text snippet. It quickly became apparent that treating these as independent binary labels was inadequate. We needed a more nuanced approach, and that involved effective text vectorization when paired with multi-label targets.
 
 The challenge lies in representing text data numerically in a way that's amenable to machine learning models when dealing with multiple labels. When you have multiple columns of labels, the vectorization process must consider not only the text itself but also how it relates to *all* labels simultaneously. The conventional approach of converting each text into a fixed-length vector, like what TF-IDF or basic word embeddings do, is just the initial step. You need that vector to be suitable to train or infer multiple columns at the same time.
 

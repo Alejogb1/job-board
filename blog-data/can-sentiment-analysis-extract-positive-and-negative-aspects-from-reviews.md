@@ -36,7 +36,7 @@ sentiment_scores = analyze_sentiment(review_text)
 print(f"Sentiment Scores: {sentiment_scores}")
 # Expected Output:  {'neg': 0.0, 'neu': 0.357, 'pos': 0.643, 'compound': 0.802}
 
-review_text_negative = "The screen is terrible, but the battery is okay"
+review_text_negative = "The screen is terrible, but the battery is "
 sentiment_scores_negative = analyze_sentiment(review_text_negative)
 print(f"Sentiment Scores: {sentiment_scores_negative}")
 # Expected Output: {'neg': 0.465, 'neu': 0.535, 'pos': 0.0, 'compound': -0.6249}

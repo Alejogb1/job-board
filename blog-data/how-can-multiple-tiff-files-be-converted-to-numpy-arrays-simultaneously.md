@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-multiple-tiff-files-be-converted-to-numpy-arrays-simultaneously"
 ---
 
-Okay, let's tackle this. Handling multi-tiff conversions to NumPy arrays is something I've encountered a fair few times, particularly when dealing with large microscopy datasets or satellite imagery. It's often not just about getting it done, but doing it efficiently. Naive approaches can really bog things down, especially if you're working with gigabytes worth of images. So, let's delve into how we can convert multiple tiff files to NumPy arrays concurrently.
+,  Handling multi-tiff conversions to NumPy arrays is something I've encountered a fair few times, particularly when dealing with large microscopy datasets or satellite imagery. It's often not just about getting it done, but doing it efficiently. Naive approaches can really bog things down, especially if you're working with gigabytes worth of images. So, let's delve into how we can convert multiple tiff files to NumPy arrays concurrently.
 
 The core issue boils down to i/o operations and processor utilization. Reading from disk and converting the data format are both relatively slow processes, and doing this sequentially for numerous files isn't ideal. We need to leverage parallelism to speed things up significantly. Python's multiprocessing library, along with a suitable image handling library, provides the tools we need. I've found that `tifffile` combined with `multiprocessing.Pool` to be particularly robust.
 

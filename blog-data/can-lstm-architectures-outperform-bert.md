@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-lstm-architectures-outperform-bert"
 ---
 
-Okay, let's talk about long short-term memory (LSTM) networks versus bidirectional encoder representations from transformers (BERT). It's a question that frequently resurfaces, and my experience, especially back in the days before transformers truly dominated the natural language processing (NLP) landscape, gives me some perspective. I’ve spent considerable time implementing and fine-tuning both architectures for various sequence-related tasks.
+, let's talk about long short-term memory (LSTM) networks versus bidirectional encoder representations from transformers (BERT). It's a question that frequently resurfaces, and my experience, especially back in the days before transformers truly dominated the natural language processing (NLP) landscape, gives me some perspective. I’ve spent considerable time implementing and fine-tuning both architectures for various sequence-related tasks.
 
 The short answer? It's nuanced. There's no blanket 'winner'. LSTMs were, for a long time, the go-to for sequential data. They elegantly handled vanishing gradients in recurrent neural networks (RNNs) and could learn long-range dependencies, albeit imperfectly. But then came transformers, and BERT in particular, which tackled sequential processing with a totally different paradigm, using attention mechanisms that allow parallel computation and generally better capturing of context. So, directly comparing raw performance on a specific task is where the details matter.
 

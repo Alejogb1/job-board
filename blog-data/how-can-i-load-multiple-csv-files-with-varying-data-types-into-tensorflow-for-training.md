@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-load-multiple-csv-files-with-varying-data-types-into-tensorflow-for-training"
 ---
 
-Alright, let's tackle this. I've had my share of encounters with varied csv datasets over the years, and trust me, it’s a common headache. Getting all that heterogeneous data into a format TensorFlow can digest, especially for training, requires some careful handling. It’s not as straightforward as a simple load command. The trick lies in understanding both TensorFlow's data pipeline and the nuances of your specific data. Let me walk you through the process.
+Alright,  I've had my share of encounters with varied csv datasets over the years, and trust me, it’s a common headache. Getting all that heterogeneous data into a format TensorFlow can digest, especially for training, requires some careful handling. It’s not as straightforward as a simple load command. The trick lies in understanding both TensorFlow's data pipeline and the nuances of your specific data. Let me walk you through the process.
 
 The core challenge, as you've probably figured out, is that csv files don't usually come neatly packaged with information about data types. You might have integers in one column, floats in another, strings mixed with timestamps, maybe some categorical values, and so on. TensorFlow, on the other hand, expects tensors with well-defined data types. So, we need a mechanism to interpret, parse, and transform those diverse formats into something it can work with.
 

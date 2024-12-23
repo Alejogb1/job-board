@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-heroku-slugs-be-minified-during-build-using-terser"
 ---
 
-Okay, let's dive into this. I’ve certainly seen my fair share of Heroku deployments and, trust me, slug size can become a real issue as projects scale. We’re aiming to reduce the slug footprint using Terser, and it’s more than feasible – it’s often essential. We need to go beyond just thinking about the individual files; we have to consider the entire pipeline.
+, let's dive into this. I’ve certainly seen my fair share of Heroku deployments and, trust me, slug size can become a real issue as projects scale. We’re aiming to reduce the slug footprint using Terser, and it’s more than feasible – it’s often essential. We need to go beyond just thinking about the individual files; we have to consider the entire pipeline.
 
 My experience with this dates back to a particularly hefty project – a complex web application that grew organically over a few years. We started noticing increasingly sluggish deployment times on Heroku, and the post-deployment “boot up” took longer as well. That’s when I realized the slug had ballooned. We were shipping a massive number of megabytes with each release, much of it unnecessary whitespace, comments, and verbose variable names in our javascript. That was the push we needed to aggressively minify our code.
 

@@ -4,7 +4,7 @@ date: "2024-12-12"
 id: "how-does-gemini-20-flash-compare-to-competitors-like-claude-35-in-coding-and-reasoning-tasks"
 ---
 
-Okay so Gemini 2.0 Flash versus Claude 3.5 for coding and reasoning yeah that's a juicy one lets dig in
+ so Gemini 2.0 Flash versus Claude 3.5 for coding and reasoning yeah that's a juicy one lets dig in
 
 It feels like we're in the Wild West of LLMs right now every week a new model drops claiming to be faster smarter better but separating the marketing hype from actual performance is tricky as heck Especially with coding it's easy to fall for benchmarks that don't reflect real world challenges I mean yeah you can throw a simple FizzBuzz at them and they'll both nail it but what about when you're debugging a complex async data pipeline or trying to wrangle legacy code
 

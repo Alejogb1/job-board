@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-3d-secure-payments-be-processed-in-a-braintree-c-sandbox-environment"
 ---
 
-Alright, let's tackle this. Instead of jumping straight into a yes or no, let's explore the nuances of 3D Secure in a Braintree sandbox context, specifically within C#. I've been there, done that, and have the scars (mostly from late nights debugging) to show for it. It's not quite as straightforward as just flipping a switch, but it’s absolutely achievable.
+Alright,  Instead of jumping straight into a yes or no, let's explore the nuances of 3D Secure in a Braintree sandbox context, specifically within C#. I've been there, done that, and have the scars (mostly from late nights debugging) to show for it. It's not quite as straightforward as just flipping a switch, but it’s absolutely achievable.
 
 The short answer is yes, you *can* process 3D Secure payments in a Braintree C# sandbox environment. However, it's crucial to understand that the sandbox is designed to simulate the real world. This means that the 3D Secure flows will also be simulated, and you won't be connecting to actual card issuer systems. This distinction is essential.
 

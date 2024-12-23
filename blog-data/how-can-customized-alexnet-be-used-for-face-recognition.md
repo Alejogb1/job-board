@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-customized-alexnet-be-used-for-face-recognition"
 ---
 
-Okay, let's tackle this. It's a topic I've spent a fair amount of time with, particularly back when I was working on a biometric authentication system for a secure access project a few years ago. We started with AlexNet as a base because of its proven architecture, and modified it to suit our specific needs. Face recognition, of course, isn't a one-size-fits-all problem, so you absolutely have to adapt these models. Let’s break down how that's done, and why.
+,  It's a topic I've spent a fair amount of time with, particularly back when I was working on a biometric authentication system for a secure access project a few years ago. We started with AlexNet as a base because of its proven architecture, and modified it to suit our specific needs. Face recognition, of course, isn't a one-size-fits-all problem, so you absolutely have to adapt these models. Let’s break down how that's done, and why.
 
 The core idea here is that AlexNet, as a pre-trained convolutional neural network (CNN), provides a fantastic feature extraction backbone. What AlexNet is originally trained on (typically ImageNet) isn’t face data, of course. It's adept at recognizing various generic objects – cats, dogs, cars – the usual suspects. These learned features are surprisingly effective for a broad range of computer vision tasks, face recognition included. Think of it like this: it's good at picking out edges, textures, and shapes – things that are fundamentally useful when identifying any object.
 

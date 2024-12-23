@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-padmask-cnn-labels-in-keras"
 ---
 
-Okay, let's talk label padding within the context of convolutional neural networks in keras, or more precisely, tensorflow. This is an area I've personally encountered quite a few times, especially when dealing with sequence data or image processing tasks where output lengths vary. It's less about "masking" in the traditional sense, like masking pixels in an image, and more about aligning your ground truth labels with model outputs, particularly when dealing with variable-length sequences which are quite common.
+, let's talk label padding within the context of convolutional neural networks in keras, or more precisely, tensorflow. This is an area I've personally encountered quite a few times, especially when dealing with sequence data or image processing tasks where output lengths vary. It's less about "masking" in the traditional sense, like masking pixels in an image, and more about aligning your ground truth labels with model outputs, particularly when dealing with variable-length sequences which are quite common.
 
 Instead of jumping straight to code, let's ground this in a scenario. Imagine we're working with a system that transcribes handwritten words. These words, naturally, will have varying lengths of characters, and thus, variable output lengths. Our convolutional network, after some intermediate processing, will likely produce a sequence of outputs – one for each "time step" or spatial position along the input. We need to align these model predictions with their corresponding ground truth labels – the actual characters in the handwritten word. This alignment is where padding comes in.
 

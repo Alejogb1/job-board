@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-deploy-a-net-core-docker-application-to-azure-app-service-integrating-with-mysql-and-enabling-bulk-data-uploads"
 ---
 
-Alright, let's tackle this. I've spent my fair share of time orchestrating .net core applications in azure, so I've seen a few things when it comes to integrating with mysql and managing large data ingestion processes. We're diving into a fairly common scenario, but there are definitely nuances to consider, especially when optimizing for performance and reliability.
+Alright,  I've spent my fair share of time orchestrating .net core applications in azure, so I've seen a few things when it comes to integrating with mysql and managing large data ingestion processes. We're diving into a fairly common scenario, but there are definitely nuances to consider, especially when optimizing for performance and reliability.
 
 Initially, when dealing with a similar setup a few years back, we had a particularly thorny issue with upload timeouts and database connection exhaustion, which I'll touch upon later. But, first, let's lay the groundwork for a successful deployment.
 

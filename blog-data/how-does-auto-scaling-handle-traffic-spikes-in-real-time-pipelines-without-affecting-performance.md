@@ -4,7 +4,7 @@ date: "2024-12-10"
 id: "how-does-auto-scaling-handle-traffic-spikes-in-real-time-pipelines-without-affecting-performance"
 ---
 
-Okay so you wanna know how autoscaling handles traffic spikes in real-time pipelines without totally tanking performance right  That's a big question its a seriously complex area but I can break it down for you in a way that hopefully makes sense
+ so you wanna know how autoscaling handles traffic spikes in real-time pipelines without totally tanking performance right  That's a big question its a seriously complex area but I can break it down for you in a way that hopefully makes sense
 
 Think of it like this imagine you're running a pizza shop  On a normal day you've got a couple of chefs a few servers everything's chill  Suddenly the Super Bowl ends and everyone wants pizza BAM huge traffic spike  If you dont have enough chefs and servers you're screwed  People are gonna wait forever pizzas are gonna get cold your reputation's toast
 

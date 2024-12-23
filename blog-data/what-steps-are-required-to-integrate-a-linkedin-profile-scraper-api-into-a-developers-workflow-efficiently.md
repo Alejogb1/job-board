@@ -4,7 +4,7 @@ date: "2024-12-10"
 id: "what-steps-are-required-to-integrate-a-linkedin-profile-scraper-api-into-a-developers-workflow-efficiently"
 ---
 
-Okay so you wanna scrape LinkedIn profiles right thats cool  lots of people do it for recruiting or market research or whatever  the thing is LinkedIn is kinda cagey about this  they dont exactly *want* you scraping their site  so you gotta be sneaky but also ethical  you dont want to get your IP banned or something
+ so you wanna scrape LinkedIn profiles right thats cool  lots of people do it for recruiting or market research or whatever  the thing is LinkedIn is kinda cagey about this  they dont exactly *want* you scraping their site  so you gotta be sneaky but also ethical  you dont want to get your IP banned or something
 
 First things first forget about some magical "LinkedIn profile scraper API"  LinkedIn doesnt offer one officially  any API you find claiming to do this is probably shady at best or a total scam at worst  they're usually wrappers around some web scraping technique anyway  so you're gonna be doing some actual coding
 

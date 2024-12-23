@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "assembly-parameters-passing-procedure"
 ---
 
-Okay so you're asking about assembly parameter passing right Been there done that got the t-shirt and probably a few extra grey hairs Let me lay it all out for you like I usually do on stack overflow after banging my head against the wall for hours.
+ so you're asking about assembly parameter passing right Been there done that got the t-shirt and probably a few extra grey hairs Let me lay it all out for you like I usually do on stack overflow after banging my head against the wall for hours.
 
 First off assembly is not like your high-level languages where you just casually throw parameters into a function call and it all magically works No sirree bob. In assembly you are down in the trenches dealing with registers memory locations and the raw instruction set architecture of the processor itself Its beautiful chaos if you know what I mean.
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "recharts-cartesian-grid-different-style-for-vertical-and-horizontal-lines"
 ---
 
-Alright so you're trying to get recharts cartesian grid to behave right like different styles for vertical and horizontal lines I've been there man believe me this one's a classic pain point I remember way back when I first started tinkering with data viz and yeah recharts was a go-to for me it looked clean and simple which is always a trap you know
+so you're trying to get recharts cartesian grid to behave right like different styles for vertical and horizontal lines I've been there man believe me this one's a classic pain point I remember way back when I first started tinkering with data viz and yeah recharts was a go-to for me it looked clean and simple which is always a trap you know
 
 So the default grid in recharts right it's all one style all lines the same color width dash whatever and you're sitting there like no no I want the x-axis lines one way and y-axis lines another way and the thing is recharts doesn't give you a direct prop to split them up like that its approach is more like build your own damn it you know but thankfully not too hard let's walk through it
 

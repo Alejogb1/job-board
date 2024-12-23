@@ -4,7 +4,7 @@ date: "2024-12-12"
 id: "cmo-pueden-las-instituciones-educativas-aprovechar-zelmira-para-transformar-sus-mtodos-de-enseanza"
 ---
 
-Okay so institutions leveraging Zelmira to shake up teaching is interesting lets break it down into bits how this could actually happen
+ so institutions leveraging Zelmira to shake up teaching is interesting lets break it down into bits how this could actually happen
 
 First off we need to think about what Zelmira actually *is* It’s not just one thing its more of a flexible platform right a collection of tools APIs and maybe some pre-built components that let you do a bunch of stuff specifically stuff that leans into personalized learning so its not like flipping a switch more like strategically building new processes
 
@@ -30,7 +30,7 @@ Zelmira will have APIs that integrate with existing learning management systems 
 
 **Code snippets as examples**
 
-Okay so for examples of how this might look in code here are a few snippets this is a simple Python example of how you could use data to adjust difficulty
+ so for examples of how this might look in code here are a few snippets this is a simple Python example of how you could use data to adjust difficulty
 
 ```python
 def adjust_difficulty(student_performance):

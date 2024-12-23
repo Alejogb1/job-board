@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-does-null-false-mean-in-graphql-mutations-for-rails"
 ---
 
-Okay, let's tackle this one. It’s a question that often surfaces, especially when you're moving beyond the basics of GraphQL with Rails. I've encountered this scenario multiple times, notably during a project where we were building a complex data management API for a large e-commerce platform. The interplay of `null` and `false` in GraphQL mutations can be a bit nuanced, and it's crucial to understand their distinct effects to avoid unintended consequences in your data layer. Let me break it down.
+, let's tackle this one. It’s a question that often surfaces, especially when you're moving beyond the basics of GraphQL with Rails. I've encountered this scenario multiple times, notably during a project where we were building a complex data management API for a large e-commerce platform. The interplay of `null` and `false` in GraphQL mutations can be a bit nuanced, and it's crucial to understand their distinct effects to avoid unintended consequences in your data layer. Let me break it down.
 
 Fundamentally, in the context of a GraphQL mutation within a Rails application, `null` and `false` have specific meanings when you are dealing with input types. While both represent a lack of value or a negative boolean outcome, they are treated quite differently by the GraphQL engine and your ActiveRecord models. Let's consider their specific impacts.
 

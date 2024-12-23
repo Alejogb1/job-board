@@ -4,7 +4,7 @@ date: "2024-12-10"
 id: "how-does-a-python-based-real-time-feature-platform-enable-ml-feature-creation-without-frameworks-like-spark-or-flink"
 ---
 
-Okay so you wanna build a real-time ML feature platform in Python without the usual heavy hitters like Spark or Flink  right cool idea  I've been messing around with this myself lately its pretty fun  The basic idea is to leverage Python's strengths for rapid prototyping and flexibility and then optimize for performance where needed  Forget those massive distributed systems for now  Let's get practical
+ so you wanna build a real-time ML feature platform in Python without the usual heavy hitters like Spark or Flink  right cool idea  I've been messing around with this myself lately its pretty fun  The basic idea is to leverage Python's strengths for rapid prototyping and flexibility and then optimize for performance where needed  Forget those massive distributed systems for now  Let's get practical
 
 The key is realizing that "real-time" doesn't always mean *ultra* low latency like millisecond processing for every single data point  For many applications near real-time is good enough meaning a few seconds or even minutes of delay is acceptable  This significantly simplifies things
 

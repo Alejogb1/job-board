@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "how-does-online-rl-differ-from-traditional-reinforcement-learning-in-model-training-and-optimization"
 ---
 
-Okay so you wanna know about online RL versus traditional RL right  like the big differences  It's a pretty cool area lots to unpack  The main thing is the *when* of learning  Traditional RL usually trains on a dataset you already have  like a giant pile of game playthroughs or robot arm movements  You process it all at once then bam you get your model  Think of it like studying for a test after you've seen the entire test already  you got all the answers its just about memorizing them
+ so you wanna know about online RL versus traditional RL right  like the big differences  It's a pretty cool area lots to unpack  The main thing is the *when* of learning  Traditional RL usually trains on a dataset you already have  like a giant pile of game playthroughs or robot arm movements  You process it all at once then bam you get your model  Think of it like studying for a test after you've seen the entire test already  you got all the answers its just about memorizing them
 
 Online RL is way different  It's learning *while* it's doing stuff  It's like learning to ride a bike  you fall down you adjust you keep going without ever having seen a perfect ride beforehand  The model gets new data and updates itself constantly in real-time  it's super interactive  This constant adaptation is key
 

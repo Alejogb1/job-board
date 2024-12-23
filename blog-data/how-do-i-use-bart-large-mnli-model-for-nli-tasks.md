@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-use-bart-large-mnli-model-for-nli-tasks"
 ---
 
-Okay, let’s tackle this. I’ve spent a fair amount of time working with natural language inference (nli) models, and `bart-large-mnli` from hugging face transformers is indeed a powerful one. It's a good choice, particularly when you need a model that has already been pre-trained on a large corpus for multiple natural language inference scenarios, making it surprisingly versatile out of the box.
+, let’s tackle this. I’ve spent a fair amount of time working with natural language inference (nli) models, and `bart-large-mnli` from hugging face transformers is indeed a powerful one. It's a good choice, particularly when you need a model that has already been pre-trained on a large corpus for multiple natural language inference scenarios, making it surprisingly versatile out of the box.
 
 My approach tends to be less about theoretical perfection and more about getting things working efficiently, which usually means understanding the nuances of the architecture and how to correctly interface with it. I recall a specific project a few years back, working on a text-based chatbot for a client who needed it to understand subtle differences in user intent. We started with a simpler model, but the performance wasn't there. Switching to something `bart-large-mnli` offered significantly improved results and really reduced the amount of fine-tuning we ended up doing.
 

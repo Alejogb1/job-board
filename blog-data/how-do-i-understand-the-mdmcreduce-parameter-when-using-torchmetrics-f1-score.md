@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-understand-the-mdmcreduce-parameter-when-using-torchmetrics-f1-score"
 ---
 
-Alright, let's tackle this. I remember a project a few years back involving a particularly complex multi-label classification problem. I was banging my head against the wall trying to get the f1 score to behave as expected, and it turned out the `mdmc_reduce` parameter in torchmetrics' `F1Score` was the culprit—or rather, my lack of understanding of it. It's a crucial detail, especially when working with multi-dimensional data, so let's break it down in a way that hopefully makes sense.
+Alright,  I remember a project a few years back involving a particularly complex multi-label classification problem. I was banging my head against the wall trying to get the f1 score to behave as expected, and it turned out the `mdmc_reduce` parameter in torchmetrics' `F1Score` was the culprit—or rather, my lack of understanding of it. It's a crucial detail, especially when working with multi-dimensional data, so let's break it down in a way that hopefully makes sense.
 
 The `mdmc_reduce` parameter, short for "multi-dimensional multi-class reduce," determines how the f1 score is computed when you have a situation where each sample can belong to multiple classes simultaneously (multi-label) and possibly across different dimensions (multi-dimensional). Think of it like this: you're not just classifying an image as either a cat or a dog; you could be classifying parts of an image (regions) and each of those regions can have multiple tags. This introduces complexity that the standard binary or even simple multi-class f1 scores can’t adequately address.
 

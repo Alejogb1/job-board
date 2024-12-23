@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-my-perceptron-algorithm-not-converge-correctly"
 ---
 
-Okay, let's tackle this. I've seen this issue surface more times than I care to count, often during the early explorations of machine learning, and it's almost always rooted in subtle, yet impactful, misunderstandings of how the perceptron really operates. The non-convergence of your perceptron algorithm, it’s not some mystical black box failure, it's typically a manifestation of one or more specific underlying problems. Let's unpack a few of those.
+,  I've seen this issue surface more times than I care to count, often during the early explorations of machine learning, and it's almost always rooted in subtle, yet impactful, misunderstandings of how the perceptron really operates. The non-convergence of your perceptron algorithm, it’s not some mystical black box failure, it's typically a manifestation of one or more specific underlying problems. Let's unpack a few of those.
 
 From my experience building image classification systems back in the early 2010s, we used perceptrons as a baseline model before moving to more sophisticated networks. I recall a particularly frustrating instance where a simple binary classifier stubbornly refused to settle, and debugging it led to a deeper appreciation for the nuances of this seemingly straightforward algorithm. I'm willing to bet that at least one of my observations will echo your experience.
 

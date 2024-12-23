@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "failed-to-find-conversion-function-from-unknown-to-text"
 ---
 
-Okay so you're hitting the "failed to find conversion function from unknown to text" classic right Been there done that got the t-shirt and a few gray hairs to prove it This one pops up more than you'd think especially when you're dealing with data coming from different places or systems that weren't exactly designed to play nice with each other
+ so you're hitting the "failed to find conversion function from unknown to text" classic right Been there done that got the t-shirt and a few gray hairs to prove it This one pops up more than you'd think especially when you're dealing with data coming from different places or systems that weren't exactly designed to play nice with each other
 
 Let's break this down from my perspective a veteran of many late nights debugging this exact thing I've probably wrestled with this in more languages than I care to admit so I feel your pain
 

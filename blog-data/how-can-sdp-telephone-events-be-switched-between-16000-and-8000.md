@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-sdp-telephone-events-be-switched-between-16000-and-8000"
 ---
 
-Alright, let's tackle this. Switching SDP (Session Description Protocol) telephone events between 16000 Hz and 8000 Hz sampling rates is something I've dealt with more than once, and it’s not always as straightforward as flipping a switch. The core challenge lies in ensuring that both the audio data itself and the associated SDP signaling are correctly modified to maintain call quality and compatibility. This involves adjusting the media format information within the SDP payload and potentially resampling the actual audio stream if it's being generated dynamically.
+Alright,  Switching SDP (Session Description Protocol) telephone events between 16000 Hz and 8000 Hz sampling rates is something I've dealt with more than once, and it’s not always as straightforward as flipping a switch. The core challenge lies in ensuring that both the audio data itself and the associated SDP signaling are correctly modified to maintain call quality and compatibility. This involves adjusting the media format information within the SDP payload and potentially resampling the actual audio stream if it's being generated dynamically.
 
 To begin, let's unpack what we're actually manipulating. SDP, as defined in RFC 4566, describes multimedia sessions, including audio. A crucial part of the SDP is the ‘m’ line, which specifies the media type (audio), transport port, and a list of *RTP payload types*. For telephone events, often termed *DTMF tones* or *in-band signaling*, we typically see these events being carried as RTP payload types associated with specific encoding parameters. The sampling rate is a fundamental parameter in these encoding definitions.
 

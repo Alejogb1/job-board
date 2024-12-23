@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "r-diag-function-matrix"
 ---
 
-Okay I see the question its about the `diag` function in R and how it interacts with matrices Been there done that a million times it always catches people out especially when they are coming from other languages
+ I see the question its about the `diag` function in R and how it interacts with matrices Been there done that a million times it always catches people out especially when they are coming from other languages
 
 So look its really straightforward but let's break it down and I will try to make it as foolproof as possible I've spent hours debugging this exact thing and trust me I get your pain First thing first lets get this out of the way the `diag` function is versatile but not super intuitive right off the bat
 

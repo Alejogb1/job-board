@@ -4,7 +4,7 @@ date: "2024-12-12"
 id: "what-advancements-have-been-made-in-gemini-20-flashs-text-to-speech-and-image-generation-capabilities"
 ---
 
-Okay cool lets dive into Gemini 2.0 Flash and its recent updates specifically on text to speech and image generation its like they've been hitting the gym non stop and honestly its kind of mind blowing
+ cool lets dive into Gemini 2.0 Flash and its recent updates specifically on text to speech and image generation its like they've been hitting the gym non stop and honestly its kind of mind blowing
 
 So Gemini 2.0 Flash you know is Googles latest attempt at a seriously optimized AI model Its designed to be fast really fast and resource efficient while still packing a punch this means they're aiming for something that can be deployed on smaller devices more real time stuff which is a huge deal especially when you start thinking about edge computing mobile and embedded systems It's not just about raw power but about making AI more accessible and immediate
 

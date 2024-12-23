@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-extract-transition-and-emission-scores-from-a-flair-sequence-taggers-crf-layer"
 ---
 
-Okay, let's talk about accessing those hidden CRF parameters within a flair sequence tagger. It's not always straightforward, but definitely achievable, and I've been in the weeds with this particular issue myself, more times than I'd like to recall. Several projects required me to not only use flair for sequence tagging but also to understand the inner workings of the conditional random field (crf) layer for advanced analysis and, let's be honest, some debugging.
+, let's talk about accessing those hidden CRF parameters within a flair sequence tagger. It's not always straightforward, but definitely achievable, and I've been in the weeds with this particular issue myself, more times than I'd like to recall. Several projects required me to not only use flair for sequence tagging but also to understand the inner workings of the conditional random field (crf) layer for advanced analysis and, let's be honest, some debugging.
 
 The challenge essentially boils down to the fact that the `flair` library, while providing a high-level api, doesn't directly expose the crf parameters as public attributes. So, instead of attempting to 'pull them out,' we'll need to access the internals of the model and its components. This isn’t usually something you'd encounter day to day when using the model, but once you move to a deeper understanding, it becomes quite necessary.
 

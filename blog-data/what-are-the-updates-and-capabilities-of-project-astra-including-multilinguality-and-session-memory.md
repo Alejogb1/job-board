@@ -4,9 +4,9 @@ date: "2024-12-12"
 id: "what-are-the-updates-and-capabilities-of-project-astra-including-multilinguality-and-session-memory"
 ---
 
-okay so project astra right it's kinda wild where they're going with this whole thing it feels like a leap not just an upgrade you know like from my pov as someone who messes with code all day it's not just about adding more features its about changing how we even interact with devices and information entirely
+ so project astra right it's kinda wild where they're going with this whole thing it feels like a leap not just an upgrade you know like from my pov as someone who messes with code all day it's not just about adding more features its about changing how we even interact with devices and information entirely
 
-forget those clunky interfaces we've been stuck with astra's core idea seems to be all about natural interaction think like having a conversation not issuing commands yeah okay okay that's a common trope in tech demos but the underlying tech is where things get interesting
+forget those clunky interfaces we've been stuck with astra's core idea seems to be all about natural interaction think like having a conversation not issuing commands yeah   that's a common trope in tech demos but the underlying tech is where things get interesting
 
 first up multilinguality they're not just adding basic translation support they want astra to actually understand and process language nuances across different cultures and dialects and not in that robotic google translate way i mean it needs to grasp context idioms and even the way we use sarcasm which is like a monumental feat in nlp you'd need like serious transformer models on steroids to pull that off
 

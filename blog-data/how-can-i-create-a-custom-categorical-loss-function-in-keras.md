@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-can-i-create-a-custom-categorical-loss-function-in-keras"
 ---
 
-Let's tackle this. I've spent a fair amount of time navigating the intricacies of custom loss functions in deep learning, and creating a custom categorical loss in Keras is something I’ve implemented more than a few times. It's a scenario that comes up often when standard options like categorical cross-entropy don't quite fit the unique demands of a specific problem. The core idea revolves around defining a new function that takes predicted outputs and true labels as input and produces a scalar value representing the loss. Let’s break it down.
+ I've spent a fair amount of time navigating the intricacies of custom loss functions in deep learning, and creating a custom categorical loss in Keras is something I’ve implemented more than a few times. It's a scenario that comes up often when standard options like categorical cross-entropy don't quite fit the unique demands of a specific problem. The core idea revolves around defining a new function that takes predicted outputs and true labels as input and produces a scalar value representing the loss. Let’s break it down.
 
 The primary motivation for developing a custom categorical loss function typically stems from a need to introduce specific biases or constraints into your training process. Perhaps your dataset is imbalanced, or certain types of misclassifications are substantially more costly than others. Standard loss functions treat all errors equally, and that’s often not ideal.
 

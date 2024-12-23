@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-am-i-getting-404-errors-with-server-side-gtm-and-custom-domains"
 ---
 
-Okay, let's unpack this 404 situation with server-side google tag manager (sgtm) and custom domains. It's a surprisingly common hiccup, and over the years, I’ve debugged this scenario more times than I care to count. In my experience, these 404s aren't usually about the server actually missing files, but rather a misconfiguration that creates an impedance mismatch between your custom domain and the sGTM server container. Let's break it down into the key areas, focusing on practical troubleshooting and configurations I’ve found helpful.
+, let's unpack this 404 situation with server-side google tag manager (sgtm) and custom domains. It's a surprisingly common hiccup, and over the years, I’ve debugged this scenario more times than I care to count. In my experience, these 404s aren't usually about the server actually missing files, but rather a misconfiguration that creates an impedance mismatch between your custom domain and the sGTM server container. Let's break it down into the key areas, focusing on practical troubleshooting and configurations I’ve found helpful.
 
 The core issue often lies in how your custom domain's dns records, your reverse proxy configuration (if you have one), and your sGTM server container's settings interact. Remember, server-side tagging isn't just about firing tags server-side; it's also about correctly handling requests routed through your domain. Think of it as a pipeline where each component needs to be precisely aligned. The most frequent offenders, from what I've seen, tend to fall into these three categories:
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-optimize-max-pooling-across-images-with-varying-sizes-and-shapes"
 ---
 
-Right then, let's tackle this. I recall a particularly challenging project a few years back involving medical imaging where we had to process a mountain of scans, all shapes and sizes, using convolutional neural networks. The bottleneck, as it often is, came down to optimizing max pooling operations. The naive implementations just wouldn't cut it, leading to unacceptable processing times. Dealing with variable input dimensions, as you've pointed out, requires some careful thought.
+Right then,  I recall a particularly challenging project a few years back involving medical imaging where we had to process a mountain of scans, all shapes and sizes, using convolutional neural networks. The bottleneck, as it often is, came down to optimizing max pooling operations. The naive implementations just wouldn't cut it, leading to unacceptable processing times. Dealing with variable input dimensions, as you've pointed out, requires some careful thought.
 
 The fundamental problem with max pooling on varying image sizes is that the straightforward, kernel-sliding implementation needs to be generalized. You can't simply define a fixed-size pool and expect it to work gracefully on inputs that are arbitrarily smaller. Furthermore, performance suffers if you’re constantly recalculating pooling parameters or padding all inputs to a common size. This can be particularly wasteful with very small images where the actual pooling might be redundant given the image’s dimensions.
 

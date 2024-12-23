@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "linux-software-watchdog-usage-explanation"
 ---
 
-Alright so software watchdogs on Linux right I've been there trust me I've seen things. Like kernel panics happening at 3 am because a rogue thread decided to take an unplanned vacation in memory land.  Been wrestling with these little lifesavers for years feels like. It's a bit like having a responsible friend who checks on you periodically just to make sure you haven't gone off the rails. 
+so software watchdogs on Linux right I've been there trust me I've seen things. Like kernel panics happening at 3 am because a rogue thread decided to take an unplanned vacation in memory land.  Been wrestling with these little lifesavers for years feels like. It's a bit like having a responsible friend who checks on you periodically just to make sure you haven't gone off the rails. 
 
 Let's break this down no fluff just the code and the concepts you actually need because I'm guessing you're probably in the middle of a debug session right now and the clock is ticking.
 
@@ -12,7 +12,7 @@ First off what's the deal with a software watchdog specifically Well think of it
 
 Now why do we even use them? Well if you have embedded devices or critical systems software watchdogs are your best friend. Think of automated machines medical equipment or industrial controllers. Things that really cant get stuck or crash without causing real world problems. A regular process can crash but a process running a critical operation that's not restarted can be catastrophic.
 
-Okay let's get practical because code talks. We have a couple of ways to implement watchdogs on Linux. One way is directly using the /dev/watchdog device the standard. You access this as a character device and there’s a ioctl system call that's the magic for peting the dog so to speak which means resetting the timer.
+ let's get practical because code talks. We have a couple of ways to implement watchdogs on Linux. One way is directly using the /dev/watchdog device the standard. You access this as a character device and there’s a ioctl system call that's the magic for peting the dog so to speak which means resetting the timer.
 
 Here's some basic C code for this
 
@@ -121,7 +121,7 @@ The `Type=notify` is also important. This tells systemd that the application is 
 
 I had a situation where we weren't restarting the service properly with systemd due to a misconfiguration of the service file itself. Systemd does its own internal checks before restarting a service and if one fails the service wont restart even if it does not call sd_notify it will not restart. You could make the service restart forever if you configure correctly a service with `Restart=always` and that's exactly what we want for critical stuff.
 
-Okay one more example if your watchdog is kernel based you can configure it directly on the kernel's command line at the boot time. I'm assuming you're using grub here but other boot loaders should be similar.
+ one more example if your watchdog is kernel based you can configure it directly on the kernel's command line at the boot time. I'm assuming you're using grub here but other boot loaders should be similar.
 
 In your `/etc/default/grub` look for the `GRUB_CMDLINE_LINUX_DEFAULT` entry and append to it the following:
 
@@ -133,9 +133,9 @@ Now run `sudo update-grub`. This ensures that the watchdog module is loaded earl
 
 `watchdog_nowayout=1` is critical this prevents applications or other processes to close the device or disable the watchdog timer in a way that leaves the watchdog unusable. There is a watchdog_disable in the ioctl but it’s disabled by `watchdog_nowayout`.
 
-Now the joke part. Why did the Linux admin cross the road? To get to the other side… which had a stable kernel. Okay maybe that wasn't funny.
+Now the joke part. Why did the Linux admin cross the road? To get to the other side… which had a stable kernel.  maybe that wasn't funny.
 
-Okay let's talk resources. For deeper understanding of the Linux watchdog subsystem I highly recommend the Linux Kernel Documentation in the source code itself. In your kernel source navigate to `Documentation/watchdog` and read `watchdog-api.txt`. And `Documentation/admin-guide/kernel-parameters.txt` is your go to reference for the kernel parameters including the watchdog ones. I've spend countless hours reading that.
+ let's talk resources. For deeper understanding of the Linux watchdog subsystem I highly recommend the Linux Kernel Documentation in the source code itself. In your kernel source navigate to `Documentation/watchdog` and read `watchdog-api.txt`. And `Documentation/admin-guide/kernel-parameters.txt` is your go to reference for the kernel parameters including the watchdog ones. I've spend countless hours reading that.
 
 Also look for embedded linux books for more context such as "Building Embedded Linux Systems" by Karim Yaghmour if you want to go deeper in this topic. It's a bit older now but a lot of these kernel level stuff is just the same old story. 
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-are-pytorch-cnn-matrices-of-shape-128x29040-and-2048x50-incompatible-for-multiplication"
 ---
 
-Alright, let's tackle this. It’s a situation I’ve bumped into more than once, particularly back when I was heavily involved in optimizing convolutional neural network architectures for some image processing projects. In essence, the incompatibility you're seeing with matrices of shapes (128x29040) and (2048x50) arises directly from the fundamental rules of matrix multiplication. It's not a deficiency in PyTorch, rather a reflection of the mathematical definition of matrix operations.
+Alright,  It’s a situation I’ve bumped into more than once, particularly back when I was heavily involved in optimizing convolutional neural network architectures for some image processing projects. In essence, the incompatibility you're seeing with matrices of shapes (128x29040) and (2048x50) arises directly from the fundamental rules of matrix multiplication. It's not a deficiency in PyTorch, rather a reflection of the mathematical definition of matrix operations.
 
 At its core, for two matrices to be compatible for multiplication, the number of columns in the first matrix *must* equal the number of rows in the second matrix. This constraint ensures that the dot products, which form the basis of matrix multiplication, can be properly calculated. You can think of it this way: matrix multiplication involves taking the dot product of each row in the first matrix with each column in the second matrix, element-wise, to produce a resulting matrix. If the lengths of those rows and columns don’t match, it’s like trying to fit a square peg into a round hole; the calculation simply breaks down.
 

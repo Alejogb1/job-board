@@ -31,7 +31,7 @@ az ml online-deployment create --name blue \
 
 In this initial snippet, we are initiating two commands. The first creates a named online endpoint which acts as the gateway through which requests reach our models. The second command deploys the specified model version under the alias 'blue'. This deployment includes specifying the virtual machine type, number of instances, path to your inference scripts (`./src`), and an environment to ensure consistency.
 
-Now, this method is okay for one or two models, but quickly becomes impractical at scale. Therefore, using deployment definitions through yaml files comes next, and it's a necessity when deploying multiple versions or variations of a model. This brings us to a more maintainable approach where you define everything in a configuration file, allowing for easier reproduction and modification.
+Now, this method is  for one or two models, but quickly becomes impractical at scale. Therefore, using deployment definitions through yaml files comes next, and it's a necessity when deploying multiple versions or variations of a model. This brings us to a more maintainable approach where you define everything in a configuration file, allowing for easier reproduction and modification.
 
 Here's a sample configuration, let's name it `deployment_config.yaml`:
 

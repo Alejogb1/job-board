@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-extract-unique-words-and-their-pos-tags-into-separate-columns-from-a-dataset"
 ---
 
-Okay, let's tackle this. Having been through similar data wrangling scenarios more than a few times, I can appreciate the nuances involved. Separating unique words and their corresponding part-of-speech (pos) tags into distinct columns from a dataset is a fairly common preprocessing task when dealing with text data, especially in natural language processing. The core challenge here boils down to effective tokenization, tagging, and data transformation, each presenting its own set of technical details.
+,  Having been through similar data wrangling scenarios more than a few times, I can appreciate the nuances involved. Separating unique words and their corresponding part-of-speech (pos) tags into distinct columns from a dataset is a fairly common preprocessing task when dealing with text data, especially in natural language processing. The core challenge here boils down to effective tokenization, tagging, and data transformation, each presenting its own set of technical details.
 
 Essentially, we need to iterate through each text entry, identify the distinct words, determine their pos tags, and then structure this information into a tabular format. The complexities arise when considering variations in text structure, the ambiguity of some words (words can have multiple meanings and therefore, multiple pos tags) and the need for efficient code execution, especially if you're dealing with a large dataset.
 

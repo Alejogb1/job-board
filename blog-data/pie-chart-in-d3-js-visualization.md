@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "pie-chart-in-d3-js-visualization"
 ---
 
-Okay so you want to build a pie chart in d3js right been there done that a million times its a classic visualization task nothing too fancy but yeah there are some gotchas if you are not careful lets get into it
+ so you want to build a pie chart in d3js right been there done that a million times its a classic visualization task nothing too fancy but yeah there are some gotchas if you are not careful lets get into it
 
 First off let's address the data format you'll need to have your data in a usable format for d3 usually an array of objects where each object has a key representing the label and a key representing the value something like this:
 
@@ -27,7 +27,7 @@ const pie = d3.pie()
 
 This `pie` is a layout function it is not really d3s drawing function it takes the data and it returns an array of objects but those objects have a startAngle endAngle data and others its the main part of how d3 knows what to draw as an arc and its crucial to get it right
 
-After you create the `pie` layout it's time to create the arc generator its d3's way of saying okay now lets transform the angles from the layout into a path a `d` attribute in an SVG which is what it will be rendered as think of it as the final step to getting the arc path strings we will use `d3.arc()` and we will configure its inner and outer radius like this:
+After you create the `pie` layout it's time to create the arc generator its d3's way of saying  now lets transform the angles from the layout into a path a `d` attribute in an SVG which is what it will be rendered as think of it as the final step to getting the arc path strings we will use `d3.arc()` and we will configure its inner and outer radius like this:
 
 ```javascript
 const arc = d3.arc()

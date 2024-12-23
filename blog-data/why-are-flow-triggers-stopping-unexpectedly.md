@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-are-flow-triggers-stopping-unexpectedly"
 ---
 
-Okay, let's dive into this. "Flow triggers stopping unexpectedly" – I've definitely seen my share of that particular headache. In my years spent developing and maintaining distributed systems, this issue has cropped up more than once, often leaving me scratching my head until the underlying causes were thoroughly investigated. It's rarely a single, isolated event; instead, it usually stems from a confluence of factors interacting in ways that aren't immediately obvious.
+, let's dive into this. "Flow triggers stopping unexpectedly" – I've definitely seen my share of that particular headache. In my years spent developing and maintaining distributed systems, this issue has cropped up more than once, often leaving me scratching my head until the underlying causes were thoroughly investigated. It's rarely a single, isolated event; instead, it usually stems from a confluence of factors interacting in ways that aren't immediately obvious.
 
 From my experience, unexpected halts in flow triggers, especially in asynchronous or event-driven architectures, typically fall into a few broad categories: resource constraints, code defects, and external dependencies gone awry. Let's unpack each of those.
 

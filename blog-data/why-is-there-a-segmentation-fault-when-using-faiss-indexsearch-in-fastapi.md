@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-there-a-segmentation-fault-when-using-faiss-indexsearch-in-fastapi"
 ---
 
-Alright, let's tackle this. I've seen this particular gremlin pop up more times than I care to remember, usually in contexts where someone is trying to bridge the gap between high-performance vector search and a user-facing web service, like with FastAPI. Segmentation faults, or segfaults, are the bane of any developer, particularly when dealing with native libraries like FAISS. Let's break down why you're probably seeing this when using `index.search()` within your FastAPI application.
+Alright,  I've seen this particular gremlin pop up more times than I care to remember, usually in contexts where someone is trying to bridge the gap between high-performance vector search and a user-facing web service, like with FastAPI. Segmentation faults, or segfaults, are the bane of any developer, particularly when dealing with native libraries like FAISS. Let's break down why you're probably seeing this when using `index.search()` within your FastAPI application.
 
 The root cause rarely lies with FAISS itself, if it works fine outside of your FastAPI setup. It's almost always an issue of memory management and thread safety, especially when those two concepts intersect with a framework like FastAPI that relies heavily on asynchronous operations and multiple worker processes. I’ve personally encountered this while building a recommendation engine that needed to quickly serve results based on pre-computed embeddings. The initial setup worked flawlessly in a test script, but as soon as I deployed it with uvicorn, segfaults became a recurring nightmare.
 

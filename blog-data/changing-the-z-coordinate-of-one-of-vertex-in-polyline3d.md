@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "changing-the-z-coordinate-of-one-of-vertex-in-polyline3d"
 ---
 
-Okay so you're wrestling with the z-coordinate of a vertex in a Polyline3D eh I've been there believe me This isn't some obscure corner case it’s a fundamental thing you deal with all the time when you’re manipulating 3D geometry so let's get this sorted out
+ so you're wrestling with the z-coordinate of a vertex in a Polyline3D eh I've been there believe me This isn't some obscure corner case it’s a fundamental thing you deal with all the time when you’re manipulating 3D geometry so let's get this sorted out
 
 First off let's assume you've got some kind of data structure holding this Polyline3D I'm not going to pretend I know exactly how yours is setup everyone rolls their own I’ve seen everything from a simple list of 3D points to more complex objects with associated metadata so I'm going generic but I'll also add some concrete examples later
 

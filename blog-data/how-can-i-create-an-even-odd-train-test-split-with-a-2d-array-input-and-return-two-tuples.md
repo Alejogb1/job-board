@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-create-an-even-odd-train-test-split-with-a-2d-array-input-and-return-two-tuples"
 ---
 
-Alright, let's tackle this. Funny enough, I actually dealt with a similar problem quite a few years back while working on a rather peculiar sensor data project. We had this massive 2D array of readings, and for our model validation, it was crucial to ensure an even-odd split, not just some arbitrary shuffle. I quickly learned that a naive approach can quickly lead to biased splits, especially when temporal or spatial dependencies are involved. So, let's unpack exactly how to achieve a robust even-odd split for a 2D array, returning the results as two tuples.
+Alright,  Funny enough, I actually dealt with a similar problem quite a few years back while working on a rather peculiar sensor data project. We had this massive 2D array of readings, and for our model validation, it was crucial to ensure an even-odd split, not just some arbitrary shuffle. I quickly learned that a naive approach can quickly lead to biased splits, especially when temporal or spatial dependencies are involved. So, let's unpack exactly how to achieve a robust even-odd split for a 2D array, returning the results as two tuples.
 
 The core idea here revolves around using the *index* of the array's first dimension – effectively, the row number – to decide whether a given row belongs to the 'even' set or the 'odd' set. This is a deterministic and straightforward method that avoids randomness, which, in this context, is highly desirable.
 

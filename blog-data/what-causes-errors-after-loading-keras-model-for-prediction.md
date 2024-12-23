@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "what-causes-errors-after-loading-keras-model-for-prediction"
 ---
 
-Okay, let's tackle this. I've seen this issue rear its head more times than I care to count, and it’s invariably frustrating because the model *worked* during training. But the moment you try to use it for predictions in a new environment, things can go sideways. It's rarely a single cause, but rather a confluence of factors, usually stemming from inconsistencies between the training and inference stages.
+,  I've seen this issue rear its head more times than I care to count, and it’s invariably frustrating because the model *worked* during training. But the moment you try to use it for predictions in a new environment, things can go sideways. It's rarely a single cause, but rather a confluence of factors, usually stemming from inconsistencies between the training and inference stages.
 
 The heart of the issue often boils down to the computational graph in TensorFlow/Keras. When you train a model, Keras builds this intricate network of operations. This graph gets serialized when you save the model. When you load it later, you're essentially resurrecting this graph. Any mismatch between the environment where you saved it and where you're loading it can lead to errors.
 

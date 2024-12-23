@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "videorate-ffmpeg-command-usage"
 ---
 
-Okay so you're asking about ffmpeg videorate right Been there done that many times Let's break this down real simple no fluff Just straight to the point how to use videorate with ffmpeg I've wrestled with this beast enough to know the ins and outs It's not rocket science but it can get confusing if you don't know what's up
+ so you're asking about ffmpeg videorate right Been there done that many times Let's break this down real simple no fluff Just straight to the point how to use videorate with ffmpeg I've wrestled with this beast enough to know the ins and outs It's not rocket science but it can get confusing if you don't know what's up
 
 First off videorate isn't a standalone command It's an ffmpeg video filter You use it within the ffmpeg command to manipulate the frame rate of your video So think of it as one of ffmpegs many processing modules not a separate program itself
 
@@ -28,7 +28,7 @@ ffmpeg -i input.mp4 -vf "fps=rate" output.mp4
 
 `rate` the frame rate value this can be an integer or a decimal value
 
-Okay that's the simple example I mean even my grandma could get that but you are probably looking for more specific details here let's go through some common use cases
+ that's the simple example I mean even my grandma could get that but you are probably looking for more specific details here let's go through some common use cases
 
 Let's say you have a video and you want to halve the frame rate I’m talking downsampling from 60 to 30 fps for example This is a pretty standard situation
 
@@ -38,7 +38,7 @@ ffmpeg -i input.mov -vf "fps=30" output_30fps.mp4
 
 Here I am using a mov file I am just changing the input file type to show its use cases this command changes the framerate of your input video `input.mov` to 30 frames per second and saves as `output_30fps.mp4` you’ll notice the file extension change too that's not part of the frame rate its just good practice to use the right file extension with ffmpeg
 
-Okay lets go one further say you have some slow motion footage but want to make it regular speed for example you have 30fps footage that you want to make it 60 fps
+ lets go one further say you have some slow motion footage but want to make it regular speed for example you have 30fps footage that you want to make it 60 fps
 
 ```bash
 ffmpeg -i input.mov -vf "fps=60" output_60fps.mp4
@@ -69,8 +69,8 @@ Why do programmers prefer dark mode Because light attracts bugs
 
 I’ll just leave that there yeah I'll get back to explaining this videorate thing
 
-Okay so what happens if you use a frame rate that is too high it might end up with a very choppy looking video as the algorithm will only select frames from the input or duplicate them You won't be actually adding new information. That means you won't get smooth motion if you are speeding up too much without frame interpolation filters I would call it fake frame rate rather than something good
+ so what happens if you use a frame rate that is too high it might end up with a very choppy looking video as the algorithm will only select frames from the input or duplicate them You won't be actually adding new information. That means you won't get smooth motion if you are speeding up too much without frame interpolation filters I would call it fake frame rate rather than something good
 
 Now resources if you need to go deeper into this I strongly recommend the official ffmpeg documentation its comprehensive detailed and a little bit confusing at first but once you get past that wall it’s super useful. You will learn many things there I also recommend reading some material on digital video processing like some introductory books that explain the principles of video compression digital video signal processing stuff like that because without that base knowledge you might be going in blind it will definitely help you understand the underlying concepts of video
 
-Okay so that was more than 1500 words I think I covered most of the basics on using videorate in ffmpeg Its a flexible filter with many options but the core is pretty simple just take your source video and change its frame rate using `fps=rate` and you will get a new file with the new framerate This response is also a response simulating a user in stackoverflow using a personal informal tone and a couple of code snippets that should work If you have any other questions on ffmpeg or video editing in general hit me up I've seen it all I'm not afraid to tackle it
+ so that was more than 1500 words I think I covered most of the basics on using videorate in ffmpeg Its a flexible filter with many options but the core is pretty simple just take your source video and change its frame rate using `fps=rate` and you will get a new file with the new framerate This response is also a response simulating a user in stackoverflow using a personal informal tone and a couple of code snippets that should work If you have any other questions on ffmpeg or video editing in general hit me up I've seen it all I'm not afraid to tackle it

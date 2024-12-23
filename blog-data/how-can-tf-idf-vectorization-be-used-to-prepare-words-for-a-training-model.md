@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-tf-idf-vectorization-be-used-to-prepare-words-for-a-training-model"
 ---
 
-Okay, let’s tackle this. TF-IDF, or Term Frequency-Inverse Document Frequency, is certainly a technique I've leaned on heavily over the years, particularly when preparing textual data for machine learning models. I remember a particularly thorny project involving analyzing thousands of customer support tickets; the raw text was, shall we say, less than ideal for feeding into a model. That’s where TF-IDF proved its worth.
+, let’s tackle this. TF-IDF, or Term Frequency-Inverse Document Frequency, is certainly a technique I've leaned on heavily over the years, particularly when preparing textual data for machine learning models. I remember a particularly thorny project involving analyzing thousands of customer support tickets; the raw text was, shall we say, less than ideal for feeding into a model. That’s where TF-IDF proved its worth.
 
 At its core, TF-IDF aims to quantify the importance of a word to a document within a corpus. It's more sophisticated than simply counting word frequencies. Straight counts can often be misleading, as common words like 'the,' 'a,' or 'is' tend to dominate, regardless of the document's content. They aren't particularly informative when differentiating between documents. This is where TF-IDF shines, by factoring in not just how often a term appears *within* a document, but also how rare it is *across* the entire collection of documents.
 

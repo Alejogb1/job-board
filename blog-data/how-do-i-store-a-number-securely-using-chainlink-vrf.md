@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-store-a-number-securely-using-chainlink-vrf"
 ---
 
-Okay, let’s talk about securing numbers with Chainlink VRF. This isn’t as straightforward as it might initially appear, and I’ve seen a few projects stumble over this particular aspect. The core issue is that VRF, or Verifiable Random Function, isn't designed to store values; it’s designed to generate cryptographically secure, unpredictable random numbers. Using it improperly as storage creates a security gap. Over the years, I’ve worked on several projects where a similar misunderstanding led to vulnerabilities, and I learned some valuable lessons. The most important being: don’t treat a random number generator as a storage mechanism.
+, let’s talk about securing numbers with Chainlink VRF. This isn’t as straightforward as it might initially appear, and I’ve seen a few projects stumble over this particular aspect. The core issue is that VRF, or Verifiable Random Function, isn't designed to store values; it’s designed to generate cryptographically secure, unpredictable random numbers. Using it improperly as storage creates a security gap. Over the years, I’ve worked on several projects where a similar misunderstanding led to vulnerabilities, and I learned some valuable lessons. The most important being: don’t treat a random number generator as a storage mechanism.
 
 Here's a breakdown of why that’s problematic and how to address the challenge effectively.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-isnt-the-airflow-scheduler-responding-to-the-pid-command"
 ---
 
-Alright, let's tackle this. I've encountered this exact scenario a few times over the years, particularly when dealing with large-scale deployments of Apache Airflow. The frustration of seeing the scheduler not responding to `pid` commands can be a real headache, but more often than not, the root causes stem from a few specific areas. It's rarely a bug in Airflow itself, although that's always something we need to rule out.
+Alright,  I've encountered this exact scenario a few times over the years, particularly when dealing with large-scale deployments of Apache Airflow. The frustration of seeing the scheduler not responding to `pid` commands can be a real headache, but more often than not, the root causes stem from a few specific areas. It's rarely a bug in Airflow itself, although that's always something we need to rule out.
 
 First, let's clarify that when we talk about the Airflow scheduler not responding to `pid`, we're usually referring to the failure of commands like `airflow scheduler pid` to return a valid process ID, or, more concerningly, no output at all. This often leads us down a rabbit hole of diagnostics. What's going on under the hood is that when you execute `airflow scheduler pid`, the command attempts to find the pid file associated with the running scheduler process. If this file isn't present or accessible, the command will fail. This command relies heavily on the correct configuration and execution environment.
 

@@ -4,9 +4,9 @@ date: "2024-12-13"
 id: "integer-expected-error-in-script"
 ---
 
-Alright I get it you've got an integer problem in your script and you're seeing unexpected behavior that's a classic let's break it down I've been wrestling with these kinds of issues for longer than some of you have been coding so trust me I've seen it all
+I get it you've got an integer problem in your script and you're seeing unexpected behavior that's a classic let's break it down I've been wrestling with these kinds of issues for longer than some of you have been coding so trust me I've seen it all
 
-Okay the core issue as I understand it you're probably dealing with integer overflow or underflow or division by zero these are the usual suspects when integers go rogue in scripts or maybe type mismatch sometimes python makes it look so easy but under the hood things are different
+ the core issue as I understand it you're probably dealing with integer overflow or underflow or division by zero these are the usual suspects when integers go rogue in scripts or maybe type mismatch sometimes python makes it look so easy but under the hood things are different
 
 Lets start with the basics integer overflow happens when you try to store a value that's larger than the maximum capacity of the integer data type if its an 8-bit integer you are limited to a specific range if its unsigned you go from 0 to 255 and if its signed you're looking at -128 to 127 and you will have this integer wraparound effect you keep adding and then it goes back to the beginning that's the wrapping effect the same is true for 16 bits 32 bits and 64 bits and all other variants.
 
@@ -18,7 +18,7 @@ Then we have division by zero well self explanatory if you divide by zero in you
 
 Type issues are another culprit you might be doing operations on different types of numbers example a float number and integer number if your calculations expect a float and it gets an integer it will do integer math and lose the decimal part this can lead to unexpected results when you expect it to be a floating number with the decimal precision.
 
-Alright I remember way back when I was working on this old graphics rendering engine I was trying to calculate some coordinates and angles and I had this integer overflow bug it was subtle I had this rotation function that was taking in an angle variable as an integer and it was supposed to rotate an object in a 3d space and everything looked fine at first but as soon as you rotate for a significant number of turns it would distort the whole 3d scene it took me days to figure out it was a simple integer overflow because when I converted the angle into a representation of an angle in a circle it was so large it wrapped around causing this issue I had to switch to using floating point numbers and do some tricks to normalize the angles.
+I remember way back when I was working on this old graphics rendering engine I was trying to calculate some coordinates and angles and I had this integer overflow bug it was subtle I had this rotation function that was taking in an angle variable as an integer and it was supposed to rotate an object in a 3d space and everything looked fine at first but as soon as you rotate for a significant number of turns it would distort the whole 3d scene it took me days to figure out it was a simple integer overflow because when I converted the angle into a representation of an angle in a circle it was so large it wrapped around causing this issue I had to switch to using floating point numbers and do some tricks to normalize the angles.
 
 Here's a quick example in python of integer overflow that I have run countless times:
 

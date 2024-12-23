@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-google-bigbird-predictions-be-exported-for-classification"
 ---
 
-Okay, let's tackle this. It’s something I’ve had to navigate personally a few times when building large-scale text classification models using BigBird, so I can definitely shed some light on the practicalities involved. Exporting BigBird predictions for classification isn't a straightforward case of simply pulling a single prediction value; it requires a bit of understanding about the model's output and how to massage it into a usable form.
+,  It’s something I’ve had to navigate personally a few times when building large-scale text classification models using BigBird, so I can definitely shed some light on the practicalities involved. Exporting BigBird predictions for classification isn't a straightforward case of simply pulling a single prediction value; it requires a bit of understanding about the model's output and how to massage it into a usable form.
 
 The core of the issue resides in BigBird's architecture itself. It's essentially a transformer model focusing on processing long sequences. Unlike some simpler classifiers, BigBird outputs a representation of the entire input sequence, not just a single prediction vector for each instance. This representation, commonly called the *pooled output* or the *[CLS] token embedding* (though BigBird might use different pooling methods), needs to be further processed to derive class probabilities. Think of it as having a very rich feature vector for each input sequence, from which you need to extract the relevant information for classification.
 

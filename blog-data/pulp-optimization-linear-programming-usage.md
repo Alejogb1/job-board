@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "pulp-optimization-linear-programming-usage"
 ---
 
-Okay so you want to talk about linear programming for pulp optimization yeah I've been down that road a few times let me tell you it's like trying to find the perfect balance in a really complex recipe except instead of ingredients we're dealing with constraints and an objective function and instead of eating it at the end you get some numbers that hopefully make sense
+ so you want to talk about linear programming for pulp optimization yeah I've been down that road a few times let me tell you it's like trying to find the perfect balance in a really complex recipe except instead of ingredients we're dealing with constraints and an objective function and instead of eating it at the end you get some numbers that hopefully make sense
 
 I first bumped into this whole linear optimization thing back in my early days trying to optimize resource allocation for a small cloud based service we were launching we had a ton of VMs different sizes different costs different performance profiles and the users were hitting it sporadically it was a chaos show honestly initially I tried to do it all by hand spreadsheets were involved it was a disaster let me tell you I was manually balancing everything and it was like trying to herd cats on roller skates I quickly realized I needed something way more systematic and efficient and that's when I really dove into linear programming 
 
@@ -43,7 +43,7 @@ print("Maximum profit:", value(prob.objective))
 
 In this code you see how we formulate the problem using `pulp` the `LpProblem` is where we define it as a maximization problem we create `LpVariable` for our variables and assign our objective function and the constraints we then run the solver and its a black box and tada you get an answer thats awesome right
 
-Now you might be thinking okay thats a pretty basic example whats it like when things get complex it’s gonna be like a whole can of worms opened but trust me with pulp it is fairly okay
+Now you might be thinking  thats a pretty basic example whats it like when things get complex it’s gonna be like a whole can of worms opened but trust me with pulp it is fairly 
 
 Let's crank up the complexity a notch what if we have multiple resources say materials X Y and Z and we also have several different products and what if some resources can be used in multiple production lines and we also wanna take care of transport cost that adds to the equation now the model can grow exponentially with variables and constraints and sometimes you just stare at the problem and question your life choices but here it is still ok with pulp
 

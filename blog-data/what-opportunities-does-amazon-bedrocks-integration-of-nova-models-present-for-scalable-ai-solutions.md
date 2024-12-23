@@ -4,7 +4,7 @@ date: "2024-12-05"
 id: "what-opportunities-does-amazon-bedrocks-integration-of-nova-models-present-for-scalable-ai-solutions"
 ---
 
-Okay so you wanna talk about Amazon Bedrock and its Nova models right  Pretty cool stuff actually  Scalability is the name of the game these days and Bedrock's trying to make that a whole lot easier for us  Think big data think massive AI projects  stuff that would usually make your head spin trying to manage  Bedrock aims to simplify all that
+ so you wanna talk about Amazon Bedrock and its Nova models right  Pretty cool stuff actually  Scalability is the name of the game these days and Bedrock's trying to make that a whole lot easier for us  Think big data think massive AI projects  stuff that would usually make your head spin trying to manage  Bedrock aims to simplify all that
 
 The main draw is  obviously the access to these powerful pre-trained models  you don't have to build everything from scratch which is a HUGE time saver  imagine training your own massive language model from nothing  that's a monumental undertaking  Bedrock lets you skip most of that  just pick a model and start building your application
 

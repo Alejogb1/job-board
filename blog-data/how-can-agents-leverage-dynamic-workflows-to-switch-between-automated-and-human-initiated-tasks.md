@@ -4,7 +4,7 @@ date: "2024-12-07"
 id: "how-can-agents-leverage-dynamic-workflows-to-switch-between-automated-and-human-initiated-tasks"
 ---
 
-Okay so you wanna know how agents can like seamlessly switch between doing stuff automatically and needing a human to step in right  That's a super cool problem  Its all about dynamic workflows  Think of it like this you've got your robot buddy doing its thing  but sometimes it hits a snag something it cant handle alone and needs a human to lend a hand
+ so you wanna know how agents can like seamlessly switch between doing stuff automatically and needing a human to step in right  That's a super cool problem  Its all about dynamic workflows  Think of it like this you've got your robot buddy doing its thing  but sometimes it hits a snag something it cant handle alone and needs a human to lend a hand
 
 The key is building flexibility into the system not a rigid set of rules but a system that can adapt  Imagine a flowchart but one that can change its shape on the fly depending on what's happening  That's what we're aiming for  We need agents that can assess their current situation understand their limitations and decide if they need human help
 

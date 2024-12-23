@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-use-await-with-an-indexeddb-getall-method"
 ---
 
-Alright, let's tackle this. I recall a project back in '18, building an offline-first web application for field data collection – quite the challenge that IndexedDB threw my way. We needed to retrieve large datasets rapidly and asynchronously, which is where the need to gracefully handle `getAll` with `await` came in. It's not immediately intuitive, especially if you're used to promises directly from other browser APIs, as IndexedDB doesn't natively return a promise-based interface for many of its operations.
+Alright,  I recall a project back in '18, building an offline-first web application for field data collection – quite the challenge that IndexedDB threw my way. We needed to retrieve large datasets rapidly and asynchronously, which is where the need to gracefully handle `getAll` with `await` came in. It's not immediately intuitive, especially if you're used to promises directly from other browser APIs, as IndexedDB doesn't natively return a promise-based interface for many of its operations.
 
 The crux of the issue lies in IndexedDB's asynchronous nature being communicated through request objects and events, not directly with promises. The `getAll` method, specifically, returns an `IDBRequest` object, which emits events when the operation is complete, such as `onsuccess` or `onerror`. This contrasts starkly with the more modern promise-based approaches we see in many other JavaScript APIs. To make `await` work effectively, we must bridge this gap by wrapping the IndexedDB request in a promise.
 

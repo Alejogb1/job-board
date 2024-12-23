@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "how-do-sub-1nm-transistor-limitations-such-as-leakage-currents-drive-the-transition-to-photonic-based-computing-systems"
 ---
 
-Okay so you wanna know about sub-1nm transistors and why we're looking at light for computing right  It's kinda crazy how small things are getting  Like seriously imagine a transistor smaller than a single atom that's the kind of scale we're talking about  And that's where things get weird  because at that size the laws of physics start to change a bit  
+ so you wanna know about sub-1nm transistors and why we're looking at light for computing right  It's kinda crazy how small things are getting  Like seriously imagine a transistor smaller than a single atom that's the kind of scale we're talking about  And that's where things get weird  because at that size the laws of physics start to change a bit  
 
 The biggest problem with these tiny transistors is leakage current  Think of it like this  you've got a tiny pipe trying to control water flow  but the pipe is so small that water leaks out everywhere  its not very efficient right  In transistors its electrons leaking between the parts they are not supposed to be in That leakage wastes energy heats things up and makes the transistors unreliable its a big problem
 

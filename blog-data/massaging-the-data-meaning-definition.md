@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "massaging-the-data-meaning-definition"
 ---
 
-Alright so you're asking about "massaging the data" right Seems like a pretty broad question but I get it We all been there staring at a pile of raw data wondering what the heck to do with it
+so you're asking about "massaging the data" right Seems like a pretty broad question but I get it We all been there staring at a pile of raw data wondering what the heck to do with it
 
 Basically when we say "massaging the data" we're talking about the process of taking raw or semi-raw data and transforming it into something more usable and meaningful It’s not some kind of mystical art form it’s just the reality of data work 90 percent of the time you're not training models you're doing this stuff
 

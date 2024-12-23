@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "inline-experiment-arm-assembly-code"
 ---
 
-Okay so inline experiment arm assembly right I've been down this rabbit hole more times than I care to admit lets break it down like we're debugging a stubborn kernel module
+ so inline experiment arm assembly right I've been down this rabbit hole more times than I care to admit lets break it down like we're debugging a stubborn kernel module
 
 First off what do you even mean by inline arm assembly Are you talking about embedding assembly directly into your C or C++ code using some kind of compiler intrinsic or are you trying to inject raw machine code into a running program's memory I'm going to assume the former because the latter is a whole different level of pain and not exactly something you'd casually ask about but hey both are possible
 

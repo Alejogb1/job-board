@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "too-many-active-webgl-contexts-problem"
 ---
 
-Okay so you've got the classic "too many active WebGL contexts" blues eh I've been there trust me I've seen the depths of that particular rabbit hole and come back with a few battle scars and a whole lot of wisdom to share This isn't a fun place to be it can make your app choke like it's trying to swallow a whole pizza whole and leave your users staring at a blank screen or worse a frozen one
+ so you've got the classic "too many active WebGL contexts" blues eh I've been there trust me I've seen the depths of that particular rabbit hole and come back with a few battle scars and a whole lot of wisdom to share This isn't a fun place to be it can make your app choke like it's trying to swallow a whole pizza whole and leave your users staring at a blank screen or worse a frozen one
 
 First off what's usually happening here is a simple case of overenthusiasm You're creating WebGL contexts like they're going out of style and you aren't properly cleaning up after yourself It's like leaving a pile of dirty dishes after every meal eventually the kitchen becomes unusable your browser is the kitchen and WebGL contexts are the dirty dishes it's a messy analogy but you get the point right
 

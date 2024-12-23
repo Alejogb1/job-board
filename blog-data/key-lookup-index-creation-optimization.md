@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "key-lookup-index-creation-optimization"
 ---
 
-Okay so key lookup index creation optimization right been there done that got the t-shirt and probably a few bug scars too Lets dive in because this is my bread and butter and I've seen it all trust me
+ so key lookup index creation optimization right been there done that got the t-shirt and probably a few bug scars too Lets dive in because this is my bread and butter and I've seen it all trust me
 
 First off you're hitting a classic problem key lookups get slow real fast when your data grows Its like searching for a specific grain of sand on a beach if you don't have a good system you're gonna spend forever digging I remember back in the days of my first serious project a content management system for a university library back in oh 2010 or so we had so many books and articles the queries were timing out every other minute it was a nightmare
 

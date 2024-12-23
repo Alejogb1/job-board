@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-create-an-azure-container-registry-and-deploy-an-image-to-it-within-the-same-azure-devops-build-pipeline-using-bicep"
 ---
 
-Okay, let's tackle this. I've been through this scenario quite a few times, usually when setting up new microservices or refactoring legacy deployments to containerized environments. It’s a common requirement to automate both the infrastructure provisioning and image deployment process within a single pipeline. Doing it via Bicep and Azure DevOps is definitely a solid approach, offering repeatability and consistency.
+,  I've been through this scenario quite a few times, usually when setting up new microservices or refactoring legacy deployments to containerized environments. It’s a common requirement to automate both the infrastructure provisioning and image deployment process within a single pipeline. Doing it via Bicep and Azure DevOps is definitely a solid approach, offering repeatability and consistency.
 
 The fundamental idea here is to use Bicep to define your Azure Container Registry (ACR) resource, and then within the same pipeline, build and push your Docker image, before finally deploying it. This eliminates the need for manual creation of the registry or separate deployment steps. I’m going to walk you through this, keeping things fairly practical.
 

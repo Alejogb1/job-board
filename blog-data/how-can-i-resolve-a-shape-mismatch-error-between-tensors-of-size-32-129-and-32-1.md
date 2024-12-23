@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-resolve-a-shape-mismatch-error-between-tensors-of-size-32-129-and-32-1"
 ---
 
-Okay, let's tackle this. I've seen this exact scenario play out countless times, especially during the early stages of a deep learning project, or when integrating pre-existing components with mismatched output structures. The shape mismatch, a clash between a tensor of size (32, 129) and one of size (32, 1), screams "dimension incompatibility," a problem that arises because the operations you're trying to perform require agreement in shapes between input tensors.
+,  I've seen this exact scenario play out countless times, especially during the early stages of a deep learning project, or when integrating pre-existing components with mismatched output structures. The shape mismatch, a clash between a tensor of size (32, 129) and one of size (32, 1), screams "dimension incompatibility," a problem that arises because the operations you're trying to perform require agreement in shapes between input tensors.
 
 Specifically, (32, 129) typically represents a batch of 32 samples, each with 129 features, while (32, 1) suggests a batch of 32 samples, each with a single feature (often, this is a label or a single value of some kind). The root problem lies in attempting an operation that isn't compatible with this dimensional disparity. This frequently surfaces during calculations involving element-wise operations or broadcasting. We can resolve this using techniques that essentially make the shapes match or make broadcasting behave as expected. We have several options, and the most suitable choice really depends on what you're trying to achieve. Let’s go over three common scenarios.
 

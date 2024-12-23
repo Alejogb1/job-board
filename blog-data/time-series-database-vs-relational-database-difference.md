@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "time-series-database-vs-relational-database-difference"
 ---
 
-Okay so this again eh time series data versus relational databases I’ve been down this road so many times feels like a deja vu but hey let's get into it It's not a new question by any means and its importance is understated by many newcomers
+ so this again eh time series data versus relational databases I’ve been down this road so many times feels like a deja vu but hey let's get into it It's not a new question by any means and its importance is understated by many newcomers
 
 First off relational databases your MySQL PostgreSQL Sqlite the usual suspects they're built for data where relationships are the key thing think of your standard application data users products orders stuff that’s naturally related in structured ways relational is in the name really. Data is typically normalized you know breaking stuff into tables with foreign keys and all that jazz. It’s great for ensuring data integrity and consistency that's its bread and butter. Queries are often complex requiring multiple joins and conditions to get the right answer. This is what they are optimized for. You can do time based queries no problem but if all you are querying are time based this is like using a tank to crack an egg.
 

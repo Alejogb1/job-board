@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-get-a-pages-permalink-in-a-contact-form"
 ---
 
-Alright, let's tackle this. I've seen this come up a number of times, and it's a surprisingly common need when you're building dynamic web applications, especially ones that need contextual data from forms. The core of the issue here is capturing the specific url of the page where your contact form resides, so it can be submitted along with the other form data. This enables you to understand the context of each submission - where the user encountered the form and potentially the specific content they were engaging with. Think of it like adding a location tag to each message sent from a physical mailbox; it provides crucial context.
+Alright,  I've seen this come up a number of times, and it's a surprisingly common need when you're building dynamic web applications, especially ones that need contextual data from forms. The core of the issue here is capturing the specific url of the page where your contact form resides, so it can be submitted along with the other form data. This enables you to understand the context of each submission - where the user encountered the form and potentially the specific content they were engaging with. Think of it like adding a location tag to each message sent from a physical mailbox; it provides crucial context.
 
 My experience with this particular problem goes back a few years, working on a rather complex e-commerce platform. We had a distributed content management system, with product pages, blogs, and resource centers, each with its own contact forms, and it became clear we needed to associate the form submission with the specific page to route queries effectively.
 

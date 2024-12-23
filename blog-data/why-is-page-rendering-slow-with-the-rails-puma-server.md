@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-page-rendering-slow-with-the-rails-puma-server"
 ---
 
-Okay, let's unpack this. I've been debugging Rails applications for a good chunk of my career, and slow page rendering with Puma, while seemingly straightforward, can stem from a surprisingly diverse set of underlying issues. It's never just *one* thing, typically. So, let's break it down into common culprits, how to identify them, and how to fix them, drawing from experiences I've had in the trenches.
+, let's unpack this. I've been debugging Rails applications for a good chunk of my career, and slow page rendering with Puma, while seemingly straightforward, can stem from a surprisingly diverse set of underlying issues. It's never just *one* thing, typically. So, let's break it down into common culprits, how to identify them, and how to fix them, drawing from experiences I've had in the trenches.
 
 First off, Puma itself is a highly performant application server; it's built for concurrency. When things slow down, it's usually not the server itself that's the bottleneck but what's happening *within* the Rails application it's hosting. It's crucial to approach this with a process of elimination. My past experiences with e-commerce applications have taught me that the root cause rarely jumps out immediately.
 

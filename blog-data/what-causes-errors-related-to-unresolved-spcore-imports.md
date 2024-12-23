@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "what-causes-errors-related-to-unresolved-spcore-imports"
 ---
 
-Okay, let's tackle this. Unresolved `sp_core` imports can be a real head-scratcher, and I've certainly spent my share of time debugging these over the years, particularly when working with embedded systems and lower-level hardware interaction, where `sp_core` often lurks. The frustration, I can tell you, is real. It's not always a single cause, but rather a confluence of factors, usually stemming from configuration mismatches and dependency issues. We're talking about fundamental problems preventing the compiler or linker from locating the necessary definitions that `sp_core` provides.
+,  Unresolved `sp_core` imports can be a real head-scratcher, and I've certainly spent my share of time debugging these over the years, particularly when working with embedded systems and lower-level hardware interaction, where `sp_core` often lurks. The frustration, I can tell you, is real. It's not always a single cause, but rather a confluence of factors, usually stemming from configuration mismatches and dependency issues. We're talking about fundamental problems preventing the compiler or linker from locating the necessary definitions that `sp_core` provides.
 
 The `sp_core` module, generally, is designed to provide core functionality for a particular system, often within the context of proprietary or specialized hardware architectures. Think of it as a foundational layer. It encompasses things like low-level hardware interfaces, memory management routines specific to that hardware, and potentially even some basic interrupt handling. If a project relies on it and can't resolve its symbols, the build is dead in the water.
 

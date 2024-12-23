@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-use-the-ftp-to-gcs-operator-on-google-composer"
 ---
 
-Okay, let's dive into the nuances of using the `ftp_to_gcs` operator within Google Composer. It's a powerful tool, but as with most things in the data engineering realm, understanding its internals and proper configuration is paramount for seamless operations. I've spent a good chunk of my career wrangling data pipelines, and I recall one particular project involving legacy systems that relied heavily on FTP for data delivery. Transitioning those flows to a more scalable and cloud-native approach, leveraging Composer and `ftp_to_gcs`, was a challenge that taught me a lot.
+, let's dive into the nuances of using the `ftp_to_gcs` operator within Google Composer. It's a powerful tool, but as with most things in the data engineering realm, understanding its internals and proper configuration is paramount for seamless operations. I've spent a good chunk of my career wrangling data pipelines, and I recall one particular project involving legacy systems that relied heavily on FTP for data delivery. Transitioning those flows to a more scalable and cloud-native approach, leveraging Composer and `ftp_to_gcs`, was a challenge that taught me a lot.
 
 The core function of the `ftp_to_gcs` operator is, of course, to fetch files from an FTP server and transfer them to Google Cloud Storage (GCS). However, simply pointing the operator at an ftp path and a gcs bucket isn’t enough. We need to consider several crucial factors: authentication, directory structures, file patterns, and error handling, among others. Let's break down how to approach this effectively.
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "npsolve-numpy-problem-error"
 ---
 
-Okay so you're seeing an `np.linalg.solve` error with numpy right Been there done that got the t-shirt I've wrestled with this specific problem more times than I'd like to admit and it's usually one of a few suspects
+ so you're seeing an `np.linalg.solve` error with numpy right Been there done that got the t-shirt I've wrestled with this specific problem more times than I'd like to admit and it's usually one of a few suspects
 
 Let's break it down real quick from my past experiences and what I've seen on various forums and in real-world debugging sessions I am not sure about the exact use case you have but I can give general ideas which are pretty common
 
@@ -40,7 +40,7 @@ So when I encounter this what do I actually do? Here is my usual workflow
 
 **Example Code Snippets**
 
-Okay so let’s throw some code at this. Here are three example scenarios each highlighting a common issue
+ so let’s throw some code at this. Here are three example scenarios each highlighting a common issue
 
 ```python
 import numpy as np
@@ -88,7 +88,7 @@ What to do when `np.linalg.solve` does not work? There are other methods to try 
 
 **Resources for deeper dive**
 
-Okay enough talking here is what you should look into if you want to know a little bit more about this and I am not going to link directly to any book or paper rather I am going to give you the general titles that you should be looking for.
+ enough talking here is what you should look into if you want to know a little bit more about this and I am not going to link directly to any book or paper rather I am going to give you the general titles that you should be looking for.
 
 1.  **"Numerical Recipes" by Press et al**: A classic resource that covers the numerical implementation of linear algebra routines among other things. It explains well the numerical challenges and is a well-known standard resource. It also includes a discussion on singular value decomposition which is something you might find useful
 

@@ -10,7 +10,7 @@ Hey so you wanna make email finders way better right  That's awesome  Finding em
 First off better data is key  Most finders use kinda crappy databases with outdated info  Think about this  Imagine having access to a real-time updated global index of every email address ever created  Sounds impossible but its not really  We could build a distributed system  Like a massively parallel search engine kinda thing across multiple servers think of a distributed hash table  This would let us instantly query billions of emails super fast without the typical slowdowns
 
 
-Okay here's some code to give you an idea of what I mean  This is simplified of course but shows the concept
+ here's some code to give you an idea of what I mean  This is simplified of course but shows the concept
 
 
 ```python

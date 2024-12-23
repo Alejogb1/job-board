@@ -4,7 +4,7 @@ date: "2024-12-10"
 id: "how-does-immutability-in-pipelines-ensure-consistency-across-feature-engineering-workflows"
 ---
 
-Okay so you wanna know about immutability in data pipelines and how it keeps things consistent right  Like when you're building these fancy feature engineering workflows  it's a total headache if things change unexpectedly  That's where immutability is your new best friend  Think of it like this you have a LEGO castle  you build it carefully  perfectly you wouldn't want someone randomly coming along and changing a brick without telling you would you  Immutability is that brick  it prevents those sneaky changes
+ so you wanna know about immutability in data pipelines and how it keeps things consistent right  Like when you're building these fancy feature engineering workflows  it's a total headache if things change unexpectedly  That's where immutability is your new best friend  Think of it like this you have a LEGO castle  you build it carefully  perfectly you wouldn't want someone randomly coming along and changing a brick without telling you would you  Immutability is that brick  it prevents those sneaky changes
 
 So how does it actually work  Well  when something is immutable it means once it's created you can't change it  You can create *new* things based on it  but the original stays untouched  This is awesome for data pipelines because it creates a totally reliable history of what happened  You can trace everything back to its source and see exactly how each feature was created  This is way easier than trying to track changes in some mutable data structure like a Python dictionary where things get overwritten all the time
 

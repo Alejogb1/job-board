@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "are-mermaid-diagrams-supported-in-github-rst-files"
 ---
 
-Okay, let's tackle this. It's a question I've personally encountered on several occasions, notably during a large documentation refactor we did a couple of years back. The core issue revolves around the rendering capabilities of reStructuredText (.rst) files within the GitHub ecosystem, specifically when it comes to complex diagramming tools like mermaid.
+,  It's a question I've personally encountered on several occasions, notably during a large documentation refactor we did a couple of years back. The core issue revolves around the rendering capabilities of reStructuredText (.rst) files within the GitHub ecosystem, specifically when it comes to complex diagramming tools like mermaid.
 
 The short answer is: *natively*, no, GitHub does not directly render mermaid diagrams embedded within .rst files. GitHub's rendering pipeline primarily focuses on processing the .rst syntax itself, transforming it into HTML. While .rst supports directives and roles, it doesn't have a built-in understanding of mermaid's syntax. Trying to insert a mermaid code block directly, thinking it will just automagically work, is a common pitfall for developers unfamiliar with the intricacies of documentation pipelines.
 

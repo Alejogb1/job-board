@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-build-pytorch-model-with-multiple-inputs-and-outputs"
 ---
 
-Okay, let's tackle this one. I recall working on a fairly intricate multimodal machine learning project a few years back, involving both image and text inputs, and requiring, ultimately, not one but several distinct predictions. It's a classic case, really, and figuring out how to structure such a model in PyTorch required some careful planning. Building models with multiple inputs and outputs in PyTorch isn't inherently complex, but it does call for a methodical approach to ensure everything aligns properly both in the forward pass and during the backpropagation stage.
+, let's tackle this one. I recall working on a fairly intricate multimodal machine learning project a few years back, involving both image and text inputs, and requiring, ultimately, not one but several distinct predictions. It's a classic case, really, and figuring out how to structure such a model in PyTorch required some careful planning. Building models with multiple inputs and outputs in PyTorch isn't inherently complex, but it does call for a methodical approach to ensure everything aligns properly both in the forward pass and during the backpropagation stage.
 
 Fundamentally, the core idea hinges on leveraging PyTorch's modularity. We treat each input stream as a branch, processing them individually (or in concert), and then we combine these processed representations as needed to produce the different outputs. It's akin to a network of interconnected paths, where each path handles a distinct type of information.
 

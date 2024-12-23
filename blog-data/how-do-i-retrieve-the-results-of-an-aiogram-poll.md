@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-retrieve-the-results-of-an-aiogram-poll"
 ---
 
-Okay, let's tackle this. Retrieving poll results in aiogram can sometimes feel a bit less straightforward than it initially appears, especially if you've spent time mostly handling standard message updates. I remember back in 2021, during an internal project where we were building a custom feedback bot using telegram, I ran into a similar situation; we wanted to use polls for collecting quick sentiment scores and then analyze the data. This experience made me become quite familiar with the nuances of poll updates.
+,  Retrieving poll results in aiogram can sometimes feel a bit less straightforward than it initially appears, especially if you've spent time mostly handling standard message updates. I remember back in 2021, during an internal project where we were building a custom feedback bot using telegram, I ran into a similar situation; we wanted to use polls for collecting quick sentiment scores and then analyze the data. This experience made me become quite familiar with the nuances of poll updates.
 
 The challenge isn't necessarily in receiving the initial poll creation update, that’s fairly straightforward, but rather in extracting the finalized results, particularly when the poll closes. Telegram, and consequently aiogram, treats active poll states and final poll results as distinct update types. To retrieve results reliably, you need to correctly identify and parse the `PollAnswer` and `Poll` updates.
 

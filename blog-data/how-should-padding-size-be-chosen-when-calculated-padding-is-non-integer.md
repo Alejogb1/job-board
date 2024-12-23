@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-should-padding-size-be-chosen-when-calculated-padding-is-non-integer"
 ---
 
-Okay, let's talk about padding – specifically, that pesky non-integer padding value. I’ve run into this more times than I care to count, and it's usually in the context of laying out elements on a screen, often in responsive design or during more complex UI work. When your layout logic yields a padding that isn’t a whole number, you're facing a decision with implications for visual fidelity and rendering performance. There's no one-size-fits-all answer, but there are established approaches, each with trade-offs.
+, let's talk about padding – specifically, that pesky non-integer padding value. I’ve run into this more times than I care to count, and it's usually in the context of laying out elements on a screen, often in responsive design or during more complex UI work. When your layout logic yields a padding that isn’t a whole number, you're facing a decision with implications for visual fidelity and rendering performance. There's no one-size-fits-all answer, but there are established approaches, each with trade-offs.
 
 The first thing to acknowledge is *why* we sometimes end up with non-integer padding values. Often, this arises from calculations involving percentages of parent elements or during grid system implementations where fractional sizes are part of the design. For example, dividing space by the number of elements could leave you with a floating-point result. Now, the browser will often try its best to accommodate, but there will be a rounding process somewhere under the hood – we just have to be intentional about where *our* rounding happens.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-implement-a-google-cloud-storage-gcs-table-expiration-task-to-bigquery-via-airflow"
 ---
 
-Okay, let's tackle this. It's a fairly common requirement when dealing with data pipelines in the cloud, and I've certainly seen my share of headaches stemming from poorly managed temporary files. Implementing a GCS expiration task tied to BigQuery using Airflow, when done methodically, can save you a lot of storage costs and operational grief. I recall a particularly painful project where we neglected this, and ended up with terabytes of obsolete intermediate data polluting our buckets; lessons were definitely learned.
+,  It's a fairly common requirement when dealing with data pipelines in the cloud, and I've certainly seen my share of headaches stemming from poorly managed temporary files. Implementing a GCS expiration task tied to BigQuery using Airflow, when done methodically, can save you a lot of storage costs and operational grief. I recall a particularly painful project where we neglected this, and ended up with terabytes of obsolete intermediate data polluting our buckets; lessons were definitely learned.
 
 The core idea here is to leverage Airflow's capabilities to orchestrate a sequence of actions: first, triggering a BigQuery job, then upon successful completion, identify associated GCS storage locations containing temporary files, and finally setting lifecycle rules to expire those files. This isn't as straightforward as executing a single command; it's a multi-step process requiring a bit of careful configuration.
 

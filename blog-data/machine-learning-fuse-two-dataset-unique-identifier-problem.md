@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "machine-learning-fuse-two-dataset-unique-identifier-problem"
 ---
 
-Okay so you're asking about merging two datasets in machine learning where the unique identifiers don't perfectly align right Been there done that got the t-shirt and probably a few lingering headaches from late nights debugging this kind of mess Let me tell you this is a classic problem and there's no single silver bullet it's all about understanding your data and picking the right tools for the job I've seen this happen so many times it's almost a rite of passage for any data science newbie
+ so you're asking about merging two datasets in machine learning where the unique identifiers don't perfectly align right Been there done that got the t-shirt and probably a few lingering headaches from late nights debugging this kind of mess Let me tell you this is a classic problem and there's no single silver bullet it's all about understanding your data and picking the right tools for the job I've seen this happen so many times it's almost a rite of passage for any data science newbie
 
 Basically the core issue is you have dataset A with IDs like `user_123` `user_456` and dataset B with IDs like `client_abc` `client_def` and you're trying to fuse them to get a more holistic view for your model. This usually means doing some kind of join based on user or customer and sometimes it’s a total crapshoot of which keys to use. Its why I started documenting my code more
 

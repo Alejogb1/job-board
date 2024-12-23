@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-use-a-lime-text-explainer-for-a-model-with-preprocessed-input"
 ---
 
-Okay, let’s tackle this. I recall facing a similar challenge back when I was working on a sentiment analysis project for a customer review system. We’d meticulously crafted our preprocessing pipeline – tokenization, stop-word removal, lemmatization, the whole nine yards – and then, like you’re experiencing, the LIME explainer seemed to be working with the *original*, unprocessed text. It’s understandably frustrating because you want explanations reflecting the data your *model* actually sees, not the raw human-readable input.
+, let’s tackle this. I recall facing a similar challenge back when I was working on a sentiment analysis project for a customer review system. We’d meticulously crafted our preprocessing pipeline – tokenization, stop-word removal, lemmatization, the whole nine yards – and then, like you’re experiencing, the LIME explainer seemed to be working with the *original*, unprocessed text. It’s understandably frustrating because you want explanations reflecting the data your *model* actually sees, not the raw human-readable input.
 
 So, fundamentally, the issue isn't that LIME is incapable of handling preprocessed text; it’s that we need to tailor its *explanation process* to align with our model’s input requirements. LIME, by default, perturbs the input text directly (by making small changes), and then observes how these changes affect the model’s output. If your model operates on, say, a sequence of numerical token IDs instead of plain text strings, then directly perturbing plain text won't give us useful explanations.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-my-pytorch-model-classification-accuracy-for-iris-only-about-04"
 ---
 
-Okay, let’s unpack this. I’ve seen this specific issue – inexplicably low accuracy on the Iris dataset with PyTorch – quite a few times over the years, and it’s often a confluence of factors rather than one single glaring error. It's frustrating, because, given the simplicity of Iris, we would expect performance nearing perfection rather than sitting down at 40%. Let's talk about potential reasons, and then how to systematically address them.
+, let’s unpack this. I’ve seen this specific issue – inexplicably low accuracy on the Iris dataset with PyTorch – quite a few times over the years, and it’s often a confluence of factors rather than one single glaring error. It's frustrating, because, given the simplicity of Iris, we would expect performance nearing perfection rather than sitting down at 40%. Let's talk about potential reasons, and then how to systematically address them.
 
 The initial accuracy of roughly 0.4 suggests a serious issue, much more substantial than just random noise. This is not the type of minor performance fluctuation you might encounter when tweaking a learning rate, for instance. When I have encountered this in the past, it was primarily down to inadequate data preparation, improperly defined model architectures for classification, or issues within the training loop itself. So, let's delve into these potential problems and discuss practical solutions that I’ve seen work.
 

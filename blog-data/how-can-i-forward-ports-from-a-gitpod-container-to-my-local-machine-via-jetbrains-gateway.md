@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-forward-ports-from-a-gitpod-container-to-my-local-machine-via-jetbrains-gateway"
 ---
 
-Okay, let's unpack this. Port forwarding from a Gitpod container to your local machine, particularly when using JetBrains Gateway, is a common challenge, but definitely solvable with a bit of understanding about the underlying mechanisms. I’ve bumped into this issue countless times while managing remote development environments, and it's something that requires a structured approach rather than just poking around until it works.
+, let's unpack this. Port forwarding from a Gitpod container to your local machine, particularly when using JetBrains Gateway, is a common challenge, but definitely solvable with a bit of understanding about the underlying mechanisms. I’ve bumped into this issue countless times while managing remote development environments, and it's something that requires a structured approach rather than just poking around until it works.
 
 The core problem arises from the network isolation that containers provide. Your Gitpod workspace is essentially a mini-virtual machine running remotely, and its ports are not directly exposed to your local network by default. JetBrains Gateway, while excellent for facilitating remote coding, also needs a way to reach those services running within the container. Luckily, Gitpod, in combination with Gateway's features, offers several ways to achieve this.
 

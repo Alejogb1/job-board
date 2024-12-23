@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-change-the-content-type-of-emails-in-laravel-9"
 ---
 
-Okay, let's talk about manipulating email content types within Laravel 9. I recall a project a few years back where we had to generate marketing emails with rich HTML content alongside plain text fallbacks, and it required a more nuanced approach than just relying on the default settings. It’s quite common to need this flexibility, especially when your recipient list includes users with varying email client capabilities.
+, let's talk about manipulating email content types within Laravel 9. I recall a project a few years back where we had to generate marketing emails with rich HTML content alongside plain text fallbacks, and it required a more nuanced approach than just relying on the default settings. It’s quite common to need this flexibility, especially when your recipient list includes users with varying email client capabilities.
 
 The default behaviour in Laravel’s mail system, leveraging SwiftMailer (or now Symfony Mailer, underneath), typically crafts emails with both ‘text/plain’ and ‘text/html’ content when you use the `markdown` or `view` blade methods within your mailables. However, there are definitely times when we need to take finer control. Perhaps you need to send an email as strictly `text/plain` for compliance reasons or perhaps you want to embed image data directly, requiring a multipart alternative structure. We can achieve this through several pathways, each having their own appropriate use-case.
 

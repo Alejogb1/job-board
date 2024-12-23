@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-classify-text-using-spacy"
 ---
 
-Okay, let's talk about text classification with spaCy. I've spent a good chunk of my career building various NLP pipelines, and text classification is one of those fundamental tasks you encounter constantly. It might seem daunting initially, but spaCy, especially when combined with a solid understanding of the underlying concepts, makes it surprisingly approachable and efficient.
+, let's talk about text classification with spaCy. I've spent a good chunk of my career building various NLP pipelines, and text classification is one of those fundamental tasks you encounter constantly. It might seem daunting initially, but spaCy, especially when combined with a solid understanding of the underlying concepts, makes it surprisingly approachable and efficient.
 
 The core idea, of course, is to assign predefined categories to text documents. This could range from simple sentiment analysis (positive, negative, neutral) to more complex tasks such as topic categorization or intent detection. My journey with spaCy started many years ago, working on a large-scale customer feedback analysis system. We had to classify millions of customer reviews into different product categories and sentiment groups to understand pain points effectively. That experience really hammered home the importance of good model training and evaluation.
 
@@ -41,7 +41,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 texts = [
     "This product is amazing.",
     "I am really unhappy with this purchase.",
-    "The service was just okay.",
+    "The service was just .",
     "Absolutely loved it!"
 ]
 

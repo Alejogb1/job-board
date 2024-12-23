@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "regular-expression-string-length-problem"
 ---
 
-Okay so you've got a regex string length issue right been there done that bought the t-shirt and probably wrote the library myself at some point seriously
+ so you've got a regex string length issue right been there done that bought the t-shirt and probably wrote the library myself at some point seriously
 
 Let's break this down because this is actually a classic and you are definitely not alone I've spent countless hours debugging regexes that just wouldn't behave especially when length constraints get involved It's like the regex engine is taunting you sometimes
 

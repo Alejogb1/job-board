@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-add-a-balance-to-the-users-account-of-a-website-directly-where-payment-is-done-in-coinbase"
 ---
 
-Okay, let's tackle this head-on. The challenge of directly manipulating a user's account balance on your website following a Coinbase payment is certainly one I've encountered—more than once, if I'm being honest. It's not merely about moving numbers; it's about the intricate dance between your system, Coinbase's platform, and ensuring both data integrity and user confidence. I’ve personally seen this go wrong in multiple different ways. Let's unpack what's needed here.
+, let's tackle this head-on. The challenge of directly manipulating a user's account balance on your website following a Coinbase payment is certainly one I've encountered—more than once, if I'm being honest. It's not merely about moving numbers; it's about the intricate dance between your system, Coinbase's platform, and ensuring both data integrity and user confidence. I’ve personally seen this go wrong in multiple different ways. Let's unpack what's needed here.
 
 The core of it revolves around a few key areas: secure communication with the Coinbase API, transaction verification, and atomic updates to the user's balance in your database. We can’t just assume that a payment came through—we need robust validation. I remember a rather heated incident during a weekend deployment where we shortcut this part of the process. It involved, let’s say, a few erroneous account balances that we subsequently had to correct manually. From that point forward, robust verification and atomic updates became our mantra.
 

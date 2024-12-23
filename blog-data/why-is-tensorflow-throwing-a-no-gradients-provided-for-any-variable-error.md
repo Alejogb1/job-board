@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-tensorflow-throwing-a-no-gradients-provided-for-any-variable-error"
 ---
 
-Alright, let's tackle this. This particular error, "no gradients provided for any variable," is a classic stumbling block when working with TensorFlow, and I've definitely spent more hours than I care to remember chasing it down across various projects. It's one of those errors that initially seems vague, but the root cause usually comes down to a handful of predictable issues, all centered around how TensorFlow calculates gradients during the backpropagation step of training a model.
+Alright,  This particular error, "no gradients provided for any variable," is a classic stumbling block when working with TensorFlow, and I've definitely spent more hours than I care to remember chasing it down across various projects. It's one of those errors that initially seems vague, but the root cause usually comes down to a handful of predictable issues, all centered around how TensorFlow calculates gradients during the backpropagation step of training a model.
 
 Essentially, this error means that when TensorFlow attempts to compute the derivatives of your loss function with respect to your trainable variables—the necessary step to update your model's parameters—it finds that these gradients are entirely zero or `None`. This implies a breakdown in the computation graph. Let’s break down the common culprits, and I'll provide code snippets to show how these manifest and how to resolve them, drawing from projects past where I've encountered these exact situations.
 

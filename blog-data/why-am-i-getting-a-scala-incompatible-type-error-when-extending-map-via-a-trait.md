@@ -12,7 +12,7 @@ When you try to extend `Map` with a trait, you're essentially creating a new typ
 
 Think of it this way: scala's compiler treats `Map[A, B]` like a sealed container specific to `A` and `B`. Even if your trait *might* work with a different pair, the compiler cannot infer that safely. A simple solution of creating your own `MyMap` class which does implement `Map` will allow scala to understand the correct generic type parameters and how it interacts with the methods. Let's look at a practical example.
 
-Imagine I had to create a custom map to hold configuration properties in one of my past projects. I thought, "Okay, I need some extra utility functions, let me just extend `Map` with a trait". I started with something like this:
+Imagine I had to create a custom map to hold configuration properties in one of my past projects. I thought, ", I need some extra utility functions, let me just extend `Map` with a trait". I started with something like this:
 
 ```scala
 trait ConfigMapOps[K, V] extends Map[K, V] {

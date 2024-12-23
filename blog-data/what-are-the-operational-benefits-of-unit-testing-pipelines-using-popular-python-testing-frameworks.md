@@ -4,7 +4,7 @@ date: "2024-12-10"
 id: "what-are-the-operational-benefits-of-unit-testing-pipelines-using-popular-python-testing-frameworks"
 ---
 
-Okay so you wanna know about unit testing pipelines in Python right  cool stuff  I've been messing around with this for ages  it's a total game changer for writing solid code  especially as things get more complex  you know  the bigger your project the more likely you are to break something unexpectedly  and unit tests are your secret weapon against that chaos
+ so you wanna know about unit testing pipelines in Python right  cool stuff  I've been messing around with this for ages  it's a total game changer for writing solid code  especially as things get more complex  you know  the bigger your project the more likely you are to break something unexpectedly  and unit tests are your secret weapon against that chaos
 
 The main operational benefit is early bug detection  like seriously early  you're catching issues while you're writing the code not weeks later when it's all tangled up and you have no idea what's going on  it's like preventative maintenance for your software  way less painful than debugging a huge mess later on
 

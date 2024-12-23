@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "revert-unchanged-files-perforce-command"
 ---
 
-Okay so you're asking about reverting unchanged files in Perforce right I've been there man I've wrestled with Perforce more times than I care to remember it's like a rite of passage for anyone working with version control at scale let me tell you
+ so you're asking about reverting unchanged files in Perforce right I've been there man I've wrestled with Perforce more times than I care to remember it's like a rite of passage for anyone working with version control at scale let me tell you
 
 So the core issue here is that Perforce sometimes gets a little overzealous It might mark files as opened for edit even though you haven't actually changed them This happens for various reasons maybe a tool touched the file maybe your IDE auto-saved something or maybe just Perforce being Perforce And then when you try to submit your changelist you get this annoying "file(s) not changed on disk" error which can be a total drag especially when you have a lot of files in your workspace
 

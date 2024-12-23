@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-are-transformer-summarizer-outputs-not-consistent-with-a-fixed-seed"
 ---
 
-Okay, let's talk about inconsistent transformer summarization outputs, even with a fixed seed. It's something I’ve definitely banged my head against in more than a few projects, especially back in my early days optimizing NLP pipelines. Thinking I had a fully reproducible system, only to find subtly different summaries creeping in – quite frustrating. So, why does this happen? It’s not a flaw in the concept of random seeding itself, but rather, a convergence of several factors inherent to how these models operate.
+, let's talk about inconsistent transformer summarization outputs, even with a fixed seed. It's something I’ve definitely banged my head against in more than a few projects, especially back in my early days optimizing NLP pipelines. Thinking I had a fully reproducible system, only to find subtly different summaries creeping in – quite frustrating. So, why does this happen? It’s not a flaw in the concept of random seeding itself, but rather, a convergence of several factors inherent to how these models operate.
 
 The most foundational issue stems from the non-deterministic nature of operations on floating-point numbers at the hardware level. While seeding certainly forces the initialization parameters of your model to be the same across runs, it does not guarantee *bit-wise* reproducibility. Floating-point arithmetic, especially within highly parallelized environments like gpus used for training and inference with transformers, isn't precisely reproducible even with the same seed due to parallel reduction operations like summation, which may accumulate values in different orders. Slight variations in hardware or even the specific order in which data is processed during each run can introduce minute numerical differences. These differences, though minuscule initially, can propagate and be amplified through the complex, layered architecture of a transformer.
 
@@ -133,7 +133,7 @@ As you will notice, adding dropout consistently produces non-deterministic resul
 
 **Practical Steps for Improved Consistency**
 
-Okay, so if exact reproducibility is extremely difficult, what can we do? The goal should be to minimize, not eradicate, inconsistencies:
+, so if exact reproducibility is extremely difficult, what can we do? The goal should be to minimize, not eradicate, inconsistencies:
 
 1.  **Control the Environment:** Use consistent versions of libraries, frameworks, and underlying hardware if possible. This also includes using the same version of operating system, docker images and python versions. This is why containerization is so helpful in the machine learning context.
 2.  **Disable Randomization Where Possible:** Examine your inference code. If you are using a library that allows it, disable dropout during inference, and any other operations you can identify as non-deterministic during prediction.

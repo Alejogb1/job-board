@@ -30,7 +30,7 @@ user.avatar.attach(io: File.open('my_file.jpg'), filename: 'my_file.jpg')
 
 ```
 
-this works fine if you're okay with activestorage's default key generation. but if you want a custom key? not so straightforward.
+this works fine if you're  with activestorage's default key generation. but if you want a custom key? not so straightforward.
 
 what happens under the hood is activestorage uses what's called a "key generator" that produces the string that names the blob in the cloud storage. this is abstracted so it's all pretty hidden, and there's not an api for overriding.
 

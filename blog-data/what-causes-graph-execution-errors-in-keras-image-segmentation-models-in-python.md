@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-causes-graph-execution-errors-in-keras-image-segmentation-models-in-python"
 ---
 
-Okay, let's tackle this. I've definitely been down this particular rabbit hole before, and graph execution errors in Keras, especially with image segmentation models, can be frustratingly opaque. It's never a single smoking gun, more often a confluence of factors that come together to break things. Let me break down the main culprits based on my experience, avoiding those overly dramatic descriptions and focusing on the technical nuances.
+,  I've definitely been down this particular rabbit hole before, and graph execution errors in Keras, especially with image segmentation models, can be frustratingly opaque. It's never a single smoking gun, more often a confluence of factors that come together to break things. Let me break down the main culprits based on my experience, avoiding those overly dramatic descriptions and focusing on the technical nuances.
 
 Essentially, graph execution errors in Keras during image segmentation point to issues within the computational graph that TensorFlow (the backend for Keras) builds. These errors typically arise during the training or inference phases when the graph's calculations become inconsistent or impossible to compute. The root causes can be broadly categorized into a few key areas, which I’ll describe below.
 

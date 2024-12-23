@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-do-i-get-attributeerror-nonetype-with-pytorch-in-azure-ml-studio"
 ---
 
-Okay, let's tackle this. That 'NoneType' AttributeError in PyTorch within Azure ML Studio is a common headache, and I've spent my share of evenings debugging it. It usually doesn't point to a single problem but rather a cascade of potential issues surrounding how your data, model, or training pipeline is structured. Let's break it down from my experience, and I’ll provide specific code examples that reflect what I’ve encountered.
+,  That 'NoneType' AttributeError in PyTorch within Azure ML Studio is a common headache, and I've spent my share of evenings debugging it. It usually doesn't point to a single problem but rather a cascade of potential issues surrounding how your data, model, or training pipeline is structured. Let's break it down from my experience, and I’ll provide specific code examples that reflect what I’ve encountered.
 
 At its core, this error signifies that you're attempting to access an attribute or method on an object that evaluates to `None`. In the context of PyTorch, this often surfaces when a crucial step in data processing, model instantiation, or training loop fails to return the expected object but rather returns nothing—`None`. Specifically, within the Azure ML Studio environment, the issue is often exacerbated due to the modular nature of the platform. Data loading, preprocessing, model definition, and training execution are often broken into distinct steps, and that’s where the gaps can emerge if not handled carefully.
 

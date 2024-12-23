@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-fix-the-undefined-method-beforefilter-error-in-my-rails-application"
 ---
 
-Okay, let's tackle this "undefined method `before_filter'" issue. It’s a fairly common stumbling block for anyone working with older Rails applications, especially those that haven’t migrated to more recent versions. I remember encountering this myself back in 2017, while refactoring a legacy application that was still clinging to Rails 3. It's a frustrating error, mostly because the fix is quite straightforward once you understand the underlying change in the framework's API.
+, let's tackle this "undefined method `before_filter'" issue. It’s a fairly common stumbling block for anyone working with older Rails applications, especially those that haven’t migrated to more recent versions. I remember encountering this myself back in 2017, while refactoring a legacy application that was still clinging to Rails 3. It's a frustrating error, mostly because the fix is quite straightforward once you understand the underlying change in the framework's API.
 
 The core problem arises because Rails has deprecated `before_filter` in favor of `before_action`. The former was used in versions of Rails prior to 4, to register callbacks that execute before controller actions. With Rails 4 and beyond, `before_action` became the standard. The error message, “undefined method `before_filter`”, simply indicates that the Rails version you’re using no longer recognizes that method.
 

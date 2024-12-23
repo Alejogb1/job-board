@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-bindev-rails-hang-in-a-new-rails-7-application"
 ---
 
-Okay, let’s unpack this. I've encountered this particular hang-up numerous times, especially in the early phases of setting up a new Rails 7 project, and it can be surprisingly tricky to pin down if you’re not familiar with the common culprits. It's less a bug and more a confluence of setup, environmental factors, and configuration. The `./bin/dev` script is a wrapper, an abstraction to simplify running your Rails app in development. But that simplicity can sometimes hide the underlying issues that cause it to stall.
+, let’s unpack this. I've encountered this particular hang-up numerous times, especially in the early phases of setting up a new Rails 7 project, and it can be surprisingly tricky to pin down if you’re not familiar with the common culprits. It's less a bug and more a confluence of setup, environmental factors, and configuration. The `./bin/dev` script is a wrapper, an abstraction to simplify running your Rails app in development. But that simplicity can sometimes hide the underlying issues that cause it to stall.
 
 The most frequent cause I've found centers on how `foreman` (which `bin/dev` usually leverages) handles processes and port assignments. `Foreman`, if you're unfamiliar, is a process manager that starts up your Rails server along with supporting services like Webpack, etc. What often happens is that one of these processes is already using a port that `foreman` tries to allocate. This creates a deadlock. The process tries to start, fails to bind to the port, and then stalls indefinitely rather than gracefully exiting.
 

@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-is-rubys-method-calling-with-param-before-filter-throws-syntax-error"
 ---
 
-Alright, let's tackle this. I've encountered this particular snag several times, and it usually stems from a fundamental misunderstanding of Ruby's parsing rules, specifically around method definition and invocation, particularly concerning parameter names shadowing method names. I’ve spent more than a few late nights debugging this exact scenario, and while initially frustrating, it became a great lesson in appreciating Ruby's subtleties.
+Alright,  I've encountered this particular snag several times, and it usually stems from a fundamental misunderstanding of Ruby's parsing rules, specifically around method definition and invocation, particularly concerning parameter names shadowing method names. I’ve spent more than a few late nights debugging this exact scenario, and while initially frustrating, it became a great lesson in appreciating Ruby's subtleties.
 
 The core issue arises when you attempt to define a method where one of the parameters shares a name with a built-in Ruby method, particularly before filters in frameworks like Rails, or any context where specific methods are expected to execute in a predictable order. The Ruby interpreter gets confused, treating the parameter as an attempt to call a method rather than receive input data, and consequently throws a syntax error. This isn't a flaw in Ruby itself, but rather a limitation— or perhaps, a carefully considered aspect— of its syntax and evaluation process.
 

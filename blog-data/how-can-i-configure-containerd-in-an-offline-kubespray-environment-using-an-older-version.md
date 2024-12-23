@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-configure-containerd-in-an-offline-kubespray-environment-using-an-older-version"
 ---
 
-Okay, let's tackle this. It's a situation I've encountered more than once, particularly in those tightly controlled or air-gapped environments where pulling directly from public repositories just isn't an option. Setting up containerd within an offline kubespray deployment, especially when using an older version, requires careful planning and a bit of manual wrangling. It's not as straightforward as a standard online install, but it's definitely manageable. Let me walk you through the steps and some of the challenges I've faced.
+,  It's a situation I've encountered more than once, particularly in those tightly controlled or air-gapped environments where pulling directly from public repositories just isn't an option. Setting up containerd within an offline kubespray deployment, especially when using an older version, requires careful planning and a bit of manual wrangling. It's not as straightforward as a standard online install, but it's definitely manageable. Let me walk you through the steps and some of the challenges I've faced.
 
 The core issue here revolves around dependency management and ensuring that all the necessary components of containerd, along with its container images, are available locally. Kubespray, in its default configuration, expects to fetch these artifacts from remote sources. We need to circumvent this by pre-populating the required files and adjusting the kubespray configuration accordingly.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-azure-web-apps-use-cname-records-to-switch-domain-registrars"
 ---
 
-Okay, let's tackle this. I recall a project back in 2017, a migration actually, where we were moving a sizable e-commerce platform to Azure. We faced precisely this challenge: seamlessly switching domain registrars for our primary web app without downtime, and naturally, using CNAME records was a critical part of that strategy. It wasn't exactly straightforward, but we got it working reliably with a bit of careful planning and testing.
+,  I recall a project back in 2017, a migration actually, where we were moving a sizable e-commerce platform to Azure. We faced precisely this challenge: seamlessly switching domain registrars for our primary web app without downtime, and naturally, using CNAME records was a critical part of that strategy. It wasn't exactly straightforward, but we got it working reliably with a bit of careful planning and testing.
 
 The core issue, as you've likely already surmised, lies in the mechanics of DNS propagation and how Azure Web Apps validates domain ownership. When dealing with different registrars, the challenge isn't just about changing where the domain points; it's ensuring Azure recognizes the changes and can correctly service requests. Azure requires you to provide proof that you control a domain before you can use it with an app service. This validation usually happens by you inserting DNS records, typically A records or CNAMEs, that Azure can then verify. So, let's break it down.
 

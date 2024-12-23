@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "bigquery-error-in-load-operation-too-many-total-leaf-fields"
 ---
 
-Okay so you're getting that "BigQuery error in load operation too many total leaf fields" eh been there done that got the t-shirt and probably accidentally deleted a few staging tables along the way let me tell you
+ so you're getting that "BigQuery error in load operation too many total leaf fields" eh been there done that got the t-shirt and probably accidentally deleted a few staging tables along the way let me tell you
 
 This error screams one thing you've got a monstrous schema trying to cram way too many columns into BigQuery it's like trying to fit a giraffe into a Mini Cooper you know its gonna end badly BigQuery has its limits especially when you're dealing with nested or repeated fields each of those contributes to the leaf field count and it adds up quick
 

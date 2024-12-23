@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "emoroberta-emotion-detection-text-usage"
 ---
 
-Okay so you're asking about using emoroberta for emotion detection in text right I've been down this road myself trust me Its a bit of a rabbit hole but definitely doable. Let me walk you through it based on my experience you'll see it's not as bad as it looks.
+ so you're asking about using emoroberta for emotion detection in text right I've been down this road myself trust me Its a bit of a rabbit hole but definitely doable. Let me walk you through it based on my experience you'll see it's not as bad as it looks.
 
 First off emoroberta its a flavor of roberta its been fine tuned for emotion classification tasks. It's not some magic box though it still needs proper handling and understanding. My first project with it was back in 2021 we were trying to gauge customer sentiment from their online forum posts. Oh boy was that a mess of slang and sarcasm. We initially tried a basic sentiment analyzer the kind that just looks for positive or negative words it was laughable it thought everything was a heated argument we are now using emoroberta and its doing much much better.
 

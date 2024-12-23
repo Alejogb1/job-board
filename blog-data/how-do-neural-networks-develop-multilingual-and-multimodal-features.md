@@ -4,7 +4,7 @@ date: "2024-12-11"
 id: "how-do-neural-networks-develop-multilingual-and-multimodal-features"
 ---
 
-Okay so you wanna know how neural nets get multilingual and multimodal right  cool stuff  it's like teaching a super smart parrot to speak multiple languages and understand pictures videos and even sounds all at once  pretty wild right
+ so you wanna know how neural nets get multilingual and multimodal right  cool stuff  it's like teaching a super smart parrot to speak multiple languages and understand pictures videos and even sounds all at once  pretty wild right
 
 First off  let's break it down  multilingual means handling multiple languages  think English Spanish French Mandarin  the works  and multimodal means dealing with different kinds of information  text images audio video  the whole shebang  Neural networks aren't magic they learn from data  lots and lots of data  and the key is how we structure that data and train the network
 

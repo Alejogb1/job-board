@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "how-to-count-unique-values-in-r-data-frame"
 ---
 
-Okay so you're hitting the classic unique value count problem in R data frames yeah I've been there trust me its a rite of passage for any data wrangler who deals with R I mean its not like its rocket science but sometimes it feels like it right like when you first start wrestling with it haha
+ so you're hitting the classic unique value count problem in R data frames yeah I've been there trust me its a rite of passage for any data wrangler who deals with R I mean its not like its rocket science but sometimes it feels like it right like when you first start wrestling with it haha
 
 So I remember this one project back at my old gig it was all about analyzing website traffic data and we had these massive data frames full of user interactions think sessions page visits actions and all that good stuff and yeah we needed to get a grip on unique user counts for different pages for timeframes for categories you name it And we were using R because at that time we had some proprietary libraries that worked better there and moving to python was a pita We also had limited computational power so our R code had to be efficient so memory had to be considered we had no cloud infrastructure so everything was running on our old server
 
@@ -20,7 +20,7 @@ df <- data.frame(
 )
 ```
 
-Okay so we want to count how many unique entries we have in columns right? The most straightforward way would be using the `unique()` function combined with the `length()` function. Its the go-to solution for many problems when dealing with unique values and counting them
+ so we want to count how many unique entries we have in columns right? The most straightforward way would be using the `unique()` function combined with the `length()` function. Its the go-to solution for many problems when dealing with unique values and counting them
 
 Here's a basic snippet you can use
 
@@ -94,9 +94,9 @@ print(paste("Unique Location using dplyr:", unique_location_dplyr))
 
 This function also takes a dataframe and a vector of column names. It then uses `distinct` which will reduce the data frame to the unique combinations of the chosen columns. Finally it just returns the number of rows using `nrow()`. Now this method is generally faster especially when you have big data frames because `dplyr` works under the hood with optimized C++ code for those operations. We also found this way more readable and easier to maintain in our team it made everyone happier even the backend guys who usually did not have to deal with R. And believe me it's better to have happy co-workers than to have to explain your crappy code on a friday afternoon.
 
-Okay a bit of advice here you should consider which method is better for your case because sometimes you don't need to import the whole dplyr package and a simple length of unique will do. If your dataset is small a function will suffice, if its huge and you are dealing with large number of combinations then dplyr is your friend. It also depends what your data looks like but that's another subject for another day.
+ a bit of advice here you should consider which method is better for your case because sometimes you don't need to import the whole dplyr package and a simple length of unique will do. If your dataset is small a function will suffice, if its huge and you are dealing with large number of combinations then dplyr is your friend. It also depends what your data looks like but that's another subject for another day.
 
-Okay now some resources if you want to get deeper into the weeds
+ now some resources if you want to get deeper into the weeds
 
 For core R concepts and data manipulation I would strongly recommend "The R Book" by Michael J. Crawley it's like an R bible it covers almost everything you need to know for R fundamentals.
 

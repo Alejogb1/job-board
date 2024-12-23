@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "xor-eax-eax-assembly-code-explanation"
 ---
 
-Okay so you're asking about `xor eax eax` in assembly right Yeah I know that dance I've probably seen this instruction more times than I've had hot meals in my life Back in my early days when I was still wrestling with 8086 assembly on a dusty old PC I actually spent a good few hours debugging a program where I'd accidentally overwritten a crucial register with a value I didn't mean to and this exact instruction saved my behind by resetting the register to zero without using the move instruction it was an educational experience I’ll tell you
+ so you're asking about `xor eax eax` in assembly right Yeah I know that dance I've probably seen this instruction more times than I've had hot meals in my life Back in my early days when I was still wrestling with 8086 assembly on a dusty old PC I actually spent a good few hours debugging a program where I'd accidentally overwritten a crucial register with a value I didn't mean to and this exact instruction saved my behind by resetting the register to zero without using the move instruction it was an educational experience I’ll tell you
 
 The core function of `xor eax eax` is incredibly straightforward It performs a bitwise XOR operation between the register `eax` and itself Now the trick here is that the XOR operation outputs 1 if the input bits are different and 0 if they are the same Since any number XORed with itself results in zero this instruction effectively sets the `eax` register to zero This is not a some kind of black magic it's just basic logic gate stuff really think of it as flipping a switch twice you end up where you started zero
 
@@ -58,7 +58,7 @@ return_not_zero:
     ret
 ```
 
-Okay this is where we get into the deeper stuff if you’re actually interested in this stuff then I can recommend two resources they have been really essential for me over time Firstly Patterson and Hennessy’s Computer Organization and Design book is a goldmine it is seriously the bible for hardware and assembly understand it and you'll get what’s really going on I mean you can find digital versions of it I think it is a good way to invest some cash in knowledge
+ this is where we get into the deeper stuff if you’re actually interested in this stuff then I can recommend two resources they have been really essential for me over time Firstly Patterson and Hennessy’s Computer Organization and Design book is a goldmine it is seriously the bible for hardware and assembly understand it and you'll get what’s really going on I mean you can find digital versions of it I think it is a good way to invest some cash in knowledge
 
 And secondly if you're digging deeper into optimization specifically with assembly you need to look at Agner Fog's microarchitecture manuals they’re extremely dense but they detail the performance characteristics of different instructions on various Intel and AMD processors these resources are seriously worth the time it's like learning a secret language that allows you to really get what's going on with the processor and how these instructions are being executed it’s a lot of learning but it is worth it
 

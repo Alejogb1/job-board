@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-disable-keras-metrics-computation-during-training"
 ---
 
-Alright, let's tackle this. Disabling metric computation during keras training isn't always the first thing that comes to mind, but it's a surprisingly useful technique, especially when you're chasing performance gains or dealing with very large datasets. I remember a project years back where we were training a ridiculously large image recognition model – the default metrics calculation was adding a substantial overhead, slowing our epochs significantly. Finding a way to sidestep that proved crucial for getting the project delivered on time.
+Alright,  Disabling metric computation during keras training isn't always the first thing that comes to mind, but it's a surprisingly useful technique, especially when you're chasing performance gains or dealing with very large datasets. I remember a project years back where we were training a ridiculously large image recognition model – the default metrics calculation was adding a substantial overhead, slowing our epochs significantly. Finding a way to sidestep that proved crucial for getting the project delivered on time.
 
 The core issue is that Keras, by default, computes and reports metrics *for each batch* during training. This is great for real-time monitoring and debugging but comes at a cost. The calculation of these metrics, especially for complex ones like f1-score or AUC, requires additional operations beyond just the forward and backward passes of the model. If you’re confident in your model architecture and training setup, and particularly if you're aiming for raw speed, disabling these metrics can offer a noticeable performance boost. Now, how do we actually do this?
 

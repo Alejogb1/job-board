@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-ferrum-mouseup-not-working-with-click-and-drag"
 ---
 
-Alright, let's tackle this. It's a situation I've seen crop up more than once, and the frustration it causes is certainly understandable. The core of the issue with `ferrum`'s `mouse.up` not triggering as expected during a click-and-drag operation usually stems from how events are being handled under the hood in the browser, and how `ferrum` interacts with those events. It's less about `ferrum` being inherently broken and more about a nuanced understanding of the event lifecycle, specifically related to mouse interactions.
+Alright,  It's a situation I've seen crop up more than once, and the frustration it causes is certainly understandable. The core of the issue with `ferrum`'s `mouse.up` not triggering as expected during a click-and-drag operation usually stems from how events are being handled under the hood in the browser, and how `ferrum` interacts with those events. It's less about `ferrum` being inherently broken and more about a nuanced understanding of the event lifecycle, specifically related to mouse interactions.
 
 My experience with headless browsers and automated testing has often led me down this rabbit hole. Back when I was heavily involved in developing our UI automation framework at a previous company, we had a similar problem with drag-and-drop functionalities implemented using native browser APIs. It felt like the `mouse.up` events were being eaten, as we sometimes say. The problem wasn’t with the automation library itself, but with us not accounting for the event propagation and capture mechanisms accurately. Let's dig a bit deeper into this.
 

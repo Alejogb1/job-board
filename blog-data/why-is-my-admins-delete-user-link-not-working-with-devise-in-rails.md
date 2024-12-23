@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-my-admins-delete-user-link-not-working-with-devise-in-rails"
 ---
 
-Okay, let's tackle this. It's a familiar situation, actually. I recall spending a good portion of a weekend a few years back debugging a very similar issue on a project using Rails and Devise. The delete user link, seemingly straightforward, refused to cooperate, and it turned out there were a few common culprits lurking beneath the surface.
+,  It's a familiar situation, actually. I recall spending a good portion of a weekend a few years back debugging a very similar issue on a project using Rails and Devise. The delete user link, seemingly straightforward, refused to cooperate, and it turned out there were a few common culprits lurking beneath the surface.
 
 Essentially, when a delete user link isn't working with Devise in Rails, the root cause often boils down to discrepancies in the intended route, missing or incorrect authorization, or issues with the delete method itself. Let's break it down, and I'll illustrate with examples based on common pitfalls i've seen.
 
@@ -33,7 +33,7 @@ Now, in your `admin/users/index.html.erb` view, a naive attempt at a delete link
 <% end %>
 ```
 
-This looks okay at first glance, but the generated link, in this scenario, would be something like `/users/:id`, not `/admin/users/:id`. This is because the `link_to user` is interpreting user to use the main user route not the admin scoped one.
+This looks  at first glance, but the generated link, in this scenario, would be something like `/users/:id`, not `/admin/users/:id`. This is because the `link_to user` is interpreting user to use the main user route not the admin scoped one.
 
 Here's the corrected version with the necessary prefix:
 

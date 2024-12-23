@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "discretionary-data-from-magnetic-strip-credit-card-how-to-parse"
 ---
 
-Okay so magnetic stripe data parsing yeah I've been there done that probably more times than I care to admit Let's just say early days of embedded systems and point of sale terminals were a wild west of encoding standards and lack of proper documentation
+ so magnetic stripe data parsing yeah I've been there done that probably more times than I care to admit Let's just say early days of embedded systems and point of sale terminals were a wild west of encoding standards and lack of proper documentation
 
 First things first you gotta understand what you're actually dealing with A magnetic stripe card usually has three tracks Track 1 Track 2 and Track 3 but most of the time you're only interested in Track 1 and Track 2 Track 3 is less common and usually for internal use of financial institutions
 
@@ -32,7 +32,7 @@ The question mark means that discretionary data might not be there which is very
 
 Now the most confusing part is discretionary data It’s not standardized so it really depends on the issuer. You might find things like card sequence number CVV or CVC data extra security information or even just random padding to fill space. You need to figure out the format of that part based on how the data was encoded in the first place. And yes sometimes you need to reverse engineer this from the data that you have which is what I have done in my past. It’s pretty fun but pretty tiring too
 
-Okay let me show some python code this is not a complete solution just an outline
+ let me show some python code this is not a complete solution just an outline
 
 ```python
 def parse_track1(track1_data):

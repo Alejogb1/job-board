@@ -66,7 +66,7 @@ class UnetGenerator(nn.Module):
         return torch.tanh(out)
 ```
 
-the discriminator is as important as the generator. a weak discriminator is like having a student with no standards, whatever the generator produces is okay, so the generator does not improve. try using a patchgan discriminator instead of a single image discriminator. the patchgan is just more effective to catch local imperfections in the generated images. try increasing the number of layers, or adding more filters. just watch out for overfitting, and if you increase the number of layers on the discriminator, you need to increase the capacity on the generator too or the generator may never learn the desired transformation.
+the discriminator is as important as the generator. a weak discriminator is like having a student with no standards, whatever the generator produces is , so the generator does not improve. try using a patchgan discriminator instead of a single image discriminator. the patchgan is just more effective to catch local imperfections in the generated images. try increasing the number of layers, or adding more filters. just watch out for overfitting, and if you increase the number of layers on the discriminator, you need to increase the capacity on the generator too or the generator may never learn the desired transformation.
 now, here is a very basic patchgan discriminator:
 
 ```python

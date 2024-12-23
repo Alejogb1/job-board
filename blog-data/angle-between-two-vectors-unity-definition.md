@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "angle-between-two-vectors-unity-definition"
 ---
 
-Okay so you're asking about the angle between two vectors and how unity or unit vectors play into that I gotcha Been there wrestled with this exact problem more times than I care to admit especially back in my early days building 3D engines from scratch man that was a mess let me tell you
+ so you're asking about the angle between two vectors and how unity or unit vectors play into that I gotcha Been there wrestled with this exact problem more times than I care to admit especially back in my early days building 3D engines from scratch man that was a mess let me tell you
 
 So first things first let's break down what a unit vector is A unit vector is basically a vector that has a magnitude of one it points in a certain direction but its length is always 1 We achieve this by taking a regular vector and dividing it by its own magnitude Think of it as normalizing the vector to its core direction and losing the scaling information
 
@@ -39,7 +39,7 @@ class Vector:
       return self.x * other.x + self.y * other.y + self.z * other.z
 ```
 
-Okay that’s the basic vector stuff. Now let's write the core method for getting the angle between vectors:
+ that’s the basic vector stuff. Now let's write the core method for getting the angle between vectors:
 
 ```python
 def angle_between(vector1, vector2):

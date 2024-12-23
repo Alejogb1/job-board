@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-set-a-ui-elements-accessibility-level"
 ---
 
-Okay, let's tackle this. I’ve certainly spent my fair share of hours fine-tuning accessibility, and setting the proper level for ui elements is a foundational aspect. It's not just about ticking a box; it’s about crafting an experience that genuinely works for everyone, regardless of their abilities. So, how do you actually go about doing it? It’s more nuanced than simply marking something as “accessible” or “not accessible.”
+,  I’ve certainly spent my fair share of hours fine-tuning accessibility, and setting the proper level for ui elements is a foundational aspect. It's not just about ticking a box; it’s about crafting an experience that genuinely works for everyone, regardless of their abilities. So, how do you actually go about doing it? It’s more nuanced than simply marking something as “accessible” or “not accessible.”
 
 Fundamentally, setting an accessibility level means providing sufficient semantic information about a ui element for assistive technologies, like screen readers, to correctly interpret and convey its purpose and state. This involves a multi-layered approach, touching on aspects from basic html attributes to intricate aria roles and states. I recall one particularly challenging project years back, where we had to retrofit a complex web application initially developed without accessibility considerations. The sheer amount of rework highlighted how crucial it is to incorporate accessibility from the outset, not as an afterthought.
 
@@ -16,7 +16,7 @@ Let's start with html and aria. In the most basic case, if you have a simple but
 <button>Click Me</button>
 ```
 
-This is, generally speaking, okay. The browser already knows a button is an interactive element. However, things become more interesting and complicated when dealing with elements that are less inherently semantic, or if the default behavior doesn't fully convey the element's intended use.
+This is, generally speaking, . The browser already knows a button is an interactive element. However, things become more interesting and complicated when dealing with elements that are less inherently semantic, or if the default behavior doesn't fully convey the element's intended use.
 
 For example, suppose we're using a `div` to create something that visually *looks* like a button. In that scenario, assistive technologies would not recognize it as a button since a div isn't intended for interaction. That is where aria comes in. To fix it, we need to inform the assistive technology about the purpose of this element through the use of `role` and `aria-label` (or similar attributes).
 

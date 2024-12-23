@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-is-fresh-laravel-install-failing-through-docker-due-to-octan"
 ---
 
-Okay, let's tackle this. I've seen this particular problem surface more than a few times, especially in projects adopting the newer Laravel ecosystem features, and it’s almost always down to a few key configuration mismatches between the expected environment by Octane and what's actually being provided by the docker setup. It's definitely not a ‘one size fits all’ diagnosis, but we can generally trace it back to issues with file permissions, shared memory, and specifically, the specific way Octane expects to interact with the underlying server.
+,  I've seen this particular problem surface more than a few times, especially in projects adopting the newer Laravel ecosystem features, and it’s almost always down to a few key configuration mismatches between the expected environment by Octane and what's actually being provided by the docker setup. It's definitely not a ‘one size fits all’ diagnosis, but we can generally trace it back to issues with file permissions, shared memory, and specifically, the specific way Octane expects to interact with the underlying server.
 
 The core of the problem usually boils down to the fact that Octane relies heavily on shared memory and file system access optimizations to achieve its performance gains. Docker containers, by their nature, are isolated environments, and sometimes the configurations required for Octane to function correctly aren't readily available out-of-the-box. Specifically, when you're seeing a failure right after a fresh Laravel install, it indicates a pretty fundamental incompatibility. Let's unpack this a little further.
 

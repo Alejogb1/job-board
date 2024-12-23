@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-apply-udfs-to-columns-in-pyspark-dataframes"
 ---
 
-Okay, let's tackle this. I've spent a good chunk of my career knee-deep in pyspark, and applying user-defined functions (udfs) to dataframe columns is something I’ve had to refine more than once. It’s a powerful feature, but also one that can introduce performance bottlenecks if not handled carefully. I remember one particular project involving genomic data; we had to implement some highly specialized calculations across millions of records, necessitating the use of udfs. It was a trial by fire, let me tell you, but we ironed out some solid strategies that I still lean on today.
+,  I've spent a good chunk of my career knee-deep in pyspark, and applying user-defined functions (udfs) to dataframe columns is something I’ve had to refine more than once. It’s a powerful feature, but also one that can introduce performance bottlenecks if not handled carefully. I remember one particular project involving genomic data; we had to implement some highly specialized calculations across millions of records, necessitating the use of udfs. It was a trial by fire, let me tell you, but we ironed out some solid strategies that I still lean on today.
 
 Fundamentally, udfs in pyspark allow you to extend the built-in functionality of dataframe manipulations. When the standard pyspark functions don't quite cut it, you fall back on udfs to execute custom python logic column-wise. The process itself is fairly straightforward: you define a python function, then register it as a udf with pyspark, and finally apply it to your dataframe. However, the devil, as always, is in the details – specifically in performance considerations and proper type handling.
 

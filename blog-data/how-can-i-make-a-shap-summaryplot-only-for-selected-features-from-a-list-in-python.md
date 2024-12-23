@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-make-a-shap-summaryplot-only-for-selected-features-from-a-list-in-python"
 ---
 
-Alright, let's tackle this. It's a common scenario, and I've certainly found myself needing to visualize only a subset of features from SHAP (SHapley Additive exPlanations) output, especially when dealing with datasets with numerous variables. It's inefficient and often visually overwhelming to plot everything. So, focusing on the problem of creating a `summary_plot` for specific features, we need to carefully slice the SHAP values. I'll share my past experiences and how I approached it.
+Alright,  It's a common scenario, and I've certainly found myself needing to visualize only a subset of features from SHAP (SHapley Additive exPlanations) output, especially when dealing with datasets with numerous variables. It's inefficient and often visually overwhelming to plot everything. So, focusing on the problem of creating a `summary_plot` for specific features, we need to carefully slice the SHAP values. I'll share my past experiences and how I approached it.
 
 Early in my career, working on a churn prediction model, I encountered this directly. We had a model using over 100 features, and the default `shap.summary_plot()` was utterly unreadable. That’s when I had to develop this feature-selection technique with SHAP values. The core concept is to filter the SHAP values array itself before passing it to the plot function. Here's how I usually approach it.
 

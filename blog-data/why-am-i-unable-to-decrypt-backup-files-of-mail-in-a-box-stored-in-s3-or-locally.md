@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-am-i-unable-to-decrypt-backup-files-of-mail-in-a-box-stored-in-s3-or-locally"
 ---
 
-Okay so you're having trouble decrypting your Mail-in-a-box backups right Been there done that tons of times especially when I was first messing around with self-hosted email back in '16 before I even properly understood symmetric encryption versus asymmetric
+ so you're having trouble decrypting your Mail-in-a-box backups right Been there done that tons of times especially when I was first messing around with self-hosted email back in '16 before I even properly understood symmetric encryption versus asymmetric
 
 Let’s break this down without getting too deep into fancy terms. Mail-in-a-box uses encryption for backups that’s a fact you can see it right there in the code and it's not a complicated idea once you actually get it but it can be a pain to debug if you haven’t done it before. This isn't your typical "oops I forgot the password" kind of problem though it definitely could be that I've done that a few times myself if you use some password manager make sure the passwords match I recommend bitwarden seriously
 

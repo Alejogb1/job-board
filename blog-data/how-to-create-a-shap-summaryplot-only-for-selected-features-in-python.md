@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-create-a-shap-summaryplot-only-for-selected-features-in-python"
 ---
 
-Okay, let's tackle this. Having spent a fair chunk of my career knee-deep in model explainability, particularly with SHAP, I've encountered this specific need more times than I care to count. The default `shap.summary_plot` is powerful, but it can be overwhelming and sometimes, frankly, irrelevant when you’re focused on just a subset of your model's inputs. Filtering it down efficiently and correctly is a crucial skill for targeted analysis. Let me walk you through how I've typically approached this, with code examples and rationale.
+,  Having spent a fair chunk of my career knee-deep in model explainability, particularly with SHAP, I've encountered this specific need more times than I care to count. The default `shap.summary_plot` is powerful, but it can be overwhelming and sometimes, frankly, irrelevant when you’re focused on just a subset of your model's inputs. Filtering it down efficiently and correctly is a crucial skill for targeted analysis. Let me walk you through how I've typically approached this, with code examples and rationale.
 
 The core challenge with `shap.summary_plot` is that it's designed to present a holistic view of all features by default. When you only want to focus on, say, the top 3 most impactful features or features related to a specific business domain, the standard approach can be cumbersome. The key here is to manipulate the shap values *before* you hand them over to the `summary_plot` function, not trying to filter within the plotting function itself. We accomplish this by selective slicing of the underlying shap values matrix.
 

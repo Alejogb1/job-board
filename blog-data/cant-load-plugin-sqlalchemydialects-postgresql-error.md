@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "cant-load-plugin-sqlalchemydialects-postgresql-error"
 ---
 
-Okay I've seen this before plenty of times this 'can't load sqlalchemy dialects postgresql' thing it's a classic really It usually boils down to a few basic issues and I can break it down for you without the fluff
+ I've seen this before plenty of times this 'can't load sqlalchemy dialects postgresql' thing it's a classic really It usually boils down to a few basic issues and I can break it down for you without the fluff
 
 So I remember the first time I ran into this oh boy It was back in my early days I was working on this data pipeline project with a bunch of sensor data flowing in it was supposed to be super clean and fast but of course it wasn't I was using sqlalchemy as the ORM because well its sqlalchemy and we were using a postgres database of course It seemed easy enough in theory just connect and start querying but nope I got this error a wall of text that pretty much said 'can't find the postgresql dialect' I spent a good 2 hours scratching my head before I realized the problem which by the way was really dumb when I think about it now
 

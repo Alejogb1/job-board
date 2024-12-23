@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-extract-data-from-domain-driven-design-entitiesaggregates"
 ---
 
-Okay, let's tackle data extraction from DDD entities and aggregates. I've seen this trip up many teams, particularly when they're transitioning to a more domain-centric approach. The heart of the issue isn't the data itself, but how we conceptualize its access in relation to the domain model. It's about preserving the integrity of your aggregates and avoiding the dreaded "anemic domain model". Over my years, I've encountered projects that fell into this pitfall, and I've developed some patterns that tend to work pretty reliably.
+, let's tackle data extraction from DDD entities and aggregates. I've seen this trip up many teams, particularly when they're transitioning to a more domain-centric approach. The heart of the issue isn't the data itself, but how we conceptualize its access in relation to the domain model. It's about preserving the integrity of your aggregates and avoiding the dreaded "anemic domain model". Over my years, I've encountered projects that fell into this pitfall, and I've developed some patterns that tend to work pretty reliably.
 
 The fundamental principle here is to avoid directly exposing the internal state of your entities. Remember, your entities and aggregates are meant to encapsulate business logic and enforce domain invariants. Directly accessing their fields from outside breaks this encapsulation, leading to inconsistent states and brittle code. So, the challenge is to extract the data *without* compromising the encapsulation that DDD strives for. We need to think of it as exposing a carefully considered view, not a raw data dump.
 

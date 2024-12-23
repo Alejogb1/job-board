@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-cakephp-2-handle-php-71-traits-without-collision-errors"
 ---
 
-Let's tackle this. I remember back in the day, around 2017, when php 7.1 started gaining serious traction, a significant part of my work was migrating legacy cakephp 2 applications. dealing with traits and cake's component system was, shall we say, *educational*. the short answer to your question is: yes, cakephp 2 can fundamentally *handle* php 7.1 traits, but you have to be mindful of how you use them, particularly with respect to potential collision errors.
+ I remember back in the day, around 2017, when php 7.1 started gaining serious traction, a significant part of my work was migrating legacy cakephp 2 applications. dealing with traits and cake's component system was, shall we say, *educational*. the short answer to your question is: yes, cakephp 2 can fundamentally *handle* php 7.1 traits, but you have to be mindful of how you use them, particularly with respect to potential collision errors.
 
 The issue isn't that cakephp 2 is inherently incompatible with traits. PHP's trait system at its core is a language feature independent of the framework. the core challenge arises when you start mixing traits, particularly within cakephp's component or behavior systems, or when traits happen to define methods or properties that clash with those already existing in your cakephp application or its base classes.
 

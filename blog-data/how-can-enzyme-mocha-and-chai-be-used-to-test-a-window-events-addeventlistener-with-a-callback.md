@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-enzyme-mocha-and-chai-be-used-to-test-a-window-events-addeventlistener-with-a-callback"
 ---
 
-Let's tackle this. Over the years, I've found that testing event listeners, particularly those tied to the window object, can become a surprisingly intricate affair. It's not enough to simply trigger an event and hope the callback fires; we need to be certain it does, and we also want to verify the data passed to the callback. The combination of enzyme, mocha, and chai, when wielded properly, provides a robust framework for this kind of testing.
+ Over the years, I've found that testing event listeners, particularly those tied to the window object, can become a surprisingly intricate affair. It's not enough to simply trigger an event and hope the callback fires; we need to be certain it does, and we also want to verify the data passed to the callback. The combination of enzyme, mocha, and chai, when wielded properly, provides a robust framework for this kind of testing.
 
 First, let's understand the problem. The `window` object operates somewhat outside the typical scope of component-based testing, particularly when we're using React or similar frameworks. You can't simply render a component and expect `window.addEventListener` to behave within the shallow rendering context. This is where mocking and careful assertion are key.
 

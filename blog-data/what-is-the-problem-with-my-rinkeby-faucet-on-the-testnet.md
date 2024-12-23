@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-is-the-problem-with-my-rinkeby-faucet-on-the-testnet"
 ---
 
-Okay, let's talk about Rinkeby faucets. It’s a classic issue, and one I’ve definitely spent a few late nights troubleshooting back in my early days with Ethereum development. Specifically regarding Rinkeby, or rather *used to be Rinkeby*, I remember dealing with it extensively. It’s not so much a 'problem' with your faucet directly, as it is an issue stemming from the broader testnet landscape and the evolution of Ethereum itself.
+, let's talk about Rinkeby faucets. It’s a classic issue, and one I’ve definitely spent a few late nights troubleshooting back in my early days with Ethereum development. Specifically regarding Rinkeby, or rather *used to be Rinkeby*, I remember dealing with it extensively. It’s not so much a 'problem' with your faucet directly, as it is an issue stemming from the broader testnet landscape and the evolution of Ethereum itself.
 
 The core of the problem is this: Rinkeby, along with other proof-of-authority testnets, like Kovan and Ropsten, are now deprecated. They’ve been officially sunset in favor of proof-of-stake testnets such as Goerli and Sepolia. What you're likely experiencing isn't a failure in your personal setup or some specific coding blunder, but rather the consequence of relying on a network that’s no longer being maintained. This is particularly frustrating when you’ve worked with them previously and everything seemed to be working correctly.
 

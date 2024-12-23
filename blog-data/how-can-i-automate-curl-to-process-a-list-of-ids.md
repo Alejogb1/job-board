@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-automate-curl-to-process-a-list-of-ids"
 ---
 
-Alright, let's tackle this. Automating `curl` with a list of ids is a common task, and thankfully, there are quite a few reliable approaches to accomplish it. I remember back in my days developing an inventory system for a small e-commerce platform, we had to routinely pull data for thousands of products using their unique identifiers via an api. That's where I first refined my methods for doing exactly this. There are several ways, and the optimal one really depends on the specific context, but I'll walk through a few.
+Alright,  Automating `curl` with a list of ids is a common task, and thankfully, there are quite a few reliable approaches to accomplish it. I remember back in my days developing an inventory system for a small e-commerce platform, we had to routinely pull data for thousands of products using their unique identifiers via an api. That's where I first refined my methods for doing exactly this. There are several ways, and the optimal one really depends on the specific context, but I'll walk through a few.
 
 Fundamentally, the challenge boils down to two key aspects: constructing the correct `curl` command for each id, and efficiently executing those commands. We can achieve this through scripting, using languages that are particularly well-suited for this sort of task. Let’s delve into three different examples using bash, python, and node.js – each has its strengths.
 

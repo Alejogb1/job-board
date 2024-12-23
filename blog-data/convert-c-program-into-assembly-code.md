@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "convert-c-program-into-assembly-code"
 ---
 
-Okay so you want to convert C code to assembly right Been there done that a million times It’s a rite of passage for anyone who gets serious about systems level stuff I remember back in uni we had this professor old school guy total wizard with low level but terrible with anything resembling user interfaces He made us write entire operating systems in assembly using C only for basic bootstrapping talk about a crash course in the reality of computer architectures
+ so you want to convert C code to assembly right Been there done that a million times It’s a rite of passage for anyone who gets serious about systems level stuff I remember back in uni we had this professor old school guy total wizard with low level but terrible with anything resembling user interfaces He made us write entire operating systems in assembly using C only for basic bootstrapping talk about a crash course in the reality of computer architectures
 
 First thing’s first understand that assembly isn't some magic black box it's just a human readable representation of machine code Machine code is what the CPU actually executes assembly is our way of talking to it without using binary strings Remember those days trying to punch in binary instructions on punch cards good times no actually horrible times I try to block that out
 
@@ -12,7 +12,7 @@ The conversion process you are talking about is called compilation and specifica
 
 Now the specific assembly dialect you end up with depends heavily on your target architecture Are you on x86 x64 ARM RISC-V you get the idea Each architecture has its own instruction set and therefore its own assembly language This can be painful but also enlightening When I was doing some reverse engineering a while back I spent days tracing through x86 assembly trying to figure out some obscure malware function that was fun not really though but educational
 
-Okay lets get practical Let’s say we have this simple C program
+ lets get practical Let’s say we have this simple C program
 
 ```c
 #include <stdio.h>
@@ -50,7 +50,7 @@ This produces an assembly file `sum.s` If you open it you'll likely see some boi
   call  printf
 ```
 
-Okay so what is going on here We have `movl` for moving data `addl` for adding The  `%rbp` register represents the base pointer for the stack `eax` `esi` are general purpose registers used to perform computations and move arguments to and from function calls  and the strange `-4(%rbp)`  `-8(%rbp)`  `-12(%rbp)` are stack memory locations allocated for our local variables x y and sum respectively `$.LC0` is the string literal for printf. In short this low-level stuff is managing and manipulating data directly in memory and registers It's very close to the hardware and that's where the true understanding of how computers operate happens
+ so what is going on here We have `movl` for moving data `addl` for adding The  `%rbp` register represents the base pointer for the stack `eax` `esi` are general purpose registers used to perform computations and move arguments to and from function calls  and the strange `-4(%rbp)`  `-8(%rbp)`  `-12(%rbp)` are stack memory locations allocated for our local variables x y and sum respectively `$.LC0` is the string literal for printf. In short this low-level stuff is managing and manipulating data directly in memory and registers It's very close to the hardware and that's where the true understanding of how computers operate happens
 
 Now you might be thinking oh great I have to hand write this garbage every time I want to write a simple C program No thankfully no The compiler handles all of this for us That’s why they make the big bucks but I digress Understanding assembly is invaluable for debugging performance analysis reverse engineering and getting a more profound sense of what your high-level code is doing under the hood Also sometimes when you are debugging a low-level memory access fault it will come up in the assembly this is something every system programmer needs to be very comfortable with
 

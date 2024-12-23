@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-pixellib-image-segmentation-not-working-properly-after-training-on-a-custom-dataset"
 ---
 
-Alright, let's tackle this. I've seen this particular headache quite a few times over the years, especially when moving beyond the curated datasets. You've invested time into creating your custom image segmentation data, trained your model using pixellib, and now it’s… underperforming. Frustration is understandable, and it's more common than you might think. It's rarely a simple "this code is broken" situation; usually, a confluence of factors is at play.
+Alright,  I've seen this particular headache quite a few times over the years, especially when moving beyond the curated datasets. You've invested time into creating your custom image segmentation data, trained your model using pixellib, and now it’s… underperforming. Frustration is understandable, and it's more common than you might think. It's rarely a simple "this code is broken" situation; usually, a confluence of factors is at play.
 
 The root cause often lies in the interplay between the data itself, the training process, and how pixellib internally uses the underlying models and architectures. Let's dissect this a bit, going through the typical culprits and how to address them, drawing on experiences I’ve had with similar projects. I'll include some Python code snippets to illustrate key aspects and provide starting points for troubleshooting.
 

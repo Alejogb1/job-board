@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "441-while-loop-print-1-to-n-zybooks"
 ---
 
-Alright lets get down to business you need a while loop to print numbers from 1 to n thats like the bread and butter of early programming you see this everywhere and the solution is pretty straight forward so lets break it down I’ve seen this kind of thing more times than I’ve had hot dinners believe me back in the day when I was just starting out I actually messed this up a couple of times thinking I knew better and looping endlessly which is not fun believe me your computer sounds like its about to take off
+lets get down to business you need a while loop to print numbers from 1 to n thats like the bread and butter of early programming you see this everywhere and the solution is pretty straight forward so lets break it down I’ve seen this kind of thing more times than I’ve had hot dinners believe me back in the day when I was just starting out I actually messed this up a couple of times thinking I knew better and looping endlessly which is not fun believe me your computer sounds like its about to take off
 
 First things first you need a variable to keep track of what number you are at lets call that counter and initialize that to one then you need a while loop that continues as long as that counter is less than or equal to the number the user has given which we will call n inside the loop you need to print the counter’s value and then increment the counter by one so that it eventually terminates if you do not increment the counter you get an infinite loop which I can assure you nobody wants and that’s the basic gist of it
 

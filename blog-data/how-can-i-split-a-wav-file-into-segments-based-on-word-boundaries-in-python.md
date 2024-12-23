@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-split-a-wav-file-into-segments-based-on-word-boundaries-in-python"
 ---
 
-Okay, let's talk about splitting wav files based on word boundaries. I've certainly tackled this beast before, and it's definitely not as straightforward as it might initially appear. It's more involved than just chopping up the audio at arbitrary time points because human speech isn’t conveniently punctuated with silences that directly correspond to word gaps. I've been there, staring at waveforms and frustrated by the lack of precise demarcation between spoken words. So, let's get into the nuts and bolts of it.
+, let's talk about splitting wav files based on word boundaries. I've certainly tackled this beast before, and it's definitely not as straightforward as it might initially appear. It's more involved than just chopping up the audio at arbitrary time points because human speech isn’t conveniently punctuated with silences that directly correspond to word gaps. I've been there, staring at waveforms and frustrated by the lack of precise demarcation between spoken words. So, let's get into the nuts and bolts of it.
 
 The core issue is that identifying word boundaries in a continuous audio stream isn't something easily handled with a simple timestamp. It requires some form of speech recognition processing, which translates the audio signal into text and provides the word timings alongside. Thus, you need a transcription element. We're not talking about perfect, real-time accuracy, but enough to generate some reasonable segment markers.
 

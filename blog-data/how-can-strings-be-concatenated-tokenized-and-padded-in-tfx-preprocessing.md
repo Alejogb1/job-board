@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-strings-be-concatenated-tokenized-and-padded-in-tfx-preprocessing"
 ---
 
-Okay, let's unpack this. It's a surprisingly nuanced area, actually, especially when you're trying to squeeze every bit of performance out of your tfx pipelines. I've spent more hours than I'd care to count fiddling with these exact steps during various natural language processing projects. Let’s get down to brass tacks, shall we?
+, let's unpack this. It's a surprisingly nuanced area, actually, especially when you're trying to squeeze every bit of performance out of your tfx pipelines. I've spent more hours than I'd care to count fiddling with these exact steps during various natural language processing projects. Let’s get down to brass tacks, shall we?
 
 We're essentially talking about preparing text data for model consumption within a tensorflow extended (tfx) pipeline, focusing specifically on concatenation, tokenization, and padding. Each of these is a critical step, and each has its own quirks and best practices within the tfx ecosystem. Tfx, as many of you know, is fantastic, but getting these preprocessing steps correct and efficient is vital for robust model performance.
 

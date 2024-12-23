@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "how-do-advancements-in-optical-switching-enable-low-latency-communication-in-high-bandwidth-ai-clusters"
 ---
 
-Okay so you wanna know how fancy light switches make AI supercomputers talk to each other really fast right  Its all about speed and bandwidth these AI things need to chew through data like crazy so delays are a huge no-no  Think of it like a massive highway system for information  Normal electronic switches are kinda slow like those old traffic lights that take forever to change  Optical switching uses light instead of electricity which is way faster light travels much faster than electrons its like comparing a jet to a bicycle  
+ so you wanna know how fancy light switches make AI supercomputers talk to each other really fast right  Its all about speed and bandwidth these AI things need to chew through data like crazy so delays are a huge no-no  Think of it like a massive highway system for information  Normal electronic switches are kinda slow like those old traffic lights that take forever to change  Optical switching uses light instead of electricity which is way faster light travels much faster than electrons its like comparing a jet to a bicycle  
 
 So how does this low latency thing work  well its a few things working together  First  the speed of light itself  like I said its super fast  Second  the way optical signals are routed  they can be switched really quickly between different paths using things like micro mirrors or something  Think of it like those little flaps in an airport directing planes  super precise super fast  And third its the reduced signal degradation less signal loss means less need to boost or retransmit data and that saves time
 

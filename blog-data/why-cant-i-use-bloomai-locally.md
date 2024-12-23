@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-cant-i-use-bloomai-locally"
 ---
 
-Okay, let's talk about running large language models, specifically BloomAI, locally. It's a question I've seen crop up quite a bit, and one I personally tackled a couple of years back when a client wanted offline access to generative text capabilities. It's not as straightforward as, say, installing a standard desktop application, and there are several intertwined factors at play. Let's break them down.
+, let's talk about running large language models, specifically BloomAI, locally. It's a question I've seen crop up quite a bit, and one I personally tackled a couple of years back when a client wanted offline access to generative text capabilities. It's not as straightforward as, say, installing a standard desktop application, and there are several intertwined factors at play. Let's break them down.
 
 Primarily, the immense size of models like BloomAI is the immediate hurdle. These models aren't simple algorithms; they are vast networks of parameters, essentially weighted connections between artificial neurons. We're talking about billions, sometimes trillions, of these parameters. Bloom, for example, depending on the specific variant, weighs in at hundreds of gigabytes, even terabytes when uncompressed. Storing that itself requires considerable local disk space. The problem escalates dramatically when you try to actually load and run it.
 

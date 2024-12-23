@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-selectively-detect-specific-labels-with-yolov5s-detectpy"
 ---
 
-Okay, let’s tackle this. I’ve spent a considerable amount of time working with YOLO models, and selectively detecting labels is a common need, especially when you're dealing with diverse datasets. It's not immediately obvious in the standard `detect.py` script, so let me walk you through how to achieve this effectively.
+, let’s tackle this. I’ve spent a considerable amount of time working with YOLO models, and selectively detecting labels is a common need, especially when you're dealing with diverse datasets. It's not immediately obvious in the standard `detect.py` script, so let me walk you through how to achieve this effectively.
 
 The core challenge arises because `detect.py` by default processes all classes trained in your model. It doesn't inherently offer a flag to filter output based on class labels. We need to leverage the underlying mechanics of the prediction and detection process to implement this filtering. Fundamentally, we're aiming to modify how detections are handled *after* the model makes its predictions. This is crucial to understand; we're not retraining the model or altering the prediction phase itself, but just filtering the output.
 

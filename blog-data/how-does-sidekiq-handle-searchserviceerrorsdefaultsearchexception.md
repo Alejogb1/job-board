@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-does-sidekiq-handle-searchserviceerrorsdefaultsearchexception"
 ---
 
-Okay, let's delve into how Sidekiq tackles `SearchService::Errors::DefaultSearchException`. It's a scenario I've actually dealt with extensively in a previous role, particularly within systems heavily reliant on background processing for complex data indexing and retrieval. It's not as simple as just catching the error; there's a strategy to consider to prevent cascading failures and ensure data consistency.
+, let's delve into how Sidekiq tackles `SearchService::Errors::DefaultSearchException`. It's a scenario I've actually dealt with extensively in a previous role, particularly within systems heavily reliant on background processing for complex data indexing and retrieval. It's not as simple as just catching the error; there's a strategy to consider to prevent cascading failures and ensure data consistency.
 
 In my experience, these types of exceptions usually arise from issues with the search engine itself—maybe a temporary network hiccup, an index that's out of sync, or even a misconfiguration. The key isn't just to let the job fail silently, but to implement a robust retry mechanism, along with monitoring and alert systems.
 

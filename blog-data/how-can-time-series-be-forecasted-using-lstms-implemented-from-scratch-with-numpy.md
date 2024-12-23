@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-time-series-be-forecasted-using-lstms-implemented-from-scratch-with-numpy"
 ---
 
-Let's tackle this. Time series forecasting with LSTMs implemented from scratch using NumPy is indeed a challenge, but certainly not insurmountable. I've had my share of experiences with this, notably during a project involving predictive maintenance for a fleet of industrial robots where off-the-shelf solutions fell short due to the specific data characteristics. It pushed me to delve deep into the mechanics of LSTMs and their numerical underpinnings.
+ Time series forecasting with LSTMs implemented from scratch using NumPy is indeed a challenge, but certainly not insurmountable. I've had my share of experiences with this, notably during a project involving predictive maintenance for a fleet of industrial robots where off-the-shelf solutions fell short due to the specific data characteristics. It pushed me to delve deep into the mechanics of LSTMs and their numerical underpinnings.
 
 First off, building an LSTM from the ground up with NumPy forces you to confront the internal workings of the model, something often abstracted away by higher-level libraries. This understanding is crucial, particularly when you need to debug issues or adapt the model to novel situations. We're essentially going to replicate the functionality of an LSTM layer through careful matrix operations and manual backpropagation – it’s tedious, but enlightening.
 

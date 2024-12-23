@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-are-rspec-and-gem-commands-failing-despite-having-the-necessary-programs-installed"
 ---
 
-Okay, let's tackle this. It’s a common frustration, hitting a wall with RSpec or gem commands even though everything seems correctly installed. I’ve seen this play out countless times, and it usually boils down to a few recurring culprits, often stemming from intricate versioning or environmental conflicts. In my early days working on a particularly sprawling Rails project, we faced this nearly daily until we formalized our tooling and dependency management.
+,  It’s a common frustration, hitting a wall with RSpec or gem commands even though everything seems correctly installed. I’ve seen this play out countless times, and it usually boils down to a few recurring culprits, often stemming from intricate versioning or environmental conflicts. In my early days working on a particularly sprawling Rails project, we faced this nearly daily until we formalized our tooling and dependency management.
 
 The most frequent issue revolves around *gem path resolution*. Your system, particularly if it has multiple Ruby installations (via RVM, rbenv, or asdf, for example), might not be using the gem set you think it is. The `gem` command, and consequently RSpec, rely on an ordered list of directories to locate gems. If your gem path is pointing to a directory where your specific gems aren’t located, or they’re present but incompatible, then failures are practically guaranteed.
 

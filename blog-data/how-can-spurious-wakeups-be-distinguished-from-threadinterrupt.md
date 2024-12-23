@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-spurious-wakeups-be-distinguished-from-threadinterrupt"
 ---
 
-Okay, let's tackle this. I’ve seen this issue pop up more times than I care to recall in multi-threaded systems. Distinguishing between a spurious wakeup and a thread interruption, both of which can prematurely pull a thread out of a `wait()` state, is indeed crucial for correct concurrency control. It's less about magical code and more about meticulous programming practices, which I'll detail here, drawing from past project nightmares and their resolutions.
+,  I’ve seen this issue pop up more times than I care to recall in multi-threaded systems. Distinguishing between a spurious wakeup and a thread interruption, both of which can prematurely pull a thread out of a `wait()` state, is indeed crucial for correct concurrency control. It's less about magical code and more about meticulous programming practices, which I'll detail here, drawing from past project nightmares and their resolutions.
 
 The core issue stems from how `Object.wait()` and `Thread.interrupt()` operate. `Object.wait()` causes a thread to block until it’s either notified (by another thread calling `notify()` or `notifyAll()`), interrupted, or experiences a spurious wakeup. A spurious wakeup is essentially an "unexplained" return from the wait state, it's not a bug in the JVM, but a reality of the underlying threading implementation, and while it is rare, its possibility requires careful consideration in all concurrent code. `Thread.interrupt()`, on the other hand, is a mechanism for one thread to signal another that it should cease its current operation. The crucial difference is intentionality: interrupt is a clear signal from another thread, a spurious wakeup isn't.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-jailed-users-be-prevented-from-accessing-a-specific-directory-in-whm"
 ---
 
-Okay, let's tackle this. I’ve definitely seen my share of jailing escapades over the years, and blocking access to specific directories within a jailed environment in WHM, well, that’s a common requirement for security hardening. The good news is that it's entirely achievable, and there are a few methods we can employ, each with its nuances. My experience stems from managing hosting infrastructures for several years, where we’ve had to lock down systems with varying degrees of paranoia.
+,  I’ve definitely seen my share of jailing escapades over the years, and blocking access to specific directories within a jailed environment in WHM, well, that’s a common requirement for security hardening. The good news is that it's entirely achievable, and there are a few methods we can employ, each with its nuances. My experience stems from managing hosting infrastructures for several years, where we’ve had to lock down systems with varying degrees of paranoia.
 
 The core issue here revolves around the chroot jail environment, and how we control the filesystem visibility from within. By default, when a user is jailed, they're confined to their home directory and potentially a few other common areas, but their reach can still extend beyond what's necessary. To restrict access further, we need to leverage either `mount` commands and file system permissions or symlink manipulations. I’ll steer clear of overly complex methods involving custom PAM modules, as they can introduce unforeseen issues and have a larger attack surface.
 

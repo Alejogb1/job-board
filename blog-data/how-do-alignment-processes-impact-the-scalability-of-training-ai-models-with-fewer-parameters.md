@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "how-do-alignment-processes-impact-the-scalability-of-training-ai-models-with-fewer-parameters"
 ---
 
-Okay so you wanna know about alignment and how it affects training smaller AI models right  That's a super cool question actually  It's like trying to get a tiny spaceship to the moon with limited fuel  you need everything perfectly aligned  otherwise its a disaster
+ so you wanna know about alignment and how it affects training smaller AI models right  That's a super cool question actually  It's like trying to get a tiny spaceship to the moon with limited fuel  you need everything perfectly aligned  otherwise its a disaster
 
 The big problem is that most current alignment techniques are resource-intensive they need massive datasets tons of compute power and frankly a whole lot of luck  Think of it like trying to teach a parrot to speak perfect English  you can do it but it takes ages and a lot of repetition  and even then  its imperfect
 

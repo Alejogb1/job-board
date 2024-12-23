@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "how-to-write-a-like-query-in-hql"
 ---
 
-Alright so you're hitting that HQL like query wall right Been there man been burned by it too Let me tell you I've wrestled with Hibernate and its quirks more times than I care to admit specifically this very like query thing back in my Java EE days oh god the pain
+so you're hitting that HQL like query wall right Been there man been burned by it too Let me tell you I've wrestled with Hibernate and its quirks more times than I care to admit specifically this very like query thing back in my Java EE days oh god the pain
 
 Let's get this straight first HQL ain't SQL It's a query language that speaks in object terms not table rows So thinking SQL-like `%` wildcards directly in HQL is gonna give you headaches and potentially some very very long debugging sessions I've spent hours staring at logs for that kind of mistake so i know what i'm saying Trust me on this one I learned the hard way
 

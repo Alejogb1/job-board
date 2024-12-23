@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "haar-cascade-trainer-gui-usage-setup"
 ---
 
-Okay so you're diving into haar cascade training for object detection I get it Been there done that I've probably seen more poorly configured haar training setups than I've had bad coffee and that's saying something
+ so you're diving into haar cascade training for object detection I get it Been there done that I've probably seen more poorly configured haar training setups than I've had bad coffee and that's saying something
 
 First things first let's clarify something you're asking about the GUI tools for haar cascade training which I'm assuming you mean OpenCV's built-in tools They're kinda old school but still effective if you know what you're doing And honestly they can be a bit of a pain to set up properly
 
@@ -18,7 +18,7 @@ I found that `opencv_createsamples` is your friend here This tool helps to gener
 
 Now let's talk about the infamous text files that are used to feed `opencv_traincascade`. I see most people mess this up. The `bg.txt` file which lists all your negative images. One mistake I see so often is having absolute path which might work on your machine and then the code doesnt work on other systems. You just need to have the relative path.
 
-Okay here's a taste of what I'm talking about. First the command to create samples with bounding boxes specified in an info.dat file :
+ here's a taste of what I'm talking about. First the command to create samples with bounding boxes specified in an info.dat file :
 
 ```bash
 opencv_createsamples -img my_object.jpg -bg bg.txt -info info.dat -num 100 -maxxangle 0.5 -maxyangle 0.5 -maxzangle 0.5 -w 20 -h 20 -vec positives.vec

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-ansible-automate-mongodb-backups-monitored-by-zabbix"
 ---
 
-Let's tackle this. I remember a particularly harrowing experience a few years back when a database crash coincided with a failing backup process—it underscored the absolute necessity of robust automated backups and monitoring. Setting up MongoDB backups orchestrated by Ansible, with Zabbix keeping a watchful eye, is a powerful combination for disaster recovery and operational awareness. I'll walk you through the process, focusing on the practicalities I've encountered over time.
+ I remember a particularly harrowing experience a few years back when a database crash coincided with a failing backup process—it underscored the absolute necessity of robust automated backups and monitoring. Setting up MongoDB backups orchestrated by Ansible, with Zabbix keeping a watchful eye, is a powerful combination for disaster recovery and operational awareness. I'll walk you through the process, focusing on the practicalities I've encountered over time.
 
 The core idea is to use Ansible to handle the backup mechanism, primarily through `mongodump`, and then to use Zabbix to monitor the success or failure of these backups, along with other important MongoDB metrics. This setup allows for scheduled, consistent backups and alerts if things go south. It's not a fire-and-forget system, though; it requires careful configuration and ongoing maintenance.
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "graphics-device-initialization-failed-for-es2-sw-javafx"
 ---
 
-Okay I've seen this one before man this "graphics device initialization failed for es2 sw javafx" error pops up and it's annoying it's like a tiny gremlin in your system. It usually means something is messed up with how JavaFX is trying to talk to your graphics hardware or software stack its not a great error because its broad so yeah lets dive into it based on my past experience with this kind of stuff.
+ I've seen this one before man this "graphics device initialization failed for es2 sw javafx" error pops up and it's annoying it's like a tiny gremlin in your system. It usually means something is messed up with how JavaFX is trying to talk to your graphics hardware or software stack its not a great error because its broad so yeah lets dive into it based on my past experience with this kind of stuff.
 
 First off when i say 'past experience' i really mean it I've been through the ringer with JavaFX especially in embedded environments and this specific error has been the bane of my existence more than once. Back in the day when I was working on a project where we had to run JavaFX on some seriously low-powered ARM boards I hit this wall hard. It was like trying to fit a square peg in a round hole the graphics drivers were always behaving strangely and javaFx just didn't want to cooperate.
 

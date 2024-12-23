@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-do-i-get-a-list-of-available-shared-mailboxes-with-the-graph-api"
 ---
 
-alright, let's tackle this. getting a list of shared mailboxes using the graph api is something i've definitely had to deal with a few times. it’s not always as straightforward as you might hope, but it's certainly doable. i remember spending a solid afternoon on this a few years back when we were migrating user permissions across a large tenant and needed to audit shared mailbox access – it was a mess at first, but hey, we got it figured out.
+alright,  getting a list of shared mailboxes using the graph api is something i've definitely had to deal with a few times. it’s not always as straightforward as you might hope, but it's certainly doable. i remember spending a solid afternoon on this a few years back when we were migrating user permissions across a large tenant and needed to audit shared mailbox access – it was a mess at first, but hey, we got it figured out.
 
 first off, you're not going to find a single endpoint that just dumps all the shared mailboxes for you. the graph api works a bit more granularly than that. you have to approach it by querying user objects and then filtering for specific mailbox types. the key here is understanding that shared mailboxes are technically user objects in azure active directory (aad), just with specific properties set to identify them as shared mailboxes rather than regular user accounts.
 

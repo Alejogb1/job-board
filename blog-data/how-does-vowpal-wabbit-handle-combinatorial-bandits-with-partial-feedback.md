@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-does-vowpal-wabbit-handle-combinatorial-bandits-with-partial-feedback"
 ---
 
-Okay, let's unpack this. Combinatorial bandits with partial feedback in Vowpal Wabbit (VW) – it's a subject I’ve spent quite a bit of time with, especially back during my work on personalized recommendation engines for a large e-commerce platform. We were dealing with millions of products and needing to learn user preferences across multiple categories, and VW, as a tool, became indispensable.
+, let's unpack this. Combinatorial bandits with partial feedback in Vowpal Wabbit (VW) – it's a subject I’ve spent quite a bit of time with, especially back during my work on personalized recommendation engines for a large e-commerce platform. We were dealing with millions of products and needing to learn user preferences across multiple categories, and VW, as a tool, became indispensable.
 
 Handling this particular scenario involves a sophisticated layering of techniques within VW, rather than a single magic bullet. The core challenge, as you're likely aware, is that with combinatorial bandits we're not selecting a single action but rather a *combination* of actions (e.g., a set of recommended products), and feedback isn’t always available for each individual action within that set. It's the 'partial' aspect that adds another layer of complexity. We might observe whether a user clicked on *any* product, or bought *any* product, but not necessarily *which* product within the set was responsible.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-do-i-get-mat1-and-mat2-shapes-cannot-be-multiplied-errors"
 ---
 
-Okay, let's tackle this. The "mat1 and mat2 shapes cannot be multiplied" error, a frequent flyer in the realms of numerical computation, particularly within libraries like numpy in python or similar matrix manipulation tools in other languages. I’ve seen this one more times than I care to count, and each time it’s a reminder of the fundamental rules of matrix multiplication. This isn't just about Python; the underlying principle applies universally across scientific computing wherever you're performing matrix operations.
+,  The "mat1 and mat2 shapes cannot be multiplied" error, a frequent flyer in the realms of numerical computation, particularly within libraries like numpy in python or similar matrix manipulation tools in other languages. I’ve seen this one more times than I care to count, and each time it’s a reminder of the fundamental rules of matrix multiplication. This isn't just about Python; the underlying principle applies universally across scientific computing wherever you're performing matrix operations.
 
 The core of the problem is mismatched dimensions. To understand why, let’s revisit the concept of matrix multiplication itself. A matrix, fundamentally, is a two-dimensional array of numbers (or sometimes even higher-dimensional, but the 2D case is most relevant here). Matrix multiplication isn’t an element-by-element operation. Instead, it's a more structured process involving a weighted sum of elements from the input matrices.
 

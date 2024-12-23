@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-implement-pauses-between-sftp-put-commands"
 ---
 
-Alright, let's tackle this. The need to pause between sftp `put` commands isn’t uncommon, and it usually surfaces when dealing with rate limiting, server resource constraints, or attempting to manage network congestion. I recall a particularly nasty incident a few years back when I was pushing large datasets to a legacy system. We were essentially hammering the server, causing it to reject subsequent connections. We needed to throttle back our transfer rate, and implementing pauses between `put` operations became critical.
+Alright,  The need to pause between sftp `put` commands isn’t uncommon, and it usually surfaces when dealing with rate limiting, server resource constraints, or attempting to manage network congestion. I recall a particularly nasty incident a few years back when I was pushing large datasets to a legacy system. We were essentially hammering the server, causing it to reject subsequent connections. We needed to throttle back our transfer rate, and implementing pauses between `put` operations became critical.
 
 Essentially, `sftp` by itself doesn't have a built-in mechanism to automatically pause after each `put`. The shell, not `sftp`, controls the timing of command executions. Therefore, we need to use shell scripting capabilities or programming language integrations to introduce these delays. We’ll explore some pragmatic approaches.
 

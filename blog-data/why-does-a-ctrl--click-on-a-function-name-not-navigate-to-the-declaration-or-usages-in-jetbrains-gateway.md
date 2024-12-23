@@ -18,7 +18,7 @@ let’s also talk about version compatibility. it’s critical that your gateway
 
 finally, sometimes it could be that the correct ide language server isnt set up correctly. for example, if you are working with a python project, you must have a valid interpreter in the remote backend, or if it’s a java application, you must have the jdk installed and the project configured with the right sdk. often people overlook these basic configurations in the remote server which can lead to the same behaviour as the lack of indexes. the gateway client is essentially a dumb client. it trusts that the server side is properly configured.
 
-okay so lets talk about some code to explain how you might want to verify that your remote ide has the correct indexes, language server configured, and project configuration are all set up.
+ so lets talk about some code to explain how you might want to verify that your remote ide has the correct indexes, language server configured, and project configuration are all set up.
 
 for example lets imagine you have a python project you want to work on. you can use the python api to see the project info. lets start with a simple script to display some general information to check that the server is indeed running correctly. this is a python script ran from the remote machine:
 

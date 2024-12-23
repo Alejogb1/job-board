@@ -4,7 +4,7 @@ date: "2024-12-12"
 id: "what-is-project-mariner-and-how-does-it-enhance-browser-based-ai-tasks"
 ---
 
-okay so project mariner right thats actually a pretty cool name it definitely gives off some kinda space exploration vibe which is kinda fitting when you think about what its trying to do in the browser space basically mariner is all about turbocharging AI stuff that happens right there in your chrome or firefox or whatever you use instead of relying on some far off server
+ so project mariner right thats actually a pretty cool name it definitely gives off some kinda space exploration vibe which is kinda fitting when you think about what its trying to do in the browser space basically mariner is all about turbocharging AI stuff that happens right there in your chrome or firefox or whatever you use instead of relying on some far off server
 
 think about it most AI tasks especially the beefy ones like image generation or complex language processing usually happen somewhere else they get sent off to some giant data center and then results come back to your browser that means latency slowdowns plus theres the whole privacy angle its kinda like sending your thoughts out into the open
 
@@ -22,7 +22,7 @@ so it makes it so things that are usually slow on a browser especially AI stuff 
 
 the aim is to empower browsers and transform them from just viewing websites into powerful ai platforms so the benefits are speed definitely privacy no more sending sensitive data to some random server responsiveness actions feel more instant and its kind of the start of new kinds of browser applications that arent possible without this kinda power
 
-okay lets get into some examples to kind of solidify all of this we're going to keep it super simple since this is all kind of a high level chat but you can think about these scenarios
+ lets get into some examples to kind of solidify all of this we're going to keep it super simple since this is all kind of a high level chat but you can think about these scenarios
 
 first lets say you want to process some text for example sentiment analysis or maybe even a simple grammar check using a natural language processing model before mariner your browser would likely have to send the text to a server the server processes it and sends back the results
 

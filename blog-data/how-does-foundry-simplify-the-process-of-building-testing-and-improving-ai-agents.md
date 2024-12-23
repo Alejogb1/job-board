@@ -4,7 +4,7 @@ date: "2024-12-03"
 id: "how-does-foundry-simplify-the-process-of-building-testing-and-improving-ai-agents"
 ---
 
-Okay so Foundry right  it's kinda like this awesome toolbox for building AI agents  forget all that messy manual coding stuff  it streamlines the whole shebang  from scratch to polished product  think of it as a supercharged assembly line for your AI brains
+ so Foundry right  it's kinda like this awesome toolbox for building AI agents  forget all that messy manual coding stuff  it streamlines the whole shebang  from scratch to polished product  think of it as a supercharged assembly line for your AI brains
 
 Building agents is usually a total nightmare you're wrestling with frameworks juggling libraries  debugging endlessly  it's a recipe for frustration and burnout  Foundry changes that  it gives you pre-built blocks components you can snap together like LEGOs  you don't need to reinvent the wheel every time you want a new agent
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-training-loss-significantly-lower-than-test-loss-with-identical-data"
 ---
 
-Okay, let's unpack this discrepancy between training and test loss, because it's a scenario I've definitely encountered more than once in my career, particularly when dealing with complex models. It's a fundamental issue, really, and understanding the nuances can save a considerable amount of debugging time. The core problem, as the question highlights, is that our model performs exceptionally well on the data it was trained on – low training loss – but falters when presented with new, unseen data, indicated by higher test loss, even though the distributions are meant to be identical.
+, let's unpack this discrepancy between training and test loss, because it's a scenario I've definitely encountered more than once in my career, particularly when dealing with complex models. It's a fundamental issue, really, and understanding the nuances can save a considerable amount of debugging time. The core problem, as the question highlights, is that our model performs exceptionally well on the data it was trained on – low training loss – but falters when presented with new, unseen data, indicated by higher test loss, even though the distributions are meant to be identical.
 
 This situation predominantly signals one of two major culprits, and sometimes a blend of both: overfitting or a data leakage issue. These can manifest in subtle and not-so-subtle ways, so a systematic approach is crucial to diagnose the root cause and apply appropriate corrective strategies.
 

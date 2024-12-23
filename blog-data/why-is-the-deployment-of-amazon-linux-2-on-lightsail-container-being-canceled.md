@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-the-deployment-of-amazon-linux-2-on-lightsail-container-being-canceled"
 ---
 
-Okay, let's talk about why migrating to Amazon Linux 2 on Lightsail Containers didn't quite stick. I've seen a fair share of these platform shifts in my time, and this one had a few specific hurdles that, in my experience, likely contributed to its cancellation. This isn't a simple case of "it didn't work"; rather, it's a nuanced situation reflecting the realities of cloud infrastructure and developer workflows.
+, let's talk about why migrating to Amazon Linux 2 on Lightsail Containers didn't quite stick. I've seen a fair share of these platform shifts in my time, and this one had a few specific hurdles that, in my experience, likely contributed to its cancellation. This isn't a simple case of "it didn't work"; rather, it's a nuanced situation reflecting the realities of cloud infrastructure and developer workflows.
 
 From what I recall, and this is purely anecdotal from projects I’ve been involved with, the initial intention to move to Amazon Linux 2 seemed logical. It's a robust, well-maintained distribution, and bringing it to Lightsail containers aimed at providing a more consistent and potentially performant base image. However, the transition encountered practical difficulties, primarily around compatibility, developer experience, and the inherent limitations of the Lightsail environment compared to, say, a full-blown EC2 setup. Let's break down what I suspect were the key factors.
 

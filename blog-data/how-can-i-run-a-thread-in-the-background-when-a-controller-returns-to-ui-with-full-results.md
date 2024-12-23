@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-run-a-thread-in-the-background-when-a-controller-returns-to-ui-with-full-results"
 ---
 
-Okay, let's tackle this. I've encountered this specific problem quite a few times in my career, especially when dealing with longer-running processes that need to execute without blocking the main thread and, consequently, the user interface. It's a common scenario in applications handling, say, complex data analysis or integrations with external services. The challenge is ensuring your UI returns promptly with the initial results while a separate process continues its work in the background, subsequently updating the UI (if needed) or logging the final outcome.
+,  I've encountered this specific problem quite a few times in my career, especially when dealing with longer-running processes that need to execute without blocking the main thread and, consequently, the user interface. It's a common scenario in applications handling, say, complex data analysis or integrations with external services. The challenge is ensuring your UI returns promptly with the initial results while a separate process continues its work in the background, subsequently updating the UI (if needed) or logging the final outcome.
 
 The key here lies in asynchronous programming paradigms. Returning a response from a controller shouldn't directly trigger or await the completion of computationally intensive tasks. Instead, it should initiate those tasks and then continue immediately, relinquishing the thread to the UI. The UI can then respond without delay and, if needed, be updated later once the background task is complete.
 

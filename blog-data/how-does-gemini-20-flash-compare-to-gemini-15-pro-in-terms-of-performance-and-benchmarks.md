@@ -4,13 +4,13 @@ date: "2024-12-12"
 id: "how-does-gemini-20-flash-compare-to-gemini-15-pro-in-terms-of-performance-and-benchmarks"
 ---
 
-Okay cool let's dive into the Gemini 2.0 Flash versus Gemini 1.5 Pro showdown it's a juicy topic for any AI nerd and honestly feels like we're finally getting some real speed improvements so buckle up
+ cool let's dive into the Gemini 2.0 Flash versus Gemini 1.5 Pro showdown it's a juicy topic for any AI nerd and honestly feels like we're finally getting some real speed improvements so buckle up
 
 First off talking benchmarks is always a bit tricky right it's like comparing apples and oranges sometimes even if both are technically fruits because different models excel at different things so it's crucial to understand what we're looking at before getting too hyped or too down on either one
 
 Gemini 1.5 Pro was a big deal when it dropped we saw that massive context window thing which felt revolutionary you could throw essentially entire books at it and it would still chug along understanding the narrative the characters everything insane but the trade off was it wasn't lightning fast it was more of a slow and deliberate processing powerhouse
 
-Now Gemini 2.0 Flash it's like Google was like okay we get it speed matters let's make this thing zoom it's clearly geared towards lower latency tasks think real time interactions API calls where you need answers now not after it's had a good think for a minute the focus isn't so much about that enormous context window it's about agility its like comparing a marathon runner to a sprinter they both athletes just playing different games
+Now Gemini 2.0 Flash it's like Google was like  we get it speed matters let's make this thing zoom it's clearly geared towards lower latency tasks think real time interactions API calls where you need answers now not after it's had a good think for a minute the focus isn't so much about that enormous context window it's about agility its like comparing a marathon runner to a sprinter they both athletes just playing different games
 
 So when we talk specific benchmarks its like yeah general metrics like MMLU math reasoning things they matter but we also need to look at things like token generation speed latency on standard tasks like text completion and even response quality for things like code generation which are different beasts altogether
 

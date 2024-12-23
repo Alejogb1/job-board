@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-can-i-fix-tensor-of-an-unsupported-type-errors-in-tensorflow"
 ---
 
-Okay, let’s tackle this “Tensor of an unsupported type” error in tensorflow. I’ve bumped into this one more times than I care to remember, and it usually boils down to a few common culprits. It's never a pleasant experience, but with a bit of focused troubleshooting, it’s absolutely manageable.
+, let’s tackle this “Tensor of an unsupported type” error in tensorflow. I’ve bumped into this one more times than I care to remember, and it usually boils down to a few common culprits. It's never a pleasant experience, but with a bit of focused troubleshooting, it’s absolutely manageable.
 
 The core issue, as the error message suggests, is that you're attempting to use a tensor with a data type that tensorflow doesn't know how to handle within the specific operation you're trying to perform. Tensorflow is quite particular about data types and their interplay within the computational graph. It expects specific input types for each operation, and when these don't match, you get these errors. This is different from a type mismatch in Python at the user-level; this is deep within the tensor manipulation itself.
 

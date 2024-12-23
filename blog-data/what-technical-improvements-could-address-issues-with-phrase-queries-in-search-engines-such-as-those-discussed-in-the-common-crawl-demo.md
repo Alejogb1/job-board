@@ -4,7 +4,7 @@ date: "2024-12-12"
 id: "what-technical-improvements-could-address-issues-with-phrase-queries-in-search-engines-such-as-those-discussed-in-the-common-crawl-demo"
 ---
 
-Okay, so you're wondering about improving phrase search, right?  Like, how come sometimes you search for `"artificial intelligence"` and get a bunch of pages about `artificial` separately and `intelligence` separately, instead of pages where those words actually appear *together* in that exact order?  Yeah, that's a total bummer. The Common Crawl demo probably showed you just how messy that can get!  Let's dive in.  It's a fascinating problem, and there are some really cool solutions being explored.
+, so you're wondering about improving phrase search, right?  Like, how come sometimes you search for `"artificial intelligence"` and get a bunch of pages about `artificial` separately and `intelligence` separately, instead of pages where those words actually appear *together* in that exact order?  Yeah, that's a total bummer. The Common Crawl demo probably showed you just how messy that can get!  Let's dive in.  It's a fascinating problem, and there are some really cool solutions being explored.
 
 First off, it's important to understand *why* this happens.  Search engines aren't magic; they're incredibly complex systems that try their best to make sense of the internet's gigantic mess.  Think about it –  a single page might mention "artificial" and "intelligence" dozens of times, maybe even in different contexts.  The search engine has to figure out: are these words actually related *in that specific way*? Are they describing a specific concept (`artificial intelligence`), or are they just separate ideas on the same page?
 

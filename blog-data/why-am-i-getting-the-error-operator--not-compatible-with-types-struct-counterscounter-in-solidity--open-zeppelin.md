@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-the-error-operator--not-compatible-with-types-struct-counterscounter-in-solidity--open-zeppelin"
 ---
 
-Let's tackle this. The error "Operator <= not compatible with types struct Counters.Counter" in Solidity, particularly within the context of OpenZeppelin's `Counters` library, is a common stumbling block, and it’s one I've personally debugged more times than I’d care to remember. It usually arises from a misunderstanding of how `Counters` actually works. It's not treating the counter as a simple integer; it’s a struct with its own type definition. Let me break it down based on my past experiences.
+ The error "Operator <= not compatible with types struct Counters.Counter" in Solidity, particularly within the context of OpenZeppelin's `Counters` library, is a common stumbling block, and it’s one I've personally debugged more times than I’d care to remember. It usually arises from a misunderstanding of how `Counters` actually works. It's not treating the counter as a simple integer; it’s a struct with its own type definition. Let me break it down based on my past experiences.
 
 Years ago, while developing a complex NFT marketplace contract, I encountered this exact problem. We were using OpenZeppelin's `Counters` to track the number of minted NFTs and, in an attempt to streamline a function, tried a comparison operation directly against the counter struct. Boom - compiler error, and I found myself staring at the same message.
 

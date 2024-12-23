@@ -4,7 +4,7 @@ date: "2024-12-03"
 id: "what-role-can-tldraw-and-hats-protocol-play-in-organizing-ai-agents-as-interns-for-progressive-automation"
 ---
 
-Okay so you wanna talk about using TLDraw and HATS for managing AI agents like interns right  Totally cool idea  I've been thinking a lot about this kind of stuff lately  It's like  we're building digital organizations  and we need tools to manage them  just like real companies
+ so you wanna talk about using TLDraw and HATS for managing AI agents like interns right  Totally cool idea  I've been thinking a lot about this kind of stuff lately  It's like  we're building digital organizations  and we need tools to manage them  just like real companies
 
 TLDraw is all about visual collaboration  you know super easy drag-and-drop interface  think of it as your digital whiteboard  perfect for mapping out workflows  defining roles  and visualizing the relationships between your AI interns  It's not just about pretty pictures though  the real power is in how it can help you structure the whole automation process
 

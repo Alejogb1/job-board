@@ -4,9 +4,9 @@ date: "2024-12-13"
 id: "eigen-isometry3d-representation-matrix"
 ---
 
-Okay so eigen isometry3d representation matrix right I've been there man trust me this is like digging into a particularly stubborn API from the early 2000s that has documentation written in like hieroglyphics
+ so eigen isometry3d representation matrix right I've been there man trust me this is like digging into a particularly stubborn API from the early 2000s that has documentation written in like hieroglyphics
 
-Okay so lemme break it down from my perspective having wrestled with this beast a few times over the years Back when I was first trying my hand at building this 3D model viewer for my grad project it hit me like a ton of bricks these rotations and translations well they just wouldn't behave especially when I started dealing with animated models That's where I crashed headfirst into this isometry matrix problem and it took a few late nights fueled by bad instant coffee to really get it
+ so lemme break it down from my perspective having wrestled with this beast a few times over the years Back when I was first trying my hand at building this 3D model viewer for my grad project it hit me like a ton of bricks these rotations and translations well they just wouldn't behave especially when I started dealing with animated models That's where I crashed headfirst into this isometry matrix problem and it took a few late nights fueled by bad instant coffee to really get it
 
 So what we're talking about is a 4x4 matrix this thing represents a transformation that preserves distance That's the core idea This isometry keeps shapes and sizes intact it's just changing their orientation and position in 3D space Think rigid body transformations your typical rotation translation combos you know the good stuff
 
@@ -89,7 +89,7 @@ print("Extracted Rotation Matrix:\n", extracted_rotation)
 print("\nExtracted Translation Vector:\n", extracted_translation)
 ```
 
-Okay this one is important because it reverses that process. It shows how to take an existing 4x4 matrix and pull out the rotation and translation components separately. This can be handy when you are receiving matrix data from sensors or another system for example some robotics platform. One tip I learned is to always double check the data format of the matrix because sometimes its row major sometimes column major and those small mistakes always cost a lot of debugging time.
+ this one is important because it reverses that process. It shows how to take an existing 4x4 matrix and pull out the rotation and translation components separately. This can be handy when you are receiving matrix data from sensors or another system for example some robotics platform. One tip I learned is to always double check the data format of the matrix because sometimes its row major sometimes column major and those small mistakes always cost a lot of debugging time.
 
 **Example 3: Applying the Isometry to a 3D Point**
 

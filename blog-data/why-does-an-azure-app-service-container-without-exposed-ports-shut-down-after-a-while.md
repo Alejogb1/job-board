@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-an-azure-app-service-container-without-exposed-ports-shut-down-after-a-while"
 ---
 
-Okay, let's tackle this. I've seen this behavior more times than I'd care to remember, and it’s almost always a variation on the same root causes. An Azure App Service container shutting down when no ports are explicitly exposed might seem counterintuitive at first. You'd think a container just sitting there, happily processing, wouldn't be a problem, right? Well, the Azure platform has a few built-in mechanisms, primarily designed for efficiency and resource management, that can lead to this. And these are the ones I've personally tripped over in a few of my deployments over the years.
+,  I've seen this behavior more times than I'd care to remember, and it’s almost always a variation on the same root causes. An Azure App Service container shutting down when no ports are explicitly exposed might seem counterintuitive at first. You'd think a container just sitting there, happily processing, wouldn't be a problem, right? Well, the Azure platform has a few built-in mechanisms, primarily designed for efficiency and resource management, that can lead to this. And these are the ones I've personally tripped over in a few of my deployments over the years.
 
 The fundamental issue revolves around the health monitoring and the lifecycle management within the Azure App Service environment. Specifically, if your container doesn't respond to the platform's health probes, it's considered unhealthy, and the platform will aggressively shut it down to reclaim resources. Remember, the service is trying to run *efficiently* on shared infrastructure, and unhealthy containers consume resources without actively contributing.
 

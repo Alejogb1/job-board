@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "in-azureml-is-startlogging-synchronous-or-asynchronous"
 ---
 
-Okay, let's tackle this. I've spent a fair bit of time wrestling with Azure Machine Learning, and specifically its logging mechanisms, so I can offer some firsthand insights. The question of whether `start_logging` in AzureML is synchronous or asynchronous is a critical one, because it affects how you design your training scripts and manage your experiment runs. It’s not always immediately obvious from the documentation, and it’s something I’ve had to debug myself during several larger scale model training projects.
+,  I've spent a fair bit of time wrestling with Azure Machine Learning, and specifically its logging mechanisms, so I can offer some firsthand insights. The question of whether `start_logging` in AzureML is synchronous or asynchronous is a critical one, because it affects how you design your training scripts and manage your experiment runs. It’s not always immediately obvious from the documentation, and it’s something I’ve had to debug myself during several larger scale model training projects.
 
 My experience has shown me that the core operation of `start_logging`, when initiating a run within the Azure Machine Learning environment, appears to function **synchronously** with respect to the execution flow of your script, at least initially, for the basic logging setup. That is, when you call it, it sets up the logging context within your script before moving to the next line of code. However, the crucial thing to remember is that the **actual writing of logs to the AzureML platform** is handled asynchronously. Let me clarify this apparent contradiction.
 

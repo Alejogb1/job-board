@@ -4,7 +4,7 @@ date: "2024-12-10"
 id: "how-does-incremental-computation-optimize-rolling-window-aggregations-for-real-time-data-processing"
 ---
 
-Okay so you wanna know about incremental computation and how it speeds up those rolling window things right for real-time data  its pretty cool actually  Imagine you're tracking website visits every second  and you need the average visits over the last minute that's a rolling window aggregation a one-minute window constantly sliding forward  doing it the naive way you recalculate the average every single second using all the data from the last minute  that's super slow especially with tons of data  
+ so you wanna know about incremental computation and how it speeds up those rolling window things right for real-time data  its pretty cool actually  Imagine you're tracking website visits every second  and you need the average visits over the last minute that's a rolling window aggregation a one-minute window constantly sliding forward  doing it the naive way you recalculate the average every single second using all the data from the last minute  that's super slow especially with tons of data  
 
 Incremental computation is like being smart about it  instead of recalculating everything you just update the result  think about it  you already have the average for the last minute  now a new second of data comes in  you don't need to add up all sixty seconds again  you just subtract the oldest second add the newest and recalculate the average from that small change  way faster right
 

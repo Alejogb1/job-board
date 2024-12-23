@@ -4,11 +4,11 @@ date: "2024-12-13"
 id: "string-agg-aggregation-result-exceeded-the-limit-of-8000-bytes-error"
 ---
 
-Alright so you're hitting the "string agg aggregation result exceeded the limit of 8000 bytes" error right Classic Happens to the best of us Seriously I've seen it more times than I've had hot coffee and that's saying something
+so you're hitting the "string agg aggregation result exceeded the limit of 8000 bytes" error right Classic Happens to the best of us Seriously I've seen it more times than I've had hot coffee and that's saying something
 
 I get it you're probably trying to concatenate a bunch of strings into one big ol' string using string_agg or a similar aggregate function in your SQL database and bam it throws this error It's like you're trying to cram way too much data into a tiny suitcase and the database is just going "Nope Not gonna happen"
 
-Okay so this isn't exactly a database problem per se its more about how databases are structured and what they allow to prevent resource hogging Believe it or not this 8000-byte limit isn't some arbitrary number some database admin pulled out of thin air It's often a safeguard to stop queries from going wild and eating up memory like a kid in a candy shop
+ so this isn't exactly a database problem per se its more about how databases are structured and what they allow to prevent resource hogging Believe it or not this 8000-byte limit isn't some arbitrary number some database admin pulled out of thin air It's often a safeguard to stop queries from going wild and eating up memory like a kid in a candy shop
 
 When you use `string_agg` or similar functions the database needs to store this increasingly larger string in memory as it aggregates The 8000-byte limit is often a default buffer size to stop this from going completely out of hand Imagine what would happen if a poorly crafted query decided to aggregate the content of all the tables into one single string the database server would instantly become unresponsive
 
@@ -30,7 +30,7 @@ Simple enough right Yeah I thought so too But lo and behold I started getting th
 
 So first thing you need to do is accept this problem and its limits and understand you have a data problem not a database problem
 
-Alright enough rambling let's look at some solutions I've picked up over the years
+enough rambling let's look at some solutions I've picked up over the years
 
 **1 Reduce the data**
 

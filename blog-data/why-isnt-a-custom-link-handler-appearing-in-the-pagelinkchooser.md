@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-isnt-a-custom-link-handler-appearing-in-the-pagelinkchooser"
 ---
 
-Okay, let's tackle this. It’s a situation I’ve encountered a few times, usually when implementing complex workflows in Wagtail or similar CMS environments, and it can be a bit baffling initially. The issue you're facing – a custom link handler failing to show up in the PageLinkChooser – typically boils down to a few key areas. We need to check our implementation meticulously to make sure all the pieces are fitting together correctly.
+,  It’s a situation I’ve encountered a few times, usually when implementing complex workflows in Wagtail or similar CMS environments, and it can be a bit baffling initially. The issue you're facing – a custom link handler failing to show up in the PageLinkChooser – typically boils down to a few key areas. We need to check our implementation meticulously to make sure all the pieces are fitting together correctly.
 
 From my experience, the most common culprits aren't necessarily coding errors in the link handler logic itself, but rather issues in how the handler is registered, configured, and made discoverable within the framework. It's like trying to fit a square peg into a round hole; the peg might be perfectly formed, but it won’t work if the hole isn't designed for it. So, let's break this down systematically.
 

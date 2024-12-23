@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "is-tfrecord-inherently-designed-for-single-pass-dataset-processing"
 ---
 
-Okay, let's tackle this one. I've certainly had my share of encounters with TFRecords, and the question of whether they're inherently meant for single-pass processing is something I've pondered extensively, especially when optimizing data pipelines for large-scale machine learning projects. The short answer is no, TFRecords aren't *inherently* designed for single-pass usage only, but there are nuances that push them in that direction, and understanding those is key.
+, let's tackle this one. I've certainly had my share of encounters with TFRecords, and the question of whether they're inherently meant for single-pass processing is something I've pondered extensively, especially when optimizing data pipelines for large-scale machine learning projects. The short answer is no, TFRecords aren't *inherently* designed for single-pass usage only, but there are nuances that push them in that direction, and understanding those is key.
 
 From my experience, the single-pass implication arises more from the common usage patterns and the underlying design philosophies of TensorFlow’s data pipeline than any hard limitation built into the format itself. Let’s delve into the details.
 

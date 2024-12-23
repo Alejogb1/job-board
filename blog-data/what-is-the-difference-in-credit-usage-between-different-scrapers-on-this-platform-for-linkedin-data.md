@@ -4,7 +4,7 @@ date: "2024-12-10"
 id: "what-is-the-difference-in-credit-usage-between-different-scrapers-on-this-platform-for-linkedin-data"
 ---
 
-Okay so you wanna know about scraper credit usage on LinkedIn right  thats a tricky one  LinkedIn's API is a beast  its constantly changing and they're super protective of their data which is totally understandable  they dont want bots scraping everything and causing havoc  so figuring out credit usage across different scrapers is like trying to navigate a maze blindfolded  
+ so you wanna know about scraper credit usage on LinkedIn right  thats a tricky one  LinkedIn's API is a beast  its constantly changing and they're super protective of their data which is totally understandable  they dont want bots scraping everything and causing havoc  so figuring out credit usage across different scrapers is like trying to navigate a maze blindfolded  
 
 First off what kind of scrapers are we talking about?  Are we talking about official LinkedIn APIs which are  like the "approved" way to get data or are we talking about third party scrapers  those sneaky little guys that try to get around LinkedIn's defenses  The official API usually has a clear pricing model like a pay-as-you-go system or maybe a subscription  they'll tell you exactly how many calls you can make and what each call costs  Its all very transparent usually  check their developer docs  they often have rate limits documented somewhere thats key to understanding cost
 

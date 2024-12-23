@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-extract-class-labels-from-a-keras-model-in-r"
 ---
 
-Okay, let’s tackle this. It's a scenario I’ve encountered a number of times, particularly when dealing with model interpretability or needing to debug complex classification pipelines. Extracting class labels from a Keras model in R, at first glance, may seem like a straightforward task, but the process requires a detailed understanding of how Keras models are structured and how R interacts with them via the `keras` package. Here’s how I’ve approached it in the past, keeping practical considerations at the forefront.
+, let’s tackle this. It's a scenario I’ve encountered a number of times, particularly when dealing with model interpretability or needing to debug complex classification pipelines. Extracting class labels from a Keras model in R, at first glance, may seem like a straightforward task, but the process requires a detailed understanding of how Keras models are structured and how R interacts with them via the `keras` package. Here’s how I’ve approached it in the past, keeping practical considerations at the forefront.
 
 The initial challenge often stems from the fact that Keras models, when trained, typically output either probabilities (for multi-class problems with softmax activation) or a single probability score (for binary classification with sigmoid). These outputs don’t directly provide the class labels. Instead, the model returns numerical predictions which must then be mapped to their corresponding classes.
 

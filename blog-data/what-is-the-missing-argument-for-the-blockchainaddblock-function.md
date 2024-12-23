@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-is-the-missing-argument-for-the-blockchainaddblock-function"
 ---
 
-Okay, let's tackle this. It’s a question that takes me back a few years, actually, to a project where we were building a private blockchain for supply chain tracking. We ran into this very scenario, a `Blockchain.addBlock()` function mysteriously failing, all because of a missing argument. The problem is not always immediately obvious, and it stems from the core understanding of how blocks are constructed and linked in a blockchain structure.
+,  It’s a question that takes me back a few years, actually, to a project where we were building a private blockchain for supply chain tracking. We ran into this very scenario, a `Blockchain.addBlock()` function mysteriously failing, all because of a missing argument. The problem is not always immediately obvious, and it stems from the core understanding of how blocks are constructed and linked in a blockchain structure.
 
 The fundamental problem when you encounter an `addBlock()` function failure, especially when the error is related to missing arguments, usually boils down to the fact that every new block must reference the preceding block in the chain. This referencing is crucial for the integrity and immutability of the blockchain. If we’re talking about a simplified blockchain model, typically, a block structure includes at least the following: the block's data, a timestamp, the block’s hash, and a hash of the previous block. The 'missing argument' almost always is the previous block's hash.
 

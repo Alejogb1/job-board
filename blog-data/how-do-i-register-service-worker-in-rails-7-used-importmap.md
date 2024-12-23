@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-register-service-worker-in-rails-7-used-importmap"
 ---
 
-Alright, let's tackle this. I’ve spent a good chunk of time working with service workers in various environments, including a particularly memorable project with a rails 7 application and importmaps. The integration, while not overly complex, does require a nuanced understanding of how these pieces fit together. Forget the boilerplate; let's break down how to register a service worker in your rails 7 application using importmap, focusing on practical, implementable solutions based on what's worked for me.
+Alright,  I’ve spent a good chunk of time working with service workers in various environments, including a particularly memorable project with a rails 7 application and importmaps. The integration, while not overly complex, does require a nuanced understanding of how these pieces fit together. Forget the boilerplate; let's break down how to register a service worker in your rails 7 application using importmap, focusing on practical, implementable solutions based on what's worked for me.
 
 The central challenge, as I’ve seen firsthand, lies in aligning the service worker's lifecycle with the asset pipeline and importmaps. Importmaps handle javascript module resolution, and the service worker file itself needs to be accessible as a static asset at a consistent path. This dual requirement requires a specific approach.
 

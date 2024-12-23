@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-doesnt-ownership-transfer-code-work-as-intended"
 ---
 
-Okay, let's talk about ownership transfer. I've seen this issue crop up more times than I can count, usually resulting in hours of debugging and a good dose of head-scratching. It's not usually a problem with the core concept of transferring ownership, but rather how the implementation interacts with the underlying system. The short of it is, that even with the clearest intentions, transferring ownership can go wrong due to various factors, and it's critical to understand the common pitfalls to write robust code.
+, let's talk about ownership transfer. I've seen this issue crop up more times than I can count, usually resulting in hours of debugging and a good dose of head-scratching. It's not usually a problem with the core concept of transferring ownership, but rather how the implementation interacts with the underlying system. The short of it is, that even with the clearest intentions, transferring ownership can go wrong due to various factors, and it's critical to understand the common pitfalls to write robust code.
 
 Specifically, I recall a project back at a previous firm where we were building a custom message queue. We intended to transfer ownership of messages between different processing stages using a simple mechanism. Instead, we encountered a minefield of unexpected behavior. Messages were being dropped, data was being corrupted, and the system behaved erratically under load. The initial design, which seemed straightforward on paper, turned out to have significant flaws when confronted with real-world concurrency and error conditions. What seemed like a simple move operation became a hotbed of bugs.
 

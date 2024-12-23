@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-a-triplet-loss-siamese-neural-network-be-evaluated-using-tensorflow"
 ---
 
-Okay, let’s tackle this. Evaluating a triplet loss siamese network in tensorflow isn’t a straightforward "accuracy" metric affair like traditional classification. It requires a more nuanced approach. I've personally spent a good chunk of time refining these models in projects involving facial recognition and product similarity searches, and the evaluation strategies needed careful consideration. Let me break it down for you based on my experiences.
+, let’s tackle this. Evaluating a triplet loss siamese network in tensorflow isn’t a straightforward "accuracy" metric affair like traditional classification. It requires a more nuanced approach. I've personally spent a good chunk of time refining these models in projects involving facial recognition and product similarity searches, and the evaluation strategies needed careful consideration. Let me break it down for you based on my experiences.
 
 Firstly, the very nature of a siamese network trained with triplet loss means we're aiming for embeddings, not direct class predictions. We want similar items to have close embeddings, and dissimilar items to have embeddings further apart. Standard classification metrics like accuracy are almost useless here because they measure the correctness of a predicted class, which we don't explicitly have. Instead, the effectiveness of our network relies on the quality of the generated embedding space. So, how do we judge that?
 

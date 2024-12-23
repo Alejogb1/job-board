@@ -56,7 +56,7 @@ Even after we comment these lines out, the jobs that were previously queued are 
 
 The jobs don't know that their "parent" has been commented. They are just waiting in the queue to be processed. This can also happen if the job file itself has been removed or renamed. The workers that have already been enqueued know only their name and arguments.
 
-Okay, let's go a little further and consider a slightly more complex scenario, one that involves not just commenting out the enqueuing of jobs, but actually modifying the job worker class itself. Let's imagine that we rename our worker class for some kind of refactor. We start with:
+, let's go a little further and consider a slightly more complex scenario, one that involves not just commenting out the enqueuing of jobs, but actually modifying the job worker class itself. Let's imagine that we rename our worker class for some kind of refactor. We start with:
 
 ```ruby
 # process_data_worker.rb (original)

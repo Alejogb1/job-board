@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-user-space-systemtap-probes-be-run-within-a-container"
 ---
 
-Alright, let's tackle this. From my experience, getting SystemTap probes working inside containers can feel a bit like navigating a maze at first, but it's definitely achievable with the right approach. I've personally had to debug a nasty performance bottleneck within a containerized service a few years back, and that forced me to really understand the nuances of this. The key here is appreciating the interplay between the container's isolation and the probe’s need for kernel access.
+Alright,  From my experience, getting SystemTap probes working inside containers can feel a bit like navigating a maze at first, but it's definitely achievable with the right approach. I've personally had to debug a nasty performance bottleneck within a containerized service a few years back, and that forced me to really understand the nuances of this. The key here is appreciating the interplay between the container's isolation and the probe’s need for kernel access.
 
 The core issue is that SystemTap probes, even user-space ones, often rely on kernel support – usually through the debugfs or similar kernel interfaces. Containers, by design, limit direct access to the host kernel for security and isolation. This means a probe running *inside* the container cannot typically see or interact with the kernel in the way it needs to function properly. We need to consider how the namespaces and security contexts interact.
 

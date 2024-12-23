@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "implementing-a-database-how-to-get-started"
 ---
 
-Okay so you wanna build a database right Been there done that got the t-shirt and probably a few scars along the way let's talk shop no fluff just real world experience. You're asking about *getting started* which is like saying "I want to climb Everest" lots of ways to go about it and some are definitely less painful than others.
+ so you wanna build a database right Been there done that got the t-shirt and probably a few scars along the way let's talk shop no fluff just real world experience. You're asking about *getting started* which is like saying "I want to climb Everest" lots of ways to go about it and some are definitely less painful than others.
 
 First off forget about trying to build a full-blown Postgres or MySQL killer right out the gate Seriously that's a recipe for disaster been there seen the aftermath it was messy. Instead let's break it down to the basics what's a database really? At its heart it's just a way to store and retrieve data right? We're not talking about some magical black box here.
 
@@ -48,7 +48,7 @@ This is super basic but it's how it's done at the very core level no crazy magic
 
 **Indexing is not a suggestion**
 
-Alright now you've got a giant text file where you throw your data and hope for the best. As you add more data your retrieval time will turn into a crawl it's the nature of the beast. Here's the thing indexing is not optional. Imagine looking for a single needle in a giant haystack every time you need it. That's how your naive linear search is working right now.
+now you've got a giant text file where you throw your data and hope for the best. As you add more data your retrieval time will turn into a crawl it's the nature of the beast. Here's the thing indexing is not optional. Imagine looking for a single needle in a giant haystack every time you need it. That's how your naive linear search is working right now.
 
 An index allows you to quickly locate the position of the data in the storage. To do so I highly recommend you get very familiar with concepts of hash maps or B-Trees. Let me tell you B-Trees are your friend at this stage.
 
@@ -98,7 +98,7 @@ Locking mechanisms are crucial. There are multiple kinds of locks with multiple 
 
 **Where to go from here**
 
-Okay so we covered some of the basics we did some code examples and you probably already have more questions than when you started. Here's my advice based on the battle scars I gathered on the way do not try to implement a full-fledged database on your first attempt.
+ so we covered some of the basics we did some code examples and you probably already have more questions than when you started. Here's my advice based on the battle scars I gathered on the way do not try to implement a full-fledged database on your first attempt.
 
 Instead I suggest you focus on the following things:
 
@@ -106,7 +106,7 @@ Instead I suggest you focus on the following things:
 2.  **Start Small:** Implement a simple toy database to practice. Don't go for distributed systems right away. Start with a local file based key-value store like we did here.
 3.  **Understand the Algorithms:** Learn about different data structures for indexing like B-trees and hash maps. These are the fundamental building blocks. Read "Introduction to Algorithms" by Cormen et al it is a gold mine for database developers.
 4.  **Don't Reinvent the Wheel:** Explore existing open-source databases to learn how they work. Look at something like SQLite it is a simple and embeddable database that is great to study.
-5.  **Practice and experiment:** Database design is an iterative process. You won't get it right on the first try but that's okay. The important part is to learn along the way.
+5.  **Practice and experiment:** Database design is an iterative process. You won't get it right on the first try but that's . The important part is to learn along the way.
 
 **Some Final Thoughts**
 

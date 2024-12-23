@@ -4,7 +4,7 @@ date: "2024-12-12"
 id: "what-were-the-communitys-impressions-and-reactions-to-googles-announcements-at-neurips"
 ---
 
-okay so NeurIPS yeah google's stuff there always gets tongues wagging feels like a yearly ritual doesn't it
+ so NeurIPS yeah google's stuff there always gets tongues wagging feels like a yearly ritual doesn't it
 
 last year's show was interesting definitely felt a shift maybe a maturity even i don't know not just flashy demos but real stuff being put out there that people could actually poke at and use more than a few eye rolling demos
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-azure-container-registry-failing-to-download-contexts"
 ---
 
-Okay, let's tackle this. I've certainly seen my share of container registry headaches, and Azure Container Registry (acr) failing to download contexts is a particularly frustrating one. It’s often not a straightforward issue but rather a confluence of potential problems, each requiring its own diagnostic path. It’s not that acr is inherently flawed; rather, the complexity of the container ecosystem often leads to these kinds of intermittent failures.
+,  I've certainly seen my share of container registry headaches, and Azure Container Registry (acr) failing to download contexts is a particularly frustrating one. It’s often not a straightforward issue but rather a confluence of potential problems, each requiring its own diagnostic path. It’s not that acr is inherently flawed; rather, the complexity of the container ecosystem often leads to these kinds of intermittent failures.
 
 First, let's define what "context" means in this setting. We're not just talking about a simple file transfer; the 'context' here usually refers to the set of files used to build a docker image, frequently the current working directory or a specified folder relative to the dockerfile. When acr isn't pulling these contexts correctly, you’re almost always dealing with problems during the `docker build` process, particularly in situations where acr is acting as a build service. The actual pull of the completed images (the result of the build) is a separate concern, and we're not discussing issues with *that* part of the process.
 

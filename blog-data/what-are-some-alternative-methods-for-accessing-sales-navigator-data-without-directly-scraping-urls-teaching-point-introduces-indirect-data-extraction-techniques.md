@@ -4,7 +4,7 @@ date: "2024-12-12"
 id: "what-are-some-alternative-methods-for-accessing-sales-navigator-data-without-directly-scraping-urls-teaching-point-introduces-indirect-data-extraction-techniques"
 ---
 
-Okay so you're looking at Sales Navigator data right without just brute forcing URLs like a robot digging through a sandbox cool I get it. Scraping can get you into trouble real fast plus it's kinda inefficient in the long run let's talk about alternatives that keep you on the right side of LinkedIn's rules.
+ so you're looking at Sales Navigator data right without just brute forcing URLs like a robot digging through a sandbox cool I get it. Scraping can get you into trouble real fast plus it's kinda inefficient in the long run let's talk about alternatives that keep you on the right side of LinkedIn's rules.
 
 One angle is thinking about the LinkedIn API itself. LinkedIn offers different APIs depending on what you're doing. There's the general developer API but that's often more geared towards job postings and company data not really the specific person-level data you get on Sales Nav. Still worth a quick peek at their documentation just in case something changes. It's usually more structured data anyway so better to use than scraping. Think of it like instead of breaking into a house you're using the front door.
 
@@ -16,7 +16,7 @@ Then there are these "integrations" or "partners" that LinkedIn authorizes to wo
 
 For example one option is using a third-party CRM that already integrates Sales Nav. You may find that the software you already use has a built in feature that lets you pull in leads. This is usually a lot easier than trying to build your own solution. You’re not hacking the system you're just using features that already exist for you.
 
-Okay let’s get to some code examples.
+ let’s get to some code examples.
 
 **First, a simple python example using the LinkedIn Marketing API, let's assume you already have credentials and the API set up**
 

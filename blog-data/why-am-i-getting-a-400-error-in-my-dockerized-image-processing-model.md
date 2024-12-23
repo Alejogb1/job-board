@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-am-i-getting-a-400-error-in-my-dockerized-image-processing-model"
 ---
 
-Okay, let's tackle this 400 error you're seeing in your dockerized image processing model. It’s a common enough headache, and from my experience, the root cause is rarely a single smoking gun. Instead, it's usually a confluence of several potential culprits. I’ve spent countless hours debugging similar issues, and I've learned to approach it methodically. Forget about chasing ghosts; let's focus on some tangible areas.
+, let's tackle this 400 error you're seeing in your dockerized image processing model. It’s a common enough headache, and from my experience, the root cause is rarely a single smoking gun. Instead, it's usually a confluence of several potential culprits. I’ve spent countless hours debugging similar issues, and I've learned to approach it methodically. Forget about chasing ghosts; let's focus on some tangible areas.
 
 Firstly, a 400 "Bad Request" error, in the context of a web server – which is what you essentially have running inside your container – indicates the server understands the request but cannot or will not process it due to a client-side issue. The problem isn’t on the server’s side itself (as a 5xx error would indicate), but rather something wrong with the data or format you're sending. In your case, it's almost certainly related to the image data being passed to your model.
 

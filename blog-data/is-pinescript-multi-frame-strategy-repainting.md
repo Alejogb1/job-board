@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "is-pinescript-multi-frame-strategy-repainting"
 ---
 
-Okay, let's tackle this, as it's a question that's popped up in forums and trading circles for as long as I can remember – and I’ve spent a good chunk of my career dealing with these types of issues. The short answer regarding Pine Script multi-frame strategy repainting is, yes, *it can*. But, like most things in programming and algorithmic trading, it's not a simple binary 'yes' or 'no'. It depends heavily on how you implement your multi-frame logic, and it's essential to understand the underlying mechanics of how Pine Script handles different timeframes.
+, let's tackle this, as it's a question that's popped up in forums and trading circles for as long as I can remember – and I’ve spent a good chunk of my career dealing with these types of issues. The short answer regarding Pine Script multi-frame strategy repainting is, yes, *it can*. But, like most things in programming and algorithmic trading, it's not a simple binary 'yes' or 'no'. It depends heavily on how you implement your multi-frame logic, and it's essential to understand the underlying mechanics of how Pine Script handles different timeframes.
 
 Let me start with an experience. Years back, while working on a proprietary trading system, I distinctly recall a very frustrating bug. A backtest showed remarkably consistent gains using multiple timeframes. In reality, it was a mirage. The strategy looked like a beautifully choreographed dance when simulated but, live, it performed like someone tripping over their own feet. The root cause? Repainting stemming from how we had coded our multi-frame data retrieval.
 

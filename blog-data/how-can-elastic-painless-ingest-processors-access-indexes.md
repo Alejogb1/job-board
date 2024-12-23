@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-elastic-painless-ingest-processors-access-indexes"
 ---
 
-Okay, let's tackle this. In my experience building complex data pipelines, effectively leveraging Elastic Painless ingest processors to interact with indices is a recurring need. It's not always as straightforward as one might hope, but with a solid understanding of the underlying mechanisms and a bit of creative coding, you can achieve quite a lot. Let's break down how we can make that happen.
+,  In my experience building complex data pipelines, effectively leveraging Elastic Painless ingest processors to interact with indices is a recurring need. It's not always as straightforward as one might hope, but with a solid understanding of the underlying mechanisms and a bit of creative coding, you can achieve quite a lot. Let's break down how we can make that happen.
 
 At its core, Painless ingest processors operate within the context of a document undergoing indexing. They're designed to transform or augment that document before it lands in the target index. Accessing *other* indices directly from within a Painless script isn't inherently built-in, and for good reason: it would introduce performance bottlenecks and potential inconsistencies. Direct database-like queries are simply not in its design scope. However, Painless provides functionalities that enable us to *indirectly* access data within other indices through enrichment techniques. The core methodology revolves around using lookup tables to effectively join data across indices.
 

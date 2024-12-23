@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "merge-sort-in-prolog-code"
 ---
 
-Alright so you're looking at merge sort in Prolog right Been there done that countless times I've had my fair share of wrestling with Prolog and sorting algorithms especially when I was first getting into declarative programming. It’s different from the imperative world of loops and assignments that I was used to. Let me tell you it was quite a shift.
+so you're looking at merge sort in Prolog right Been there done that countless times I've had my fair share of wrestling with Prolog and sorting algorithms especially when I was first getting into declarative programming. It’s different from the imperative world of loops and assignments that I was used to. Let me tell you it was quite a shift.
 
 So when you're tackling merge sort in Prolog you're really thinking about recursion and list manipulation which are basically the bread and butter of the language. You’re not going to be directly modifying arrays like you would in say C or Java. Instead you're defining relationships and how lists should be transformed.
 
@@ -17,7 +17,7 @@ split_list([X, Y | Rest], [X | Left], [Y | Right]) :-
     split_list(Rest, Left, Right).
 ```
 
-Okay what’s happening here? `split_list([], [], []).` This is our base case when we encounter an empty list we return two empty lists. Makes sense right? Next up `split_list([X], [X], []).` This is the base case for single element lists one element we output the same single-element list in the left list and an empty list in the right list. Then the general case: `split_list([X, Y | Rest], [X | Left], [Y | Right]) :- split_list(Rest, Left, Right).` This is where the magic happens. We take the head of the list two elements `X` and `Y` and stick them into separate output lists `Left` and `Right` respectively and then recursively call `split_list` with `Rest`. This continues until we hit the base cases resulting in roughly equal lists.
+ what’s happening here? `split_list([], [], []).` This is our base case when we encounter an empty list we return two empty lists. Makes sense right? Next up `split_list([X], [X], []).` This is the base case for single element lists one element we output the same single-element list in the left list and an empty list in the right list. Then the general case: `split_list([X, Y | Rest], [X | Left], [Y | Right]) :- split_list(Rest, Left, Right).` This is where the magic happens. We take the head of the list two elements `X` and `Y` and stick them into separate output lists `Left` and `Right` respectively and then recursively call `split_list` with `Rest`. This continues until we hit the base cases resulting in roughly equal lists.
 
 Now that we have splitting down the next crucial step is merging the sorted lists into a single sorted list. Here’s the merge function I usually rely on I’ve tweaked it over the years but the core idea remains the same.
 

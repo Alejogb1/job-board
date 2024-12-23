@@ -4,7 +4,7 @@ date: '2024-11-15'
 id: 'lightweight-relevant-ads-for-ai-engineers'
 ---
 
-Okay, so you want ads that are like, super targeted to AI engineers and not, like, annoying or too heavy.  I get it, I'm all about efficiency.  
+, so you want ads that are like, super targeted to AI engineers and not, like, annoying or too heavy.  I get it, I'm all about efficiency.  
 
 So, the first thing we need is some kind of data to know who we're targeting  Think about it like this, you want your ads to be like a really good dating app.  You're not showing people pictures of cats if they're looking for someone to build a rocket ship with right?  
 

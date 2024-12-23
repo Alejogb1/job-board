@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-add-votes-to-a-rails-poll"
 ---
 
-Okay, let's tackle this. I've seen my fair share of poll implementations, and the voting mechanism is always a surprisingly nuanced area. When we’re adding votes to a Rails poll, it's not just about incrementing a counter. We need to think about data integrity, race conditions, user experience, and efficient querying. In my experience building a community platform years ago, I had to implement a robust voting system, and these are the core lessons I learned.
+,  I've seen my fair share of poll implementations, and the voting mechanism is always a surprisingly nuanced area. When we’re adding votes to a Rails poll, it's not just about incrementing a counter. We need to think about data integrity, race conditions, user experience, and efficient querying. In my experience building a community platform years ago, I had to implement a robust voting system, and these are the core lessons I learned.
 
 First, the simplest approach, directly updating a counter on the poll option, can lead to problems. Imagine multiple users voting at the same time: there's a high chance we'll lose some votes due to a race condition. To avoid this, we absolutely *must* implement some sort of locking or use an atomic operation.
 

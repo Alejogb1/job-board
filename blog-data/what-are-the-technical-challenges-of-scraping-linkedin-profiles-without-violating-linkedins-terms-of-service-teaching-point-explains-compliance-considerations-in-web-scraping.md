@@ -4,7 +4,7 @@ date: "2024-12-12"
 id: "what-are-the-technical-challenges-of-scraping-linkedin-profiles-without-violating-linkedins-terms-of-service-teaching-point-explains-compliance-considerations-in-web-scraping"
 ---
 
-Alright let's dive into the LinkedIn scraping situation it's like trying to sneak into a really well-guarded party right we all know LinkedIn’s got tons of useful data for all sorts of things but they also have these rules which are kinda like the bouncers at the door and you really don't want to get thrown out so the technical side of it is a bunch of things all playing together
+let's dive into the LinkedIn scraping situation it's like trying to sneak into a really well-guarded party right we all know LinkedIn’s got tons of useful data for all sorts of things but they also have these rules which are kinda like the bouncers at the door and you really don't want to get thrown out so the technical side of it is a bunch of things all playing together
 
 First off LinkedIn is really good at detecting bots they've got these sophisticated algorithms that look for patterns in your requests so if you're blasting their servers with a bunch of requests in a short time it's a dead giveaway that you're not a real person browsing the site just like you wouldn't repeatedly slam a door to check it works they can spot an automated system super quick so a huge challenge is mimicking human-like behavior you have to slow things down add random pauses between requests like a real user would which makes the process slower and more tedious no more just whacking it with requests its about finesse
 

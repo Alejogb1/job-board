@@ -4,7 +4,7 @@ date: "2024-12-11"
 id: "what-does-it-mean-for-neural-networks-to-exhibit-self-repair-mechanisms-when-components-are-removed"
 ---
 
-Okay so you wanna know about self-repair in neural networks right  like what happens when you yank out parts of the network  It's kinda cool actually  It's not like a robot fixing itself with a tiny wrench  it's more subtle  more like the network adapting finding new ways to do its thing even with missing pieces
+ so you wanna know about self-repair in neural networks right  like what happens when you yank out parts of the network  It's kinda cool actually  It's not like a robot fixing itself with a tiny wrench  it's more subtle  more like the network adapting finding new ways to do its thing even with missing pieces
 
 Imagine a neural network as a giant intricate web  tons of nodes all connected buzzing with activity  each node contributes to the overall function  Now suppose you just  *snip*  remove a few nodes or even entire sections  Suddenly some pathways are blocked right  information cant flow as smoothly  you'd expect a total meltdown  right  Well maybe not
 

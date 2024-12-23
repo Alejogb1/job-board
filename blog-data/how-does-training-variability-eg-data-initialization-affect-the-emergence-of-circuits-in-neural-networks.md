@@ -4,7 +4,7 @@ date: "2024-12-11"
 id: "how-does-training-variability-eg-data-initialization-affect-the-emergence-of-circuits-in-neural-networks"
 ---
 
-Okay so you wanna know about how training stuff like different data or starting points messes with how circuits form in neural nets right  Super cool question actually  It's like baking a cake sometimes you get a fluffy masterpiece other times a brick  Except instead of cake it's a brain and instead of a brick it's a model that just doesn't learn
+ so you wanna know about how training stuff like different data or starting points messes with how circuits form in neural nets right  Super cool question actually  It's like baking a cake sometimes you get a fluffy masterpiece other times a brick  Except instead of cake it's a brain and instead of a brick it's a model that just doesn't learn
 
 The whole "circuits" thing is a pretty hot topic these days  People are trying to figure out how these specific pathways in the network become important for certain tasks  It's not just random connections firing everywhere there are these patterns that emerge  And the crazy thing is how much the training process itself influences these patterns
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "cluster-routing-allocation-enable-none-seems-not-working"
 ---
 
-Alright so you're seeing "cluster routing allocation enable none" not doing what you expect right Classic. Been there done that got the t-shirt and the debugging scars to prove it. Let me lay it out because this is a common pitfall and I’ve debugged this thing more times than I’d like to admit.
+so you're seeing "cluster routing allocation enable none" not doing what you expect right Classic. Been there done that got the t-shirt and the debugging scars to prove it. Let me lay it out because this is a common pitfall and I’ve debugged this thing more times than I’d like to admit.
 
 First thing's first when you say "not working" let's be precise here. What are you seeing exactly are the routes still being allocated are you getting error messages is it just silence? It's really crucial to pin down the *specific* behavior that deviates from what you expect. Details people details that's what debuggers crave.
 

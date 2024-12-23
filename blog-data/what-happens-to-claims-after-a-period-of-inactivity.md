@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-happens-to-claims-after-a-period-of-inactivity"
 ---
 
-Okay, let's tackle this. The lifecycle of a claim after inactivity is a topic I’ve had to navigate more than a few times in my career, and it's usually more nuanced than people initially expect. There isn't a one-size-fits-all answer because it's heavily dependent on the specific system, the underlying data store, and the business logic driving that system. I'll walk you through what typically happens, and then show you some examples from different scenarios I’ve encountered.
+,  The lifecycle of a claim after inactivity is a topic I’ve had to navigate more than a few times in my career, and it's usually more nuanced than people initially expect. There isn't a one-size-fits-all answer because it's heavily dependent on the specific system, the underlying data store, and the business logic driving that system. I'll walk you through what typically happens, and then show you some examples from different scenarios I’ve encountered.
 
 Generally speaking, when a claim becomes inactive—and this can mean anything from a user not updating it, a timeout period reached in a distributed system, or a transaction process stalling—the system has to make a decision about what to do with it. The primary concern is maintaining data consistency and avoiding the accumulation of stale or misleading information. Often, this involves some form of archival or cleanup process.
 

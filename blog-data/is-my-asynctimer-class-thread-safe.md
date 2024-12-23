@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "is-my-asynctimer-class-thread-safe"
 ---
 
-Alright, let's tackle this. The question of whether an `AsyncTimer` class is thread-safe is, as it often is in concurrent programming, decidedly nuanced. It's not a simple yes or no, and depends heavily on the *specific implementation* of your `AsyncTimer` class. I've spent my fair share of late nights debugging race conditions and deadlocks caused by improperly implemented thread-safe components, so I can speak with some experience here.
+Alright,  The question of whether an `AsyncTimer` class is thread-safe is, as it often is in concurrent programming, decidedly nuanced. It's not a simple yes or no, and depends heavily on the *specific implementation* of your `AsyncTimer` class. I've spent my fair share of late nights debugging race conditions and deadlocks caused by improperly implemented thread-safe components, so I can speak with some experience here.
 
 The fundamental issue stems from the fact that concurrent access to shared state, in this case, the internal state of your timer, can lead to unexpected and often frustrating outcomes. If multiple threads attempt to modify or even just read the timer's internal state simultaneously without appropriate synchronization mechanisms, you can encounter data corruption, inconsistent results, or even program crashes.
 

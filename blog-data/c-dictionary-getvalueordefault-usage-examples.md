@@ -4,13 +4,13 @@ date: "2024-12-13"
 id: "c-dictionary-getvalueordefault-usage-examples"
 ---
 
-Alright so you're wrestling with `Dictionary.GetValueOrDefault` in C# eh? Been there done that countless times believe me. It's one of those seemingly simple things that can bite you if you're not careful. I've personally debugged more than my share of null reference exceptions related to missing keys in dictionaries before I discovered the beauty of this little method.
+so you're wrestling with `Dictionary.GetValueOrDefault` in C# eh? Been there done that countless times believe me. It's one of those seemingly simple things that can bite you if you're not careful. I've personally debugged more than my share of null reference exceptions related to missing keys in dictionaries before I discovered the beauty of this little method.
 
 Let me tell you a story back in my early days I was working on this large data processing project we had a configuration dictionary holding crucial parameters for all the different modules. We started with a basic `dictionary[key]` approach. Of course what could go wrong right? well plenty as it turns out. We had different engineers adding config parameters some would add them some wouldn't resulting in a wild west of key checking and if statements before accessing the value. Let’s say the code looked awful and it was just a recipe for disaster. Null reference exceptions were our daily bread.
 
 Then we stumbled upon `GetValueOrDefault` it was like discovering fire. It allowed us to gracefully handle missing keys without resorting to endless try-catches or null checks. No more screaming exceptions in the middle of the night it was glorious.
 
-Okay let’s dive in to what this thing is and how you can use it. It’s pretty straightforward.
+ let’s dive in to what this thing is and how you can use it. It’s pretty straightforward.
 
 **Basic Usage**
 
@@ -92,7 +92,7 @@ Here we are defining a custom class User and using it as values in the dictionar
 While `GetValueOrDefault` is incredibly handy it's not a silver bullet. There are a few things you should keep in mind:
 
 *   **Performance**: For very very very large dictionaries or in performance-critical sections repeated `GetValueOrDefault` calls could have some overhead as opposed to a single lookup but in most of the cases and in most use cases this overhead is usually negligible. I wouldn't worry about it unless you're dealing with some hyper-optimized system.
-*   **Default Value Types**: Be mindful of default values. A default of 0 for an int might be okay but for a custom class or a struct you need to make sure your default value makes sense. I have seen so many cases where people use a `null` as default value for something that cant be null and then a new NullReferenceException pops up.
+*   **Default Value Types**: Be mindful of default values. A default of 0 for an int might be  but for a custom class or a struct you need to make sure your default value makes sense. I have seen so many cases where people use a `null` as default value for something that cant be null and then a new NullReferenceException pops up.
 *   **Object Creation:**  When you use the overload with a custom default value if the key isn’t found the default value creation will happen every time. In cases where default values need some calculation that takes time try to create and reuse the same default value instance this is good not only for performance but for code readability too.
 
 **My general approach**
@@ -107,7 +107,7 @@ So here's my general philosophy when it comes to `GetValueOrDefault`.
 
 **Where to learn more**
 
-Alright so if you want to really deep dive into dictionary behavior and optimization in .NET I would recommend:
+so if you want to really deep dive into dictionary behavior and optimization in .NET I would recommend:
 *   **"CLR via C#” by Jeffrey Richter** It is a deep dive into .NET framework itself. Everything from types to memory management is described in detail here. Understanding the internals of how dictionaries operate under the hood can help you write much more efficient and resilient code.
 
 *   **"Effective C#" by Bill Wagner** this book provides practical guidance on writing cleaner more performant and maintainable code in C#. It covers topics like working with collections and choosing the right data structures for the job which are crucial for mastering `GetValueOrDefault`.

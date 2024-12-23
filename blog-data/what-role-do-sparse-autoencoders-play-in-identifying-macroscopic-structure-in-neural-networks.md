@@ -4,7 +4,7 @@ date: "2024-12-11"
 id: "what-role-do-sparse-autoencoders-play-in-identifying-macroscopic-structure-in-neural-networks"
 ---
 
-Okay so you wanna know about sparse autoencoders and how they peek into the big picture of neural networks right  like figuring out the overall structure the macroscopic stuff  It's a cool idea  makes sense to want to understand what a network's actually doing beyond just its input-output behaviour  It's like looking at a city from a plane versus walking its streets you get a completely different perspective
+ so you wanna know about sparse autoencoders and how they peek into the big picture of neural networks right  like figuring out the overall structure the macroscopic stuff  It's a cool idea  makes sense to want to understand what a network's actually doing beyond just its input-output behaviour  It's like looking at a city from a plane versus walking its streets you get a completely different perspective
 
 Sparse autoencoders are basically these clever little networks  They're all about learning efficient representations of data  Think of it like this you give them a picture of a cat and they try to reconstruct it but with a catch they're forced to do it using only a few active neurons  That "sparsity" constraint is key It's like saying hey network you can only use a small set of your brain cells to remember this cat  This forces it to learn the most essential features the really important parts of the cat image instead of just memorizing every pixel
 

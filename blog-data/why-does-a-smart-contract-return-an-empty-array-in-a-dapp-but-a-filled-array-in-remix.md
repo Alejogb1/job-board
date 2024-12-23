@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-a-smart-contract-return-an-empty-array-in-a-dapp-but-a-filled-array-in-remix"
 ---
 
-Okay, let’s unpack this common, and frankly, quite frustrating situation. I’ve seen this crop up countless times, particularly when developers are transitioning from the controlled environment of Remix to the more unpredictable world of a deployed dapp. You’ve got a smart contract method that, in Remix, dutifully returns a populated array, but when called from your dapp, it’s suddenly an empty vessel. This discrepancy usually stems from a few core areas, which I'll illustrate by drawing on experiences I've had working on various blockchain projects.
+, let’s unpack this common, and frankly, quite frustrating situation. I’ve seen this crop up countless times, particularly when developers are transitioning from the controlled environment of Remix to the more unpredictable world of a deployed dapp. You’ve got a smart contract method that, in Remix, dutifully returns a populated array, but when called from your dapp, it’s suddenly an empty vessel. This discrepancy usually stems from a few core areas, which I'll illustrate by drawing on experiences I've had working on various blockchain projects.
 
 The crux of the matter generally revolves around subtle differences in how Remix and your dapp handle data retrieval and interaction with the blockchain. Remix, in essence, acts as a highly simplified interface directly interacting with a local or simulated blockchain environment. Your dapp, on the other hand, often uses an intermediary library such as ethers.js or web3.js, which introduce layers of complexity in how data is requested, transmitted, and processed. This often results in the kind of mismatch you're seeing.
 

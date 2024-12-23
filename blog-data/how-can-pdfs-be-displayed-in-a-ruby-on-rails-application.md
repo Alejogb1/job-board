@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-pdfs-be-displayed-in-a-ruby-on-rails-application"
 ---
 
-Okay, let's tackle this. I've encountered the challenge of displaying PDFs in Rails apps more times than I care to count, and each time it presents slightly different nuances. There are several approaches, each with its own trade-offs, and selecting the right one often depends on specific requirements. Let me share some methods I’ve found useful, along with code examples and resources that helped me along the way.
+,  I've encountered the challenge of displaying PDFs in Rails apps more times than I care to count, and each time it presents slightly different nuances. There are several approaches, each with its own trade-offs, and selecting the right one often depends on specific requirements. Let me share some methods I’ve found useful, along with code examples and resources that helped me along the way.
 
 Essentially, you’ve got three primary routes: embedding the PDF directly in the page using an `<iframe>` or `<embed>` tag, using a viewer like pdf.js, or linking to the PDF for download or display via the browser's built-in PDF viewer. The optimal choice often hinges on whether you need user interaction within the PDF, if rendering performance is critical, or if you’re dealing with sensitive data that requires controlled access.
 

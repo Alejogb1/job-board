@@ -4,9 +4,9 @@ date: "2024-12-13"
 id: "how-to-inspect-incoming-tcp-and-ip-headers-ebpf"
 ---
 
-Okay so you wanna get down and dirty with inspecting TCP and IP headers using eBPF right been there done that plenty of times its like trying to understand a really messed up network conversation in real time but super fascinating once you get the hang of it
+ so you wanna get down and dirty with inspecting TCP and IP headers using eBPF right been there done that plenty of times its like trying to understand a really messed up network conversation in real time but super fascinating once you get the hang of it
 
-Alright so first things first eBPF Extended Berkeley Packet Filter its the cool kid on the block for doing all sorts of kernel level networking magic its not your grandma's packet filtering this is deep dives into packet data without even needing to copy it to user space which is insane efficiency for our use case and very good if you are dealing with low-latency stuff and you are basically working on baremetal environments
+so first things first eBPF Extended Berkeley Packet Filter its the cool kid on the block for doing all sorts of kernel level networking magic its not your grandma's packet filtering this is deep dives into packet data without even needing to copy it to user space which is insane efficiency for our use case and very good if you are dealing with low-latency stuff and you are basically working on baremetal environments
 
 Now how do we actually do this inspection you ask well we need to write some eBPF code load it into the kernel and tell it to watch network events. We are going to use socket filters since its what we want in this case and we want to trace on the socket level
 
@@ -163,7 +163,7 @@ finally:
 ```
 This script loads the C code into the kernel attaches the xdp filter to a network interface and it reads the data from the kernel using the `events` perf ring buffer that we declared in the C code with the `BPF_PERF_OUTPUT(events);` macro. I once spent an afternoon figuring out why I was not receiving any data and the reason was just a typo on the perf event name I called it `event` instead of `events` and it just returned nothing very annoying to debug.
 
-Okay so that’s like the basic concept we are using XDP because it's faster than tc filters because it is more low level but for inspecting TCP headers with ebpf we could also use socket filters.
+ so that’s like the basic concept we are using XDP because it's faster than tc filters because it is more low level but for inspecting TCP headers with ebpf we could also use socket filters.
 
 Here is how a socket filter version may look like:
 

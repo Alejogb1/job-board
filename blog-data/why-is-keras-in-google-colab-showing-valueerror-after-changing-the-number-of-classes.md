@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-keras-in-google-colab-showing-valueerror-after-changing-the-number-of-classes"
 ---
 
-Alright, let's tackle this. I’ve seen this particular ValueError pop up more times than I care to remember, particularly when modifying class counts in Keras models within a Google Colab environment. It’s a surprisingly common pitfall, and understanding the nuances is crucial for smooth model development. Let's explore the reasons behind it and how we can reliably resolve the issue.
+Alright,  I’ve seen this particular ValueError pop up more times than I care to remember, particularly when modifying class counts in Keras models within a Google Colab environment. It’s a surprisingly common pitfall, and understanding the nuances is crucial for smooth model development. Let's explore the reasons behind it and how we can reliably resolve the issue.
 
 The crux of the problem, often manifesting as a `ValueError`, when you alter the number of classes in your Keras model, particularly after it's been partially defined or even trained, stems primarily from mismatches in the expected output shape and the actual output shape during model compilation or fitting. This becomes especially prominent after you have initially trained the model with a specific number of output nodes (corresponding to classes) and you decide to adjust it later.
 

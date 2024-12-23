@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-resolve-the-cant-find-training-file-error"
 ---
 
-Okay, let's tackle this. I’ve seen this particular error rear its head more times than I care to count, across a variety of training pipelines. It's usually less about the magic of machine learning and more about the mundane details of file paths and resource management. The "Can't find training file" error, frustratingly general as it is, stems from a disconnect between where your training script *thinks* the data is, and where it actually *is*. It's rarely a problem with your algorithm itself, but rather a problem of context.
+,  I’ve seen this particular error rear its head more times than I care to count, across a variety of training pipelines. It's usually less about the magic of machine learning and more about the mundane details of file paths and resource management. The "Can't find training file" error, frustratingly general as it is, stems from a disconnect between where your training script *thinks* the data is, and where it actually *is*. It's rarely a problem with your algorithm itself, but rather a problem of context.
 
 My experiences, especially during the early days of scaling up a deep learning model for satellite imagery analysis, are etched in my memory. We had multiple researchers simultaneously working on various components, and data paths being mismatched was the source of no end of grief. I’ll illustrate how I approach debugging this, and I'll include some specific code snippets to make it more concrete, but first a couple of general strategies.
 
@@ -17,7 +17,7 @@ Let’s break this down further. The core problem essentially involves a lack of
 3. **File Does Not Exist:** While it may seem obvious, sometimes files simply aren't present at the intended locations, perhaps due to an interrupted download, a failed data transfer, or simply having moved the file and not updated it within the training configuration.
 4. **Misconfigured data loading libraries:** Specifically within libraries like TensorFlow or PyTorch, there may be configurations for specific datasets where the library is expecting a specific data structure. If that is missing or incorrectly configured you will get data loading errors.
 
-Okay, let's look at some code examples. For these, I’ll use python as it's fairly ubiquitous in the data science and machine learning fields.
+, let's look at some code examples. For these, I’ll use python as it's fairly ubiquitous in the data science and machine learning fields.
 
 **Example 1: Absolute vs. Relative Paths**
 

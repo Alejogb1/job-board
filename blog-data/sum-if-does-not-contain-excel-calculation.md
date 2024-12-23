@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "sum-if-does-not-contain-excel-calculation"
 ---
 
-Okay so you're asking about summing values in Excel-like data but with a condition specifically you want to sum only if a certain value is not present in a range right I've been down this rabbit hole before more times than I'd like to admit lets unpack this no nonsense style
+ so you're asking about summing values in Excel-like data but with a condition specifically you want to sum only if a certain value is not present in a range right I've been down this rabbit hole before more times than I'd like to admit lets unpack this no nonsense style
 
 First off lets clarify what I assume you're wrestling with. You've got something like a spreadsheet maybe its actually a CSV or a database table but the structure is essentially rows and columns one of your columns has numbers another one has say tags or categories that are strings and you want to sum the numbers only for rows where a specific string is missing in that tags column
 
@@ -64,7 +64,7 @@ if total_sum is not None:
 
 ```
 
-Okay a couple of things to note here. First I use a csv reader so you can replace the csv if you need a excel reader or any other reader I left it as simple as possible. Second thing is the `astype(str)` and `.str.contains` are key the `astype(str)` makes sure all your values are treated as strings before filtering. Third the `~` is the not operator in pandas. Lastly `na=False` makes sure all NAs or null values are automatically ignored. This is my personal style I like to program so that null values never cause exceptions unless you explicitly want them I have wasted too much time debugging with null values to be careful about it. This approach is super robust handles NaNs in data and is efficient.
+ a couple of things to note here. First I use a csv reader so you can replace the csv if you need a excel reader or any other reader I left it as simple as possible. Second thing is the `astype(str)` and `.str.contains` are key the `astype(str)` makes sure all your values are treated as strings before filtering. Third the `~` is the not operator in pandas. Lastly `na=False` makes sure all NAs or null values are automatically ignored. This is my personal style I like to program so that null values never cause exceptions unless you explicitly want them I have wasted too much time debugging with null values to be careful about it. This approach is super robust handles NaNs in data and is efficient.
 
 **Command Line using `awk`**
 
@@ -89,7 +89,7 @@ awk -F, -v excluded_value="discount" '
 ' mydata.csv
 ```
 
-Okay lets get into this thing:
+ lets get into this thing:
 
 `-F,`: This tells `awk` that the delimiter is the comma a common delimiter for CSVs
 `-v excluded_value="discount"`: This sets a variable called `excluded_value` that is equal to the value you want to exclude if you are looking for multiple values you can loop through a list of them in the code if needed.

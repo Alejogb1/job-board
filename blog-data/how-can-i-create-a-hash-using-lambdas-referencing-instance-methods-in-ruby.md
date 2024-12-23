@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-create-a-hash-using-lambdas-referencing-instance-methods-in-ruby"
 ---
 
-Alright, let's tackle this. It’s a surprisingly nuanced area, and I remember a project back in '09 where we heavily relied on dynamic configurations, which often involved precisely this: building hashes where the values were essentially method calls on an instance. The challenge, as always, lies in getting the binding correct and avoiding those nasty "undefined method" errors at runtime.
+Alright,  It’s a surprisingly nuanced area, and I remember a project back in '09 where we heavily relied on dynamic configurations, which often involved precisely this: building hashes where the values were essentially method calls on an instance. The challenge, as always, lies in getting the binding correct and avoiding those nasty "undefined method" errors at runtime.
 
 The core concept here involves understanding that a lambda in Ruby is a closure; it captures its surrounding scope. When we want a lambda to call an instance method, we need to ensure that 'self' within that lambda refers to the correct instance. Simply creating a lambda and assigning it won't magically bind it to a particular object. That's where the trick lies.
 

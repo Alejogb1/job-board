@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "how-can-photonic-technologies-facilitate-seamless-communication-between-wafer-scale-chips-such-as-those-used-in-large-ai-processing-systems"
 ---
 
-Okay so you want to know how light can help super-fast chips talk to each other right  like imagine a city of chips needing to chat constantly  that's basically what we're dealing with in massive AI systems  these things are huge  think wafer-scale  meaning the chips are practically the size of a small pizza  getting data between them using traditional electronics is a nightmare  it's slow it's power hungry and it generates a ton of heat  that's where photons our little light buddies come in
+ so you want to know how light can help super-fast chips talk to each other right  like imagine a city of chips needing to chat constantly  that's basically what we're dealing with in massive AI systems  these things are huge  think wafer-scale  meaning the chips are practically the size of a small pizza  getting data between them using traditional electronics is a nightmare  it's slow it's power hungry and it generates a ton of heat  that's where photons our little light buddies come in
 
 Photonic integration is the key here  it's all about embedding optical components directly onto the chip  instead of relying on those clunky electrical wires  think tiny lasers waveguides and modulators all living on the same silicon  this lets us send data as light signals way faster than electrons can travel  and with way less energy loss  it's like upgrading from a bicycle to a spaceship for data transfer
 

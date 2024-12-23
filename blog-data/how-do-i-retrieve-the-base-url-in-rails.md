@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-retrieve-the-base-url-in-rails"
 ---
 
-Okay, let’s tackle this. It’s a common task, and I remember a project a few years back where incorrect URL construction was causing cascading issues with our microservices. We were deploying across multiple environments, and the need to accurately determine the base url became critical for consistent API calls and redirect behavior. Let's dive into the approaches one can take within Rails to reliably retrieve this information.
+, let’s tackle this. It’s a common task, and I remember a project a few years back where incorrect URL construction was causing cascading issues with our microservices. We were deploying across multiple environments, and the need to accurately determine the base url became critical for consistent API calls and redirect behavior. Let's dive into the approaches one can take within Rails to reliably retrieve this information.
 
 The base url in a rails application, essentially the root of your application’s web address, can be a bit tricky because it's often constructed from multiple sources. It's not just about grabbing the host, but considering the protocol (http/https) and any potential subdirectories your application might be deployed under.
 

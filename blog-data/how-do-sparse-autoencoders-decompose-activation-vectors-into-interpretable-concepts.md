@@ -4,7 +4,7 @@ date: "2024-12-11"
 id: "how-do-sparse-autoencoders-decompose-activation-vectors-into-interpretable-concepts"
 ---
 
-Okay so you wanna know how sparse autoencoders unpack those activation vectors into something we can actually understand right  like  finding the hidden meaning in the matrix  It's a cool question  and honestly  it's a bit of a messy area  there's no single perfect answer  but let's dive in
+ so you wanna know how sparse autoencoders unpack those activation vectors into something we can actually understand right  like  finding the hidden meaning in the matrix  It's a cool question  and honestly  it's a bit of a messy area  there's no single perfect answer  but let's dive in
 
 First off what are we even talking about  A sparse autoencoder is basically a neural network that tries to reconstruct its input  but with a catch  it's forced to be *sparse* meaning only a few neurons are active at a time  Think of it like this you have a picture of a cat  the autoencoder looks at it  then tries to describe it using only a few key features  like pointy ears  whiskers  maybe a fluffy tail  instead of describing every single pixel  That sparsity is key to interpretability
 

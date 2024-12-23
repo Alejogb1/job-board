@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-export-az-information-from-a-terraform-vpc-module"
 ---
 
-Okay, let's talk about extracting availability zone (AZ) information from a Terraform vpc module. It's a common requirement, and I've bumped into this more times than i'd care to recall, usually when cascading modules or when another team needs to build resources dependent on a specific subnet. It’s less straightforward than a simple output value, mostly because AZs can change and hardcoding them is a recipe for pain.
+, let's talk about extracting availability zone (AZ) information from a Terraform vpc module. It's a common requirement, and I've bumped into this more times than i'd care to recall, usually when cascading modules or when another team needs to build resources dependent on a specific subnet. It’s less straightforward than a simple output value, mostly because AZs can change and hardcoding them is a recipe for pain.
 
 The heart of the matter lies in how Terraform handles dynamic values. You can't just reach inside a VPC module and grab them directly because those values are often determined at apply time, and outputs only become available after the module has been successfully created. This is where thinking about indirect outputs and data sources come in. I've seen this trip up even experienced folks.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-sentences-be-categorized-and-highlighted"
 ---
 
-Okay, let’s tackle this one. Sentence categorization and highlighting—it's a deceptively complex area, and I’ve certainly spent my share of late nights debugging text processing pipelines that went sideways with this very issue. It's not just about slapping some bold tags on anything that looks like a question; a robust approach requires a good understanding of both linguistic structure and effective implementation.
+, let’s tackle this one. Sentence categorization and highlighting—it's a deceptively complex area, and I’ve certainly spent my share of late nights debugging text processing pipelines that went sideways with this very issue. It's not just about slapping some bold tags on anything that looks like a question; a robust approach requires a good understanding of both linguistic structure and effective implementation.
 
 My experience stems from a project a few years back, where we were building a knowledge extraction system from unstructured reports. We needed to identify key sentence types like assertions, questions, negations, and instructions. A basic keyword approach was laughably insufficient; you’d end up misclassifying statements with “why” in them as questions or labeling negated sentences as positives. So, we had to build a more nuanced system.
 

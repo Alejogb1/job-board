@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "conv2d-pytorch-layer-neural-networks"
 ---
 
-Alright so you're diving into `conv2d` layers in PyTorch right I get it Been there done that countless times Let me break it down for ya from my experience and yeah I’m gonna keep it techy and informal like we're chatting on a forum
+so you're diving into `conv2d` layers in PyTorch right I get it Been there done that countless times Let me break it down for ya from my experience and yeah I’m gonna keep it techy and informal like we're chatting on a forum
 
 First off `conv2d` is your bread and butter for dealing with image data in neural networks think of it as a specialized tool for recognizing patterns in a grid of pixels Unlike standard linear layers which treat each input feature independently a convolution layer looks at local regions of the input to extract features This is key for image processing where spatial relationships matter a lot
 
@@ -38,7 +38,7 @@ output_feature_map = conv_layer(input_image)
 print(output_feature_map.shape) # Output: torch.Size([1, 16, 30, 30])
 ```
 
-Okay so what’s happening here We create a tensor that represents our batch of input images we're simulating a batch of 1 image with 3 color channels and 32 by 32 resolution We then define our `conv2d` layer with the `nn.Conv2d` class The parameters are `in_channels` which is the number of color channels in our input image usually 3 for RGB images, `out_channels` which is number of filters or feature maps we want to create often this is a power of 2 like 16 32 64 etc `kernel_size` which is the dimensions of the filter `stride` how many pixels to jump when moving the kernel (usually 1 for a dense feature map) and `padding` how many pixels to pad on the borders of the input image (we're not padding in this case so it’s zero) Then we run input through layer and get the output’s shape
+ so what’s happening here We create a tensor that represents our batch of input images we're simulating a batch of 1 image with 3 color channels and 32 by 32 resolution We then define our `conv2d` layer with the `nn.Conv2d` class The parameters are `in_channels` which is the number of color channels in our input image usually 3 for RGB images, `out_channels` which is number of filters or feature maps we want to create often this is a power of 2 like 16 32 64 etc `kernel_size` which is the dimensions of the filter `stride` how many pixels to jump when moving the kernel (usually 1 for a dense feature map) and `padding` how many pixels to pad on the borders of the input image (we're not padding in this case so it’s zero) Then we run input through layer and get the output’s shape
 
 The output has the same batch size of 1 16 output channels and reduced spatial dimensions due to convolution
 
@@ -107,7 +107,7 @@ Also remember the weights in those layers are learnable parameters those are the
 
 A common issue I had back then was hyperparameter tuning figuring out the right number of layers kernel sizes strides etc. It is an art and the right answer depends a lot on the type of data you have and task you want to achieve. There is no one size fits all solution and it is a lot of trial and error in this case. The most important part is to keep testing and keeping an eye on the metrics. Remember to not make assumptions in the hyperparameter space and try random combinations of parameters or try to do parameter optimization with specialized tools
 
-I recall spending an entire weekend tweaking the number of filters in my convolutional layers It's like trying to find the perfect seasoning for a dish too much of one thing or not enough and it's just not right That reminds me why did the neural network cross the road Because it wanted to optimize the loss function on the other side. Okay back to serious stuff
+I recall spending an entire weekend tweaking the number of filters in my convolutional layers It's like trying to find the perfect seasoning for a dish too much of one thing or not enough and it's just not right That reminds me why did the neural network cross the road Because it wanted to optimize the loss function on the other side.  back to serious stuff
 
 Finally I would recommend you to read "Deep Learning" by Goodfellow Bengio and Courville It is a great book to understand more about convolutional networks and their basics also "Hands-On Machine Learning with Scikit-Learn Keras & TensorFlow" by Aurélien Géron is a more practical approach to deep learning that gives hands on explanation using popular frameworks and also "Programming PyTorch for Deep Learning" by Ian Pointer if you are more pytorch focused.
 Anyways, that should give you a solid starting point and remember to experiment a lot and happy coding!

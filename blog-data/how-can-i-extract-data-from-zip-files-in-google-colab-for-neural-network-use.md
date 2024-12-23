@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-extract-data-from-zip-files-in-google-colab-for-neural-network-use"
 ---
 
-Alright, let's tackle this. I recall a particularly tricky project a few years back where we had to pre-process a massive dataset of satellite imagery, all meticulously archived in numerous zip files. Dealing with those archives directly within Google Colab’s environment presented some interesting challenges. We needed a method that was both efficient and robust, given the limited resources and the iterative nature of model development. The key was understanding the nuances of file access and decompression within the colab environment, and then translating that into clean data pipelines.
+Alright,  I recall a particularly tricky project a few years back where we had to pre-process a massive dataset of satellite imagery, all meticulously archived in numerous zip files. Dealing with those archives directly within Google Colab’s environment presented some interesting challenges. We needed a method that was both efficient and robust, given the limited resources and the iterative nature of model development. The key was understanding the nuances of file access and decompression within the colab environment, and then translating that into clean data pipelines.
 
 Firstly, we need to recognize that a direct interaction with the zip archive as a single object within Colab’s file system is generally inefficient. Think of it this way, attempting to load data directly from a zipped archive is akin to trying to read a book without opening it. You might get the table of contents, but the actual text is inaccessible. Instead, we will focus on unpacking data sequentially and feeding it into our model.
 

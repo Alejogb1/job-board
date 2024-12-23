@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-an-empty-array-shown-after-pushing-data-in-an-asynchronous-foreach-loop"
 ---
 
-Alright, let's tackle this. It’s a situation I've bumped into more than once, particularly when working with Node.js and dealing with asynchronous operations within array iterations. Seeing that empty array after pushing data in what seems like a straightforward loop can definitely throw you for a loop (no pun intended). The core issue stems from how javascript handles asynchrony, and how it interacts with the procedural nature of a `forEach` loop. Let’s break it down.
+Alright,  It’s a situation I've bumped into more than once, particularly when working with Node.js and dealing with asynchronous operations within array iterations. Seeing that empty array after pushing data in what seems like a straightforward loop can definitely throw you for a loop (no pun intended). The core issue stems from how javascript handles asynchrony, and how it interacts with the procedural nature of a `forEach` loop. Let’s break it down.
 
 The fundamental problem lies in the fact that `forEach` is synchronous. While you can include asynchronous operations *within* the callback of a `forEach` loop, the loop itself will not wait for those asynchronous operations to complete. Think of it like this: the loop iterates through your array, and for each element, it fires off an asynchronous task. However, the loop doesn't pause to see those tasks through. It completes all iterations immediately, and then the asynchronous tasks execute whenever their time comes, not necessarily in the order of the loop's iterations, or necessarily before you look at the results.
 

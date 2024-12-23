@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-are-my-azure-container-apps-restarting-multiple-times"
 ---
 
-Okay, let's tackle this. From my experience, dealing with perpetually restarting Azure Container Apps is a classic head-scratcher, and there isn't one singular culprit; it's usually a combination of factors. I've personally spent quite a few late nights debugging similar issues in production, so I can certainly walk you through the usual suspects and how to approach them systematically.
+,  From my experience, dealing with perpetually restarting Azure Container Apps is a classic head-scratcher, and there isn't one singular culprit; it's usually a combination of factors. I've personally spent quite a few late nights debugging similar issues in production, so I can certainly walk you through the usual suspects and how to approach them systematically.
 
 Often, when you're seeing multiple restarts, the issue lies within the app’s resource allocation or configuration. It's rarely an issue with Azure itself; more often, it's about how the app is behaving within its environment. We can explore some common causes and what I've done in the past to rectify them.
 

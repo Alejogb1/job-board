@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "ingress-yaml-template-returns-error-in-renderring-nil-pointer-evaluating-int"
 ---
 
-Okay so you're hitting the classic "nil pointer evaluating int" snag in your Kubernetes ingress YAML template rendering sounds familiar let me tell you
+ so you're hitting the classic "nil pointer evaluating int" snag in your Kubernetes ingress YAML template rendering sounds familiar let me tell you
 
 I've been wrestling with YAML for way too long I swear its like its always plotting against us just waiting for one little mistake it seems like it's specifically designed to give programmers existential dread when something like this shows up so here's the breakdown from someone who's been in the trenches with this and yes I've seen this exact error way too many times its the kind of error that wakes you up at 3 am
 

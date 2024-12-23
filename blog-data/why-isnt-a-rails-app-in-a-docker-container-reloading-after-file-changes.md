@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-isnt-a-rails-app-in-a-docker-container-reloading-after-file-changes"
 ---
 
-Alright, let's tackle this. I’ve definitely been in the weeds with this exact issue more than once, and it usually boils down to a few common culprits when dealing with rails in docker. It's a frustration shared by many, and understanding the nuances can save a significant amount of debugging time. I remember this one project back in '18, a relatively complex ecommerce platform, where we wrestled with this reload issue for what felt like an eternity. It was a classic case of misconfigured volume mounts and how they interact with the development environment.
+Alright,  I’ve definitely been in the weeds with this exact issue more than once, and it usually boils down to a few common culprits when dealing with rails in docker. It's a frustration shared by many, and understanding the nuances can save a significant amount of debugging time. I remember this one project back in '18, a relatively complex ecommerce platform, where we wrestled with this reload issue for what felt like an eternity. It was a classic case of misconfigured volume mounts and how they interact with the development environment.
 
 The core problem stems from the way Docker containers and host filesystems interact when you’re setting up a development environment. When you make changes to your files on your host machine, those changes are only reflected within the docker container if you have properly configured volume mounts. However, it's not just about *having* a mount – it's about how those changes are being observed within the container, particularly concerning rails.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-a-401-unauthorized-error-when-accessing-a-quarkus-application-in-a-docker-container-secured-by-keycloak"
 ---
 
-Okay, let’s unpack this 401 error with your Quarkus application behind a Keycloak barrier, all snug in a Docker container. This is a surprisingly common hiccup, and I’ve personally navigated these authentication labyrinths a few times, especially when intricate docker-compose setups start layering on complexity. Instead of blaming gremlins, let’s systematically trace potential points of failure.
+, let’s unpack this 401 error with your Quarkus application behind a Keycloak barrier, all snug in a Docker container. This is a surprisingly common hiccup, and I’ve personally navigated these authentication labyrinths a few times, especially when intricate docker-compose setups start layering on complexity. Instead of blaming gremlins, let’s systematically trace potential points of failure.
 
 The 401 Unauthorized response, in its essence, means your application is trying to access a protected resource without presenting valid credentials or with credentials that the authentication server, Keycloak in this case, has rejected. It's less about the container and more about the authentication handshake. I’d bet a considerable amount that the culprit lies somewhere in the interplay of Keycloak’s configuration, your Quarkus application's security settings, and possibly the Docker network. I’ve spent many late nights troubleshooting very similar issues.
 

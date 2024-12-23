@@ -4,11 +4,11 @@ date: "2024-12-13"
 id: "fatal-invalid-refspec-git-pull-error"
 ---
 
-Okay so you’re getting a `fatal invalid refspec` error during a `git pull` right? Been there done that got the t-shirt multiple times believe me. This is a pretty common pain point especially when you're messing with remote branches and trying to keep everything synced. Let me walk you through some of the usual suspects and how I've wrangled this particular git gremlin in the past.
+ so you’re getting a `fatal invalid refspec` error during a `git pull` right? Been there done that got the t-shirt multiple times believe me. This is a pretty common pain point especially when you're messing with remote branches and trying to keep everything synced. Let me walk you through some of the usual suspects and how I've wrangled this particular git gremlin in the past.
 
 First off let’s break down what a refspec even is. Think of it as git’s way of specifying what parts of the remote repository you’re interested in and how they should map to your local branches. Basically it's a set of rules git uses during push and pull operations. The error `fatal invalid refspec` basically means git doesn't understand the rules you've provided or are trying to use during the pull.
 
-Alright now the common causes and solutions I've encountered. Often its a typo. Yes the most basic thing you'd think we'd all be careful of but in the heat of coding and deploying things like typos happen to everyone including yours truly. You might be specifying a remote branch name that doesn’t exist either locally or remotely. This happened to me when I was working on a hotfix a few years back and was trying to pull from origin hotfixbranch instead of origin/hotfix-branch. Yeah the devil is in the detail.
+now the common causes and solutions I've encountered. Often its a typo. Yes the most basic thing you'd think we'd all be careful of but in the heat of coding and deploying things like typos happen to everyone including yours truly. You might be specifying a remote branch name that doesn’t exist either locally or remotely. This happened to me when I was working on a hotfix a few years back and was trying to pull from origin hotfixbranch instead of origin/hotfix-branch. Yeah the devil is in the detail.
 
 Another common culprit is a misconfigured remote. Sometimes the remote URL can get messed up or the remote name itself can be incorrect. I had this happen when I was experimenting with different git providers and messed up my remotes configuration which led to a lot of head scratching. Check your `.git/config` file or use `git remote -v` to verify your remote settings.
 
@@ -48,7 +48,7 @@ git checkout -b new-feature origin/new-feature
 git pull
 ```
 
-Okay but here is the kicker that most people don’t seem to grasp is that sometimes your refspec in your git config can be messed up. It could be too strict or malformed. In rare cases especially when git gets messy people edit this file manually which is why things go sideways. Let's say you have a weird git config file that looks like this:
+ but here is the kicker that most people don’t seem to grasp is that sometimes your refspec in your git config can be messed up. It could be too strict or malformed. In rare cases especially when git gets messy people edit this file manually which is why things go sideways. Let's say you have a weird git config file that looks like this:
 
 ```
 [remote "origin"]
@@ -83,7 +83,7 @@ Here is something interesting I learned when I was dealing with large projects w
 
 Now another thing to keep in mind is that git pull is just a shortcut of `git fetch` and `git merge`. So if you’re still struggling try doing those operations separately. So do a `git fetch origin` followed by a `git merge origin/yourbranch` and see if that helps. Sometimes a clearer error message will give you more insight into the underlying issue.
 
-And here's a little joke for you: Why was the refspec so bad at its job? Because it kept losing its references. Okay okay I know it's bad but its the best I could come up with.
+And here's a little joke for you: Why was the refspec so bad at its job? Because it kept losing its references.   I know it's bad but its the best I could come up with.
 
 So in summary here is what I would recommend you check when troubleshooting `fatal invalid refspec`:
 

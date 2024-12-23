@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-is-a-suitable-tensorflow-2-loss-function-for-semantic-segmentation-with-two-classes"
 ---
 
-Alright, let's tackle this. Thinking back to that project I worked on a few years ago involving satellite imagery analysis, where we had to isolate areas of deforestation, selecting the correct loss function for semantic segmentation was absolutely crucial. Two-class segmentation, while seemingly straightforward, actually presents a few nuances that can significantly impact model performance. The key is to carefully consider what each loss function penalizes and how it aligns with your dataset characteristics. Let's dive into it.
+Alright,  Thinking back to that project I worked on a few years ago involving satellite imagery analysis, where we had to isolate areas of deforestation, selecting the correct loss function for semantic segmentation was absolutely crucial. Two-class segmentation, while seemingly straightforward, actually presents a few nuances that can significantly impact model performance. The key is to carefully consider what each loss function penalizes and how it aligns with your dataset characteristics. Let's dive into it.
 
 For a binary segmentation task, where you're distinguishing between two classes (e.g., forest and non-forest), you have a variety of loss functions available in TensorFlow 2, each with its own strengths and potential drawbacks. The most common choices revolve around variations of cross-entropy and, increasingly, distance-based losses.
 

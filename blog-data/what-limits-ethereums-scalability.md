@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-limits-ethereums-scalability"
 ---
 
-Okay, let's tackle this. I’ve seen firsthand how Ethereum’s scalability challenges play out in various real-world applications, from early decentralized exchanges struggling under transaction load to more recent attempts at layer-2 solutions. It's not a single monolithic issue, but rather a confluence of factors deeply rooted in its foundational design.
+,  I’ve seen firsthand how Ethereum’s scalability challenges play out in various real-world applications, from early decentralized exchanges struggling under transaction load to more recent attempts at layer-2 solutions. It's not a single monolithic issue, but rather a confluence of factors deeply rooted in its foundational design.
 
 Ethereum's primary limitation stems from its consensus mechanism: proof-of-work (pow) initially, and now transitioning to proof-of-stake (pos). While pos is a major improvement, it doesn't magically eliminate all scalability bottlenecks. In a proof-of-work system, every node in the network processes every transaction. This ensures high security and decentralization but inherently limits throughput. With pos, a subset of validators (stakers) are responsible for proposing and validating blocks, reducing the computational burden on the network. However, the fundamental challenge remains the same: each node still needs to process and verify every transaction, regardless of how blocks are proposed and validated.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-are-2-documents-failing-to-index-in-my-elasticsearch-python-application"
 ---
 
-Okay, let's tackle this. Document indexing failures in Elasticsearch, particularly when they’re isolated to just a couple of cases, can be a surprisingly nuanced problem. I’ve seen this happen more times than I care to count, and it usually boils down to subtle data inconsistencies or unexpected mapping quirks. It's seldom a straight bug in the Elasticsearch cluster itself, especially if the rest of your pipeline is performing adequately.
+,  Document indexing failures in Elasticsearch, particularly when they’re isolated to just a couple of cases, can be a surprisingly nuanced problem. I’ve seen this happen more times than I care to count, and it usually boils down to subtle data inconsistencies or unexpected mapping quirks. It's seldom a straight bug in the Elasticsearch cluster itself, especially if the rest of your pipeline is performing adequately.
 
 From my experience, debugging these situations requires a systematic approach. First, don't immediately assume it’s some sort of major malfunction. We should start with the basics and methodically eliminate the common culprits. When two specific documents fail, but many others are indexed correctly, it often means those two documents contain peculiarities that are incompatible with your Elasticsearch index mapping or configuration.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-bash-history-and-its-output-be-logged-within-a-kubernetes-container"
 ---
 
-Alright, let's tackle this. I've seen this scenario pop up more times than I care to recall, particularly in environments with stringent auditing requirements or when debugging intermittent container issues. Getting a good handle on bash history within a Kubernetes container, along with its associated output, is crucial for post-mortem analysis and general security posture. It’s definitely not straightforward out of the box, since containers are designed to be ephemeral. However, with a few tricks, it’s entirely feasible to capture this kind of information reliably.
+Alright,  I've seen this scenario pop up more times than I care to recall, particularly in environments with stringent auditing requirements or when debugging intermittent container issues. Getting a good handle on bash history within a Kubernetes container, along with its associated output, is crucial for post-mortem analysis and general security posture. It’s definitely not straightforward out of the box, since containers are designed to be ephemeral. However, with a few tricks, it’s entirely feasible to capture this kind of information reliably.
 
 Fundamentally, the challenge stems from the fact that bash history is typically stored in a `.bash_history` file within a user's home directory. In containerized environments, especially those running on Kubernetes, these directories are often transient, meaning any history recorded there will vanish when the container restarts or is replaced. So, our approach needs to ensure persistence and a means to redirect standard output and error streams alongside history.
 

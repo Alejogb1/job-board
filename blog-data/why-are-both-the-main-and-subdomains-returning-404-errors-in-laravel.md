@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-are-both-the-main-and-subdomains-returning-404-errors-in-laravel"
 ---
 
-Okay, let's unpack this 404 situation with both the main and subdomains in a Laravel setup. I’ve seen this particular scenario play out a number of times, and it often boils down to a handful of common culprits. It’s never usually just one thing, but rather a combination of configuration hiccups. Let’s dive in.
+, let's unpack this 404 situation with both the main and subdomains in a Laravel setup. I’ve seen this particular scenario play out a number of times, and it often boils down to a handful of common culprits. It’s never usually just one thing, but rather a combination of configuration hiccups. Let’s dive in.
 
 First, let's consider the fundamental issue: a 404 error indicates that the server can't locate the requested resource. In the context of web servers and Laravel, this usually points to problems in how requests are being routed either at the web server level (like Nginx or Apache) or within Laravel itself. We’re dealing with both main and subdomains failing, which suggests a systemic issue, not just a problem isolated to one particular route.
 

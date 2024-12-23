@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "which-document-in-a-set-is-most-likely-to-answer-a-given-question"
 ---
 
-Okay, let's tackle this. Choosing the correct document from a collection to answer a specific question is a problem I've encountered more than once, and it’s far from trivial. It’s a core issue in information retrieval, and while at first glance it might seem simple, the complexities lie in accurately gauging semantic relevance. In my experience, we’re rarely dealing with exact keyword matches; it's about understanding context and underlying meanings. I've spent some significant time on this, and the methodologies aren't always straightforward, so let's break it down.
+,  Choosing the correct document from a collection to answer a specific question is a problem I've encountered more than once, and it’s far from trivial. It’s a core issue in information retrieval, and while at first glance it might seem simple, the complexities lie in accurately gauging semantic relevance. In my experience, we’re rarely dealing with exact keyword matches; it's about understanding context and underlying meanings. I've spent some significant time on this, and the methodologies aren't always straightforward, so let's break it down.
 
 Essentially, this challenge is about creating a ranking system. We need to determine which document, from a given corpus, has the highest probability of containing the answer to a user’s question. This boils down to scoring each document against the query and then selecting the highest-ranked one. We’re moving beyond basic keyword matching and focusing on semantic similarity and document context. Here's how I've approached this in the past, with a focus on practical application.
 

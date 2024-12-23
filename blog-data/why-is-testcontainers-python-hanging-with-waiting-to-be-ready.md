@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-is-testcontainers-python-hanging-with-waiting-to-be-ready"
 ---
 
-Okay, let’s unpack this. I’ve seen the “waiting to be ready” hang with `testcontainers-python` more times than I care to count, and it's rarely due to a single, straightforward reason. It’s more often a confluence of subtle environmental and configuration issues, sometimes even down to the intricacies of docker itself. From my experience, tracing these hangs requires a systematic approach; let me walk you through some typical culprits and how I've addressed them.
+, let’s unpack this. I’ve seen the “waiting to be ready” hang with `testcontainers-python` more times than I care to count, and it's rarely due to a single, straightforward reason. It’s more often a confluence of subtle environmental and configuration issues, sometimes even down to the intricacies of docker itself. From my experience, tracing these hangs requires a systematic approach; let me walk you through some typical culprits and how I've addressed them.
 
 Fundamentally, the “waiting to be ready” message from `testcontainers-python` indicates that the library is unable to establish a connection with the containerized service within a reasonable timeout period. This implies that the underlying service isn't becoming reachable on the exposed port after docker has started it. The container itself might be running without error (at least initially), but `testcontainers-python`'s health check—which uses the specified ports—doesn’t return positive, leading to the indefinite wait.
 

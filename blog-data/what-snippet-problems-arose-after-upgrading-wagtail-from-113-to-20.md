@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-snippet-problems-arose-after-upgrading-wagtail-from-113-to-20"
 ---
 
-Okay, let's tackle this. I recall a rather involved migration project a few years back, moving a large content platform from Wagtail 1.13 to 2.0. The upgrade itself, while largely smooth, surfaced a few significant issues concerning snippets that required some thoughtful restructuring. It wasn't a simple find-and-replace, that's for sure.
+,  I recall a rather involved migration project a few years back, moving a large content platform from Wagtail 1.13 to 2.0. The upgrade itself, while largely smooth, surfaced a few significant issues concerning snippets that required some thoughtful restructuring. It wasn't a simple find-and-replace, that's for sure.
 
 The core problem stemmed from a combination of changes introduced in Wagtail 2.0, specifically how snippets are managed and referenced within page models. The old model, using `ForeignKey` relationships with the `related_name` attribute, had a tendency to become a bit… unwieldy. Let's break it down.
 

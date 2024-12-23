@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-type-should-a-rust-trait-return"
 ---
 
-Alright, let's tackle this. When discussing what type a rust trait should return, it’s not a simple matter of picking one and calling it a day. The answer, as is often the case in software engineering, depends heavily on context and what you're trying to achieve. I've encountered this exact question countless times over my years of working with Rust, particularly during the early adoption phases within our team on a legacy codebase refactor. Let me share what I've learned, avoiding jargon and keeping it grounded in practical examples.
+Alright,  When discussing what type a rust trait should return, it’s not a simple matter of picking one and calling it a day. The answer, as is often the case in software engineering, depends heavily on context and what you're trying to achieve. I've encountered this exact question countless times over my years of working with Rust, particularly during the early adoption phases within our team on a legacy codebase refactor. Let me share what I've learned, avoiding jargon and keeping it grounded in practical examples.
 
 Essentially, a trait in Rust defines a set of behaviors, a contract that types can implement. The return type from methods declared within that trait directly impacts its usability and flexibility. There isn't one single “best” type, but rather a selection based on trade-offs.
 

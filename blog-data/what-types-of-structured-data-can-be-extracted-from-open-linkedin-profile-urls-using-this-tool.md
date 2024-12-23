@@ -4,7 +4,7 @@ date: "2024-12-10"
 id: "what-types-of-structured-data-can-be-extracted-from-open-linkedin-profile-urls-using-this-tool"
 ---
 
-Okay so you wanna know what kinda structured data we can pull from LinkedIn profiles right using some cool tool  I'm guessing you're thinking about web scraping or maybe an API  but either way the possibilities are pretty awesome  LinkedIn's a goldmine of info  especially if you're into people analytics or recruitment or even just generally curious about who's doing what
+ so you wanna know what kinda structured data we can pull from LinkedIn profiles right using some cool tool  I'm guessing you're thinking about web scraping or maybe an API  but either way the possibilities are pretty awesome  LinkedIn's a goldmine of info  especially if you're into people analytics or recruitment or even just generally curious about who's doing what
 
 First off you're gonna get the basics  stuff like name job title company  that's like low hanging fruit  easy peasy  but it's the foundation  you'll always want that  think of it as the scaffolding for everything else
 

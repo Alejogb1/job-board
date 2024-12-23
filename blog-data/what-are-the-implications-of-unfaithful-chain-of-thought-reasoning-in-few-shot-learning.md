@@ -4,7 +4,7 @@ date: "2024-12-11"
 id: "what-are-the-implications-of-unfaithful-chain-of-thought-reasoning-in-few-shot-learning"
 ---
 
-Okay so you wanna dive into the weirdness of broken chain of thought reasoning in few-shot learning right  That's a super interesting area its kinda like watching a really smart dog almost get the answer but then totally miss the point at the end  It's frustrating but also fascinating to see how these models think  
+ so you wanna dive into the weirdness of broken chain of thought reasoning in few-shot learning right  That's a super interesting area its kinda like watching a really smart dog almost get the answer but then totally miss the point at the end  It's frustrating but also fascinating to see how these models think  
 
 Few-shot learning is all about teaching a model to do a new task with just a few examples  Imagine teaching a kid to identify different types of birds with only like three pictures of each  That's tough right  Chain of thought reasoning is supposed to help with that its like giving the model an internal monologue so it can break down the problem step by step and reach a better answer Its all about intermediate steps not just jumping to a conclusion
 

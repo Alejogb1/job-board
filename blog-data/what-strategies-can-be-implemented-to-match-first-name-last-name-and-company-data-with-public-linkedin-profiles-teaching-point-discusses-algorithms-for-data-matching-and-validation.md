@@ -4,13 +4,13 @@ date: "2024-12-12"
 id: "what-strategies-can-be-implemented-to-match-first-name-last-name-and-company-data-with-public-linkedin-profiles-teaching-point-discusses-algorithms-for-data-matching-and-validation"
 ---
 
-okay so matching names and companies to linkedIn profiles yeah that's a fun one its like piecing together a puzzle with slightly warped pieces but instead of cardboard its digital information
+ so matching names and companies to linkedIn profiles yeah that's a fun one its like piecing together a puzzle with slightly warped pieces but instead of cardboard its digital information
 
 first off lets acknowledge that there isn't a magic bullet no single algorithm is gonna perfectly nail it every time were dealing with messy human input inconsistencies and privacy so expect some degree of fuzziness you're gonna need a multi faceted approach a strategy that combines several techniques
 
 one initial approach is leveraging simple string matching this is like the low hanging fruit you can start with exact matches for first and last names combined with the company name then go a bit fuzzier with lowercase comparisons and getting rid of extra spaces or special characters the problem here though is you'll miss nicknames like "Rob" instead of "Robert" or companies that have abbreviations like "IBM" vs "International Business Machines"
 
-another trick is to introduce some kind of edit distance which essentially measures how similar two strings are common edit distances are Levenshtein distance which calculates how many single character edits inserts deletes or substitutions are required to change one string into another or Jaro Winkler distance which prioritizes differences early in the string which is useful for names where prefixes and suffixes often get tweaked it does mean that you will need a threshold you will need to work out what distance is too far apart to be a match and which distance is okay
+another trick is to introduce some kind of edit distance which essentially measures how similar two strings are common edit distances are Levenshtein distance which calculates how many single character edits inserts deletes or substitutions are required to change one string into another or Jaro Winkler distance which prioritizes differences early in the string which is useful for names where prefixes and suffixes often get tweaked it does mean that you will need a threshold you will need to work out what distance is too far apart to be a match and which distance is 
 
 ```python
 from Levenshtein import distance

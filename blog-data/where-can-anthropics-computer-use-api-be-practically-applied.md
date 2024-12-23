@@ -4,7 +4,7 @@ date: "2024-12-03"
 id: "where-can-anthropics-computer-use-api-be-practically-applied"
 ---
 
-Hey so you're asking about Anthropic's Claude API and where it's actually useful right  like beyond the hype  Okay cool let's dive in its pretty versatile actually more than I initially thought
+Hey so you're asking about Anthropic's Claude API and where it's actually useful right  like beyond the hype   cool let's dive in its pretty versatile actually more than I initially thought
 
 First off you gotta remember Claude is a large language model LLM  think really smart parrot that's read the entire internet  it doesn't *understand* things in the human sense but it can generate text translate languages write different kinds of creative content and answer your questions in an informative way  the API is how you tap into all that power programmatically
 

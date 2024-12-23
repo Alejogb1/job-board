@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "sparql-filter-float-values-usage"
 ---
 
-Okay so you're asking about filtering float values in SPARQL right I get it This is one of those things that looks simple on the surface but then you dive in and you're like "wait what's going on" I've been there trust me So yeah SPARQL and floating point numbers are not always best friends I mean floats in general are tricky enough as it is without adding a query language to the mix
+ so you're asking about filtering float values in SPARQL right I get it This is one of those things that looks simple on the surface but then you dive in and you're like "wait what's going on" I've been there trust me So yeah SPARQL and floating point numbers are not always best friends I mean floats in general are tricky enough as it is without adding a query language to the mix
 
 Let's break it down based on what I've seen and what I've personally banged my head against over the years I swear I once spent a full day debugging a SPARQL query where the issue was a tiny floating point difference between what I expected and what the data actually held good times
 
@@ -64,7 +64,7 @@ Here I'm using a tolerance of `0.00001` this range check will include `ex:item1`
 
 And just to be clear you need to adjust `0.00001` based on the precision required on your specific problem If you are using 2 decimals precision a tolerance of 0.01 would be more than enough. If you are using a different measure you should adjust accordingly I usually look at my data with a script to see what precision is the minimal required
 
-There is no one-size-fits-all `epsilon` You really need to know the data and what level of error is okay for your application I mean if you are using currency then 2 decimals for the most part is enough unless you are dealing with high amounts
+There is no one-size-fits-all `epsilon` You really need to know the data and what level of error is  for your application I mean if you are using currency then 2 decimals for the most part is enough unless you are dealing with high amounts
 
 **Type casting**
 

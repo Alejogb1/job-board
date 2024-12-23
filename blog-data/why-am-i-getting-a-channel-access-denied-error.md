@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-am-i-getting-a-channel-access-denied-error"
 ---
 
-Okay, let’s unpack that "channel access denied" error. I've seen that particular message more times than I care to count, and it's usually a signpost pointing to a few common underlying issues. It almost never means what it *sounds* like at face value – a literal denial of access, as in, "you're not allowed, period." Instead, it's typically a symptom of a more nuanced problem with the system’s understanding of who or what is making the request, and under what conditions.
+, let’s unpack that "channel access denied" error. I've seen that particular message more times than I care to count, and it's usually a signpost pointing to a few common underlying issues. It almost never means what it *sounds* like at face value – a literal denial of access, as in, "you're not allowed, period." Instead, it's typically a symptom of a more nuanced problem with the system’s understanding of who or what is making the request, and under what conditions.
 
 My history with these kinds of errors goes back to a large-scale distributed system I was managing a few years ago. We were using a message queue heavily, and intermittently, we’d get bombarded with these "channel access denied" errors across seemingly random consumer services. The initial panic was real, but after a deep dive, we pinned down the root causes, and learned a heck of a lot in the process.
 

@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-wont-php-ftp-connect-when-containerized"
 ---
 
-Okay, let's tackle this. I've seen this particular headache rear its ugly head more times than I care to remember, often when transitioning a legacy php application into a containerized environment. The scenario of a php script failing to establish an ftp connection when running inside a container, while seemingly working fine outside, is almost always rooted in network configuration or permissions issues, not some inherent flaw in php itself. It's a frustrating situation, granted, but usually boils down to a few fairly common culprits.
+,  I've seen this particular headache rear its ugly head more times than I care to remember, often when transitioning a legacy php application into a containerized environment. The scenario of a php script failing to establish an ftp connection when running inside a container, while seemingly working fine outside, is almost always rooted in network configuration or permissions issues, not some inherent flaw in php itself. It's a frustrating situation, granted, but usually boils down to a few fairly common culprits.
 
 My first encounter with this was back in 2015, migrating a fairly critical inventory management system to docker. The php ftp functions worked perfectly locally during development. Yet, the moment the docker container spun up, the ftp connection failed silently, leaving a very perplexed support team. After a lot of head-scratching and tcpdump sessions, the pattern became very clear.
 

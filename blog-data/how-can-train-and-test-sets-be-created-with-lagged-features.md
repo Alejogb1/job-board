@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-train-and-test-sets-be-created-with-lagged-features"
 ---
 
-Okay, let’s tackle lagged feature creation for training and testing sets. It's a common challenge, and I've certainly had my share of encounters with it over the years, particularly when dealing with time-series data, which, let’s face it, tends to be a large chunk of what we all deal with. Getting this process correct is fundamental for reliable predictive models. The key difficulty isn't just about adding a lag, but ensuring that the temporal ordering is maintained across the training and testing data, and that we avoid any 'data leakage'.
+, let’s tackle lagged feature creation for training and testing sets. It's a common challenge, and I've certainly had my share of encounters with it over the years, particularly when dealing with time-series data, which, let’s face it, tends to be a large chunk of what we all deal with. Getting this process correct is fundamental for reliable predictive models. The key difficulty isn't just about adding a lag, but ensuring that the temporal ordering is maintained across the training and testing data, and that we avoid any 'data leakage'.
 
 Essentially, the concept of a lagged feature revolves around using a value at a previous time point as an input for the model at the current time point. Imagine you're predicting sales for tomorrow; a lagged feature could be the sales from yesterday or the average sales from the past week. The tricky bit arrives when we need to maintain this lagged structure when splitting data into training and testing sets. Simply shuffling data or using a random sample split will obliterate the time dependency and make our evaluation useless. The temporal component must be respected and preserved.
 

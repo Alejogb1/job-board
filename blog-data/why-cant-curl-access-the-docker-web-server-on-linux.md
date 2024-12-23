@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-cant-curl-access-the-docker-web-server-on-linux"
 ---
 
-Okay, let's unpack this. I've seen this exact scenario countless times, often right when you need that quick test or integration. It's frustrating, but usually stems from a few fundamental networking and configuration points when working with docker on linux. It's never as straightforward as it appears at first blush. The core issue, boiled down, is that your `curl` command running on the host machine operates within the host's networking namespace, while your docker container and its web server are operating in a separate, isolated namespace, unless specifically configured otherwise.
+, let's unpack this. I've seen this exact scenario countless times, often right when you need that quick test or integration. It's frustrating, but usually stems from a few fundamental networking and configuration points when working with docker on linux. It's never as straightforward as it appears at first blush. The core issue, boiled down, is that your `curl` command running on the host machine operates within the host's networking namespace, while your docker container and its web server are operating in a separate, isolated namespace, unless specifically configured otherwise.
 
 One of my early projects involved building a microservice architecture and, you guessed it, we faced this very problem when trying to get our health check endpoint to respond correctly for our orchestration platform. I learned the hard way about these nuances, and it made me appreciate the intricacies of container networking.
 

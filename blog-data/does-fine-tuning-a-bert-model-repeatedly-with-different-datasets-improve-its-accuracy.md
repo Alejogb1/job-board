@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "does-fine-tuning-a-bert-model-repeatedly-with-different-datasets-improve-its-accuracy"
 ---
 
-Okay, let's tackle this. From my experience, repeatedly fine-tuning a BERT model on different datasets doesn’t *automatically* guarantee improved accuracy. It's more nuanced than that, and I've learned this the hard way, through a few projects where I hoped for a linear improvement but encountered more of a rollercoaster. The key factors involve understanding the nature of your datasets, the kind of transfer learning you're implementing, and avoiding catastrophic forgetting.
+,  From my experience, repeatedly fine-tuning a BERT model on different datasets doesn’t *automatically* guarantee improved accuracy. It's more nuanced than that, and I've learned this the hard way, through a few projects where I hoped for a linear improvement but encountered more of a rollercoaster. The key factors involve understanding the nature of your datasets, the kind of transfer learning you're implementing, and avoiding catastrophic forgetting.
 
 Firstly, let’s consider what we mean by ‘accuracy’. Is it a global measure over some massive, all-encompassing dataset, or are we targeting specific tasks defined by our different training sets? BERT, pre-trained on huge quantities of text, has a general linguistic understanding. Fine-tuning then specializes that understanding for a downstream task. Imagine it as training a highly skilled carpenter, and then giving them specialized training in making kitchen cabinets. If you then try to further fine-tune them on building bridges, their kitchen cabinet skill might suffer, and they might not excel at bridge building either, if not done with careful consideration.
 

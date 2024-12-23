@@ -4,7 +4,7 @@ date: "2024-12-11"
 id: "what-are-the-properties-and-challenges-of-sparse-autoencoders-in-neural-networks"
 ---
 
-Okay so you wanna know about sparse autoencoders cool beans  I've been messing around with these things lately and they're kinda neat but also kinda tricky  Let's dive in
+ so you wanna know about sparse autoencoders cool beans  I've been messing around with these things lately and they're kinda neat but also kinda tricky  Let's dive in
 
 First off what even *is* a sparse autoencoder  Think of it like this you got a neural network a bunch of layers of interconnected nodes right  The goal is to make a smaller compressed representation of your input data  Like imagine squeezing a really juicy orange you get a smaller more concentrated version the essence  That's kinda what an autoencoder does it takes input data  squishes it down through a narrow bottleneck the hidden layer  and then tries to reconstruct the original input  It's like a super sophisticated copy machine that first compresses then decompresses
 

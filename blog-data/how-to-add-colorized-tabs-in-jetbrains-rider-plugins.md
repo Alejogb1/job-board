@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-add-colorized-tabs-in-jetbrains-rider-plugins"
 ---
 
-Okay, let's talk about colorized tabs in JetBrains Rider plugins. I’ve spent a fair amount of time in Rider’s plugin ecosystem, and this specific feature request comes up quite frequently, often from developers wanting to improve their workflow or visually distinguish project elements. The process isn't terribly complicated, but it does involve navigating Rider’s plugin API and understanding how to leverage its UI component system. I’ll guide you through it, leaning heavily on some practical code that I’ve used in the past to achieve this.
+, let's talk about colorized tabs in JetBrains Rider plugins. I’ve spent a fair amount of time in Rider’s plugin ecosystem, and this specific feature request comes up quite frequently, often from developers wanting to improve their workflow or visually distinguish project elements. The process isn't terribly complicated, but it does involve navigating Rider’s plugin API and understanding how to leverage its UI component system. I’ll guide you through it, leaning heavily on some practical code that I’ve used in the past to achieve this.
 
 Essentially, the goal is to modify the appearance of the tabs within Rider’s editor, likely in the form of adding a color indication. The key here is that we are not directly manipulating the tab’s visual presentation itself. Instead, we’re interacting with Rider's infrastructure, which decides what colors to render for various components. What we can influence is the ‘data’ that Rider uses for rendering. We'll use a `FileEditorManagerListener` to achieve this.
 

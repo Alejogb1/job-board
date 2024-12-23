@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "camera-pose-estimation-accuracy-with-aruco-board"
 ---
 
-Okay so camera pose estimation accuracy using an ArUco board eh been there done that bought the t-shirt well more like built the entire system from scratch only to realize my t-shirt was inside out the whole time but we'll get to that
+ so camera pose estimation accuracy using an ArUco board eh been there done that bought the t-shirt well more like built the entire system from scratch only to realize my t-shirt was inside out the whole time but we'll get to that
 
 Let's dive right in you're talking about the classic problem of figuring out where a camera is in 3D space relative to a known ArUco marker board and yeah accuracy is paramount otherwise your augmented reality dream becomes a shaky distorted mess and nobody wants that believe me
 
@@ -16,7 +16,7 @@ First thing first let's talk about ArUco itself You got your marker size marker 
 
 I’ve seen people thinking bigger is always better but hold your horses if the marker board is massive well your camera has to see all of it all the time or you are going to have a partial detection or no detection at all Also if the board is too big you also have to deal with potential distortions from your lens specially if your FOV is very wide this could be a real problem
 
-Okay so for example let's say you are using OpenCV which is a usual suspect here I’ll be using python as my language because well python
+ so for example let's say you are using OpenCV which is a usual suspect here I’ll be using python as my language because well python
 
 ```python
 import cv2
@@ -80,7 +80,7 @@ cv2.destroyAllWindows()
 In this code snippet you'll see that I start by setting the correct dictionary as well as the parameters Then I set the board parameters like marker size marker spacing and finally board size as well as how to create the board Next I show you that you need your camera parameters to make the pose calculation work this are your camera intrinsic matrix and your distortion coefficients Finally I show how you detect the markers how to estimate the pose with `estimatePoseBoard` which is the function that performs all the heavy lifting and draw the detected markers and the axis in the corner of each marker for visualization
 So camera calibration is non-negotiable you need accurate camera intrinsic parameters and distortion coefficients if you want an accurate pose estimation It's like trying to cook a perfect meal without measuring the ingredients you can’t do it and your meal will be garbage. There are methods to calibrate your camera like the one provided in OpenCV or with specialized calibration tools I used to do it with the checkerboard but there are more sophisticated methods that will improve the final pose
 
-Okay then let's talk about image processing because this is important as well If your image is blurry or if the lightning is very bad the detection is going to be awful the pose estimation will be wrong so preprocessing can really help you deal with this situation and increase your pose accuracy so think about using things like Gaussian blur or histogram equalization they're simple to implement but they do help to deal with noise in the image
+ then let's talk about image processing because this is important as well If your image is blurry or if the lightning is very bad the detection is going to be awful the pose estimation will be wrong so preprocessing can really help you deal with this situation and increase your pose accuracy so think about using things like Gaussian blur or histogram equalization they're simple to implement but they do help to deal with noise in the image
 
 Another thing I learned the hard way is that you have to be careful with the distance of your board to the camera closer is better because the marker will be bigger but not too close because you might have perspective issues and distortions the edges of the board can appear curved it is very tricky to get that right
 
@@ -223,4 +223,4 @@ So here we are using `solvePnP` instead of `estimatePoseBoard` this is another w
 Finally for the resources I would avoid tutorials or videos I found them lacking focus on the theory instead look for academic papers or books like the classic "Multiple View Geometry in Computer Vision" by Richard Hartley and Andrew Zisserman it is a bible for this kind of problems it is very math intensive but it will explain you all you need to know about pose calculation and camera calibration Another resource you can use is the documentation in OpenCV of the ArUco module to see what are the parameters that you can use and tune to improve your pose results
 Also make sure you read academic papers about aruco pose estimation there's a ton of research in that area so it might help you implement something even more robust and with a better error metric
 
-Okay I think that's about it If you had more specific questions just shoot and I'll see what I can do I really enjoy this kind of stuff it is like my version of a good detective novel
+ I think that's about it If you had more specific questions just shoot and I'll see what I can do I really enjoy this kind of stuff it is like my version of a good detective novel

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "how-to-increase-the-heap-size-in-weka"
 ---
 
-Okay so you want to crank up the heap size in Weka right I get it I've been there trust me It's like trying to run a marathon in flip-flops Weka's default memory settings are often like a tricycle when you're dealing with a monster dataset
+ so you want to crank up the heap size in Weka right I get it I've been there trust me It's like trying to run a marathon in flip-flops Weka's default memory settings are often like a tricycle when you're dealing with a monster dataset
 
 Here's the deal Weka is a Java application and like any Java app it runs inside a Java Virtual Machine JVM The JVM is like the engine and it needs gas aka memory This memory is the heap and its initial size isn't always ideal especially when you start crunching big data or complex models This can lead to OutOfMemoryErrors which are basically the app screaming at you because it's out of space
 
@@ -97,7 +97,7 @@ A good rule of thumb is to allocate at least twice the size of your dataset in m
 
 A big mistake I once did when I started was to set `-Xmx` way larger than the actual amount of RAM I had on my machine and that caused the app to crash even more often because the operating system simply could not handle all that memory It was like asking a car with a 4 cylinder engine to behave like a V8 It simply wont perform better! So make sure you stay within your machine's limits
 
-Now for a tiny little joke because apparently I need to make one So why don't scientists trust atoms Because they make up everything! ha. ha. alright back to work
+Now for a tiny little joke because apparently I need to make one So why don't scientists trust atoms Because they make up everything! ha. ha. back to work
 
 **Resources**
 

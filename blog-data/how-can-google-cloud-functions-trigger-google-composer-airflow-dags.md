@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-google-cloud-functions-trigger-google-composer-airflow-dags"
 ---
 
-Okay, let's tackle this. I’ve seen this particular challenge come up quite a few times in my career, and it's a common need when you start stitching together serverless functions and orchestrating workflows. The interaction between Google Cloud Functions and Composer (which essentially is managed Apache Airflow) is a classic example of combining event-driven architectures with scheduled task management. It's not a straightforward integration, but a few well-established patterns make it quite manageable.
+,  I’ve seen this particular challenge come up quite a few times in my career, and it's a common need when you start stitching together serverless functions and orchestrating workflows. The interaction between Google Cloud Functions and Composer (which essentially is managed Apache Airflow) is a classic example of combining event-driven architectures with scheduled task management. It's not a straightforward integration, but a few well-established patterns make it quite manageable.
 
 The key challenge, as i’ve found, is that Cloud Functions are designed to react to events, while Airflow DAGs are typically triggered on a schedule or through manual intervention. Thus, you need a bridge between the asynchronous and the scheduled worlds. One approach which tends to be the most effective is to use Cloud Functions to programmatically trigger a DAG run using the Airflow API exposed by Cloud Composer. This is my preferred way to go because it offers fine-grained control and avoids less efficient polling solutions.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-fix-custom-csv-export-issues-in-active-admin-index"
 ---
 
-Okay, so, let's talk about custom csv exports in Active Admin. I've definitely been down that rabbit hole a few times, especially back when I was working on that large e-commerce platform. The default csv export is, well, *default*, and often needs some serious tweaking to handle real-world data complexities. We’re not just dealing with simple strings and numbers, are we? We’ve got related models, calculated attributes, complex data formats… it all gets interesting.
+, so, let's talk about custom csv exports in Active Admin. I've definitely been down that rabbit hole a few times, especially back when I was working on that large e-commerce platform. The default csv export is, well, *default*, and often needs some serious tweaking to handle real-world data complexities. We’re not just dealing with simple strings and numbers, are we? We’ve got related models, calculated attributes, complex data formats… it all gets interesting.
 
 The core issue is that Active Admin’s built-in CSV generation is geared toward a simple table export. It assumes a one-to-one mapping between database columns and CSV columns. When you need more control – like exporting related model data, formatting timestamps, or creating custom columns – you need to dive into custom configurations.
 

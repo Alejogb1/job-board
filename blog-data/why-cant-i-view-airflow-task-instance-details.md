@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-cant-i-view-airflow-task-instance-details"
 ---
 
-Okay, let’s tackle this. I’ve seen this particular issue crop up more often than one might expect, and usually, it's not just one thing but a constellation of potential culprits preventing you from viewing those crucial Airflow task instance details. Trust me, tracking down why you can't see those logs or details has been a recurring theme in my past projects, and each time it's a bit of a puzzle to solve.
+, let’s tackle this. I’ve seen this particular issue crop up more often than one might expect, and usually, it's not just one thing but a constellation of potential culprits preventing you from viewing those crucial Airflow task instance details. Trust me, tracking down why you can't see those logs or details has been a recurring theme in my past projects, and each time it's a bit of a puzzle to solve.
 
 The core problem lies in the fact that Airflow, while powerful, relies on several interconnected components working harmoniously. When one of these falters, access to task instance information, which is essentially the record of your DAG's execution, can be compromised. Let's break down some of the common reasons, based on my experience.
 

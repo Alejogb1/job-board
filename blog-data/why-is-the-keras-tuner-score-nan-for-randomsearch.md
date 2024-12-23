@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-the-keras-tuner-score-nan-for-randomsearch"
 ---
 
-Okay, let's dive into this. I've seen this specific NaN issue with Keras Tuner's RandomSearch pop up more than a few times, and it's rarely a straightforward problem. It usually signals an underlying issue with how your model is being trained or evaluated within the tuner's search process. It's less about the tuner itself having a bug and more about the interaction between the tuner, the model, and the data.
+, let's dive into this. I've seen this specific NaN issue with Keras Tuner's RandomSearch pop up more than a few times, and it's rarely a straightforward problem. It usually signals an underlying issue with how your model is being trained or evaluated within the tuner's search process. It's less about the tuner itself having a bug and more about the interaction between the tuner, the model, and the data.
 
 The core problem, put simply, is that a NaN (Not a Number) score indicates an invalid or undefined numerical result during the evaluation phase of the hyperparameter search. This almost always stems from a computation that results in something mathematically undefined – like division by zero or the logarithm of a negative number. In the context of model training, the most frequent culprit is a loss function or metric producing NaN, which in turn propagates to the tuner’s score.
 

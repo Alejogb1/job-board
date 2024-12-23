@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-resolve-a-matrix-multiplication-error-with-incompatible-shapes-4000x20-and-200x441"
 ---
 
-Okay, let's tackle this. I've certainly been down this road a few times, staring at traceback after traceback, all pointing to shape mismatches in matrix multiplications. The error you’re seeing, a clash between a 4000x20 matrix and a 200x441 matrix, is a classic example of incompatible dimensions in linear algebra operations, and specifically, matrix multiplication. It usually screams one thing: the inner dimensions just don't line up.
+,  I've certainly been down this road a few times, staring at traceback after traceback, all pointing to shape mismatches in matrix multiplications. The error you’re seeing, a clash between a 4000x20 matrix and a 200x441 matrix, is a classic example of incompatible dimensions in linear algebra operations, and specifically, matrix multiplication. It usually screams one thing: the inner dimensions just don't line up.
 
 The foundational rule for matrix multiplication, often overlooked, is this: if you're multiplying a matrix A of shape (m, n) by a matrix B of shape (p, q), then 'n' must equal 'p'. The resulting matrix will have dimensions (m, q). Your current situation is that 'n' (20) is not equal to 'p' (200), hence the error. The key here isn't just knowing *what* the error is, it’s also understanding *why* this constraint exists and how to systematically address it, rather than just hoping for the best with random transformations.
 

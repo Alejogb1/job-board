@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "should-grad-cam-attributions-exceed-a-value-of-1"
 ---
 
-Alright, let's tackle this. From my own experience, specifically during a project a few years back involving anomaly detection in medical imaging, I came across the very question of whether Grad-CAM attributions can, and should, exceed 1. It's a valid concern, and the answer is nuanced, so let's unpack it.
+Alright,  From my own experience, specifically during a project a few years back involving anomaly detection in medical imaging, I came across the very question of whether Grad-CAM attributions can, and should, exceed 1. It's a valid concern, and the answer is nuanced, so let's unpack it.
 
 Grad-CAM, or Gradient-weighted Class Activation Mapping, is a technique to visualize which parts of an input image are most important for a convolutional neural network’s decision-making process. The crux of it lies in computing the gradient of the target class’s score with respect to the feature maps of the last convolutional layer, and then using these gradients to weight the activation maps. The result is a heatmap which, in theory, indicates areas of high influence. However, that heatmap can, and often does, have values outside the [0, 1] range, and here's why that isn't necessarily a problem.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-tensorflow-replicate-the-functionality-of-scikit-learns-mlpclassifier"
 ---
 
-Alright, let's tackle this. I’ve certainly been down this road before, migrating projects from scikit-learn’s relatively simple `MLPClassifier` to the more flexible, but also more verbose, world of TensorFlow. It’s a common scenario, especially when you need the power of GPU acceleration or want more granular control over the training process. The core functionality is indeed replicable, but the approach and the level of detail you’ll interact with differ significantly.
+Alright,  I’ve certainly been down this road before, migrating projects from scikit-learn’s relatively simple `MLPClassifier` to the more flexible, but also more verbose, world of TensorFlow. It’s a common scenario, especially when you need the power of GPU acceleration or want more granular control over the training process. The core functionality is indeed replicable, but the approach and the level of detail you’ll interact with differ significantly.
 
 Essentially, both `MLPClassifier` in scikit-learn and TensorFlow's neural network building blocks allow you to implement a multilayer perceptron (MLP), which is a type of feedforward artificial neural network. The `MLPClassifier` provides a convenient high-level API with predefined layers and training procedures. TensorFlow, however, offers a lower-level approach where you define the architecture, loss function, optimizer, and training loop yourself, giving you greater customization options.
 

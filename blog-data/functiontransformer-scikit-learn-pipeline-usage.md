@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "functiontransformer-scikit-learn-pipeline-usage"
 ---
 
-Okay so you're asking about `FunctionTransformer` in scikit-learn pipelines right Been there done that more times than I care to admit I get it Its a powerful tool but can be a bit tricky the first few times so lets break it down like a bad bug fix
+ so you're asking about `FunctionTransformer` in scikit-learn pipelines right Been there done that more times than I care to admit I get it Its a powerful tool but can be a bit tricky the first few times so lets break it down like a bad bug fix
 
 Essentially you're dealing with situations where your data isn't quite ready for the model you wanna use You need to preprocess it but not with the usual scikit-learn transformers like `StandardScaler` or `PolynomialFeatures` no no you need something custom Something that's specific to your data and its quirks That's where `FunctionTransformer` comes in It lets you apply an arbitrary function to your data within a pipeline basically giving you the ability to wrap that weird pre-processing you need into something you can use in a pipeline
 

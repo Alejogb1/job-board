@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "what-strategies-can-reduce-query-latency-for-distributed-search-engines-running-on-cloud-infrastructure-with-high-bandwidth-demands"
 ---
 
-Okay so you're dealing with slow search right major bummer especially when you're talking distributed systems on the cloud  high bandwidth is cool but if your queries are taking forever it kinda defeats the purpose  Let's brainstorm some ways to speed things up  It's like a detective story figuring out where the bottlenecks are
+ so you're dealing with slow search right major bummer especially when you're talking distributed systems on the cloud  high bandwidth is cool but if your queries are taking forever it kinda defeats the purpose  Let's brainstorm some ways to speed things up  It's like a detective story figuring out where the bottlenecks are
 
 First thing you gotta do is profile  Find out what's actually slowing things down  Is it network latency are your indexes huge are your queries poorly written is your data spread out too thinly across servers are your servers themselves underpowered  You need tools for this  There are heaps of cloud monitoring tools that give you all sorts of metrics  Think of it like a doctor's checkup for your search engine  Use them to pinpoint the problem
 
@@ -22,7 +22,7 @@ Fifth  hardware  Are your servers powerful enough are they properly sized for th
 Sixth caching  This is huge  Caching frequently accessed data drastically reduces the amount of work your servers have to do every time a search query comes in  Think of it like having a shelf of the most popular books right next to the counter in your library  It speeds up things immensely  You can cache search results index parts or even entire documents  Look into different caching strategies like LRU Least Recently Used or LFU Least Frequently Used  There's a lot of literature on this  Caching is a whole field in itself
 
 
-Okay here are some code snippets  These are just illustrative because the actual implementation depends hugely on your specific technology stack  Assume its Python for now
+ here are some code snippets  These are just illustrative because the actual implementation depends hugely on your specific technology stack  Assume its Python for now
 
 
 **Snippet 1 Simple Inverted Index (Python)**

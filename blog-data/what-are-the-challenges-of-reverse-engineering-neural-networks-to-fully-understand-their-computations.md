@@ -4,7 +4,7 @@ date: "2024-12-11"
 id: "what-are-the-challenges-of-reverse-engineering-neural-networks-to-fully-understand-their-computations"
 ---
 
-Okay so you wanna crack open a neural network see whats ticking right  It's like trying to dissect a really really complex clockwork mechanism only instead of gears youve got layers of interconnected neurons firing away  and instead of a simple timekeeping function its doing things like recognizing cats in pictures or translating languages  Its wild
+ so you wanna crack open a neural network see whats ticking right  It's like trying to dissect a really really complex clockwork mechanism only instead of gears youve got layers of interconnected neurons firing away  and instead of a simple timekeeping function its doing things like recognizing cats in pictures or translating languages  Its wild
 
 The biggest challenge is the sheer complexity  These things are huge  millions sometimes billions of parameters all interacting in non linear ways  Its not like you can just trace a single signal path and understand the whole thing  Its more like a massively parallel distributed system where information flows in unpredictable ways  Think about it  each neuron gets inputs from dozens maybe hundreds of other neurons each with its own weight  then it applies some non linear activation function  and the output gets fed into other neurons  repeating this process for many many layers  Its a chaotic beautiful mess
 

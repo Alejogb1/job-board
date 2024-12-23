@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-keep-airflow-tasks-running-all-the-time"
 ---
 
-Alright, let's tackle this. The request to keep airflow tasks running ‘all the time’ is a common one, though it usually highlights a misunderstanding of airflow's core architecture. Airflow isn’t designed to maintain perpetually running processes, but rather to orchestrate workflows. However, there are indeed strategies to achieve behavior that *resembles* continuously running tasks. I’ve been involved in several projects where we’ve had to implement such solutions, and it's always a careful balance between desired functionality and respecting the tool's design principles.
+Alright,  The request to keep airflow tasks running ‘all the time’ is a common one, though it usually highlights a misunderstanding of airflow's core architecture. Airflow isn’t designed to maintain perpetually running processes, but rather to orchestrate workflows. However, there are indeed strategies to achieve behavior that *resembles* continuously running tasks. I’ve been involved in several projects where we’ve had to implement such solutions, and it's always a careful balance between desired functionality and respecting the tool's design principles.
 
 The fundamental point here is that airflow's *scheduler* triggers tasks based on predefined schedules or external triggers. Once a task is complete (successful or failed), it stops. It does *not* automatically restart unless scheduled or explicitly triggered again. Therefore, to simulate persistent execution, you'll essentially be setting up a recurring process that launches your task. It's crucial to understand this distinction before we delve into the practical side of things.
 

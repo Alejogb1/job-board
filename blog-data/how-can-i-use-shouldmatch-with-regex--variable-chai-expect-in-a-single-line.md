@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-use-shouldmatch-with-regex--variable-chai-expect-in-a-single-line"
 ---
 
-Alright, let's tackle this. It’s a common scenario, and one I’ve definitely encountered a few times in my years of building and testing applications. The desire to keep your tests concise, particularly when dealing with string matching and regular expressions, is completely understandable. You want a single, readable line that asserts that some value matches a regex pattern constructed dynamically. So, the core of your question revolves around integrating `chai.expect`, the `should` syntax, regex, and dynamically constructed variables within that single line of assertion.
+Alright,  It’s a common scenario, and one I’ve definitely encountered a few times in my years of building and testing applications. The desire to keep your tests concise, particularly when dealing with string matching and regular expressions, is completely understandable. You want a single, readable line that asserts that some value matches a regex pattern constructed dynamically. So, the core of your question revolves around integrating `chai.expect`, the `should` syntax, regex, and dynamically constructed variables within that single line of assertion.
 
 The `should` assertion style, while often preferred for its fluent interface, can sometimes make integrating variable regular expressions a little less straightforward than the alternative `expect` interface might appear at first glance. I’ve personally found that there are a couple of ways to make this work quite smoothly. The trick is to leverage the power of javascript template literals, or careful string construction, along with the built-in regex functionality. Let me walk you through some solutions.
 

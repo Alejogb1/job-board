@@ -4,11 +4,11 @@ date: "2024-12-13"
 id: "how-can-i-use-cfdirectory-to-make-a-list-of-documents-downloadable-using-coldfus"
 ---
 
-Okay so you want to make a directory listing that lets users download files using ColdFusion right been there done that a million times It's like the bread and butter of web dev back in the day well and still today tbh 
+ so you want to make a directory listing that lets users download files using ColdFusion right been there done that a million times It's like the bread and butter of web dev back in the day well and still today tbh 
 
 So let's get right into it you're thinking `cfdirectory` and that's a solid starting point It's kinda the workhorse for file system interaction in CFML its purpose is listing files and directories right it doesn’t serve files it does that for you to be able to do that.  I've spent countless hours wrestling with it especially back in the CF 5 days when I first started doing this stuff oh man those were the days remember those tag spaghetti times yeah I do. It felt like trying to debug a nuclear reactor with a potato.
 
-Alright so you want to make the files downloadable not just show their filenames So we need to combine `cfdirectory` with some kind of link generation and then a bit of file serving logic. The simplest approach goes something like this we generate a simple html list with anchor tags that point to filepaths so the users browser can download them.
+so you want to make the files downloadable not just show their filenames So we need to combine `cfdirectory` with some kind of link generation and then a bit of file serving logic. The simplest approach goes something like this we generate a simple html list with anchor tags that point to filepaths so the users browser can download them.
 
 Here's a basic example I used a similar approach in one of my previous projects involving legacy asset management system it was a messy monster I tell ya but this code worked perfectly fine:
 
@@ -37,7 +37,7 @@ Here's a basic example I used a similar approach in one of my previous projects 
 6. `<li><a href="download.cfm?file=#URLEncodedFormat(fileList.name)#">#fileList.name#</a></li>`: This generates the link to a file using `download.cfm` and passes it the filename via the query string. Note `URLEncodedFormat` is important here to encode any spaces and special characters that files can have.
 7.  `</ul></cfoutput>`: Close the html ul tag that we opened at step 3.
 
-Alright now what's that `download.cfm` all about well it handles the actual file serving I bet you figured that out. Here's a simple implementation:
+now what's that `download.cfm` all about well it handles the actual file serving I bet you figured that out. Here's a simple implementation:
 
 ```cfml
 <cfparam name="URL.file" default="">

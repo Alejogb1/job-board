@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-rails-save-and-update-arrays-in-a-banks-database-using-a-service"
 ---
 
-Okay, let’s tackle this. I've seen this particular challenge crop up in a few contexts, most notably during my time working on a legacy financial system, ironically not *too* long ago. We had to migrate from a clunky, pre-relational database to a Postgres system using Rails, and handling arrays efficiently was key. It's not as straightforward as simple scalar data, but with the right approach, it becomes manageable.
+, let’s tackle this. I've seen this particular challenge crop up in a few contexts, most notably during my time working on a legacy financial system, ironically not *too* long ago. We had to migrate from a clunky, pre-relational database to a Postgres system using Rails, and handling arrays efficiently was key. It's not as straightforward as simple scalar data, but with the right approach, it becomes manageable.
 
 The core problem revolves around how Rails, with its ActiveRecord ORM, interacts with database fields that hold arrays. Postgres, thankfully, handles arrays natively which allows us to go beyond simple single-value columns. Using a service layer on top of this isn't just good practice; it's often essential for managing the complexity of data manipulation and business logic, especially when dealing with sensitive financial information.
 

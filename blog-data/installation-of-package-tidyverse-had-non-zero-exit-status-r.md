@@ -4,13 +4,13 @@ date: "2024-12-13"
 id: "installation-of-package-tidyverse-had-non-zero-exit-status-r"
 ---
 
-Okay so you're banging your head against a non-zero exit status while trying to install tidyverse in R eh Been there done that got the t-shirt and the permanent eye twitch its an R classic really
+ so you're banging your head against a non-zero exit status while trying to install tidyverse in R eh Been there done that got the t-shirt and the permanent eye twitch its an R classic really
 
-Alright so its not exactly rare that you see this error and believe me I've seen it more times than I can count back in my day when I was wrestling with R for a computational biology project remember those days it was a mix of coding panic and coffee consumption of epic proportions we were trying to analyze some RNA-seq data for a gene expression study and of course tidyverse was the main player I recall vividly I think it was 2017 late at night yeah that's right and this thing just decided to crap out on install I almost threw my computer against the wall yeah I know that wasn't a good solution in hindsight a lot of hair was lost that night anyway
+so its not exactly rare that you see this error and believe me I've seen it more times than I can count back in my day when I was wrestling with R for a computational biology project remember those days it was a mix of coding panic and coffee consumption of epic proportions we were trying to analyze some RNA-seq data for a gene expression study and of course tidyverse was the main player I recall vividly I think it was 2017 late at night yeah that's right and this thing just decided to crap out on install I almost threw my computer against the wall yeah I know that wasn't a good solution in hindsight a lot of hair was lost that night anyway
 
 First off non-zero exit status basically screams something went wrong during the installation process R uses this code to say "Hey I tried and I failed spectacularly" it's not the most informative thing but it's something let's dissect some potential suspects here
 
-Okay let's break down the most common culprits and how to nail them down
+ let's break down the most common culprits and how to nail them down
 
 1 **Dependency Hell**
 
@@ -58,7 +58,7 @@ Oh boy yeah old R versions can have problems with the newest packages the tidyve
 
 Sometimes your machine may not have enough RAM or hard drive space to install all those packages at once I know it sounds absurd because these packages are pretty small and they do not occupy much of your resources but who knows maybe you are working on a very resource constraint machine If this is your problem your only bet here is to buy a new computer or upgrade yours.
 
-Okay you know those old jokes that are like why did the programmer quit his job because he didn't get arrays right yeah its a bad one and I apologize I don't know why I said that I am probably tired and need to go for a walk.
+ you know those old jokes that are like why did the programmer quit his job because he didn't get arrays right yeah its a bad one and I apologize I don't know why I said that I am probably tired and need to go for a walk.
 
 So yeah you see non-zero exit status usually its a collection of a combination of problems there is no single cause or a single solution but this list usually does the trick
 
@@ -69,4 +69,4 @@ Now where can you get more info on this
 *   **Stack Overflow of course**: Yeah I am being biased here but this is the place to be for debugging problems most common issues have already been answered here just try to be specific about your issue to find the correct answer.
 * **R-bloggers website**: A website with an enormous quantity of tutorials, blog posts and tips about R and a very good place to keep in the loop with the R ecosystem.
 
-Okay so that is about it if you keep getting the same error you might want to paste some more details about your specific setup OS version R version output of sessionInfo() the more details you give us the better we can help you it is usually the first thing I asked when I was solving these errors for other colleagues and yes that happened quite a few times. I really hope this was helpful let me know how it goes
+ so that is about it if you keep getting the same error you might want to paste some more details about your specific setup OS version R version output of sessionInfo() the more details you give us the better we can help you it is usually the first thing I asked when I was solving these errors for other colleagues and yes that happened quite a few times. I really hope this was helpful let me know how it goes

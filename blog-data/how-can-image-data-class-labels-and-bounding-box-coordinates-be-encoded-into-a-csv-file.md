@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-image-data-class-labels-and-bounding-box-coordinates-be-encoded-into-a-csv-file"
 ---
 
-Okay, let's tackle this. It's a common need when working with computer vision datasets, and I've definitely seen my share of messy CSV files trying to do exactly this. The core challenge is translating complex multi-dimensional data like images, classes, and bounding boxes into a format that's inherently flat—the comma-separated values. It's not always straightforward, but with a bit of planning, we can achieve a structured, usable result.
+,  It's a common need when working with computer vision datasets, and I've definitely seen my share of messy CSV files trying to do exactly this. The core challenge is translating complex multi-dimensional data like images, classes, and bounding boxes into a format that's inherently flat—the comma-separated values. It's not always straightforward, but with a bit of planning, we can achieve a structured, usable result.
 
 The fundamental idea is to represent each data point – typically, each image – as a single row in the CSV file. This row will contain the path to the image, its associated class label, and the bounding box coordinates for objects within that image, if applicable. The main hurdle is efficiently encoding the bounding box information, as an image might have zero, one, or multiple objects. We'll need to consider how to handle these variations effectively. Here’s how I usually approach it.
 

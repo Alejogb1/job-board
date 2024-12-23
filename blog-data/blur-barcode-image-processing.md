@@ -4,11 +4,11 @@ date: "2024-12-13"
 id: "blur-barcode-image-processing"
 ---
 
-Alright so you're asking about blurring barcode images right Been there done that Got my share of blurry barcode nightmares I’m not gonna lie This is not a walk in the park especially if you want reliable results I've wasted more hours than I'd care to admit on this one so let's get into it.
+so you're asking about blurring barcode images right Been there done that Got my share of blurry barcode nightmares I’m not gonna lie This is not a walk in the park especially if you want reliable results I've wasted more hours than I'd care to admit on this one so let's get into it.
 
 So first things first when you say blurry that can mean a lot of different things You might be dealing with motion blur due to camera shake you could have out-of-focus blur maybe the image itself was just poorly captured Or even a combination of all of the above The type of blur definitely impacts how you approach it.
 
-Okay let’s start with a quick rundown of common image blurring techniques we're going to be talking about ways to reduce blur not necessarily the blur effects you see on Instagram okay because I dont care about that
+ let’s start with a quick rundown of common image blurring techniques we're going to be talking about ways to reduce blur not necessarily the blur effects you see on Instagram  because I dont care about that
 
 First of all you have the good old average blur This is probably the most basic one you just take the average pixel color in a small neighborhood around each pixel and apply it to that pixel Not rocket science right? Easy to implement fast to compute But it doesn't always give the best results Especially with sharp edges because you know it blurs the whole image.
 
@@ -52,7 +52,7 @@ def gaussian_blur(image, kernel_size, sigma):
 
 So here the kernel calculations is hidden into the gaussian blur cv2 function This is very practical because you can change the blur just by playing with the kernel size and sigma.
 
-Now those are not deblurring methods okay these blur methods are usefull to try removing noise but they will blur a blurred image more making it worse so if you have severe blur these are not the tools you are looking for but keep them in your toolbox. Now things get more interesting when you want to actually try reducing blur.
+Now those are not deblurring methods  these blur methods are usefull to try removing noise but they will blur a blurred image more making it worse so if you have severe blur these are not the tools you are looking for but keep them in your toolbox. Now things get more interesting when you want to actually try reducing blur.
 
 Deblurring is a whole other beast This is where the math gets a bit more intense I've spent long nights trying to get these working perfectly And the first one we are going to look at it is the Wiener deconvolution method.
 
@@ -94,7 +94,7 @@ Another method you can explore is Richardson-Lucy deconvolution It's an iterativ
 
 I've worked on some image processing projects that lasted days because of the iterative methods so I know very well the cons of that. For the implementation I will not include the code because the code is lengthy and it would require a lot of libraries but Richardson Lucy algorithm is well documented and implemented in many image processing libraries such as scikit-image or in Matlab.
 
-Okay So far we talked about the blurring methods and the deblurring methods but one of the most important parts of your workflow is the preprocessing before the actual deblurring and depending on how bad your images are you may need this more than the deblurring itself.
+ So far we talked about the blurring methods and the deblurring methods but one of the most important parts of your workflow is the preprocessing before the actual deblurring and depending on how bad your images are you may need this more than the deblurring itself.
 
 Preprocessing can often do wonders before applying any deblurring technique First thing is often good to do a grayscale conversion if you are not working with monochrome images. You can get a better contrast with your grayscale images if you normalize the values to get more detail on the barcode. Also you can try edge enhancement using methods such as Unsharp Masking. This technique can make edges sharper and more visible but be careful using it you may over-sharpen and introduce artifacts that can affect badly to your barcode reading.
 

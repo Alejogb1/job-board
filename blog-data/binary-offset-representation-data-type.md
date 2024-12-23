@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "binary-offset-representation-data-type"
 ---
 
-Okay so you're asking about binary offset representation data types right Been there done that I've wrestled with these things more than I'd like to admit I've seen projects explode because of misunderstood offsets It's a classic low level headache that can easily trip you up if you aren't careful I think I first ran into it hard back in my embedded days We were writing firmware for a small sensor node think really constrained resources like really really constrained We couldn't just throw memory at the problem so we had to be hyper-efficient The traditional pointer way of doing things was just too bulky for some of our data structures plus the fact we were doing some in memory calculations directly on the raw bits meant we needed more direct control over memory access and interpretation
+ so you're asking about binary offset representation data types right Been there done that I've wrestled with these things more than I'd like to admit I've seen projects explode because of misunderstood offsets It's a classic low level headache that can easily trip you up if you aren't careful I think I first ran into it hard back in my embedded days We were writing firmware for a small sensor node think really constrained resources like really really constrained We couldn't just throw memory at the problem so we had to be hyper-efficient The traditional pointer way of doing things was just too bulky for some of our data structures plus the fact we were doing some in memory calculations directly on the raw bits meant we needed more direct control over memory access and interpretation
 
 Binary offset representation is basically using an integer value not as a number in the normal arithmetic sense but as an offset from a base address Imagine you have a big chunk of memory allocated like a byte array and you want to access different parts of it instead of having pointers scattered all over the place which can be a pain in embedded systems you use an integer offset The offset tells you how far in bytes you have to jump from the base to get to the data you need So the data type isn’t just storing the value itself but actually its position relative to a given address
 
@@ -71,7 +71,7 @@ int main() {
 
 ```
 
-Okay what is important to see is that we use the base address along with the offset integer values to create the address for the fields within the packet. The cast is needed as we need to interpret the integer address as a pointer of a certain type like uint8_t or uint16_t or uint32_t
+ what is important to see is that we use the base address along with the offset integer values to create the address for the fields within the packet. The cast is needed as we need to interpret the integer address as a pointer of a certain type like uint8_t or uint16_t or uint32_t
 
 The pointer arithmetic is really just the base address plus offset that yields the new address we want to access in memory directly. Note that this can be incredibly unsafe if you're not careful with your offsets and your memory layout you could very easily read or write out of bounds and crash your program hence it's often used when speed is preferred over safety.
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "regex-string-length-validation"
 ---
 
-Okay so regex string length validation right I've been there done that got the t-shirt several times actually. Let me tell you it’s not as straightforward as some people think especially when you're dealing with edge cases and specific character sets.
+ so regex string length validation right I've been there done that got the t-shirt several times actually. Let me tell you it’s not as straightforward as some people think especially when you're dealing with edge cases and specific character sets.
 
 First off when we talk about regex and length validation we're not talking about using regex to magically count characters. Regex is fundamentally about pattern matching. The length check it self is something the programming language will do. What we do with regex is enforce constraints on the characters allowed within that length.
 

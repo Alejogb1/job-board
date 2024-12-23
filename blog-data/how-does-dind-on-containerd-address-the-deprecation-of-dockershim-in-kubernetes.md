@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-does-dind-on-containerd-address-the-deprecation-of-dockershim-in-kubernetes"
 ---
 
-Okay, let's talk about dind on containerd in the context of the dockershim deprecation. This isn't some abstract theoretical concept for me; I've spent considerable time wrestling (okay, *working*) with various container runtimes over the years, including a fairly hairy transition period when we had to migrate our k8s clusters away from the standard docker runtime. So, I have a deep understanding of the real-world practicalities involved.
+, let's talk about dind on containerd in the context of the dockershim deprecation. This isn't some abstract theoretical concept for me; I've spent considerable time wrestling (, *working*) with various container runtimes over the years, including a fairly hairy transition period when we had to migrate our k8s clusters away from the standard docker runtime. So, I have a deep understanding of the real-world practicalities involved.
 
 The move from Docker as the container runtime in Kubernetes (k8s) to container-native solutions like containerd or CRI-O was, honestly, a long time coming. Docker, in its early days, was fantastic for developers—simple to grasp and use. However, as k8s matured, the overhead of having a full docker daemon involved became a clear bottleneck. Docker itself is a comprehensive platform, encompassing build tools, image management, and networking alongside the core runtime component. Kubernetes, however, only needs that latter bit, and forcing k8s to interact with the full Docker suite using the DockerShim created an unnecessary layer of complexity and performance limitations. This is the problem that the dockershim deprecation addressed.
 

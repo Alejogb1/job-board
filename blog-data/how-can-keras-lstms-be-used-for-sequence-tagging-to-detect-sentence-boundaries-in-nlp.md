@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-keras-lstms-be-used-for-sequence-tagging-to-detect-sentence-boundaries-in-nlp"
 ---
 
-Okay, let’s tackle this interesting challenge. Sequence tagging with LSTMs for sentence boundary detection; I've spent quite a bit of time with this problem in the past, particularly when dealing with noisy transcripts from an older speech-to-text system where punctuation was… let's say *optional*. It's a worthwhile exercise that really showcases the power of recurrent neural networks, specifically lstms, when properly applied to natural language processing.
+, let’s tackle this interesting challenge. Sequence tagging with LSTMs for sentence boundary detection; I've spent quite a bit of time with this problem in the past, particularly when dealing with noisy transcripts from an older speech-to-text system where punctuation was… let's say *optional*. It's a worthwhile exercise that really showcases the power of recurrent neural networks, specifically lstms, when properly applied to natural language processing.
 
 The core idea here is to frame sentence boundary detection not as a binary classification problem (sentence/not-sentence), but as a sequence tagging task. In sequence tagging, we assign a label to each token (usually words or subwords) in the input sequence. For sentence boundary detection, this label can indicate whether a token is the end of a sentence or not. This approach allows us to leverage the temporal dependencies present in the text, which is where lstms truly shine. They process the sequence step-by-step, maintaining a hidden state that captures information from past tokens, thereby making informed predictions about the likelihood of a sentence ending at a given point.
 

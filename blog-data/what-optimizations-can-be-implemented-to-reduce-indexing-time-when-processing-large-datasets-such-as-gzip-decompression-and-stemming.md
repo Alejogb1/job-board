@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "what-optimizations-can-be-implemented-to-reduce-indexing-time-when-processing-large-datasets-such-as-gzip-decompression-and-stemming"
 ---
 
-Okay so you're dealing with massive datasets and indexing is taking forever right  total pain I know  We need to speed things up  Gzip decompression and stemming are definitely bottlenecks we can tackle
+ so you're dealing with massive datasets and indexing is taking forever right  total pain I know  We need to speed things up  Gzip decompression and stemming are definitely bottlenecks we can tackle
 
 First let's talk gzip  It's great for storage but a real drag on indexing  The thing is you're essentially decompressing every single file just to index it that's insanely inefficient  We could try decompressing only *parts* of the files on demand  Think of it like lazy loading but for indexing  You only unzip what you need when you need it  This is way more clever than decompressing everything upfront  It's like eating an elephant one bite at a time right
 

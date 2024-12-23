@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "is-index-43280-valid-for-a-dimension-with-size-32"
 ---
 
-Alright, let's tackle this. Instead of just spitting out a "yes" or "no," we need to understand the fundamentals of indexing and dimension sizes. It's a question I've seen pop up, often from those newer to programming, and it's a critical concept. I recall a particularly frustrating debugging session back in my days developing a physics simulation engine where similar index misalignment brought down a perfectly good week of work, just because I didn't double-check those boundary conditions. So, let's break it down.
+Alright,  Instead of just spitting out a "yes" or "no," we need to understand the fundamentals of indexing and dimension sizes. It's a question I've seen pop up, often from those newer to programming, and it's a critical concept. I recall a particularly frustrating debugging session back in my days developing a physics simulation engine where similar index misalignment brought down a perfectly good week of work, just because I didn't double-check those boundary conditions. So, let's break it down.
 
 The core issue here revolves around understanding array or vector indexing. In practically all programming languages, array indexing begins at zero, not one. This is a zero-based indexing system, meaning the first element of an array is accessed via index 0, the second at index 1, and so forth. A dimension with a size of 32 means you have 32 elements stored consecutively in memory. Consequently, the valid indices for this dimension will range from 0 up to and including 31.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-scale-values-already-within-the--1-to-1-range-in-a-pandas-dataframe"
 ---
 
-Okay, let's dive into scaling values already within the -1 to 1 range in a Pandas DataFrame. I've tackled this a few times in different projects, from normalizing sensor readings to adjusting model output probabilities, so I'm familiar with the nuances. The specific requirements tend to vary quite a bit, and it's important to consider the *why* behind the scaling before implementing it. Simply put, scaling a -1 to 1 range usually means expanding or compressing it further to a new range, or adjusting the distribution around the mean.
+, let's dive into scaling values already within the -1 to 1 range in a Pandas DataFrame. I've tackled this a few times in different projects, from normalizing sensor readings to adjusting model output probabilities, so I'm familiar with the nuances. The specific requirements tend to vary quite a bit, and it's important to consider the *why* behind the scaling before implementing it. Simply put, scaling a -1 to 1 range usually means expanding or compressing it further to a new range, or adjusting the distribution around the mean.
 
 The initial -1 to 1 range itself is often the result of some previous normalization or scaling step, perhaps using techniques like min-max scaling or the hyperbolic tangent function. However, this doesn't always mean you'll retain the same properties when scaling *again*. You've got several potential methods at your disposal, and the best choice depends on your needs.
 

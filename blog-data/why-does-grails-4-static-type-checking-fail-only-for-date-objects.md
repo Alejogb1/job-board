@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-grails-4-static-type-checking-fail-only-for-date-objects"
 ---
 
-Okay, let's unpack this peculiar issue with Grails 4's static type checking and `Date` objects. It's not the most intuitive behavior, and I've certainly stumbled over it myself in past projects. I recall a particularly frustrating debugging session on a reporting service, where date formatting issues cascaded due to precisely this quirk. The project, a migration from Grails 2 to 4, was rife with these unexpected static type check failures.
+, let's unpack this peculiar issue with Grails 4's static type checking and `Date` objects. It's not the most intuitive behavior, and I've certainly stumbled over it myself in past projects. I recall a particularly frustrating debugging session on a reporting service, where date formatting issues cascaded due to precisely this quirk. The project, a migration from Grails 2 to 4, was rife with these unexpected static type check failures.
 
 The core of the matter lies in how Grails handles Groovy's dynamic nature combined with Java's type system. Groovy allows you to be very loose with types, which is great for rapid prototyping but can lead to runtime surprises when types are implicit. The static type checking introduced in later Grails versions, leveraging Groovy's `@TypeChecked` and `@CompileStatic` annotations, aims to mitigate these surprises by enforcing type safety at compile time. However, `java.util.Date` throws a spanner in the works.
 

@@ -4,7 +4,7 @@ date: "2024-12-11"
 id: "how-can-interpretability-help-identify-whether-ai-models-engage-in-planning-goal-setting-or-deception"
 ---
 
-Okay so you wanna know how we can use interpretability to sniff out if our AI is secretly plotting world domination or just, you know, being a bit dodgy right  Its a BIG question and honestly a pretty hot topic in AI research right now  We're building these incredibly complex systems and we're only just starting to figure out how to even understand what they're doing inside their little digital brains
+ so you wanna know how we can use interpretability to sniff out if our AI is secretly plotting world domination or just, you know, being a bit dodgy right  Its a BIG question and honestly a pretty hot topic in AI research right now  We're building these incredibly complex systems and we're only just starting to figure out how to even understand what they're doing inside their little digital brains
 
 The core idea here is that we cant just look at the output of an AI model and say "Aha thats planning"  We need to peek under the hood  Interpretability techniques let us do just that giving us a glimpse into the models internal workings  Instead of just seeing the final decision we can see the steps it took to get there  This is super crucial for figuring out if its exhibiting higher-level cognitive functions like planning goal setting or even deception which is a whole other ball game
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "what-is-the-syntax-meaning-of-raiserror"
 ---
 
-Okay so you're asking about `RAISERROR` right Yeah I know that pain We've all been there staring at SQL Server logs trying to figure out why something's gone sideways Let's break it down nice and simple like we're at the keyboard together debugging something at 3 am
+ so you're asking about `RAISERROR` right Yeah I know that pain We've all been there staring at SQL Server logs trying to figure out why something's gone sideways Let's break it down nice and simple like we're at the keyboard together debugging something at 3 am
 
 First thing first `RAISERROR` is basically SQL Server's way of throwing a custom exception You know like in programming languages when you hit an error and you're like "Yo something went bad let the system know" well `RAISERROR` does that in T-SQL its whole job is to interrupt execution and report a problem
 
@@ -16,7 +16,7 @@ Anyway the basic syntax goes like this:
 RAISERROR (message, severity, state [, argument [,...n]]) [WITH option [,...n]];
 ```
 
-Alright let's dissect it
+let's dissect it
 
 `message` This is the actual error message that you want to show up in your logs or in whatever application is consuming your SQL data It's a `varchar` or `nvarchar` string and you can use placeholders like `%s` `%d` and so on to put in variables You know for more dynamic errors I hate it when errors are all generic and unhelpful like "Error occurred" thanks for the heads up yeah I could have guessed that
 
@@ -28,7 +28,7 @@ Alright let's dissect it
 
 `WITH option` This is like extra configuration for `RAISERROR` it gives you a little more control over the error behavior like `LOG` to make sure the error shows up in the error log `NOWAIT` to immediately send the error and so on I don't usually play much with this option but it's good to know it's there when you need it
 
-Okay so let's see some examples First a super simple one with a fixed error message
+ so let's see some examples First a super simple one with a fixed error message
 
 ```sql
 RAISERROR ('This is a basic error', 16, 1);

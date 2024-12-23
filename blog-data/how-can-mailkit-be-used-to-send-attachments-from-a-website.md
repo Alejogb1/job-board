@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-mailkit-be-used-to-send-attachments-from-a-website"
 ---
 
-Okay, let's dive into this. Sending attachments via MailKit from a website is a common need, and while the library makes it relatively straightforward, there are nuances that can trip you up. I remember a project back in '18, where we were building a customer support portal, and getting file attachments into email responses was a critical feature. We ran into several challenges, ranging from file encoding to ensuring the correct mime types, so I’ve certainly had my hands dirty with this topic.
+, let's dive into this. Sending attachments via MailKit from a website is a common need, and while the library makes it relatively straightforward, there are nuances that can trip you up. I remember a project back in '18, where we were building a customer support portal, and getting file attachments into email responses was a critical feature. We ran into several challenges, ranging from file encoding to ensuring the correct mime types, so I’ve certainly had my hands dirty with this topic.
 
 First off, let's establish that MailKit doesn't magically handle file uploads from your web framework – you need to handle that part independently. Whether you are using asp.net, node.js, python's django, or something else is irrelevant to Mailkit. You need to first receive the file on the server, then integrate with MailKit. Once you have the file available on the server-side as a stream, or file path it's smooth sailing. The core of sending attachments hinges on using the `MimeKit.BodyBuilder` class to construct the message body.
 

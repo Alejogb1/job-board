@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-prevent-form-data-from-clearing-on-a-get-request-in-rails-7"
 ---
 
-Okay, let's tackle this. I've seen this issue pop up more times than I care to remember – that frustrating scenario where you submit a form, expecting a filtered list or some other action via a get request, and boom, all your carefully inputted data vanishes into the ether. It's a classic gotcha, and thankfully, there are some effective strategies to prevent it.
+,  I've seen this issue pop up more times than I care to remember – that frustrating scenario where you submit a form, expecting a filtered list or some other action via a get request, and boom, all your carefully inputted data vanishes into the ether. It's a classic gotcha, and thankfully, there are some effective strategies to prevent it.
 
 The fundamental issue, as many of you may already know, lies in how http get requests are intended to function. They are designed to retrieve resources based on the url, with any parameters appended as part of the query string. Unlike post, put, or patch requests, they don’t inherently carry a payload (a body) in the same manner. Browsers, by default, don't retain form data when initiating a get request. When you navigate to a new url or refresh, that data isn’t sent along, leading to the form being reset.
 

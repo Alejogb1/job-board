@@ -4,9 +4,9 @@ date: "2024-12-13"
 id: "what-is-meant-by-this-systemverilog-typedef-enum-statement"
 ---
 
-Alright so you're asking about `typedef enum` in SystemVerilog I've been there man trust me Spent way too many nights staring at compile errors because of these little guys Let's break it down
+so you're asking about `typedef enum` in SystemVerilog I've been there man trust me Spent way too many nights staring at compile errors because of these little guys Let's break it down
 
-Okay first off `typedef` is just a way of making a new name for an existing data type Think of it as giving your friend a nickname its still them but now you can call them by the new name its for convenience right and to make the code easier to understand not much more to it.
+ first off `typedef` is just a way of making a new name for an existing data type Think of it as giving your friend a nickname its still them but now you can call them by the new name its for convenience right and to make the code easier to understand not much more to it.
 
 Now `enum` that's where the real magic happens `enum` is short for enumeration It's a way to create a list of named integer constants Think like a list of predefined words like color red green blue each of these words would be represented by a underlying integer number. These numbers usually are 0 1 2 if you dont specify them otherwise if you do specify the value it just increases accordingly.
 

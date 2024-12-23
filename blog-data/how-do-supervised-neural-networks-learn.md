@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-supervised-neural-networks-learn"
 ---
 
-Okay, let’s tackle this one. It's a fundamental question, and I've seen enough variations of it over the years to understand where the confusion often lies. Supervised learning, in the context of neural networks, is at its core about minimizing error. Specifically, it's about adjusting the network's internal parameters — weights and biases — to map input data to desired output data as accurately as possible. The process is iterative and involves something akin to guided trial and error, but with a sophisticated mathematical framework underpinning everything.
+, let’s tackle this one. It's a fundamental question, and I've seen enough variations of it over the years to understand where the confusion often lies. Supervised learning, in the context of neural networks, is at its core about minimizing error. Specifically, it's about adjusting the network's internal parameters — weights and biases — to map input data to desired output data as accurately as possible. The process is iterative and involves something akin to guided trial and error, but with a sophisticated mathematical framework underpinning everything.
 
 I remember working on a project back in the mid-2010s where we were building a system to classify handwritten digits. We had a huge dataset, which was great, but also a testament to the importance of data preprocessing before diving into the modeling phase. That's a separate discussion, however. The neural network, a relatively simple feedforward model at the time, started from a place of near randomness in its predictions. Essentially, it was just guessing. The magic happened as we fed it training data.
 

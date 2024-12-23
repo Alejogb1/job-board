@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "618-lab-word-frequencies-python-text-processing"
 ---
 
-Okay so word frequencies in Python right classic I've banged my head against this wall more times than I care to admit Seriously this is like a rite of passage for anyone getting into text processing and data analysis in Python I remember my early days probably around python 2.7 days or so back when you had to worry about unicode like it was a bomb waiting to go off I was working on a project involving parsing tons of legal documents think court transcripts and laws and the like My boss at the time a real stickler for clean data was breathing down my neck about getting accurate term frequencies He had some weird obsession with being able to spot certain phrases and keywords like "reasonable doubt" and I had to deliver like yesterday I made all the rookie mistakes you can imagine trying to brute force it with simple loops and regexes it was a total mess Performance was trash and I swear I had some race conditions hiding in there somewhere It made me want to quit and take up knitting seriously
+ so word frequencies in Python right classic I've banged my head against this wall more times than I care to admit Seriously this is like a rite of passage for anyone getting into text processing and data analysis in Python I remember my early days probably around python 2.7 days or so back when you had to worry about unicode like it was a bomb waiting to go off I was working on a project involving parsing tons of legal documents think court transcripts and laws and the like My boss at the time a real stickler for clean data was breathing down my neck about getting accurate term frequencies He had some weird obsession with being able to spot certain phrases and keywords like "reasonable doubt" and I had to deliver like yesterday I made all the rookie mistakes you can imagine trying to brute force it with simple loops and regexes it was a total mess Performance was trash and I swear I had some race conditions hiding in there somewhere It made me want to quit and take up knitting seriously
 
 The key is you need to think more like a machine than you do a human that's the secret for text processing you want to use libraries that are designed for this stuff Instead of reinventing the wheel let's get to the code.
 
@@ -29,7 +29,7 @@ frequencies = get_word_frequencies_basic(example_text)
 print(frequencies)
 ```
 
-Okay so what's happening here First I am importing some modules that are useful we have string to help deal with punctuation and `Counter` is literally built for what we are trying to do. The function `get_word_frequencies_basic` takes our text it lowercases everything so we don't treat "The" and "the" as different words it cleans out the punctuation that's the next part. Then it splits the string into individual words. Finally the `Counter` will go through that list of words and create a dictionary like object with the frequencies. Easy right that should handle your basic needs but let's be honest that's the bare minimum
+ so what's happening here First I am importing some modules that are useful we have string to help deal with punctuation and `Counter` is literally built for what we are trying to do. The function `get_word_frequencies_basic` takes our text it lowercases everything so we don't treat "The" and "the" as different words it cleans out the punctuation that's the next part. Then it splits the string into individual words. Finally the `Counter` will go through that list of words and create a dictionary like object with the frequencies. Easy right that should handle your basic needs but let's be honest that's the bare minimum
 
 Now what if you need to deal with big files not just a couple of sentences What if you have a massive text file of say a million lines or more then the first approach is going to become incredibly slow for those cases You will have to start thinking about how memory works and optimize this thing to become fast and efficient for large files that's where generators become your friend let's see an example of that
 
@@ -58,7 +58,7 @@ frequencies = get_word_frequencies_generator(file_path)
 print(frequencies.most_common(10)) # Show top 10
 ```
 
-Okay this one is different here I introduce `word_generator` and the `yield` keyword that's how we create generators this guy will read the text line by line not all at once it cleans it up as it goes and yields each word one at a time the main function `get_word_frequencies_generator` uses the generator to feed the words into the `Counter` This is way more efficient for larger datasets because it doesn't load the entire file into memory at once. it keeps it on disk and only fetches the current line It's not magic but for large datasets its close to magic
+ this one is different here I introduce `word_generator` and the `yield` keyword that's how we create generators this guy will read the text line by line not all at once it cleans it up as it goes and yields each word one at a time the main function `get_word_frequencies_generator` uses the generator to feed the words into the `Counter` This is way more efficient for larger datasets because it doesn't load the entire file into memory at once. it keeps it on disk and only fetches the current line It's not magic but for large datasets its close to magic
 
 Let's talk about edge cases you need to handle things like weird characters maybe you're dealing with text with emojis or non-standard punctuation in this case the `string.punctuation` might not catch all of it so you can clean it with regular expressions its a tool you must use or be able to use in all your text processing tasks here is an example
 
@@ -79,7 +79,7 @@ frequencies = get_word_frequencies_regex(example_text)
 print(frequencies)
 ```
 
-Alright this one looks different right I replaced the `string.punctuation` part with a regex. The line `re.sub(r'[^a-z\s]', '', text)` uses a regular expression to keep only lowercase letters and spaces in the text. everything else is removed this gives you a more robust way to handle all kinds of input including weird emojis unicode symbols and whatnot which you may encounter on text from the wild.
+this one looks different right I replaced the `string.punctuation` part with a regex. The line `re.sub(r'[^a-z\s]', '', text)` uses a regular expression to keep only lowercase letters and spaces in the text. everything else is removed this gives you a more robust way to handle all kinds of input including weird emojis unicode symbols and whatnot which you may encounter on text from the wild.
 
 Now what about more complex scenarios? you will want to be familiar with nltk specifically its tokenizers if you want to do advanced processing you can use it to deal with things like stemming lemmatization and stop words but that is beyond this question for the purpose of this I am just covering the basics
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-local-csv-files-be-read-into-a-containerized-airflow-environment"
 ---
 
-Okay, let's tackle this one. I remember facing this challenge myself a while back, during a project where we were migrating a legacy batch processing system to a containerized Airflow setup. The initial assumption that Airflow, running neatly in its docker container, could directly access files on the host machine—well, it turned out not to be that straightforward. We had to refine our approach to ensure a seamless and maintainable workflow.
+, let's tackle this one. I remember facing this challenge myself a while back, during a project where we were migrating a legacy batch processing system to a containerized Airflow setup. The initial assumption that Airflow, running neatly in its docker container, could directly access files on the host machine—well, it turned out not to be that straightforward. We had to refine our approach to ensure a seamless and maintainable workflow.
 
 Fundamentally, containers are designed for isolation. They don't inherently have access to the host filesystem. This is a core security and architectural principle. To get around this with Airflow reading local csv files, we need to establish some form of controlled data transfer. Three common methods came to the forefront in my experience, each with its trade-offs and suitability depending on the context.
 

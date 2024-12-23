@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "kotlin-data-class-inherit-problem-definition"
 ---
 
-Alright so you're asking about data classes and inheritance in Kotlin right been there done that got the t-shirt a few times actually data classes are cool they’re like these super handy shortcuts for creating classes that primarily hold data you get equals hashCode toString copy all that jazz automatically its great less boilerplate saves me a ton of time so naturally you’d think ok inheritance lets throw in some hierarchy build a system make reusable classes easy peasy not quite
+so you're asking about data classes and inheritance in Kotlin right been there done that got the t-shirt a few times actually data classes are cool they’re like these super handy shortcuts for creating classes that primarily hold data you get equals hashCode toString copy all that jazz automatically its great less boilerplate saves me a ton of time so naturally you’d think ok inheritance lets throw in some hierarchy build a system make reusable classes easy peasy not quite
 
 See the problem here isn't that kotlin prevents you from inheriting from a data class because it doesnt it does allow it what they don't let you do is inherit _into_ a data class It makes sense kinda when you think about it data classes rely on all those generated methods like equals and hashcode using all the primary constructor properties if you try to tack on properties through inheritance that's where things get wonky
 

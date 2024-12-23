@@ -4,13 +4,13 @@ date: "2024-12-03"
 id: "what-key-features-can-ai-agents-extract-from-discord-chats-such-as-decisions-milestones-and-faqs"
 ---
 
-Okay so you wanna know what cool stuff AI can pull from Discord chats right  like decisions milestones FAQs the whole shebang  It's actually pretty neat what you can do  Think of it like this Discord is a giant messy data goldmine  and AI is your superpowered pickaxe
+ so you wanna know what cool stuff AI can pull from Discord chats right  like decisions milestones FAQs the whole shebang  It's actually pretty neat what you can do  Think of it like this Discord is a giant messy data goldmine  and AI is your superpowered pickaxe
 
 First off  we need to think about how we're even gonna *get* that data  Discord's API is your friend here  you'll need to  you know  actually get permission to access those chats ethically of course no shady business  That means building an app or something that interacts with the API  then you grab the data  json heaven baby
 
 Now the fun part the feature extraction  This is where things get interesting  we're not just looking at words we're looking for patterns meaning context the whole nine yards  And it's not gonna be some simple keyword search
 
-Decisions are a big one  Think about how people make decisions in a chat  often it's a back and forth  maybe some voting  or just a clear statement like "okay we're doing X"  To find these  you'd probably use some Natural Language Processing (NLP) techniques  specifically stuff like sentiment analysis  to see if there's agreement or disagreement  and maybe some topic modeling to see what the discussion is even *about*  Check out "Speech and Language Processing" by Jurafsky and Martin  it's a bible for this kind of stuff  They cover everything from basic tokenization to advanced topic modeling techniques
+Decisions are a big one  Think about how people make decisions in a chat  often it's a back and forth  maybe some voting  or just a clear statement like " we're doing X"  To find these  you'd probably use some Natural Language Processing (NLP) techniques  specifically stuff like sentiment analysis  to see if there's agreement or disagreement  and maybe some topic modeling to see what the discussion is even *about*  Check out "Speech and Language Processing" by Jurafsky and Martin  it's a bible for this kind of stuff  They cover everything from basic tokenization to advanced topic modeling techniques
 
 Here’s a super basic Python example using spaCy for sentiment analysis and a simple decision detection
 
@@ -29,7 +29,7 @@ def detect_decision(text):
       return True
   return False
 
-chat_message = "Okay guys we've decided to use Python for this project"
+chat_message = " guys we've decided to use Python for this project"
 if detect_decision(chat_message):
   print("Decision detected!")
 else:

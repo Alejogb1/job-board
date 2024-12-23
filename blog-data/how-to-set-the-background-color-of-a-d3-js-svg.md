@@ -4,13 +4,13 @@ date: "2024-12-13"
 id: "how-to-set-the-background-color-of-a-d3-js-svg"
 ---
 
-Alright so you're asking about setting the background color of a d3 svg right classic issue and honestly something I've tripped over more times than I'd like to admit early in my d3 journey
+so you're asking about setting the background color of a d3 svg right classic issue and honestly something I've tripped over more times than I'd like to admit early in my d3 journey
 
 Let's get this sorted out quick and dirty I'll cut the fluff
 
 First things first d3 doesn't directly control the background of the svg like you might with say css on a div that's not how it rolls instead you manipulate the svg element itself to achieve what you want It's a bit of a mental shift if you're used to thinking in pure html/css terms
 
-Okay here's the typical way you'd do it using d3 and yeah it's deceptively simple once you know it
+ here's the typical way you'd do it using d3 and yeah it's deceptively simple once you know it
 
 ```javascript
 // Assuming you have your svg selection already
@@ -65,7 +65,7 @@ Here we're not using 100% height or width but a predefined width and height so t
 
 **Things I Wish I Knew When I Started**
 
-Okay so here's the honest to goodness things that would've saved me some pain
+ so here's the honest to goodness things that would've saved me some pain
 
 *   **Read the D3 Docs**: Sounds obvious right well it wasn't to me for a long time I tended to rely on copy pasting snippets until I broke it completely which happened a lot. D3 documentation is pretty good and they always have examples I'm always surprised when I see people doing stuff without checking the docs.
 
@@ -77,4 +77,4 @@ Okay so here's the honest to goodness things that would've saved me some pain
 
 *   **Developer tools:** Remember to use browser's dev tools to inspect the DOM and check the computed styles it helps a lot
 
-Okay so that is that I hope I covered everything for you and that you don't need to waste as much time as I did back in the days. It's amazing how something as simple as a background color could cause a lot of headaches. I remember one time I spent almost 3 hours trying to fix this I was convinced there was a bug in d3 but guess what it was just a typo in my code. You know they say it’s not a bug it's a feature right haha. Anyway let me know if you have other questions happy to help fellow developers avoid these d3 pitfalls.
+ so that is that I hope I covered everything for you and that you don't need to waste as much time as I did back in the days. It's amazing how something as simple as a background color could cause a lot of headaches. I remember one time I spent almost 3 hours trying to fix this I was convinced there was a bug in d3 but guess what it was just a typo in my code. You know they say it’s not a bug it's a feature right haha. Anyway let me know if you have other questions happy to help fellow developers avoid these d3 pitfalls.

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-are-tf-idf-values-identical"
 ---
 
-Alright, let's tackle this. Identical tf-idf values, a situation I’ve definitely encountered more than once in my career—often when helping colleagues debug their information retrieval pipelines. It usually boils down to a few core issues, and the solution often involves inspecting the data preprocessing stage, the tf-idf calculation parameters, or even the text data itself. Let me break it down, based on my past projects, and then we can look at some code.
+Alright,  Identical tf-idf values, a situation I’ve definitely encountered more than once in my career—often when helping colleagues debug their information retrieval pipelines. It usually boils down to a few core issues, and the solution often involves inspecting the data preprocessing stage, the tf-idf calculation parameters, or even the text data itself. Let me break it down, based on my past projects, and then we can look at some code.
 
 Essentially, tf-idf, or term frequency-inverse document frequency, aims to reflect how important a word is to a document within a collection (or corpus) of documents. Term frequency (tf) calculates how often a term appears within a document, while inverse document frequency (idf) measures how common or rare a term is across the entire collection. A high tf-idf value implies that a term is both frequent within a document and rare across the entire collection, suggesting it's highly representative of that document. So, when you see identical values for different terms or documents, it signals a breakdown in this differentiating mechanism.
 
@@ -14,7 +14,7 @@ Another critical area where I have personally faced issues is in the **implement
 
 Now, consider the actual **data characteristics** themselves. Let's say the document corpus you are analyzing includes documents which are substantially similar, or if many documents have an unusual amount of overlap in their vocabulary. This often happens when analyzing news articles from the same news agency where common events are discussed using similar language, or in the cases of research papers where abstracts all use highly standardized terminology. In these situations, some or many document pairs may very well demonstrate similar patterns of term occurrences, resulting in closely matching tf-idf values irrespective of correct pre-processing or implementation. The 'importance' signal of tf-idf becomes diluted when a wide corpus presents itself as a collection of repetitions. A project involving analyzing legal documents highlighted this for me; similar clauses across different documents had high tf-idf values, but they weren't really useful for differentiating documents.
 
-Okay, let's delve into some practical examples through code. For these examples, I'll use python and `scikit-learn`, a common library for this purpose.
+, let's delve into some practical examples through code. For these examples, I'll use python and `scikit-learn`, a common library for this purpose.
 
 **Code Snippet 1: Basic tf-idf without proper pre-processing**
 

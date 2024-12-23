@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-perform-xavier-weight-initialization-in-kotlin"
 ---
 
-Okay, let's unpack Xavier initialization in Kotlin, something I’ve tackled more than a few times across different projects. Instead of launching straight into the code, let's consider the 'why' first. Initializing neural network weights is absolutely critical; if you start with values that are too large or too small, your training process can stall or diverge entirely. Xavier initialization, and its successor He initialization, are designed to mitigate that, primarily by maintaining the variance of activations throughout the layers of your network.
+, let's unpack Xavier initialization in Kotlin, something I’ve tackled more than a few times across different projects. Instead of launching straight into the code, let's consider the 'why' first. Initializing neural network weights is absolutely critical; if you start with values that are too large or too small, your training process can stall or diverge entirely. Xavier initialization, and its successor He initialization, are designed to mitigate that, primarily by maintaining the variance of activations throughout the layers of your network.
 
 I recall vividly a project a few years back, building a convolutional network for image classification. We were pulling our hair out because the gradients were vanishing towards the deeper layers. We hadn't been mindful about initialization, and were just using small random values, leading to a training process that barely improved our loss function. Switching over to Xavier initialization dramatically improved training speed and the network’s final performance. This lesson has stayed with me.
 

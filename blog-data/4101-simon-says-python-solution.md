@@ -4,11 +4,11 @@ date: "2024-12-13"
 id: "4101-simon-says-python-solution"
 ---
 
-Alright so you're wrestling with a Simon Says implementation in Python right Been there done that multiple times let me tell you
+so you're wrestling with a Simon Says implementation in Python right Been there done that multiple times let me tell you
 
 First off let's get some things straight This isn't about intricate AI or complex game mechanics It's about basic sequence handling timing and user input validation Think of it like a bread and butter problem something you'd encounter in a beginner's class but sometimes it still trips you up if you're not careful I remember one time back in '08 when I was dabbling in embedded systems I had to implement a similar sequence matching logic on a ridiculously constrained microcontroller Talk about a challenge it was like squeezing an elephant into a matchbox and the debugging oh boy the debugging
 
-Okay so based on the question you are asking for a Python based solution for a sequence matching game probably Simon Says where there is a given sequence you have to match it and this involves generating a sequence comparing it with user input and having some sort of indication of win or lose I am going to give you some code examples showing you how this can be done in different ways and I will try to show some alternative ways to do the same thing to add to the learning experience
+ so based on the question you are asking for a Python based solution for a sequence matching game probably Simon Says where there is a given sequence you have to match it and this involves generating a sequence comparing it with user input and having some sort of indication of win or lose I am going to give you some code examples showing you how this can be done in different ways and I will try to show some alternative ways to do the same thing to add to the learning experience
 
 **The Core Logic**
 

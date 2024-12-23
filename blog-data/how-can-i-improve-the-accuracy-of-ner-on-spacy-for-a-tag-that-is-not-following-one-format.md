@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-improve-the-accuracy-of-ner-on-spacy-for-a-tag-that-is-not-following-one-format"
 ---
 
-Alright, let's tackle this. It's a problem I've certainly bumped into more than a few times. You're dealing with a named entity recognition (NER) challenge using spaCy, and the hurdle is that your specific entity tag isn't conforming to a predictable pattern. This isn't uncommon; real-world data rarely fits neatly into pre-defined boxes. It's the kind of issue that often requires a bit of fine-tuning beyond just relying on out-of-the-box models.
+Alright,  It's a problem I've certainly bumped into more than a few times. You're dealing with a named entity recognition (NER) challenge using spaCy, and the hurdle is that your specific entity tag isn't conforming to a predictable pattern. This isn't uncommon; real-world data rarely fits neatly into pre-defined boxes. It's the kind of issue that often requires a bit of fine-tuning beyond just relying on out-of-the-box models.
 
 I remember a project a few years back where I was working on processing legal documents. We had to identify specific clauses related to contract terminations, which weren't always worded consistently, nor were they marked with obvious keywords. The standard spaCy models did a decent job on the more structured parts, but for these termination clauses, the accuracy was consistently low.
 

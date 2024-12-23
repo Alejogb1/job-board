@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "633-hourly-temperature-reporting-python-zybooks"
 ---
 
-Okay so you're wrestling with zybooks 6.3.3 hourly temperature reporting in python right Been there done that multiple times actually let me tell you it's one of those exercises that sounds simple but can trip you up if you're not careful 
+ so you're wrestling with zybooks 6.3.3 hourly temperature reporting in python right Been there done that multiple times actually let me tell you it's one of those exercises that sounds simple but can trip you up if you're not careful 
 
 I remember back in the day when I was first getting into python I got stuck on this exact problem for hours I think it was around 2018 or something and I was trying to optimize the script for some weird reason anyway it took me like 3 different iterations to finally nail it It's always the simple things that get you I swear
 
@@ -12,7 +12,7 @@ So what we're essentially dealing with is reading a list or a set of temperature
 
 First the key thing is parsing the input properly zybooks usually just gives you the data and doesn't tell you how its formatted explicitly so you need to be careful You need to understand what the input looks like before even thinking about the code it's the classic garbage in garbage out situation
 
-Let's say you receive the input as a space separated string of floats or integers which represent the temperature every hour of the day starting from hour 0 and going all the way to hour 23 Okay so here's the most basic solution I would say to tackle that
+Let's say you receive the input as a space separated string of floats or integers which represent the temperature every hour of the day starting from hour 0 and going all the way to hour 23  so here's the most basic solution I would say to tackle that
 
 ```python
 def report_hourly_temperatures(temperature_data):
@@ -27,7 +27,7 @@ temperature_input = input()
 report_hourly_temperatures(temperature_input)
 ```
 
-Okay so this works fine right Its straightforward we just split the input string convert them to floats enumerate through it and print formatted output with 2 decimal places no rocket science here 
+ so this works fine right Its straightforward we just split the input string convert them to floats enumerate through it and print formatted output with 2 decimal places no rocket science here 
 
 But what if you have more complex scenarios right Like what if you need to handle missing data or you want to filter the data for specific temperature ranges things can get a bit hairy pretty fast
 

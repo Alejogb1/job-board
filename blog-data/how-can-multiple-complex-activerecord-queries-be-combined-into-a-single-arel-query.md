@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-multiple-complex-activerecord-queries-be-combined-into-a-single-arel-query"
 ---
 
-Alright, let's tackle this. I remember a particularly gnarly project back in '18, dealing with a legacy reporting system that was practically drowning in scattered ActiveRecord queries. We needed to pull data from across several tables, filter it based on complex criteria, and then perform some aggregate calculations. It was a classic case of "N+1 query hell," and it was severely impacting performance. That experience really pushed me to get comfortable with Arel, and that's where the solution for combining complex ActiveRecord queries into a single one lies.
+Alright,  I remember a particularly gnarly project back in '18, dealing with a legacy reporting system that was practically drowning in scattered ActiveRecord queries. We needed to pull data from across several tables, filter it based on complex criteria, and then perform some aggregate calculations. It was a classic case of "N+1 query hell," and it was severely impacting performance. That experience really pushed me to get comfortable with Arel, and that's where the solution for combining complex ActiveRecord queries into a single one lies.
 
 The core idea is this: instead of composing multiple queries in a procedural fashion with ActiveRecord, we express the desired data retrieval and manipulation declaratively using Arel, which ultimately translates into a single, highly optimized sql query. ActiveRecord is great for its simplicity and convention, but when you need more power and control, especially over complex joins, aggregations, and subqueries, diving into Arel is necessary.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-arent-rails-objects-assigning-values"
 ---
 
-Okay, let's talk about those perplexing situations where your Rails objects seem resistant to accepting assigned values. I've seen this more times than i'd like to recall, and the reasons, while varied, often stem from a few common culprits. It's never fun staring at code that looks like it *should* work, but doesn't. It often feels like you're chasing ghosts. I recall vividly one particularly thorny incident at my former gig with a rather large application. Debugging it took the better part of a frustrating afternoon. So, let's unravel this.
+, let's talk about those perplexing situations where your Rails objects seem resistant to accepting assigned values. I've seen this more times than i'd like to recall, and the reasons, while varied, often stem from a few common culprits. It's never fun staring at code that looks like it *should* work, but doesn't. It often feels like you're chasing ghosts. I recall vividly one particularly thorny incident at my former gig with a rather large application. Debugging it took the better part of a frustrating afternoon. So, let's unravel this.
 
 The core issue, generally, isn't that Rails is fundamentally broken in its assignment mechanics; instead, it's often related to how we’re interacting with Active Record models and underlying ruby mechanisms. Here's a breakdown of the typical reasons, followed by practical code examples to solidify the concepts.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-use-the-bart-large-mnli-model-for-nli-tasks"
 ---
 
-Okay, let's tackle this one. I've spent a fair bit of time working with natural language inference (nli) models, particularly those built on transformer architectures like bart-large-mnli. It's a powerful tool, but getting it to work smoothly requires understanding a few key concepts and handling the inputs correctly. Let's walk through how I approach it, and hopefully, it’ll streamline the process for you.
+, let's tackle this one. I've spent a fair bit of time working with natural language inference (nli) models, particularly those built on transformer architectures like bart-large-mnli. It's a powerful tool, but getting it to work smoothly requires understanding a few key concepts and handling the inputs correctly. Let's walk through how I approach it, and hopefully, it’ll streamline the process for you.
 
 First, it's essential to grasp that bart-large-mnli is pre-trained specifically for nli tasks. Unlike a general-purpose model, it doesn't require additional fine-tuning for basic inference. This is a huge benefit. It's built to classify the relationship between two sentences – a premise and a hypothesis – into three classes: entailment, contradiction, or neutral. Think of it as the model's baked-in understanding of how well one sentence logically follows from, contradicts, or is unrelated to another.
 

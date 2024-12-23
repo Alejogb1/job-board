@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "python-2-7-statsmodels-result-conf-int"
 ---
 
-Alright so you're wrestling with `statsmodels` confidence intervals in Python 2.7 eh Been there done that let me tell you that's a trip down memory lane
+so you're wrestling with `statsmodels` confidence intervals in Python 2.7 eh Been there done that let me tell you that's a trip down memory lane
 
 First off yeah Python 2.7 its a bit of a legacy situation nowadays most folks have moved on to Python 3x but hey sometimes you're stuck with what you got Believe me I've been there had to maintain a legacy system running 2.7 for a company once ugh it was a whole project in itself
 

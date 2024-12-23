@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-allow-access-to-an-azure-container-app-only-over-api-management"
 ---
 
-Alright, let's tackle this. I remember a project a few years back where we needed to secure a microservices backend running in Azure Container Apps. The client had a strict policy: no direct access to the containers, everything had to go through API Management (APIM). It seemed straightforward enough, but the devil, as always, was in the details. This isn't just about slapping a firewall rule; it requires a nuanced approach to networking and identity.
+Alright,  I remember a project a few years back where we needed to secure a microservices backend running in Azure Container Apps. The client had a strict policy: no direct access to the containers, everything had to go through API Management (APIM). It seemed straightforward enough, but the devil, as always, was in the details. This isn't just about slapping a firewall rule; it requires a nuanced approach to networking and identity.
 
 The core principle here is to restrict access to the container app's ingress point and then configure API Management to proxy requests to it. First, we’ll isolate the container app within a virtual network (VNet), limiting public access. Then, we’ll configure APIM to communicate with the app internally, bypassing public internet exposure. Finally, we will rely on APIM's robust authentication and authorization policies to protect the backend. Think of it as a guardhouse (APIM) securing the inner sanctum (Container App).
 

@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-doesnt-tailscale-reconnect-after-wan-failovers"
 ---
 
-Okay, let's talk about Tailscale and those pesky disconnects after a WAN hiccup. From my own experience, troubleshooting network issues—especially those involving overlay networks like Tailscale—often feels like navigating a maze with shifting walls. You'd think a reconnect would be automatic, but there are a few nuances at play here that can cause headaches. I've spent quite a few late nights staring at tcpdump outputs to get to the bottom of similar situations, and I can tell you, there's usually a logical reason for the lack of automatic recovery.
+, let's talk about Tailscale and those pesky disconnects after a WAN hiccup. From my own experience, troubleshooting network issues—especially those involving overlay networks like Tailscale—often feels like navigating a maze with shifting walls. You'd think a reconnect would be automatic, but there are a few nuances at play here that can cause headaches. I've spent quite a few late nights staring at tcpdump outputs to get to the bottom of similar situations, and I can tell you, there's usually a logical reason for the lack of automatic recovery.
 
 First off, it’s essential to understand that Tailscale, while presenting a seamless network abstraction, operates on top of your existing network infrastructure. This means it relies heavily on things like network address translation (NAT), the stability of your underlying connection, and its own internal state management. When a wide area network (WAN) connection fails, a cascade of events occurs that can disrupt Tailscale’s ability to smoothly recover.
 

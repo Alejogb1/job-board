@@ -4,7 +4,7 @@ date: "2024-12-12"
 id: "how-does-googles-project-mariner-achieve-state-of-the-art-performance-on-the-webvoyager-benchmark"
 ---
 
-Alright let's dive into Project Mariner and how it conquers WebVoyager its a pretty cool area to geek out on actually
+let's dive into Project Mariner and how it conquers WebVoyager its a pretty cool area to geek out on actually
 
 So WebVoyager think of it as this intricate obstacle course for web-based agents Its not just about clicking buttons randomly its about understanding the web page layout its dynamic content and figuring out the user intention essentially the agent needs to be able to navigate different websites accomplish specific tasks like booking flights or ordering takeout this is where traditional rule based systems often stumble because the web is so diverse and always changing
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-do-aligned-fasttext-vectors-contain-only-a-single-value-per-word"
 ---
 
-Okay, let's tackle this. I've definitely seen my share of oddities in vector embeddings, and the single-value-per-word situation with aligned FastText vectors is something I recall troubleshooting back during a particularly large multi-language project I was managing. It's not necessarily an *inherent* property of FastText itself, but rather a consequence of *how* we typically align these vectors for cross-lingual applications.
+,  I've definitely seen my share of oddities in vector embeddings, and the single-value-per-word situation with aligned FastText vectors is something I recall troubleshooting back during a particularly large multi-language project I was managing. It's not necessarily an *inherent* property of FastText itself, but rather a consequence of *how* we typically align these vectors for cross-lingual applications.
 
 The crux of the issue boils down to the alignment process itself and the goals it's trying to achieve. FastText, at its core, creates vectors that represent the semantics of words within a given language. These embeddings are trained based on local context and subword information, enabling robust handling of out-of-vocabulary words. However, these embeddings are language-specific. They don't inherently understand the relationship between "cat" in english and "gato" in spanish.
 

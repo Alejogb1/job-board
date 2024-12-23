@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-isnt-my-flask-python-app-running"
 ---
 
-Alright, let's tackle this. I’ve seen this scenario play out more times than I care to remember, often with subtle variations that can drive you up the wall. A Flask app refusing to launch isn’t usually a single dramatic failure but rather an accumulation of small, easily overlooked details. Based on my experience, there are a few common culprits that frequently lead to this situation.
+Alright,  I’ve seen this scenario play out more times than I care to remember, often with subtle variations that can drive you up the wall. A Flask app refusing to launch isn’t usually a single dramatic failure but rather an accumulation of small, easily overlooked details. Based on my experience, there are a few common culprits that frequently lead to this situation.
 
 First, I often find myself scrutinizing the environment setup. Python's ecosystem, while powerful, can be a bit finicky with its package management. It's essential to use virtual environments to isolate project dependencies. This prevents conflicts between libraries used in different projects. I recall troubleshooting a deployment issue for a colleague once; he had inadvertently installed a newer version of `requests` globally that conflicted with the older version required by his Flask app’s requirements file. The symptoms were baffling until we recreated the virtual environment from scratch, resolving the dependency conflict and finally getting the app to run.
 

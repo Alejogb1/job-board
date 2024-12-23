@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-are-kotlin-websockets-stuck-in-timewait"
 ---
 
-Alright, let's tackle this. I've definitely seen my share of websocket issues over the years, and the dreaded TIME_WAIT state is a classic head-scratcher. It's a common situation, especially when dealing with abrupt disconnections or poorly managed connection lifecycles. Seeing your Kotlin websockets stuck there is often a symptom of the TCP protocol doing its job – albeit sometimes inconveniently from our perspective – and there are a few common culprits in the Kotlin ecosystem. Let's break it down.
+Alright,  I've definitely seen my share of websocket issues over the years, and the dreaded TIME_WAIT state is a classic head-scratcher. It's a common situation, especially when dealing with abrupt disconnections or poorly managed connection lifecycles. Seeing your Kotlin websockets stuck there is often a symptom of the TCP protocol doing its job – albeit sometimes inconveniently from our perspective – and there are a few common culprits in the Kotlin ecosystem. Let's break it down.
 
 The TIME_WAIT state, at its core, isn’t really about Kotlin specifically; it's a standard part of TCP's connection closing handshake. When a TCP connection is closed, the side that initiated the close (the one that sent the *FIN* packet first) usually enters TIME_WAIT. This waiting period exists for a couple of crucial reasons, chiefly, to ensure that delayed or re-ordered packets from the connection have time to be fully delivered and processed. Without it, we risk data loss or corruption when a new connection is established on the same port, and we risk receiving fragments from the previous connection.
 

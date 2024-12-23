@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "what-mechanisms-are-employed-in-photonic-transceivers-to-reduce-latency-during-multi-chip-communication-for-neural-network-training-workloads"
 ---
 
-Okay so you wanna know how photonic transceivers speed things up when you're training massive neural nets right  like those huge models that need tons of chips to work together  It's a cool problem because the bottleneck isn't just the chips themselves its also how fast they can talk to each other
+ so you wanna know how photonic transceivers speed things up when you're training massive neural nets right  like those huge models that need tons of chips to work together  It's a cool problem because the bottleneck isn't just the chips themselves its also how fast they can talk to each other
 
 The main thing is that light travels way faster than electrons so using photons instead of electrical signals for communication between chips is a big win Latency is that delay you know the time it takes for data to get from point A to point B and we want to minimize that  Photonic transceivers are basically the bridges between the electrical world of your chips and the optical world of light signals
 

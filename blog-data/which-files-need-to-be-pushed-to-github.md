@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "which-files-need-to-be-pushed-to-github"
 ---
 
-Okay, let's unpack this. It's a question that seems simple on the surface, but the devil, as always, is in the details. Over the years, particularly during a stint building a distributed microservices architecture, I've seen firsthand the chaos that can erupt from improperly managed git repositories. The short answer is "it depends," but let's get beyond that and into a more precise explanation. When you ask what *files* to push to GitHub, you're really asking about what constitutes the *source* of your project—and what contributes to reproducible builds.
+, let's unpack this. It's a question that seems simple on the surface, but the devil, as always, is in the details. Over the years, particularly during a stint building a distributed microservices architecture, I've seen firsthand the chaos that can erupt from improperly managed git repositories. The short answer is "it depends," but let's get beyond that and into a more precise explanation. When you ask what *files* to push to GitHub, you're really asking about what constitutes the *source* of your project—and what contributes to reproducible builds.
 
 Generally, you need to push anything that is required to reconstruct your project and ensure its consistent behavior. This includes, but is not limited to:
 

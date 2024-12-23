@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-does-java-thread-waiting-work"
 ---
 
-Okay, let's unpack the intricacies of thread waiting in java. I've definitely seen my fair share of concurrent applications behaving strangely, and the correct handling of thread waiting is paramount to ensuring stability. It’s more involved than simply telling a thread to pause; there's a whole mechanism underneath. We’re dealing with coordination, not just simple pauses.
+, let's unpack the intricacies of thread waiting in java. I've definitely seen my fair share of concurrent applications behaving strangely, and the correct handling of thread waiting is paramount to ensuring stability. It’s more involved than simply telling a thread to pause; there's a whole mechanism underneath. We’re dealing with coordination, not just simple pauses.
 
 My first encounter with this, as I recall, was back when I was working on a large-scale data processing application. We had these massive files coming in, and naturally, we used multiple threads to crunch them. Initially, it worked fine, but as the load increased, we encountered a really nasty deadlock issue. Threads were getting stuck indefinitely, and the system ground to a halt. It took a few days of intensive debugging to realize our naive approach to thread management was the root cause. So, let's get down to the technical details.
 

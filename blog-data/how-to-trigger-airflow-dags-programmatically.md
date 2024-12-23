@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-trigger-airflow-dags-programmatically"
 ---
 
-Alright, let's tackle this. Programmatically triggering Airflow DAGs is a common requirement, and over the years I've bumped into more than a few scenarios where relying solely on the scheduler isn’t quite enough. I remember a particularly tricky project where we needed to kick off a complex ETL pipeline based on real-time events coming from an external system. The scheduler alone couldn't handle that level of dynamism, necessitating a programmatic approach. There’s a spectrum of ways to achieve this, each with its own advantages and trade-offs. Let’s break it down.
+Alright,  Programmatically triggering Airflow DAGs is a common requirement, and over the years I've bumped into more than a few scenarios where relying solely on the scheduler isn’t quite enough. I remember a particularly tricky project where we needed to kick off a complex ETL pipeline based on real-time events coming from an external system. The scheduler alone couldn't handle that level of dynamism, necessitating a programmatic approach. There’s a spectrum of ways to achieve this, each with its own advantages and trade-offs. Let’s break it down.
 
 The core concept revolves around the Airflow REST API. Airflow exposes various endpoints that allow us to interact with it programmatically, and one such endpoint is specifically designed to trigger DAG runs. This is the primary method for remote execution. We typically achieve this through scripting languages like Python, using libraries that can handle HTTP requests. Python's `requests` library is a solid workhorse here, but I have also used other alternatives depending on the specific system involved.
 

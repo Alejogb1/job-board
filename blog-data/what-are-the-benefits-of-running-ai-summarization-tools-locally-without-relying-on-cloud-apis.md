@@ -14,7 +14,7 @@ Now the thing is local AI summarization isn't exactly plug-and-play  It requires
 We're talking about transformer models primarily  these are the heavy hitters in the summarization world  They're based on the transformer architecture which is detailed in the seminal "Attention is All You Need" paper  you should definitely dig into that  it's dense but rewarding  Understanding the inner workings helps you choose and even modify the models
 
 
-Okay enough theory let's look at some code examples  I'm gonna stick with Python because it's super versatile and has great libraries for this kind of stuff
+ enough theory let's look at some code examples  I'm gonna stick with Python because it's super versatile and has great libraries for this kind of stuff
 
 
 First up  let's use the `transformers` library  it's awesome  it lets you easily load and use pre-trained summarization models  This example uses BART a popular model known for its strong performance

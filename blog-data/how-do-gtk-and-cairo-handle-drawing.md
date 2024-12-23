@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-gtk-and-cairo-handle-drawing"
 ---
 
-Okay, let's talk about drawing with GTK and Cairo. I’ve spent a fair amount of time navigating the intricacies of this particular pair, particularly back when I was developing a custom visualization tool for geological data – a real performance challenge at times, let me tell you. Understanding how they work together is essential if you're planning any kind of complex or performance-sensitive graphical application on Linux, or even cross-platform scenarios involving GTK.
+, let's talk about drawing with GTK and Cairo. I’ve spent a fair amount of time navigating the intricacies of this particular pair, particularly back when I was developing a custom visualization tool for geological data – a real performance challenge at times, let me tell you. Understanding how they work together is essential if you're planning any kind of complex or performance-sensitive graphical application on Linux, or even cross-platform scenarios involving GTK.
 
 The crucial thing to grasp is that GTK, as a toolkit, handles the overall window management, event handling (clicks, key presses), and the structure of your user interface elements like buttons, text boxes, and so on. It doesn't *directly* draw graphics beyond the basic rendering of those UI elements. For anything more sophisticated – shapes, images, custom visualizations – GTK relies on Cairo. Cairo is a 2D graphics library, specifically designed for drawing; it handles the actual rasterization of shapes and paths into pixels on the screen. Think of GTK as the stage manager, setting up the scene, and Cairo as the artist, painting the details onto that stage.
 

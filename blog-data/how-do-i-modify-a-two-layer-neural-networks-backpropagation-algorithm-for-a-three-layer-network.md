@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-modify-a-two-layer-neural-networks-backpropagation-algorithm-for-a-three-layer-network"
 ---
 
-Alright, let's tackle this. I've been down that road of extending network architectures a few times myself, and I recall quite vividly the moment I had to move beyond a simple two-layer model. It's more about understanding the underlying mechanism than anything else; once you've got that, extending it feels almost natural. Backpropagation, at its core, is just the chain rule of calculus applied to the parameters of your network, so adding layers simply means extending that chain.
+Alright,  I've been down that road of extending network architectures a few times myself, and I recall quite vividly the moment I had to move beyond a simple two-layer model. It's more about understanding the underlying mechanism than anything else; once you've got that, extending it feels almost natural. Backpropagation, at its core, is just the chain rule of calculus applied to the parameters of your network, so adding layers simply means extending that chain.
 
 The shift from two to three layers introduces an extra set of weights and biases, which also means an extra layer of gradients to calculate. The crucial change isn't in the fundamental backpropagation algorithm itself, but rather in how we recursively apply it from the output layer all the way back to the input layer. In a two-layer scenario, you're typically dealing with a single hidden layer and an output layer. When you introduce a third, it effectively becomes a sandwich – input, hidden layer 1, hidden layer 2, output.
 

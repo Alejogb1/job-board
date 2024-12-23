@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-authenticate-with-github-within-a-heroku-application"
 ---
 
-Alright, let's tackle this. It's a problem I've certainly bumped into more times than I'd prefer, and it always boils down to a few key steps when dealing with Heroku and GitHub integration for authentication. I recall wrestling – oops, *encountering* – this specific challenge on a project where we were aiming for a seamless deployment pipeline tied directly to a private GitHub repository. The goal was to authenticate our users, who were collaborators on the repo, via their github identities for finer-grained access control within our application.
+Alright,  It's a problem I've certainly bumped into more times than I'd prefer, and it always boils down to a few key steps when dealing with Heroku and GitHub integration for authentication. I recall wrestling – oops, *encountering* – this specific challenge on a project where we were aiming for a seamless deployment pipeline tied directly to a private GitHub repository. The goal was to authenticate our users, who were collaborators on the repo, via their github identities for finer-grained access control within our application.
 
 Essentially, we're talking about enabling a web application hosted on Heroku to verify that a user is who they claim to be based on their github account. This usually involves leveraging OAuth 2.0, and it requires a careful dance between your app, github, and the user. Let’s break down the process.
 

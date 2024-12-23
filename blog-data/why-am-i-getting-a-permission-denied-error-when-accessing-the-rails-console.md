@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-a-permission-denied-error-when-accessing-the-rails-console"
 ---
 
-Let's tackle this. I've seen this exact scenario play out more times than I care to count, and it's rarely as straightforward as a simple "oops, forgot to sudo" moment. The "permission denied" error when trying to access the rails console is often a symptom of deeper underlying issues with your environment's setup, especially when you’re working with multiple projects or using containerization.
+ I've seen this exact scenario play out more times than I care to count, and it's rarely as straightforward as a simple "oops, forgot to sudo" moment. The "permission denied" error when trying to access the rails console is often a symptom of deeper underlying issues with your environment's setup, especially when you’re working with multiple projects or using containerization.
 
 Often, the immediate suspect that jumps to mind is, as mentioned, forgetting to use `sudo` or not having the correct user privileges. But let's be realistic. As seasoned developers, we’re usually past that initial stage of making those novice mistakes. Instead, let’s delve into the more nuanced, system-level causes and the practical troubleshooting steps that we can use.
 

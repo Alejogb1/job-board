@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-arent-ios-uiview-elements-resizing-appropriately-across-different-devices"
 ---
 
-Okay, let's tackle this. Been there, seen that—the bane of every iOS developer's existence: layout frustrations across different devices. It’s not a simple one-size-fits-all solution, and the devil is, as they say, in the details. In my experience, there isn't usually one single culprit; it's often a combination of factors that conspire to make your carefully laid-out ui look completely out of whack on another iPhone model or iPad. Let’s break down why this happens and how to deal with it, pulling from my own experiences and established best practices.
+,  Been there, seen that—the bane of every iOS developer's existence: layout frustrations across different devices. It’s not a simple one-size-fits-all solution, and the devil is, as they say, in the details. In my experience, there isn't usually one single culprit; it's often a combination of factors that conspire to make your carefully laid-out ui look completely out of whack on another iPhone model or iPad. Let’s break down why this happens and how to deal with it, pulling from my own experiences and established best practices.
 
 The core of the problem stems from the fact that iOS devices come in a myriad of screen sizes and resolutions. While the logical points (or “pixels,” conceptually) you use in your layouts try to abstract away from the actual pixel density, the differing aspect ratios and overall screen dimensions are very real problems that can throw off your designs if not handled correctly. A layout that looks fantastic on a 6.1-inch iPhone might appear cramped or stretched on a 4.7-inch device, or even worse, incredibly vacant on a larger iPad screen.
 
@@ -33,7 +33,7 @@ class BadFrameLayoutViewController: UIViewController {
 }
 ```
 
-In this basic code example, the blue square is positioned 50 points from the left and 100 points from the top, with a fixed width and height of 100 points each. This looks okay on a simulator, perhaps, but try running it on an iPad and you'll see how inadequate that approach is, the square will likely appear tiny and out of place. This fixed frame approach has failed to adapt to the varied sizes of devices.
+In this basic code example, the blue square is positioned 50 points from the left and 100 points from the top, with a fixed width and height of 100 points each. This looks  on a simulator, perhaps, but try running it on an iPad and you'll see how inadequate that approach is, the square will likely appear tiny and out of place. This fixed frame approach has failed to adapt to the varied sizes of devices.
 
 **Example 2: Basic Autolayout with Constraints**
 

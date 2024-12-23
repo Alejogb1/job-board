@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-use-pagy-for-multiple-tables-on-one-page-in-rails"
 ---
 
-Okay, let's tackle this. I've seen variations of this requirement quite a few times in my years of working with rails applications. The scenario is common: you've got a dashboard, a complex view, or maybe a reporting page that needs to display paginated data from multiple database tables simultaneously. And yes, while rails' default pagination mechanisms are good for simple cases, they fall short when you need that more sophisticated multi-table presentation. Pagy, a gem I've come to appreciate for its performance and flexibility, offers an elegant solution.
+,  I've seen variations of this requirement quite a few times in my years of working with rails applications. The scenario is common: you've got a dashboard, a complex view, or maybe a reporting page that needs to display paginated data from multiple database tables simultaneously. And yes, while rails' default pagination mechanisms are good for simple cases, they fall short when you need that more sophisticated multi-table presentation. Pagy, a gem I've come to appreciate for its performance and flexibility, offers an elegant solution.
 
 The key here isn’t to try to force pagy to magically handle multiple tables in a single, monolithic call. Instead, we'll treat each table’s data and pagination separately and combine the presentation in the view. This gives us fine-grained control and keeps the logic clean. It's akin to modular design principles - each pagination concern is isolated.
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "verilog-ternary-operator-usage-examples"
 ---
 
-Alright so you're asking about Verilog's ternary operator right Been there done that got the silicon burn scars to prove it This thing's a real workhorse if you know how to tame it Otherwise it can leave you scratching your head at 3 AM debugging a seemingly simple logic block Trust me I've been there
+so you're asking about Verilog's ternary operator right Been there done that got the silicon burn scars to prove it This thing's a real workhorse if you know how to tame it Otherwise it can leave you scratching your head at 3 AM debugging a seemingly simple logic block Trust me I've been there
 
 Let's break it down the ternary operator in Verilog is basically a compact way to write an if-else statement it's syntax is this condition ? true_expression : false_expression It evaluates the condition if it's true it returns the true expression otherwise the false expression Pretty straightforward right?
 

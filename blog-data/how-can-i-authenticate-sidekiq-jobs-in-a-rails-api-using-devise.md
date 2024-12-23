@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-authenticate-sidekiq-jobs-in-a-rails-api-using-devise"
 ---
 
-Okay, let's tackle this. I’ve spent my fair share of time getting background jobs and authentication to play nicely in Rails applications, so I'm confident we can get your Sidekiq jobs secured. The challenge, as you've likely noticed, isn't in the core Devise authentication logic itself; it's in bridging the gap between the synchronous world of HTTP requests and the asynchronous realm of background processing. Think of it less as a direct authentication of the *job* itself, and more about making sure the job is executed *within the context* of an authenticated user.
+,  I’ve spent my fair share of time getting background jobs and authentication to play nicely in Rails applications, so I'm confident we can get your Sidekiq jobs secured. The challenge, as you've likely noticed, isn't in the core Devise authentication logic itself; it's in bridging the gap between the synchronous world of HTTP requests and the asynchronous realm of background processing. Think of it less as a direct authentication of the *job* itself, and more about making sure the job is executed *within the context* of an authenticated user.
 
 The crux of the problem lies in the stateless nature of sidekiq. Each job runs in its own isolated process, and has no inherent knowledge of the current user context established within your web application's request/response cycle managed by Devise. We need to explicitly pass relevant user information to the worker, and then validate that information before proceeding with the task.
 

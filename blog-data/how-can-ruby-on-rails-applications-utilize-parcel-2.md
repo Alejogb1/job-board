@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-ruby-on-rails-applications-utilize-parcel-2"
 ---
 
-Okay, let's dive into this. I've spent a fair amount of time over the years grappling with the front-end asset pipeline in Rails, and I've certainly seen its evolution. Integrating a system like Parcel 2 isn't just about swapping out a gem; it’s about understanding the implications of a more modern bundler within a framework primarily designed around a different approach.
+, let's dive into this. I've spent a fair amount of time over the years grappling with the front-end asset pipeline in Rails, and I've certainly seen its evolution. Integrating a system like Parcel 2 isn't just about swapping out a gem; it’s about understanding the implications of a more modern bundler within a framework primarily designed around a different approach.
 
 From my experiences, early Rails projects often felt heavily coupled to the default asset pipeline, Sprockets. Transitioning to something like webpack was a hurdle at first, requiring a substantial refactor and a good grasp of its configurations. Moving to Parcel 2, however, presented a different set of considerations, largely centered around ease of setup and faster build times. Parcel 2's zero-configuration promise is alluring, but applying it in the context of a mature Rails project demands a specific strategy.
 

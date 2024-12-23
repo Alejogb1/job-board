@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-shiny-leverage-mirais-multi-core-capabilities"
 ---
 
-Okay, let's tackle this. It's a question I've seen pop up several times in various projects, and the answer, while straightforward in principle, often involves a few nuances. Specifically, we're looking at the interplay between Shiny, R's interactive web application framework, and Mirai, its package for asynchronous computation, particularly with regard to utilizing multi-core architectures.
+,  It's a question I've seen pop up several times in various projects, and the answer, while straightforward in principle, often involves a few nuances. Specifically, we're looking at the interplay between Shiny, R's interactive web application framework, and Mirai, its package for asynchronous computation, particularly with regard to utilizing multi-core architectures.
 
 The short answer is yes, Shiny *can* leverage Mirai to utilize multi-core capabilities, but it requires deliberate implementation. It's not something that happens automagically just by having Mirai installed. In my experience, I first encountered this limitation in a project where we were processing large datasets within a Shiny application. The application became sluggish, almost unresponsive, during these intensive computations. We were essentially blocking the main Shiny process with our calculations, preventing UI updates and user interaction. That's when I started really exploring the potential of Mirai in conjunction with Shiny.
 

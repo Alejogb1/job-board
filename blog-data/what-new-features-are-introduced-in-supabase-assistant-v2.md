@@ -4,7 +4,7 @@ date: "2024-12-03"
 id: "what-new-features-are-introduced-in-supabase-assistant-v2"
 ---
 
-Okay so Supabase Assistant v2 right  It's pretty cool actually a huge jump from v1  I've been playing around with it for a while now and man its  like having a superpowered sidekick for all my Supabase stuff  It's basically an AI assistant specifically tailored for interacting with your Supabase projects  Imagine having autocomplete but for your entire database schema  and functions and all that jazz  
+ so Supabase Assistant v2 right  It's pretty cool actually a huge jump from v1  I've been playing around with it for a while now and man its  like having a superpowered sidekick for all my Supabase stuff  It's basically an AI assistant specifically tailored for interacting with your Supabase projects  Imagine having autocomplete but for your entire database schema  and functions and all that jazz  
 
 The biggest difference I see from v1 is the speed and the contextual awareness  v1 was kinda slow sometimes like molasses in January  and it often forgot what we were talking about midway through a complex query  V2 though  it's lightning fast  I barely notice any lag even with really intricate requests and it remembers the whole conversation perfectly  It's like it actually understands what I'm trying to build not just spitting out code based on keywords  
 

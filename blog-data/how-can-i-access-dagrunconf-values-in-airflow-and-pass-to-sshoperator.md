@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-access-dagrunconf-values-in-airflow-and-pass-to-sshoperator"
 ---
 
-Alright, let's tackle this. Been there, done that, quite a few times actually. Passing `dag_run.conf` values to an `SSHOperator` in Airflow is a common requirement, especially when you need to dynamically configure your remote execution based on user input or external triggers. It's not complicated, but you need to understand a few core concepts to get it right and avoid some potential pitfalls. Let's break down the approach, and I'll give you some practical code examples based on some projects where I’ve had to handle this sort of thing.
+Alright,  Been there, done that, quite a few times actually. Passing `dag_run.conf` values to an `SSHOperator` in Airflow is a common requirement, especially when you need to dynamically configure your remote execution based on user input or external triggers. It's not complicated, but you need to understand a few core concepts to get it right and avoid some potential pitfalls. Let's break down the approach, and I'll give you some practical code examples based on some projects where I’ve had to handle this sort of thing.
 
 First, understand that `dag_run.conf` is a dictionary available when a dag run is triggered, either manually or via the scheduler. This dictionary can hold arbitrary key-value pairs, which makes it extremely versatile for parameterizing your dags. Now, the key to getting those values into your `SSHOperator` is understanding Jinja templating, which Airflow uses extensively.
 

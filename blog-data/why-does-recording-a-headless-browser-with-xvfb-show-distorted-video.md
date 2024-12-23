@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-does-recording-a-headless-browser-with-xvfb-show-distorted-video"
 ---
 
-Okay, let's tackle this. It’s a problem I’ve certainly run into more than a few times over the years, especially when dealing with automated UI testing and web scraping pipelines. The issue you're describing—distorted video output when recording a headless browser using xvfb—isn't entirely straightforward, but it usually boils down to a combination of factors related to framebuffer management, resolution mismatch, and how the video encoding process interacts with this simulated display environment.
+,  It’s a problem I’ve certainly run into more than a few times over the years, especially when dealing with automated UI testing and web scraping pipelines. The issue you're describing—distorted video output when recording a headless browser using xvfb—isn't entirely straightforward, but it usually boils down to a combination of factors related to framebuffer management, resolution mismatch, and how the video encoding process interacts with this simulated display environment.
 
 From my experience, several key components contribute to this distortion, and understanding them is critical to finding a solution. First, consider xvfb itself. Xvfb, or X virtual framebuffer, is essentially an X server that operates entirely in memory. It doesn't have a physical display; it creates a virtual buffer to simulate the display, which is crucial for running GUI applications without a monitor, like headless browsers. This virtual framebuffer is where the browser renders its output. Now, when you try to record the output, what you are actually recording is the contents of this framebuffer, captured at specific intervals.
 

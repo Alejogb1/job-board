@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-parameters-are-necessary-to-access-mail-with-office-365-oauth-using-clientcredentials"
 ---
 
-Okay, let's tackle this. I recall a particularly frustrating project a few years back where we migrated a legacy on-premise email system to Office 365 and were tasked with building a service that programmatically accessed mailboxes. We initially stumbled through several iterations before landing on a stable solution using `client_credentials` flow for OAuth, so I have some firsthand experience with the parameters involved.
+,  I recall a particularly frustrating project a few years back where we migrated a legacy on-premise email system to Office 365 and were tasked with building a service that programmatically accessed mailboxes. We initially stumbled through several iterations before landing on a stable solution using `client_credentials` flow for OAuth, so I have some firsthand experience with the parameters involved.
 
 Accessing mailboxes with Office 365 using `client_credentials` involves several key elements that must be precisely configured. Unlike user-delegated flows, the `client_credentials` grant type is designed for service-to-service interactions where no end-user is directly involved. This makes it suitable for scenarios like automated processing of emails or data analytics. Essentially, we're giving our service the authority to access mailboxes based on its own identity, rather than that of a specific user.
 

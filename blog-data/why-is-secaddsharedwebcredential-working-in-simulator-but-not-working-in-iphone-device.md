@@ -59,7 +59,7 @@ replace `teamid` with your development team id and `bundleid` with your applicat
 
 now, there is a subtle but important thing to remember, you have to use the full app identifier, so something like this: “teamid.your.bundle.id”. and the key is that this needs to match *exactly* the one you use to sign your app. also, confirm that you have https configured correctly because if you don’t the configuration won’t be considered and the handshake will fail. it is like trying to talk to someone through a broken phone. it just won't work.
 
-third, the actual code for saving the credential. i've had cases where the code looked alright but subtle bugs were causing the credential saving to fail. while the simulator is forgiving, the device is not. for instance the service parameter on your call has to be fully equal to the configured service type in your credentials configuration.
+third, the actual code for saving the credential. i've had cases where the code looked but subtle bugs were causing the credential saving to fail. while the simulator is forgiving, the device is not. for instance the service parameter on your call has to be fully equal to the configured service type in your credentials configuration.
 
 ```swift
 func saveWebCredential(username: string, password: string, service: string, completion: @escaping (bool, error?) -> void) {

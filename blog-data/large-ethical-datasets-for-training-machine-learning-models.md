@@ -4,7 +4,7 @@ date: '2024-11-15'
 id: 'large-ethical-datasets-for-training-machine-learning-models'
 ---
 
-Okay, so you're asking about ethical datasets for training machine learning models That's super important. You know, these models can be really powerful but they can also reflect the biases present in the data they're trained on.  
+, so you're asking about ethical datasets for training machine learning models That's super important. You know, these models can be really powerful but they can also reflect the biases present in the data they're trained on.  
 
 It's like, imagine teaching your AI friend about the world using only a few biased books. Your friend would learn some things right, but also a bunch of wrong things. That's why using ethical datasets is crucial.
 

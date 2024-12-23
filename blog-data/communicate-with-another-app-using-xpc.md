@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "communicate-with-another-app-using-xpc"
 ---
 
-Alright so you want to get two apps chatting using XPC right I get it Been there done that probably even bought the t-shirt
+so you want to get two apps chatting using XPC right I get it Been there done that probably even bought the t-shirt
 
 Let me tell you XPC can be a bit of a trip at first its this inter process communication thing Apple throws at you It's not exactly a walk in the park but once you wrap your head around it it's pretty powerful stuff I remember my first dance with XPC it was a total headache I was trying to get a helper app to do some heavy lifting like image processing so my main app wouldn't get bogged down and become unresponsive I was so new to it I was trying to pass complex objects directly through the connection like some kind of naive newbie it failed spectacularly crashes left and right memory leaks galore good times
 
@@ -57,7 +57,7 @@ listener.resume()
 
 ```
 
-Okay that's our service you've got the protocol you've got the implementation which I have been very brief for example purposes don't do that in real code make it more robust you also have the listener that's waiting for connection requests it's pretty straightforward now over on your main app where you will actually call that service first thing you do you have to create an NSXPCConnection to the service
+ that's our service you've got the protocol you've got the implementation which I have been very brief for example purposes don't do that in real code make it more robust you also have the listener that's waiting for connection requests it's pretty straightforward now over on your main app where you will actually call that service first thing you do you have to create an NSXPCConnection to the service
 
 Here is how your main app can connect and call to the service remember to replace `com.yourcompany.YourAppName.YourAppNameHelper` with the bundle ID of your XPC service that's important
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-keras-be-configured-to-reset-weights-to-the-previous-epoch-if-the-loss-increases"
 ---
 
-Let's tackle this. It’s a problem I’ve faced multiple times in my career, particularly when dealing with volatile datasets or finetuning complex architectures where unexpected loss spikes can throw off the training process. The question of how to revert to previous weights in Keras upon a loss increase touches on fundamental training dynamics and how we can exert finer control over them.
+ It’s a problem I’ve faced multiple times in my career, particularly when dealing with volatile datasets or finetuning complex architectures where unexpected loss spikes can throw off the training process. The question of how to revert to previous weights in Keras upon a loss increase touches on fundamental training dynamics and how we can exert finer control over them.
 
 The core issue revolves around the standard optimization process: by default, Keras, along with its underlying framework (like TensorFlow or Theano), progresses forward at each epoch, updating weights based on the gradients calculated from the current batch of data. If the loss increases, these updated weights, by definition, are less effective than their predecessors. To achieve the desired behavior, we need to introduce a mechanism that monitors the loss, determines whether an increase has occurred, and if so, restores the weights to their state before the current training epoch began.
 

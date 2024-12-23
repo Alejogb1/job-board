@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-fix-a-keras-lstm-layer-incompatibility-with-a-4d-input-tensor"
 ---
 
-Alright, let's tackle this. I recall a rather frustrating project a few years back involving real-time sensor data analysis where we ran into this exact issue. The problem was, our fancy new LSTM network, built with Keras, kept throwing a fit when we fed it a 4D tensor. It’s a classic case of tensor shape mismatch, specifically when the LSTM layer expects a 3D input. Let me walk you through the common pitfalls and, more importantly, the practical solutions I found effective.
+Alright,  I recall a rather frustrating project a few years back involving real-time sensor data analysis where we ran into this exact issue. The problem was, our fancy new LSTM network, built with Keras, kept throwing a fit when we fed it a 4D tensor. It’s a classic case of tensor shape mismatch, specifically when the LSTM layer expects a 3D input. Let me walk you through the common pitfalls and, more importantly, the practical solutions I found effective.
 
 The core of the issue stems from how LSTMs are designed to process sequential data. Keras' LSTM layer, by default, expects an input tensor of the shape `(batch_size, time_steps, features)`. That's three dimensions. Now, a 4D tensor typically emerges when you’ve got some kind of spatial or multi-channel context layered on top of your sequence data, perhaps from a sequence of images or, in my case, readings from a sensor array where we had both time and spatial relationships.
 

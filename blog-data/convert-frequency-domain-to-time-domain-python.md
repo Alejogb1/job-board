@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "convert-frequency-domain-to-time-domain-python"
 ---
 
-Alright so you wanna go from frequency to time domain right I've been there done that trust me It's a classic signal processing problem and it's not always straightforward especially if you're just starting out But let me break it down for you based on my own experience over the years
+so you wanna go from frequency to time domain right I've been there done that trust me It's a classic signal processing problem and it's not always straightforward especially if you're just starting out But let me break it down for you based on my own experience over the years
 
 See I remember this one project I was working on years back for a small startup we were trying to build this real time audio processing gizmo and we had this cool frequency analysis code all set up outputting beautiful spectrograms and whatnot But the higher ups wanted to actually *hear* the manipulated audio in real time Not just stare at pretty pictures so yeah that was my introduction to the inverse Fourier transform This wasn’t my first rodeo with DSP but it was the first time I had to do real time stuff and that changes everything. It was a wild time.
 
@@ -59,7 +59,7 @@ plt.show()
 
 ```
 
-Alright so here we're generating a simple sine wave Then we use `fft.fft()` to get the frequency data and `fft.ifft()` to go back to the time domain.  Notice I'm using `np.real()` for the `ifft()` result this is because the IFFT may return complex numbers due to floating-point errors and we're only interested in the real part in most audio processing scenarios
+so here we're generating a simple sine wave Then we use `fft.fft()` to get the frequency data and `fft.ifft()` to go back to the time domain.  Notice I'm using `np.real()` for the `ifft()` result this is because the IFFT may return complex numbers due to floating-point errors and we're only interested in the real part in most audio processing scenarios
 
 Now you might be thinking that's too simple and you are absolutely right. Real world signals are far more complex We don't usually have a nice clean single frequency sine wave. Let's look at an example using a more diverse signal with multiple frequencies.
 

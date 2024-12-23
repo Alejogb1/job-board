@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "when-should-async-lifecycle-methods-be-used-in-blazor"
 ---
 
-Okay, let's tackle this one. I recall a particular project, back in my early days with Blazor, where I initially misunderstood the implications of using asynchronous operations in lifecycle methods. We were building a fairly complex dashboard, pulling data from multiple apis, and my initial naive implementation resulted in some pretty nasty ui lockups. The experience cemented for me the importance of understanding when and why to use async in these contexts. Let's break it down, shall we?
+, let's tackle this one. I recall a particular project, back in my early days with Blazor, where I initially misunderstood the implications of using asynchronous operations in lifecycle methods. We were building a fairly complex dashboard, pulling data from multiple apis, and my initial naive implementation resulted in some pretty nasty ui lockups. The experience cemented for me the importance of understanding when and why to use async in these contexts. Let's break it down, shall we?
 
 The core of the issue lies in Blazor’s lifecycle and its synchronous nature, by default. Lifecycle methods like `OnInitialized`, `OnParametersSet`, and `OnAfterRender` are typically executed synchronously. This means if you initiate a long-running operation, like a network request or heavy computation, within these synchronous methods, your application’s ui thread will be blocked. The browser will effectively freeze, causing a poor user experience. This is where the asynchronous versions, `OnInitializedAsync`, `OnParametersSetAsync`, and `OnAfterRenderAsync`, become crucial.
 

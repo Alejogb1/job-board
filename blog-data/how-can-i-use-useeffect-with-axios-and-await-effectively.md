@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-use-useeffect-with-axios-and-await-effectively"
 ---
 
-Okay, let's tackle this. Been around the block a few times with data fetching in react, and `useEffect` with `axios` and `await` is a common trio that, when not handled precisely, can lead to some frustrating scenarios. It's a core pattern, but there are nuances to understand to get it working smoothly and avoid common pitfalls. I’ve seen my share of components getting stuck in infinite loops, or requests firing off when they shouldn’t, so let me break down how to handle this effectively, focusing on practical application.
+,  Been around the block a few times with data fetching in react, and `useEffect` with `axios` and `await` is a common trio that, when not handled precisely, can lead to some frustrating scenarios. It's a core pattern, but there are nuances to understand to get it working smoothly and avoid common pitfalls. I’ve seen my share of components getting stuck in infinite loops, or requests firing off when they shouldn’t, so let me break down how to handle this effectively, focusing on practical application.
 
 The fundamental issue arises from the side-effect nature of data fetching. `useEffect` is the go-to hook for managing side-effects in react functional components, and making an http request is *definitely* a side-effect. When combining that with `axios` for network requests and `async/await` for cleaner asynchronous code, it's crucial to manage the lifecycle of the component and the asynchronous calls properly. Otherwise, you end up triggering the effect on every render, leading to that infinite loop we all dread.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-connect-to-mongodb-from-a-container"
 ---
 
-Let's tackle this. I've spent a fair bit of time wrestling – err, *resolving* – connectivity issues between containers and databases, particularly MongoDB. It’s a common scenario, and while it might seem straightforward, there are nuances that can trip you up, especially in more complex environments. So, let’s walk through this.
+ I've spent a fair bit of time wrestling – err, *resolving* – connectivity issues between containers and databases, particularly MongoDB. It’s a common scenario, and while it might seem straightforward, there are nuances that can trip you up, especially in more complex environments. So, let’s walk through this.
 
 The challenge essentially boils down to correctly configuring networking and ensuring that your application container can resolve the hostname or IP address of the MongoDB container and that communication isn't blocked by firewalls or other network policies. When I first started working with docker-based applications, I recall spending an entire afternoon troubleshooting a very similar problem due to a subtle misconfiguration in a `docker-compose` file, a rather painful, but ultimately insightful learning experience.
 

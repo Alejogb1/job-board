@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "system-verilog-queue-purpose-usage"
 ---
 
-Alright so you're asking about SystemVerilog queues right Yeah I've messed around with those things plenty of times Been there done that got the t-shirt I guess I can spill some details and maybe help you understand how to use them when to use them why to use them and well the quirks that sometimes come with them
+so you're asking about SystemVerilog queues right Yeah I've messed around with those things plenty of times Been there done that got the t-shirt I guess I can spill some details and maybe help you understand how to use them when to use them why to use them and well the quirks that sometimes come with them
 
 So basically a SystemVerilog queue is a dynamic data structure it's like a flexible array that automatically grows or shrinks as you add or remove elements It's not a static size like a normal array which I always find useful I mean who wants to manually allocate memory size for dynamic structures anyway not me
 

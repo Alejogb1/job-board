@@ -4,7 +4,7 @@ date: "2024-12-11"
 id: "what-is-the-importance-of-empirical-research-and-tooling-in-advancing-mechanistic-interpretability"
 ---
 
-Okay so you wanna know about empirical research and tooling in making AI more understandable right  Mechanistic interpretability that's the cool buzzword  Basically it means  we want to know *why* an AI does what it does not just what it does  Like  we want to peek under the hood see the gears turning not just watch the car drive  And that's where empirical research and the right tools come in massively
+ so you wanna know about empirical research and tooling in making AI more understandable right  Mechanistic interpretability that's the cool buzzword  Basically it means  we want to know *why* an AI does what it does not just what it does  Like  we want to peek under the hood see the gears turning not just watch the car drive  And that's where empirical research and the right tools come in massively
 
 Think of it like this you're a mechanic  You can't just look at a car and say "it's broken"  You need to test things measure stuff see which parts are faulty  That's empirical research  It's all about getting your hands dirty collecting data running experiments seeing what happens  In AI land that means building datasets devising clever experiments and carefully analyzing the results
 

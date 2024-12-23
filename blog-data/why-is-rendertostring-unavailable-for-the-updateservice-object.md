@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-rendertostring-unavailable-for-the-updateservice-object"
 ---
 
-Alright, let's tackle this. I’ve definitely tripped over this particular issue a few times myself, especially when dealing with complex service objects and wanting a quick way to get a template rendered into a string. The unavailability of `render_to_string` directly on an `UpdateService` object, or similar service layer components, usually isn’t arbitrary; it’s fundamentally about architectural separation and the responsibility of different components within a typical application design.
+Alright,  I’ve definitely tripped over this particular issue a few times myself, especially when dealing with complex service objects and wanting a quick way to get a template rendered into a string. The unavailability of `render_to_string` directly on an `UpdateService` object, or similar service layer components, usually isn’t arbitrary; it’s fundamentally about architectural separation and the responsibility of different components within a typical application design.
 
 In my experience, `UpdateService` objects, whether they're Django-based or from another framework, are usually meant to handle business logic related to updating entities or resources. Think of tasks like validating data, applying transformations, interacting with data persistence layers, and so on. The role of generating HTML, which is what `render_to_string` effectively does, falls under the purview of the presentation layer, typically handled by views, controllers, or specialized rendering utilities. Blurring these lines often leads to a codebase that is difficult to maintain, test, and evolve.
 

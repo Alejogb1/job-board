@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-visualize-layer-activations-in-tensorflow"
 ---
 
-Okay, let's tackle visualizing layer activations in TensorFlow. I've personally debugged my fair share of neural nets over the years, and understanding what's happening inside each layer is absolutely crucial, especially when things aren't behaving as expected. It's definitely a step beyond simply looking at overall performance metrics; we need to peek into the network's internal representations.
+, let's tackle visualizing layer activations in TensorFlow. I've personally debugged my fair share of neural nets over the years, and understanding what's happening inside each layer is absolutely crucial, especially when things aren't behaving as expected. It's definitely a step beyond simply looking at overall performance metrics; we need to peek into the network's internal representations.
 
 Essentially, layer activation visualization aims to expose the intermediate outputs of a neural network for a given input. These outputs represent the features that each layer has learned to extract. Visualizing them can provide insights into whether a layer is detecting the features we intended, whether it's becoming saturated, or if there are issues with vanishing or exploding gradients that might need attention.
 

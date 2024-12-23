@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-can-i-use-user-methods-in-a-pipeline"
 ---
 
-Okay, let's tackle this. A question about integrating user methods into a pipeline, I've certainly been down that road more than once, and it’s always a good exercise in understanding flexibility and control in data processing. It’s not simply about slapping any old function in the middle; it's about doing it in a way that’s robust, maintainable, and ideally, reusable.
+,  A question about integrating user methods into a pipeline, I've certainly been down that road more than once, and it’s always a good exercise in understanding flexibility and control in data processing. It’s not simply about slapping any old function in the middle; it's about doing it in a way that’s robust, maintainable, and ideally, reusable.
 
 The core issue is this: pipelines, whether in data science, machine learning, or ETL (extract, transform, load) processes, are fundamentally about a sequence of operations. These operations are often, and should be, as generic and modular as possible. But there are times when you need to inject domain-specific logic – precisely where user-defined methods come into play. Think of it as customizing a factory assembly line with a tool of your own making.
 

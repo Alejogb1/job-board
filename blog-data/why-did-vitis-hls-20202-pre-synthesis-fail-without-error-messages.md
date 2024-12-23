@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-did-vitis-hls-20202-pre-synthesis-fail-without-error-messages"
 ---
 
-Okay, let's tackle this. I’ve definitely been in the trenches with Vitis HLS, and silent failures during pre-synthesis are infuriatingly common, and particularly baffling when the tool doesn't explicitly tell you what went wrong. In my experience, that 'no error' state is rarely a sign of nothing being wrong; it’s more likely the symptom of a subtle problem that the pre-synthesis phase isn't equipped to catch before it essentially gives up. It's a bit like a silent exception; the process just stops without fanfare, leaving you to play detective.
+,  I’ve definitely been in the trenches with Vitis HLS, and silent failures during pre-synthesis are infuriatingly common, and particularly baffling when the tool doesn't explicitly tell you what went wrong. In my experience, that 'no error' state is rarely a sign of nothing being wrong; it’s more likely the symptom of a subtle problem that the pre-synthesis phase isn't equipped to catch before it essentially gives up. It's a bit like a silent exception; the process just stops without fanfare, leaving you to play detective.
 
 So, focusing on Vitis HLS 2020.2, specifically, let’s break down why a pre-synthesis step might fail without any helpful error messages. I think I can offer a few practical insights based on my own experiences – situations that I initially found utterly baffling but ultimately led to some solid understanding of how the tool works (and doesn't work).
 

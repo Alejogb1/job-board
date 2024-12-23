@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "what-techniques-can-be-used-to-design-a-stateless-search-engine-capable-of-fetching-data-directly-from-amazon-s3-without-maintaining-local-indexes"
 ---
 
-Okay so you want a stateless search engine grabbing stuff straight from S3 no local indexes right  thats cool actually pretty challenging but doable  we can totally pull this off
+ so you want a stateless search engine grabbing stuff straight from S3 no local indexes right  thats cool actually pretty challenging but doable  we can totally pull this off
 
 The core idea is to avoid any persistent state  every search request is treated as a completely independent operation  no caching no stored data except what's already in S3  This means we'll be doing a lot of on-the-fly processing which might sound slow but with smart design it can be surprisingly efficient for specific use cases
 

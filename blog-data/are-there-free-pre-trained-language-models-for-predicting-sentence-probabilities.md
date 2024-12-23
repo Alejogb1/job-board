@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "are-there-free-pre-trained-language-models-for-predicting-sentence-probabilities"
 ---
 
-Alright, let's tackle this. Sentence probability prediction using language models – it's a task I’ve encountered several times across various projects, and yes, thankfully, there are indeed free and pre-trained options available. The landscape has changed significantly over the years, moving from needing to train models from scratch to having very capable pre-trained architectures readily accessible. It's a game-changer, really, reducing the barrier to entry for many NLP tasks.
+Alright,  Sentence probability prediction using language models – it's a task I’ve encountered several times across various projects, and yes, thankfully, there are indeed free and pre-trained options available. The landscape has changed significantly over the years, moving from needing to train models from scratch to having very capable pre-trained architectures readily accessible. It's a game-changer, really, reducing the barrier to entry for many NLP tasks.
 
 My early experience with this involved trying to build a text quality assessment system for a translation service a few years back. We needed to understand how "natural" a translated sentence sounded, which is essentially what sentence probability measures. Back then, we were leaning heavily on n-gram models with backoff, which, let's be frank, had limitations. They struggled with long-range dependencies and often fell short when it came to nuanced language structures.
 

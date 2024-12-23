@@ -4,7 +4,7 @@ date: "2024-12-05"
 id: "what-are-the-challenges-and-opportunities-in-implementing-continued-pretraining-cpt-for-domain-specific-ai-models"
 ---
 
-Okay so you wanna chat about continued pretraining CPT for domain-specific AI models right  That's a cool area lots of moving parts  Challenges opportunities the whole shebang  Let's dive in  It's like building a really specialized super-powered AI right  But instead of starting from scratch you're taking something already pretty smart and making it even smarter for a very specific job
+ so you wanna chat about continued pretraining CPT for domain-specific AI models right  That's a cool area lots of moving parts  Challenges opportunities the whole shebang  Let's dive in  It's like building a really specialized super-powered AI right  But instead of starting from scratch you're taking something already pretty smart and making it even smarter for a very specific job
 
 First big challenge is data  You need TONS of it and it's gotta be high quality  Think medical imaging  financial transactions  legal documents  Whatever your niche is  you need enough examples to really teach the model the nuances  Otherwise you're just adding noise and it might not even learn anything useful  It's like trying to teach a kid advanced calculus with only a few scribbled notes  ain't gonna work
 

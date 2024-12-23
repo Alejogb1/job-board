@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-doesnt-tailscale-reconnect-after-a-wan-failover-on-an-upstream-router"
 ---
 
-Okay, let's talk about Tailscale and those frustrating disconnects following a WAN failover. I've spent more late nights than I care to remember chasing similar issues in various network environments, so this feels familiar. In your scenario, the root of the problem likely isn't Tailscale itself, but rather the transient changes in network addressing and routing that occur during the failover on your upstream router. Tailscale, at its core, relies on establishing a stable connection to its control plane (the coordination server) and then to other peers, using mechanisms like NAT traversal and DERP relays when direct connections aren't possible.
+, let's talk about Tailscale and those frustrating disconnects following a WAN failover. I've spent more late nights than I care to remember chasing similar issues in various network environments, so this feels familiar. In your scenario, the root of the problem likely isn't Tailscale itself, but rather the transient changes in network addressing and routing that occur during the failover on your upstream router. Tailscale, at its core, relies on establishing a stable connection to its control plane (the coordination server) and then to other peers, using mechanisms like NAT traversal and DERP relays when direct connections aren't possible.
 
 The crux of the issue lies in the fact that a WAN failover often results in a new public IP address being assigned to your router. This change, while seemingly innocuous, significantly impacts the underlying networking that Tailscale depends upon. Here's a breakdown of why:
 

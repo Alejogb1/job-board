@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "auth0-issue-unable-to-issue-redirect-for-oauth-2-0-transaction"
 ---
 
-Okay so you're banging your head against the wall with Auth0's OAuth 2.0 redirect issues I've been there man like seriously been there It's like you think it's all smooth sailing with their docs and boom you're stuck in redirect limbo let me tell you about my adventures with this specific flavor of hell
+ so you're banging your head against the wall with Auth0's OAuth 2.0 redirect issues I've been there man like seriously been there It's like you think it's all smooth sailing with their docs and boom you're stuck in redirect limbo let me tell you about my adventures with this specific flavor of hell
 
 First off let's get this straight auth0 redirect issues usually boil down to a few core problems it's not often magic or some bug in their system it's often a misconfiguration or a lack of understanding of how the oAuth 2.0 flow actually works specifically the redirect_uri and its nuances
 

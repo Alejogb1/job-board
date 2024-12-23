@@ -4,7 +4,7 @@ date: "2024-12-10"
 id: "how-does-a-unified-system-support-both-real-time-and-batch-workflows-within-the-same-pipeline"
 ---
 
-Okay so you wanna know how to juggle real-time and batch processing in one snazzy system right  It's a common problem actually  like trying to eat a whole pizza while also meticulously building a Lego castle  both need attention but at different paces
+ so you wanna know how to juggle real-time and batch processing in one snazzy system right  It's a common problem actually  like trying to eat a whole pizza while also meticulously building a Lego castle  both need attention but at different paces
 
 The key is realizing they're not really enemies  they just need different environments different tools different speeds  Think of it like a highway with fast lanes for real-time stuff and slower service roads for the batch jobs  You dont want your delivery trucks clogging up the fast lane right
 

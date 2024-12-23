@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "localization-emoji-ios-development"
 ---
 
-Okay so localization and emojis on iOS right I've been down that rabbit hole more times than I care to remember trust me its not always sunshine and rainbows. I'm gonna walk you through this based on my past scars I mean experience.
+ so localization and emojis on iOS right I've been down that rabbit hole more times than I care to remember trust me its not always sunshine and rainbows. I'm gonna walk you through this based on my past scars I mean experience.
 
 First things first when we talk localization we are essentially dealing with encoding right? iOS uses Unicode and UTF-8 encoding by default thats the foundation for everything we'll do with text and emojis. I remember way back when I was first starting out I'd get weird characters all over the place especially with foreign languages if I forgot to double check the encoding on the text files. It's like my app decided to invent its own language that nobody understood it's not a cool feature trust me.
 

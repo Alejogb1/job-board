@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-definition-differs-appear-if-the-items-are-identical"
 ---
 
-Okay, let’s unpack this. It's a situation I've encountered quite a few times, and it usually boils down to a subtle mismatch in how “identical” is being interpreted by our code, versus how *we* intend it to be interpreted. The scenario where you get a "definition differs" error, even when visually or intuitively the items seem identical, arises from the fact that identity, in a computational context, is rarely a purely visual check. It’s often a more nuanced comparison of internal state, memory location, and type, not just superficial resemblance.
+, let’s unpack this. It's a situation I've encountered quite a few times, and it usually boils down to a subtle mismatch in how “identical” is being interpreted by our code, versus how *we* intend it to be interpreted. The scenario where you get a "definition differs" error, even when visually or intuitively the items seem identical, arises from the fact that identity, in a computational context, is rarely a purely visual check. It’s often a more nuanced comparison of internal state, memory location, and type, not just superficial resemblance.
 
 Think back to a project I worked on years ago, a complex data processing pipeline for genomic data. We were dealing with incredibly large datasets, and a key part of the pipeline involved identifying and consolidating duplicate records. We kept running into that frustrating "definition differs" error when comparing two records that, when printed to the console, seemed absolutely the same. It taught me a very valuable lesson about the levels of equivalence, and how they can go wrong if not handled carefully.
 

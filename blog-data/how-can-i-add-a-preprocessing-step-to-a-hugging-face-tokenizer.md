@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-add-a-preprocessing-step-to-a-hugging-face-tokenizer"
 ---
 
-Alright, let's tackle this. It's a question I've definitely been around the block with, having dealt with some particularly gnarly text datasets over the years. Preprocessing with Hugging Face tokenizers is essential for getting the most out of your models, and the way you go about it can dramatically affect performance. It's not just about the mechanics of adding a function; it's about understanding *why* you're doing it and how it fits into the overall pipeline.
+Alright,  It's a question I've definitely been around the block with, having dealt with some particularly gnarly text datasets over the years. Preprocessing with Hugging Face tokenizers is essential for getting the most out of your models, and the way you go about it can dramatically affect performance. It's not just about the mechanics of adding a function; it's about understanding *why* you're doing it and how it fits into the overall pipeline.
 
 The core issue here is that the default tokenizer from Hugging Face, while powerful, doesn't always handle every nuance of real-world data. Think of messy user-generated content, data with inconsistent formatting, or the need for specific normalizations not baked into the tokenizer's default behavior. That's where custom preprocessing steps become crucial. We need a way to sanitize and structure the input *before* it gets turned into numerical IDs.
 

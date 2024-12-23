@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-can-i-use-a-private-git-repo-in-azure-functions-and-container-apps"
 ---
 
-Okay, let’s tackle this. I’ve definitely been in this situation more than once, needing to pull code from a private git repository into Azure Functions and Container Apps, and it’s always a little more nuanced than just pointing and clicking. The fundamental challenge boils down to authentication: how do we securely provide these services access to your private repository without exposing your credentials? It's a common problem, and fortunately, there are several robust ways to address it. Let's break down the best practices, including detailed examples, based on my experiences over the years.
+, let’s tackle this. I’ve definitely been in this situation more than once, needing to pull code from a private git repository into Azure Functions and Container Apps, and it’s always a little more nuanced than just pointing and clicking. The fundamental challenge boils down to authentication: how do we securely provide these services access to your private repository without exposing your credentials? It's a common problem, and fortunately, there are several robust ways to address it. Let's break down the best practices, including detailed examples, based on my experiences over the years.
 
 My earliest encounters involved trying to simply embed credentials directly into deployment configurations, which, as you can imagine, is a terrible idea, security-wise. Thankfully, much more sophisticated options have emerged. The core issue revolves around providing a secure, short-lived authentication token or key that grants access to your private repository specifically for the deployment process, without storing static secrets.
 

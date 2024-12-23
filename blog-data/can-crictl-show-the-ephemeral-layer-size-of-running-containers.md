@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-crictl-show-the-ephemeral-layer-size-of-running-containers"
 ---
 
-Okay, let's tackle this. The question of displaying the ephemeral layer size of running containers using `crictl` is a nuanced one, and it’s something I've encountered directly in several production environments. The short answer is: `crictl` itself doesn’t provide a direct command to show the ephemeral layer size for running containers. However, that doesn't mean the information isn't accessible; it just requires some understanding of the underlying container runtime and a bit of resourceful maneuvering.
+,  The question of displaying the ephemeral layer size of running containers using `crictl` is a nuanced one, and it’s something I've encountered directly in several production environments. The short answer is: `crictl` itself doesn’t provide a direct command to show the ephemeral layer size for running containers. However, that doesn't mean the information isn't accessible; it just requires some understanding of the underlying container runtime and a bit of resourceful maneuvering.
 
 My past experiences with containerized applications, particularly those handling large datasets, made monitoring storage usage critical. Early on, we ran into issues where ephemeral layers would unexpectedly grow, impacting performance and sometimes causing containers to crash. Understanding and visualizing ephemeral layer sizes became crucial for diagnosing these types of problems.
 

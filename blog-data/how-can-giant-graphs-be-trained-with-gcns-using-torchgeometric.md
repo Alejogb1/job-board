@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-giant-graphs-be-trained-with-gcns-using-torchgeometric"
 ---
 
-Okay, let's tackle this. I remember a particularly challenging project back in my early days working on recommendation systems. We were dealing with a user-item graph that was frankly, enormous. Training a graph convolutional network (gcn) on it with `torch_geometric` felt like trying to move a mountain with a spoon. That experience, coupled with others since then, has given me some solid insights on how to approach the problem of training gcn’s on massive graphs. It isn't a trivial undertaking, and there are multiple avenues we can explore, each with its own set of tradeoffs.
+,  I remember a particularly challenging project back in my early days working on recommendation systems. We were dealing with a user-item graph that was frankly, enormous. Training a graph convolutional network (gcn) on it with `torch_geometric` felt like trying to move a mountain with a spoon. That experience, coupled with others since then, has given me some solid insights on how to approach the problem of training gcn’s on massive graphs. It isn't a trivial undertaking, and there are multiple avenues we can explore, each with its own set of tradeoffs.
 
 The core challenge lies in the sheer size of the graph. A typical gcn operation requires propagating information across the graph, involving loading the entire adjacency matrix or neighbor information into memory. For massive graphs, this simply isn't feasible. We run into out-of-memory errors faster than you can blink. Therefore, we need strategies that allow us to work with only a subset of the graph at a time, leveraging techniques like sampling and batching.
 

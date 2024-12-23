@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "eigen-dot-product-calculation-vector"
 ---
 
-Okay so you're asking about calculating the dot product involving eigenvectors right I've been there man more times than I care to remember trust me this isn’t some theoretical math problem it's bread and butter when you’re dealing with stuff like dimensionality reduction principal component analysis even some image processing routines where you're trying to find the dominant features yeah I’ve seen it all
+ so you're asking about calculating the dot product involving eigenvectors right I've been there man more times than I care to remember trust me this isn’t some theoretical math problem it's bread and butter when you’re dealing with stuff like dimensionality reduction principal component analysis even some image processing routines where you're trying to find the dominant features yeah I’ve seen it all
 
 Let’s break it down from a practical perspective the core of this question hinges on a fundamental misunderstanding or maybe just a slip up in how we're using these things. Eigenvectors by their definition are vectors that when a linear transformation is applied to them they only change by a scalar factor that's the eigenvalue. They don't rotate or shear they only scale. Now when we start talking about dot products well that’s a measure of how similar two vectors are or more accurately how much they project onto each other
 

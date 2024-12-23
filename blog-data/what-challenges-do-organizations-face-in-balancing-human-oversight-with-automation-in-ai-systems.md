@@ -4,7 +4,7 @@ date: "2024-12-07"
 id: "what-challenges-do-organizations-face-in-balancing-human-oversight-with-automation-in-ai-systems"
 ---
 
-Okay so you want to talk about the weird balancing act between humans and AI right  like how do we keep things human in a world that's getting increasingly automated  It's a huge deal and honestly kinda scary if you think about it too much  Organizations are wrestling with this on a daily basis its not just some theoretical debate happening in ivory towers  It's real world stuff with real world consequences
+ so you want to talk about the weird balancing act between humans and AI right  like how do we keep things human in a world that's getting increasingly automated  It's a huge deal and honestly kinda scary if you think about it too much  Organizations are wrestling with this on a daily basis its not just some theoretical debate happening in ivory towers  It's real world stuff with real world consequences
 
 One big problem is just understanding what AI can actually do and what it can't  Like we're still in the early days of really powerful AI  and a lot of the hype around it is just that hype  So organizations might think they can automate everything and then bam they realize their AI is actually really good at one specific task but falls flat on its face when you throw something slightly different at it  This leads to a lot of wasted time and money  Plus it can damage trust  Nobody wants to rely on an AI system that's constantly screwing up
 

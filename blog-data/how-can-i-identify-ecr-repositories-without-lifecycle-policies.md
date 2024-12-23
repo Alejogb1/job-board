@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-identify-ecr-repositories-without-lifecycle-policies"
 ---
 
-Alright, let's tackle this. Identifying ecr repositories that are lacking lifecycle policies is something I've had to deal with more times than I'd like to recall. It's a common oversight, especially as teams scale and deployments become more complex, and it often leads to bloated storage costs and unnecessary management overhead. I remember one project in particular, a large-scale microservices initiative, where we inadvertently amassed a huge number of untagged images; it was a cleanup nightmare that could have been easily avoided with proper lifecycle management from the start.
+Alright,  Identifying ecr repositories that are lacking lifecycle policies is something I've had to deal with more times than I'd like to recall. It's a common oversight, especially as teams scale and deployments become more complex, and it often leads to bloated storage costs and unnecessary management overhead. I remember one project in particular, a large-scale microservices initiative, where we inadvertently amassed a huge number of untagged images; it was a cleanup nightmare that could have been easily avoided with proper lifecycle management from the start.
 
 From a technical standpoint, there isn’t a single direct command to flag repositories without a policy. Instead, we need to systematically interrogate each repository to determine its policy status. The core approach involves two key steps: first, enumerate all of the ecr repositories within the specified region and then, for each repository, check if a lifecycle policy is attached. If one isn’t, we know that repository is lacking the necessary governance.
 

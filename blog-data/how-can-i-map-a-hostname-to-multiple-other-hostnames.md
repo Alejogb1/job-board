@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-map-a-hostname-to-multiple-other-hostnames"
 ---
 
-Okay, let’s tackle this. It's a problem I encountered fairly frequently back when I was managing infrastructure for a large distributed system. The requirement to resolve a single “user-facing” hostname to multiple internal hostnames, typically for load balancing or service discovery, is surprisingly common. It’s not about some simple one-to-one DNS mapping; it’s more complex than that. We need to go beyond the typical A or CNAME records.
+, let’s tackle this. It's a problem I encountered fairly frequently back when I was managing infrastructure for a large distributed system. The requirement to resolve a single “user-facing” hostname to multiple internal hostnames, typically for load balancing or service discovery, is surprisingly common. It’s not about some simple one-to-one DNS mapping; it’s more complex than that. We need to go beyond the typical A or CNAME records.
 
 Essentially, what you're asking about boils down to achieving flexible routing at the network or application layer. We want a system where a request sent to `api.example.com` might be transparently forwarded to, say, `api-server-01.internal.example.com`, `api-server-02.internal.example.com`, and so on, with some kind of logic to determine which one gets the actual request. This is distinct from simple DNS round-robin, although that can be one component of a solution. Let's explore the options.
 

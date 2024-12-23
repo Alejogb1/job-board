@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-readasync-hanging-from-the-stream"
 ---
 
-Okay, let's tackle this. I’ve seen the `ReadAsync` hanging issue more times than I care to remember, often in the most perplexing circumstances. It’s rarely as simple as "the stream is broken," and usually, there's something more insidious lurking underneath. It’s one of those situations that can make you question your sanity, until you carefully analyze the execution flow. So, let's break down why a `ReadAsync` operation on a stream might get stuck indefinitely, focusing on common pitfalls and practical solutions.
+,  I’ve seen the `ReadAsync` hanging issue more times than I care to remember, often in the most perplexing circumstances. It’s rarely as simple as "the stream is broken," and usually, there's something more insidious lurking underneath. It’s one of those situations that can make you question your sanity, until you carefully analyze the execution flow. So, let's break down why a `ReadAsync` operation on a stream might get stuck indefinitely, focusing on common pitfalls and practical solutions.
 
 First off, it's essential to understand that `ReadAsync` is designed for asynchronous operations. This means that the method should *not* block the calling thread while waiting for data; instead, it should return a `Task` that will complete once the data is read or an error occurs. When this task doesn't complete – which results in the hanging – it signals one or more underlying issues.
 

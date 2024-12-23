@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "what-are-the-limitations-of-amazon-ec2-instance-types-like-c5n2xlarge-when-handling-network-intensive-search-queries"
 ---
 
-Okay so you're asking about the limits of things like c5n2xlarge instances for super heavy duty search stuff right  Network intense searches are a beast you know  They're not just about crunching numbers they're about screaming data across the network and that's where things get tricky with EC2  Even a beefy instance like the c5n2xlarge has its weaknesses
+ so you're asking about the limits of things like c5n2xlarge instances for super heavy duty search stuff right  Network intense searches are a beast you know  They're not just about crunching numbers they're about screaming data across the network and that's where things get tricky with EC2  Even a beefy instance like the c5n2xlarge has its weaknesses
 
 First off network bandwidth is king  These instances have decent bandwidth sure but its not unlimited  Think of a firehose its big but its still got a limit on how much water it can pump  If your search query generates a massive amount of network traffic it'll overwhelm that bandwidth  You'll see latency spike your queries will crawl and users will be unhappy  It's like trying to download a terabyte file on a dial-up connection pure pain
 

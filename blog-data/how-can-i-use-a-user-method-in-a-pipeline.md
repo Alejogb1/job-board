@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-use-a-user-method-in-a-pipeline"
 ---
 
-Let's tackle this. I’ve seen this scenario come up more than a few times, especially in contexts where complex data transformations are needed in a systematic fashion. The key here isn’t just about using *a* user method, but understanding *how* to seamlessly integrate that custom logic within a broader pipeline, often involving various stages of data manipulation or processing. Think of pipelines like a carefully choreographed dance; each step needs to work in harmony with the others. User-defined methods, in this context, represent your unique choreography steps, needing to slot in without causing a disruption.
+ I’ve seen this scenario come up more than a few times, especially in contexts where complex data transformations are needed in a systematic fashion. The key here isn’t just about using *a* user method, but understanding *how* to seamlessly integrate that custom logic within a broader pipeline, often involving various stages of data manipulation or processing. Think of pipelines like a carefully choreographed dance; each step needs to work in harmony with the others. User-defined methods, in this context, represent your unique choreography steps, needing to slot in without causing a disruption.
 
 The fundamental challenge often revolves around keeping these custom methods modular, testable, and easily integrated into different pipelines. Let’s break down the strategies I've found most effective, with a look at some code snippets that will hopefully solidify these concepts.
 

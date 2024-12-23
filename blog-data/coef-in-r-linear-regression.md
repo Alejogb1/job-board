@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "coef-in-r-linear-regression"
 ---
 
-Okay so coef in R linear regression yeah I've been down that rabbit hole more times than I care to admit it's one of those things that looks simple on the surface but can get surprisingly nuanced real fast Let me break it down from my perspective having wrestled with it for longer than I want to calculate
+ so coef in R linear regression yeah I've been down that rabbit hole more times than I care to admit it's one of those things that looks simple on the surface but can get surprisingly nuanced real fast Let me break it down from my perspective having wrestled with it for longer than I want to calculate
 
 First off let's be clear we are talking about the coefficients derived from a linear regression model right not like some random set of numbers I mean you can get those anywhere it's about the coefficients from a lm function output in R. When you run a linear regression your basic goal is to find the best line (or hyperplane in higher dimensions) that fits your data. These coefficients are the numerical weights that each variable gets in the linear equation they tell you how much influence each predictor variable has on the response variable think of it as the dials you need to turn to match predicted value as much as possible to the measured values.
 

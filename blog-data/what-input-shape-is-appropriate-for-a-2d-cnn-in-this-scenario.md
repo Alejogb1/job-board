@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-input-shape-is-appropriate-for-a-2d-cnn-in-this-scenario"
 ---
 
-Okay, let's tackle this. Input shapes for 2d convolutional neural networks, especially when dealing with real-world scenarios, aren't always as straightforward as the textbook examples might suggest. I remember a project a few years back where we were classifying satellite imagery for urban planning – a classic 2d image processing problem – and getting the input shape *just so* was pivotal to the network performing well. We had to move past the usual RGB setup and consider a broader range of factors, and that’s what I'll discuss here.
+,  Input shapes for 2d convolutional neural networks, especially when dealing with real-world scenarios, aren't always as straightforward as the textbook examples might suggest. I remember a project a few years back where we were classifying satellite imagery for urban planning – a classic 2d image processing problem – and getting the input shape *just so* was pivotal to the network performing well. We had to move past the usual RGB setup and consider a broader range of factors, and that’s what I'll discuss here.
 
 When we’re talking about 2d cnns, the input shape generally takes the form of (height, width, channels). This might seem simple enough, but the devil is, as always, in the details. The height and width represent the spatial dimensions of your input data – the image itself in many cases. The ‘channels’ dimension, however, holds slightly more nuance. For a color image, this is typically 3, representing red, green, and blue (rgb). But what if you have grayscale images? Or, as we did with the satellite data, multi-spectral data?
 

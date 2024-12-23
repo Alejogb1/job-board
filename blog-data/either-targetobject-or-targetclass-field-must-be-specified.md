@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "either-targetobject-or-targetclass-field-must-be-specified"
 ---
 
-Alright so you've hit the "either `targetobject` or `targetclass` field must be specified" error I know that pain well let me tell you
+so you've hit the "either `targetobject` or `targetclass` field must be specified" error I know that pain well let me tell you
 
 I've been wrestling with this kind of thing for ages and let me break it down for you it’s a common pitfall especially when you're juggling object oriented programming or configuration systems that deal with dynamic instantiation or processing of objects basically the system is screaming at you because it doesn’t know what you want to target or create
 
@@ -111,4 +111,4 @@ And here's a little joke for you I don't like object oriented programming becaus
 
 To sum up when you see "either `targetobject` or `targetclass` field must be specified" it's not a bug it’s a feature it's the framework being explicit it needs either an instance to work on or a class to create an instance from so your best course of action is to check the library documentation look at the usage examples see the patterns and use the right parameter for the right job debugging it’s not a sprint it's a marathon you should be persistent and focused and you will solve it
 
-Alright I hope that helps Let me know if you have more questions and I can dive more into it happy coding
+I hope that helps Let me know if you have more questions and I can dive more into it happy coding

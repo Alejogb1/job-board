@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "double-rounding-floating-point-error"
 ---
 
-Okay so you're banging your head against the wall with double rounding floating point errors right I've been there believe me It's like the digital equivalent of trying to fit a square peg in a round hole only the peg is made of silicon and the hole is a series of bits that sometimes just don't want to play nice I get it
+ so you're banging your head against the wall with double rounding floating point errors right I've been there believe me It's like the digital equivalent of trying to fit a square peg in a round hole only the peg is made of silicon and the hole is a series of bits that sometimes just don't want to play nice I get it
 
 Let me break it down from my own personal hellish experiences with this beast.
 

@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-write-a-custom-rasa-component-for-text-preprocessing"
 ---
 
-Okay, let's unpack this. Building custom components for Rasa is a task I’ve found myself revisiting many times over the years, especially when dealing with very specific text preprocessing needs that the standard pipelines don’t quite cover. It’s where the rubber meets the road, so to speak, in making your conversational AI truly tailored to your domain.
+, let's unpack this. Building custom components for Rasa is a task I’ve found myself revisiting many times over the years, especially when dealing with very specific text preprocessing needs that the standard pipelines don’t quite cover. It’s where the rubber meets the road, so to speak, in making your conversational AI truly tailored to your domain.
 
 The core challenge, as I see it, is creating a modular, maintainable piece of code that fits seamlessly within Rasa's framework. We’re not just stringing together arbitrary functions; we're building a component that understands the Rasa input format, transforms it as needed, and then passes it along to the next stage of the pipeline. I've personally dealt with issues ranging from handling nuanced entity variations in product names to implementing highly specific stemming algorithms—each requiring a bespoke component.
 

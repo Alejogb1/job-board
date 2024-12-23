@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "dead-code-java-meaning-definition"
 ---
 
-Okay so dead code java right I've been around the block a few times with this one seen it crop up in all sorts of projects from quick and dirty scripts to enterprise behemoths let me break it down for you and share some of the pain I've personally experienced dealing with this beast
+ so dead code java right I've been around the block a few times with this one seen it crop up in all sorts of projects from quick and dirty scripts to enterprise behemoths let me break it down for you and share some of the pain I've personally experienced dealing with this beast
 
 Basically dead code in java or any programming language for that matter is code that will never ever be executed By 'never ever' I mean under any circumstances that your program is likely to encounter think conditional branches that are always false try-catch blocks that never actually throw exceptions or methods that are simply never called The compiler might not flag it as an error because it's syntactically valid just useless baggage
 
@@ -73,7 +73,7 @@ public class DeadCodeExample3 {
 ```
 This time it's the `try-catch` block that is the culprit In this specific example the code within the `try` block cannot throw an `ArithmeticException` making the catch block completely useless as no exception will ever happen during the execution of this piece of code In some previous projects (this is a common situation to be honest) i found myself using `Exception` as a catch argument for safety but as the projects become more complex these generalized catches can hide the real problematic code.
 
-Okay now why is dead code bad well it's like carrying extra luggage that weighs you down slows you down your build times and increases the overall application size more lines of code to go through it also impacts the maintainability and readability of code it makes understanding the structure of the application more difficult as dead code clutters the place and distracts from what the program does actually
+ now why is dead code bad well it's like carrying extra luggage that weighs you down slows you down your build times and increases the overall application size more lines of code to go through it also impacts the maintainability and readability of code it makes understanding the structure of the application more difficult as dead code clutters the place and distracts from what the program does actually
 
 On top of it all its also a security risk sometimes those old codes might still contain bugs or vulnerabilities that can be taken advantage by malicious actors even if that specific piece of code is never executed by the application it still might be exploited in the future or worse be used as a entry point. Think of it as an old abandoned tunnel in your codebase just waiting for someone with bad intentions.
 

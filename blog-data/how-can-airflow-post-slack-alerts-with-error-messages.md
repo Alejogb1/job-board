@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-airflow-post-slack-alerts-with-error-messages"
 ---
 
-Okay, let’s tackle this. I’ve actually spent a good chunk of time refining exactly this process in past projects – ensuring that critical failures in our workflows were immediately flagged via Slack was non-negotiable. It's crucial for maintaining system health and reducing mean time to resolution, in my experience. Let's break down how to effectively integrate Airflow and Slack for error messaging, focusing on reliability and clarity.
+, let’s tackle this. I’ve actually spent a good chunk of time refining exactly this process in past projects – ensuring that critical failures in our workflows were immediately flagged via Slack was non-negotiable. It's crucial for maintaining system health and reducing mean time to resolution, in my experience. Let's break down how to effectively integrate Airflow and Slack for error messaging, focusing on reliability and clarity.
 
 Essentially, the core challenge here is capturing and transforming Airflow’s diagnostic information into a format that Slack understands, and then triggering a notification whenever a task fails. Airflow, thankfully, provides hooks and callbacks that enable this type of custom integration. The approach we'll take is leveraging the `on_failure_callback` parameter available at the dag or individual task level, combining it with the `SlackWebhookHook` provided within the apache-airflow-providers-slack package. It’s a fairly common solution, but the details matter a lot.
 

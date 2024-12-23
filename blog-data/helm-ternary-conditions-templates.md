@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "helm-ternary-conditions-templates"
 ---
 
-Okay so you're asking about ternary conditions in Helm templates right Been there done that got the t-shirt and probably a few scars to prove it Let me tell you it can get messy fast if you're not careful especially when you start nesting conditions like russian dolls
+ so you're asking about ternary conditions in Helm templates right Been there done that got the t-shirt and probably a few scars to prove it Let me tell you it can get messy fast if you're not careful especially when you start nesting conditions like russian dolls
 
 Look Helm templates they're basically Go templates with some extra sprinkles from the Kubernetes world They're powerful but also very picky and unforgiving when it comes to syntax and logic errors And ternary conditions are a common point where things go sideways So you're in good company if you're banging your head against the wall right now believe me I have been in your shoes I have had to use it for several services in previous companies
 
@@ -29,7 +29,7 @@ Now the ternary operator is essentially a shortcut for this if else block it's m
 ```
 This is a pipeline actually so you need to have your conditional before your pipe character | and the conditional result is piped to the `ternary` function which receives the true value and the false value you need to specify.
 
-Okay let's get to some real world examples I recall once I was deploying an application that needed to configure its logging level differently in production and development environments I mean that’s like a classic case use case for a ternary right so in our `values.yaml` file we had something like this:
+ let's get to some real world examples I recall once I was deploying an application that needed to configure its logging level differently in production and development environments I mean that’s like a classic case use case for a ternary right so in our `values.yaml` file we had something like this:
 
 ```yaml
 environment: "development"
@@ -108,7 +108,7 @@ spec:
             {{- end }}
             {{- end }}
 ```
-Okay so again as you can see this is not elegant at all. We are using `with` and `if-else` all combined which makes things hard to understand. If we re write using ternaries it becomes much more elegant like this:
+ so again as you can see this is not elegant at all. We are using `with` and `if-else` all combined which makes things hard to understand. If we re write using ternaries it becomes much more elegant like this:
 
 ```yaml
 apiVersion: apps/v1

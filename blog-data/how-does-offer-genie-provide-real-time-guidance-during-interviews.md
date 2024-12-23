@@ -4,7 +4,7 @@ date: "2024-12-03"
 id: "how-does-offer-genie-provide-real-time-guidance-during-interviews"
 ---
 
-Okay so Offer Genie  real-time interview guidance is pretty cool actually it's not like some magic AI that tells you exactly what to say  think of it more like a supercharged cheat sheet that learns your style and the job  it's all about context baby  
+ so Offer Genie  real-time interview guidance is pretty cool actually it's not like some magic AI that tells you exactly what to say  think of it more like a supercharged cheat sheet that learns your style and the job  it's all about context baby  
 
 First off it analyzes the job description  I mean seriously analyzes it  not just keyword matching  we're talking NLP natural language processing  stuff you'd find in a good computational linguistics textbook maybe Jurafsky and Martin's "Speech and Language Processing" that's your bible right there for this kind of stuff  it breaks down the skills needed the responsibilities the company culture  the whole shebang  it figures out what kind of answers they're looking for what kind of vibe they're going for  
 
@@ -12,7 +12,7 @@ Then comes the fun part  the live feedback  It uses speech-to-text  really advan
 
 Think of it like a sophisticated grammar checker on steroids  it's not just catching grammatical errors  it's analyzing your choice of words your tone  your pacing  even your filler words like uh and um  it identifies areas where you're rambling where you're being too vague or where you're not hitting the key points  it's brutal but helpful  
 
-It gives you subtle cues  like a little vibration on your phone  a color-coded visual display  maybe a slight change in the background  telling you to maybe elaborate on something  or maybe to steer clear of a certain topic  or just to chill out and breathe  because interviews are stressful okay  
+It gives you subtle cues  like a little vibration on your phone  a color-coded visual display  maybe a slight change in the background  telling you to maybe elaborate on something  or maybe to steer clear of a certain topic  or just to chill out and breathe  because interviews are stressful   
 
 It's adaptive too  it learns from your responses  your strengths your weaknesses  the more you use it the better it gets at tailoring its feedback to your specific needs and interview style  it doesn't try to change you into someone you're not it just helps you shine brighter in a way that aligns with what the interviewer is looking for  
 

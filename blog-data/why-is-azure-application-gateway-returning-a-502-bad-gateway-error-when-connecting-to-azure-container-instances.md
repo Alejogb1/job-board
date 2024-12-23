@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-azure-application-gateway-returning-a-502-bad-gateway-error-when-connecting-to-azure-container-instances"
 ---
 
-Okay, let's delve into this 502 error situation with Azure Application Gateway and Azure Container Instances (ACI). It’s a fairly common headache, and I’ve seen it firsthand multiple times, often during the pressure cooker of deployment phases. The root cause, as is typical, isn't usually a single issue, but rather a confluence of potential misconfigurations or limitations. I'm not going to pretend it’s always straightforward, but I can break down the core reasons based on my experiences and provide some troubleshooting steps with code examples.
+, let's delve into this 502 error situation with Azure Application Gateway and Azure Container Instances (ACI). It’s a fairly common headache, and I’ve seen it firsthand multiple times, often during the pressure cooker of deployment phases. The root cause, as is typical, isn't usually a single issue, but rather a confluence of potential misconfigurations or limitations. I'm not going to pretend it’s always straightforward, but I can break down the core reasons based on my experiences and provide some troubleshooting steps with code examples.
 
 The core problem we are observing is a 502 'Bad Gateway' error originating from the Azure Application Gateway. This error essentially signifies that the gateway, which acts as a reverse proxy in front of our ACI instances, cannot establish a successful connection to the backend service – in this case, your containerized application running within ACI. Now, let’s pinpoint the common culprits:
 

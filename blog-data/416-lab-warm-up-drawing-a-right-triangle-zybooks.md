@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "416-lab-warm-up-drawing-a-right-triangle-zybooks"
 ---
 
-Okay so you're struggling with that zybooks 416 lab right triangle drawing thing yeah I get it Been there done that bought the t-shirt multiple times honestly Lets just dive in I've seen this problem crop up with a bunch of new coders and even some people who thought they were hot stuff but turned out their code was just a pile of random variables thrown at the wall
+ so you're struggling with that zybooks 416 lab right triangle drawing thing yeah I get it Been there done that bought the t-shirt multiple times honestly Lets just dive in I've seen this problem crop up with a bunch of new coders and even some people who thought they were hot stuff but turned out their code was just a pile of random variables thrown at the wall
 
 So what we're talking about is essentially how to use loops and basic output to draw a right triangle using characters usually asterisks or maybe hash symbols in your terminal or console It seems super simple but there are little gotchas that can mess with your head if you haven't seen it a hundred times
 

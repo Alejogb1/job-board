@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-a-neterrconnectionrefused-error-with-laravel-9-sail-and-php-81"
 ---
 
-Okay, let's tackle this. Seeing `net::ERR_CONNECTION_REFUSED` when you're trying to get a Laravel 9 app up and running with Sail and PHP 8.1 is, unfortunately, a reasonably common scenario, and it usually boils down to a few core areas. I've personally spent a fair amount of time debugging similar situations over the years. It's rarely a single, glaring issue; rather, it's often a combination of small misconfigurations or misunderstandings about how these technologies interact.
+,  Seeing `net::ERR_CONNECTION_REFUSED` when you're trying to get a Laravel 9 app up and running with Sail and PHP 8.1 is, unfortunately, a reasonably common scenario, and it usually boils down to a few core areas. I've personally spent a fair amount of time debugging similar situations over the years. It's rarely a single, glaring issue; rather, it's often a combination of small misconfigurations or misunderstandings about how these technologies interact.
 
 At its heart, `net::ERR_CONNECTION_REFUSED` indicates that your browser, or whatever client is making the request, is trying to reach a server (in this case, your Laravel application via Sail), but there’s nothing listening on the specified port. Let’s systematically work through the most probable causes.
 

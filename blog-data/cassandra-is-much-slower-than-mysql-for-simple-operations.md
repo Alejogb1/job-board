@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "cassandra-is-much-slower-than-mysql-for-simple-operations"
 ---
 
-Okay so I see your question and yeah I've been there man Cassandra versus MySQL for simple ops it's a classic head scratcher Right off the bat if you're seeing dramatically slower performance from Cassandra on what you consider simple operations it's usually not Cassandra just being slow but rather something about how you're using it or your data model that's causing problems Let's dive in because I've fought this dragon myself a few times
+ so I see your question and yeah I've been there man Cassandra versus MySQL for simple ops it's a classic head scratcher Right off the bat if you're seeing dramatically slower performance from Cassandra on what you consider simple operations it's usually not Cassandra just being slow but rather something about how you're using it or your data model that's causing problems Let's dive in because I've fought this dragon myself a few times
 
 First thing first the key difference Cassandra is built for scale and availability at the cost of some single-node write speed MySQL on the other hand is generally optimized for single-server performance with the ability to scale using replication and sharding but it's a different paradigm entirely A typical OLTP relational database like MySQL works by writing to a single disk location typically with ACID guarantees it's designed for things like transactional consistency and single row lookups which it does amazingly well Cassandra on the other hand writes to multiple locations in a distributed system for fault tolerance meaning that every write goes to multiple nodes and then there is a time for the data to get in sync so the trade-off is the single write speed for the ability to scale out
 

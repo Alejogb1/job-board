@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-create-a-pytorch-lightning-module-with-injected-nested-models"
 ---
 
-Okay, let's talk about crafting PyTorch Lightning modules that incorporate injected, nested models. This isn't just theoretical; I’ve certainly faced this scenario multiple times in my past projects, particularly when working with complex architectures like multi-modal systems or hierarchical attention networks. Getting this structured correctly is crucial for both maintainability and effective training.
+, let's talk about crafting PyTorch Lightning modules that incorporate injected, nested models. This isn't just theoretical; I’ve certainly faced this scenario multiple times in my past projects, particularly when working with complex architectures like multi-modal systems or hierarchical attention networks. Getting this structured correctly is crucial for both maintainability and effective training.
 
 The challenge essentially boils down to cleanly separating the concerns within your LightningModule. You have the high-level logic—training loops, validation steps, optimization, etc.—and then the specific modeling components, which might themselves be composed of several layers. We need to make sure that our LightningModule isn't just one giant, monolithic block of code.
 

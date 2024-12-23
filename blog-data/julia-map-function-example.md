@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "julia-map-function-example"
 ---
 
-Okay so you're asking about the `map` function in Julia right Been there done that Got my hands dirty with that little beast countless times Let me tell you a story or two about how I wrangled it in my projects and what I learned along the way
+ so you're asking about the `map` function in Julia right Been there done that Got my hands dirty with that little beast countless times Let me tell you a story or two about how I wrangled it in my projects and what I learned along the way
 
 First off `map` in Julia is basically your go-to for applying a function to every element of an iterable A list a tuple even a string Anything that can be looped over `map` can handle it Its like a for loop but way more concise and generally faster because its optimized internally by Julia you don't need to write an explicit loop that takes more lines and more thinking time honestly
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-save-a-pytorch-model-and-load-it-in-a-new-file"
 ---
 
-Let's tackle this. I remember a particularly hairy project a few years back involving real-time object detection on embedded systems. The model training was done on a beefy server, but then we had to deploy it onto resource-constrained hardware. Saving and loading that PyTorch model efficiently and reliably became absolutely critical. I learned a few things along the way, and it’s a scenario many developers encounter.
+ I remember a particularly hairy project a few years back involving real-time object detection on embedded systems. The model training was done on a beefy server, but then we had to deploy it onto resource-constrained hardware. Saving and loading that PyTorch model efficiently and reliably became absolutely critical. I learned a few things along the way, and it’s a scenario many developers encounter.
 
 So, you’re looking to persist your trained PyTorch model, allowing you to load it up in another script or even on a completely different machine, which is a common need. Essentially, you need to serialize the model’s state and architecture to disk, and then deserialize it when required. Let's break down the process.
 

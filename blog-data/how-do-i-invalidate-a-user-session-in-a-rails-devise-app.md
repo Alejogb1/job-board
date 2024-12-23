@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-invalidate-a-user-session-in-a-rails-devise-app"
 ---
 
-Right, let's tackle this. Session invalidation in a rails application using devise is a common, yet crucial, aspect of application security and user management. It's not just about hitting a "log out" button; we need to ensure that user sessions are terminated gracefully and securely across different scenarios. I've personally debugged systems where improper session handling led to security vulnerabilities, so I've come to appreciate the importance of getting this right.
+Right,  Session invalidation in a rails application using devise is a common, yet crucial, aspect of application security and user management. It's not just about hitting a "log out" button; we need to ensure that user sessions are terminated gracefully and securely across different scenarios. I've personally debugged systems where improper session handling led to security vulnerabilities, so I've come to appreciate the importance of getting this right.
 
 From my experience, simply removing the session cookie client-side isn't sufficient. A session can be associated with server-side data that needs to be cleared as well to truly invalidate it. Devise provides a solid base for authentication, but we need to leverage its functionality correctly. We also need to consider various conditions that could prompt session invalidation, beyond the standard user-initiated sign-out.
 

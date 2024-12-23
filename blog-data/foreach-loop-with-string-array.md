@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "foreach-loop-with-string-array"
 ---
 
-Okay so you're asking about `foreach` loops with string arrays right I've been there done that probably more times than I've had hot dinners it's a pretty bread and butter thing in programming but sometimes you just need a refresher or a slightly different angle
+ so you're asking about `foreach` loops with string arrays right I've been there done that probably more times than I've had hot dinners it's a pretty bread and butter thing in programming but sometimes you just need a refresher or a slightly different angle
 
 I remember back in my early days I was working on this text processing tool we needed to slurp in a whole bunch of log files parse out specific strings and then do some analysis on them I think it was the late 2000s when I was still struggling with pointer arithmetic and C++ before I fully embraced the higher-level languages like python and the dot net framework it was a mess I tell you absolute chaos if you ask me
 
@@ -60,7 +60,7 @@ orange
 
 LINQ is seriously powerful especially when you need to manipulate collections of data trust me on this I spent ages doing this kind of stuff manually before it was widely used it was like discovering fire if I am honest it made me less angry when I am programming to be honest and that is a good thing I am sure we all agree
 
-Okay okay let's not leave the python folks out so here is a python example the core of the loop logic remains more or less the same really
+  let's not leave the python folks out so here is a python example the core of the loop logic remains more or less the same really
 
 ```python
 my_strings = ["Python", "is", "Awesome", "for", "automation"]

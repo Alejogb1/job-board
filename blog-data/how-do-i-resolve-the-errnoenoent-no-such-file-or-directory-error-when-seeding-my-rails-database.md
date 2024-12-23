@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-resolve-the-errnoenoent-no-such-file-or-directory-error-when-seeding-my-rails-database"
 ---
 
-Okay, let’s tackle this. Seeing that `Errno::ENOENT` when seeding a rails database is a fairly common stumble, and it often boils down to a few predictable causes. From my experience, I've probably debugged this same issue in at least a dozen projects, ranging from small personal endeavors to large enterprise applications. The frustration is definitely real, but it's almost always a configuration or path issue that can be methodically traced and resolved.
+, let’s tackle this. Seeing that `Errno::ENOENT` when seeding a rails database is a fairly common stumble, and it often boils down to a few predictable causes. From my experience, I've probably debugged this same issue in at least a dozen projects, ranging from small personal endeavors to large enterprise applications. The frustration is definitely real, but it's almost always a configuration or path issue that can be methodically traced and resolved.
 
 The core problem with an `Errno::ENOENT` error, specifically when seeding, is that the ruby process executing your seed script can't locate a resource it needs – most commonly a file. This could be an image, a csv, a json config file, or pretty much anything the code tries to open. The error message itself, "no such file or directory," is quite literal; it implies the provided path is incorrect, the resource doesn’t exist in that particular location, or maybe the current working directory isn’t what we think it should be.
 

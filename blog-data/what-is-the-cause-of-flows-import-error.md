@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "what-is-the-cause-of-flows-import-error"
 ---
 
-Okay, let’s dive into Flow's import errors. Over the years, I've seen these pop up in various contexts – from small personal projects to large-scale enterprise systems, and the root cause often boils down to a few key areas. It's rarely a single, monolithic issue; instead, it's usually a combination of factors interacting in sometimes unexpected ways. Let’s break it down with a focus on real-world troubleshooting.
+, let’s dive into Flow's import errors. Over the years, I've seen these pop up in various contexts – from small personal projects to large-scale enterprise systems, and the root cause often boils down to a few key areas. It's rarely a single, monolithic issue; instead, it's usually a combination of factors interacting in sometimes unexpected ways. Let’s break it down with a focus on real-world troubleshooting.
 
 Fundamentally, Flow's import errors stem from its static analysis system struggling to resolve module paths during type checking. Unlike runtime environments that can dynamically load modules, Flow relies on having a clear picture of the module structure *before* execution. This ahead-of-time analysis is what enables it to detect type errors early. When an import statement cannot be resolved to a file on disk, or if the file’s module definition does not match what's expected by the import, a cascade of errors can arise.
 

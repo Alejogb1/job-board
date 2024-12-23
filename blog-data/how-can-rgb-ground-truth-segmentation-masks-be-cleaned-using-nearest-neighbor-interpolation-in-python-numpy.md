@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-rgb-ground-truth-segmentation-masks-be-cleaned-using-nearest-neighbor-interpolation-in-python-numpy"
 ---
 
-Okay, let’s tackle this. I recall dealing with a particularly noisy dataset of satellite imagery a few years back. The initial RGB ground truth segmentation masks were, to put it mildly, riddled with artifacts. We needed a way to smooth those edges and fill in small gaps reliably. Nearest neighbor interpolation, while simple, proved to be a surprisingly effective tool when used thoughtfully within a NumPy environment. It’s definitely not the fanciest algorithm we have, but its efficiency and ease of implementation made it ideal for our processing pipeline.
+, let’s tackle this. I recall dealing with a particularly noisy dataset of satellite imagery a few years back. The initial RGB ground truth segmentation masks were, to put it mildly, riddled with artifacts. We needed a way to smooth those edges and fill in small gaps reliably. Nearest neighbor interpolation, while simple, proved to be a surprisingly effective tool when used thoughtfully within a NumPy environment. It’s definitely not the fanciest algorithm we have, but its efficiency and ease of implementation made it ideal for our processing pipeline.
 
 The core idea with nearest neighbor interpolation for segmentation masks is straightforward: for any pixel that needs to be filled or smoothed, we assign it the value of the closest available, valid pixel. In the context of a segmentation mask, this means finding the nearest labeled region and extending its boundary a little bit. It's not going to reconstruct complex shapes, but it’s excellent for removing small isolated errors, filling little holes, or correcting rough edges.
 

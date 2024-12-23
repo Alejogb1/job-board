@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-improve-the-memory-usage-performance-in-spacy"
 ---
 
-Okay, let's talk about optimizing spaCy for memory efficiency; it's a common challenge, and one I've certainly encountered more than a few times in my work, particularly when dealing with large datasets. Believe me, seeing your memory consumption balloon with spaCy can be quite frustrating, especially during time-sensitive production runs. It isn't about just arbitrarily cutting back; it's about employing strategic techniques to streamline processing.
+, let's talk about optimizing spaCy for memory efficiency; it's a common challenge, and one I've certainly encountered more than a few times in my work, particularly when dealing with large datasets. Believe me, seeing your memory consumption balloon with spaCy can be quite frustrating, especially during time-sensitive production runs. It isn't about just arbitrarily cutting back; it's about employing strategic techniques to streamline processing.
 
 The first, and perhaps most critical, step is to be incredibly judicious about the components you load. spaCy offers various components for diverse natural language processing tasks. If your project doesn't require part-of-speech tagging, dependency parsing, or named entity recognition, don't load them. Each component consumes a significant chunk of memory, so only loading those relevant to your specific task provides an immediate and substantial memory saving. When initializing spaCy, use the `disable` argument. Let me demonstrate:
 

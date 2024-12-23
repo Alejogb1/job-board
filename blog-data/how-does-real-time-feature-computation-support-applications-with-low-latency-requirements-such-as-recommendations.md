@@ -4,7 +4,7 @@ date: "2024-12-10"
 id: "how-does-real-time-feature-computation-support-applications-with-low-latency-requirements-such-as-recommendations"
 ---
 
-Okay so you wanna know how real-time feature computation helps apps that need super-fast responses like those recommendation engines right  It's all about speed my friend  Imagine Netflix recommending you a show  you don't want to wait five minutes for that suggestion do you No way you'd probably close the app  That's where real-time computation comes in
+ so you wanna know how real-time feature computation helps apps that need super-fast responses like those recommendation engines right  It's all about speed my friend  Imagine Netflix recommending you a show  you don't want to wait five minutes for that suggestion do you No way you'd probably close the app  That's where real-time computation comes in
 
 The basic idea is instead of crunching all the data later or batch processing  you do it as things happen  So every time someone watches a movie or rates a show the system updates its understanding of their taste *immediately*  No waiting for a scheduled job to run  It's all happening in the now  This is crucial for low latency because the delay between action and reaction is minimal almost instantaneous
 

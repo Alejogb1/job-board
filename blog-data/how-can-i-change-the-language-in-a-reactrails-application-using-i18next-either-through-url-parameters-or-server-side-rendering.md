@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-change-the-language-in-a-reactrails-application-using-i18next-either-through-url-parameters-or-server-side-rendering"
 ---
 
-Okay, let’s dive into this. I've faced this exact challenge a few times, particularly on one project involving a multi-national user base. Getting internationalization (i18n) working smoothly in a React/Rails application can be tricky, but it's immensely satisfying when done correctly. We're talking about a setup using i18next, which is a solid choice for managing translations, combined with React on the front end and Rails on the backend. We'll address both URL parameter-based language switching and server-side rendering (SSR) approaches, outlining the pros, cons, and necessary configurations.
+, let’s dive into this. I've faced this exact challenge a few times, particularly on one project involving a multi-national user base. Getting internationalization (i18n) working smoothly in a React/Rails application can be tricky, but it's immensely satisfying when done correctly. We're talking about a setup using i18next, which is a solid choice for managing translations, combined with React on the front end and Rails on the backend. We'll address both URL parameter-based language switching and server-side rendering (SSR) approaches, outlining the pros, cons, and necessary configurations.
 
 First, let's nail the core concept: locale detection. You need to figure out which language your user prefers. There are a few ways to determine this; user browser settings, explicitly selected by the user in your application, or through some default setting. Today, we are going to focus on the URL parameter and SSR methods.
 

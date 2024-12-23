@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "where-are-tomcat-security-constraints-defined-webxml-or-web-infwebxml"
 ---
 
-Okay, let's talk about Tomcat security constraints. I've had my share of late nights troubleshooting these, so I'll lay out what I know from practical experience, not just theoretical textbook concepts. The short answer – and I’m going to get into *why* this is – is that security constraints in a Tomcat web application are defined primarily within the `WEB-INF/web.xml` file, often referred to simply as the `web.xml`.
+, let's talk about Tomcat security constraints. I've had my share of late nights troubleshooting these, so I'll lay out what I know from practical experience, not just theoretical textbook concepts. The short answer – and I’m going to get into *why* this is – is that security constraints in a Tomcat web application are defined primarily within the `WEB-INF/web.xml` file, often referred to simply as the `web.xml`.
 
 Let’s unpack that. You won't find security configurations, in the context of web applications, directly embedded in a top-level `web.xml` file alongside, say, the `catalina.sh` script in the Tomcat root. Those are configuration files for Tomcat itself, not for the deployed web applications. Instead, each web application, packaged as a WAR (Web Application Archive) file, carries its own `web.xml` located in the `WEB-INF` directory.
 

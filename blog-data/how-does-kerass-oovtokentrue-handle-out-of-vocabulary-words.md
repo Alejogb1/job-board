@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-does-kerass-oovtokentrue-handle-out-of-vocabulary-words"
 ---
 
-Alright, let's tackle this. From my time working on various NLP pipelines, I've encountered this exact issue numerous times—dealing with those pesky out-of-vocabulary (OOV) words, especially when you're relying on a pre-trained tokenizer in Keras. It’s a common pitfall, and understanding how `oov_token=True` operates is crucial for building robust models. So, let's break it down.
+Alright,  From my time working on various NLP pipelines, I've encountered this exact issue numerous times—dealing with those pesky out-of-vocabulary (OOV) words, especially when you're relying on a pre-trained tokenizer in Keras. It’s a common pitfall, and understanding how `oov_token=True` operates is crucial for building robust models. So, let's break it down.
 
 The `oov_token=True` parameter within Keras's `Tokenizer` class, particularly when used in conjunction with text preprocessing for neural networks, doesn't perform magic. It doesn't somehow *understand* an unknown word. Instead, it establishes a placeholder – a specific token – to represent all words it encounters that weren't included in its initial vocabulary. It's a rather pragmatic approach: “I don’t know this word, so I'm going to label it as ‘unknown’ using this reserved token.”
 

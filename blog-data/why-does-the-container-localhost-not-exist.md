@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-the-container-localhost-not-exist"
 ---
 
-Okay, let’s address this peculiar "localhost doesn't exist" quandary, because it's a situation I’ve debugged more than a few times, usually late on a Friday night, of course. It stems from a fundamental misunderstanding of how networking, particularly within containerized environments, actually functions. It's not about a missing *place* called localhost; it's about a conceptual mismatch in how these systems address themselves.
+, let’s address this peculiar "localhost doesn't exist" quandary, because it's a situation I’ve debugged more than a few times, usually late on a Friday night, of course. It stems from a fundamental misunderstanding of how networking, particularly within containerized environments, actually functions. It's not about a missing *place* called localhost; it's about a conceptual mismatch in how these systems address themselves.
 
 The core problem lies in the isolated nature of containers. When you start a container, you are essentially creating a separate operating system instance, albeit sharing the host’s kernel. This container has its own network stack, its own perception of “local.” Consequently, `localhost` (or 127.0.0.1) inside the container points *to the container itself*, not the host machine. Your host's `localhost` and the container's `localhost` are, in essence, different entities residing on two completely different, though physically connected, network interfaces. This is the critical point that seems to catch people out most frequently. They expect `localhost` to be a universal reference, which, in a containerized context, is simply incorrect.
 

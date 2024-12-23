@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "plotting-grouped-data-in-same-plot-using-pandas"
 ---
 
-Okay so you've got some grouped data in pandas and you wanna plot it all on the same graph yeah I've been there a few times this is like a staple data vis task lets break it down I'm gonna assume you're not dealing with anything super fancy just straightforward stuff
+ so you've got some grouped data in pandas and you wanna plot it all on the same graph yeah I've been there a few times this is like a staple data vis task lets break it down I'm gonna assume you're not dealing with anything super fancy just straightforward stuff
 
 First off pandas is your friend here It's practically built for this kind of thing so lets get that out of the way and then we'll get into the plotting itself and by the way this isn’t the first time I’ve had to deal with this issue I remember way back in my early days working on this data set for a sports analytics project I had to visualize player stats grouped by teams It was a mess at first with everything scattered but then pandas and matplotlib saved the day I remember this quite vividly
 

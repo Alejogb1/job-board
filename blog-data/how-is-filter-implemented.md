@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "how-is-filter-implemented"
 ---
 
-Okay so you're asking how `filter` is implemented right I've been around the block with this one honestly probably written my own `filter` implementation more times than I care to admit it's a fundamental operation in so many areas.
+ so you're asking how `filter` is implemented right I've been around the block with this one honestly probably written my own `filter` implementation more times than I care to admit it's a fundamental operation in so many areas.
 
 First off let's talk conceptually `filter` in essence is a higher-order function meaning it takes another function as an argument that function being the predicate the condition for keeping or removing elements it goes through a collection usually an array or list or something similar and it applies that predicate to each element if the predicate returns `true` or some truthy value the element is kept otherwise its thrown away or skipped it returns a new collection containing only the elements that passed the test its a core pattern for data manipulation.
 
@@ -31,7 +31,7 @@ const evenNumbers = filterManually(numbers, (number) => number % 2 === 0);
 console.log(evenNumbers); // Output: [2, 4, 6]
 ```
 
-Okay so that's pretty straightforward it initializes an empty array then loops through the input array checks each element using the predicate and if the result is truthy it appends it to the new array pretty basic but it works its O(n) time complexity where n is the number of elements in the array.
+ so that's pretty straightforward it initializes an empty array then loops through the input array checks each element using the predicate and if the result is truthy it appends it to the new array pretty basic but it works its O(n) time complexity where n is the number of elements in the array.
 
 Now let’s look at a more functional approach using higher order functions again this one might be a bit more like what you find in modern js if you are not trying to use basic oldschool approaches like the one above. This example uses the array.reduce function which is very useful in functional programming it’s just a different way to iterate through a collection.
 
@@ -89,4 +89,4 @@ Oh and you wanted a joke right?
 
 Why did the programmer quit his job? Because he didn't get arrays!
 
-Alright so I think that basically covers the common implementation techniques of `filter` if you have any other questions about this let me know otherwise i wish you the best for your programming endeavors and hopefully this explanation helped a bit and you found it useful.
+so I think that basically covers the common implementation techniques of `filter` if you have any other questions about this let me know otherwise i wish you the best for your programming endeavors and hopefully this explanation helped a bit and you found it useful.

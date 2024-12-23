@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-a-deep-learning-computer-vision-model-be-deployed-on-aws-lambda"
 ---
 
-Okay, let's tackle this. I've personally dealt with deploying deep learning models, particularly computer vision ones, onto AWS Lambda a few times – it’s definitely a task that requires some specific attention to detail. It's not as simple as just dragging and dropping your model; there are nuances that can trip you up, often related to the inherent limitations of Lambda's execution environment. Let me break it down.
+,  I've personally dealt with deploying deep learning models, particularly computer vision ones, onto AWS Lambda a few times – it’s definitely a task that requires some specific attention to detail. It's not as simple as just dragging and dropping your model; there are nuances that can trip you up, often related to the inherent limitations of Lambda's execution environment. Let me break it down.
 
 Fundamentally, the challenge with deploying a large deep learning model on AWS Lambda stems from two major constraints: the size limit of the deployment package and the execution timeout. Lambda functions are meant to be lightweight and fast, so deploying something like a sizable convolutional neural network (CNN) can be a bit tricky. The goal is to create a package that is as small as possible without losing functionality, and to optimize execution speed so it falls within the time limitations.
 

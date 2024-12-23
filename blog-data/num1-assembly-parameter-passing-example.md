@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "num1-assembly-parameter-passing-example"
 ---
 
-Okay so num1 assembly parameter passing that’s a classic. I've tangled with this more times than I care to remember especially back when I was working on embedded systems and those custom processors that nobody else wanted to touch. It’s not rocket science but it’s fundamental and you gotta get it right or your whole system will just spectacularly implode. Seriously I've seen it.
+ so num1 assembly parameter passing that’s a classic. I've tangled with this more times than I care to remember especially back when I was working on embedded systems and those custom processors that nobody else wanted to touch. It’s not rocket science but it’s fundamental and you gotta get it right or your whole system will just spectacularly implode. Seriously I've seen it.
 
 First off when we're talking about assembly we're talking about directly manipulating registers and memory. No fancy abstractions here you’re on your own. Parameter passing in assembly is all about moving data into the right places before you call a subroutine or function and making sure it’s in the right place when the routine returns the results. The most common approach it’s just moving values into pre-defined registers or locations in memory but those places are all based on conventions or architectures. For x86_64 and ARM for example there's a clear set of rules these are called calling conventions and ignoring them is a recipe for disaster so pay attention to your platform's specification. I've seen some junior guys mess it up and it’s always a debugging nightmare.
 

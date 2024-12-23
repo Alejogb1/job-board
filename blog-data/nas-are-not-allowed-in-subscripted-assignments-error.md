@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "nas-are-not-allowed-in-subscripted-assignments-error"
 ---
 
-Okay I see what's going on here this is a classic "why is Python being so annoying" moment I've banged my head against this particular wall more times than I'd like to admit believe me you are not alone
+ I see what's going on here this is a classic "why is Python being so annoying" moment I've banged my head against this particular wall more times than I'd like to admit believe me you are not alone
 
 The core issue as I see it you're trying to use `np.nan` inside a subscripted assignment and getting this "nas are not allowed in subscripted assignments" error right? It's super specific and it basically comes down to how numpy handles assignment operations especially when dealing with masked arrays or complex data types I've been there it's a real gotcha and i remember being in my first job having the same issue for hours.
 

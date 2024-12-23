@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "valueerror-endog-must-be-in-the-unit-interval"
 ---
 
-Okay so you've got a `ValueError` that says `endog must be in the unit interval` right Been there done that more times than I care to admit Man that error message is like a rite of passage in certain types of stats modeling especially when dealing with proportions or probabilities and yeah it's frustrating I get it
+ so you've got a `ValueError` that says `endog must be in the unit interval` right Been there done that more times than I care to admit Man that error message is like a rite of passage in certain types of stats modeling especially when dealing with proportions or probabilities and yeah it's frustrating I get it
 
 First off let's break this down endog thats your dependent variable in stats speak you know the thing you're trying to predict or explain And unit interval means it needs to be between 0 and 1 inclusive In other words a value between 0 and 1 basically a probability or a proportion It is important to clarify what kind of models commonly use this sort of variable
 

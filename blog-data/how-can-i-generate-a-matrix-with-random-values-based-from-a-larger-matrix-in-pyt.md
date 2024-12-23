@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "how-can-i-generate-a-matrix-with-random-values-based-from-a-larger-matrix-in-pyt"
 ---
 
-Okay so you need to pull random numbers from an existing matrix and build a new one cool I've wrestled with this kind of thing plenty of times back in the day it's like a bread and butter problem for data analysis or simulation stuff
+ so you need to pull random numbers from an existing matrix and build a new one cool I've wrestled with this kind of thing plenty of times back in the day it's like a bread and butter problem for data analysis or simulation stuff
 
 Let's break it down first off you’re talking about random numbers and matrices so NumPy is your friend if you're not using it already seriously go install it it's the base of pretty much anything matrix based in python I mean like 90% of it maybe 95%
 
@@ -43,7 +43,7 @@ print (result)
 
 This code creates a new matrix with the dimensions defined in the new_shape argument it loops through every element in the new matrix and for each one it picks a random row and column of the source matrix using `np.random.randint` then copies the value from that random position in the source to that position in the new matrix you know i was not born knowing all this.
 
-Okay i hear you saying this is not very performatic and yes you are right this will be very slow for big matrices because for loops in python for this are not a great idea
+ i hear you saying this is not very performatic and yes you are right this will be very slow for big matrices because for loops in python for this are not a great idea
 
 **Method 2 Using flattened indices**
 
@@ -73,7 +73,7 @@ result = random_matrix_from_source_v2(source, new_shape)
 print (result)
 ```
 
-Okay so instead of looping through each cell of the output matrix we flat the source matrix that turns it into a big vector using `source_matrix.flatten()` then generate a set of random indices using the `randint` function these indices are used to directly access elements in the flattened version of the matrix and we reshape the result to the shape you initially wanted
+ so instead of looping through each cell of the output matrix we flat the source matrix that turns it into a big vector using `source_matrix.flatten()` then generate a set of random indices using the `randint` function these indices are used to directly access elements in the flattened version of the matrix and we reshape the result to the shape you initially wanted
 
 This is generally faster than the nested loop approach and that's why i use it in most cases. And let's face it nobody likes waiting for a program to finish right especially when you are a data scientist and your boss is breathing down your neck.
 

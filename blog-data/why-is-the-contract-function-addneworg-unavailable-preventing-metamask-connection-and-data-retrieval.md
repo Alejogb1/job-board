@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-the-contract-function-addneworg-unavailable-preventing-metamask-connection-and-data-retrieval"
 ---
 
-Let's tackle this. Ah, the familiar frustration of a contract function seemingly vanishing into thin air, particularly when MetaMask is involved. I’ve been down this rabbit hole a few times myself, so I understand the head-scratching. Typically, when a function like `addNewOrg` isn’t accessible, preventing MetaMask from properly interacting with your contract and pulling data, there's a handful of culprits, and it's rarely just one simple switch. Let me walk you through what I've seen in my own experience and how to methodically approach this kind of problem.
+ Ah, the familiar frustration of a contract function seemingly vanishing into thin air, particularly when MetaMask is involved. I’ve been down this rabbit hole a few times myself, so I understand the head-scratching. Typically, when a function like `addNewOrg` isn’t accessible, preventing MetaMask from properly interacting with your contract and pulling data, there's a handful of culprits, and it's rarely just one simple switch. Let me walk you through what I've seen in my own experience and how to methodically approach this kind of problem.
 
 First off, it's crucial to remember that smart contracts exist within the context of a blockchain environment. This means we have several layers to consider: the solidity code itself, its compilation and deployment, and how the interacting application—in this case, your MetaMask-enabled front-end—is structured. I’ve found that most problems tend to fall into one of these categories, and sometimes it's a combination of them.
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "hashcat-token-length-exception-error"
 ---
 
-Okay so hashcat token length exception error right I've been there man believe me it's like a right of passage for anyone messing with hash cracking stuff So you're firing up hashcat probably throwing some rockyou at it and bang token length exception error pops up feels like a slap in the face doesn’t it
+ so hashcat token length exception error right I've been there man believe me it's like a right of passage for anyone messing with hash cracking stuff So you're firing up hashcat probably throwing some rockyou at it and bang token length exception error pops up feels like a slap in the face doesn’t it
 
 Basically hashcat is screaming at you that something is not right with how it's reading the input that you're feeding it It's expecting a password or some other input to be a certain length but instead it's encountering input that doesn't match that length that's why we get that specific error This usually comes when you're working with mask attacks or custom wordlists or even with hash types that require a specific length of input
 
@@ -12,7 +12,7 @@ Now let me tell you about this one time back in the day when I was trying to cra
 
 Then I had another experience when I was trying to crack NTLM hashes the hashcat was expecting a 16-byte hex representation of a password and I was providing a string of variable length because I thought that was what the hash is I wasn’t giving hashcat what it expected so boom again token length exception error I spent hours digging into that one man
 
-Alright so you see this error a lot with mask attacks This usually happens when your mask is not correctly formatted or does not generate passwords that are compatible with the rules of the hash type So lets say you're using something like `?l?l?l?l?d?d` which should generate 6 character passwords made of four lowercase letters and two digits If you're attacking something that expects a fixed length password that is different you are going to see that error I’ve been there too man
+so you see this error a lot with mask attacks This usually happens when your mask is not correctly formatted or does not generate passwords that are compatible with the rules of the hash type So lets say you're using something like `?l?l?l?l?d?d` which should generate 6 character passwords made of four lowercase letters and two digits If you're attacking something that expects a fixed length password that is different you are going to see that error I’ve been there too man
 
 Here’s the deal in code this is how you do things in hashcat
 

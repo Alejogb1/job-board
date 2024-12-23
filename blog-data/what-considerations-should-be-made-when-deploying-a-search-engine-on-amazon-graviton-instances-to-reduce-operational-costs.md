@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "what-considerations-should-be-made-when-deploying-a-search-engine-on-amazon-graviton-instances-to-reduce-operational-costs"
 ---
 
-Okay so you wanna run a search engine on Graviton instances to save some cash right  Smart move Graviton's are pretty awesome for cost optimization especially if you're not doing crazy intense stuff that needs top-tier x86 performance  There's a bunch of things to think about though  It's not just slapping your code onto a cheaper server and calling it a day
+ so you wanna run a search engine on Graviton instances to save some cash right  Smart move Graviton's are pretty awesome for cost optimization especially if you're not doing crazy intense stuff that needs top-tier x86 performance  There's a bunch of things to think about though  It's not just slapping your code onto a cheaper server and calling it a day
 
 First off  **instance sizing** is key  Don't just grab the cheapest thing you see  You need to profile your search engine's resource usage  Are you mostly CPU bound memory bound or I/O bound  Graviton instances come in different flavors  some are better at certain tasks than others  You might find a sweet spot with a memory-optimized instance if your search index is huge or a compute-optimized one if your search algorithms are particularly complex  The "right" instance type depends entirely on your application  and you can usually find good starting points in the AWS documentation or by running some performance tests yourself   A good resource to check out would be the AWS Graviton instance comparison charts – they're updated pretty regularly.  Don't be afraid to experiment a little and scale up or down as needed  AWS lets you adjust pretty easily
 

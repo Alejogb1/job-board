@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-an-invalidargumenterror-graph-execution-error-in-modelfit"
 ---
 
-Okay, let's unpack this. InvalidArgumentError during model.fit is a frustratingly common issue, and it usually boils down to a mismatch between the data you're feeding into your model and the model's expected input structure. I've spent far too many late nights chasing down similar errors in my own projects, and, honestly, it often feels like finding a needle in a haystack the first time. But after tackling it enough times, certain patterns begin to emerge. I'm going to assume we're operating within the realm of TensorFlow or Keras here, as that's where `model.fit` is most prevalent.
+, let's unpack this. InvalidArgumentError during model.fit is a frustratingly common issue, and it usually boils down to a mismatch between the data you're feeding into your model and the model's expected input structure. I've spent far too many late nights chasing down similar errors in my own projects, and, honestly, it often feels like finding a needle in a haystack the first time. But after tackling it enough times, certain patterns begin to emerge. I'm going to assume we're operating within the realm of TensorFlow or Keras here, as that's where `model.fit` is most prevalent.
 
 The core problem is that the TensorFlow graph, responsible for executing your model's computations, receives data that doesn't conform to what it was expecting when the model architecture was originally defined. This incompatibility can manifest in several ways, and pinpointing the exact cause requires a bit of detective work.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-deploy-a-flask-web-application-to-azure-container-registry"
 ---
 
-Okay, let's tackle this. Deploying a Flask application to Azure Container Registry (ACR) is a process I've gone through countless times, and while it might seem complex initially, breaking it down into steps makes it quite manageable. It's crucial to understand that we're essentially packaging our application into a Docker container and then pushing that container to a registry which Azure Container Instances or Kubernetes can then use. Here's how I've approached this, with some concrete examples from prior projects.
+,  Deploying a Flask application to Azure Container Registry (ACR) is a process I've gone through countless times, and while it might seem complex initially, breaking it down into steps makes it quite manageable. It's crucial to understand that we're essentially packaging our application into a Docker container and then pushing that container to a registry which Azure Container Instances or Kubernetes can then use. Here's how I've approached this, with some concrete examples from prior projects.
 
 First, we need to containerize the Flask application. That involves creating a Dockerfile. The Dockerfile will specify the base image, copy our application code, install necessary dependencies, and define the command to run when the container starts. I remember one project where we had a rather tricky dependency conflict, and we had to carefully pin specific library versions in the `requirements.txt` file to ensure the build process was reproducible.
 

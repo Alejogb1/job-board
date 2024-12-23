@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "opencv-project-points-camera-transformation"
 ---
 
-Alright so camera transformations with OpenCV yeah I’ve been down that rabbit hole more times than I care to admit. It's like one of those things that sounds simple on paper but then reality hits you with all its coordinate systems and matrices and suddenly you're debugging for hours.
+so camera transformations with OpenCV yeah I’ve been down that rabbit hole more times than I care to admit. It's like one of those things that sounds simple on paper but then reality hits you with all its coordinate systems and matrices and suddenly you're debugging for hours.
 
 So you wanna get points from one camera view to another right? Project them from one perspective to another that’s the gist of it. I’ve seen it a bunch especially in multi-camera setups or robotics projects where you've gotta figure out where something is in the real world based on different views of it.
 

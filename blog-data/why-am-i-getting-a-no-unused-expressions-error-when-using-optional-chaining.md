@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-a-no-unused-expressions-error-when-using-optional-chaining"
 ---
 
-Okay, let's tackle this. It's a common stumbling block, especially when we're leveraging the elegance of optional chaining, and I've personally spent a few hours debugging similar issues in a legacy project involving complex object manipulations. Seeing that `no-unused-expressions` error can be misleading at first glance, so let’s break down exactly why it happens and how to address it.
+,  It's a common stumbling block, especially when we're leveraging the elegance of optional chaining, and I've personally spent a few hours debugging similar issues in a legacy project involving complex object manipulations. Seeing that `no-unused-expressions` error can be misleading at first glance, so let’s break down exactly why it happens and how to address it.
 
 The core issue stems from how linters, particularly those enforcing rules like `no-unused-expressions` (commonly found in eslint configurations, for example), interpret statements involving optional chaining. The essence of optional chaining (`?.`) is to safely access properties of nested objects without causing errors if any intermediary property is null or undefined. It’s designed to *return* a value or undefined. However, if the result of the optional chaining is not explicitly used, or at least implicitly used within a larger statement (such as assignment or function call), the linter will flag it as an unused expression. Effectively, the code is performing a conditional access that isn't actually doing anything actionable in the context that the linter considers.
 

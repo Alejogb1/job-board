@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-determine-the-optimal-number-of-features-using-mrmr"
 ---
 
-Okay, let's tackle the feature selection quandary using mRMR. It's a process I've refined over quite a few projects, most notably on a rather complex signal processing initiative, where we had an initial feature set that was, frankly, bloated. It's not just about throwing features at a model and hoping something sticks, it's about efficiency and, ultimately, performance. mRMR, or Minimum Redundancy Maximum Relevance, provides a powerful framework for this.
+, let's tackle the feature selection quandary using mRMR. It's a process I've refined over quite a few projects, most notably on a rather complex signal processing initiative, where we had an initial feature set that was, frankly, bloated. It's not just about throwing features at a model and hoping something sticks, it's about efficiency and, ultimately, performance. mRMR, or Minimum Redundancy Maximum Relevance, provides a powerful framework for this.
 
 The crux of mRMR is its dual objective. We're not just seeking features that have a strong correlation with the target variable (that's the "maximum relevance" part); we're also aiming to select features that are minimally redundant with each other. Think of it like assembling a team; you want members who can individually contribute significantly, but also bring distinct skill sets. If all your team members have the exact same expertise, they're largely redundant, regardless of their individual competence.
 

@@ -4,11 +4,11 @@ date: "2024-12-13"
 id: "low-level-and-high-level-data-types"
 ---
 
-Okay so low level versus high level data types right Been there done that got the t-shirt a couple of times actually Let’s break it down from my experience you know the trenches of debugging
+ so low level versus high level data types right Been there done that got the t-shirt a couple of times actually Let’s break it down from my experience you know the trenches of debugging
 
 First off let’s talk about what we actually mean by data types Because without that we're just throwing terms around like confetti I'm going to assume we're talking about programming here not you know astrophysics data types or something though that's cool too but for different reasons
 
-Okay so at the core level your computer a hunk of silicon and electricity only groks bits and bytes That's it Zeroes and ones Now a low level data type is one that's very close to this hardware representation think of it as a direct mapping to how the CPU and memory view data These are things like integers characters floating point numbers at their most basic representations
+ so at the core level your computer a hunk of silicon and electricity only groks bits and bytes That's it Zeroes and ones Now a low level data type is one that's very close to this hardware representation think of it as a direct mapping to how the CPU and memory view data These are things like integers characters floating point numbers at their most basic representations
 
 For example in C or C++ we have `int` `char` `float` and `double` Those are low level data types `int` for example is typically represented as a fixed number of bits usually 32 or 64 which directly maps to a range of numerical values The same with `char` being a byte mapping to a character representation usually ASCII or UTF-8 and floating points are stored using the IEEE 754 standard its a detailed process believe me i spent a few nights wrestling with bit manipulation debugging these things a long time ago when I was building a custom rendering engine way before unity or unreal existed think mid 2000’s I mean we are talking real hardcore low level stuff no external libraries just custom code that barely worked sometimes I am just glad I am still alive after all that
 

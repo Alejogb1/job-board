@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-cant-i-access-a-specific-spa-page-by-typing-the-route-directly-in-rails"
 ---
 
-Okay, let's tackle this. It's a common frustration when working with single-page applications (SPAs) integrated within a Rails backend, and I’ve definitely encountered it more than a few times in my career. The issue isn’t usually with the SPA itself, but with how Rails handles routing and client-side navigation. Let's break down why you can't directly access a specific SPA route by typing it into the address bar, and how to resolve it.
+,  It's a common frustration when working with single-page applications (SPAs) integrated within a Rails backend, and I’ve definitely encountered it more than a few times in my career. The issue isn’t usually with the SPA itself, but with how Rails handles routing and client-side navigation. Let's break down why you can't directly access a specific SPA route by typing it into the address bar, and how to resolve it.
 
 Fundamentally, the challenge arises from a difference in how Rails and SPAs manage navigation. Rails, being a server-side framework, uses its router to map incoming requests (e.g., `/users/123`, `/products/details`) to specific controller actions. These actions then render a full HTML page which is sent back to the browser. A traditional Rails application is designed this way from the ground up.
 

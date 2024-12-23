@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-isnt-json-data-being-imported-in-azure-ml-studio"
 ---
 
-Okay, let's tackle this. I’ve seen this exact scenario play out more than a few times – trying to get json data into Azure ml studio and hitting a snag. It's a common frustration, but usually it comes down to a few key culprits. Often, it’s not Azure ml studio itself that’s the problem, but rather, how the data is being presented or interpreted. Let's explore some of the main reasons and how to address them, drawing from past troubleshooting sessions.
+,  I’ve seen this exact scenario play out more than a few times – trying to get json data into Azure ml studio and hitting a snag. It's a common frustration, but usually it comes down to a few key culprits. Often, it’s not Azure ml studio itself that’s the problem, but rather, how the data is being presented or interpreted. Let's explore some of the main reasons and how to address them, drawing from past troubleshooting sessions.
 
 First, the most common hurdle: formatting mismatches. Azure ml studio, particularly when using the data import wizard, expects a structured, tabular format. Json, while a fantastically versatile data serialization method, doesn’t naturally fit into that model. Think of it this way: a relational database has rows and columns; Azure ml studio initially expects something that maps easily onto that concept when ingesting data. a single json document might be a hierarchical, nested tree, not a clean table. Consequently, the studio struggles to automatically infer schemas. It assumes one row per file, which is wrong if the file is a single json object or a list, not a json line (each json object is on one line).
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "attributeerror-module-datetime-has-no-attribute-today"
 ---
 
-Okay I see this one a lot let's unpack it because `datetime` not having `today` sounds like a newbie mistake but its often not it is actually a subtle misunderstanding of how Python’s datetime module operates and it gets even the most experienced people once in a while I've been there believe me so dont feel bad
+ I see this one a lot let's unpack it because `datetime` not having `today` sounds like a newbie mistake but its often not it is actually a subtle misunderstanding of how Python’s datetime module operates and it gets even the most experienced people once in a while I've been there believe me so dont feel bad
 
 So the `datetime` module in Python provides a bunch of classes and functions for dealing with dates and times The issue here is you are probably trying to use `datetime.today()` when it doesn't exist directly within the `datetime` module itself It's common I did it too I remember a particularly frustrating debugging session during a university project my team and I were working on an event scheduling app and I had implemented the time functions all wrong.
 

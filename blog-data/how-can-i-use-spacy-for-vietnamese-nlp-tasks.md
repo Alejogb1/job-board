@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-use-spacy-for-vietnamese-nlp-tasks"
 ---
 
-Okay, let’s tackle this. Vietnamese natural language processing using spaCy is definitely something I've spent a fair amount of time on, and it's got some nuances you should be aware of, especially if you're used to working with more resource-rich languages like English. I’ve seen firsthand how crucial it is to get the fundamentals down before diving into complex tasks, and that’s where we’ll start.
+, let’s tackle this. Vietnamese natural language processing using spaCy is definitely something I've spent a fair amount of time on, and it's got some nuances you should be aware of, especially if you're used to working with more resource-rich languages like English. I’ve seen firsthand how crucial it is to get the fundamentals down before diving into complex tasks, and that’s where we’ll start.
 
 The first crucial aspect is understanding that spaCy’s out-of-the-box models primarily focus on languages with more abundant annotated data. Therefore, for Vietnamese, you'll need to make a few adjustments. Pre-trained models for Vietnamese are indeed available, but their performance might not match those for, say, English, straight out of the gate. Don’t let that discourage you; it's quite workable, but it does require a slightly different approach, especially in pre-processing and model training/fine-tuning, which I’ll touch on. I recall a project a few years back involving sentiment analysis for Vietnamese product reviews. Initially, the default pipelines were generating results that were… less than satisfactory. Let's say they were very creative interpretations of the data.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-override-sorbet-generated-attribute-methods-in-ruby-on-rails"
 ---
 
-Okay, let's talk about overriding Sorbet-generated attribute methods in Rails. It’s something that’s come up a few times in my career, and it’s rarely straightforward. Sorbet, as a static type checker, brings immense value to large Ruby codebases, especially in a Rails context, but its interaction with the magic of Rails' attribute handling sometimes requires a bit of finesse.
+, let's talk about overriding Sorbet-generated attribute methods in Rails. It’s something that’s come up a few times in my career, and it’s rarely straightforward. Sorbet, as a static type checker, brings immense value to large Ruby codebases, especially in a Rails context, but its interaction with the magic of Rails' attribute handling sometimes requires a bit of finesse.
 
 The core of the issue stems from how Sorbet handles attributes declared via `T.prop` or `T.let` inside a class. When you use these constructs, Sorbet infers or expects specific accessors (getter/setter methods) to exist, which often conflict with the attribute management mechanisms Rails provides, like those established using `ActiveRecord::Base` and its columns, or those established using simple `attr_accessor` in Ruby.
 

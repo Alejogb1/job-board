@@ -10,7 +10,7 @@ the basic gist is they're mapping ai assistance in coding to the sae levels of d
 
 first off they mentioned this stat that like 92% of devs use ai coding tools now which is bananas  a year ago it was just 1%  they even made a bold prediction that in 5 years 99% of code will be written by ai  which is kinda freaky but also kinda awesome maybe not awesome for devs but awesome for tech overall  that's some seriously next-level stuff
 
-okay so the levels themselves are split into three categories human-initiated ai-initiated and ai-led and each has two levels each for a total of six
+ so the levels themselves are split into three categories human-initiated ai-initiated and ai-led and each has two levels each for a total of six
 
 level 0: this is the old school way total manual coding no ai help  it's like driving a car with no assistance its all you baby  the only thing close to ai is maybe some basic ide autocompletion
 
@@ -30,7 +30,7 @@ print(f"the sum is: {result}") #prints 8
 
 level 1:  this is where things start getting interesting you're still in charge but the ai is starting to help  think of it as like cruise control in a car it helps but you're still driving  the ai generates lines or blocks of code based on what you're doing  it's learning from tons of open-source code so it can suggest better completions
 
-level 2: okay now we're talking the ai understands the context of your codebase way better it's not just guessing anymore it knows what libraries you're using and can suggest completions based on that it's like having a super smart pair programmer who's seen all the code ever written  this is like a car with adaptive cruise control and lane keeping assist  it's doing more but you are still completely in control
+level 2:  now we're talking the ai understands the context of your codebase way better it's not just guessing anymore it knows what libraries you're using and can suggest completions based on that it's like having a super smart pair programmer who's seen all the code ever written  this is like a car with adaptive cruise control and lane keeping assist  it's doing more but you are still completely in control
 
 code example for level 2 (using context):
 

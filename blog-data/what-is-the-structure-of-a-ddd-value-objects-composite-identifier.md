@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "what-is-the-structure-of-a-ddd-value-objects-composite-identifier"
 ---
 
-Okay, let's tackle this. I've definitely spent my share of time wrestling (oops, almost slipped there!) with complex domain models, and value objects with composite identifiers are a frequent guest at the party. It's not always immediately obvious how to structure them effectively, but a little methodical approach goes a long way. Let's break down the "why" before getting into the "how".
+,  I've definitely spent my share of time wrestling (oops, almost slipped there!) with complex domain models, and value objects with composite identifiers are a frequent guest at the party. It's not always immediately obvious how to structure them effectively, but a little methodical approach goes a long way. Let's break down the "why" before getting into the "how".
 
 First off, we're talking about Domain-Driven Design (DDD), and specifically, value objects. Unlike entities, which have a persistent identity, value objects are defined by their attributes. They are immutable, and equality is based on the values of those attributes, not on any unique identifier. When a single attribute isn't enough to uniquely identify the concept—or when multiple attributes together *define* the concept—we’re in composite identifier territory. It is important to understand that the composite identifier isn’t an “identifier” in the same sense as an entity's id. It’s an immutable set of attributes that, together, form the value’s identity.
 

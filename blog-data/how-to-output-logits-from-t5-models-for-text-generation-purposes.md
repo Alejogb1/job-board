@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-output-logits-from-t5-models-for-text-generation-purposes"
 ---
 
-Let's tackle this. I’ve definitely been down this road before, specifically during a project aiming to refine a summarization pipeline, where direct access to logits was crucial for implementing custom scoring mechanisms. The usual approach with T5, employing something like `model.generate()`, masks away the raw output probabilities, providing only the decoded text. But sometimes, that intermediate data – the pre-softmax logits – is precisely what's needed. So, how do we extract these? The trick lies in manipulating the model's forward pass and understanding what tensors are produced.
+ I’ve definitely been down this road before, specifically during a project aiming to refine a summarization pipeline, where direct access to logits was crucial for implementing custom scoring mechanisms. The usual approach with T5, employing something like `model.generate()`, masks away the raw output probabilities, providing only the decoded text. But sometimes, that intermediate data – the pre-softmax logits – is precisely what's needed. So, how do we extract these? The trick lies in manipulating the model's forward pass and understanding what tensors are produced.
 
 Fundamentally, the `generate()` method is a convenience function. It orchestrates the entire decoding process from input to output text. What we’re after is the underlying tensor that’s fed into the softmax function – that’s where the logits reside. We’ll essentially need to intercept the output of the model before the softmax and its associated argmax operations are performed.
 

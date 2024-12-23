@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-can-rbf-neural-networks-be-used-for-testing"
 ---
 
-Okay, let's delve into radial basis function (rbf) networks and their rather interesting application in testing scenarios. The use of neural networks in testing isn't exactly a new frontier, but the specific characteristics of rbf networks, as I’ve observed firsthand over the years, offer a few unique advantages that are worth exploring.
+, let's delve into radial basis function (rbf) networks and their rather interesting application in testing scenarios. The use of neural networks in testing isn't exactly a new frontier, but the specific characteristics of rbf networks, as I’ve observed firsthand over the years, offer a few unique advantages that are worth exploring.
 
 Initially, it's important to understand the fundamental structure of an rbf network. Unlike multi-layer perceptrons (mlps) which rely on weighted sums and activation functions spread across multiple layers, rbf networks typically feature three layers: an input layer, a hidden layer with rbf activation functions, and an output layer. The crucial aspect is the hidden layer, where each neuron has a radial basis function, usually a gaussian. This gaussian function computes a distance from an input vector to a 'center' vector specific to that neuron. The further the input is from the center, the lower the output of that neuron, hence the 'radial' characteristic.
 

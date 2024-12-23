@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-are-promise-rejections-affecting-the-entire-system"
 ---
 
-Alright, let's tackle this. I remember one particularly challenging project a few years back—a distributed e-commerce platform built on a microservices architecture. We were pushing updates daily and things were humming, then bam, cascading failures. Rejection after rejection, seemingly without rhyme or reason. Eventually, we traced it all back to poorly handled promises. It's a lesson I've never forgotten, and it’s a core issue when dealing with asynchronous operations.
+Alright,  I remember one particularly challenging project a few years back—a distributed e-commerce platform built on a microservices architecture. We were pushing updates daily and things were humming, then bam, cascading failures. Rejection after rejection, seemingly without rhyme or reason. Eventually, we traced it all back to poorly handled promises. It's a lesson I've never forgotten, and it’s a core issue when dealing with asynchronous operations.
 
 The problem isn’t usually the rejection itself; it’s how that rejection propagates, or more accurately, how we fail to *contain* that propagation within our system. Promises, while elegant for handling asynchronous tasks, come with a crucial caveat: unhandled rejections can lead to catastrophic system-wide issues. Think of it like a broken circuit in a complex electrical grid. One faulty component can trigger a chain reaction, shutting down entire sections.
 

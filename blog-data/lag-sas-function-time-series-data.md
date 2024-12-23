@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "lag-sas-function-time-series-data"
 ---
 
-Okay so lag sas function time series data right I get it Been there done that a million times Feels like yesterday when I first wrestled with this beast Honestly it's way more common than people think Especially in time series analysis where you're constantly looking back at past values to predict or understand trends Okay let's dive in this is how I'd tackle it based on my own painful trial and error
+ so lag sas function time series data right I get it Been there done that a million times Feels like yesterday when I first wrestled with this beast Honestly it's way more common than people think Especially in time series analysis where you're constantly looking back at past values to predict or understand trends  let's dive in this is how I'd tackle it based on my own painful trial and error
 
 First things first let's break down what "lag" means in this context think of it as shifting your data backwards in time So if you have a time series of say daily temperatures a lag of 1 would give you the temperature from the day before A lag of 2 the temperature from two days before and so on SAS makes this kinda straightforward with its `lag` function but you gotta know how to use it
 
@@ -19,7 +19,7 @@ data lagged_data;
 run;
 ```
 
-Okay so this is the basic stuff `original_data` is your input dataset the one you already have `temperature` is the variable you want to lag and `lagged_value_1` is what we called the newly generated variable where the past values will be stored Pretty self explanatory
+ so this is the basic stuff `original_data` is your input dataset the one you already have `temperature` is the variable you want to lag and `lagged_value_1` is what we called the newly generated variable where the past values will be stored Pretty self explanatory
 
 Now what if you want multiple lags? Like lags of 1 2 and 3? No problem SAS has you covered You can do it this way:
 

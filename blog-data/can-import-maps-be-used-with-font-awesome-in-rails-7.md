@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-import-maps-be-used-with-font-awesome-in-rails-7"
 ---
 
-Okay, let’s get into it. Funny enough, I actually tangled with this exact scenario a couple of years back, migrating a particularly messy Rails 6 app to 7. The team was insistent on Font Awesome, and naturally, we wanted to leverage the new import maps feature instead of relying on the old asset pipeline or node module shenanigans for font management. The short answer? Yes, absolutely, import maps can handle Font Awesome in Rails 7, but it requires a bit more consideration than simply swapping out a gem or adding a yarn dependency.
+, let’s get into it. Funny enough, I actually tangled with this exact scenario a couple of years back, migrating a particularly messy Rails 6 app to 7. The team was insistent on Font Awesome, and naturally, we wanted to leverage the new import maps feature instead of relying on the old asset pipeline or node module shenanigans for font management. The short answer? Yes, absolutely, import maps can handle Font Awesome in Rails 7, but it requires a bit more consideration than simply swapping out a gem or adding a yarn dependency.
 
 The primary appeal of import maps is that they give you control over how the browser resolves module specifiers, effectively bypassing the need for a complex bundler in many cases. This is particularly attractive for a library like Font Awesome, which is essentially just a collection of CSS and font files. We want to serve these assets directly rather than bundling them into a single javascript file, as was common practice previously.
 

@@ -4,7 +4,7 @@ date: "2024-12-11"
 id: "how-does-backtracking-in-chain-of-thought-reasoning-affect-model-performance"
 ---
 
-Okay so you wanna know about backtracking in chain of thought prompting right  super cool stuff  I've been messing around with it a lot lately its pretty wild how much it changes things  Basically chain of thought prompting is like giving the model a little step-by-step guide to solving a problem instead of just throwing the problem at it  Think of it like showing your work in math class  It helps the model break down complex tasks into smaller more manageable chunks
+ so you wanna know about backtracking in chain of thought prompting right  super cool stuff  I've been messing around with it a lot lately its pretty wild how much it changes things  Basically chain of thought prompting is like giving the model a little step-by-step guide to solving a problem instead of just throwing the problem at it  Think of it like showing your work in math class  It helps the model break down complex tasks into smaller more manageable chunks
 
 Now backtracking is when the model kind of goes "oops I messed up" mid-solution and revises its previous steps  It's like having a little eraser and going back to fix a mistake before moving on  It's not like a total restart it's more of a refined approach  Its a really interesting dynamic because sometimes it helps massively sometimes it adds extra steps and even hurts performance its a bit of a double edged sword you know
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-the-airflow-dag-parameter-maxactiveruns-not-working"
 ---
 
-Okay, let's address this. The issue of `max_active_runs` in Apache Airflow seemingly not behaving as expected is a frequent point of confusion, and one I've certainly encountered on multiple projects. It's rarely as simple as a bug, but rather a nuanced interplay between configuration, scheduling, and the underlying operational mechanics of Airflow. Let’s break down why you might see this behavior and how to troubleshoot it.
+, let's address this. The issue of `max_active_runs` in Apache Airflow seemingly not behaving as expected is a frequent point of confusion, and one I've certainly encountered on multiple projects. It's rarely as simple as a bug, but rather a nuanced interplay between configuration, scheduling, and the underlying operational mechanics of Airflow. Let’s break down why you might see this behavior and how to troubleshoot it.
 
 In my experience, particularly on an old e-commerce platform’s data pipelines I worked on some years ago, we initially struggled with this. We'd set `max_active_runs` to what we thought was a conservative value, yet still saw multiple concurrent dag runs, leading to resource contention and occasional failures. The root cause, as is often the case, wasn’t immediately apparent, and figuring out the interaction between different Airflow components was crucial.
 

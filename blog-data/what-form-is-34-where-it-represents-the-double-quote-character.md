@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "what-form-is-34-where-it-represents-the-double-quote-character"
 ---
 
-Okay so you're asking about how a double quote character is represented when you see `34` right let me tell you I've been down this rabbit hole more times than I care to admit its an oldie but a goodie
+ so you're asking about how a double quote character is represented when you see `34` right let me tell you I've been down this rabbit hole more times than I care to admit its an oldie but a goodie
 
 It's all about encoding buddy encoding is how computers store and display text and the number `34` is the decimal representation of a specific character in a character encoding specifically its the double quote character `"` in ASCII and its descendants like UTF-8
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-resolve-a-shape-mismatch-error-in-a-broadcast-operation"
 ---
 
-Okay, let's talk about shape mismatches in broadcast operations—something I've certainly bumped into more times than I care to remember. It’s a common headache, especially when dealing with numerical computations involving multi-dimensional arrays, often encountered in fields like scientific computing, machine learning, and data analysis. I've particularly seen this crop up during large matrix operations in custom signal processing libraries I was working on a while back.
+, let's talk about shape mismatches in broadcast operations—something I've certainly bumped into more times than I care to remember. It’s a common headache, especially when dealing with numerical computations involving multi-dimensional arrays, often encountered in fields like scientific computing, machine learning, and data analysis. I've particularly seen this crop up during large matrix operations in custom signal processing libraries I was working on a while back.
 
 The core issue, at its heart, arises from the way broadcasting is designed to work. It's a powerful technique that allows you to perform operations between arrays of different shapes under specific conditions. The basic idea is that when you're, say, adding two arrays, if they don't have matching dimensions, broadcasting attempts to "stretch" the smaller array to fit the larger one's shape, effectively avoiding the need to manually manipulate them to be the same size. But, this automatic stretching is not arbitrary. There are strict rules. The general rule is that shapes are compatible for broadcasting when they are either equal, or one of them is 1. Failing this compatibility, we get our dreaded shape mismatch error.
 

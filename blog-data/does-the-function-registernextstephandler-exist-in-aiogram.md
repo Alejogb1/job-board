@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "does-the-function-registernextstephandler-exist-in-aiogram"
 ---
 
-Okay, let's tackle this. It’s a fair question, and one that hints at a particular way of building interactive flows in telegram bots. I recall back in 2021, when working on a rather complex e-commerce bot using aiogram, that this pattern—dynamically registering handlers based on the user’s previous action—became quite critical for handling conversational states. While aiogram doesn't *directly* expose a function precisely named `register_next_step_handler`, it accomplishes the same thing through its powerful state management and dispatcher capabilities. It doesn't use a single function, but rather relies on a combination of concepts to achieve conditional, step-based handler execution.
+,  It’s a fair question, and one that hints at a particular way of building interactive flows in telegram bots. I recall back in 2021, when working on a rather complex e-commerce bot using aiogram, that this pattern—dynamically registering handlers based on the user’s previous action—became quite critical for handling conversational states. While aiogram doesn't *directly* expose a function precisely named `register_next_step_handler`, it accomplishes the same thing through its powerful state management and dispatcher capabilities. It doesn't use a single function, but rather relies on a combination of concepts to achieve conditional, step-based handler execution.
 
 The key here is understanding that aiogram uses a state machine-like approach. We define states for different stages of a conversation, and the dispatcher uses these states to determine which handler to invoke based on the incoming message. When you need to move the user to the "next step," you're effectively setting a new state. The dispatcher then routes the following message to the handler registered for that state.
 
@@ -48,7 +48,7 @@ async def start_command(message: types.Message, state: FSMContext):
 async def process_name(message: types.Message, state: FSMContext):
     async with state.proxy() as data:
         data['name'] = message.text
-    await message.answer("Okay, now what's your age?")
+    await message.answer(", now what's your age?")
     await UserRegistration.waiting_for_age.set() # move to the next state
 
 @dp.message_handler(state=UserRegistration.waiting_for_age)
@@ -104,7 +104,7 @@ async def process_product(message: types.Message, state: FSMContext):
     async with state.proxy() as data:
        data['product'] = message.text
 
-    await message.answer(f"Okay, you want to buy {message.text}. Confirm? (yes/no)")
+    await message.answer(f", you want to buy {message.text}. Confirm? (yes/no)")
     await PurchaseProcess.waiting_for_confirmation.set()
 
 @dp.message_handler(state=PurchaseProcess.waiting_for_confirmation)

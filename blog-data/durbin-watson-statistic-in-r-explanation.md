@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "durbin-watson-statistic-in-r-explanation"
 ---
 
-Okay so you want to know about the Durbin-Watson statistic in R and why you might use it right? I get it I've been there staring at residuals like they hold the secrets to the universe so lets dive in
+ so you want to know about the Durbin-Watson statistic in R and why you might use it right? I get it I've been there staring at residuals like they hold the secrets to the universe so lets dive in
 
 First off Durbin-Watson its a test for autocorrelation specifically in the residuals of a regression model Think of it like this you fit a model and you get these errors the stuff your model couldn't explain Durbin-Watson checks if those errors are hanging out with each other in a way they shouldn't you know if they are correlated over time or space or whatever your independent variable is
 
@@ -121,4 +121,4 @@ If you want to dig deeper into this I highly recommend checking out "Time Series
 
 And a little joke before we wrap this up why did the regression model break up with the residuals? Because they just couldn't find a constant relationship haha get it
 
-Alright good luck with your modeling and if you have more questions come back anytime
+good luck with your modeling and if you have more questions come back anytime

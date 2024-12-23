@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-my-ml-model-training-loss-increase-exponentially"
 ---
 
-Okay, let's tackle this. I've certainly seen my share of loss functions behaving in, shall we say, *unpredictable* ways, and an exponentially increasing loss is definitely one that makes you sit up straighter in your chair. I remember back when we were fine-tuning a transformer model for sentiment analysis, we ran into a similar problem. The loss was just spiraling upwards faster than a SpaceX rocket, and needless to say, it wasn't ideal. So, let’s dive into the common culprits, and how you can start to diagnose and fix this issue based on my experiences.
+,  I've certainly seen my share of loss functions behaving in, shall we say, *unpredictable* ways, and an exponentially increasing loss is definitely one that makes you sit up straighter in your chair. I remember back when we were fine-tuning a transformer model for sentiment analysis, we ran into a similar problem. The loss was just spiraling upwards faster than a SpaceX rocket, and needless to say, it wasn't ideal. So, let’s dive into the common culprits, and how you can start to diagnose and fix this issue based on my experiences.
 
 The core issue with an exponentially increasing training loss, fundamentally, is that the model is diverging from a stable state; it’s moving *away* from, rather than towards, a good solution. It's not just a matter of the model learning slowly, it's actively becoming worse. This can stem from multiple intertwined reasons, but broadly they fall under a few categories: problems with the optimization process, issues with the data, and architectural inadequacies.
 

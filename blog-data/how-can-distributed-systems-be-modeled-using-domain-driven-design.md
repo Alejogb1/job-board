@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-distributed-systems-be-modeled-using-domain-driven-design"
 ---
 
-Okay, let’s tackle this. I remember a particularly challenging project back in '18, integrating three previously siloed legacy systems for a financial institution – a true distributed monolith, if you will. We spent weeks untangling spaghetti code and trying to reconcile inconsistent data, until we finally leaned into domain-driven design (ddd). It dramatically changed our approach, providing not only a structure for the software but also a clear model of the business problem we were addressing.
+, let’s tackle this. I remember a particularly challenging project back in '18, integrating three previously siloed legacy systems for a financial institution – a true distributed monolith, if you will. We spent weeks untangling spaghetti code and trying to reconcile inconsistent data, until we finally leaned into domain-driven design (ddd). It dramatically changed our approach, providing not only a structure for the software but also a clear model of the business problem we were addressing.
 
 So, how do we use ddd to model distributed systems? The core principle, as always with ddd, is to start with the domain. Forget the technology for now; think about the actual business. A distributed system, inherently, deals with multiple interconnected services, each often responsible for a specific part of that business. This is where the concept of ‘bounded contexts’ becomes critical. These are not simply microservices, although they often map closely. Instead, they represent a semantic boundary within the business domain where a particular model is consistent and meaningful.
 

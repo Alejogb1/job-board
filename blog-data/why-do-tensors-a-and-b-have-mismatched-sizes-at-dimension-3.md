@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-do-tensors-a-and-b-have-mismatched-sizes-at-dimension-3"
 ---
 
-Okay, let's tackle this. I’ve certainly bumped into this exact headache more times than I care to recall, especially back during my time working on those complex image segmentation models. Debugging tensor shape mismatches can feel like chasing shadows initially, but it's almost always rooted in a straightforward logical error within the code. So, when tensors 'a' and 'b' exhibit a dimension 3 size discrepancy, it boils down to the operations attempting to be performed on them not aligning with their respective shapes.
+,  I’ve certainly bumped into this exact headache more times than I care to recall, especially back during my time working on those complex image segmentation models. Debugging tensor shape mismatches can feel like chasing shadows initially, but it's almost always rooted in a straightforward logical error within the code. So, when tensors 'a' and 'b' exhibit a dimension 3 size discrepancy, it boils down to the operations attempting to be performed on them not aligning with their respective shapes.
 
 Think of it this way: tensors, at their core, are just multi-dimensional arrays. Each dimension represents a different axis of the data. Dimension 0 might be the number of samples, dimension 1 the features, dimension 2 spatial height in an image, and so on. When dimension 3 has mismatched sizes between tensors 'a' and 'b', it indicates that either the inputs were not prepared correctly for a specific operation or there’s an incorrect expectation of the tensor shapes before an action occurs (like an element-wise operation or matrix multiplication that needs compatible dimensions).
 

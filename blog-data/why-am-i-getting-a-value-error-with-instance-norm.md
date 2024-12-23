@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-am-i-getting-a-value-error-with-instance-norm"
 ---
 
-Okay, let's tackle this. It's not uncommon to run into `ValueError` issues when dealing with instance normalization, and having experienced this myself on a few occasions, I can offer some context and solutions based on those experiences. It's generally not a matter of instance norm being fundamentally flawed; more often, it stems from a mismatch in the expected tensor shapes or improper usage during implementation.
+,  It's not uncommon to run into `ValueError` issues when dealing with instance normalization, and having experienced this myself on a few occasions, I can offer some context and solutions based on those experiences. It's generally not a matter of instance norm being fundamentally flawed; more often, it stems from a mismatch in the expected tensor shapes or improper usage during implementation.
 
 Let's unpack what typically goes wrong, keeping in mind instance norm's mechanics. Unlike batch norm, which normalizes activations across a batch of samples, instance norm normalizes activations *within* each sample independently, across spatial dimensions. This makes it particularly useful in tasks like style transfer or image generation where we want to preserve individual style or instance-specific characteristics.
 

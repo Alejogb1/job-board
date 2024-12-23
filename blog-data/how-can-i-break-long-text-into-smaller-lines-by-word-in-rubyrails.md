@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-break-long-text-into-smaller-lines-by-word-in-rubyrails"
 ---
 
-Okay, let's tackle text wrapping in Ruby/Rails, a task I’ve encountered more times than I care to count over the years. It might seem straightforward at first glance, but the devil, as they say, is in the details. In one particularly memorable project, we had user-generated content flowing into a mobile app, and handling those variable text lengths was critical for a clean ui. We couldn't rely on simple character truncation – we needed intelligent word wrapping. So, here’s how I’ve approached it, with a focus on practicality and clarity.
+, let's tackle text wrapping in Ruby/Rails, a task I’ve encountered more times than I care to count over the years. It might seem straightforward at first glance, but the devil, as they say, is in the details. In one particularly memorable project, we had user-generated content flowing into a mobile app, and handling those variable text lengths was critical for a clean ui. We couldn't rely on simple character truncation – we needed intelligent word wrapping. So, here’s how I’ve approached it, with a focus on practicality and clarity.
 
 The core problem, of course, is taking a string, and making sure that no line exceeds a specified length *in terms of characters*, without splitting words. We want to break the text down at suitable spaces, while respecting the target width. This is more complex than simply cutting strings at an arbitrary character limit. Here's the breakdown of methods I’ve found helpful:
 

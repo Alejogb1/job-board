@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-actiondispatchintegrationtest-modify-rails-environment-variables"
 ---
 
-Alright, let's tackle this. I've certainly been down this rabbit hole before, particularly during a rather complex integration testing suite for a microservices project a few years back. The short answer is yes, `ActionDispatch::IntegrationTest` can absolutely modify Rails environment variables, but it's a process that needs careful handling, and it's vital to understand the nuances involved. It's not about straightforward mutation; rather, it’s about managing the environment in a way that your tests operate as expected and don't leak changes to other test runs.
+Alright,  I've certainly been down this rabbit hole before, particularly during a rather complex integration testing suite for a microservices project a few years back. The short answer is yes, `ActionDispatch::IntegrationTest` can absolutely modify Rails environment variables, but it's a process that needs careful handling, and it's vital to understand the nuances involved. It's not about straightforward mutation; rather, it’s about managing the environment in a way that your tests operate as expected and don't leak changes to other test runs.
 
 When we talk about "modifying" environment variables in the context of `ActionDispatch::IntegrationTest`, we're generally aiming to override values typically loaded from `.env` files, or system environment settings, for the duration of the specific test. You wouldn't actually modify the original system environment of the machine running the test. What we're doing is influencing what Rails sees when it loads configurations for an individual test. Think of it more like providing temporary local overrides within the testing environment.
 

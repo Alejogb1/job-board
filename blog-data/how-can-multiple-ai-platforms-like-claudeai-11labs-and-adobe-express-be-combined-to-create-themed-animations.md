@@ -4,7 +4,7 @@ date: "2024-12-03"
 id: "how-can-multiple-ai-platforms-like-claudeai-11labs-and-adobe-express-be-combined-to-create-themed-animations"
 ---
 
-Okay so you wanna make themed animations using Claude AI 11Labs and Adobe Express right  That's awesome  It's like a total creative powerhouse waiting to be unleashed  Let's break it down  It's all about workflow and leveraging each platform's strengths
+ so you wanna make themed animations using Claude AI 11Labs and Adobe Express right  That's awesome  It's like a total creative powerhouse waiting to be unleashed  Let's break it down  It's all about workflow and leveraging each platform's strengths
 
 First off Claude AI is your brainstorming buddy and story engine  Think of it as the creative director  You feed it the theme say "create a whimsical underwater animation about a singing seahorse"  and it'll generate a script maybe even some scene descriptions  It's amazing how detailed you can get  I'd suggest looking into some papers on large language model applications in creative writing for more info  There's a ton of research on how these models can help with worldbuilding character development and plot outlining  It's not just about random words it's about structured storytelling
 

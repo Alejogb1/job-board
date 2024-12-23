@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-prevent-spacy-from-tokenizing-on-the--character"
 ---
 
-Alright, let's tackle this. It's a common issue, and one I recall hitting during a project involving structured product data a few years back. We were processing descriptions that often included component specifications separated by forward slashes, and Spacy's default tokenizer, as you've probably discovered, tends to split these up, which was not desirable for our use case.
+Alright,  It's a common issue, and one I recall hitting during a project involving structured product data a few years back. We were processing descriptions that often included component specifications separated by forward slashes, and Spacy's default tokenizer, as you've probably discovered, tends to split these up, which was not desirable for our use case.
 
 The core of the issue lies within Spacy's tokenizer configuration. Spacy, by default, uses a rule-based tokenizer that operates on a set of predefined patterns. The forward slash, `/`, is, unfortunately, one of those default token boundaries. To prevent this, we need to modify the tokenizer's behavior. I generally find two approaches that work reliably: either customizing the tokenization rules directly or by using a pre-tokenizer function. I'll walk you through both.
 

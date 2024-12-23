@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-a-pre-trained-keras-model-be-loaded-and-further-trained"
 ---
 
-Okay, let's tackle this. I recall a project a few years back, working with a rather large image classification model that had been pre-trained on ImageNet. We needed to adapt it for a very specific, niche domain, and the standard 'transfer learning' approach seemed insufficient—we needed to continue training the entire network, not just the final layers. That's where understanding the nuances of loading and further training a pre-trained Keras model became crucial.
+,  I recall a project a few years back, working with a rather large image classification model that had been pre-trained on ImageNet. We needed to adapt it for a very specific, niche domain, and the standard 'transfer learning' approach seemed insufficient—we needed to continue training the entire network, not just the final layers. That's where understanding the nuances of loading and further training a pre-trained Keras model became crucial.
 
 The key is understanding that when we talk about “loading” a pre-trained model, we're generally referring to loading its architecture and the weights of its trained layers, not necessarily all aspects of the training configuration itself. Keras offers straightforward mechanisms for this, but certain nuances must be carefully managed to achieve successful further training. This isn’t a simple “point and click” process; it often requires careful consideration of various parameters and training strategies.
 

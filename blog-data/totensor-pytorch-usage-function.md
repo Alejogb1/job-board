@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "totensor-pytorch-usage-function"
 ---
 
-Okay so you're asking about `totensor` in PyTorch right Been there done that multiple times let me tell you I've wrestled with that beast enough to fill a small library honestly
+ so you're asking about `totensor` in PyTorch right Been there done that multiple times let me tell you I've wrestled with that beast enough to fill a small library honestly
 
 So `totensor` yeah it's fundamental It's how you get your data into the PyTorch ecosystem from whatever weird format it's in right Like seriously I've seen data come in as CSVs nested lists numpy arrays even sometimes as images directly stored as byte arrays absolute madness but the world is crazy that's why the PyTorch crew made `totensor` it's our data sanitization station
 

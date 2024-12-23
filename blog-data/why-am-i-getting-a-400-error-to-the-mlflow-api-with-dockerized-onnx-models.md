@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-am-i-getting-a-400-error-to-the-mlflow-api-with-dockerized-onnx-models"
 ---
 
-Okay, let's tackle this. It's not uncommon to encounter 400 errors when interacting with the MLflow API, especially when dealing with dockerized ONNX models. From my experience, these errors often boil down to a few key culprits. It’s never just one thing, is it? I remember debugging a similar issue years back with a large-scale anomaly detection system - the frustration then is quite similar, I assume. The devil, as always, is in the details. Let me walk you through the common pitfalls and provide some concrete examples.
+,  It's not uncommon to encounter 400 errors when interacting with the MLflow API, especially when dealing with dockerized ONNX models. From my experience, these errors often boil down to a few key culprits. It’s never just one thing, is it? I remember debugging a similar issue years back with a large-scale anomaly detection system - the frustration then is quite similar, I assume. The devil, as always, is in the details. Let me walk you through the common pitfalls and provide some concrete examples.
 
 First, a 400 status code generally indicates that the server cannot or will not process the request due to something that is perceived as a client error. It’s a signal that the request itself is malformed. In the context of MLflow serving ONNX models, several things can contribute to this. The most frequent issues center around: payload format, model signatures, and request header configurations.
 

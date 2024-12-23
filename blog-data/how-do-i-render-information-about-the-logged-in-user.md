@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-render-information-about-the-logged-in-user"
 ---
 
-Okay, let's tackle user data rendering. It's a seemingly simple task, but, like most things in development, it carries nuances that can really impact application performance and security. I’ve seen this go south on a number of projects, so let's break down the correct approach.
+, let's tackle user data rendering. It's a seemingly simple task, but, like most things in development, it carries nuances that can really impact application performance and security. I’ve seen this go south on a number of projects, so let's break down the correct approach.
 
 The fundamental challenge revolves around securely and efficiently retrieving and displaying information about the currently logged-in user. We need to ensure this data is: 1) accessible only when authenticated, 2) not leaking sensitive details to unauthorized parties, and 3) delivered to the client-side in a way that doesn't bog down the user interface. In my experience, the 'naive' method of just throwing all user information at the client is a quick route to a security headache.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-await-an-async-function-in-a-spawned-rust-tokio-thread"
 ---
 
-Okay, let’s tackle this. It's a common pitfall, and one I've certainly stumbled over myself a few times, particularly when initially embracing the asynchronous paradigm in Rust with tokio. The issue isn't with the concept itself, but rather how futures, and especially `async` functions, interact with the threading model. Let's break it down.
+, let’s tackle this. It's a common pitfall, and one I've certainly stumbled over myself a few times, particularly when initially embracing the asynchronous paradigm in Rust with tokio. The issue isn't with the concept itself, but rather how futures, and especially `async` functions, interact with the threading model. Let's break it down.
 
 Essentially, when you spawn a thread using `tokio::spawn`, you’re creating a new execution context that *doesn't* inherently understand the asynchronous runtime within which your main program is running. An `async` function, at its core, returns a future. This future needs to be polled by an executor to actually make progress. When you directly call an `async` function within a spawned tokio thread and expect it to magically complete, you're often met with a future that’s simply…waiting. It's not being driven by an active tokio runtime. The spawned thread doesn’t have its own.
 

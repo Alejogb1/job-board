@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-train-a-tensorflow-model-with-data-of-varying-shapes"
 ---
 
-Alright, let's tackle this. I've definitely been in situations where you're staring at a mountain of data, all seemingly determined to be different shapes, and trying to get a TensorFlow model to learn from it. It's not uncommon, and it definitely needs a structured approach.
+Alright,  I've definitely been in situations where you're staring at a mountain of data, all seemingly determined to be different shapes, and trying to get a TensorFlow model to learn from it. It's not uncommon, and it definitely needs a structured approach.
 
 The core issue, as you've likely noticed, is that TensorFlow (and most deep learning frameworks) expect batches of data to be, well, uniformly shaped tensors. A model’s architecture, particularly its dense layers, matrix multiplications and convolution operations, are predicated on this consistency. Feeding it varying shapes during training will trigger exceptions and lead to unpredictable results. So, how do we circumvent this? I’ve found that three primary approaches tend to be the most effective, each with its own use cases and trade-offs.
 

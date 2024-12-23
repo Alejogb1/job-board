@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "what-architectural-differences-exist-between-elastics-frozen-tier-search-and-fully-stateless-search-engines-querying-s3"
 ---
 
-Okay so you wanna know about Elastic's frozen tier versus stateless search engines hitting S3 right  cool  its a pretty interesting comparison actually  they both aim for the same thing basically super fast super scalable search but they go about it in wildly different ways
+ so you wanna know about Elastic's frozen tier versus stateless search engines hitting S3 right  cool  its a pretty interesting comparison actually  they both aim for the same thing basically super fast super scalable search but they go about it in wildly different ways
 
 Elastic's frozen tier is all about efficiency within their ecosystem its like a smart hibernation mode for your indices you still have all your data but its not actively chugging resources until you need it  Think of it as putting your infrequently used winter coat in the back of your closet its there when you need it but isnt taking up prime real estate in your daily wardrobe
 

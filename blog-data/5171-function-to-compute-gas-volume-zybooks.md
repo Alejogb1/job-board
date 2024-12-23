@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "5171-function-to-compute-gas-volume-zybooks"
 ---
 
-Okay so you're stuck on a gas volume calculation function typical zybooks problem right I've been there man trust me I’ve seen this exact scenario a thousand times probably did it myself back when I was in college feels like a lifetime ago
+ so you're stuck on a gas volume calculation function typical zybooks problem right I've been there man trust me I’ve seen this exact scenario a thousand times probably did it myself back when I was in college feels like a lifetime ago
 
 Lets break it down this is classic physics meets programming you gotta translate the Ideal Gas Law into code its actually simpler than it sounds once you’ve got the formula down
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "how-to-remove-all-metadata-using-ffmpeg"
 ---
 
-Okay so you wanna strip metadata from your media files using ffmpeg right Been there done that let me tell you it’s a rabbit hole but a necessary one if you’re serious about cleaning up your digital life or prepping content for specific platforms
+ so you wanna strip metadata from your media files using ffmpeg right Been there done that let me tell you it’s a rabbit hole but a necessary one if you’re serious about cleaning up your digital life or prepping content for specific platforms
 
 I've spent way too many hours wrestling with ffmpeg it’s powerful but it also has its quirks It wasn't always smooth sailing believe me I once spent a whole weekend trying to figure out why a seemingly simple video was crashing a mobile app turns out it was some obscure metadata tag that ffmpeg hadn’t touched a nightmare I tell you So I learned the hard way that sometimes getting rid of everything is the best approach
 
@@ -14,7 +14,7 @@ First things first the basic command you’re probably looking for is this
 ffmpeg -i input.mp4 -map 0 -c copy -map_metadata -1 output.mp4
 ```
 
-Alright let’s break this down a little `-i input.mp4` that's your input file right the video or audio whatever you've got Then `-map 0` says take all the streams from that input `-c copy` is key it’s telling ffmpeg to copy the streams without re-encoding that’s critical if you want speed and to avoid any quality loss Now `-map_metadata -1` this is the magic right here it's telling ffmpeg to drop all metadata That `-1` means all metadata will be stripped completely Finally you've got `output.mp4` which is the name of your cleaned up file
+let’s break this down a little `-i input.mp4` that's your input file right the video or audio whatever you've got Then `-map 0` says take all the streams from that input `-c copy` is key it’s telling ffmpeg to copy the streams without re-encoding that’s critical if you want speed and to avoid any quality loss Now `-map_metadata -1` this is the magic right here it's telling ffmpeg to drop all metadata That `-1` means all metadata will be stripped completely Finally you've got `output.mp4` which is the name of your cleaned up file
 
 Simple enough right Well not always let’s say you’ve got a file where even that doesn’t cut it Sometimes there’s weird embedded stuff that clings on or you have specific tags you absolutely don't want
 
@@ -40,7 +40,7 @@ Remember it’s all about understanding the structure of your input file the dat
 
 Now I know ffmpeg can seem scary but it's really about understanding the options and their implications A lot of times problems arise from the fact that the user is not sure about which stream contains the metadata that they are trying to get rid off or they are not using the correct syntax for the different metadata they are targeting.
 
-I also know that you might want to go more advanced than just removing metadata Maybe you'll want to add new metadata or to change existing metadata to a different value I mean let’s be honest we’ve all wanted to rename an album or add a cool description to a video right? Okay maybe just me but there is also something called metadata injection which is a common thing to do in media production
+I also know that you might want to go more advanced than just removing metadata Maybe you'll want to add new metadata or to change existing metadata to a different value I mean let’s be honest we’ve all wanted to rename an album or add a cool description to a video right?  maybe just me but there is also something called metadata injection which is a common thing to do in media production
 
 But before we go there let's talk about more basic things you need to know about metadata
 

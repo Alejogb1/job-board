@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-spring-data-be-used-to-maintain-separate-domain-and-entity-classes-in-ddd"
 ---
 
-Okay, let's tackle this. I remember back when I was working on a large e-commerce platform, we faced a similar challenge: how to cleanly separate our domain logic from the persistence layer using Spring Data while adhering to Domain-Driven Design (DDD) principles. It’s a common stumbling block, and the solution requires a thoughtful approach. It's not always intuitive, especially when you're first exploring DDD with Spring.
+,  I remember back when I was working on a large e-commerce platform, we faced a similar challenge: how to cleanly separate our domain logic from the persistence layer using Spring Data while adhering to Domain-Driven Design (DDD) principles. It’s a common stumbling block, and the solution requires a thoughtful approach. It's not always intuitive, especially when you're first exploring DDD with Spring.
 
 The core issue lies in the fact that Spring Data, by default, tends to assume your entities are also your domain objects. This can quickly lead to an anemic domain model, where your entities end up with persistence-related concerns polluting your core business logic. DDD, on the other hand, advocates for a rich domain model, encapsulated and independent of infrastructural details like persistence. To bridge this gap, we need to consciously enforce a separation between domain models and JPA entities.
 

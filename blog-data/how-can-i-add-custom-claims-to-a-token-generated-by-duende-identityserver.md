@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-add-custom-claims-to-a-token-generated-by-duende-identityserver"
 ---
 
-Okay, let's tackle this. I've spent a fair bit of time elbow-deep in IdentityServer, and dealing with custom claims is something I've frequently encountered – often in scenarios that, let's say, weren't textbook. Adding custom claims isn't just about adding extra data; it's about building a secure, flexible, and maintainable authentication and authorization system. We're talking about enriching tokens with application-specific or user-specific information that's critical for downstream services, and doing it correctly is paramount.
+,  I've spent a fair bit of time elbow-deep in IdentityServer, and dealing with custom claims is something I've frequently encountered – often in scenarios that, let's say, weren't textbook. Adding custom claims isn't just about adding extra data; it's about building a secure, flexible, and maintainable authentication and authorization system. We're talking about enriching tokens with application-specific or user-specific information that's critical for downstream services, and doing it correctly is paramount.
 
 The core concept here revolves around the IdentityServer's extensibility points, primarily the `IProfileService` interface. This interface provides methods that are invoked during the token issuance process. It allows you to dynamically inject custom claims into access tokens and identity tokens based on the context, including the user's identity, the client requesting the token, and the scopes involved. Think of it as a hook into the token creation pipeline.
 

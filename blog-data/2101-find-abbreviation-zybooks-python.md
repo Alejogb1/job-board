@@ -4,11 +4,11 @@ date: "2024-12-13"
 id: "2101-find-abbreviation-zybooks-python"
 ---
 
-Okay so someone's wrestling with abbreviations in Zybooks Python right I've been there trust me it's a classic case of "I have this string and I want to make it shorter but not like *that* shorter"
+ so someone's wrestling with abbreviations in Zybooks Python right I've been there trust me it's a classic case of "I have this string and I want to make it shorter but not like *that* shorter"
 
 Right so looking at the question "2101 find abbreviation zybooks python" screams that we’re dealing with Zybooks exercises most likely that whole auto-graded shebang where they're expecting a specific output format and if you're not spot on it's gonna mark you down brutal I've spent far too much time staring at those test cases cursing the precise formatting requirements but it's a necessary evil for learning the nitty gritty details I guess
 
-Alright let's break down what this usually entails we're generally dealing with some form of string input and wanting to generate an abbreviation typically either taking first letters of words or something similar and not something as easy as just string slicing because if it was that easy we would not be here right
+let's break down what this usually entails we're generally dealing with some form of string input and wanting to generate an abbreviation typically either taking first letters of words or something similar and not something as easy as just string slicing because if it was that easy we would not be here right
 
 My past experiences with this usually revolved around parsing strings that had various structures sometimes names with middle initials and sometimes multi-word phrases you know the usual "John D Smith" or "International Business Machines Corporation" and the need to distill them down to something like "JDS" or "IBM" without getting tripped up by extra spaces or edge cases.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-stochastic-gradient-descent-be-applied-to-custom-functions"
 ---
 
-Okay, let's tackle this. I remember a particularly challenging project a few years back, developing a custom anomaly detection system for sensor data. We had this weird, non-standard loss function that wasn't playing nice with existing libraries, and that's where the deep dive into applying stochastic gradient descent (SGD) to custom functions really began. It's certainly more involved than just throwing data at a pre-built model, but absolutely achievable with a clear understanding of the underlying mechanisms.
+,  I remember a particularly challenging project a few years back, developing a custom anomaly detection system for sensor data. We had this weird, non-standard loss function that wasn't playing nice with existing libraries, and that's where the deep dive into applying stochastic gradient descent (SGD) to custom functions really began. It's certainly more involved than just throwing data at a pre-built model, but absolutely achievable with a clear understanding of the underlying mechanisms.
 
 Essentially, the power of SGD lies in its ability to iteratively adjust model parameters (weights, biases, etc.) to minimize a given cost or loss function. The function itself, in most deep learning scenarios, quantifies the error of our model’s predictions compared to the actual ground truth. When you move outside the realm of standard loss functions available in frameworks like tensorflow or pytorch, you need to be very explicit with how that process unfolds.
 

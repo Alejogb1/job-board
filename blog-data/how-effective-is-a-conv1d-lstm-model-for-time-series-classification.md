@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-effective-is-a-conv1d-lstm-model-for-time-series-classification"
 ---
 
-Alright, let's tackle this. I've spent a good chunk of my career playing around with time series data, and the combination of a Conv1D and LSTM—that's a combo I've seen both excel and occasionally stumble, so I’ve got a pretty solid grasp on their effectiveness, or lack thereof, depending on the situation. Instead of a generic overview, let's break down where this architecture really shines and where its limitations lie.
+Alright,  I've spent a good chunk of my career playing around with time series data, and the combination of a Conv1D and LSTM—that's a combo I've seen both excel and occasionally stumble, so I’ve got a pretty solid grasp on their effectiveness, or lack thereof, depending on the situation. Instead of a generic overview, let's break down where this architecture really shines and where its limitations lie.
 
 I remember a project a few years back, dealing with sensor data from a manufacturing line. The task was to classify different types of mechanical failures based on short snippets of time-series readings. We started with more traditional methods like statistical feature extraction and then tried some basic recurrent neural networks, but the performance wasn't cutting it. That's when we started exploring hybrid architectures like Conv1D-LSTM.
 

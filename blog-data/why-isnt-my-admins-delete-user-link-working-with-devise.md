@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-isnt-my-admins-delete-user-link-working-with-devise"
 ---
 
-Okay, let's tackle this. I’ve seen this particular puzzle crop up more times than I care to remember, and it’s almost always a subtle permissions issue tangled up with Devise's default behaviors and possibly a sprinkle of confusion around HTTP methods. So, let's break down why your admin's delete user link might be failing, even when it *looks* like it should work.
+,  I’ve seen this particular puzzle crop up more times than I care to remember, and it’s almost always a subtle permissions issue tangled up with Devise's default behaviors and possibly a sprinkle of confusion around HTTP methods. So, let's break down why your admin's delete user link might be failing, even when it *looks* like it should work.
 
 First off, Devise is remarkably good at handling authentication for user models, but it doesn't magically grant superpowers to your admin panel. What's often missed is that while Devise handles user login, signup, and password resets, it doesn't inherently provide any logic for different *roles* or *authorization*. You've got to layer that on yourself. My experience comes from building and maintaining a multi-tenant application where we had admins, moderators, regular users and some custom roles too. We battled through these sorts of things consistently.
 
@@ -44,7 +44,7 @@ We need to use Rails form helpers to change the HTTP method to `DELETE`. This wi
 <%= button_to "Delete User", admin_user_path(user), method: :delete %>
 ```
 
-Okay, this is much better. This uses Rails form helpers and will send a `DELETE` request with CSRF token (as long as you have `<%= csrf_meta_tags %>` in your layout file). However, if you did not implement authorization, *any* authenticated user could delete another user. This is clearly not good. We need to add authorization. Let’s assume, for the sake of example, that we can authorize admin users using the `admin` boolean column on the `users` model. Here’s the code:
+, this is much better. This uses Rails form helpers and will send a `DELETE` request with CSRF token (as long as you have `<%= csrf_meta_tags %>` in your layout file). However, if you did not implement authorization, *any* authenticated user could delete another user. This is clearly not good. We need to add authorization. Let’s assume, for the sake of example, that we can authorize admin users using the `admin` boolean column on the `users` model. Here’s the code:
 
 ```ruby
 # app/controllers/admin/users_controller.rb

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-isnt-the-referrer-function-sending-msgvalue-to-the-correct-address"
 ---
 
-Okay, let's tackle this. I've bumped into this particular issue countless times in my years developing smart contracts, and it's almost always a subtle misunderstanding of how `msg.value` and transaction contexts operate within the ethereum virtual machine (evm). Let’s unpack it. The short answer is this: the referrer function, as you’re experiencing, probably isn’t explicitly *forwarding* the `msg.value`, it’s merely being called, typically within the context of another transaction.
+,  I've bumped into this particular issue countless times in my years developing smart contracts, and it's almost always a subtle misunderstanding of how `msg.value` and transaction contexts operate within the ethereum virtual machine (evm). Let’s unpack it. The short answer is this: the referrer function, as you’re experiencing, probably isn’t explicitly *forwarding* the `msg.value`, it’s merely being called, typically within the context of another transaction.
 
 Imagine this scenario, back in my early days working on a decentralized exchange prototype. We had a core smart contract handling trades, and we wanted to implement a referral system. The initial approach was simplistic: a user would call the main trade function, and if a referrer address was provided, we'd trigger another function on the same contract. We expected the full `msg.value` from the user's initial trade transaction to automatically pass along to this referral function, thinking the internal call would propagate that context. We were, to put it mildly, incorrect.
 

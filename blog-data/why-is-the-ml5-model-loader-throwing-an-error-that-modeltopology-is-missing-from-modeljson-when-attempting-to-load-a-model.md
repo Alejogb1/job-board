@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-the-ml5-model-loader-throwing-an-error-that-modeltopology-is-missing-from-modeljson-when-attempting-to-load-a-model"
 ---
 
-Okay, let's unpack this. I've seen this specific `modelTopology` error with ml5.js more times than I care to remember, often cropping up in projects where we're pushing the boundaries of model customization or working with models from unconventional sources. It's a frustrating roadblock, but thankfully, the root cause typically boils down to a mismatch between what ml5.js expects in the `model.json` file and what's actually present.
+, let's unpack this. I've seen this specific `modelTopology` error with ml5.js more times than I care to remember, often cropping up in projects where we're pushing the boundaries of model customization or working with models from unconventional sources. It's a frustrating roadblock, but thankfully, the root cause typically boils down to a mismatch between what ml5.js expects in the `model.json` file and what's actually present.
 
 Essentially, ml5.js, when loading a model, relies on a specific structure within that `model.json` file. It's not just a random collection of metadata; it's a blueprint that tells ml5.js how to construct and use the neural network. The error message `modelTopology is missing` is a clear indication that this particular blueprint is incomplete according to the expected ml5.js schema.
 

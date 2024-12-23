@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-rspec-request-tests-in-a-rails-70-app-ensure-a-specific-integer-response"
 ---
 
-Alright, let's tackle this. Ensuring a specific integer response in RSpec request tests for a Rails 7.0 application is something I've definitely navigated a few times, particularly when dealing with APIs or specific endpoints that return numeric identifiers. It's crucial for maintaining the contract of your application, and honestly, a small oversight here can cascade into larger issues down the line. My experience has shown me that focusing on precision in these tests pays dividends.
+Alright,  Ensuring a specific integer response in RSpec request tests for a Rails 7.0 application is something I've definitely navigated a few times, particularly when dealing with APIs or specific endpoints that return numeric identifiers. It's crucial for maintaining the contract of your application, and honestly, a small oversight here can cascade into larger issues down the line. My experience has shown me that focusing on precision in these tests pays dividends.
 
 The core of the problem lies in correctly asserting the structure and value within the response body. Rails responses, particularly in JSON format, can sometimes be a bit opaque if you're not explicit about how you're testing them. Let's break down the general approach and then dive into some code examples.
 

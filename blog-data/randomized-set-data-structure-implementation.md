@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "randomized-set-data-structure-implementation"
 ---
 
-Okay so you want to talk about randomized set implementations right Been there done that Let me tell you it's not as straightforward as some might think you'd think it's a simple wrapper around a hashset or something but nah not really There are nuances
+ so you want to talk about randomized set implementations right Been there done that Let me tell you it's not as straightforward as some might think you'd think it's a simple wrapper around a hashset or something but nah not really There are nuances
 
 My first encounter with this was way back in like probably 2014 or 2015 I was working on this real-time data processing pipeline and we needed a way to deduplicate incoming events without a fixed order of insertion or deletion basically we had a firehose of events and needed to keep track of which ones we had already seen to avoid reprocessing them and the order we processed them did not matter But just a plain set didn't quite cut it because we occasionally had to remove entries randomly to simulate expiring entries without a strict fifo or lifo queue It was a real headache at first
 
@@ -62,7 +62,7 @@ You can test it by doing some insertions and then some removals and the the cont
 
 I remember when i first implemented this i made a stupid mistake where i was updating the mapping incorrectly and it was inserting but not updating mapping at all when removing so it was still returning that it contains but i already removed it I was like what in the world and then i got the debugger out and it turned out it was like one line that made the whole thing not work and after that the random removal worked flawlessly I almost threw my computer out the window when I saw that it was a one-line fix and that line i was missing was the line to update the mapping table I can't tell you how many times that kind of thing has happened It's almost comical at this point You spend hours debugging something and then its like it just needs a single line to be changed or added
 
-Alright here is another example this time using Java it is the same logic but different programming language
+here is another example this time using Java it is the same logic but different programming language
 
 ```java
 import java.util.*;

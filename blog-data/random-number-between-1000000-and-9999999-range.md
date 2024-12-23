@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "random-number-between-1000000-and-9999999-range"
 ---
 
-Okay so you need a random number between 1000000 and 9999999 range right I've been there done that a bunch of times it sounds simple but you can mess it up if you aren't careful especially when you are under pressure dealing with critical systems
+ so you need a random number between 1000000 and 9999999 range right I've been there done that a bunch of times it sounds simple but you can mess it up if you aren't careful especially when you are under pressure dealing with critical systems
 
 Let's break it down and I'll give you my take on it and share some code snippets based on my painful past experiences
 

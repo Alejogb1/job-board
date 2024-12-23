@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-does-selenium-4s-webdriver-manage-implicit-waits"
 ---
 
-Okay, let's talk about implicit waits in Selenium 4. From my experience, they are often a point of confusion, especially when you're dealing with dynamic web applications. I’ve certainly seen my share of flaky tests due to misunderstood implicit wait behavior. So, let's break it down.
+, let's talk about implicit waits in Selenium 4. From my experience, they are often a point of confusion, especially when you're dealing with dynamic web applications. I’ve certainly seen my share of flaky tests due to misunderstood implicit wait behavior. So, let's break it down.
 
 The core idea behind an implicit wait is to tell the webdriver to pause for a specified duration when attempting to find an element that isn't immediately present in the document object model (dom). Instead of throwing a `NoSuchElementException` immediately, selenium will periodically poll the dom for the element until either the element is found or the specified wait time elapses. This mechanism provides a somewhat cleaner way of handling asynchronous loading compared to hardcoded `Thread.sleep()` calls, which are notoriously brittle.
 

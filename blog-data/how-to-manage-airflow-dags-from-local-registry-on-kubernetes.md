@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-manage-airflow-dags-from-local-registry-on-kubernetes"
 ---
 
-Let's tackle this. I recall a particularly gnarly project a few years back where we scaled our data pipelines tenfold, and orchestrating those with airflow on kubernetes, using a local dag registry, became an absolute necessity. It wasn’t all smooth sailing, but we hammered out a process that worked reliably. I'll walk you through that, focusing on the core concepts and techniques.
+ I recall a particularly gnarly project a few years back where we scaled our data pipelines tenfold, and orchestrating those with airflow on kubernetes, using a local dag registry, became an absolute necessity. It wasn’t all smooth sailing, but we hammered out a process that worked reliably. I'll walk you through that, focusing on the core concepts and techniques.
 
 Managing airflow dags from a local registry on kubernetes introduces a few key challenges. First, you're dealing with the inherent dynamism of kubernetes deployments coupled with airflow's need to discover and parse dags, which are essentially python scripts. Second, keeping those dags consistent across different pods is crucial for preventing runtime errors. We don’t want different airflow workers seeing different versions of the same dag. The solution revolves around implementing a streamlined workflow for dag development, version control, and deployment.
 

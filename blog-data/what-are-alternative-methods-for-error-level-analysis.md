@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-are-alternative-methods-for-error-level-analysis"
 ---
 
-Okay, let's tackle this. I’ve spent my share of late nights debugging, and the usual `try...except` blocks sometimes just don't cut it when you're trying to really understand what's going wrong, particularly in complex systems. Error level analysis, as we usually define it, can be pretty basic—logging, raising exceptions, etc. But there are definitely more nuanced ways to dissect and categorize errors, leading to better debugging and more resilient code. I’ve seen firsthand how adopting some of these methods can be game-changers.
+,  I’ve spent my share of late nights debugging, and the usual `try...except` blocks sometimes just don't cut it when you're trying to really understand what's going wrong, particularly in complex systems. Error level analysis, as we usually define it, can be pretty basic—logging, raising exceptions, etc. But there are definitely more nuanced ways to dissect and categorize errors, leading to better debugging and more resilient code. I’ve seen firsthand how adopting some of these methods can be game-changers.
 
 Firstly, let's move beyond simply classifying errors as "fatal" or "non-fatal." A more sophisticated approach involves categorizing errors based on their **impact and scope.** Think of a tiered system:
 

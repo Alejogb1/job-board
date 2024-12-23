@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "dir-glob-ruby-files"
 ---
 
-Okay I see this question dir glob ruby files right so let me tell you I've been there done that more times than I can count it's like a right of passage in the ruby world especially when you're dealing with project structures that aren't exactly how you want them
+ I see this question dir glob ruby files right so let me tell you I've been there done that more times than I can count it's like a right of passage in the ruby world especially when you're dealing with project structures that aren't exactly how you want them
 
 So the core issue is you want to grab a list of file paths that match a certain pattern right that's what globbing is all about and you want to do it in Ruby I assume from the question that you want to use it with the `Dir` class since you mentioned `dir`
 
@@ -23,7 +23,7 @@ This code will simply print an array that contains the file paths of all ruby fi
 
 Now lets say you wanted to be a bit more specific you only want files inside a specific folder a common mistake that beginners commit is trying to concatenate file paths and making errors using string manipulations when ruby provide path tools and glob can use them perfectly so don't do that
 
-Okay so if your files were all inside a directory called "scripts" that was in the same directory as the ruby script you are running it would look something like this
+ so if your files were all inside a directory called "scripts" that was in the same directory as the ruby script you are running it would look something like this
 
 ```ruby
 scripts_dir = "scripts"
@@ -60,7 +60,7 @@ There are other options too the `glob` function also receives a second optional 
 
 But also be aware of the limitations of glob for example it doesn't support regular expressions natively and some patterns can get complicated so if you find yourself trying to do extremely complicated patterns then maybe you want to investigate other libraries specifically designed for parsing complex patterns for a few minutes that I don't recommend it here because the question is about Dir.glob
 
-Alright let's talk resources if you want to dive deeper here are some recommendations first the official ruby documentation for the Dir class it's the bible of the ruby world for a reason you'll find the documentation in the ruby-doc website search for `Dir` and you will find everything you need to know about the `Dir` class and all the available methods
+let's talk resources if you want to dive deeper here are some recommendations first the official ruby documentation for the Dir class it's the bible of the ruby world for a reason you'll find the documentation in the ruby-doc website search for `Dir` and you will find everything you need to know about the `Dir` class and all the available methods
 
 Then if you want to understand how the glob function works under the hood then you can check the POSIX standard specifically the section about file globbing it's a bit dry but you will understand how the patterns actually work the standard is the IEEE Std 1003.1-2017 you can check the standard if you are interested in how these patterns are implemented in different operating systems
 
@@ -70,4 +70,4 @@ One last thing when doing file operations on a server make sure you are handling
 
 Also just as a random bit I think my hard drive is starting to feel old it's been spinning for quite a while lately I think I'm going to need to get a new one sooner or later
 
-Okay I think that's it for now let me know if you have more questions I've spent a lot of time dealing with files and patterns and I'm glad to share what I've learned along the years
+ I think that's it for now let me know if you have more questions I've spent a lot of time dealing with files and patterns and I'm glad to share what I've learned along the years

@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-can-features-be-specified-for-richtextblocks-in-wagtail"
 ---
 
-Let's tackle this. I've spent a fair amount of time working with Wagtail, and specifying features for RichTextBlocks, especially within larger, more complex projects, can often feel like navigating a labyrinth if you don't have a solid handle on the underlying mechanisms. So, let's break down how we can effectively control the available tools and formatting options for rich text content in your Wagtail models.
+ I've spent a fair amount of time working with Wagtail, and specifying features for RichTextBlocks, especially within larger, more complex projects, can often feel like navigating a labyrinth if you don't have a solid handle on the underlying mechanisms. So, let's break down how we can effectively control the available tools and formatting options for rich text content in your Wagtail models.
 
 From my experience, the core of this lies in Wagtail's `features` parameter within the `RichTextBlock` definition. This parameter, when absent, defaults to a very basic set of features, generally only including bold and italic text. This is usually not sufficient for practical applications. The power here is that we're given granular control over what editing options are presented to the content editor.
 

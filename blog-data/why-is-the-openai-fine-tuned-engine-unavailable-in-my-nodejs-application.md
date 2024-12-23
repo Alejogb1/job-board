@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-the-openai-fine-tuned-engine-unavailable-in-my-nodejs-application"
 ---
 
-Okay, let's unpack this. I've seen this particular issue pop up more times than I care to count, especially when transitioning from initial experimentation with the OpenAI API to a more robust, production-oriented Node.js application. It’s almost always down to a few core issues, and they tend to revolve around how the API is accessed and configured, rather than a fundamental problem with the fine-tuned model itself. In my experience, this isn’t a matter of the fine-tuned engine vanishing, but rather the application not being able to *find* or *use* it properly.
+, let's unpack this. I've seen this particular issue pop up more times than I care to count, especially when transitioning from initial experimentation with the OpenAI API to a more robust, production-oriented Node.js application. It’s almost always down to a few core issues, and they tend to revolve around how the API is accessed and configured, rather than a fundamental problem with the fine-tuned model itself. In my experience, this isn’t a matter of the fine-tuned engine vanishing, but rather the application not being able to *find* or *use* it properly.
 
 First, let’s clarify what we’re usually dealing with. When you fine-tune a model with OpenAI, it generates a *new* model id, often displayed as a string. This model id isn't the same as the base model you might be using directly, like `gpt-3.5-turbo` or `text-davinci-003`. Think of it as a derived product, with its own specific identifier. The core problem lies in making sure your Node.js application uses this correct, specific identifier during API calls.
 

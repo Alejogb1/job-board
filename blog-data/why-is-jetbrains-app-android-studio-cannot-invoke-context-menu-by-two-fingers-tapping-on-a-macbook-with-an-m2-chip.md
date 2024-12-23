@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-is-jetbrains-app-android-studio-cannot-invoke-context-menu-by-two-fingers-tapping-on-a-macbook-with-an-m2-chip"
 ---
 
-alright, let's tackle this.
+alright, 
 
 so, you're hitting an issue with android studio on your macbook m2, specifically the context menu not popping up with a two-finger tap. that's… annoying, i get it. i've spent way too many hours debugging similar kinds of input weirdness myself, so let's unpack this.
 

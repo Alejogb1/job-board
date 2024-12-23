@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-a-cloudfront-access-to-a-kms-encrypted-file-failing-with-an-invalid-token"
 ---
 
-Okay, let's unpack this scenario. It's not an uncommon one, and I've definitely seen my fair share of CloudFront-KMS integration puzzles in the past, sometimes even feeling like I was chasing shadows. Seeing a CloudFront access failing with an 'invalid token' when a KMS-encrypted file is involved typically points to a core issue: the relationship between authentication, authorization, and the subtle dance of encryption key management. Essentially, CloudFront, KMS, and the S3 bucket, where your encrypted file resides, need to be in complete harmony. If even one note is off, you end up with this frustrating error.
+, let's unpack this scenario. It's not an uncommon one, and I've definitely seen my fair share of CloudFront-KMS integration puzzles in the past, sometimes even feeling like I was chasing shadows. Seeing a CloudFront access failing with an 'invalid token' when a KMS-encrypted file is involved typically points to a core issue: the relationship between authentication, authorization, and the subtle dance of encryption key management. Essentially, CloudFront, KMS, and the S3 bucket, where your encrypted file resides, need to be in complete harmony. If even one note is off, you end up with this frustrating error.
 
 The root problem almost always boils down to CloudFront not having the necessary permissions to decrypt the object using KMS before delivering it to the viewer. It's not usually about an inherently "invalid" token per se, but rather a token that's not properly authorized to access the relevant KMS key. The flow of requests and permissions is crucial here, and I’ll illustrate it in a step-by-step manner.
 

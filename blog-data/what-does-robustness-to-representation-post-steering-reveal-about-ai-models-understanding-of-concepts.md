@@ -4,7 +4,7 @@ date: "2024-12-11"
 id: "what-does-robustness-to-representation-post-steering-reveal-about-ai-models-understanding-of-concepts"
 ---
 
-Okay so you wanna dig into robustness to representation post-steering and what that tells us about how well AI actually *gets* concepts right yeah  It's a pretty juicy question  I mean we're basically asking can we mess with how the AI sees things after it's already made up its mind and still get the right answer  If it can that suggests a deeper understanding than just surface-level pattern matching
+ so you wanna dig into robustness to representation post-steering and what that tells us about how well AI actually *gets* concepts right yeah  It's a pretty juicy question  I mean we're basically asking can we mess with how the AI sees things after it's already made up its mind and still get the right answer  If it can that suggests a deeper understanding than just surface-level pattern matching
 
 Think of it like this  you show a kid a picture of a cat  they say "cat"  Great  Now you show them a really weird picture of a cat like a cat made of LEGOs or a cat drawn super abstractly  A really robust model should still say "cat"  Even if it's a bit hesitant  That's post-steering robustness  We've steered it toward a specific answer initially then we test how it handles deviations
 

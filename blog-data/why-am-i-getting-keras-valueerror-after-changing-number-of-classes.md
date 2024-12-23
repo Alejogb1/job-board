@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-am-i-getting-keras-valueerror-after-changing-number-of-classes"
 ---
 
-Alright, let's tackle this. I’ve seen this particular `ValueError` with Keras more times than I care to count, and it almost always boils down to a mismatch in the expected shape of your data, specifically concerning the output layer and the loss function when you alter the number of classes. It's a common hiccup, especially during iterative model development, and it’s definitely solvable once we pinpoint the root cause.
+Alright,  I’ve seen this particular `ValueError` with Keras more times than I care to count, and it almost always boils down to a mismatch in the expected shape of your data, specifically concerning the output layer and the loss function when you alter the number of classes. It's a common hiccup, especially during iterative model development, and it’s definitely solvable once we pinpoint the root cause.
 
 The core issue stems from the fact that Keras, and indeed most deep learning frameworks, demand consistency between the number of units in your output layer, the shape of your target data (your labels), and the chosen loss function. When you change the number of classes, you are, in essence, altering the fundamental dimensionality of your classification problem. The model, without proper adjustments, will stubbornly expect the previous dimensionality, resulting in the `ValueError`.
 

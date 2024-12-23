@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-limit-concurrent-asynchronous-operation-executions-in-a-web-api-controller"
 ---
 
-Okay, let’s tackle this. It’s a problem I’ve seen crop up in various projects, most notably during a large-scale data processing pipeline I worked on a few years back. We had a web api acting as a trigger, and without proper concurrency controls, we ended up overloading our backend database, leading to some rather stressful late nights. So, I’m pretty familiar with the challenge and some effective solutions.
+, let’s tackle this. It’s a problem I’ve seen crop up in various projects, most notably during a large-scale data processing pipeline I worked on a few years back. We had a web api acting as a trigger, and without proper concurrency controls, we ended up overloading our backend database, leading to some rather stressful late nights. So, I’m pretty familiar with the challenge and some effective solutions.
 
 Limiting concurrent asynchronous operation executions in a web api controller is crucial for maintaining stability and preventing resource exhaustion. The default behavior of most web frameworks is to handle incoming requests concurrently, which, while offering performance benefits, can easily lead to issues if your downstream operations are resource-intensive or rate-limited. The problem arises when you're not just responding with cached data or some trivial logic but kicking off longer-running processes in response to user requests. Unchecked concurrency can quickly overwhelm your system.
 

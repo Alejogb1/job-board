@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-perform-multi-label-token-classification-using-contextual-embeddings-for-each-word"
 ---
 
-Okay, let's tackle this. It’s a scenario I’ve encountered a few times in past projects, specifically when dealing with complex text categorization where a single token can have multiple associated labels. Think of something like identifying different entities within a medical text – a single word might be both a symptom and a medication, for example. Traditional approaches often stumble here, which is where contextual embeddings really shine.
+,  It’s a scenario I’ve encountered a few times in past projects, specifically when dealing with complex text categorization where a single token can have multiple associated labels. Think of something like identifying different entities within a medical text – a single word might be both a symptom and a medication, for example. Traditional approaches often stumble here, which is where contextual embeddings really shine.
 
 The core challenge is that we need a system that not only understands the individual words but also how they are used within the surrounding context. This is where models like BERT, RoBERTa, or even some of the more recent transformer variants, become incredibly useful because they produce embeddings that are highly dependent on the input sequence.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-arent-images-displaying-on-my-github-pages-site-after-adding-a-custom-domain"
 ---
 
-Okay, let's tackle this. I’ve seen this issue crop up more times than I care to count, and it's usually a subtle combination of factors rather than one glaring mistake. When you’re moving a GitHub Pages site over to a custom domain, image display problems are often tied to how paths are being interpreted relative to the new base url. Let's unpack that.
+,  I’ve seen this issue crop up more times than I care to count, and it's usually a subtle combination of factors rather than one glaring mistake. When you’re moving a GitHub Pages site over to a custom domain, image display problems are often tied to how paths are being interpreted relative to the new base url. Let's unpack that.
 
 The core problem usually stems from a mismatch between how your project references its assets, specifically images, and the way those paths are interpreted once the custom domain is in place. Think of it as navigating a city with familiar street names and suddenly those names change, requiring you to recalibrate your entire internal map. When you deploy on GitHub Pages directly (username.github.io/repo), the base path is straightforward. However, once a custom domain like `mydomain.com` is set up, that base path changes and your image paths may not reflect that.
 

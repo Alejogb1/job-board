@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-configure-vimspector-for-a-ruby-on-rails-app-using-passenger"
 ---
 
-Okay, let's tackle vimspector configuration for a Ruby on Rails application, specifically one using Passenger. This isn’t always a straightforward setup, and I remember spending a good chunk of time ironing out the wrinkles in a past project. The key here is understanding the interplay between vimspector, the debugging adapter (in this case, debase), and Passenger's application lifecycle.
+, let's tackle vimspector configuration for a Ruby on Rails application, specifically one using Passenger. This isn’t always a straightforward setup, and I remember spending a good chunk of time ironing out the wrinkles in a past project. The key here is understanding the interplay between vimspector, the debugging adapter (in this case, debase), and Passenger's application lifecycle.
 
 The primary challenge comes from Passenger's deployment method. It spawns application processes, often in a pool, and this can obscure the connection between your debugger and the code you're trying to examine. The solution lies in configuring the debugger to attach to one of these spawned processes correctly. It’s crucial that you don’t just launch the application through the debugger, since Passenger usually has its own process management routines. We'll focus on *attaching* to a running process.
 

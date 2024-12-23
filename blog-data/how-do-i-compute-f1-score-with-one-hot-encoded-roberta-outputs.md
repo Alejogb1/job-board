@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-compute-f1-score-with-one-hot-encoded-roberta-outputs"
 ---
 
-Let's tackle this. One-hot encoding the outputs of a Roberta model, particularly when evaluating performance, can introduce some interesting nuances when calculating the F1 score. I’ve certainly been down this road before, wrestling (okay, perhaps 'tackling') similar scenarios on past NLP projects involving multi-class classification where interpreting model output correctly was critical.
+ One-hot encoding the outputs of a Roberta model, particularly when evaluating performance, can introduce some interesting nuances when calculating the F1 score. I’ve certainly been down this road before, wrestling (, perhaps 'tackling') similar scenarios on past NLP projects involving multi-class classification where interpreting model output correctly was critical.
 
 The core issue stems from the fact that the output of a Roberta model (or any transformer-based model, for that matter) is typically a probability distribution over classes. One-hot encoding transforms this probability distribution into a discrete prediction, essentially assigning a single class label to each instance. This is where the subtleties arise when calculating the F1 score. Recall that the F1 score is the harmonic mean of precision and recall, and both precision and recall are inherently tied to the concept of true positives, false positives, and false negatives, which in turn depends on proper categorical comparisons.
 

@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-am-i-getting-error-dpy-3011-with-python-oracledb-and-oracle"
 ---
 
-Okay, let's tackle this. "Error DPY-3011" with `python-oracledb` and Oracle… I've seen this beast pop up more than a few times in my career, and it's almost always a threading or connection pool hiccup, usually triggered under heavier loads. It can be infuriating, but it’s definitely traceable and solvable with a bit of focused debugging. So, let's break down what’s probably happening, and I'll walk you through some troubleshooting approaches, supported by some actual code.
+,  "Error DPY-3011" with `python-oracledb` and Oracle… I've seen this beast pop up more than a few times in my career, and it's almost always a threading or connection pool hiccup, usually triggered under heavier loads. It can be infuriating, but it’s definitely traceable and solvable with a bit of focused debugging. So, let's break down what’s probably happening, and I'll walk you through some troubleshooting approaches, supported by some actual code.
 
 In essence, DPY-3011 from `python-oracledb` translates to "internal error: thread state has not been initialized." Oracle's client libraries, which `python-oracledb` wraps, are sensitive to how threads and connections are managed. If a thread attempts to use an Oracle database connection that hasn't been properly set up in its execution context, you’ll hit this. Think of it like this: imagine Oracle expects all threads to have a specific ‘key’ before touching the database; if that key isn't present, access is denied – hence the error.
 

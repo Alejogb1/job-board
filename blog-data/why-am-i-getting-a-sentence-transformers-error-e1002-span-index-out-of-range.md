@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-a-sentence-transformers-error-e1002-span-index-out-of-range"
 ---
 
-Okay, let's tackle this. That `[E1002] Span index out of range` error from Sentence Transformers can be a real headache, and I've certainly spent my fair share of time debugging it over the years, especially back when we were first integrating transformer-based embeddings into our recommendation engine at [FictionalTechCo]. It usually boils down to a mismatch between the way your input text is tokenized and the way Sentence Transformers (or the underlying tokenizer) expects it.
+,  That `[E1002] Span index out of range` error from Sentence Transformers can be a real headache, and I've certainly spent my fair share of time debugging it over the years, especially back when we were first integrating transformer-based embeddings into our recommendation engine at [FictionalTechCo]. It usually boils down to a mismatch between the way your input text is tokenized and the way Sentence Transformers (or the underlying tokenizer) expects it.
 
 At its core, Sentence Transformers doesn't just operate on raw strings. It breaks them down into tokens—numerical representations of words or sub-words—using a tokenizer associated with the specific model you're using. This tokenization process creates a sequence of indices and corresponding spans of text. The error arises when Sentence Transformers tries to access a token span that doesn't exist; that is, the calculated indices for those spans are somehow outside the expected or legitimate boundaries of the tokenized input. There are several common reasons for this:
 

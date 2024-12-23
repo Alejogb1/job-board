@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-access-minikube-from-outside-the-cluster-to-manage-pods"
 ---
 
-Okay, let’s talk about accessing Minikube from outside the cluster to manage pods. It's a common hurdle, and I've certainly spent my share of evenings troubleshooting similar setups. I recall one particular project where we had a tight deadline and absolutely needed to automate deployments directly from our CI/CD pipeline, which, of course, was outside the local minikube environment. It was quite the learning experience, and that's where I picked up some of these approaches.
+, let’s talk about accessing Minikube from outside the cluster to manage pods. It's a common hurdle, and I've certainly spent my share of evenings troubleshooting similar setups. I recall one particular project where we had a tight deadline and absolutely needed to automate deployments directly from our CI/CD pipeline, which, of course, was outside the local minikube environment. It was quite the learning experience, and that's where I picked up some of these approaches.
 
 The challenge, at its core, lies in the fact that minikube, by default, is designed to be isolated. It typically runs within its own virtual machine (vm) or container environment. This means that tools and processes on your host machine—outside of that environment—can’t directly reach the Kubernetes api server inside of Minikube without some specific configuration. Trying to connect from outside the cluster is like trying to get a remote control to operate a device without first configuring the correct signal path.
 

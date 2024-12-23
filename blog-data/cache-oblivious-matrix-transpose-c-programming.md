@@ -4,9 +4,9 @@ date: "2024-12-13"
 id: "cache-oblivious-matrix-transpose-c-programming"
 ---
 
-Okay so cache oblivious matrix transpose in C right I've been down that rabbit hole before let me tell you it's a classic problem that makes you appreciate good memory access patterns it's not just about transposing a matrix it's about doing it efficiently without knowing the specifics of the cache which is the whole cache oblivious part
+ so cache oblivious matrix transpose in C right I've been down that rabbit hole before let me tell you it's a classic problem that makes you appreciate good memory access patterns it's not just about transposing a matrix it's about doing it efficiently without knowing the specifics of the cache which is the whole cache oblivious part
 
-I remember back in the day when I was still working on my undergrad thesis a professor threw this at me as a challenge "transpose this matrix so that it sings to your CPU" he said with a cryptic grin I was like "okay sure dude let's see what we can do" naive college me I tried all sorts of things the standard row-major swaps the column-major approaches and yeah they all worked in the sense they transposed the matrix but when you scaled up with bigger matrices it was like watching a turtle race a jet I mean cache misses were everywhere performance was dreadful
+I remember back in the day when I was still working on my undergrad thesis a professor threw this at me as a challenge "transpose this matrix so that it sings to your CPU" he said with a cryptic grin I was like " sure dude let's see what we can do" naive college me I tried all sorts of things the standard row-major swaps the column-major approaches and yeah they all worked in the sense they transposed the matrix but when you scaled up with bigger matrices it was like watching a turtle race a jet I mean cache misses were everywhere performance was dreadful
 
 First off what does cache oblivious even mean it means our algorithm shouldn't rely on specific cache sizes or line sizes or even associativity we write code that works well regardless of those hardware details if you're like most folks starting you're used to thinking in terms of locality of reference if data you access is in the cache good performance if not well you got a slow trip to RAM cache oblivious algorithms are about maximizing that locality without explicitly tuning for it
 
@@ -99,7 +99,7 @@ void matrix_transpose_iterative(int *A, int n) {
 
 In that last code we're basically mimicking the behavior of recursive calls with nested loops we're just breaking the matrix into blocks and transposing each block and here we also avoided recursive calls and we iterate through the blocks and perform small transpose operation on each one. This iterative approach would be way better at handling large matrices and can also have a performance benefit over recursive functions for large datasets.
 
-Okay now if you want to really get under the hood you should totally check out "Cache-Oblivious Algorithms" by Harald Prokop from the MIT Laboratory for Computer Science it's a great resource for theoretical foundations then dive into "Introduction to Algorithms" by Cormen et al it has really good coverage on divide and conquer concepts and they do touch cache oblivious strategies as well.
+ now if you want to really get under the hood you should totally check out "Cache-Oblivious Algorithms" by Harald Prokop from the MIT Laboratory for Computer Science it's a great resource for theoretical foundations then dive into "Introduction to Algorithms" by Cormen et al it has really good coverage on divide and conquer concepts and they do touch cache oblivious strategies as well.
 
 And look the thing is not all code is perfect some might have some bugs in them like the time I tried to implement this and reversed the row and col indexes for like two days straight before figuring out I’m an idiot and switched them back. So always test always verify your code before claiming it solves the world's problems.
 

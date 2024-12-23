@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-a-solidity-smart-contract-be-deployed-using-an-angular-frontend"
 ---
 
-Alright, let's tackle this. Deploying a Solidity smart contract via an Angular frontend – something I've dealt with a fair number of times over the years, and it's rarely straightforward the first go around. The key lies in bridging the gap between the browser environment, where Angular lives, and the Ethereum blockchain, where your smart contract resides. We’re essentially orchestrating a handshake, if you will, between these two distinct realms.
+Alright,  Deploying a Solidity smart contract via an Angular frontend – something I've dealt with a fair number of times over the years, and it's rarely straightforward the first go around. The key lies in bridging the gap between the browser environment, where Angular lives, and the Ethereum blockchain, where your smart contract resides. We’re essentially orchestrating a handshake, if you will, between these two distinct realms.
 
 The central component enabling this interaction is web3.js or ethers.js (I lean towards ethers these days). These are javascript libraries that provide the necessary methods to communicate with the ethereum network. Think of them as the translation layer, converting javascript calls into ethereum RPC requests that your node can understand.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-knn-be-optimized-through-grid-search"
 ---
 
-Okay, let's tackle this one. I’ve spent a good chunk of my career dealing with the practicalities of machine learning models, and knn optimization via grid search is certainly a topic that's crossed my desk more than a few times. It's not just about getting the model to work; it's about ensuring it performs optimally, and grid search, while straightforward, can benefit from careful planning.
+, let's tackle this one. I’ve spent a good chunk of my career dealing with the practicalities of machine learning models, and knn optimization via grid search is certainly a topic that's crossed my desk more than a few times. It's not just about getting the model to work; it's about ensuring it performs optimally, and grid search, while straightforward, can benefit from careful planning.
 
 First off, let’s establish what we’re working with. K-nearest neighbors (knn) is a non-parametric algorithm, meaning it doesn’t make assumptions about the underlying data distribution. That’s fantastic for datasets where those assumptions might be invalid. However, its performance critically depends on the choice of a few key hyperparameters: primarily, the number of neighbors (k) and the distance metric used to define “nearness.” Grid search is a brute-force method, yes, but it's incredibly effective for systematically exploring the hyperparameter space. This, by the way, is one area where i’ve had many a late night, especially when dealing with very high dimensional datasets.
 

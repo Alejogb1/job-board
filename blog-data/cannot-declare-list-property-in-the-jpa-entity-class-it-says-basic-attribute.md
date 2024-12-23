@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "cannot-declare-list-property-in-the-jpa-entity-class-it-says-basic-attribute"
 ---
 
-Okay I've been down this road more times than I care to remember you're staring at a JPA entity class trying to cram a list in there and JPA is just throwing a fit screaming "basic attribute" it's like it thinks you're trying to store a single integer instead of the whole damn collection I've lost count of the hours debugging that exact issue so let's dive in and try to sort this out for you
+ I've been down this road more times than I care to remember you're staring at a JPA entity class trying to cram a list in there and JPA is just throwing a fit screaming "basic attribute" it's like it thinks you're trying to store a single integer instead of the whole damn collection I've lost count of the hours debugging that exact issue so let's dive in and try to sort this out for you
 
 First off what's happening here is JPA specifically the implementation you're likely using like Hibernate is a bit particular about what it considers a "basic" type in your entities Think of it like this JPA by default knows how to map simple things like ints strings dates directly to database columns it's got built-in converters and all that good stuff A `List` on the other hand is not so simple it's a collection it can have varying numbers of elements and JPA needs to know how to translate that into a relational database world that world of tables columns rows
 

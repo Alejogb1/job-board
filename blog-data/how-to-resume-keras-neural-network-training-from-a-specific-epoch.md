@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-resume-keras-neural-network-training-from-a-specific-epoch"
 ---
 
-Okay, let's tackle this. I’ve been down this road countless times – interrupted training runs are an unfortunate reality, especially when dealing with complex models and lengthy datasets. The good news is, resuming a Keras training session from a specific epoch is straightforward, provided you've set things up correctly from the outset. It hinges primarily on leveraging the power of model checkpoints and potentially some customized callbacks.
+,  I’ve been down this road countless times – interrupted training runs are an unfortunate reality, especially when dealing with complex models and lengthy datasets. The good news is, resuming a Keras training session from a specific epoch is straightforward, provided you've set things up correctly from the outset. It hinges primarily on leveraging the power of model checkpoints and potentially some customized callbacks.
 
 My past experiences on projects involving large-scale image recognition have underscored how critical it is to save model progress. I recall one project where we were training a convolutional neural network for a medical imaging task; a sudden power outage at hour 20 of a 30-hour run was enough to make anyone swear under their breath. Thankfully, we had checkpointing enabled, which saved us from having to restart from scratch.
 

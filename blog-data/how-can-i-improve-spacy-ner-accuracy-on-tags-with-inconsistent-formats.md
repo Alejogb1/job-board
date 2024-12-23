@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-can-i-improve-spacy-ner-accuracy-on-tags-with-inconsistent-formats"
 ---
 
-Alright, let's tackle this. Inconsistent formatting wreaks havoc on named entity recognition (NER), and I’ve certainly seen my share of it during past projects. The problem isn’t that spaCy is fundamentally flawed; it’s that the underlying models are trained on specific, reasonably consistent patterns. When your input deviates wildly, accuracy takes a hit. Let's break down how to address this.
+Alright,  Inconsistent formatting wreaks havoc on named entity recognition (NER), and I’ve certainly seen my share of it during past projects. The problem isn’t that spaCy is fundamentally flawed; it’s that the underlying models are trained on specific, reasonably consistent patterns. When your input deviates wildly, accuracy takes a hit. Let's break down how to address this.
 
 First, let’s acknowledge that “inconsistent formats” is a broad issue. It could mean variations in spacing, capitalization, the use of punctuation, or even the presence of extra non-alphanumeric characters. We need to bring some order to the chaos before we even start tweaking spaCy. Think of it like this: if you gave a perfectly trained chess AI a board with extra pawns and moved pieces randomly, you wouldn't expect it to perform optimally. Same principle applies.
 

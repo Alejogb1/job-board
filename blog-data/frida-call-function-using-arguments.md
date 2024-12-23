@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "frida-call-function-using-arguments"
 ---
 
-Okay so you wanna call a function using Frida with arguments right I've been there dude tons of times This whole process can be a bit of a headache especially when you're dealing with weird data types or some quirky native code But don’t fret I’ve spilled enough coffee over this stuff to help you out
+ so you wanna call a function using Frida with arguments right I've been there dude tons of times This whole process can be a bit of a headache especially when you're dealing with weird data types or some quirky native code But don’t fret I’ve spilled enough coffee over this stuff to help you out
 
 Let's break it down First off the general idea is pretty straightforward You use Frida to hook the function you wanna call then you execute that function with your own arguments Now this seems simple but let me tell you some implementation can be a real pain in the rear end I’ve spent a week debugging a single argument passing issue in some legacy Java library Once I did a deep dive with Java reflection to figure out that the parameter was a proxy object and I had to create it from scratch on the fly in JS just to pass it to the hooked function And that’s not the worst I’ve seen it gets way worse when it comes to c++
 
@@ -45,7 +45,7 @@ Now for the real deal calling the function with your own args we need to manipul
   Memory.free(my_str_arg);
 ```
 
-Okay this snippet here is more involved We're using `NativeFunction` which takes the function's address the return type (int) and argument types as well. The most common type are `int` `uint` `pointer` `float` `double` and so on Be sure to check out the Frida documentation for more specific types if you are dealing with non common c data types.
+ this snippet here is more involved We're using `NativeFunction` which takes the function's address the return type (int) and argument types as well. The most common type are `int` `uint` `pointer` `float` `double` and so on Be sure to check out the Frida documentation for more specific types if you are dealing with non common c data types.
 
 We create our arguments `my_int_arg` is an integer while for string `my_str_arg` we use `Memory.allocUtf8String` because we need to pass a pointer to the C function We then call the function like a normal Javascript method passing the arguments and printing the result.
 
@@ -78,7 +78,7 @@ Let's say for example that you need to call a function that receives a C structu
 
 ```
 
-Alright this is where some deep knowledge of C data structures starts to help We first create a new allocated memory block `my_struct_ptr` based on the size of our struct in bytes. Then we manually write to that memory location using `writeS32` for the int and `writeFloat` for the float we increment the pointer position using the `add` method to ensure the next write operations are done on the right memory position. After that we call the hooked function with the address of our created struct and the usual log the return of the function.
+this is where some deep knowledge of C data structures starts to help We first create a new allocated memory block `my_struct_ptr` based on the size of our struct in bytes. Then we manually write to that memory location using `writeS32` for the int and `writeFloat` for the float we increment the pointer position using the `add` method to ensure the next write operations are done on the right memory position. After that we call the hooked function with the address of our created struct and the usual log the return of the function.
 
 Important note: In this specific example we didn't need to free the struct memory as it was allocated by `Memory.alloc`. Remember that only `Memory.allocUtf8String` memory needs to be manually deallocated.
 

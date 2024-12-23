@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "does-mustusereturnvalueattribute-enforce-return-value-usage-when-a-method-contains-an-out-parameter"
 ---
 
-Okay, let's unpack this. The question revolves around the interplay between the `MustUseReturnValueAttribute` and methods that employ `out` parameters in c#. It's a scenario I've encountered more than once, usually when refactoring legacy code or enforcing stricter coding standards on large teams. There's a common misconception that `MustUseReturnValueAttribute` functions in a catch-all manner, but its behavior with `out` parameters is more nuanced than that.
+, let's unpack this. The question revolves around the interplay between the `MustUseReturnValueAttribute` and methods that employ `out` parameters in c#. It's a scenario I've encountered more than once, usually when refactoring legacy code or enforcing stricter coding standards on large teams. There's a common misconception that `MustUseReturnValueAttribute` functions in a catch-all manner, but its behavior with `out` parameters is more nuanced than that.
 
 My experience, particularly during a large data ingestion project where we were migrating from an older system, forced me to confront this head-on. We had numerous utility methods using `out` parameters to signal success or failure in data parsing or conversion. We initially thought applying the attribute universally would resolve the problem of neglected return values. Reality, as it often does, proved more interesting.
 

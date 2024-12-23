@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-a-stateful-set-used-for-the-worker-definition-in-the-airflow-helm-chart"
 ---
 
-Okay, let’s dive into that. It's a good question, and I’ve actually spent a fair bit of time troubleshooting various scheduler configurations over the years, including deployments that relied heavily on Airflow. You wouldn't think that choosing between a deployment and a statefulset for the workers is that big of a deal, but the implications are pretty substantial, especially in production environments. So let’s break it down.
+, let’s dive into that. It's a good question, and I’ve actually spent a fair bit of time troubleshooting various scheduler configurations over the years, including deployments that relied heavily on Airflow. You wouldn't think that choosing between a deployment and a statefulset for the workers is that big of a deal, but the implications are pretty substantial, especially in production environments. So let’s break it down.
 
 The primary reason a *statefulset* is the recommended approach for worker deployments in the Airflow Helm chart is directly tied to the nature of Airflow's worker nodes and the tasks they execute. These workers are not inherently stateless; they are frequently involved in processes that require persistence, at least for the duration of task execution. This is in stark contrast to, say, a web server, which, for the most part, can be treated as a stateless entity. If a webserver goes down, you can usually spin up another and it’ll start responding to requests without losing the state of the ongoing transactions. But Airflow workers operate differently.
 

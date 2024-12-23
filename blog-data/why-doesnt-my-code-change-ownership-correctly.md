@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-doesnt-my-code-change-ownership-correctly"
 ---
 
-Alright, let's tackle this. I’ve seen this specific problem pop up more than a few times in my career – the frustrating scenario where you’re expecting a straightforward ownership transfer in code, but it just stubbornly refuses to behave. It's less about a single magical solution and more about understanding the nuanced details that can go awry in how systems handle resource ownership. In my experience, particularly during a project involving a distributed microservices architecture a few years back, we battled intermittent ownership transfer failures constantly until we really dissected the underlying mechanics.
+Alright,  I’ve seen this specific problem pop up more than a few times in my career – the frustrating scenario where you’re expecting a straightforward ownership transfer in code, but it just stubbornly refuses to behave. It's less about a single magical solution and more about understanding the nuanced details that can go awry in how systems handle resource ownership. In my experience, particularly during a project involving a distributed microservices architecture a few years back, we battled intermittent ownership transfer failures constantly until we really dissected the underlying mechanics.
 
 The core issue usually stems from the different levels at which 'ownership' can be defined: within your application's logical boundaries, by the operating system, or even within the network itself. Let's break those down and how each impacts what you're likely experiencing.
 

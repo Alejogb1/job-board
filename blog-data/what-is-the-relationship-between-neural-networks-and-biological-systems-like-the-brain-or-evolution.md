@@ -4,7 +4,7 @@ date: "2024-12-11"
 id: "what-is-the-relationship-between-neural-networks-and-biological-systems-like-the-brain-or-evolution"
 ---
 
-Okay so you wanna know about neural networks and how they relate to brains and evolution right  It's a super cool question  like seriously fascinating stuff  We're talking about artificial intelligence inspired by nature itself  Pretty meta right
+ so you wanna know about neural networks and how they relate to brains and evolution right  It's a super cool question  like seriously fascinating stuff  We're talking about artificial intelligence inspired by nature itself  Pretty meta right
 
 First off let's be clear  a neural network isn't a brain  It's a simplified model a really really simplified model  Think of it like this  a brain is this incredibly complex massively parallel system with trillions of neurons each with thousands of connections  It's a wet messy thing that's been evolving for millions of years  A neural network is a bunch of mathematical functions organized in layers  It's dry neat and can be simulated on a computer  We're trying to capture the essence the *idea* of how the brain works not replicate it exactly
 

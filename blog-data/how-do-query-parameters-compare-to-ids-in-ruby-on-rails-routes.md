@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-query-parameters-compare-to-ids-in-ruby-on-rails-routes"
 ---
 
-Alright, let's tackle this. I've spent a fair amount of time navigating the intricacies of Rails routing, particularly when deciding between query parameters and IDs, and it's a decision that carries significant weight in terms of both functionality and maintainability. From my experience working on a large-scale e-commerce platform years back, the wrong choice could lead to performance bottlenecks and unnecessarily complicated logic, so careful consideration is paramount.
+Alright,  I've spent a fair amount of time navigating the intricacies of Rails routing, particularly when deciding between query parameters and IDs, and it's a decision that carries significant weight in terms of both functionality and maintainability. From my experience working on a large-scale e-commerce platform years back, the wrong choice could lead to performance bottlenecks and unnecessarily complicated logic, so careful consideration is paramount.
 
 Essentially, both query parameters and IDs are mechanisms for passing data to your Rails application via the URL, but they serve fundamentally different purposes. The primary distinction lies in how they are treated by the routing system and the implied semantics of the data they represent.
 

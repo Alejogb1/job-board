@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-training-progress-in-vertex-ai-be-monitored"
 ---
 
-Okay, let's unpack this one. Monitoring training progress in Vertex AI, or indeed any machine learning environment, is not merely about watching numbers go up and down. It’s a critical part of ensuring that your models actually learn what they're supposed to, and more importantly, it allows you to intervene when things go sideways. Over my years, I’ve seen far too many training runs that looked promising initially only to reveal fundamental flaws much later, often at great expense. So, let's get down to the details of how to stay on top of that in Vertex AI.
+, let's unpack this one. Monitoring training progress in Vertex AI, or indeed any machine learning environment, is not merely about watching numbers go up and down. It’s a critical part of ensuring that your models actually learn what they're supposed to, and more importantly, it allows you to intervene when things go sideways. Over my years, I’ve seen far too many training runs that looked promising initially only to reveal fundamental flaws much later, often at great expense. So, let's get down to the details of how to stay on top of that in Vertex AI.
 
 The first layer of monitoring, and arguably the most fundamental, comes from the built-in tools that Vertex AI provides. During training, Vertex AI automatically logs a number of crucial metrics, which are easily accessible through the cloud console. These include standard metrics like training loss, validation loss, accuracy, and other metrics relevant to your chosen model and task (precision, recall, F1 scores etc.). It's not just about raw numbers though; it's the *trends* that matter.
 

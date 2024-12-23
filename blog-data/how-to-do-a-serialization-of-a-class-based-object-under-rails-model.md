@@ -140,7 +140,7 @@ in this example `activerecord-serializers` lets you easily use the `json` serial
 
 so, what's the best approach for you? it really depends on your use case, you should take into account how complex your objects are, if you need custom serialization, and if you plan to query your data.
 
-for smaller projects using `serialize` with a plain ruby object will be sufficient, the trade-offs of using yaml might be okay. for bigger projects, or projects that are constantly changing and are more complex, it's probably better to write custom methods to handle `json` and have more flexibility. or use `activerecord-serializers` gem for more specific use cases.
+for smaller projects using `serialize` with a plain ruby object will be sufficient, the trade-offs of using yaml might be . for bigger projects, or projects that are constantly changing and are more complex, it's probably better to write custom methods to handle `json` and have more flexibility. or use `activerecord-serializers` gem for more specific use cases.
 
 before deciding you should also think about alternative database options. if you will need to query the data, maybe consider moving to a `jsonb` column in postgres or even move to a nosql database if this attribute is the main focus of your application.
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "cant-specify-class-path-in-java"
 ---
 
-Okay so you're banging your head against the wall with classpaths in Java right Been there done that got the t-shirt and probably a few permanent indentations on my desk from frustration Okay let's break this down I've wrestled with this beast more times than I care to remember so hopefully this helps
+ so you're banging your head against the wall with classpaths in Java right Been there done that got the t-shirt and probably a few permanent indentations on my desk from frustration  let's break this down I've wrestled with this beast more times than I care to remember so hopefully this helps
 
 First off when you say can't specify classpath you gotta be a bit more specific because that's kinda like saying "my car doesn't work" there's a million and one reasons why that might be let's run down the common suspects
 
@@ -22,7 +22,7 @@ First off when you say can't specify classpath you gotta be a bit more specific 
 
 **How I deal with classpaths**
 
-Okay so you're probably thinking alright smarty pants how do *you* handle this mess well here are my go-to techniques
+ so you're probably thinking smarty pants how do *you* handle this mess well here are my go-to techniques
 
 1.  **Explicit is your friend:** Unless you're dealing with a *lot* of dependencies go for explicit classpaths it's more work to start with but it's much easier to maintain and debug This means listing every jar file you need separately no wildcards if you can avoid it think of it as being nice to your future self you will be very thankful it's like organizing your tools properly so you don't end up looking for a screwdriver for 30 minutes because you keep your tools in a box of unorganized junk
 
@@ -32,7 +32,7 @@ Okay so you're probably thinking alright smarty pants how do *you* handle this m
 
 **Examples**
 
-Alright let's get into some code This is how I typically set the classpath when I have to deal with it manually (which luckily is not often anymore)
+let's get into some code This is how I typically set the classpath when I have to deal with it manually (which luckily is not often anymore)
 
 **Example 1: Simple Explicit Classpath**
 
@@ -82,7 +82,7 @@ This needs to be included when you package your jar file using the `jar` command
 **Recommended Reading**
 
 *   *"Effective Java" by Joshua Bloch:* While not *specifically* about classpaths it's a bible for Java development it'll make you a better programmer which helps you deal with classpaths more effectively
-*   *"Java Concurrency in Practice" by Brian Goetz et al:* Okay this one is about concurrency but that's also a common source of class path issues when dealing with threads and different classloaders having a solid understanding of that will make you a much better programmer It also helps with this problem indirectly
+*   *"Java Concurrency in Practice" by Brian Goetz et al:*  this one is about concurrency but that's also a common source of class path issues when dealing with threads and different classloaders having a solid understanding of that will make you a much better programmer It also helps with this problem indirectly
 *   The official Java documentation on classpaths is pretty good too and is usually very easy to follow check it out when in doubt.
 
-I hope this helps you on your journey it is one of those problems that once you overcome it will make you much better programmer It took me a very long time to understand the classpath and all of its nuances you're probably on that same path but that is okay if you need help feel free to ask!
+I hope this helps you on your journey it is one of those problems that once you overcome it will make you much better programmer It took me a very long time to understand the classpath and all of its nuances you're probably on that same path but that is  if you need help feel free to ask!

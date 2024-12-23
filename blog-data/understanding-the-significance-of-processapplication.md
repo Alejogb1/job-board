@@ -4,9 +4,9 @@ date: "2024-12-13"
 id: "understanding-the-significance-of-processapplication"
 ---
 
-Okay so you wanna know about process application eh Like the whole point of it Why its a thing and why we bother yeah I get it This hits close to home man I've been there probably like everyone has
+ so you wanna know about process application eh Like the whole point of it Why its a thing and why we bother yeah I get it This hits close to home man I've been there probably like everyone has
 
-First off lets drop the formal language okay We're all devs here or aspiring ones I've been slinging code for what feels like a lifetime probably a decade more than I care to admit and process application thats just fancy talk for how programs actually run under the hood It's the heart of what makes everything we build work
+First off lets drop the formal language  We're all devs here or aspiring ones I've been slinging code for what feels like a lifetime probably a decade more than I care to admit and process application thats just fancy talk for how programs actually run under the hood It's the heart of what makes everything we build work
 
 Think of it like this you write a program right Its just a bunch of text files until it's something more you compile it or interpret it and then it morphs into this executable thing a process this thing that the operating system can actually well execute. Its application the running instance of your code its not just sitting in the disk you know? So that's the gist process application is the active running version of your code in memory
 
@@ -117,7 +117,7 @@ In that simple server it uses threads to handle multiple client connections. If 
 
 So to really understand processes and application there is no shortcut you gotta get your hands dirty and really explore the OS functionalities. I recall when I was first dealing with this. I thought memory leaks were something you only see on TV I had this one app that kept crashing and I couldn't figure out why. Took me days using all these debugging tools like gdb or valgrind to realize I was leaking memory because of improper resource management my application did not manage its resources within the process correctly and thus was doing silly things. That was a real headache let me tell you
 
-Okay so that wasn't too much detail right? Well you need to dive deep into the operating system concepts and how it handles processes scheduling memory management and all that. Check out books like "Operating System Concepts" by Silberschatz Galvin and Gagne that's like the bible or "Modern Operating Systems" by Tanenbaum. Those are solid resources for diving deeper.
+ so that wasn't too much detail right? Well you need to dive deep into the operating system concepts and how it handles processes scheduling memory management and all that. Check out books like "Operating System Concepts" by Silberschatz Galvin and Gagne that's like the bible or "Modern Operating Systems" by Tanenbaum. Those are solid resources for diving deeper.
 
 Oh one more thing and this might be a tiny bit unrelated but when you write code it does seem like you are just writing instructions. But the magic happens in how the OS takes that code and turns into something actually useful to users that's a big responsibility and we should all take it seriously. It’s not just typing into a keyboard it’s turning ideas into software applications and that's kinda cool right. (here it goes my one and only joke) Its less like making tea and more like building a fully functional spaceship but you still need the right kettle which is the process! Get it!
 

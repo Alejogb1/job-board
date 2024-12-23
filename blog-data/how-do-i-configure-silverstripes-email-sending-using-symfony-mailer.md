@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-configure-silverstripes-email-sending-using-symfony-mailer"
 ---
 
-Okay, let's tackle this. I recall a particularly sticky situation back in '19, when we were migrating a sizable SilverStripe platform to a containerized environment. The default email configuration was… let's just say it wasn't scaling with the new infrastructure. We ended up ditching the built-in `Email` class entirely and going full Symfony Mailer. It was a bit involved, but absolutely worth it. Let's walk through how you can configure SilverStripe to leverage Symfony Mailer.
+,  I recall a particularly sticky situation back in '19, when we were migrating a sizable SilverStripe platform to a containerized environment. The default email configuration was… let's just say it wasn't scaling with the new infrastructure. We ended up ditching the built-in `Email` class entirely and going full Symfony Mailer. It was a bit involved, but absolutely worth it. Let's walk through how you can configure SilverStripe to leverage Symfony Mailer.
 
 The key here is understanding that SilverStripe's `Email` class is essentially an abstraction. To replace it, we need to essentially bypass that abstraction and inject Symfony Mailer services directly. It’s a shift from relying on SilverStripe’s internal mechanisms to a more direct integration with a more robust email library. This gives us much more control and flexibility, particularly around features like transport strategies, templating, and more complex email composition.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-verify-a-method-call-in-rspec"
 ---
 
-Okay, let's talk about method verification in RSpec. I’ve spent a fair amount of time debugging brittle tests over the years, and it's definitely a topic that benefits from a solid understanding. Often, simply asserting the *outcome* of a method isn't enough; you need to ensure the method itself was invoked correctly. That’s where RSpec's mocking and stubbing capabilities come into play, particularly the `expect(...).to receive(...)` syntax. This is not just about catching errors; it's about writing tests that accurately reflect the intent and interactions of your code.
+, let's talk about method verification in RSpec. I’ve spent a fair amount of time debugging brittle tests over the years, and it's definitely a topic that benefits from a solid understanding. Often, simply asserting the *outcome* of a method isn't enough; you need to ensure the method itself was invoked correctly. That’s where RSpec's mocking and stubbing capabilities come into play, particularly the `expect(...).to receive(...)` syntax. This is not just about catching errors; it's about writing tests that accurately reflect the intent and interactions of your code.
 
 In essence, verifying a method call in RSpec means asserting that a specific method on a specific object was called a certain number of times, with specific arguments, during the execution of the code you're testing. This is extremely important when dealing with interactions between objects, particularly in decoupled systems where the outcome might be dependent on these interactions. You don't want to rely solely on the eventual state of the system if you also need to make sure the intermediate steps occur as expected.
 

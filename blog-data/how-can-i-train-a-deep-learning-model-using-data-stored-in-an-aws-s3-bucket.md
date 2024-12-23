@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-train-a-deep-learning-model-using-data-stored-in-an-aws-s3-bucket"
 ---
 
-Okay, let's tackle this. S3 and deep learning models - it’s a combo I’ve certainly danced with more than a few times. Actually, I recall a project back in 2019 where we were analyzing satellite imagery; the dataset was massive, and storing it all locally just wasn't viable. Leveraging S3 was a necessity, not a luxury. Getting the training process working seamlessly with that setup required a deep dive into data loading and pipelining, which is precisely what I'll elaborate on here.
+,  S3 and deep learning models - it’s a combo I’ve certainly danced with more than a few times. Actually, I recall a project back in 2019 where we were analyzing satellite imagery; the dataset was massive, and storing it all locally just wasn't viable. Leveraging S3 was a necessity, not a luxury. Getting the training process working seamlessly with that setup required a deep dive into data loading and pipelining, which is precisely what I'll elaborate on here.
 
 The core challenge when training a deep learning model with data stored in S3 revolves around efficiently streaming the data to your training environment. You don’t want to download the entire dataset locally before you can even begin. That defeats the purpose of cloud storage and makes the whole process painstakingly slow. You need a method that can fetch data in chunks, on-demand, and without becoming a performance bottleneck.
 

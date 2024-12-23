@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-retrieve-the-status-of-a-previous-airflow-task-run"
 ---
 
-Alright, let's tackle this. Retrieving the status of a previous Airflow task run is a bread-and-butter operation, something I've done countless times while debugging pipelines. It might seem straightforward at first glance, but there are nuances that can trip you up if you're not careful. I've seen many teams struggle with this, often reinventing the wheel instead of leveraging Airflow's provided tools. Let's break it down systematically.
+Alright,  Retrieving the status of a previous Airflow task run is a bread-and-butter operation, something I've done countless times while debugging pipelines. It might seem straightforward at first glance, but there are nuances that can trip you up if you're not careful. I've seen many teams struggle with this, often reinventing the wheel instead of leveraging Airflow's provided tools. Let's break it down systematically.
 
 First, we need to understand the underlying data structure. Airflow stores its metadata—including task instance states—in its backend database. Depending on your setup, this could be postgres, mysql, or something else. Accessing this directly is generally *not* recommended for routine operations; instead, we use Airflow's API or command-line tools for a consistent and safe interface. My experience has taught me that direct database queries, while sometimes tempting for a "quick fix," can lead to maintenance nightmares and can break things when Airflow's schema changes during upgrades.
 

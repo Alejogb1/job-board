@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "acess-time-in-hdf5-file-reading"
 ---
 
-Okay so you're asking about access time when reading HDF5 files right Been there done that so many times it's not even funny Let me tell you I've spent countless nights debugging this exact issue I can almost taste the frustration you're probably feeling
+ so you're asking about access time when reading HDF5 files right Been there done that so many times it's not even funny Let me tell you I've spent countless nights debugging this exact issue I can almost taste the frustration you're probably feeling
 
 First things first HDF5 is complex and access time can be impacted by so many things It's not just a simple file read it's about how you're structuring your data how you're accessing it the library version you're using and even your system's hardware configuration
 

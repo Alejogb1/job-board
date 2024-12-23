@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-random-fourier-features-and-performers-approximate-the-softmax-kernel"
 ---
 
-Okay, let's delve into this. I remember a particularly nasty machine learning problem back at 'Project Chimera' where we had to deal with an enormous dataset and the traditional softmax kernel was just choking our system. That's when I really had to get comfortable with random Fourier features and Performers. It became apparent that approximating the softmax kernel efficiently was paramount, and these two methods proved invaluable. So, to answer your question directly, let's break down *how* they achieve this.
+, let's delve into this. I remember a particularly nasty machine learning problem back at 'Project Chimera' where we had to deal with an enormous dataset and the traditional softmax kernel was just choking our system. That's when I really had to get comfortable with random Fourier features and Performers. It became apparent that approximating the softmax kernel efficiently was paramount, and these two methods proved invaluable. So, to answer your question directly, let's break down *how* they achieve this.
 
 First, it’s essential to understand why the softmax kernel is such a resource hog. The softmax kernel, given input vectors *x* and *y*, is often represented as exp(*x*<sup>T</sup>*y*). Calculating this for all pairs of data points scales quadratically with the number of data points, making it computationally intractable for large datasets. The goal here is to find an approximation that preserves the properties of the kernel while being significantly faster to compute.
 

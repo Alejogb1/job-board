@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-a-ruby-on-rails-checkbox-failing-validation"
 ---
 
-Okay, let's tackle this. I’ve seen my share of perplexing checkbox behavior in Rails applications over the years, and they often boil down to a few common issues, each with its nuances. The reason your checkbox is failing validation isn't inherently mysterious; it’s usually a matter of how Rails handles form submissions and data types. I'll walk you through the usual suspects, focusing on the logic and some practical solutions.
+,  I’ve seen my share of perplexing checkbox behavior in Rails applications over the years, and they often boil down to a few common issues, each with its nuances. The reason your checkbox is failing validation isn't inherently mysterious; it’s usually a matter of how Rails handles form submissions and data types. I'll walk you through the usual suspects, focusing on the logic and some practical solutions.
 
 Fundamentally, a checkbox in HTML sends only a value when checked, typically "1", and sends nothing when unchecked. Rails leverages this by interpreting a missing parameter as 'false' and a presence as 'true' within a model attribute that should be boolean. That seems straightforward enough, but several pitfalls can lead to validation failures.
 

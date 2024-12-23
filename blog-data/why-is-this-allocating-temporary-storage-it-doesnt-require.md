@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-this-allocating-temporary-storage-it-doesnt-require"
 ---
 
-Okay, let’s tackle this. I've seen this pattern countless times, and it’s often more nuanced than it initially appears. It’s frustrating to observe an application seemingly allocating temporary storage unnecessarily, especially when performance and resource management are crucial. The 'why' behind such behavior typically stems from a complex interplay of factors within the code, the underlying environment, and sometimes even the compiler itself. It's rarely just one thing.
+, let’s tackle this. I've seen this pattern countless times, and it’s often more nuanced than it initially appears. It’s frustrating to observe an application seemingly allocating temporary storage unnecessarily, especially when performance and resource management are crucial. The 'why' behind such behavior typically stems from a complex interplay of factors within the code, the underlying environment, and sometimes even the compiler itself. It's rarely just one thing.
 
 First, let’s break down what 'temporary storage' often implies. We’re usually talking about dynamically allocated memory on the heap, or perhaps stack space utilized for intermediate results, like within a function call. When you see this happening unexpectedly, it's typically due to one or more of these root causes: eager evaluation, implicit type conversions, the generation of intermediate objects or copies, inefficient algorithms, or even interactions with external libraries that don’t quite behave as we'd expect.
 

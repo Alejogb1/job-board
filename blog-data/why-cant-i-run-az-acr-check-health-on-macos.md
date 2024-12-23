@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-cant-i-run-az-acr-check-health-on-macos"
 ---
 
-Okay, let's tackle this. You're running into an issue I've seen a few times now, specifically with the `az acr check-health` command on macOS. It's not immediately obvious why it fails sometimes, especially if you're used to things working smoothly on other platforms. The core of the problem often boils down to how the Azure CLI interacts with the local environment on macOS, particularly regarding its reliance on certain command-line utilities and network configurations.
+,  You're running into an issue I've seen a few times now, specifically with the `az acr check-health` command on macOS. It's not immediately obvious why it fails sometimes, especially if you're used to things working smoothly on other platforms. The core of the problem often boils down to how the Azure CLI interacts with the local environment on macOS, particularly regarding its reliance on certain command-line utilities and network configurations.
 
 From my experience, I recall working on a CI/CD pipeline a couple of years back. We were migrating from Jenkins to Azure DevOps, and, of course, we leveraged Azure Container Registry (ACR) for our Docker images. When I started replicating the health checks on my Macbook (local development), I encountered the same roadblock you’re facing now. I spent a day or so debugging, and here’s what I found.
 

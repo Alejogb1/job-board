@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-use-a-python-package-stored-in-private-git-repo-for-azure-functions-and-container-apps"
 ---
 
-Okay, let's tackle this one. I've actually spent a decent chunk of my career navigating this exact scenario – the joys of private dependencies and serverless deployments. Specifically, I recall a project a few years back where we had some very sensitive data processing logic that absolutely had to stay out of public repos, and getting that to play nice with our Azure Functions and Container Apps was... an experience. It's not inherently complex, but it does require a specific, methodical approach.
+, let's tackle this one. I've actually spent a decent chunk of my career navigating this exact scenario – the joys of private dependencies and serverless deployments. Specifically, I recall a project a few years back where we had some very sensitive data processing logic that absolutely had to stay out of public repos, and getting that to play nice with our Azure Functions and Container Apps was... an experience. It's not inherently complex, but it does require a specific, methodical approach.
 
 The core challenge here is that, by default, Azure Functions and Container Apps don't have direct access to private Git repositories. You’re essentially dealing with an environment that’s designed for public consumption, and you're trying to introduce something that isn’t. There are a few established routes to get around this. We'll focus on the most common and generally recommended methods, breaking down the technical specifics and providing illustrative examples along the way.
 

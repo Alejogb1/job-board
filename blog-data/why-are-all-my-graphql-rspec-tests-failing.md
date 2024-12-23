@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-are-all-my-graphql-rspec-tests-failing"
 ---
 
-Alright, let's tackle this. Test failures, especially across the board like you're describing, can feel incredibly frustrating, but they often stem from systematic issues. I've certainly been in the same boat, particularly when dealing with intricate graphql schemas. It's rarely just one thing, usually a confluence of factors. Let’s dissect some common causes, focusing specifically on why your *rspec* tests are reporting blanket failures. I'll steer clear of hand-waving and get down to specifics, referencing a few real situations I've navigated over the years.
+Alright,  Test failures, especially across the board like you're describing, can feel incredibly frustrating, but they often stem from systematic issues. I've certainly been in the same boat, particularly when dealing with intricate graphql schemas. It's rarely just one thing, usually a confluence of factors. Let’s dissect some common causes, focusing specifically on why your *rspec* tests are reporting blanket failures. I'll steer clear of hand-waving and get down to specifics, referencing a few real situations I've navigated over the years.
 
 First, and perhaps most frequently, is schema drift. Think of it as the foundational mismatch between what your rspec tests *expect* the graphql schema to look like, and the reality of what's actually deployed or available during your testing environment. I remember a project, a complex e-commerce platform, where we had multiple development branches and a somewhat aggressive merge schedule. Schema changes were occurring faster than the test suite could keep up with them. The result? Absolutely nothing passed.
 

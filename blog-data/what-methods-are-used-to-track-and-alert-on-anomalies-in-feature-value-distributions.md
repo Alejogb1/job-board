@@ -4,7 +4,7 @@ date: "2024-12-10"
 id: "what-methods-are-used-to-track-and-alert-on-anomalies-in-feature-value-distributions"
 ---
 
-Okay so you wanna know how to spot weird stuff in how your data's behaving right  like anomalies in feature distributions  That's a super common problem and there are tons of ways to tackle it  It's all about figuring out what's "normal" for your data and then flagging anything that deviates too far  Think of it like this you know your dog usually barks at the mailman but suddenly it's silent that's an anomaly right
+ so you wanna know how to spot weird stuff in how your data's behaving right  like anomalies in feature distributions  That's a super common problem and there are tons of ways to tackle it  It's all about figuring out what's "normal" for your data and then flagging anything that deviates too far  Think of it like this you know your dog usually barks at the mailman but suddenly it's silent that's an anomaly right
 
 One simple way is just using good old statistics  If you're dealing with something like a normally distributed feature you can calculate the mean and standard deviation then define thresholds like anything more than three standard deviations away from the mean is a red flag  Seems straightforward but it works  Especially if you're dealing with a stable dataset that doesn't change too dramatically over time  
 

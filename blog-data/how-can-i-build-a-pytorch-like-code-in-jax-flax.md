@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-build-a-pytorch-like-code-in-jax-flax"
 ---
 
-Okay, let's tackle this. The question of replicating a PyTorch-like experience within JAX using Flax is a common one, and I've certainly seen my share of attempts – some successful, others…less so. It's not simply a matter of translating code line by line; it's about understanding the fundamental differences in their architectures and adopting an approach that leverages the strengths of JAX and Flax.
+,  The question of replicating a PyTorch-like experience within JAX using Flax is a common one, and I've certainly seen my share of attempts – some successful, others…less so. It's not simply a matter of translating code line by line; it's about understanding the fundamental differences in their architectures and adopting an approach that leverages the strengths of JAX and Flax.
 
 Essentially, we're talking about emulating a more imperative style, common in PyTorch, within the functional paradigm of JAX, which Flax operates upon. In PyTorch, model parameters are mutable, you define your layers sequentially, and the computational graph is constructed on-the-fly (define-by-run). JAX, on the other hand, uses immutable data structures and requires you to define the full computation in advance as a pure function. This functional nature can feel a little alien if you're coming directly from a PyTorch background, but there are effective ways to adapt.
 

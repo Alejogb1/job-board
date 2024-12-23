@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "relevel-only-works-with-unordered-factors"
 ---
 
-Alright so you're asking about `relevel` and its interaction with factors specifically the "unordered" bit right I've been there man I've banged my head against that wall more times than I care to admit Let's break this down no fluff just the raw data
+so you're asking about `relevel` and its interaction with factors specifically the "unordered" bit right I've been there man I've banged my head against that wall more times than I care to admit Let's break this down no fluff just the raw data
 
 So yeah `relevel` in R it's a function that seems simple enough on the surface but it can get you tripped up real fast especially if you're dealing with factors that aren't what you expect Like the question kinda points out it's got a thing for unordered factors You know those categorical variables that don't have a natural sequence like colors or maybe different types of operating systems Now the key here is that `relevel` is all about changing the *base level* or reference level of a factor This is crucial when you're doing statistical modeling like regressions because the first level gets used as the baseline against which all other levels are compared
 

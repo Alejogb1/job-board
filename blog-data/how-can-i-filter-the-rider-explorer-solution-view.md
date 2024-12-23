@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-can-i-filter-the-rider-explorer-solution-view"
 ---
 
-Okay, let's tackle this one. I've spent a fair amount of time navigating large codebases, and the ability to effectively filter the Rider Explorer Solution View is a lifesaver, plain and simple. It’s one of those subtle features that dramatically impacts productivity once you understand its capabilities. I recall a particularly convoluted project involving a microservices architecture, where the solution contained literally hundreds of projects. Without solid filtering, it felt like trying to find a specific grain of sand on a beach.
+, let's tackle this one. I've spent a fair amount of time navigating large codebases, and the ability to effectively filter the Rider Explorer Solution View is a lifesaver, plain and simple. It’s one of those subtle features that dramatically impacts productivity once you understand its capabilities. I recall a particularly convoluted project involving a microservices architecture, where the solution contained literally hundreds of projects. Without solid filtering, it felt like trying to find a specific grain of sand on a beach.
 
 The beauty of Rider's filtering mechanism isn't just about reducing visual clutter; it’s about providing you with surgical precision when focusing on specific parts of your solution. It lets you surface only what's relevant to your current task. There are several methods and levels of refinement available, each serving a distinct purpose. I'll walk you through the core approaches I've found most effective, with code examples to illustrate how these techniques work with specific project structures.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "whats-the-behavior-of-async-methods-called-from-sync-contexts"
 ---
 
-Okay, let’s delve into that. I’ve certainly navigated this particular interaction – the sync-to-async call – quite a few times in my career, and it’s a common source of subtle bugs if not handled with care. Let's break down what happens and, more importantly, how to manage it effectively.
+, let’s delve into that. I’ve certainly navigated this particular interaction – the sync-to-async call – quite a few times in my career, and it’s a common source of subtle bugs if not handled with care. Let's break down what happens and, more importantly, how to manage it effectively.
 
 The core issue revolves around the fundamental differences in how synchronous and asynchronous operations are executed within a program. Synchronous code executes sequentially, one step at a time, blocking the current thread until each operation completes. Asynchronous code, on the other hand, allows a program to perform other tasks while waiting for a long-running operation to complete, typically using callbacks, promises, or the `async`/`await` paradigm.
 

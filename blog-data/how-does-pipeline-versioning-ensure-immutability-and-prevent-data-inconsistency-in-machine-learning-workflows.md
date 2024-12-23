@@ -4,7 +4,7 @@ date: "2024-12-10"
 id: "how-does-pipeline-versioning-ensure-immutability-and-prevent-data-inconsistency-in-machine-learning-workflows"
 ---
 
-Okay so you wanna know about pipeline versioning and how it keeps things nice and tidy in your ML world right  like prevents the whole thing from imploding into a mess of inconsistent data and broken models  yeah I get it its a big deal  basically imagine building with Lego but you keep swapping bricks out without keeping track  soon you have a wobbly Frankenstein monster instead of a cool spaceship
+ so you wanna know about pipeline versioning and how it keeps things nice and tidy in your ML world right  like prevents the whole thing from imploding into a mess of inconsistent data and broken models  yeah I get it its a big deal  basically imagine building with Lego but you keep swapping bricks out without keeping track  soon you have a wobbly Frankenstein monster instead of a cool spaceship
 
 The key is immutability  think of it like a time capsule for your entire workflow  once you’ve got a version its locked  no messing around changing things later  you can always go back to that exact state its like having a perfect snapshot of everything that happened code data everything
 

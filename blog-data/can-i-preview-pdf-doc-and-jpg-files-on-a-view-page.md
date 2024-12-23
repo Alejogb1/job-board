@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-i-preview-pdf-doc-and-jpg-files-on-a-view-page"
 ---
 
-Okay, let’s address this. Previewing various file formats directly on a web page – specifically pdf, doc(x), and jpg – is a common requirement, and the approaches differ significantly depending on the format and the level of fidelity you’re aiming for. Over the years, I’ve tackled this challenge multiple times, and the solutions often involved a blend of client-side and server-side strategies, each with its own trade-offs. Let’s break it down.
+, let’s address this. Previewing various file formats directly on a web page – specifically pdf, doc(x), and jpg – is a common requirement, and the approaches differ significantly depending on the format and the level of fidelity you’re aiming for. Over the years, I’ve tackled this challenge multiple times, and the solutions often involved a blend of client-side and server-side strategies, each with its own trade-offs. Let’s break it down.
 
 From the get-go, understand that providing a “true” live preview, especially for complex formats like doc(x), is not trivial using client-side javascript alone. We often need to lean on browser capabilities or utilize server-side conversion processes. For pdfs, browsers have made strides, but word documents remain quite challenging client-side. And of course, images are straightforward, but sometimes require specific handling.
 

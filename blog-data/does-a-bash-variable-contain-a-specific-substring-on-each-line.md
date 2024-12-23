@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "does-a-bash-variable-contain-a-specific-substring-on-each-line"
 ---
 
-Okay, let’s unpack this. The question of checking for a specific substring within a Bash variable, particularly when that variable might contain multiline content, isn't as straightforward as a simple string comparison. I've had to deal with this exact scenario more times than I care to count, often when processing log files or configuration data stored in Bash variables. We need to iterate through each line and perform the substring check independently. Let's dive into the techniques.
+, let’s unpack this. The question of checking for a specific substring within a Bash variable, particularly when that variable might contain multiline content, isn't as straightforward as a simple string comparison. I've had to deal with this exact scenario more times than I care to count, often when processing log files or configuration data stored in Bash variables. We need to iterate through each line and perform the substring check independently. Let's dive into the techniques.
 
 Fundamentally, we're talking about a combination of string manipulation and iteration. Bash provides a few powerful ways to accomplish this, primarily utilizing loops and string-matching operators. The core concept revolves around splitting the multi-line variable into individual lines, then using pattern matching (such as `[[ ... ]]` with the `=~` operator or `grep`) on each line.
 

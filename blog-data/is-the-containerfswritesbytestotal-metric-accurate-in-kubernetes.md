@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "is-the-containerfswritesbytestotal-metric-accurate-in-kubernetes"
 ---
 
-Okay, let's talk about `container_fs_writes_bytes_total` in Kubernetes. This is a metric that, like many others, appears straightforward on the surface but can present some nuances if you're not careful in your interpretation. I've spent a fair bit of time debugging performance issues related to persistent volumes and storage in Kubernetes, and this specific metric has definitely popped up as a point of investigation more than once.
+, let's talk about `container_fs_writes_bytes_total` in Kubernetes. This is a metric that, like many others, appears straightforward on the surface but can present some nuances if you're not careful in your interpretation. I've spent a fair bit of time debugging performance issues related to persistent volumes and storage in Kubernetes, and this specific metric has definitely popped up as a point of investigation more than once.
 
 The short answer? Accuracy is relative. The metric itself, as exposed by the kubelet via cAdvisor, aims to measure the total number of bytes written to the container’s filesystem. However, how accurately it reflects the *application's* writes is where things get interesting. There are a few layers involved, and each can introduce complexities.
 

@@ -57,7 +57,7 @@ in this snippet we first create some dummy data, in a real life example you woul
 
 **partial dependence plots (pdp): showing the directional impact**
 
-okay, now we're getting into the interesting part. feature importance tells us *which* features matter, but pdp tells us *how* they matter. partial dependence plots (pdp) show how the model's predicted output changes as we vary a specific feature, while keeping all other features constant (averaged out in a manner), in a timeseries setting, this becomes a very useful tool, if you do the proper procedures to generate it.
+, now we're getting into the interesting part. feature importance tells us *which* features matter, but pdp tells us *how* they matter. partial dependence plots (pdp) show how the model's predicted output changes as we vary a specific feature, while keeping all other features constant (averaged out in a manner), in a timeseries setting, this becomes a very useful tool, if you do the proper procedures to generate it.
 
 the principle of this plot is to show the average change in output when changing a given variable in the data domain and keeping all other variables constant (but in reality, averaged out to a specific value), this gives you a sense of the direction of impact and the magnitude. there are some limitations of these graphs, like not showing the interactions between variables, but it provides a more detailed insight than just feature importances.
 

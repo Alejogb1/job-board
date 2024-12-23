@@ -4,11 +4,11 @@ date: "2024-12-13"
 id: "geom-hline-color-linetype-customization-ggplot2"
 ---
 
-Okay so you're wrestling with `geom_hline` in `ggplot2` and want some finer control over color and linetype specifically you're not happy with the default and need to make it dance a bit yeah i get it been there done that countless times let me share some wisdom from the trenches
+ so you're wrestling with `geom_hline` in `ggplot2` and want some finer control over color and linetype specifically you're not happy with the default and need to make it dance a bit yeah i get it been there done that countless times let me share some wisdom from the trenches
 
 First off `geom_hline` is your friend for adding horizontal lines it's great for marking thresholds average values or just creating some visual structure in your plot but the defaults can be well less than ideal if you're trying to create something that stands out
 
-Okay let's break down how to tweak the color and linetype think of it like we're styling a web page but instead of css we are using R and ggplot2 I'll show you code snippets that you can copy paste and start playing with straight away
+ let's break down how to tweak the color and linetype think of it like we're styling a web page but instead of css we are using R and ggplot2 I'll show you code snippets that you can copy paste and start playing with straight away
 
 Here is the first basic code you asked for we are not using any function just pure ggplot2 you need to call `geom_hline`
 
@@ -47,7 +47,7 @@ Notice we are using vectors for `yintercept` `color` and `linetype` the first li
 
 This is something I did when doing some A/B testing I was visualizing experiment results and needed to show the control group's metric and the target and to make it visually distinct this approach saved me from endless manual plot tweaks I think I was even using spreadsheets before this it was dark times
 
-Okay now let's ramp things up a bit what if you want even more control or want to apply styles conditionally you'll need to start thinking about using `aes()` mappings inside of geom_hline
+ now let's ramp things up a bit what if you want even more control or want to apply styles conditionally you'll need to start thinking about using `aes()` mappings inside of geom_hline
 
 Here is the code example of using `aes()`
 

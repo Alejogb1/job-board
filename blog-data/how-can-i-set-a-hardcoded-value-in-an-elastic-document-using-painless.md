@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-set-a-hardcoded-value-in-an-elastic-document-using-painless"
 ---
 
-Okay, let's tackle this. Setting a hardcoded value in an Elasticsearch document using Painless is, on the surface, a straightforward task, but like most things, there are nuances worth exploring. I recall a project years back involving a data migration where we had to, on the fly, standardize a specific field across millions of documents – a scenario that required this exact technique. Let me walk you through it.
+,  Setting a hardcoded value in an Elasticsearch document using Painless is, on the surface, a straightforward task, but like most things, there are nuances worth exploring. I recall a project years back involving a data migration where we had to, on the fly, standardize a specific field across millions of documents – a scenario that required this exact technique. Let me walk you through it.
 
 Fundamentally, Painless allows us to execute scripts directly within Elasticsearch during various operations, such as indexing or updating. The key to setting a hardcoded value lies in understanding the context variable `ctx`, which grants access to the document being processed. Specifically, within `ctx.source`, we can directly modify the fields of the document.
 

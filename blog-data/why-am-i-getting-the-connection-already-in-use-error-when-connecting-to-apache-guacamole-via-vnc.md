@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-the-connection-already-in-use-error-when-connecting-to-apache-guacamole-via-vnc"
 ---
 
-Okay, let's unpack this "connection already in use" error you're encountering with Apache Guacamole and VNC. It’s a frustrating one, I recall having to troubleshoot a very similar setup back when we were transitioning our legacy systems to a more modern remote access solution. It’s not necessarily a problem with Guacamole itself, but more often a conflict arising from how VNC connections are handled, and how those handles sometimes persist when things don't go entirely as expected.
+, let's unpack this "connection already in use" error you're encountering with Apache Guacamole and VNC. It’s a frustrating one, I recall having to troubleshoot a very similar setup back when we were transitioning our legacy systems to a more modern remote access solution. It’s not necessarily a problem with Guacamole itself, but more often a conflict arising from how VNC connections are handled, and how those handles sometimes persist when things don't go entirely as expected.
 
 Fundamentally, the "connection already in use" error indicates that a socket or resource necessary for establishing a new VNC connection is already actively being used by another process or an existing connection. This can occur in several scenarios, often stemming from improper handling of VNC server sessions or client-side issues. Let's consider a few of the usual suspects, keeping in mind that the error message is a symptom, not the root cause.
 

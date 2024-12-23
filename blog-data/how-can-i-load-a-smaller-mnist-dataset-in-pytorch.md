@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-load-a-smaller-mnist-dataset-in-pytorch"
 ---
 
-Okay, let's tackle this. I’ve often found myself needing a quick way to work with a reduced MNIST dataset, be it for rapid prototyping, debugging, or resource-constrained environments. Full-size datasets can be cumbersome when you're just trying to validate a new architectural idea, so efficient subsampling is a crucial skill. The good news is that it's surprisingly straightforward in PyTorch. Let’s break it down systematically.
+,  I’ve often found myself needing a quick way to work with a reduced MNIST dataset, be it for rapid prototyping, debugging, or resource-constrained environments. Full-size datasets can be cumbersome when you're just trying to validate a new architectural idea, so efficient subsampling is a crucial skill. The good news is that it's surprisingly straightforward in PyTorch. Let’s break it down systematically.
 
 The core challenge is not the *loading* itself, but the *selection* of a smaller subset from the standard MNIST dataset. PyTorch’s `torchvision.datasets.MNIST` module neatly handles the initial download and storage. The trick lies in how we manipulate the data after it’s loaded, or even during the loading process, to extract our desired reduced set.
 

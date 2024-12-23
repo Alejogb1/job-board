@@ -4,7 +4,7 @@ date: "2024-12-11"
 id: "how-do-criteria-based-goal-evaluation-mechanisms-manifest-in-neural-networks"
 ---
 
-Okay so you wanna know how we judge if a neural net is doing a good job right  like how do we make sure it's actually meeting its goals  It's a super cool question and way more complicated than it sounds at first glance  Neural nets are these amazing black boxes we pump data into and they spit out answers but figuring out *why* they give those answers or if those answers are even good is a whole other beast
+ so you wanna know how we judge if a neural net is doing a good job right  like how do we make sure it's actually meeting its goals  It's a super cool question and way more complicated than it sounds at first glance  Neural nets are these amazing black boxes we pump data into and they spit out answers but figuring out *why* they give those answers or if those answers are even good is a whole other beast
 
 The basic idea is we need *criteria*  These aren't just random things we make up  They're specifically designed to reflect what we *want* the network to do  Think of it like training a dog  You wouldn't just yell at it randomly right You'd reward it for sitting staying fetching etc  Those are your criteria
 

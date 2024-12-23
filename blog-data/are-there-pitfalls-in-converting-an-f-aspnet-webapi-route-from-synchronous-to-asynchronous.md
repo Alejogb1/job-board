@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "are-there-pitfalls-in-converting-an-f-aspnet-webapi-route-from-synchronous-to-asynchronous"
 ---
 
-Okay, let's talk about moving an F# ASP.NET web api from synchronous to asynchronous operations. I’ve been down this road more than a few times, and it's definitely a journey where seemingly minor changes can have significant repercussions if not handled thoughtfully. In my experience, I’ve seen several projects where a well-intended effort to introduce asynchronous patterns led to more headaches than improvements. The potential for issues isn't trivial, so it's good we're addressing it head-on.
+, let's talk about moving an F# ASP.NET web api from synchronous to asynchronous operations. I’ve been down this road more than a few times, and it's definitely a journey where seemingly minor changes can have significant repercussions if not handled thoughtfully. In my experience, I’ve seen several projects where a well-intended effort to introduce asynchronous patterns led to more headaches than improvements. The potential for issues isn't trivial, so it's good we're addressing it head-on.
 
 The primary motivation, of course, is to improve scalability and responsiveness. Asynchronous operations, by freeing up thread pool resources while waiting for I/O-bound tasks (like database queries or external api calls), can handle more concurrent requests. However, the switch isn't as simple as sprinkling `async` and `await` keywords everywhere. There are nuances within both the F# language and the asp.net core pipeline that we need to be mindful of.
 

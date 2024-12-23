@@ -165,7 +165,7 @@ accuracy = accuracy_score(y_test, y_pred)
 print(f"Accuracy: {accuracy:.2f}")
 
 # New Text Test
-new_text = "This is an okay film."
+new_text = "This is an  film."
 prediction = classifier.predict(new_text)
 print(f"Prediction for '{new_text}': {prediction}")
 ```

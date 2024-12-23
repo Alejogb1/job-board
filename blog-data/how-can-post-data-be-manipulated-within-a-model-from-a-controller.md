@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-post-data-be-manipulated-within-a-model-from-a-controller"
 ---
 
-Okay, let's tackle this. I’ve definitely seen my fair share of situations where manipulating post data within a model feels necessary. It's a common scenario, and if not handled correctly, it can lead to all sorts of headaches, from unintended data modifications to tightly coupled architectures that become nightmares to maintain. We need to be methodical and strategic about how we approach this.
+,  I’ve definitely seen my fair share of situations where manipulating post data within a model feels necessary. It's a common scenario, and if not handled correctly, it can lead to all sorts of headaches, from unintended data modifications to tightly coupled architectures that become nightmares to maintain. We need to be methodical and strategic about how we approach this.
 
 The core issue, as I see it, is that the controller's job is primarily about *orchestration*. It receives the request (including the post data), it validates the request (to a degree), and then it determines what action to take. Models, on the other hand, are about the *data itself* and any associated business logic. This distinction is fundamental, and blurring it by pushing post-data manipulation directly into the model is generally a bad idea. We want to avoid having our models overly reliant on the nuances of the request object.
 

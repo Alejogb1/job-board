@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-create-a-generic-function-taking-ranget-as-an-argument"
 ---
 
-Okay, let's tackle this. It's a question that's popped up for me more than once in various projects, particularly when dealing with large datasets or needing highly adaptable algorithms. I’ve learned over the years that properly handling generics with ranges can really streamline your codebase and make things much more flexible.
+,  It's a question that's popped up for me more than once in various projects, particularly when dealing with large datasets or needing highly adaptable algorithms. I’ve learned over the years that properly handling generics with ranges can really streamline your codebase and make things much more flexible.
 
 The core issue here is that while Swift provides `Range<Bound>`, we often want our function to operate on *any* kind of range, irrespective of the specific `Bound` type. The challenge lies in ensuring type safety while maintaining that desired level of abstraction. You don't want to force all your ranges into, say, `Range<Int>`, just to use a common processing function.
 

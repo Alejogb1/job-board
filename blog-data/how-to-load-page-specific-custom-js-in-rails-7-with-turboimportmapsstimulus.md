@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-load-page-specific-custom-js-in-rails-7-with-turboimportmapsstimulus"
 ---
 
-Alright, let's tackle this. It’s a question I've spent more than a few late nights wrestling with, especially in the early days of transitioning legacy Rails apps to Turbo. The challenge of loading page-specific javascript in a modern rails 7 application using turbo, importmaps, and stimulus is definitely non-trivial, but it’s far from insurmountable. Instead of the old way with rails asset pipeline, we've now got importmaps for module resolution and stimulus for controller behavior, so we need to think differently about how to structure our javascript code.
+Alright,  It’s a question I've spent more than a few late nights wrestling with, especially in the early days of transitioning legacy Rails apps to Turbo. The challenge of loading page-specific javascript in a modern rails 7 application using turbo, importmaps, and stimulus is definitely non-trivial, but it’s far from insurmountable. Instead of the old way with rails asset pipeline, we've now got importmaps for module resolution and stimulus for controller behavior, so we need to think differently about how to structure our javascript code.
 
 The traditional asset pipeline often relied on server-side logic to generate page-specific javascript includes. With Turbo and importmaps, we lean more towards a client-side approach for handling such scenarios. Importmaps centralize javascript module definitions, and Turbo enhances the application experience by delivering partial page updates, so our scripts now need to load dynamically. This means we have to be selective about what scripts we load and when they're executed.
 

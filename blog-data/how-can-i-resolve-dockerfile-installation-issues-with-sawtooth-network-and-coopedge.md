@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-resolve-dockerfile-installation-issues-with-sawtooth-network-and-coopedge"
 ---
 
-Alright, let's tackle this. Sawtooth network setups within Docker, especially when you introduce CoopEdge, can indeed present some unique challenges during the build process. I've certainly spent my share of late nights debugging seemingly nonsensical build failures, and more often than not, it boils down to nuances in how Dockerfiles interact with the specifics of these platforms. It’s less about fundamental Docker problems and more about subtle version conflicts, dependency mismatches, and the intricacies of Sawtooth's distributed architecture.
+Alright,  Sawtooth network setups within Docker, especially when you introduce CoopEdge, can indeed present some unique challenges during the build process. I've certainly spent my share of late nights debugging seemingly nonsensical build failures, and more often than not, it boils down to nuances in how Dockerfiles interact with the specifics of these platforms. It’s less about fundamental Docker problems and more about subtle version conflicts, dependency mismatches, and the intricacies of Sawtooth's distributed architecture.
 
 From my experience, these issues typically manifest during three key phases of the Dockerfile build: the base image selection, package installations, and finally, the configuration and setup of the Sawtooth and CoopEdge components themselves. Getting each of these right is essential.
 

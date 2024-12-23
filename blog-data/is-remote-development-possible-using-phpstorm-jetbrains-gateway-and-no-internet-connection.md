@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "is-remote-development-possible-using-phpstorm-jetbrains-gateway-and-no-internet-connection"
 ---
 
-Okay, let's tackle this. The feasibility of remote php development with PhpStorm, using JetBrains Gateway, and operating entirely offline presents a nuanced situation. I’ve personally navigated scenarios similar to this, particularly in secure, disconnected environments. The short answer is: not in the conventional way you'd expect, but with some strategic planning, it's definitely achievable, albeit with significant constraints.
+,  The feasibility of remote php development with PhpStorm, using JetBrains Gateway, and operating entirely offline presents a nuanced situation. I’ve personally navigated scenarios similar to this, particularly in secure, disconnected environments. The short answer is: not in the conventional way you'd expect, but with some strategic planning, it's definitely achievable, albeit with significant constraints.
 
 The core issue lies with JetBrains Gateway’s architecture. It's explicitly designed to facilitate a thin client/server setup where the vast majority of processing and code management resides on a remote server. The client, what you experience on your local machine, is essentially a display and input interface. Key to this functionality is the network connection that allows this continuous, real-time exchange of data. Without it, JetBrains Gateway simply cannot establish the necessary communication channels to work correctly. You cannot bypass this need for network connectivity with Gateway; it's integral to how it is designed.
 

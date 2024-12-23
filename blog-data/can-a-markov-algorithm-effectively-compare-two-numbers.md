@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-a-markov-algorithm-effectively-compare-two-numbers"
 ---
 
-Let's tackle this. Instead of starting with definitions, let’s jump right into a scenario I encountered some years ago. I was working on a system that, surprisingly, needed to compare numerical magnitudes using only very basic rewrite rules – a constraint that forced us down an unexpected path involving Markov algorithms. The usual integer comparison operators were simply not an option in this particular implementation context due to the hardware limitations of the system. The core challenge? Representing numbers and then using a substitution process (as Markov algorithms do) to infer which was larger or, in a more basic form, if they were equal.
+ Instead of starting with definitions, let’s jump right into a scenario I encountered some years ago. I was working on a system that, surprisingly, needed to compare numerical magnitudes using only very basic rewrite rules – a constraint that forced us down an unexpected path involving Markov algorithms. The usual integer comparison operators were simply not an option in this particular implementation context due to the hardware limitations of the system. The core challenge? Representing numbers and then using a substitution process (as Markov algorithms do) to infer which was larger or, in a more basic form, if they were equal.
 
 The short answer to your question, "Can a Markov algorithm effectively compare two numbers?" is yes, absolutely, although 'effectively' depends heavily on your definition and constraints. It's not going to win any speed contests compared to direct hardware implementations, but it’s a fascinating illustration of computational power even with limited tools.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-trigger-an-airflow-dag-with-a-config-which-has-a-list-as-a-value"
 ---
 
-Okay, let's break down how to trigger an airflow dag with a configuration that includes a list as a value. It's a common scenario, particularly when you need to parameterize your workflows based on a set of input data or processing targets. I've encountered this often enough across various data engineering pipelines and the challenges it introduces, and I'll walk you through the best practices I've found, illustrated by some concrete examples.
+, let's break down how to trigger an airflow dag with a configuration that includes a list as a value. It's a common scenario, particularly when you need to parameterize your workflows based on a set of input data or processing targets. I've encountered this often enough across various data engineering pipelines and the challenges it introduces, and I'll walk you through the best practices I've found, illustrated by some concrete examples.
 
 The core issue stems from how airflow handles DAG configurations, particularly when interacting with its API or when you’re invoking a DAG run via the command-line interface (cli). You're essentially passing a dictionary, and when that dictionary has a value that’s a list, it needs to be properly serialized and deserialized. Airflow internally uses json for these operations, meaning you need to ensure your list is json-serializable.
 

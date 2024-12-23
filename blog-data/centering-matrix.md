@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "centering-matrix"
 ---
 
-Okay so centering a matrix yeah I've been there done that got the t-shirt a few times actually seems like a pretty basic thing but can get you tangled up if you're not careful alright so let's break it down you're essentially trying to shift your data so that the mean of each column becomes zero right that's the core of it and it's often a necessary step for a lot of machine learning and data analysis stuff so I get why you're asking this
+ so centering a matrix yeah I've been there done that got the t-shirt a few times actually seems like a pretty basic thing but can get you tangled up if you're not careful so let's break it down you're essentially trying to shift your data so that the mean of each column becomes zero right that's the core of it and it's often a necessary step for a lot of machine learning and data analysis stuff so I get why you're asking this
 
 I remember back in the day when I was working on this project involving some image recognition task and we had a whole bunch of pixel data formatted as a matrix and the initial model was just not working well like accuracy was abysmal after a lot of debugging and head scratching I realized that our data wasn't centered around zero so the model was having trouble with the baseline essentially the data had too much of a bias or offset in some direction once we centered that the model started to converge a whole lot better it was quite the learning experience so trust me centering is way more important than it sounds at first
 
@@ -35,7 +35,7 @@ print("Original Matrix:\n", data_matrix)
 print("Centered Matrix:\n", centered_data)
 ```
 
-Alright so the function `center_matrix` takes the matrix as input calculates the column means using `np.mean(matrix, axis=0)` and then subtracts these means from the matrix again `matrix - col_means` its crucial that you get the axis right or it will not do what we want it would center across rows and we don't want that we are after columns and then we return the centered matrix and that's it nothing complicated
+so the function `center_matrix` takes the matrix as input calculates the column means using `np.mean(matrix, axis=0)` and then subtracts these means from the matrix again `matrix - col_means` its crucial that you get the axis right or it will not do what we want it would center across rows and we don't want that we are after columns and then we return the centered matrix and that's it nothing complicated
 
 I have also worked with larger datasets involving a matrix with thousands of rows and hundreds of columns and when that happens efficiency is a concern at that point you might want to consider utilizing vectorization and the correct library which can definitely speed things up a lot especially if you're doing this on a regular basis on very big data
 
@@ -77,7 +77,7 @@ console.log("Original Matrix:", dataMatrix);
 console.log("Centered Matrix:", centeredData);
 ```
 
-Okay so here we have javascript implementation it is more explicit in its looping but it is more or less doing the same thing we first calculate the column means like we did with numpy with plain old loops which as i said is less efficient compared to numpy but its ok for small matrix we then map over the matrix to subtract the column mean from its correspondent entry in the end you get a centered matrix again
+ so here we have javascript implementation it is more explicit in its looping but it is more or less doing the same thing we first calculate the column means like we did with numpy with plain old loops which as i said is less efficient compared to numpy but its ok for small matrix we then map over the matrix to subtract the column mean from its correspondent entry in the end you get a centered matrix again
 
 And here is one more example in C++ just because we can
 
@@ -142,6 +142,6 @@ Ok this is a bit of a tangent but i think it is necessary to clarify this point 
 
 If you want to delve deeper into the mathematical foundations of matrix operations and transformations I would recommend "Linear Algebra and Its Applications" by Gilbert Strang it is a classic for a reason it provides a very clear understanding of this stuff and it is very easy to read to be frank but you need some level of math background at least introductory to get the most of it if you are looking for something more practical i recommend "Hands-On Machine Learning with Scikit-Learn Keras & TensorFlow" by Aurélien Géron which covers a lot of pre-processing techniques including matrix centering with a focus on machine learning applications
 
-Alright i think that's about everything I had to say about centering a matrix. it seems that its quite a simple problem at first glance but i have seen it cause so many headaches because people do not pay attention to details in the implementation or misunderstand the core ideas behind it hopefully my answer was very clear and detailed enough and you are all set now to move forward and center your matrixes like the pros we are or well try to be
+i think that's about everything I had to say about centering a matrix. it seems that its quite a simple problem at first glance but i have seen it cause so many headaches because people do not pay attention to details in the implementation or misunderstand the core ideas behind it hopefully my answer was very clear and detailed enough and you are all set now to move forward and center your matrixes like the pros we are or well try to be
 
 ps i once had a matrix that tried to center itself but it just ended up feeling like a zero-dimensional point oh the irony

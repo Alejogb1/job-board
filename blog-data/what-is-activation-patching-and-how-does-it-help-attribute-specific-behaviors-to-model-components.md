@@ -4,7 +4,7 @@ date: "2024-12-11"
 id: "what-is-activation-patching-and-how-does-it-help-attribute-specific-behaviors-to-model-components"
 ---
 
-Okay so activation patching right super cool idea  Basically imagine you've got this huge complicated AI model think of it like a sprawling city  lots of different neighborhoods interacting  you want to know which neighborhood is responsible for a specific action like say the model identifying a cat in a picture  activation patching is like selectively shutting off the power to certain neighborhoods to see what happens
+ so activation patching right super cool idea  Basically imagine you've got this huge complicated AI model think of it like a sprawling city  lots of different neighborhoods interacting  you want to know which neighborhood is responsible for a specific action like say the model identifying a cat in a picture  activation patching is like selectively shutting off the power to certain neighborhoods to see what happens
 
 It's not exactly flipping a switch though its more like dimming the lights  you take the activations from a particular layer or group of neurons in your model these are the signals the neurons are firing think of them as the electricity flowing through the city and you attenuate them you reduce their strength  you're not completely cutting them off just making them weaker
 

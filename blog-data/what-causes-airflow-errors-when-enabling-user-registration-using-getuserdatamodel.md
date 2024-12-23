@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-causes-airflow-errors-when-enabling-user-registration-using-getuserdatamodel"
 ---
 
-Okay, let's tackle this. I recall a rather frustrating incident a few years back when we were migrating our Airflow deployment to a more robust, multi-tenant setup. The decision to enable user registration, which seemed straightforward on paper, quickly spiraled into a rabbit hole of cryptic errors. The core of the issue, as I discovered after much debugging, often lies in a misconfiguration or a misunderstanding of how `get_user_datamodel` interacts with Airflow's security layer.
+,  I recall a rather frustrating incident a few years back when we were migrating our Airflow deployment to a more robust, multi-tenant setup. The decision to enable user registration, which seemed straightforward on paper, quickly spiraled into a rabbit hole of cryptic errors. The core of the issue, as I discovered after much debugging, often lies in a misconfiguration or a misunderstanding of how `get_user_datamodel` interacts with Airflow's security layer.
 
 The `get_user_datamodel` function, residing within the `airflow.security.permissions` module, is specifically designed to manage user registration and retrieval. At its heart, it's meant to define how Airflow interacts with the user database or the user management system you've opted for. The challenge occurs when this interaction isn't set up properly, particularly when using a custom implementation.
 

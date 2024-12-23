@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-google-natural-language-sentiment-analysis-giving-incorrect-results"
 ---
 
-Okay, let’s talk about sentiment analysis misfires in Google's Natural Language API. I’ve seen this happen, and it’s rarely a simple 'this API is broken' situation. In my experience, it usually stems from a nuanced interaction between the input data, the model’s training, and how we interpret the output. It's a good problem to dissect, and honestly, one that I've spent a fair amount of time debugging on past projects.
+, let’s talk about sentiment analysis misfires in Google's Natural Language API. I’ve seen this happen, and it’s rarely a simple 'this API is broken' situation. In my experience, it usually stems from a nuanced interaction between the input data, the model’s training, and how we interpret the output. It's a good problem to dissect, and honestly, one that I've spent a fair amount of time debugging on past projects.
 
 First, it's essential to understand that sentiment analysis isn't about some perfect emotional interpretation. It’s a statistical approximation based on patterns the model has learned. These models are powerful, but they're also highly dependent on the context and the quality of training data, which, in Google’s case, is vast but not infallible.
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "embedded-games-html5-integration"
 ---
 
-Okay I get it embedded games HTML5 integration yeah I've wrestled with that beast a few times let me tell you it's not always a walk in the park especially when you're dealing with legacy systems or quirky embedded environments Been there done that got the scars to prove it
+ I get it embedded games HTML5 integration yeah I've wrestled with that beast a few times let me tell you it's not always a walk in the park especially when you're dealing with legacy systems or quirky embedded environments Been there done that got the scars to prove it
 
 So you're looking at shoehorning HTML5 games into some kind of embedded context right like a digital signage player or a specialized industrial controller maybe a smart fridge who knows The challenges are usually the same though resource constraints compatibility headaches and debugging nightmares are part of the package when you work with embeddeds
 

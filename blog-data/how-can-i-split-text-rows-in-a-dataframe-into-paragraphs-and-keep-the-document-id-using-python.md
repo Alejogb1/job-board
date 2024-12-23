@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-split-text-rows-in-a-dataframe-into-paragraphs-and-keep-the-document-id-using-python"
 ---
 
-Okay, let's tackle this. I've seen this problem pop up in various data science projects over the years, particularly those dealing with unstructured text documents. We often get dataframes where each row contains potentially multiple paragraphs lumped together, and for deeper analysis, we need to break these down. Keeping track of the original document id is crucial, of course. I’ll walk you through how I’ve approached this using python, ensuring each paragraph is associated with its originating document.
+,  I've seen this problem pop up in various data science projects over the years, particularly those dealing with unstructured text documents. We often get dataframes where each row contains potentially multiple paragraphs lumped together, and for deeper analysis, we need to break these down. Keeping track of the original document id is crucial, of course. I’ll walk you through how I’ve approached this using python, ensuring each paragraph is associated with its originating document.
 
 The core idea revolves around identifying paragraph delimiters, which are often represented by one or more newline characters (`\n`). However, edge cases always seem to find a way in, so we need to be a bit more robust. For example, sometimes you'll find consecutive newline characters, extra whitespace, or even a mix of carriage returns and newlines (`\r\n`). I'll provide a solution that takes those into account, using `pandas` and `re` (regular expressions).
 

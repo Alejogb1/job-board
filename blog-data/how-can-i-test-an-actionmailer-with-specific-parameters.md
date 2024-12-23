@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-test-an-actionmailer-with-specific-parameters"
 ---
 
-Okay, let’s address this. I've actually been down this road quite a few times, and it's a recurring challenge when you’re building robust applications that depend heavily on email functionality. Testing `ActionMailer` with specific parameters isn’t just about checking if an email gets sent; it's about ensuring the *right* email with the *right* content and headers is sent, given different sets of data. The key is to move beyond simple acceptance tests and embrace a more granular, parameter-driven approach. Let me walk you through how I’ve tackled this in the past.
+, let’s address this. I've actually been down this road quite a few times, and it's a recurring challenge when you’re building robust applications that depend heavily on email functionality. Testing `ActionMailer` with specific parameters isn’t just about checking if an email gets sent; it's about ensuring the *right* email with the *right* content and headers is sent, given different sets of data. The key is to move beyond simple acceptance tests and embrace a more granular, parameter-driven approach. Let me walk you through how I’ve tackled this in the past.
 
 The core issue is decoupling the mailer functionality from the actual email sending process. We don't want to actually send emails during our tests; we want to confirm that the mailers are configured correctly. Rails, thankfully, provides excellent tools to achieve this via its test suite. The `ActionMailer::Base.deliveries` array is your best friend here. Before any tests run, it’s often wise to clear this array. In your test setup, add a `setup` or `before` hook that does something like this:
 

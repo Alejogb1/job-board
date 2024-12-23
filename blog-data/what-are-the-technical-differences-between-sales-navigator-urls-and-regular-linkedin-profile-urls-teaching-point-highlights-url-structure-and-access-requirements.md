@@ -4,7 +4,7 @@ date: "2024-12-12"
 id: "what-are-the-technical-differences-between-sales-navigator-urls-and-regular-linkedin-profile-urls-teaching-point-highlights-url-structure-and-access-requirements"
 ---
 
-Okay so let's dive into the LinkedIn URL stuff sales nav versus regular profile pages its kind of like comparing apples and slightly different oranges both are fruit but they do different things right?
+ so let's dive into the LinkedIn URL stuff sales nav versus regular profile pages its kind of like comparing apples and slightly different oranges both are fruit but they do different things right?
 
 A regular LinkedIn profile URL you've seen it it's like `linkedin.com/in/your-name-or-username` pretty straightforward its public facing it's meant for general networking you know connecting with colleagues friends potential employers pretty standard stuff If you're browsing publicly or even logged into your account you can usually see these pages without any friction the main purpose is to present a person's professional story their skills work experience all that jazz it's easily shared in your resume or email signature or embedded in your website
 
@@ -51,7 +51,7 @@ This Python example just shows the different URL types and access rules
 
 My second suggestion is: How does LinkedIn's API handle rate limiting when accessing profile data, and how can developers design their applications to accommodate these limitations? (Teaching point: Explains API limits, rate limiting, and best practices for application design.)
 
-Okay rate limiting that’s the bane of every API developer's existence its like having a super fast sports car but being stuck on a congested highway LinkedIn's API isn't different they are very strict on rate limits and its completely understandable they need to protect their servers from getting flooded with requests. They want to make sure everyone has a fair chance to use the platform and their data.
+ rate limiting that’s the bane of every API developer's existence its like having a super fast sports car but being stuck on a congested highway LinkedIn's API isn't different they are very strict on rate limits and its completely understandable they need to protect their servers from getting flooded with requests. They want to make sure everyone has a fair chance to use the platform and their data.
 
 Basically rate limiting is their system to make sure no one single user or application is hogging all the resources it's a set number of requests you can make in a specific amount of time and if you go over this limit well the API will throw errors at you usually a 429 status code which means you have made too many requests.
 
@@ -110,7 +110,7 @@ There are some good resources on REST API design and general best practices from
 
 My third suggestion is: What are some common pitfalls or mistakes developers should avoid when building integrations with LinkedIn APIs? (Teaching point: Identifies common development errors, emphasizes code maintainability and documentation)
 
-Okay let's talk about common slip-ups when wrestling with LinkedIn APIs there are definitely some pitfalls you want to sidestep like hidden ice patches when you're trying to take a stroll. This stuff can lead to broken apps frustrated users and a lot of debugging so its useful to go through some of the common issues.
+ let's talk about common slip-ups when wrestling with LinkedIn APIs there are definitely some pitfalls you want to sidestep like hidden ice patches when you're trying to take a stroll. This stuff can lead to broken apps frustrated users and a lot of debugging so its useful to go through some of the common issues.
 
 One big mistake is not properly handling pagination some of the Linkedin API endpoints return large data sets but they are paginated into multiple pages if you’re just fetching the first page you are missing out on a lot of crucial information your code needs to be able to handle pagination by following the "next page" links or tokens this usually comes as part of the request's response.
 

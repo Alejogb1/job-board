@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-can-i-set-custom-trigger-rules-in-airflow"
 ---
 
-Alright, let's tackle this. Custom trigger rules in airflow, it's a topic I’ve spent a fair amount of time with, especially back during my stint at 'DataStreams Inc'. We needed precise control over dag executions to avoid cascading failures and resource bottlenecks. What you're essentially aiming for is to move beyond the standard 'all_success' or 'all_failed' conditions. Thankfully, airflow offers several ways to achieve this granular level of control. It's not just about boolean operators anymore; you can implement quite sophisticated logic.
+Alright,  Custom trigger rules in airflow, it's a topic I’ve spent a fair amount of time with, especially back during my stint at 'DataStreams Inc'. We needed precise control over dag executions to avoid cascading failures and resource bottlenecks. What you're essentially aiming for is to move beyond the standard 'all_success' or 'all_failed' conditions. Thankfully, airflow offers several ways to achieve this granular level of control. It's not just about boolean operators anymore; you can implement quite sophisticated logic.
 
 First off, it’s crucial to understand the underlying mechanics. Airflow, at its core, uses the `trigger_rule` parameter within its task definition. This parameter dictates when a task should move from a 'scheduled' state to 'running'. The standard options, like `all_success`, `all_failed`, `all_done`, `one_success`, `one_failed`, and `none_failed`, are fine for straightforward pipelines, but they quickly become insufficient for intricate workflow needs. You will see these in most introductory documentation and tutorials, but that’s rarely enough for complex production setups.
 

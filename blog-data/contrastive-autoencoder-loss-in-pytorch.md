@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "contrastive-autoencoder-loss-in-pytorch"
 ---
 
-Okay so you're wrestling with contrastive loss in a variational autoencoder setup using PyTorch right I've been there man trust me its a deep rabbit hole but once you get it it's like magic lets break it down
+ so you're wrestling with contrastive loss in a variational autoencoder setup using PyTorch right I've been there man trust me its a deep rabbit hole but once you get it it's like magic lets break it down
 
 First off lets clarify the core ideas before we jump to code specifics you got your standard VAE a latent space encoder decoder the whole shebang Then you are looking at incorporating contrastive loss you’re basically pushing for a representation space where similar data points are grouped closer and dissimilar ones are further apart This is different from the standard VAE’s reconstruction objective which just tries to match the input this adds a layer of semantic structure that is pretty useful
 
@@ -33,7 +33,7 @@ class ContrastiveLoss(nn.Module):
         return loss_contrastive
 ```
 
-Alright so lets break this down `output1` and `output2` these are the latent vector representations that are coming from your VAEs encoder right and label is a tensor of ones and zeros Ones indicate that the pair is dissimilar and zero means they are the same this is how the distance calculations work in here. The margin is used to make sure the representations are pulled close and the negative samples are at least a distance away. The clamping in the negative pairs is a key idea of the contrastive loss it makes sure that you do not get stuck and allows for the optimization to converge.
+so lets break this down `output1` and `output2` these are the latent vector representations that are coming from your VAEs encoder right and label is a tensor of ones and zeros Ones indicate that the pair is dissimilar and zero means they are the same this is how the distance calculations work in here. The margin is used to make sure the representations are pulled close and the negative samples are at least a distance away. The clamping in the negative pairs is a key idea of the contrastive loss it makes sure that you do not get stuck and allows for the optimization to converge.
 
 Now that you have the loss function, you would need to wire it into your training loop something like this should be what you need:
 

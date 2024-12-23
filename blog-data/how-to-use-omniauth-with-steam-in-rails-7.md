@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-use-omniauth-with-steam-in-rails-7"
 ---
 
-Alright, let's tackle this. I remember a project back in '21 where we integrated Steam authentication; that was…educational, to say the least. Omniauth, while powerful, can sometimes feel like it's pushing back when you're trying to get third-party auth working smoothly, especially with a platform like Steam that has its own nuances. Getting it going in Rails 7 is pretty straightforward, though, if you break it down. Let's walk through it.
+Alright,  I remember a project back in '21 where we integrated Steam authentication; that was…educational, to say the least. Omniauth, while powerful, can sometimes feel like it's pushing back when you're trying to get third-party auth working smoothly, especially with a platform like Steam that has its own nuances. Getting it going in Rails 7 is pretty straightforward, though, if you break it down. Let's walk through it.
 
 The primary challenge often isn’t the gem itself, but configuring it correctly to handle Steam's particular quirks. Steam uses a variation of OpenID, and while Omniauth provides an abstraction, understanding what's happening under the hood is essential.
 

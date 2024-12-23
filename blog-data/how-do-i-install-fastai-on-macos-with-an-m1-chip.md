@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-install-fastai-on-macos-with-an-m1-chip"
 ---
 
-Okay, let's tackle this. Been there, done that, a few times now actually, especially after those M1 chips started popping up. Getting fastai working seamlessly on macOS with an M1 processor does introduce some nuances, but it's certainly achievable. It's less about a simple install command and more about understanding the underlying dependency landscape and working around some potential architecture clashes.
+,  Been there, done that, a few times now actually, especially after those M1 chips started popping up. Getting fastai working seamlessly on macOS with an M1 processor does introduce some nuances, but it's certainly achievable. It's less about a simple install command and more about understanding the underlying dependency landscape and working around some potential architecture clashes.
 
 The core issue you'll run into stems from the fact that many scientific computing libraries, especially those relying heavily on compiled extensions, might not have been initially built with arm64 (Apple Silicon) architectures in mind. While Rosetta 2 emulation can alleviate some of the problems, it's not the most performant solution and can sometimes lead to unexpected behavior. So, the first step is to aim for native arm64 compatibility whenever possible.
 

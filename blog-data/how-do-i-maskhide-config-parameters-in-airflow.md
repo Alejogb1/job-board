@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-maskhide-config-parameters-in-airflow"
 ---
 
-Okay, let's tackle this. It's a common challenge, and one I recall facing several times back when I was managing data pipelines for a large e-commerce platform. We had sensitive database credentials, api keys, and other configuration details that absolutely could not be exposed in plain sight within our Airflow configurations. The goal, as you know, is to prevent these from being directly included in DAG code or environment variables that might be easily accessible. The solution, of course, involves a strategic combination of features and best practices that, if implemented correctly, can offer substantial protection.
+,  It's a common challenge, and one I recall facing several times back when I was managing data pipelines for a large e-commerce platform. We had sensitive database credentials, api keys, and other configuration details that absolutely could not be exposed in plain sight within our Airflow configurations. The goal, as you know, is to prevent these from being directly included in DAG code or environment variables that might be easily accessible. The solution, of course, involves a strategic combination of features and best practices that, if implemented correctly, can offer substantial protection.
 
 The core idea revolves around avoiding the direct embedding of these sensitive parameters. Think of it like designing a secure vault. You don’t leave the key lying around or in a place where it can be guessed. Instead, you keep the key separate and require a specific process to access it. In our case with Airflow, we accomplish this by referencing these credentials, rather than storing them directly in the DAG code.
 

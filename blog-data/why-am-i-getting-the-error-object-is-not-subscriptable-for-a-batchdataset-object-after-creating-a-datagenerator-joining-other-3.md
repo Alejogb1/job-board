@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-the-error-object-is-not-subscriptable-for-a-batchdataset-object-after-creating-a-datagenerator-joining-other-3"
 ---
 
-Alright, let's tackle this. The 'object is not subscriptable' error when dealing with a `BatchDataset` in TensorFlow (or similar libraries) after combining generators is a classic gotcha, and it usually stems from a misunderstanding of how these data structures operate internally. It’s something I've bumped into a few times myself, particularly back when I was working on a large-scale image segmentation project that required intricate data pipelines. The complexity of the pipelines often led to this exact issue.
+Alright,  The 'object is not subscriptable' error when dealing with a `BatchDataset` in TensorFlow (or similar libraries) after combining generators is a classic gotcha, and it usually stems from a misunderstanding of how these data structures operate internally. It’s something I've bumped into a few times myself, particularly back when I was working on a large-scale image segmentation project that required intricate data pipelines. The complexity of the pipelines often led to this exact issue.
 
 The core of the problem isn't necessarily in the data itself, but rather in the way you're trying to access it. When you create a `BatchDataset` by joining several generators, you're essentially working with a stream of data that is already processed and packaged. It’s no longer a structure you can interact with like a simple list or dictionary, hence the "not subscriptable" error when you attempt something like `batch_dataset[index]` or `batch_dataset['key']`. `BatchDataset` objects are iterators or generators of batches, not directly accessible containers.
 

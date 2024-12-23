@@ -4,7 +4,7 @@ date: "2024-12-03"
 id: "how-do-searchgpt-rankings-work-and-what-strategies-can-improve-them"
 ---
 
-Okay so you wanna know about SearchGPT rankings right  kinda like SEO but for AI search results  it's pretty new so the info is scattered but I'll give you the lowdown from what I've gleaned
+ so you wanna know about SearchGPT rankings right  kinda like SEO but for AI search results  it's pretty new so the info is scattered but I'll give you the lowdown from what I've gleaned
 
 Basically SearchGPT  or whatever flavour of AI search you're using  isn't just spitting out web links anymore  it's trying to understand your query and give you the *best* answer  and that "best" is where the ranking magic happens
 

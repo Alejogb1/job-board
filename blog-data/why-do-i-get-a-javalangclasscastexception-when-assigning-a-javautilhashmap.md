@@ -21,7 +21,7 @@ public class LegacyCodeExample {
         rawMap.put("key2", "string value");
 
         //Somewhere down the line...
-        Integer value = (Integer) rawMap.get("key1");  // This seems okay... at first.
+        Integer value = (Integer) rawMap.get("key1");  // This seems ... at first.
         String anotherValue = (String) rawMap.get("key2"); // And so does this...
        
         Map anotherRawMap = new HashMap();

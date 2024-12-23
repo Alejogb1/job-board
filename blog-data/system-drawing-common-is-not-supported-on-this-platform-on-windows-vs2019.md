@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "system-drawing-common-is-not-supported-on-this-platform-on-windows-vs2019"
 ---
 
-Okay so you're hitting that "System Drawing Common not supported" wall on Windows using VS2019 right Been there totally understand the pain First off you are right System Drawing Common is a notorious pain point it has a complicated history especially between different .NET versions and operating system compatibility Before diving into the fixes lets just clarify a couple of things
+ so you're hitting that "System Drawing Common not supported" wall on Windows using VS2019 right Been there totally understand the pain First off you are right System Drawing Common is a notorious pain point it has a complicated history especially between different .NET versions and operating system compatibility Before diving into the fixes lets just clarify a couple of things
 
 I've seen this problem crop up more times than I care to admit Back in the early .NET Core days we were all migrating our projects some of them depended heavily on older WinForms stuff especially legacy image processing routines and guess what System Drawing Common was the first stumbling block
 

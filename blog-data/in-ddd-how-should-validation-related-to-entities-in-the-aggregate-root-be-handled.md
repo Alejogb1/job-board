@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "in-ddd-how-should-validation-related-to-entities-in-the-aggregate-root-be-handled"
 ---
 
-Alright, let's tackle this. I remember a particularly frustrating project a few years back, building an inventory management system for a large retailer. We were neck-deep in DDD and, naturally, the question of entity validation within aggregate roots cropped up – it's a classic. And it's crucial to get it right, or your domain logic quickly becomes a tangled mess.
+Alright,  I remember a particularly frustrating project a few years back, building an inventory management system for a large retailer. We were neck-deep in DDD and, naturally, the question of entity validation within aggregate roots cropped up – it's a classic. And it's crucial to get it right, or your domain logic quickly becomes a tangled mess.
 
 The essence of DDD, as I see it after years of implementation, isn't just about drawing boxes and arrows; it's about creating a ubiquitous language and encapsulating business rules within the appropriate boundaries. Aggregate roots, acting as transactional consistency boundaries, are particularly sensitive. Therefore, how you handle validation within them is pivotal. The core principle here is to ensure validity *before* any state changes are persisted. Validation isn't an afterthought; it's a fundamental part of the aggregate's behavior.
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "why-i-do-get-cannot-find-bound-of-current-function-when-i-overwrite-the-ret-ad"
 ---
 
-Okay so you're hitting a classic and frankly annoying issue you're messing with the return address on the stack and getting tripped up by the compiler or maybe even the hardware itself let me break down why that's happening and how I've personally battled this demon over the years
+ so you're hitting a classic and frankly annoying issue you're messing with the return address on the stack and getting tripped up by the compiler or maybe even the hardware itself let me break down why that's happening and how I've personally battled this demon over the years
 
 So first off the “cannot find bound of current function” message you’re seeing that's essentially the system’s way of saying "hey I have no freaking idea where I’m supposed to go back to after this function finishes" It’s like trying to use a GPS but the starting point is nowhere and the ending point is a random pile of bits You've overwritten the crucial piece of data the return address
 
@@ -14,7 +14,7 @@ Basically when a function is called the processor does a few things It pushes th
 
 Now when you overwrite this return address well all hell breaks loose The program is gonna try to return to some completely random spot in memory and that's where you get segmentation faults crashes and that lovely "cannot find bound" error your debugging system whether it’s a debugger or just the operating system is trying to unwind the stack to find where it was supposed to be coming from and its looking at a corrupted return address so it's completely lost
 
-Okay code examples lets look at a super simplified view I'm not gonna dive into actual stack frames here cause that’s way more platform specific but I will show how the principle looks
+ code examples lets look at a super simplified view I'm not gonna dive into actual stack frames here cause that’s way more platform specific but I will show how the principle looks
 
 **Code Example 1: Simple C function with return address overwrite**
 
@@ -39,7 +39,7 @@ int main() {
 
 Here we've got a classic buffer overflow strcpy doesn't know when to stop copying so if your `input` is bigger than buffer it starts overwriting the stack beyond `buffer` and importantly this can overwrite the return address. This can lead to very unpredictable behavior and usually a crash at the function return if the overwritten address is invalid
 
-Okay thats the classic example but its not always just a buffer overflow sometimes you might be manually manipulating the stack for some reason or another like in assembly code
+ thats the classic example but its not always just a buffer overflow sometimes you might be manually manipulating the stack for some reason or another like in assembly code
 
 **Code Example 2: Assembly example of manual stack manipulation and return address overwrite (x86_64 like)**
 

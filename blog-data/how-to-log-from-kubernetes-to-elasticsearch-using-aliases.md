@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-log-from-kubernetes-to-elasticsearch-using-aliases"
 ---
 
-Okay, let's tackle this. I've spent a fair amount of time wrangling Kubernetes and Elasticsearch together, and logging is one of those areas where things can quickly become… well, let’s just say *complex*. Managing indices with proper naming conventions and avoiding schema conflicts is crucial, and using aliases provides an elegant solution. It's not always straightforward, so let me walk you through how I typically approach this, based on real experiences.
+,  I've spent a fair amount of time wrangling Kubernetes and Elasticsearch together, and logging is one of those areas where things can quickly become… well, let’s just say *complex*. Managing indices with proper naming conventions and avoiding schema conflicts is crucial, and using aliases provides an elegant solution. It's not always straightforward, so let me walk you through how I typically approach this, based on real experiences.
 
 The core idea here isn't merely sending logs; it's about managing those logs effectively within Elasticsearch. We’re aiming for a setup that's scalable, maintainable, and allows for easy querying. Instead of writing directly to concrete index names like `kubernetes-logs-2024-07-26`, we'll be logging to aliases such as `kubernetes-logs-write` and then subsequently querying using aliases like `kubernetes-logs-read`. This gives us that crucial abstraction layer we need for roll-overs and other index management tasks.
 

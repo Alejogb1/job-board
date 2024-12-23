@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "which-addresses-in-the-serum-network-have-a-data-size-of-777"
 ---
 
-Okay, let's tackle this one. It’s not every day you encounter such a specific data size quirk on a network like Serum, but I recall a project back in '21 where we had some seriously perplexing address-related data issues. Specifically, we were dealing with custom PDA (Program Derived Addresses) which, as it turns out, can be the root of non-standard sizes. Understanding why some Serum addresses might yield a data size of exactly 777 bytes boils down to how Serum, and more generally Solana, stores and interacts with account data, particularly when programs are in the mix.
+, let's tackle this one. It’s not every day you encounter such a specific data size quirk on a network like Serum, but I recall a project back in '21 where we had some seriously perplexing address-related data issues. Specifically, we were dealing with custom PDA (Program Derived Addresses) which, as it turns out, can be the root of non-standard sizes. Understanding why some Serum addresses might yield a data size of exactly 777 bytes boils down to how Serum, and more generally Solana, stores and interacts with account data, particularly when programs are in the mix.
 
 Let's be clear upfront: standard Solana addresses, the public keys we all know, don't directly store data in this manner. They are identifiers. The 777-byte data size almost certainly refers to the data held within *account* structures associated with those addresses, specifically accounts owned by a program or perhaps a custom account created via a program’s instructions. In Solana, when a program needs to store state or data, it does so in accounts that it owns. This is where the 777 bytes comes into play.
 

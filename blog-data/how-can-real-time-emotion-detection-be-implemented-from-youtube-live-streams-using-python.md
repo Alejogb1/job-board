@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-real-time-emotion-detection-be-implemented-from-youtube-live-streams-using-python"
 ---
 
-Okay, let's talk about implementing real-time emotion detection from YouTube live streams using Python. This isn't a trivial task, and I've tackled similar projects in the past involving video analysis, so I'll try to break it down in a way that makes sense. It involves a pipeline of interconnected processes, each with its own set of challenges.
+, let's talk about implementing real-time emotion detection from YouTube live streams using Python. This isn't a trivial task, and I've tackled similar projects in the past involving video analysis, so I'll try to break it down in a way that makes sense. It involves a pipeline of interconnected processes, each with its own set of challenges.
 
 First off, we need to get the video data. YouTube's API doesn't directly stream live video frames; instead, we have to leverage libraries that can access the stream via its hls (HTTP Live Streaming) manifestation. `yt-dlp` is an excellent tool for this. It handles authentication and media format intricacies reasonably well and can give you a url to the live stream's manifest. From there, we can use something like `ffmpeg` (or a python wrapper, like `ffmpeg-python`) to extract the frames and process them. That will form the base of the pipeline.
 

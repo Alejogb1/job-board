@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-apache-airflow-authenticate-users-via-ldap-securely"
 ---
 
-Okay, let's tackle user authentication in Apache Airflow with LDAP. I've spent my fair share of time wrestling with this particular setup, and it’s definitely crucial to get it locked down properly for any production environment. It's less about a simple on/off switch and more about carefully configuring several pieces to play nicely together.
+, let's tackle user authentication in Apache Airflow with LDAP. I've spent my fair share of time wrestling with this particular setup, and it’s definitely crucial to get it locked down properly for any production environment. It's less about a simple on/off switch and more about carefully configuring several pieces to play nicely together.
 
 The core issue here is bridging the gap between Airflow's internal user management system and your organization's LDAP directory. Airflow doesn't inherently understand LDAP; it needs an adapter or a bridge. What we’re going to do is configure Airflow to leverage `flask-ldap3-login`, a Flask extension that does the heavy lifting for us, handling the LDAP query and authentication process. It’s important to recognize that we aren't actually *importing* user data into Airflow. We are verifying credentials against the LDAP server on each login attempt.
 

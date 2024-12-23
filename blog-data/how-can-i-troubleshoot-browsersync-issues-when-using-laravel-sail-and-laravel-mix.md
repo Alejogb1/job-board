@@ -4,11 +4,11 @@ date: "2024-12-23"
 id: "how-can-i-troubleshoot-browsersync-issues-when-using-laravel-sail-and-laravel-mix"
 ---
 
-Alright, let's tackle this. It’s a situation I've definitely found myself in more times than I’d like to recall, getting BrowserSync to play nice with Laravel Sail and Mix. It’s often less straightforward than you might hope, and the symptoms can vary, leading you down different troubleshooting paths. The core problem usually revolves around network configurations, file watching, and how these tools interact with Docker.
+Alright,  It’s a situation I've definitely found myself in more times than I’d like to recall, getting BrowserSync to play nice with Laravel Sail and Mix. It’s often less straightforward than you might hope, and the symptoms can vary, leading you down different troubleshooting paths. The core problem usually revolves around network configurations, file watching, and how these tools interact with Docker.
 
 From my experience, the first thing to examine is how your containers are exposing ports, specifically the one BrowserSync uses (usually 3000 for the server and 3001 for the ui). Laravel Sail, being a wrapper around Docker Compose, relies heavily on correctly configured ports. If those aren’t aligned, the live reloading functionality simply won’t work. I remember a particularly frustrating debugging session where a coworker had inadvertently mapped the browser sync ports in a Dockerfile instead of Docker Compose, causing inconsistent behavior between local and containerized environments.
 
-Okay, let's break this down with some tangible examples and solutions.
+, let's break this down with some tangible examples and solutions.
 
 **The First Area: Port Mapping & Network Configuration**
 

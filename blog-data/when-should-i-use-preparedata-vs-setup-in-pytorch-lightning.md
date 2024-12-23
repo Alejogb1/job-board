@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "when-should-i-use-preparedata-vs-setup-in-pytorch-lightning"
 ---
 
-Alright, let's tackle this. I’ve seen this confusion pop up more times than I can count, and it’s understandable. Both `prepare_data` and `setup` in PyTorch Lightning seem to deal with data, but they have distinctly different responsibilities. The key lies in understanding *when* each method is called and what resources they’re meant to handle. Think of `prepare_data` as your data *download and preprocessing stage*, while `setup` is where you *assign and instantiate* the processed data ready for training/evaluation. They're sequential, not interchangeable. I recall a particularly thorny project early in my career involving large image datasets where not understanding this distinction led to some… let’s call them *interesting* debugging sessions.
+Alright,  I’ve seen this confusion pop up more times than I can count, and it’s understandable. Both `prepare_data` and `setup` in PyTorch Lightning seem to deal with data, but they have distinctly different responsibilities. The key lies in understanding *when* each method is called and what resources they’re meant to handle. Think of `prepare_data` as your data *download and preprocessing stage*, while `setup` is where you *assign and instantiate* the processed data ready for training/evaluation. They're sequential, not interchangeable. I recall a particularly thorny project early in my career involving large image datasets where not understanding this distinction led to some… let’s call them *interesting* debugging sessions.
 
 Let’s break it down step-by-step, focusing on the practicalities and avoiding overly abstract explanations.
 

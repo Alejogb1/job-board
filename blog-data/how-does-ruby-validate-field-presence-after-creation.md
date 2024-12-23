@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-does-ruby-validate-field-presence-after-creation"
 ---
 
-Okay, let's dissect this. Field validation in Ruby, specifically after object creation, isn't a singular process. It's more about applying a set of techniques and choices tailored to the specific needs of your application and the lifecycle of your model objects. I've dealt with this countless times, from simple blog platforms to complex enterprise systems, and it’s never a one-size-fits-all. The crucial point is understanding *when* and *how* you want to validate that a field is present.
+, let's dissect this. Field validation in Ruby, specifically after object creation, isn't a singular process. It's more about applying a set of techniques and choices tailored to the specific needs of your application and the lifecycle of your model objects. I've dealt with this countless times, from simple blog platforms to complex enterprise systems, and it’s never a one-size-fits-all. The crucial point is understanding *when* and *how* you want to validate that a field is present.
 
 At its core, "presence" usually means a field isn't `nil` or, in the case of strings, that it's not an empty string or just whitespace. But it can get more nuanced. For instance, you might consider a zero value for an integer to be 'present,' or you might have a boolean where `false` is considered a legitimate value.
 

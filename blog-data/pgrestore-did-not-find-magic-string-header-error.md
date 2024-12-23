@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "pgrestore-did-not-find-magic-string-header-error"
 ---
 
-Okay so you're hitting the "pg_restore did not find magic string header" error right? I've been there man believe me I've wrestled with this beast way more times than I care to admit it's like a rite of passage for Postgres users sometimes
+ so you're hitting the "pg_restore did not find magic string header" error right? I've been there man believe me I've wrestled with this beast way more times than I care to admit it's like a rite of passage for Postgres users sometimes
 
 So here's the deal this error usually screams one thing loud and clear your restore file isn't what pg_restore expects it to be It's essentially saying "hey I'm looking for a file that starts with a specific sequence of bytes a magic string if you will and you're giving me something that doesn't match that pattern" It's Postgres trying to ensure the integrity of backups it's a good thing but man is it annoying when it goes wrong
 
@@ -34,7 +34,7 @@ Again `your_username`, `your_host`, `your_port` and `your_database` should be re
 
 **Second the format of the dump**
 
-Okay lets assume you took the right dump file and still getting that error Well you have likely taken a format that is not meant to be restored using `pg_restore`.
+ lets assume you took the right dump file and still getting that error Well you have likely taken a format that is not meant to be restored using `pg_restore`.
 
 There are a few types of formats for pg_dump namely plain text and custom formats. Plain text is used with the `-Ft` option of pg_dump and is generally used for importing into another system through pipes or just to view the SQL statements. It cannot be restored using `pg_restore`. Custom format files which is what is usually used for `pg_restore` is created using the `-Fc` option which we used before. It creates a binary file that is very different from a plain text file and contains more meta data about the restore. This is also why custom format is generally preferred as it also allows for parallel restores using the `-j` option.
 
@@ -66,7 +66,7 @@ This is one of those "duh" moments but you need to make sure that you are using 
 
 **Debugging tips**
 
-Okay so you have gone over the basics what next?
+ so you have gone over the basics what next?
 
 First check the size of your backup file If it's ridiculously small like only a few bytes then you definitely have a bad file It should be a considerable size if it actually has database information within it.
 
@@ -80,4 +80,4 @@ For more in depth Postgres knowledge I would suggest "PostgreSQL Administration 
 
 I remember this one time I was trying to restore a database on a new server for a client and I was getting this error over and over again I was banging my head against the wall for hours it turned out I had accidentally grabbed the wrong file it was like the most embarrassing moment for me ever I was just looking at the files with the same name in two different folders and I did not see that I was using the one in the wrong folder it was one of those days you know like they say "every day we stray further from god"
 
-Okay I think I've covered most of the angles on this "magic string header" thing Hopefully this helps you solve your issue It's frustrating but you'll get through it And if you still can't well you know where to find me I'll be here debugging something else probably
+ I think I've covered most of the angles on this "magic string header" thing Hopefully this helps you solve your issue It's frustrating but you'll get through it And if you still can't well you know where to find me I'll be here debugging something else probably

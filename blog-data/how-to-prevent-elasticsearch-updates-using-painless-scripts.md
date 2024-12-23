@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-prevent-elasticsearch-updates-using-painless-scripts"
 ---
 
-Okay, let's talk about preventing Elasticsearch updates using painless scripts. I've seen this need crop up in quite a few projects over the years, and it's often about enforcing data integrity rules or implementing sophisticated access controls directly at the indexing level. It’s not always about straightforward read-write permissions; sometimes it’s about ensuring changes happen only under very specific circumstances, determined by the document itself. It's a bit more nuanced than just locking down access generally.
+, let's talk about preventing Elasticsearch updates using painless scripts. I've seen this need crop up in quite a few projects over the years, and it's often about enforcing data integrity rules or implementing sophisticated access controls directly at the indexing level. It’s not always about straightforward read-write permissions; sometimes it’s about ensuring changes happen only under very specific circumstances, determined by the document itself. It's a bit more nuanced than just locking down access generally.
 
 The core mechanism we'll be exploiting here is the power of painless within Elasticsearch’s `_update` API. While we typically think of painless for modifying document contents, it also provides a powerful way to examine the existing document and the proposed changes before they are committed. This examination lets us conditionally cancel the update, in effect preventing it.
 

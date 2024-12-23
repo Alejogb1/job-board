@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-await-multiple-asynchronous-functions"
 ---
 
-Alright, let's tackle this. Asynchronous operations, especially when you're dealing with multiple of them, can feel a bit like herding cats if you’re not careful. I’ve seen many projects stumble over this particular hurdle, and over time, I’ve developed a few preferred methods for managing them effectively. The key lies in understanding the core concepts of asynchronous programming within your chosen environment, be it javascript, python, or any language that embraces async/await.
+Alright,  Asynchronous operations, especially when you're dealing with multiple of them, can feel a bit like herding cats if you’re not careful. I’ve seen many projects stumble over this particular hurdle, and over time, I’ve developed a few preferred methods for managing them effectively. The key lies in understanding the core concepts of asynchronous programming within your chosen environment, be it javascript, python, or any language that embraces async/await.
 
 The basic problem is this: you have several independent tasks that don't need to execute sequentially, and you want to wait for *all* of them to complete before proceeding with the next stage of your program. You could naively await each one sequentially, of course, but that’s going to bottleneck your entire application, reducing the efficiency benefits of asynchrony. Instead, you need a way to start them concurrently and then, crucially, be notified when all have wrapped up.
 

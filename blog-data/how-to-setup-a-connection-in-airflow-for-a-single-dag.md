@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-setup-a-connection-in-airflow-for-a-single-dag"
 ---
 
-Okay, let's dive into this. I've spent quite a bit of time in the trenches with airflow, and handling connection setups—especially on a per-dag basis—can get a little nuanced. It's not always as straightforward as the documentation might suggest at first glance. I've seen teams struggle with this, ending up with tangled connection definitions that become a maintenance headache. Instead of treating airflow connections as a global resource, focusing on per-dag setups can significantly improve your workflow and make things more manageable in the long run.
+, let's dive into this. I've spent quite a bit of time in the trenches with airflow, and handling connection setups—especially on a per-dag basis—can get a little nuanced. It's not always as straightforward as the documentation might suggest at first glance. I've seen teams struggle with this, ending up with tangled connection definitions that become a maintenance headache. Instead of treating airflow connections as a global resource, focusing on per-dag setups can significantly improve your workflow and make things more manageable in the long run.
 
 The challenge, really, isn't just *how* to configure a connection, but *where* to do it so it's both discoverable and scoped correctly to a single dag. You absolutely want to avoid global connection definitions unless they're truly application-wide. Otherwise, it leads to unintended consequences when dags start interacting with services they shouldn't have access to, or if one dag's connection conflicts with another.
 

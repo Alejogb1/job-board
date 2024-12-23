@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "does-passing-validation-data-to-fit-obviate-the-need-for-evaluate"
 ---
 
-Okay, let's talk about `fit()` and `evaluate()` in the context of model training, particularly within machine learning frameworks like TensorFlow or Keras. The question of whether supplying validation data to the `fit()` method eliminates the need for `evaluate()` is a frequent point of confusion, and it’s a valuable one to clarify. I've seen this issue crop up in numerous projects throughout my career, and it’s worth dissecting the nuances. In short, the answer isn’t a simple "yes" or "no."
+, let's talk about `fit()` and `evaluate()` in the context of model training, particularly within machine learning frameworks like TensorFlow or Keras. The question of whether supplying validation data to the `fit()` method eliminates the need for `evaluate()` is a frequent point of confusion, and it’s a valuable one to clarify. I've seen this issue crop up in numerous projects throughout my career, and it’s worth dissecting the nuances. In short, the answer isn’t a simple "yes" or "no."
 
 To begin, let's consider their primary functions. The `fit()` method is fundamentally about training the model. It iterates through the training dataset, adjusts model parameters using an optimization algorithm, and, importantly, *also* provides insights into its performance on validation data *if provided*. This validation data is used to monitor the model's generalization ability; its performance on data the model hasn’t seen during training. This is key to preventing overfitting, where a model performs well on the training data but poorly on new, unseen data.
 

@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-dont-azureml-experiments-finish-even-with-existing-outputs"
 ---
 
-Okay, let's delve into why Azure Machine Learning (AzureML) experiments sometimes stubbornly refuse to complete, even when the expected outputs are, seemingly, already present. This is a frustration many of us have encountered, and it’s not always a straightforward issue. I’ve personally spent hours debugging such scenarios, and it usually boils down to nuanced behaviors in the execution framework rather than a simple 'missing file' error.
+, let's delve into why Azure Machine Learning (AzureML) experiments sometimes stubbornly refuse to complete, even when the expected outputs are, seemingly, already present. This is a frustration many of us have encountered, and it’s not always a straightforward issue. I’ve personally spent hours debugging such scenarios, and it usually boils down to nuanced behaviors in the execution framework rather than a simple 'missing file' error.
 
 The primary reason, in my experience, centers around AzureML's job management system and how it tracks dependencies and completeness. It doesn’t just look for the *existence* of output files; it verifies that the job *actually generated* them as part of its assigned task. Think of it as an audit trail, ensuring integrity and reproducibility. Simply copying a file into the output location isn't enough; AzureML expects its worker processes to have performed the operations that resulted in those files.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-skip-tls-certificate-checks-for-crictl-when-pulling-from-a-private-repo"
 ---
 
-Okay, let's tackle this. I recall a particularly frustrating incident back in my early cloud-native days. We had a small, isolated development cluster with a private image registry. The goal was simplicity: quick iterations, minimal overhead. We initially opted for self-signed certificates, and boy, did that introduce complications, especially with `crictl`. Ignoring TLS verification seemed like a quick fix initially, but, as you'll see, it's not always the best approach. There’s a proper way to navigate this, and I’d rather avoid the usual advice that glosses over the underlying mechanics.
+,  I recall a particularly frustrating incident back in my early cloud-native days. We had a small, isolated development cluster with a private image registry. The goal was simplicity: quick iterations, minimal overhead. We initially opted for self-signed certificates, and boy, did that introduce complications, especially with `crictl`. Ignoring TLS verification seemed like a quick fix initially, but, as you'll see, it's not always the best approach. There’s a proper way to navigate this, and I’d rather avoid the usual advice that glosses over the underlying mechanics.
 
 The core issue stems from the secure nature of TLS. `crictl`, a command-line interface for container runtimes that follow the CRI (Container Runtime Interface) standard, inherently validates the certificates presented by the remote registry. When using self-signed or certificates issued by an untrusted authority, the validation process fails, preventing image pulls. Just disabling this check globally can introduce security risks. Hence, the need for more nuanced solutions.
 

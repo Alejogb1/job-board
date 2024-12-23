@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-the-matlab-fitcsvm-function-fail-to-produce-an-svm-boundary-that-separates-the-data"
 ---
 
-Alright, let's tackle this. I've seen this particular problem manifest itself more times than I’d care to recount, usually involving some frustrating late-night debugging sessions. The fact that `fitcsvm` in MATLAB doesn't always generate a separating hyperplane as expected – especially when it seems like it should – stems from several intertwined factors. It's not necessarily a bug, but more about the underlying assumptions and how we, as users, are interacting with the algorithm.
+Alright,  I've seen this particular problem manifest itself more times than I’d care to recount, usually involving some frustrating late-night debugging sessions. The fact that `fitcsvm` in MATLAB doesn't always generate a separating hyperplane as expected – especially when it seems like it should – stems from several intertwined factors. It's not necessarily a bug, but more about the underlying assumptions and how we, as users, are interacting with the algorithm.
 
 The core issue usually boils down to these major points: data characteristics, parameter tuning, and the underlying optimization process. Let’s break each of these down and I'll provide some illustrative examples based on real scenarios I've encountered over the years.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-use-keras-functional-to-replace-intermediate-layers"
 ---
 
-Okay, let's tackle this. It's something I've had to do a fair bit over the years, specifically in some older projects where models were constructed more organically and then required surgical alterations later. It's a common scenario, and Keras's functional API is, thankfully, up to the task.
+,  It's something I've had to do a fair bit over the years, specifically in some older projects where models were constructed more organically and then required surgical alterations later. It's a common scenario, and Keras's functional API is, thankfully, up to the task.
 
 The core idea when using the Keras functional api to replace intermediate layers is that you aren't directly manipulating the layers within an existing `keras.Model` instance. Instead, you're rebuilding parts of the computational graph, while reusing the weights from the original model. This is particularly useful when you want to maintain the learned parameters of certain portions of your network while substituting a different architecture for others. It’s more of a graph manipulation rather than a layer-by-layer edit.
 

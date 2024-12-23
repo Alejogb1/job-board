@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "an-invalid-attribute-was-designated-on-the-pdo-object-laravel"
 ---
 
-Okay so you're hitting that good ol' PDO invalid attribute error in Laravel right Been there done that got the t-shirt and probably a few stress wrinkles along the way Trust me this isn't a fun one but it's definitely solvable Let's break it down
+ so you're hitting that good ol' PDO invalid attribute error in Laravel right Been there done that got the t-shirt and probably a few stress wrinkles along the way Trust me this isn't a fun one but it's definitely solvable Let's break it down
 
 First off when we talk about PDO in Laravel we're usually talking about the database connection under the hood Laravel's Eloquent ORM makes things nice and abstract for us most of the time but sometimes you need to get a bit down and dirty and that's where PDO comes in Direct access to PDO is pretty powerful but it's also where things can go sideways if you're not careful Now this "invalid attribute" error means you're trying to set a PDO attribute that either doesn't exist or can't be set in the way you're trying to set it Most likely you've messed with some configuration setting directly on the underlying PDO object either through a raw query or something a bit fancier
 
@@ -30,7 +30,7 @@ You might be using a perfectly valid attribute but supplying an invalid value fo
 
 Some PDO attributes are only available for specific database drivers Like a setting to use an asynchronous mode or something similar. Make sure the attribute you are setting is relevant for the database you are using.
 
-Okay lets see some code examples because I know you're here for that sweet sweet code So the issue is usually with something like this below and lets see how to properly solve it
+ lets see some code examples because I know you're here for that sweet sweet code So the issue is usually with something like this below and lets see how to properly solve it
 
 **Example 1: Incorrect Attribute**
 
@@ -188,7 +188,7 @@ In this case we are using a valid value for this particular attribute. You can s
 4. **Avoid direct PDO modification if possible:** Eloquent gives you a pretty great abstraction layer and if you're just trying to get something done you might not need to dive into the underlying database connection this can save you a lot of time and pain later
 5. **Take a step back:** Sometimes you are so involved in trying to fix it that you miss the obvious. Maybe you need to go grab a coffee and then just look at it from a fresh perspective.
 
-I once spent hours tracking down this error because I was trying to use an attribute that was only available for MySQL but I was using Postgres It was a real facepalm moment believe me I felt like an idiot. So yeah be extra careful and double-check your assumptions sometimes you think you know but you are wrong and that's alright we are all just trying to figure things out as we go.
+I once spent hours tracking down this error because I was trying to use an attribute that was only available for MySQL but I was using Postgres It was a real facepalm moment believe me I felt like an idiot. So yeah be extra careful and double-check your assumptions sometimes you think you know but you are wrong and that's we are all just trying to figure things out as we go.
 
 This issue is a fairly common one especially when you start going deeper into databases You could consider the book "SQL Performance Explained" by Markus Winand as it will help you understand more about the underlying database behaviors It is also super helpful to understand how the database server is configured which can also play a part in these kinds of issues. Also always refer to the documentation of the specific database server you are using.
 

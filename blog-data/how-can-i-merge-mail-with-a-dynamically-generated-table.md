@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-can-i-merge-mail-with-a-dynamically-generated-table"
 ---
 
-Okay, let's tackle this. It’s a fairly common challenge, and I've certainly been in the trenches with dynamically generated tables and mail merges a few times over the years. Thinking back, I remember a project for a client where we had to generate personalized financial summaries with transaction tables that varied wildly in size depending on user activity. The static mail merge approaches just weren’t cutting it.
+,  It’s a fairly common challenge, and I've certainly been in the trenches with dynamically generated tables and mail merges a few times over the years. Thinking back, I remember a project for a client where we had to generate personalized financial summaries with transaction tables that varied wildly in size depending on user activity. The static mail merge approaches just weren’t cutting it.
 
 So, the core issue isn't simply about merging data; it's about handling the *dynamic* nature of that data, specifically a table whose structure (number of rows, potentially even columns) isn't fixed. The standard merge tools built into word processors, email clients, or reporting software generally assume a consistent data layout. We need a more programmatic, flexible approach. In my experience, the sweet spot often lies in generating the document (or at least the table part) programmatically and then using a merge engine, or email service, to complete the delivery.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-obtain-output-for-each-input-after-5-convolutional-1d-layers"
 ---
 
-Okay, let's unpack this. I've been there, staring at a stack of convolutional 1D layers wondering how to extract the intermediate results. It’s a common scenario, particularly when trying to visualize how the model is learning or perhaps when implementing certain attention mechanisms. You're dealing with a sequential process, and sometimes you need to peek behind the curtain at each stage. The key here is realizing that neural networks, especially with frameworks like TensorFlow or PyTorch, are fundamentally graphs of operations. We can tap into these intermediate steps fairly easily if we plan for it.
+, let's unpack this. I've been there, staring at a stack of convolutional 1D layers wondering how to extract the intermediate results. It’s a common scenario, particularly when trying to visualize how the model is learning or perhaps when implementing certain attention mechanisms. You're dealing with a sequential process, and sometimes you need to peek behind the curtain at each stage. The key here is realizing that neural networks, especially with frameworks like TensorFlow or PyTorch, are fundamentally graphs of operations. We can tap into these intermediate steps fairly easily if we plan for it.
 
 Essentially, your goal is to access the output tensor of each of the five convolutional layers, as opposed to the final output of the entire stack. This isn't a built-in feature, per se, but it's definitely achievable. I've tackled this in a past project where I was doing some analysis on time series data, specifically looking at how different convolutional filters extracted different types of sequential features at various depths.
 

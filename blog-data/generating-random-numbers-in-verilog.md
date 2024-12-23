@@ -4,9 +4,9 @@ date: "2024-12-13"
 id: "generating-random-numbers-in-verilog"
 ---
 
-Okay so you're asking about random number generation in Verilog right Yeah I've been down that rabbit hole a few times lets just say it wasn't always pretty
+ so you're asking about random number generation in Verilog right Yeah I've been down that rabbit hole a few times lets just say it wasn't always pretty
 
-Alright lets break this down we're dealing with hardware description language here which is a very different beast from say Python or Java the idea of "random" is a bit more nuanced it's not like you have some magic `random()` function at your disposal things are generally more deterministic which makes it a challenge you're not getting true randomness like from atmospheric noise or radioactive decay we're talking pseudorandom numbers from a mathematical algorithm which is good enough for most use cases
+lets break this down we're dealing with hardware description language here which is a very different beast from say Python or Java the idea of "random" is a bit more nuanced it's not like you have some magic `random()` function at your disposal things are generally more deterministic which makes it a challenge you're not getting true randomness like from atmospheric noise or radioactive decay we're talking pseudorandom numbers from a mathematical algorithm which is good enough for most use cases
 
 Look when I started out I thought it was easy you know I'd seen that `rand` thing in some example code I thought "great I'll just use that" man was I wrong I got some very predictable patterns and debug was a nightmare it was like debugging without coffee and I like my coffee I ended up spending days chasing my tail and that's when I learned the beauty of LFSRs
 
@@ -35,9 +35,9 @@ module lfsr_4bit (
 
 endmodule
 ```
-Okay so this is a simple version I use for like testing but let me explain This module `lfsr_4bit` takes a `clk` and `reset` as inputs you have the `random_num` as your output we got `shift_reg` which does the magic if reset is high it uses initial seed value else the register shifts left and a new bit is calculated using XOR and it's important for it to be a good bit sequence that makes this thing a "random number" generator or you will have a very bad predictable sequence that was my experience the first time I thought I could just change some bits and everything would be fine
+ so this is a simple version I use for like testing but let me explain This module `lfsr_4bit` takes a `clk` and `reset` as inputs you have the `random_num` as your output we got `shift_reg` which does the magic if reset is high it uses initial seed value else the register shifts left and a new bit is calculated using XOR and it's important for it to be a good bit sequence that makes this thing a "random number" generator or you will have a very bad predictable sequence that was my experience the first time I thought I could just change some bits and everything would be fine
 
-Alright so this is simple and good for small bits but what if we need a bigger sequence Well you're gonna need a larger shift register lets make this a 32-bit version
+so this is simple and good for small bits but what if we need a bigger sequence Well you're gonna need a larger shift register lets make this a 32-bit version
 
 ```verilog
 module lfsr_32bit (
@@ -71,7 +71,7 @@ Implementing a full Mersenne Twister in Verilog is doable but that is probably o
 
 For those who are asking I have seen people implement some linear congruent generators this are a bad idea for me they have predictable outputs you should not use it if you can avoid it just stick with LFSRs or Xorshift
 
-Alright now lets say you need to generate random numbers in a specific range you'll need some extra logic
+now lets say you need to generate random numbers in a specific range you'll need some extra logic
 
 ```verilog
 module random_range (
@@ -106,6 +106,6 @@ One important note the modulo operation when used on the lfsr output might have 
 
 Right before I forget some resources you should definitely check out if you want to go deeper into this is "The Art of Computer Programming Vol. 2" by Donald Knuth it has everything you need about random numbers it's a bible for these sorts of things Then you have "Handbook of Applied Cryptography" by Alfred J. Menezes and a lot more good stuff if you want to get into cryptographic implementations
 
-Okay so to recap we talked about LFSRs for basic pseudo random generation we saw a 4-bit and 32-bit implementations then we briefly talked about other options like Mersenne Twister and linear congruential generators I showed you how to limit the range of the random numbers and i even recommended some resources I think I covered everything you asked if you have any more questions feel free to ask that's what we're all here for right We gotta help each other out
+ so to recap we talked about LFSRs for basic pseudo random generation we saw a 4-bit and 32-bit implementations then we briefly talked about other options like Mersenne Twister and linear congruential generators I showed you how to limit the range of the random numbers and i even recommended some resources I think I covered everything you asked if you have any more questions feel free to ask that's what we're all here for right We gotta help each other out
 
 And yeah i know this whole thing was very technical and there was no fun or analogies in it just like the requirements asked for but you know what programmers like the most? they like code I can tell you that for free

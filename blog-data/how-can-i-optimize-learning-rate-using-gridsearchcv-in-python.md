@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-optimize-learning-rate-using-gridsearchcv-in-python"
 ---
 
-Okay, let's dive into this. I recall a particularly sticky project a few years back, where I was trying to fine-tune a complex convolutional neural network for image segmentation. The model architecture wasn't the issue; it was the training process, specifically, getting the learning rate dialed in. GridSearchCV felt like the natural tool, but using it naively led to some… shall we say, less-than-optimal results. We'll explore how to approach it effectively, but first, let’s establish the crucial concepts.
+, let's dive into this. I recall a particularly sticky project a few years back, where I was trying to fine-tune a complex convolutional neural network for image segmentation. The model architecture wasn't the issue; it was the training process, specifically, getting the learning rate dialed in. GridSearchCV felt like the natural tool, but using it naively led to some… shall we say, less-than-optimal results. We'll explore how to approach it effectively, but first, let’s establish the crucial concepts.
 
 The learning rate in any gradient-descent based optimization algorithm is that hyperparameter which dictates how large a step we take in the direction of the negative gradient. A too-large learning rate and your model might oscillate around the minimum, never converging to an optimal set of parameters. Too small, and you could be waiting an eternity to see results or get trapped in a suboptimal local minimum.
 

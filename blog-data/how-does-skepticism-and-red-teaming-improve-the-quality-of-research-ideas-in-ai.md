@@ -4,7 +4,7 @@ date: "2024-12-11"
 id: "how-does-skepticism-and-red-teaming-improve-the-quality-of-research-ideas-in-ai"
 ---
 
-Okay so you wanna talk about skepticism and red-teaming in AI research right  It's a super crucial thing especially now that AI is like everywhere  Think about it all these fancy models  transformers  diffusion  all this stuff  they sound amazing in papers but  you know  reality bites  hard  
+ so you wanna talk about skepticism and red-teaming in AI research right  It's a super crucial thing especially now that AI is like everywhere  Think about it all these fancy models  transformers  diffusion  all this stuff  they sound amazing in papers but  you know  reality bites  hard  
 
 Skepticism is basically like your internal bullshit detector  it's that voice in your head saying "hold on a sec  does this *really* work as well as they claim" or "are they cherry-picking results"  It's not about being negative  it's about being *critical*  and critically evaluating the work is key  Otherwise you just end up building on shaky foundations and your whole research edifice collapses later  That's a huge time waste  
 
@@ -22,7 +22,7 @@ Imagine you're training a sentiment analysis model  You might think  "Hey this m
 
 ```python
 #Simplified example  no real sentiment analysis here
-training_data = [("Great product", 1), ("Amazing", 1), ("Good", 1), ("Okay", 0), ("Bad", 0)] #heavily positive biased data
+training_data = [("Great product", 1), ("Amazing", 1), ("Good", 1), ("", 0), ("Bad", 0)] #heavily positive biased data
 # ... training code ...
 
 test_data = [("Terrible product", 0), ("This is awful", 0)]

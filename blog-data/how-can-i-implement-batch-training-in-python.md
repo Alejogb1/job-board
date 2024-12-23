@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-implement-batch-training-in-python"
 ---
 
-Okay, let’s talk batch training. I've spent a fair amount of time optimizing training loops over the years, and dealing with the intricacies of large datasets. So, I'll share what I've learned about implementing batch training in Python, focusing on clarity and practicality rather than getting bogged down in theoretical minutiae.
+, let’s talk batch training. I've spent a fair amount of time optimizing training loops over the years, and dealing with the intricacies of large datasets. So, I'll share what I've learned about implementing batch training in Python, focusing on clarity and practicality rather than getting bogged down in theoretical minutiae.
 
 Batch training, fundamentally, is about processing data in manageable chunks rather than all at once. This isn't just a matter of convenience; it's often a necessity for memory management, and it can also influence the convergence and stability of your model training. Without it, you might find your system choking on out-of-memory errors or struggling with the noise of very large datasets when using stochastic optimization techniques. I remember specifically having to completely overhaul a system that was trying to learn on a single huge matrix back in '14 - it was an enlightening experience, albeit frustrating at the time.
 

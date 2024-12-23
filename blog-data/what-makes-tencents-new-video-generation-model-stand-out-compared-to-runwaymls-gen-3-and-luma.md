@@ -4,7 +4,7 @@ date: "2024-12-03"
 id: "what-makes-tencents-new-video-generation-model-stand-out-compared-to-runwaymls-gen-3-and-luma"
 ---
 
-Okay so you wanna know what makes Tencent's new video generation model different right  I've been digging into this and honestly it's a pretty juicy topic  Runway Gen-3 and Luma are solid  like really solid  but Tencent's offering seems to be pushing some boundaries  it's not just a minor upgrade you know
+ so you wanna know what makes Tencent's new video generation model different right  I've been digging into this and honestly it's a pretty juicy topic  Runway Gen-3 and Luma are solid  like really solid  but Tencent's offering seems to be pushing some boundaries  it's not just a minor upgrade you know
 
 The big thing I'm seeing is efficiency  Runway and Luma are impressive don't get me wrong but they're resource hogs  think massive GPUs days of training  Tencent's model seems to be targeting a much better balance between quality and resource usage  I haven't seen the exact numbers but from what I've read their training process is significantly faster and requires less compute power  This is huge for accessibility more people can play with it easier
 

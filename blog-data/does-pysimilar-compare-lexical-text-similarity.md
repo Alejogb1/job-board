@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "does-pysimilar-compare-lexical-text-similarity"
 ---
 
-let's tackle this. you're asking if pysimilar checks for lexical similarity between texts, and the short answer is: yes, but with some caveats i’ve learned the hard way.
+ you're asking if pysimilar checks for lexical similarity between texts, and the short answer is: yes, but with some caveats i’ve learned the hard way.
 
 pysimilar isn't a library i've used extensively lately. i remember a project back in '16, it was something about trying to build a quick and dirty plagiarism checker. the idea was to flag similar submissions in student assignments. we had a deadline, and like any good last minute programmer, i opted for the quickest solution available. it was naive, i know, but that's how we learn. we were using pysimilar on a bunch of essays and short code snippets. i didn't grasp the nuances back then, just threw it at the data and called it a day. the results were, let's say, less than optimal. it flagged some things as super similar when they weren't, and missed others that were.
 

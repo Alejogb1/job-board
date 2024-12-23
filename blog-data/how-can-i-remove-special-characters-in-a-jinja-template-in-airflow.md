@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-remove-special-characters-in-a-jinja-template-in-airflow"
 ---
 
-Okay, let’s tackle this. I’ve seen this issue pop up numerous times, often when dealing with data pipelines that pull information from diverse, sometimes messy, sources. In my previous stint managing a large-scale ETL system, we frequently encountered problems with data containing special characters that then caused headaches when rendered into Airflow DAG configurations via Jinja templates. Getting a clean, predictable output from those templates was essential for our operations. Here's how I approached it and how you can too.
+, let’s tackle this. I’ve seen this issue pop up numerous times, often when dealing with data pipelines that pull information from diverse, sometimes messy, sources. In my previous stint managing a large-scale ETL system, we frequently encountered problems with data containing special characters that then caused headaches when rendered into Airflow DAG configurations via Jinja templates. Getting a clean, predictable output from those templates was essential for our operations. Here's how I approached it and how you can too.
 
 The core of the problem lies in Jinja’s rendering process. Jinja essentially takes your template and replaces placeholders (variables, expressions, etc.) with their evaluated values. However, it doesn’t automatically filter out special characters. When these characters are present in the values being substituted, they can break your intended syntax, especially in contexts like file paths, command-line arguments, or SQL queries within your DAG. So, we need to proactively handle this before the template renders fully.
 

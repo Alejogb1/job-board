@@ -4,11 +4,11 @@ date: "2024-12-13"
 id: "discrete-event-system-simulation-book-recommendations"
 ---
 
-Okay so you're looking for resources on discrete event system simulation right been there done that a few times myself Lets talk books since you asked
+ so you're looking for resources on discrete event system simulation right been there done that a few times myself Lets talk books since you asked
 
 First thing that pops to mind when thinking about this kinda thing is the classic stuff you know the foundations My undergrad days were fueled by these types of books I remember struggling so hard with some of the more theoretical concepts but trust me its worth it in the long run Its like learning the rules of a game before you try to win every single round You really do need to understand all the bits and pieces before you start creating elaborate systems
 
-So for a real strong base I'd suggest looking at "Discrete-Event System Simulation" by Jerry Banks It's like the bible for this stuff Honestly I probably slept with this book under my pillow for a good semester it was that intense Okay not literally but I did spend hours pouring over it Its heavy on the theory the math and a lot of queuing models Its not always a joyride to read but trust me again when you hit a roadblock later on this book is the first place you'll go back to and find some answers its got everything from random number generation to model validation Its a little bit older so it wont have all the latest hottest things in the simulation world but the core principles are timeless This is ground zero
+So for a real strong base I'd suggest looking at "Discrete-Event System Simulation" by Jerry Banks It's like the bible for this stuff Honestly I probably slept with this book under my pillow for a good semester it was that intense  not literally but I did spend hours pouring over it Its heavy on the theory the math and a lot of queuing models Its not always a joyride to read but trust me again when you hit a roadblock later on this book is the first place you'll go back to and find some answers its got everything from random number generation to model validation Its a little bit older so it wont have all the latest hottest things in the simulation world but the core principles are timeless This is ground zero
 
 Then once you've got a good grip on the underlying concepts you gotta think about implementation I had my first big simulation project back in my university days I was trying to simulate a super simple factory conveyor belt system with like three different stations It was supposed to be easy but its always the simplest seeming things that get you right The whole timing mechanism was a nightmare I mean really I spent an entire week debugging a stupid clock cycle error
 

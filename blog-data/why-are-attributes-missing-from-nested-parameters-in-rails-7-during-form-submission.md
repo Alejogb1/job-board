@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-are-attributes-missing-from-nested-parameters-in-rails-7-during-form-submission"
 ---
 
-Alright, let's tackle this. I’ve seen this particular issue crop up more times than I care to remember, especially in Rails projects with complex forms. It’s a situation where you expect nested attributes to come through clean during form submission, but instead, they're just… absent, leaving you scratching your head. The culprit is usually a combination of how Rails handles strong parameters and how the form is constructed. It's not necessarily a 'bug' per se, but more a case of misconfiguration or a misunderstanding of the framework's expectations.
+Alright,  I’ve seen this particular issue crop up more times than I care to remember, especially in Rails projects with complex forms. It’s a situation where you expect nested attributes to come through clean during form submission, but instead, they're just… absent, leaving you scratching your head. The culprit is usually a combination of how Rails handles strong parameters and how the form is constructed. It's not necessarily a 'bug' per se, but more a case of misconfiguration or a misunderstanding of the framework's expectations.
 
 From my experience, these situations commonly arise when dealing with associations – think something like a `User` model having many `Posts`, and you’re trying to create or update both simultaneously through a single form. The nested `posts_attributes` would be the place where those new or updated post records would get their data from. Now, when things go sideways, it often boils down to two primary reasons: improperly configured strong parameters or, occasionally, incorrect field naming conventions within the form itself.
 

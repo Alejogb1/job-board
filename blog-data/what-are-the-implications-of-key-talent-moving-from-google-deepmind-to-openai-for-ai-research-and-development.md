@@ -4,7 +4,7 @@ date: "2024-12-05"
 id: "what-are-the-implications-of-key-talent-moving-from-google-deepmind-to-openai-for-ai-research-and-development"
 ---
 
-Okay so like you asked about the DeepMind exodus to OpenAI right  huge deal honestly  it's not just a few people it's top tier researchers  people who've been at the forefront of groundbreaking stuff for years  think about the implications man  it's a seismic shift  
+ so like you asked about the DeepMind exodus to OpenAI right  huge deal honestly  it's not just a few people it's top tier researchers  people who've been at the forefront of groundbreaking stuff for years  think about the implications man  it's a seismic shift  
 
 For one thing OpenAI just got a massive brain boost  a serious injection of talent that's gonna accelerate their projects  no question  DeepMind's been a powerhouse  they've published insane papers on AlphaFold protein structure prediction  that was monumental  then there's AlphaZero the thing that just schooled everything in Go chess and shogi  these aren't small achievements  these are paradigm shifts  the people behind that stuff are now at OpenAI
 
@@ -20,7 +20,7 @@ It's a bit of a domino effect actually  other companies might start poaching tal
 
 This isn't just some corporate drama either  it's a reflection of the wider AI landscape  the changing dynamics of the industry  the fierce competition  and the incredible talent pool  it's all so intertwined  
 
-You want some code examples to show how this might play out? Okay here's a bit of Python for a simple neural network  this isn't directly related to the DeepMind OpenAI stuff but it shows the kind of fundamental stuff these researchers work with:
+You want some code examples to show how this might play out?  here's a bit of Python for a simple neural network  this isn't directly related to the DeepMind OpenAI stuff but it shows the kind of fundamental stuff these researchers work with:
 
 
 ```python

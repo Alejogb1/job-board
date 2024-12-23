@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-a-child-page-of-a-specific-type-be-created-under-a-parent-page-using-django-wagtail-and-provided-post-data"
 ---
 
-Okay, let's unpack this. Creating child pages in Wagtail, especially when driven by post data, is something I’ve navigated many times, and it’s a very common requirement in any content-driven website. It sounds simple at first, but the devil’s always in the details, particularly when considering data validation and the broader implications on your Wagtail setup.
+, let's unpack this. Creating child pages in Wagtail, especially when driven by post data, is something I’ve navigated many times, and it’s a very common requirement in any content-driven website. It sounds simple at first, but the devil’s always in the details, particularly when considering data validation and the broader implications on your Wagtail setup.
 
 Here's the breakdown of how I would approach this, drawing from my experience. Let's assume you're not just dealing with straightforward fields but potentially relational data as well. We’ll tackle this step by step with accompanying code examples to make things crystal clear.
 

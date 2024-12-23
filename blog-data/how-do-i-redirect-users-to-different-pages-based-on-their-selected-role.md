@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-redirect-users-to-different-pages-based-on-their-selected-role"
 ---
 
-Okay, let's tackle this. Redirecting users based on their selected role is a very common requirement, and I've implemented this countless times over my career. I recall a specific project early on, a large e-learning platform, where we had students, instructors, and administrators, each needing a distinct initial landing experience upon login. The challenge wasn’t just about getting the redirects to work; it was about doing it efficiently and securely. Let's break down how you can achieve this, focusing on clarity and practicality, not convoluted theoretical constructs.
+,  Redirecting users based on their selected role is a very common requirement, and I've implemented this countless times over my career. I recall a specific project early on, a large e-learning platform, where we had students, instructors, and administrators, each needing a distinct initial landing experience upon login. The challenge wasn’t just about getting the redirects to work; it was about doing it efficiently and securely. Let's break down how you can achieve this, focusing on clarity and practicality, not convoluted theoretical constructs.
 
 The core idea revolves around identifying the user's role *after* successful authentication, and then using that role information to direct them to the appropriate page. This involves a few key steps: authentication, role retrieval, and finally, the redirection logic. I've found that layering this approach makes the system more robust and easier to maintain.
 

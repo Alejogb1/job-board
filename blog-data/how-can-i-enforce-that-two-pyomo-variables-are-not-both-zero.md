@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-enforce-that-two-pyomo-variables-are-not-both-zero"
 ---
 
-Okay, let's tackle this. I remember back in '14, working on a complex supply chain optimization model, we ran into a similar issue with inventory levels and production quantities. The model kept spitting out trivial solutions where both were zero, which, while technically feasible, was useless. We had to enforce a constraint that prevented that. The key is understanding the behavior of your variables and strategically using constraints. In pyomo, you’re essentially building mathematical formulations of your problem, and sometimes, that requires a bit of creative constraint application.
+,  I remember back in '14, working on a complex supply chain optimization model, we ran into a similar issue with inventory levels and production quantities. The model kept spitting out trivial solutions where both were zero, which, while technically feasible, was useless. We had to enforce a constraint that prevented that. The key is understanding the behavior of your variables and strategically using constraints. In pyomo, you’re essentially building mathematical formulations of your problem, and sometimes, that requires a bit of creative constraint application.
 
 The core problem is that pyomo (and most solvers) tend to gravitate towards the simplest solution first, which often includes setting variables to zero when there isn't a direct incentive not to. When you need to *prevent* two variables from *simultaneously* being zero, you can't simply use a standard inequality or equality constraint. These work well with numerical bounds but not explicitly for logic. Instead, we'll have to introduce some clever manipulations to the model's structure.
 

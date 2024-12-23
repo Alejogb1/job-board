@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-screenrecording-a-headless-browser-using-xvfb-with-ffmpeg-or-jmf-jarjava-showing-distorted-video-in-container"
 ---
 
-Okay, let's tackle this. It's a familiar frustration, the distorted headless screen recording. I've spent many a late night chasing down similar artifacts myself, particularly back when I was working on automated UI testing pipelines that required video evidence. What might appear straightforward – capturing the output of a virtual display using `xvfb` and then encoding it with `ffmpeg` (or, in your case, the less common but still valid, `jmf` jar in java) – often devolves into a battle against subtle configuration mismatches and unforeseen interactions between these tools. The core issue, more often than not, lies in how the various pieces negotiate resolution, pixel format, and frame rate.
+,  It's a familiar frustration, the distorted headless screen recording. I've spent many a late night chasing down similar artifacts myself, particularly back when I was working on automated UI testing pipelines that required video evidence. What might appear straightforward – capturing the output of a virtual display using `xvfb` and then encoding it with `ffmpeg` (or, in your case, the less common but still valid, `jmf` jar in java) – often devolves into a battle against subtle configuration mismatches and unforeseen interactions between these tools. The core issue, more often than not, lies in how the various pieces negotiate resolution, pixel format, and frame rate.
 
 Let's break down the common culprits and then look at some practical solutions with code.
 

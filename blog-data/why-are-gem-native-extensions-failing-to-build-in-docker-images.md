@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-are-gem-native-extensions-failing-to-build-in-docker-images"
 ---
 
-Okay, let's tackle this one. I've seen my share of gem native extension build failures within Docker, and it can definitely feel like chasing ghosts if you don't understand the underlying causes. It’s a particularly annoying issue because the build often works perfectly on your local machine, but falls apart in the container. It's almost never a random occurrence. There are usually specific and logical reasons why this happens, primarily stemming from discrepancies in the environment, dependencies, and build processes.
+, let's tackle this one. I've seen my share of gem native extension build failures within Docker, and it can definitely feel like chasing ghosts if you don't understand the underlying causes. It’s a particularly annoying issue because the build often works perfectly on your local machine, but falls apart in the container. It's almost never a random occurrence. There are usually specific and logical reasons why this happens, primarily stemming from discrepancies in the environment, dependencies, and build processes.
 
 When I first encountered this problem a few years back, while setting up a continuous integration pipeline for a rather complex rails application, I nearly pulled my hair out. The application relied heavily on image processing libraries, many of which had native extensions compiled from C. Locally, development was smooth sailing. But in the dockerized CI/CD environment, these gems kept failing during the `bundle install` phase. After much troubleshooting, it became clear that the Docker environment wasn’t as close to my development setup as I’d initially thought.
 

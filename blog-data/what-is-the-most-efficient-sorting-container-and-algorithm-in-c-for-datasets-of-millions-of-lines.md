@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-is-the-most-efficient-sorting-container-and-algorithm-in-c-for-datasets-of-millions-of-lines"
 ---
 
-Alright, let's tackle this. It’s a question I've actually grappled with firsthand, specifically back when I was optimizing data ingestion for a large-scale analytics platform. We were routinely dealing with files that had tens of millions of lines, and the initial sorting implementation was… let’s just say ‘less than ideal.’ Performance was suffering, and it was impacting downstream processes quite significantly. So, the efficiency of sorting containers and algorithms was definitely top of mind.
+Alright,  It’s a question I've actually grappled with firsthand, specifically back when I was optimizing data ingestion for a large-scale analytics platform. We were routinely dealing with files that had tens of millions of lines, and the initial sorting implementation was… let’s just say ‘less than ideal.’ Performance was suffering, and it was impacting downstream processes quite significantly. So, the efficiency of sorting containers and algorithms was definitely top of mind.
 
 The quick answer, of course, is that there isn’t one single ‘most efficient’ solution that works universally. The best choice depends heavily on the characteristics of your dataset, primarily its size, distribution, and whether or not the data fits into memory. And in our specific case back then, we had to contend with the fact that data did *not* always fit within the available ram.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-wordpress-installations-on-aws-lightsail-be-version-controlled"
 ---
 
-Alright, let's tackle this. Version controlling WordPress installations, especially on something like AWS Lightsail, isn’t always straightforward, but it's absolutely crucial for sane development and maintenance. I’ve definitely been in the trenches with this, more times than I care to recall, often learning the hard way what *not* to do. Early in my career, I tried manually backing up and FTP-ing changes – a process that quickly turned into a chaotic nightmare of lost work and corrupted databases. Needless to say, I adopted version control quickly.
+Alright,  Version controlling WordPress installations, especially on something like AWS Lightsail, isn’t always straightforward, but it's absolutely crucial for sane development and maintenance. I’ve definitely been in the trenches with this, more times than I care to recall, often learning the hard way what *not* to do. Early in my career, I tried manually backing up and FTP-ing changes – a process that quickly turned into a chaotic nightmare of lost work and corrupted databases. Needless to say, I adopted version control quickly.
 
 The core issue with WordPress lies in its multifaceted nature. It's not just code; it’s also a database and a media library. Simply throwing the `/wp-content` directory into a git repository isn't the full solution. You'll encounter challenges with database changes, uploaded images, theme customizations, and plugin updates. To truly version control a WordPress installation effectively on Lightsail, we need to manage these components separately and cohesively.
 

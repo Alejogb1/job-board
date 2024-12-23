@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-use-templated-fields-in-sparksubmitoperator-with-airflow-when-some-are-not-supported"
 ---
 
-Let's tackle this. I've encountered similar scenarios numerous times, particularly when integrating older Spark deployments with more contemporary Airflow workflows. The SparkSubmitOperator, while powerful, does sometimes present challenges with its templating engine, particularly when dealing with arguments it doesn't inherently recognize as templatable. The crux of the issue isn't that templating *can't* happen, but rather that the operator only directly supports templating on a predefined set of parameters.
+ I've encountered similar scenarios numerous times, particularly when integrating older Spark deployments with more contemporary Airflow workflows. The SparkSubmitOperator, while powerful, does sometimes present challenges with its templating engine, particularly when dealing with arguments it doesn't inherently recognize as templatable. The crux of the issue isn't that templating *can't* happen, but rather that the operator only directly supports templating on a predefined set of parameters.
 
 The key to overcoming this limitation is understanding where Airflow’s templating engine interacts with the operator, and exploiting that interface. Basically, Airflow uses Jinja2 for rendering templates, and it does so *before* passing the parameters to the underlying system call that triggers `spark-submit`. Thus, the problem isn't that templating *as a concept* fails, but the operator might not interpret the parameter that we want to be templated. I’ve seen this manifest as the application of default values when the template failed.
 

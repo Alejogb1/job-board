@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "application-ref-angular-meaning-definition"
 ---
 
-Alright so you're asking about "application ref" in Angular and what it actually *means* right I've been around the block with Angular since back in the ng-bootstrap days let me tell ya it's not as straightforward as some folks make it out to be at first glance
+so you're asking about "application ref" in Angular and what it actually *means* right I've been around the block with Angular since back in the ng-bootstrap days let me tell ya it's not as straightforward as some folks make it out to be at first glance
 
 Basically when we talk about "application ref" we're diving into the core mechanics of how Angular bootstraps and manages your whole app it's like the central nervous system if you're into those kinda analogies but let's not go there it's the thing that gives you a handle to the root component of your application it's an object implementing `ApplicationRef` interface you can access with DI Angular's dependency injection system inject it where needed
 

@@ -4,7 +4,7 @@ date: '2024-11-15'
 id: 'comprehensive-metrics-for-evaluating-ai-models'
 ---
 
-Okay so like, evaluating AI models is a huge deal right Now you gotta know how good your model is, so you can trust its decisions. That means digging into lots of metrics, not just one or two. 
+ so like, evaluating AI models is a huge deal right Now you gotta know how good your model is, so you can trust its decisions. That means digging into lots of metrics, not just one or two. 
 
 Think of it like this, you're comparing different kinds of cookies, you need more than just taste to decide which one's the best, right You gotta look at texture, ingredients, even the way they look.
 

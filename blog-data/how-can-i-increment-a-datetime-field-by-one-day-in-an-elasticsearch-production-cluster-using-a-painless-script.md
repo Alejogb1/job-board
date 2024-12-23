@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-increment-a-datetime-field-by-one-day-in-an-elasticsearch-production-cluster-using-a-painless-script"
 ---
 
-Alright, let's tackle this. Incrementing a datetime field by one day within an Elasticsearch cluster using a painless script is a task that, while seemingly straightforward, requires a careful approach, especially within a production environment. I’ve actually had to implement this a few times in the past, usually as part of a data cleanup operation or when dealing with delayed event ingestion. The key is to understand how painless interacts with joda-time, which is the time library underlying Elasticsearch, and to handle potential pitfalls like time zones effectively.
+Alright,  Incrementing a datetime field by one day within an Elasticsearch cluster using a painless script is a task that, while seemingly straightforward, requires a careful approach, especially within a production environment. I’ve actually had to implement this a few times in the past, usually as part of a data cleanup operation or when dealing with delayed event ingestion. The key is to understand how painless interacts with joda-time, which is the time library underlying Elasticsearch, and to handle potential pitfalls like time zones effectively.
 
 I've seen some folks try string manipulation, but that’s a recipe for disaster, particularly with varying date formats or locales. We want precision and reliability. Painless gives us access to `org.joda.time.DateTime` objects, which is what we’ll be leveraging.
 

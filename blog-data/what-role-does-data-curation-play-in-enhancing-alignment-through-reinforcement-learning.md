@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "what-role-does-data-curation-play-in-enhancing-alignment-through-reinforcement-learning"
 ---
 
-Okay so you wanna talk about data curation and how it helps reinforcement learning be more aligned right  cool  It's a super important topic especially now that we're seeing RL agents doing more and more complex stuff  think self driving cars robot surgeons  you definitely don't want those guys doing something unexpected  Alignment is all about making sure the agent is doing what you actually want it to do not just what it *thinks* it should do based on its training data
+ so you wanna talk about data curation and how it helps reinforcement learning be more aligned right  cool  It's a super important topic especially now that we're seeing RL agents doing more and more complex stuff  think self driving cars robot surgeons  you definitely don't want those guys doing something unexpected  Alignment is all about making sure the agent is doing what you actually want it to do not just what it *thinks* it should do based on its training data
 
 The thing is RL is all about learning from experience  you give the agent a bunch of data it interacts with the environment gets rewards or penalties and learns a policy  that policy is basically how it decides what action to take in different situations  The problem is that data can be messy noisy biased and generally not reflect the real world perfectly  This is where data curation comes in
 

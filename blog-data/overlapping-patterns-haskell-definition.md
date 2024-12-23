@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "overlapping-patterns-haskell-definition"
 ---
 
-Okay so you're asking about overlapping patterns in Haskell right I've been there man believe me it's a rabbit hole and I've spent more nights than I care to admit debugging code because of it
+ so you're asking about overlapping patterns in Haskell right I've been there man believe me it's a rabbit hole and I've spent more nights than I care to admit debugging code because of it
 
 First off let's be crystal clear what we're talking about Overlapping patterns happen in function definitions when you have multiple patterns that could potentially match the same input Haskell usually tries patterns in the order they're written so it's mostly about the order but that doesn't mean it's all sunshine and rainbows because ambiguity can still creep in
 

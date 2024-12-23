@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-base64-encode-the-subject-header-in-a-systemnetmailsmtpclient"
 ---
 
-Alright, let's tackle this. Encoding the subject header when using `System.Net.Mail.SmtpClient` isn't as straightforward as you might initially think, particularly if you're aiming for robust handling of special characters. I’ve certainly bumped into this in past projects, notably one where we were dealing with a global client base and character encoding inconsistencies kept messing up email subjects. Let me walk you through it, drawing from my experience and throwing in some code examples.
+Alright,  Encoding the subject header when using `System.Net.Mail.SmtpClient` isn't as straightforward as you might initially think, particularly if you're aiming for robust handling of special characters. I’ve certainly bumped into this in past projects, notably one where we were dealing with a global client base and character encoding inconsistencies kept messing up email subjects. Let me walk you through it, drawing from my experience and throwing in some code examples.
 
 First, the crux of the issue is that the email subject header, according to internet standards, has limitations on the characters it can directly contain. Characters beyond the basic ASCII range, along with certain reserved characters, need to be encoded. While base64 isn't typically used for email subjects in its raw form, it becomes an essential component when implementing *MIME encoded-word* syntax, which uses base64 to encode text data.
 

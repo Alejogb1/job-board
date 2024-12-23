@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-increase-my-accuracy-for-a-multi-class-classification-lstm-network"
 ---
 
-Okay, let’s talk multi-class classification with lstms; a challenge I've faced more than a few times. It's not uncommon to hit a plateau in accuracy, and usually, it's not a matter of one single magical adjustment but rather a layered approach. I’ve seen this firsthand, particularly back in my days working on a sentiment analysis project for a large social media platform – that was quite the learning curve, trust me.
+, let’s talk multi-class classification with lstms; a challenge I've faced more than a few times. It's not uncommon to hit a plateau in accuracy, and usually, it's not a matter of one single magical adjustment but rather a layered approach. I’ve seen this firsthand, particularly back in my days working on a sentiment analysis project for a large social media platform – that was quite the learning curve, trust me.
 
 So, when accuracy isn't quite where you need it, here's how I typically approach it, broken down into several key areas:
 

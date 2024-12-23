@@ -10,7 +10,7 @@ The core principle, for me at least, is that upgrades should always be approache
 
 Specifically, what we must be aware of are potential schema changes in the metadata database (usually Postgres or MySQL) and configuration changes in the airflow.cfg file or within the values.yaml that the chart utilizes. I've had instances where a previously working configuration flag became deprecated, leading to scheduler instability after the upgrade. Carefully documenting and testing each step is essential. For resource purposes, the documentation on the official Apache Airflow website, as well as the changelogs on the chart repository, are fundamental reads. Don't rely solely on third-party blogs; the source is always the most accurate. Also, the *Database Internals* book by Alex Petrov can be invaluable for those wanting a detailed understanding of database migrations, which often go hand-in-hand with upgrades.
 
-Okay, let's solidify this with a practical approach. Typically, we'll follow a three-stage plan:
+, let's solidify this with a practical approach. Typically, we'll follow a three-stage plan:
 
 1.  **Staging Environment Upgrade:** This is where all the initial testing takes place. We deploy the new chart version, targeting the upgraded Airflow version to a non-production Kubernetes namespace. We’ll use a distinct copy of our production database, with realistic data, so we can thoroughly validate functionality.
 2.  **Production Canary Deployment:** Once satisfied with our staging results, we start by upgrading a limited subset of our production resources. Think of it as a controlled blast radius—we aim to validate the changes in a live environment without affecting the entire service.

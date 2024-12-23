@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-my-custom-view-created-with-constraint-layout-not-visible-in-the-preview"
 ---
 
-Okay, let's tackle this. It’s a situation I’ve seen countless times, and it usually boils down to a few core issues when your custom view, built with `ConstraintLayout`, decides to play hide-and-seek in the preview. Having personally debugged this more than I'd like to remember, I can tell you it rarely points to a fundamental flaw in your logic, but more commonly to how layout previews are rendered and interpreted.
+,  It’s a situation I’ve seen countless times, and it usually boils down to a few core issues when your custom view, built with `ConstraintLayout`, decides to play hide-and-seek in the preview. Having personally debugged this more than I'd like to remember, I can tell you it rarely points to a fundamental flaw in your logic, but more commonly to how layout previews are rendered and interpreted.
 
 The preview in Android Studio, while immensely helpful, isn’t a perfect representation of the runtime environment. It operates under slightly different constraints and assumptions, leading to these frustrating moments where everything seems correctly configured yet doesn't appear. We need to look beyond the obvious. The core problem isn't that the preview is broken, but that your view is missing the necessary context to render itself within that confined environment. Let's unpack the likely suspects.
 

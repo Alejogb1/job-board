@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-this-rspec-example-hang"
 ---
 
-Okay, let's unpack this. I’ve seen this sort of thing more times than I care to remember, particularly in larger, more complex Rails applications. An RSpec test suite suddenly hanging, with no clear error message, is often symptomatic of a few recurring underlying issues. Let’s delve into the most probable causes and how to approach debugging them, based on personal experiences troubleshooting similar situations.
+, let's unpack this. I’ve seen this sort of thing more times than I care to remember, particularly in larger, more complex Rails applications. An RSpec test suite suddenly hanging, with no clear error message, is often symptomatic of a few recurring underlying issues. Let’s delve into the most probable causes and how to approach debugging them, based on personal experiences troubleshooting similar situations.
 
 The core problem, generally, boils down to some form of *blocking* within the test environment. RSpec, by its nature, is single-threaded. If a resource is acquired but never released, or a loop continues indefinitely without exiting, that thread grinds to a halt, and the test suite appears hung. This isn’t necessarily a bug within RSpec itself, but rather a consequence of how we've constructed our code and test fixtures.
 

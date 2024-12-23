@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-previously-trained-mask-r-cnn-weights-be-retained-during-retraining"
 ---
 
-Okay, let's talk about retaining previously trained Mask R-CNN weights during retraining. It's a situation I've definitely navigated more than once, usually when adapting a model for a slightly different task or a different dataset. Instead of always starting from scratch, preserving those pre-trained weights can lead to significantly faster convergence and often, better final performance. It's not always a straightforward process though, so let's get into the practical details.
+, let's talk about retaining previously trained Mask R-CNN weights during retraining. It's a situation I've definitely navigated more than once, usually when adapting a model for a slightly different task or a different dataset. Instead of always starting from scratch, preserving those pre-trained weights can lead to significantly faster convergence and often, better final performance. It's not always a straightforward process though, so let's get into the practical details.
 
 The core idea behind retaining pre-trained weights is transfer learning, a cornerstone technique in deep learning. Essentially, we're leveraging the knowledge the model has already accumulated from a potentially large, general dataset (like coco, which is common for mask r-cnn pre-training) and applying it to our specific problem. This reduces the need to learn low-level features from random initialization. When we say we want to retain weights, we're typically talking about two things: the convolutional layers, which learn image features, and the region proposal network (rpn) that proposes object bounding boxes and masks.
 

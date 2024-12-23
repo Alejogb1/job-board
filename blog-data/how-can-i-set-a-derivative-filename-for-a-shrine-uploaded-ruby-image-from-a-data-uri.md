@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-set-a-derivative-filename-for-a-shrine-uploaded-ruby-image-from-a-data-uri"
 ---
 
-Okay, let's tackle this. It's a common enough scenario, especially when dealing with modern frontends that leverage data uris for image previews before final submission. I remember back in my days working on that e-commerce platform, we had a similar issue where we were processing user-uploaded product images, including thumbnails generated server-side. The default filename handling from Shrine wasn't cutting it; we needed more control.
+,  It's a common enough scenario, especially when dealing with modern frontends that leverage data uris for image previews before final submission. I remember back in my days working on that e-commerce platform, we had a similar issue where we were processing user-uploaded product images, including thumbnails generated server-side. The default filename handling from Shrine wasn't cutting it; we needed more control.
 
 The core problem here revolves around the fact that a data uri, by its nature, doesn’t inherently contain filename information. Shrine, when presented with a data uri, has no way of deriving a filename unless explicitly told to do so. The default behaviour generally results in some kind of generated, often less-than-ideal, filename. What we need to do is intercept the upload process and provide a suitable filename when a data uri is the source.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-implement-rate-limiting-in-sailsjs-using-express-rate-limit"
 ---
 
-Okay, let's tackle rate limiting in Sails.js with `express-rate-limit`. It’s a crucial aspect of securing any API, and I've certainly had my share of late nights debugging issues caused by rate limit vulnerabilities before implementing these strategies. I'm going to share my approach, focusing on practical steps and nuances I've learned along the way.
+, let's tackle rate limiting in Sails.js with `express-rate-limit`. It’s a crucial aspect of securing any API, and I've certainly had my share of late nights debugging issues caused by rate limit vulnerabilities before implementing these strategies. I'm going to share my approach, focusing on practical steps and nuances I've learned along the way.
 
 First, understand that Sails.js, being built on Express.js, readily integrates with standard Express middleware. This means we can leverage `express-rate-limit` directly without too much fuss. The core principle of rate limiting is simple: it restricts the number of requests a client can make within a specific timeframe. This helps prevent brute-force attacks, denial-of-service attempts, and mitigates the impact of misbehaving clients.
 

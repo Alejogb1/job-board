@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-can-i-login-with-oauth-20"
 ---
 
-Okay, let's tackle this. It's been a while since my team and I first grappled with the intricacies of OAuth 2.0 in a large-scale application, but the fundamentals remain as crucial as ever. Logging in using OAuth 2.0, while seemingly straightforward from a user perspective, involves a series of carefully choreographed steps to ensure security and proper authorization. Fundamentally, you're not just logging *in*; you're granting a third-party application permission to access resources on your behalf, hosted by a separate service. Let me walk you through the process, based on what I’ve learned through trial and (sometimes painful) error.
+,  It's been a while since my team and I first grappled with the intricacies of OAuth 2.0 in a large-scale application, but the fundamentals remain as crucial as ever. Logging in using OAuth 2.0, while seemingly straightforward from a user perspective, involves a series of carefully choreographed steps to ensure security and proper authorization. Fundamentally, you're not just logging *in*; you're granting a third-party application permission to access resources on your behalf, hosted by a separate service. Let me walk you through the process, based on what I’ve learned through trial and (sometimes painful) error.
 
 The core idea behind OAuth 2.0 is to delegate access without sharing your credentials directly with the application. It works by using tokens, not your username and password. Think of it like handing someone a temporary key rather than giving them a permanent copy of your house key. This way, you can control what resources a third party can access, and you can revoke access at any time.
 

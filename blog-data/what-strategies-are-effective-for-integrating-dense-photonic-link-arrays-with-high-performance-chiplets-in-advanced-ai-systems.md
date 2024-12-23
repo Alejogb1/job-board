@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "what-strategies-are-effective-for-integrating-dense-photonic-link-arrays-with-high-performance-chiplets-in-advanced-ai-systems"
 ---
 
-Okay so you wanna jam a bunch of super-fast light pipes into these crazy-powerful tiny computer chips for AI right  That's ambitious cool  Integrating dense photonic link arrays with chiplets is like trying to thread a needle while riding a unicycle blindfolded  but the potential payoff is huge think massively parallel AI computations  way faster than anything we have now
+ so you wanna jam a bunch of super-fast light pipes into these crazy-powerful tiny computer chips for AI right  That's ambitious cool  Integrating dense photonic link arrays with chiplets is like trying to thread a needle while riding a unicycle blindfolded  but the potential payoff is huge think massively parallel AI computations  way faster than anything we have now
 
 First off forget about just slapping them together you need a plan a serious plan  We're talking about different worlds here the electrical world of the chiplets and the optical world of the photonic links  It's like trying to mix oil and water you need an emulsifier  and that emulsifier is gonna be some serious engineering
 

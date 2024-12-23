@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-delete-records-from-active-storage-blobs"
 ---
 
-Okay, let's tackle the tricky, and surprisingly common, issue of deleting records from active storage blobs. It's not as straightforward as you might initially think, especially when considering the various potential failure points in a production environment. I’ve certainly had my share of late-night debugging sessions over this very topic.
+, let's tackle the tricky, and surprisingly common, issue of deleting records from active storage blobs. It's not as straightforward as you might initially think, especially when considering the various potential failure points in a production environment. I’ve certainly had my share of late-night debugging sessions over this very topic.
 
 The core issue arises from the relationship between your application's database and the actual storage of files, be that on a local disk, amazon s3, google cloud storage, or any other provider. Active storage provides a convenient layer, but we must be mindful of the underlying processes. Simply deleting a database record might leave orphaned blobs, consuming storage space and potentially creating a security risk. Conversely, deleting blobs without correctly updating or removing database associations can lead to application errors.
 

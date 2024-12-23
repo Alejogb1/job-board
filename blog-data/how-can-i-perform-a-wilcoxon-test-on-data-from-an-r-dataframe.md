@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-perform-a-wilcoxon-test-on-data-from-an-r-dataframe"
 ---
 
-Right, let's tackle this. Performing a Wilcoxon test on data within an R dataframe is a fairly common scenario, and I've certainly found myself doing it numerous times across various projects. It’s essential for non-parametric comparisons when your data doesn’t meet the assumptions of a t-test, which happens more often than many would like. The key here is to understand the different variations of the Wilcoxon test, how to extract the necessary data from your dataframe, and how to interpret the results within the context of your research.
+Right,  Performing a Wilcoxon test on data within an R dataframe is a fairly common scenario, and I've certainly found myself doing it numerous times across various projects. It’s essential for non-parametric comparisons when your data doesn’t meet the assumptions of a t-test, which happens more often than many would like. The key here is to understand the different variations of the Wilcoxon test, how to extract the necessary data from your dataframe, and how to interpret the results within the context of your research.
 
 Essentially, the Wilcoxon test comes in two primary flavours, and choosing the correct one depends entirely on what you're comparing: the Wilcoxon signed-rank test and the Wilcoxon rank-sum test (also known as the Mann-Whitney U test). Let's break each down with respect to R and dataframes.
 

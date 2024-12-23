@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-word-frequency-be-counted-in-a-sentence"
 ---
 
-Okay, let's tackle this. I've seen variations of this problem countless times, often buried within more complex natural language processing pipelines. Counting word frequencies in a sentence sounds simple on the surface, but a few nuances need addressing for a robust and accurate implementation. From my experience working on large-scale text analysis projects, I've learned that how you handle preprocessing and edge cases is critical.
+,  I've seen variations of this problem countless times, often buried within more complex natural language processing pipelines. Counting word frequencies in a sentence sounds simple on the surface, but a few nuances need addressing for a robust and accurate implementation. From my experience working on large-scale text analysis projects, I've learned that how you handle preprocessing and edge cases is critical.
 
 Let’s break down the core aspects. The essential objective is to take a string of text, identify the individual words, and then tally how many times each unique word appears. This process involves several steps: tokenization, cleaning, and frequency calculation. We’ll look at each of these in detail and then go through some practical code examples.
 

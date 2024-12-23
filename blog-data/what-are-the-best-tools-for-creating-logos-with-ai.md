@@ -12,7 +12,7 @@ First off you gotta think about what kind of AI you're dealing with  Some tools 
 
 One thing I've noticed is the "generate" button is kinda misleading  These aren't magic wands you still gotta do some work  Think of it like having a really talented but slightly unfocused intern they give you a bunch of options then you gotta pick the best one and maybe polish it up
 
-Okay so let's dive into some specific tools and I'll toss in some code examples cause why not  
+ so let's dive into some specific tools and I'll toss in some code examples cause why not  
 
 **1  The Super Simple Ones**
 

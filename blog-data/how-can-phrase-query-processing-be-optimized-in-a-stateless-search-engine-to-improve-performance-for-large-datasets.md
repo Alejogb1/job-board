@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "how-can-phrase-query-processing-be-optimized-in-a-stateless-search-engine-to-improve-performance-for-large-datasets"
 ---
 
-Okay so you wanna speed up phrase searches in a stateless search engine right  Big datasets are the enemy here  think millions or billions of documents  a simple "find 'hello world'" can take forever if you're not smart about it  Stateless means no persistent memory between queries  every search is a fresh start which is kinda limiting but also simplifies things in its own way
+ so you wanna speed up phrase searches in a stateless search engine right  Big datasets are the enemy here  think millions or billions of documents  a simple "find 'hello world'" can take forever if you're not smart about it  Stateless means no persistent memory between queries  every search is a fresh start which is kinda limiting but also simplifies things in its own way
 
 The main problem is that you're basically doing a full scan of your index potentially  for each word in the phrase  you gotta locate all documents containing that word and then see which ones have *all* the words together in the right order  That's a ton of work  especially with lots of documents and long phrases
 

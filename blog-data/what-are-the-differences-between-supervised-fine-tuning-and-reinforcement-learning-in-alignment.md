@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "what-are-the-differences-between-supervised-fine-tuning-and-reinforcement-learning-in-alignment"
 ---
 
-Okay so you wanna know about supervised fine-tuning versus reinforcement learning in alignment right  pretty big topic  lots of moving parts  let's break it down in a way that hopefully makes sense  I'll try to keep it simple and avoid too much jargon  but hey it's AI we're talking about so some technical stuff is unavoidable
+ so you wanna know about supervised fine-tuning versus reinforcement learning in alignment right  pretty big topic  lots of moving parts  let's break it down in a way that hopefully makes sense  I'll try to keep it simple and avoid too much jargon  but hey it's AI we're talking about so some technical stuff is unavoidable
 
 Basically both supervised fine-tuning and reinforcement learning are ways to get a language model or any model really  to behave better to be more aligned with what we want  but they go about it in different ways kinda like two different tools in your toolbox
 

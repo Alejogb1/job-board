@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-color-code-two-specific-bars-differently-in-an-altair-bar-chart"
 ---
 
-Alright, let's tackle this. Getting specific bars to stand out in an Altair chart is a fairly common task, and thankfully, it’s achievable with a few different strategies. I remember facing a similar challenge years ago while visualizing server performance metrics where highlighting peak usage times was crucial. We needed certain bars to pop, and the standard single-color output wasn’t cutting it. We ended up using a combination of conditional logic and encoding, which proved quite effective.
+Alright,  Getting specific bars to stand out in an Altair chart is a fairly common task, and thankfully, it’s achievable with a few different strategies. I remember facing a similar challenge years ago while visualizing server performance metrics where highlighting peak usage times was crucial. We needed certain bars to pop, and the standard single-color output wasn’t cutting it. We ended up using a combination of conditional logic and encoding, which proved quite effective.
 
 The crux of the matter is that Altair, being declarative, doesn't directly offer a "color this bar specifically" command. Instead, we manipulate the underlying data and encoding to achieve the desired result. The key lies in adding a new field to your data that dictates the color, and then mapping that field to the `color` channel in your encoding.
 

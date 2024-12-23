@@ -4,7 +4,7 @@ date: "2024-12-04"
 id: "what-practical-steps-can-organizations-take-to-adopt-decentralized-model-training-methods-like-nous-distro"
 ---
 
-Hey so you wanna dive into decentralized model training right like with that cool Nous DisTrO thing  yeah its pretty rad  Okay so orgs wanna jump on this bandwagon its all about splitting up the training process across multiple devices or machines its not just some theoretical hype its actually super practical for massive datasets and models we're talking images videos the whole shebang you know  
+Hey so you wanna dive into decentralized model training right like with that cool Nous DisTrO thing  yeah its pretty rad   so orgs wanna jump on this bandwagon its all about splitting up the training process across multiple devices or machines its not just some theoretical hype its actually super practical for massive datasets and models we're talking images videos the whole shebang you know  
 
 First things first you gotta pick your poison meaning your framework  TensorFlow PyTorch Horovod theyre all players in this game each with its own quirks and strengths  TensorFlow is super mature tons of resources out there its like the reliable old car you can always depend on  PyTorch is more pythonic  feels snappier for prototyping you know more of that "get stuff done fast" vibe  Horovod is all about that distributed training speed  it really shines when you have multiple GPUs screaming in parallel its like a well oiled machine if you have that setup.
 

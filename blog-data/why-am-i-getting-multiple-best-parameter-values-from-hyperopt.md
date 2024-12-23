@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-multiple-best-parameter-values-from-hyperopt"
 ---
 
-Okay, let's tackle this. It’s a situation I've certainly encountered more than once, and it can be a head-scratcher if you’re not familiar with the nuances of how optimization algorithms, particularly those used by hyperopt, operate. The core issue, when you're seeing multiple "best" parameter sets, isn't a flaw in hyperopt itself, but rather a reflection of how optimization landscapes can be complex and, quite frankly, messy.
+,  It’s a situation I've certainly encountered more than once, and it can be a head-scratcher if you’re not familiar with the nuances of how optimization algorithms, particularly those used by hyperopt, operate. The core issue, when you're seeing multiple "best" parameter sets, isn't a flaw in hyperopt itself, but rather a reflection of how optimization landscapes can be complex and, quite frankly, messy.
 
 Specifically, when you're running a hyperparameter optimization using a tool like hyperopt, you're essentially guiding a search algorithm through a high-dimensional space defined by your hyperparameters and evaluated by your loss function (which you want to minimize). The goal, of course, is to find the hyperparameter combination that results in the absolute lowest loss value. However, in the real world, this landscape can have numerous local minima—think of it like a mountain range with many valleys. The algorithm might find a valley that’s good, but not necessarily the *best*. And, importantly, there might be several different such valleys that produce results that are 'best' in that they all hit the same lowest loss value you have been able to see given your search space.
 

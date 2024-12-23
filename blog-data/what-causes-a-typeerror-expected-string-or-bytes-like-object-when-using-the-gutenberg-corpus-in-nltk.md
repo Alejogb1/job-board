@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-causes-a-typeerror-expected-string-or-bytes-like-object-when-using-the-gutenberg-corpus-in-nltk"
 ---
 
-Okay, let's tackle this one. It’s not the most exotic error, but it's certainly one that crops up frequently when folks start exploring natural language processing with nltk and the gutenberg corpus. I've seen this particular `TypeError: expected string or bytes-like object` rear its head more times than I care to remember, especially during my early explorations into NLP. It’s usually a signal that we’re inadvertently feeding a list or some other non-string object where a string or byte sequence is anticipated. Let me break down the reasons and illustrate with a few examples.
+, let's tackle this one. It’s not the most exotic error, but it's certainly one that crops up frequently when folks start exploring natural language processing with nltk and the gutenberg corpus. I've seen this particular `TypeError: expected string or bytes-like object` rear its head more times than I care to remember, especially during my early explorations into NLP. It’s usually a signal that we’re inadvertently feeding a list or some other non-string object where a string or byte sequence is anticipated. Let me break down the reasons and illustrate with a few examples.
 
 The heart of the matter lies in how nltk’s `gutenberg` corpus stores and provides its text data. It doesn’t deliver individual documents as simple strings. Instead, it presents each document as a list of tokens – usually words or punctuation. This is a crucial design choice for preprocessing text, but it becomes problematic if you directly pass these token lists to functions or methods expecting a raw string. This mismatch is the typical culprit behind the `TypeError`.
 

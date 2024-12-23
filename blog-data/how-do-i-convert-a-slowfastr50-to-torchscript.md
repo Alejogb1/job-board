@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-convert-a-slowfastr50-to-torchscript"
 ---
 
-Alright, let's tackle this. Converting a Slowfast_r50 model to TorchScript is definitely a worthwhile exercise, especially when you need that performance boost or deployment flexibility. I’ve personally dealt with this process a few times, and it’s not always a straightforward walk in the park. It often requires a bit of nuanced understanding of both the model architecture and TorchScript’s capabilities, but with a methodical approach, it's completely achievable.
+Alright,  Converting a Slowfast_r50 model to TorchScript is definitely a worthwhile exercise, especially when you need that performance boost or deployment flexibility. I’ve personally dealt with this process a few times, and it’s not always a straightforward walk in the park. It often requires a bit of nuanced understanding of both the model architecture and TorchScript’s capabilities, but with a methodical approach, it's completely achievable.
 
 Essentially, TorchScript is PyTorch’s way of serializing and optimizing models for production environments. It allows you to decouple the model from Python’s runtime, making it faster and portable to different platforms. However, not all PyTorch code translates seamlessly to TorchScript, and that's where some careful adjustments come into play. The Slowfast_r50, with its complex temporal modeling and dual-path architecture, presents a unique set of considerations.
 

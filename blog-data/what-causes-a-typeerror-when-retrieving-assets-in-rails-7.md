@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-causes-a-typeerror-when-retrieving-assets-in-rails-7"
 ---
 
-Okay, let's talk TypeErrors with Rails 7 assets. I've spent more hours debugging asset pipelines than I care to recall, and trust me, those seemingly simple `TypeError` messages often mask a pretty complex underlying issue. You're likely seeing these errors when your Rails application attempts to access something like an image, stylesheet, or javascript file, and the system encounters a data type mismatch. It's not just a case of "file not found;" it's more nuanced than that.
+, let's talk TypeErrors with Rails 7 assets. I've spent more hours debugging asset pipelines than I care to recall, and trust me, those seemingly simple `TypeError` messages often mask a pretty complex underlying issue. You're likely seeing these errors when your Rails application attempts to access something like an image, stylesheet, or javascript file, and the system encounters a data type mismatch. It's not just a case of "file not found;" it's more nuanced than that.
 
 The core problem usually boils down to how Rails manages assets with the asset pipeline, specifically with how it handles the compilation and delivery process when using Sprockets (or its alternatives). Let's look at why these TypeErrors arise.
 

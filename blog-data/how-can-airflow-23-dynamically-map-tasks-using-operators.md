@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-airflow-23-dynamically-map-tasks-using-operators"
 ---
 
-Okay, let's tackle dynamic task mapping in Airflow 2.3. I recall a particularly tricky project a few years back where we needed to process datasets from various sources, each with a different schema, using the same core logic. Static workflows just wouldn’t cut it, and we were exploring alternatives. We landed on Airflow’s dynamic task mapping capabilities, and it became indispensable. It's far more powerful than just stringing together static tasks; it lets you define the task execution based on a dynamically generated collection of inputs at runtime.
+, let's tackle dynamic task mapping in Airflow 2.3. I recall a particularly tricky project a few years back where we needed to process datasets from various sources, each with a different schema, using the same core logic. Static workflows just wouldn’t cut it, and we were exploring alternatives. We landed on Airflow’s dynamic task mapping capabilities, and it became indispensable. It's far more powerful than just stringing together static tasks; it lets you define the task execution based on a dynamically generated collection of inputs at runtime.
 
 Dynamic task mapping, at its core, is about generating tasks within your DAG based on the output of a previous task. It’s not about generating the *DAG* itself, mind you; it’s about expanding the tasks within an already defined DAG structure. This is typically handled with the `expand` method, or by using the map function directly on operators. Think of it as "task multiplication," where a single task definition becomes many instances based on a given collection of items.
 

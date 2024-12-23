@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "coldfusion-cfdocument-title-in-url"
 ---
 
-Okay so you're asking about getting the cfdocument title in the URL right Been there done that got the t-shirt Let me tell you this is a classic problem that pops up more often than you'd think especially with legacy ColdFusion apps that haven't really been touched in ages. It's not super straightforward and CF's kind of quirky behavior with cfdocument doesn't always help.
+ so you're asking about getting the cfdocument title in the URL right Been there done that got the t-shirt Let me tell you this is a classic problem that pops up more often than you'd think especially with legacy ColdFusion apps that haven't really been touched in ages. It's not super straightforward and CF's kind of quirky behavior with cfdocument doesn't always help.
 
 I've been dealing with ColdFusion since CF 5 you remember the days of that old server config UI. I remember clearly when I had this problem in an old e-commerce system I was working on back in 2010. A project for an online book store they wanted to generate dynamic PDFs of order confirmations each one with the order ID in the filename and the PDF title. It was a real struggle then because we had to figure out how to get that title dynamically without resorting to some crazy file system hack.
 

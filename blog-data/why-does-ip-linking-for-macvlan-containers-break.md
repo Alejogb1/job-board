@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-does-ip-linking-for-macvlan-containers-break"
 ---
 
-Okay, let's tackle this. I’ve spent a fair amount of time debugging seemingly inexplicable network issues in containerized environments, and macvlan and ip linking specifically has been a recurring culprit. It’s not so much about ‘breaking’ in a catastrophic sense, but rather, more about a nuanced interaction of how these technologies operate and the assumptions we make as developers.
+,  I’ve spent a fair amount of time debugging seemingly inexplicable network issues in containerized environments, and macvlan and ip linking specifically has been a recurring culprit. It’s not so much about ‘breaking’ in a catastrophic sense, but rather, more about a nuanced interaction of how these technologies operate and the assumptions we make as developers.
 
 Essentially, the issue stems from the way macvlan interfaces behave and how that interacts with the host’s networking stack, specifically when we’re attempting to use ip linking within the container. When you use macvlan, you’re creating a *virtual* network interface within the container that is directly attached to the physical network interface of the host. This sounds great on paper: the container gets its own MAC address and looks like a separate, physical device on the network. However, that isolation is a double-edged sword.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-handle-template-re-parsing-when-upgrading-liquid-versions"
 ---
 
-Okay, let's tackle this. I've been through the Liquid version upgrade wringer a few times, and it's never quite as straightforward as the release notes make it sound. You're asking about re-parsing templates after a Liquid upgrade, and there's a good reason why this can be tricky – it's not just a matter of dropping in the new library. Template parsing logic can shift subtly between versions, and what worked perfectly under version x might suddenly throw errors or, worse, render incorrectly under version y. So, a proactive approach is key.
+,  I've been through the Liquid version upgrade wringer a few times, and it's never quite as straightforward as the release notes make it sound. You're asking about re-parsing templates after a Liquid upgrade, and there's a good reason why this can be tricky – it's not just a matter of dropping in the new library. Template parsing logic can shift subtly between versions, and what worked perfectly under version x might suddenly throw errors or, worse, render incorrectly under version y. So, a proactive approach is key.
 
 The core problem stems from the fact that Liquid, like any templating engine, has an internal representation of the templates it processes. This representation isn't typically exposed or meant to be manipulated directly. When you upgrade the underlying Liquid library, this internal model can change. New tags might be supported, or existing syntax might be interpreted differently. The parser's behavior is fundamentally tied to the specific version. You’re not just replacing a library; you’re potentially altering the rules for how your templates are understood.
 

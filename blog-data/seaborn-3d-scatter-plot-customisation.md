@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "seaborn-3d-scatter-plot-customisation"
 ---
 
-Okay so seaborn 3d scatter plots right yeah I've been there a few times believe me customization can be a bit of a rabbit hole especially when you're trying to get it exactly right This is one of those things where you think "oh it's just a scatter plot how hard can it be" and then you find yourself three hours deep wrestling with matplotlib axes objects
+ so seaborn 3d scatter plots right yeah I've been there a few times believe me customization can be a bit of a rabbit hole especially when you're trying to get it exactly right This is one of those things where you think "oh it's just a scatter plot how hard can it be" and then you find yourself three hours deep wrestling with matplotlib axes objects
 
 So lemme break it down based on what I've seen over the years my own struggles and hopefully steer you clear of some pitfalls I definitely fell into back in the day
 
@@ -14,7 +14,7 @@ I remember once trying to do some analysis of a simulation I had run involving a
 
 I tried for like 2 hours to find some secret keyword argument or some magic function but of course no that was not it because seaborn does not have the native functions to make 3D plots
 
-Okay so how do you actually create the 3D scatter plot You'll want to create a matplotlib figure and axes with projection='3d' first then use matplotlib's scatter function to create the actual points
+ so how do you actually create the 3D scatter plot You'll want to create a matplotlib figure and axes with projection='3d' first then use matplotlib's scatter function to create the actual points
 
 Here's a basic example to get us started
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-model-accuracy-low-after-hyperparameter-tuning"
 ---
 
-Okay, let's tackle this. I've seen this scenario play out more times than I care to count, usually right after thinking we’d cracked the code with a new architecture or training regime. The situation: you've meticulously crafted your model, you’ve chosen your loss function, you’ve even gone through the motions of hyperparameter tuning – perhaps even deploying some automated optimization algorithm – and yet, the performance still lags. It's frustrating, but it's a common stumbling block, and understanding the root causes can be the key to unlocking your model's true potential.
+,  I've seen this scenario play out more times than I care to count, usually right after thinking we’d cracked the code with a new architecture or training regime. The situation: you've meticulously crafted your model, you’ve chosen your loss function, you’ve even gone through the motions of hyperparameter tuning – perhaps even deploying some automated optimization algorithm – and yet, the performance still lags. It's frustrating, but it's a common stumbling block, and understanding the root causes can be the key to unlocking your model's true potential.
 
 Often, the issue isn't that the tuning process *failed* necessarily, but rather that it revealed a deeper systemic problem. We tend to think of hyperparameter tuning as some magical incantation that cures all ills, when in reality, it's just another tool. It’s incredibly helpful, sure, but if your underlying model structure or data pipeline has inherent flaws, no amount of parameter tweaking is going to fix it.
 

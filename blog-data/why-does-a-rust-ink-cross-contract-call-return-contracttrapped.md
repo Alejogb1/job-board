@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-a-rust-ink-cross-contract-call-return-contracttrapped"
 ---
 
-Okay, let's unpack this. *ContractTrapped*, that old chestnut, especially when dealing with ink!'s cross-contract calls in Rust. I've seen my fair share of head-scratching moments tracing that particular error back to its roots. It's not always immediately apparent, but usually, it boils down to a few common culprits in the interplay between your smart contracts.
+, let's unpack this. *ContractTrapped*, that old chestnut, especially when dealing with ink!'s cross-contract calls in Rust. I've seen my fair share of head-scratching moments tracing that particular error back to its roots. It's not always immediately apparent, but usually, it boils down to a few common culprits in the interplay between your smart contracts.
 
 Frankly, encountering a `ContractTrapped` result in a cross-contract call within ink! usually points to an unrecoverable error occurring within the *target* contract during the execution of the called function. Think of it less as your calling contract doing something wrong directly, and more as the target contract experiencing a catastrophic failure that propagates back. The important detail is that `ContractTrapped` is a deliberately vague, broad-spectrum error on the *caller's* side because you can't always know exactly what went wrong within the confines of another contract's execution context.
 

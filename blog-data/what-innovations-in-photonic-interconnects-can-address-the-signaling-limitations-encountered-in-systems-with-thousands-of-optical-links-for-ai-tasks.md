@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "what-innovations-in-photonic-interconnects-can-address-the-signaling-limitations-encountered-in-systems-with-thousands-of-optical-links-for-ai-tasks"
 ---
 
-Okay so you're asking about speeding up AI systems right  the bottleneck is all those optical links thousands of them  imagine the spaghetti  getting data across is slow its a huge problem  and photonic interconnects are the key  think light not electrons  light's way faster
+ so you're asking about speeding up AI systems right  the bottleneck is all those optical links thousands of them  imagine the spaghetti  getting data across is slow its a huge problem  and photonic interconnects are the key  think light not electrons  light's way faster
 
 So what can we do to make things quicker  well a bunch of things are being worked on I'll try to break it down  it's kinda complicated but bear with me
 

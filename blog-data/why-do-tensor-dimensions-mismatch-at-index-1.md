@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-do-tensor-dimensions-mismatch-at-index-1"
 ---
 
-Okay, let's tackle this tensor dimension mismatch issue. I've seen this one rear its head more than a few times in my career, and it’s usually due to a fundamental misunderstanding of how tensors are shaped and how operations affect those shapes. So, the specific error of “tensor dimensions mismatch at index 1” is almost always related to the second dimension in a multi-dimensional tensor, often representing columns in matrices or a sequence length in higher dimensions. Let me break it down with some context and examples.
+, let's tackle this tensor dimension mismatch issue. I've seen this one rear its head more than a few times in my career, and it’s usually due to a fundamental misunderstanding of how tensors are shaped and how operations affect those shapes. So, the specific error of “tensor dimensions mismatch at index 1” is almost always related to the second dimension in a multi-dimensional tensor, often representing columns in matrices or a sequence length in higher dimensions. Let me break it down with some context and examples.
 
 In my experience, this commonly occurs during neural network training, specifically when dealing with batched data. Let's say I was building a recurrent neural network (rnn) for time series prediction a while back. I had my input sequences, each with a varying length, prepared for batching. The initial issue I encountered is that some sequences were longer than others, leading to a direct mismatch when feeding them into the rnn layer.
 

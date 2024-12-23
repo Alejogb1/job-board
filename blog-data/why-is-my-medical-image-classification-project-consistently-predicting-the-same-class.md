@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-my-medical-image-classification-project-consistently-predicting-the-same-class"
 ---
 
-Okay, let's tackle this. It's a frustrating spot to be in, seeing your medical image classification model stubbornly stuck on a single prediction, especially after all the effort put into it. I've been there, back in my days working on early pathology image analysis; saw this exact scenario repeatedly. It's rarely one single issue causing it, but rather a confluence of factors all leading to this undesirable outcome. Let's break down the common culprits and how to approach them.
+,  It's a frustrating spot to be in, seeing your medical image classification model stubbornly stuck on a single prediction, especially after all the effort put into it. I've been there, back in my days working on early pathology image analysis; saw this exact scenario repeatedly. It's rarely one single issue causing it, but rather a confluence of factors all leading to this undesirable outcome. Let's break down the common culprits and how to approach them.
 
 The core problem, generally, is that your model has essentially learned to optimize for something other than the desired classification task. Instead of discerning the nuanced features within your medical images, it's become overly reliant on a skewed or biased aspect of your dataset, often finding a shortcut that guarantees high initial accuracy but fails catastrophically when faced with unseen data.
 

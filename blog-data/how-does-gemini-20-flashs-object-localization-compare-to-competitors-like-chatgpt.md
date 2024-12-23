@@ -4,7 +4,7 @@ date: "2024-12-12"
 id: "how-does-gemini-20-flashs-object-localization-compare-to-competitors-like-chatgpt"
 ---
 
-Okay let's dive into Gemini 2.0 Flash and how it stacks up against the localization champs especially ChatGPT it's a cool topic and honestly it highlights some really fundamental differences in how these models are built
+ let's dive into Gemini 2.0 Flash and how it stacks up against the localization champs especially ChatGPT it's a cool topic and honestly it highlights some really fundamental differences in how these models are built
 
 So we're talking about object localization right That's not just saying there's *a* cat in the picture it's about drawing a box around the cat saying "here precisely is the cat" ChatGPT at its core is a language model its forte is text generation understanding context relating words and concepts It's not inherently designed to process spatial data like images and understand where things are within that image Its training is primarily on text datasets whereas image processing models need to be trained on image data and annotated images specifying bounding boxes for objects
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "how-to-solve-a-timeout-error-in-laravel-5"
 ---
 
-Okay so timeout errors in Laravel 5 eh I've been there more times than I'd like to admit let's break this down real simple and avoid all the fluffy stuff
+ so timeout errors in Laravel 5 eh I've been there more times than I'd like to admit let's break this down real simple and avoid all the fluffy stuff
 
 First off timeouts they're basically your web server or php script saying "yo I'm done waiting I'm out" and it can stem from a bunch of things mostly boils down to your code taking too long to execute or the server not being patient enough either way we need to fix it
 
@@ -18,7 +18,7 @@ Yeah this one's usually the main offender You have a query that's doing too much
 
 **2 External API Calls**
 
-Okay imagine this you're pulling data from a third-party api and that api is slow unresponsive or just plain broken your application is stuck there waiting and waiting for that response and again if it takes too long timeout city
+ imagine this you're pulling data from a third-party api and that api is slow unresponsive or just plain broken your application is stuck there waiting and waiting for that response and again if it takes too long timeout city
 
 **3 Resource-Intensive Tasks**
 

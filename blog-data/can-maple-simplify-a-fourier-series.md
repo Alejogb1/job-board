@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "can-maple-simplify-a-fourier-series"
 ---
 
-okay so you're asking if Maple can simplify a Fourier series right yeah ive been down that rabbit hole more times than i care to remember its a pretty common question and the answer well it’s complicated but mostly yes with caveats lots of them
+ so you're asking if Maple can simplify a Fourier series right yeah ive been down that rabbit hole more times than i care to remember its a pretty common question and the answer well it’s complicated but mostly yes with caveats lots of them
 
 look ive spent years wrestling with this stuff back in my uni days i was obsessed with signal processing and that meant dealing with Fourier series non stop in my masters project i was trying to reconstruct some crazy audio signals from a bunch of sensors and believe me maple was a crucial tool but it wasn't always smooth sailing
 

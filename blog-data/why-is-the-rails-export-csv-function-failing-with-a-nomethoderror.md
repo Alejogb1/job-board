@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-the-rails-export-csv-function-failing-with-a-nomethoderror"
 ---
 
-Okay, let's tackle this. It's a familiar frustration: the Rails `csv` exporter throwing a `NoMethodError`. I've seen this crop up more times than I care to count, and usually, it boils down to a few common culprits. The message itself, `NoMethodError`, means Ruby is trying to call a method that simply doesn’t exist for a given object, often an object you’re trying to access during your CSV generation. Let me break down what I've usually encountered and how to fix it, drawing on some real-world debugging sessions from my past projects.
+,  It's a familiar frustration: the Rails `csv` exporter throwing a `NoMethodError`. I've seen this crop up more times than I care to count, and usually, it boils down to a few common culprits. The message itself, `NoMethodError`, means Ruby is trying to call a method that simply doesn’t exist for a given object, often an object you’re trying to access during your CSV generation. Let me break down what I've usually encountered and how to fix it, drawing on some real-world debugging sessions from my past projects.
 
 First, understand that generating a CSV in Rails typically involves iterating over a collection of model instances (or even plain ruby hashes/arrays) and accessing attributes or methods of those instances for each row's columns. The `NoMethodError` points directly to a problem during that access process. The error message usually includes the method it couldn’t find, and the object context which is crucial for diagnosis. Let's say we're trying to export a list of `User` records with attributes like `email`, `username`, and `created_at`. The most frequent errors happen because:
 

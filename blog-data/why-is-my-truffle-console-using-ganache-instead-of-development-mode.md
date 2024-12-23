@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-my-truffle-console-using-ganache-instead-of-development-mode"
 ---
 
-Okay, let's untangle this issue. It’s a common head-scratcher, and I've certainly been in similar spots over the years, particularly back when I was knee-deep in contract development for a supply chain project. The problem you're facing, where the Truffle console unexpectedly connects to Ganache instead of utilizing the development environment, usually boils down to configuration priorities and how Truffle interprets those. It’s not a straightforward “one switch” issue, so we'll need to dissect the different components at play.
+, let's untangle this issue. It’s a common head-scratcher, and I've certainly been in similar spots over the years, particularly back when I was knee-deep in contract development for a supply chain project. The problem you're facing, where the Truffle console unexpectedly connects to Ganache instead of utilizing the development environment, usually boils down to configuration priorities and how Truffle interprets those. It’s not a straightforward “one switch” issue, so we'll need to dissect the different components at play.
 
 The core of the problem lies in how Truffle decides which network configuration to use when you invoke `truffle console` or `truffle migrate`. The default behavior when no specific network is indicated is generally to look for a 'development' network defined in your `truffle-config.js` (or `truffle-config.mjs` if you're using es modules). However, if no ‘development’ network is specified or if it’s somehow ambiguous, truffle might fallback on a default like attempting a connection to a default Ganache setup running locally, and that's likely what you're observing.
 

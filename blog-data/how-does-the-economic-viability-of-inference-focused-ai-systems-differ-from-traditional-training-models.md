@@ -4,7 +4,7 @@ date: "2024-12-11"
 id: "how-does-the-economic-viability-of-inference-focused-ai-systems-differ-from-traditional-training-models"
 ---
 
-Okay so you wanna know about the money side of inference versus training in AI right  Its a big deal  like a REALLY big deal  because its not just about building the model its about keeping it running and making it useful and profitable  Traditional training is like building a house  you spend a ton upfront materials labor architects the whole shebang Then you have the house and its ready  Inference is like actually living in that house  you gotta pay the utilities keep it maintained maybe even renovate sometimes   
+ so you wanna know about the money side of inference versus training in AI right  Its a big deal  like a REALLY big deal  because its not just about building the model its about keeping it running and making it useful and profitable  Traditional training is like building a house  you spend a ton upfront materials labor architects the whole shebang Then you have the house and its ready  Inference is like actually living in that house  you gotta pay the utilities keep it maintained maybe even renovate sometimes   
 
 The main difference is where the costs are focused  Training  is a big upfront capital expense  You need powerful GPUs massive datasets possibly even specialized hardware  think those monster server farms  The cost scales massively with model size and complexity  A massive language model can cost millions maybe even tens of millions to train just once  Its a one time thing for a specific model but that one time is expensive  Plus you need skilled people data scientists engineers  its a whole team
 

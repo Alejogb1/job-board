@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "rollmean-r-function-implementation"
 ---
 
-Alright so you're asking about implementing a rolling mean function in R right? I've been down this road more times than I can count believe me Seems like every data analysis project I touch ends up needing some kind of moving average calculation Its a real bread and butter type of thing and honestly its not that complicated once you get a good handle on it
+so you're asking about implementing a rolling mean function in R right? I've been down this road more times than I can count believe me Seems like every data analysis project I touch ends up needing some kind of moving average calculation Its a real bread and butter type of thing and honestly its not that complicated once you get a good handle on it
 
 I remember back when I was still wet behind the ears hacking away at my first real data science gig I thought the way to do it was with these crazy nested for loops I mean talk about a performance killer I was processing gigabytes of sensor data and my machine was practically crying for mercy I spent like a whole weekend just waiting for computations to finish it was an actual nightmare I finally had to scrap that mess and find a better solution which thankfully led me to vectors in R
 
@@ -43,7 +43,7 @@ rollmean_filter <- function(x, window) {
   return(as.numeric(result))
 }
 ```
-Okay what's going on here? Well we generate the filter's weights as I explained before `rep(1/window, window)` generates a vector where each element is equal to one divided by the window size We use `filter` with these weights on our `x` vector which is our data and `sides = 1` means we're only looking at past values for the filter The result is directly the vector of rolling means because the weights are already normalized The function returns the result as a numeric vector
+ what's going on here? Well we generate the filter's weights as I explained before `rep(1/window, window)` generates a vector where each element is equal to one divided by the window size We use `filter` with these weights on our `x` vector which is our data and `sides = 1` means we're only looking at past values for the filter The result is directly the vector of rolling means because the weights are already normalized The function returns the result as a numeric vector
 
 I remember the first time I switched to `filter` I was like "What is this sorcery?" My code ran like a thousand times faster I almost felt bad for all the computing time I wasted on my old approach Seriously it was a game changer But lets be honest the `filter` function is doing a bunch of optimizations under the hood that would be really tedious to try to code myself
 

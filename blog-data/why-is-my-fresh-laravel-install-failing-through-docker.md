@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-my-fresh-laravel-install-failing-through-docker"
 ---
 
-Okay, let’s tackle this. I've seen this particular scenario play out more times than I care to remember, and it's often a combination of subtle misconfigurations rather than one glaring error. A fresh Laravel install failing within a Docker environment, despite appearing straightforward, can often trip up even seasoned developers. We're not talking about esoteric edge cases, but rather the more commonplace pitfalls that arise from the interplay between docker, its networking, and laravel's expectations.
+, let’s tackle this. I've seen this particular scenario play out more times than I care to remember, and it's often a combination of subtle misconfigurations rather than one glaring error. A fresh Laravel install failing within a Docker environment, despite appearing straightforward, can often trip up even seasoned developers. We're not talking about esoteric edge cases, but rather the more commonplace pitfalls that arise from the interplay between docker, its networking, and laravel's expectations.
 
 My experiences with various teams have highlighted a few recurring themes. One project, in particular, stands out - an ambitious e-commerce platform that went through several iterations of docker setups before finally landing on a stable and performant one. The initial deployments were plagued by similar issues as you’re describing – a seemingly “fresh” Laravel install failing inside a docker container. Let me break down what typically causes these problems and how we can approach fixing them.
 

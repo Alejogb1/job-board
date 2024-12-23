@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-the-graph-be-used-to-verify-uniswap-v2-token-volume-for-tomorrow"
 ---
 
-Alright, let's tackle this. It's a pertinent question, especially given the increasing importance of reliable on-chain data analysis. I’ve spent a fair amount of time architecting data pipelines that rely on The Graph, and specifically, I recall one rather challenging project involving real-time dex volume monitoring back in late 2021. It's a good learning point, and I can definitely shed some light on using it to predict Uniswap v2 volume for tomorrow.
+Alright,  It's a pertinent question, especially given the increasing importance of reliable on-chain data analysis. I’ve spent a fair amount of time architecting data pipelines that rely on The Graph, and specifically, I recall one rather challenging project involving real-time dex volume monitoring back in late 2021. It's a good learning point, and I can definitely shed some light on using it to predict Uniswap v2 volume for tomorrow.
 
 The short answer is: **no, The Graph itself cannot directly *verify* tomorrow’s volume**. It’s primarily a historical data indexing service, not a predictive engine. The Graph indexes data from the blockchain and makes it easily queryable. Think of it as a very efficient and organized database of past events. What you *can* do, however, is use The Graph to retrieve historical volume data that can then feed into a separate predictive model. This is a critical distinction.
 

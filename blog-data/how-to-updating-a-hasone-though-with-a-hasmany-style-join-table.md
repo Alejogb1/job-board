@@ -114,6 +114,6 @@ also, i found "refactoring databases" by scott w. ambler and pramod j. sadalage 
 
 you could find other solutions online, but those books cover all those topics extensively and will be a good investment. it will make you understand why rails handles relationships the way it does.
 
-remember, it is okay to have a bit of a headache sometimes! as a wise man once said: "why do programmers prefer dark mode? because light attracts bugs!" (had to get that one out of my system, sorry).
+remember, it is  to have a bit of a headache sometimes! as a wise man once said: "why do programmers prefer dark mode? because light attracts bugs!" (had to get that one out of my system, sorry).
 
 i hope this explanation and the code snippets help clarify how to handle `has_one :through` when your join table might contain multiple matching entries, and how to structure your update method. it took me a while to get the hang of this myself, so don't get too discouraged. just keep trying things out and you'll get there.

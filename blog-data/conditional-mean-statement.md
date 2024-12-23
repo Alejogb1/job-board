@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "conditional-mean-statement"
 ---
 
-Alright so you're asking about conditional mean statements right Been there done that a million times This is like bread and butter for anyone who's wrangled datasets with any real complexity I've seen it used in everything from optimizing ad spend to predicting server load spikes so let's dive in.
+so you're asking about conditional mean statements right Been there done that a million times This is like bread and butter for anyone who's wrangled datasets with any real complexity I've seen it used in everything from optimizing ad spend to predicting server load spikes so let's dive in.
 
 Basically when we talk about a conditional mean we're saying hey I don't just want the average of *all* my data I want the average of my data *given* some specific criteria This "given" part is the heart of the matter it lets us slice our data and get more nuanced insights It's like saying instead of knowing the average temperature for the entire year I want the average temperature only for the month of July or only on weekdays this level of granularity is super useful in any practical analysis.
 

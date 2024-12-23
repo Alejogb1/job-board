@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-typeerror-inputs-to-a-layer-should-be-tensors-got-none-for-a-u-net"
 ---
 
-Alright, let's tackle this. I've seen this particular `TypeError: Inputs to a layer should be tensors. Got: None` more times than I care to remember, especially when working with U-nets, and it usually stems from a fairly common set of missteps. It's not an error that screams its solution at you, so let's break down why it happens and how to fix it, drawing from experience building similar architectures for medical image segmentation, among other projects.
+Alright,  I've seen this particular `TypeError: Inputs to a layer should be tensors. Got: None` more times than I care to remember, especially when working with U-nets, and it usually stems from a fairly common set of missteps. It's not an error that screams its solution at you, so let's break down why it happens and how to fix it, drawing from experience building similar architectures for medical image segmentation, among other projects.
 
 Fundamentally, this error indicates that a layer in your U-net, or any TensorFlow/Keras model, is receiving `None` instead of a proper tensor as its input. Tensors, as you likely know, are the core data structure in these libraries – multi-dimensional arrays that represent the input, the outputs of each layer, and ultimately the predictions. The network is essentially a chain of tensor transformations. If one layer gets `None`, it breaks that chain, hence the error message.
 

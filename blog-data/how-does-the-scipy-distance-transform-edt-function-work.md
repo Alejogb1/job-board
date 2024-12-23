@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "how-does-the-scipy-distance-transform-edt-function-work"
 ---
 
-Okay so you're asking about scipy's `distance_transform_edt` and how it actually works under the hood right cool I've been knee deep in spatial algorithms for years seriously this isn't my first rodeo with these things
+ so you're asking about scipy's `distance_transform_edt` and how it actually works under the hood right cool I've been knee deep in spatial algorithms for years seriously this isn't my first rodeo with these things
 
 First off the `distance_transform_edt` function in SciPy's `scipy.ndimage` module is a workhorse it's what you use when you need to calculate the Euclidean distance transform for a binary image That transform basically tells you for each pixel in the image how far away it is from the nearest pixel that's considered "on" or non-zero The output is another image same size but instead of ones and zeros you get those distances
 

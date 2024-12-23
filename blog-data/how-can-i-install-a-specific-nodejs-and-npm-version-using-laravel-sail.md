@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-install-a-specific-nodejs-and-npm-version-using-laravel-sail"
 ---
 
-Alright, let's tackle this. This isn’t an uncommon scenario, and it’s definitely something I’ve bumped into a few times over the years, especially when dealing with legacy projects or wanting to ensure a consistent development environment across a team. You're asking about how to specify exact node and npm versions within your Laravel Sail setup. Sail, by default, uses the versions bundled within the official docker image, but we can definitely customize this. I'll walk you through it, explain the why, and provide some working examples.
+Alright,  This isn’t an uncommon scenario, and it’s definitely something I’ve bumped into a few times over the years, especially when dealing with legacy projects or wanting to ensure a consistent development environment across a team. You're asking about how to specify exact node and npm versions within your Laravel Sail setup. Sail, by default, uses the versions bundled within the official docker image, but we can definitely customize this. I'll walk you through it, explain the why, and provide some working examples.
 
 The core idea is to modify the `Dockerfile` used by Laravel Sail. The default one pulls a general image, but we’re going to use that as a base and add our version-specific instructions. I’ve found this to be the most reliable approach, as it’s tightly coupled to the environment's definition.
 

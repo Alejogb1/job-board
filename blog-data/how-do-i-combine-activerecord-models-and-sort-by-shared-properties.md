@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-combine-activerecord-models-and-sort-by-shared-properties"
 ---
 
-Okay, let's tackle this. Sorting ActiveRecord models based on shared properties—it's a classic challenge, and I've certainly banged my head against it a few times over the years. A common scenario is wanting to list users based on something like their most recent order date, which isn't directly stored on the `users` table, or perhaps ordering blog posts by the total number of comments. The trick isn't about hacking ActiveRecord, but about leveraging the database’s inherent capabilities and expressing your intent clearly.
+,  Sorting ActiveRecord models based on shared properties—it's a classic challenge, and I've certainly banged my head against it a few times over the years. A common scenario is wanting to list users based on something like their most recent order date, which isn't directly stored on the `users` table, or perhaps ordering blog posts by the total number of comments. The trick isn't about hacking ActiveRecord, but about leveraging the database’s inherent capabilities and expressing your intent clearly.
 
 The fundamental issue boils down to the fact that you want to sort based on data not immediately available within the model's table itself. Instead, this data usually exists in related tables, connected via associations. Now, ActiveRecord, being the ORM (Object-Relational Mapper) that it is, typically encourages you to operate with Ruby objects, leading some towards inefficient methods like loading everything and then sorting in memory. Don't do that, unless you *really* have to for a limited scope. The key is to perform that sorting operation at the database level, which is far more efficient.
 

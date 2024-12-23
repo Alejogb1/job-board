@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-implement-the-azure-ad-authorization-code-flow"
 ---
 
-Alright, let's tackle this. I’ve spent a fair bit of time wrestling with authentication flows, especially the authorization code flow with Azure AD, which, trust me, has its nuances. I remember back when we were transitioning from our legacy authentication system to a more robust, cloud-centric one—it wasn't smooth sailing at first, but we got there. Let's break down how to implement that flow, covering the key steps and considerations.
+Alright,  I’ve spent a fair bit of time wrestling with authentication flows, especially the authorization code flow with Azure AD, which, trust me, has its nuances. I remember back when we were transitioning from our legacy authentication system to a more robust, cloud-centric one—it wasn't smooth sailing at first, but we got there. Let's break down how to implement that flow, covering the key steps and considerations.
 
 The authorization code flow is designed for secure delegation of user identity to your application without directly exposing their credentials. It's a crucial aspect of modern application security, particularly when dealing with sensitive resources. The core idea revolves around a two-step process involving an intermediary authorization server—in this case, Azure AD.
 

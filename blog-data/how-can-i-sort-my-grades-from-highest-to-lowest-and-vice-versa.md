@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-sort-my-grades-from-highest-to-lowest-and-vice-versa"
 ---
 
-Okay, let’s tackle this common yet fundamental challenge of grade sorting. I remember, back in my early days of developing student management systems, this was a routine task that always popped up in different flavors. While it might sound simple on the surface, the devil, as they say, often lies in the details, especially when handling real-world data. So, let's break down how to efficiently sort grades, whether ascending or descending, using a few common approaches.
+, let’s tackle this common yet fundamental challenge of grade sorting. I remember, back in my early days of developing student management systems, this was a routine task that always popped up in different flavors. While it might sound simple on the surface, the devil, as they say, often lies in the details, especially when handling real-world data. So, let's break down how to efficiently sort grades, whether ascending or descending, using a few common approaches.
 
 Essentially, sorting comes down to ordering a collection of elements based on a specific criterion – in this case, numerical grades. The core algorithm to accomplish this is, more often than not, some variant of a comparison-based sort. These algorithms work by pairwise comparing elements and swapping them until the entire collection is in the desired order. For basic numeric data, this process is fairly straightforward. However, I've learned from experience that real grade data is rarely purely numerical; you might encounter letter grades, pluses and minuses, or even strings containing a mix of numerical and alphabetical identifiers. Let's focus on a numerical context for the moment, keeping those nuances in mind.
 

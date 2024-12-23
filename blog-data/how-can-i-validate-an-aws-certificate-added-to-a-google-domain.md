@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-validate-an-aws-certificate-added-to-a-google-domain"
 ---
 
-Alright, let's tackle this. Having spent a fair bit of time navigating the intricacies of cross-cloud certificate management, I've developed a pragmatic approach to validating AWS certificates used with Google domains. It's not always as straightforward as one might hope, but with a bit of understanding, it’s certainly manageable.
+Alright,  Having spent a fair bit of time navigating the intricacies of cross-cloud certificate management, I've developed a pragmatic approach to validating AWS certificates used with Google domains. It's not always as straightforward as one might hope, but with a bit of understanding, it’s certainly manageable.
 
 The crux of the issue lies in the fact that AWS Certificate Manager (ACM) primarily validates certificates through Domain Name System (DNS) records or email validation, while Google Domains operates its own DNS management system. You’re essentially bridging two different ecosystems, and the process involves ensuring that the verification details provided by AWS are properly registered within Google Domains so that ACM can confirm you control the domain.
 

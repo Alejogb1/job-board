@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-javas-await-be-used"
 ---
 
-Okay, let's talk about `await` in Java. It's crucial to understand that Java doesn't actually have a keyword named `await` in the same way that, say, JavaScript or C# does. What we *do* have are mechanisms built upon the `java.util.concurrent` package, particularly features involving `CompletableFuture` and related asynchronous tools, that allow us to achieve similar blocking behaviors, and frankly, often much more sophisticated ones. I've spent a considerable amount of time debugging intricate multi-threaded applications, and these constructs have proven invaluable.
+, let's talk about `await` in Java. It's crucial to understand that Java doesn't actually have a keyword named `await` in the same way that, say, JavaScript or C# does. What we *do* have are mechanisms built upon the `java.util.concurrent` package, particularly features involving `CompletableFuture` and related asynchronous tools, that allow us to achieve similar blocking behaviors, and frankly, often much more sophisticated ones. I've spent a considerable amount of time debugging intricate multi-threaded applications, and these constructs have proven invaluable.
 
 The essence of what people are often looking for when they mention 'await' is the ability to pause the execution of a thread until a specific asynchronous task completes. In Java, we accomplish this not through a single keyword, but through thoughtful application of mechanisms. It's essential to move beyond a direct translation mentality.
 

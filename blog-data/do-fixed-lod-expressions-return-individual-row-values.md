@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "do-fixed-lod-expressions-return-individual-row-values"
 ---
 
-Okay, let's unpack this. Before we dive into the specifics, it's worth stating that questions about Level of Detail (LOD) expressions, especially fixed ones, are common and sometimes a source of misunderstanding, even after years of working with them. I've personally spent countless hours debugging visualizations where the expected behavior didn't quite match the reality, specifically regarding fixed LODs and row-level interactions. So, let me break down whether fixed LOD expressions return individual row values, addressing common misconceptions along the way.
+, let's unpack this. Before we dive into the specifics, it's worth stating that questions about Level of Detail (LOD) expressions, especially fixed ones, are common and sometimes a source of misunderstanding, even after years of working with them. I've personally spent countless hours debugging visualizations where the expected behavior didn't quite match the reality, specifically regarding fixed LODs and row-level interactions. So, let me break down whether fixed LOD expressions return individual row values, addressing common misconceptions along the way.
 
 Fundamentally, the answer isn't a simple yes or no. It depends heavily on *how* the fixed LOD is structured and *what* calculations it contains within its scope. A fixed LOD expression, in its core functionality, is designed to compute a value *at a specified level of detail*, independent of the level of detail in the visualization or the row-level context of the data. That’s crucial. It means it's not inherently a row-by-row operation in the way you might expect from, say, a simple aggregate calculation within a table.
 

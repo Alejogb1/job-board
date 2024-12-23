@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-a-nosuchelementexception-when-using-xpath"
 ---
 
-Okay, let’s tackle this. That pesky `NoSuchElementException` when using xpath is a common head-scratcher, and honestly, I’ve spent more hours debugging these than I care to recall. It's usually not the xpath syntax itself that's at fault, though that's definitely a possibility. Typically, it boils down to the context in which you're applying the xpath, specifically whether an element matching your xpath *actually exists* at the time you’re trying to access it.
+, let’s tackle this. That pesky `NoSuchElementException` when using xpath is a common head-scratcher, and honestly, I’ve spent more hours debugging these than I care to recall. It's usually not the xpath syntax itself that's at fault, though that's definitely a possibility. Typically, it boils down to the context in which you're applying the xpath, specifically whether an element matching your xpath *actually exists* at the time you’re trying to access it.
 
 Let's break this down into the typical culprits, drawing from some past projects where I’ve banged my head against this particular wall. I recall working on a large-scale web scraping project for market analysis a few years back, and the amount of time I spent tracking down `NoSuchElementExceptions` was considerable. We were pulling data from dozens of sites, and every slight variation in site structure was a potential source of issues. We found that even though xpaths seemed to work perfectly in one site, they would often fail in another, all due to subtle changes in the dom structure.
 

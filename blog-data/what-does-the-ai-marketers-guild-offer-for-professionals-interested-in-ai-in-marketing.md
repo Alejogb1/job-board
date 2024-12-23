@@ -53,7 +53,7 @@ The code we used was pretty straightforward  we leveraged a library called trans
 from transformers import pipeline
 
 classifier = pipeline("sentiment-analysis")
-results = classifier(["This product is amazing", "I hate this product", "It's okay"])
+results = classifier(["This product is amazing", "I hate this product", "It's "])
 print(results)
 ```
 

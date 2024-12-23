@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "how-to-i-use-the-separate-function-in-r-to-split-a-column-into-as-many-columns-a"
 ---
 
-Okay so you’re wrestling with `separate` in R right splitting one column into multiple based on a delimiter I’ve been there trust me It's a common data wrangling pain point especially when you're dealing with messy data and let me tell you that I know this all too well been there done that got the t-shirt or rather the stack overflow badge
+ so you’re wrestling with `separate` in R right splitting one column into multiple based on a delimiter I’ve been there trust me It's a common data wrangling pain point especially when you're dealing with messy data and let me tell you that I know this all too well been there done that got the t-shirt or rather the stack overflow badge
 
 First off let’s be clear `separate` from the `tidyr` package is your friend in this scenario It's like a data surgeon it cuts things up neatly into what you need it to be You probably already know `dplyr` if you're using `separate` but just a reminder both are parts of the `tidyverse` which is super useful when you start dealing with more complicated stuff
 
@@ -50,7 +50,7 @@ print(my_data_separated)
 
 ```
 
-Here `col = compound` specifies which column to split `into` is an argument containing a character vector telling the names of the new columns and `sep = "-"` is the separator. Notice how I also used a `tibble` for data so it's more reproducible because people tend to use `data.frames` which is okay but `tibbles` are slightly more refined to be used with `tidyverse` functions
+Here `col = compound` specifies which column to split `into` is an argument containing a character vector telling the names of the new columns and `sep = "-"` is the separator. Notice how I also used a `tibble` for data so it's more reproducible because people tend to use `data.frames` which is  but `tibbles` are slightly more refined to be used with `tidyverse` functions
 
 Now you mentioned “as many columns” this is where it gets interesting and can be a pain if you do not think it through carefully `separate` can handle cases with a variable number of split parts it will just create `NA` in the columns if they do not exist so in this case the column parts need to be the same
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "how-to-measure-exactly-what-data-out-in-azure-web-app"
 ---
 
-Okay so you're asking about figuring out exactly what data is flowing in and out of an Azure Web App that's a classic problem I've wrestled with a fair bit myself over the years Let's break this down because there isn't one single magic bullet solution it's more of a toolbox approach and what you reach for depends a lot on what exactly you're trying to measure
+ so you're asking about figuring out exactly what data is flowing in and out of an Azure Web App that's a classic problem I've wrestled with a fair bit myself over the years Let's break this down because there isn't one single magic bullet solution it's more of a toolbox approach and what you reach for depends a lot on what exactly you're trying to measure
 
 First up you gotta differentiate between network traffic and app-level data flow Network traffic is the raw bytes going across the wire http requests responses etc while app-level is like the data your app actually processes the actual database queries the json payloads and so on Network stuff you're often interested in the bandwidth usage how many connections you're seeing maybe even some latency data App data well that’s about the structure of the data the size of requests how often certain API endpoints are hit etc
 

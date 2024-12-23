@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "valueerror-posx-and-posy-should-be-finite-values"
 ---
 
-Alright listen up I've seen this `ValueError posx and posy should be finite values` more times than I care to admit It's a classic and it usually means you've messed up somewhere with your coordinate calculations or data handling It always comes back to those sneaky infinite or NaN values that can creep into your code.
+listen up I've seen this `ValueError posx and posy should be finite values` more times than I care to admit It's a classic and it usually means you've messed up somewhere with your coordinate calculations or data handling It always comes back to those sneaky infinite or NaN values that can creep into your code.
 
 So yeah it throws when you are expecting numerical coordinates to be finite but you pass in infinity or NaN values its common particularly when using libraries that deal with geometric figures or any operations that may divide by zero or use some function of a log where log zero can happen
 

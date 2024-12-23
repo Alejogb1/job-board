@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-isnt-my-airflow-taskgroup-triggering-downstream-tasks-correctly"
 ---
 
-Okay, let's tackle this. It's a problem I’ve certainly bumped into a few times during my career, often in situations where time wasn't exactly on my side. The symptom—a task group not behaving as expected when triggering downstream tasks—can stem from a few core issues in Airflow. We'll go through those, and I'll even include some code snippets to illustrate the points better.
+,  It's a problem I’ve certainly bumped into a few times during my career, often in situations where time wasn't exactly on my side. The symptom—a task group not behaving as expected when triggering downstream tasks—can stem from a few core issues in Airflow. We'll go through those, and I'll even include some code snippets to illustrate the points better.
 
 My experience points to a hierarchy of potential problems. First, we need to be sure the task group itself is concluding successfully. Then, we move to its *relationship* with subsequent tasks. Let’s look deeper.
 

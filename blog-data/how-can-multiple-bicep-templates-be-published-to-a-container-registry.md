@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-multiple-bicep-templates-be-published-to-a-container-registry"
 ---
 
-Okay, let's unpack this. I've actually tackled this specific challenge quite a few times in the past, especially when architecting larger, more complex infrastructure deployments. It's not uncommon for projects to outgrow a single, monolithic bicep file, and that's where the need to manage and publish multiple bicep templates to a container registry becomes crucial.
+, let's unpack this. I've actually tackled this specific challenge quite a few times in the past, especially when architecting larger, more complex infrastructure deployments. It's not uncommon for projects to outgrow a single, monolithic bicep file, and that's where the need to manage and publish multiple bicep templates to a container registry becomes crucial.
 
 The core concept here is recognizing that bicep files, post-compilation, essentially become arm templates (json). These json files, along with any associated artifacts like parameters files, can be packaged into a container image. The container registry then serves as a repository for these images, allowing you to version and deploy your infrastructure as code with much more granularity. This is especially effective in scenarios where you want to have composable infrastructure modules that can be reused across various environments.
 

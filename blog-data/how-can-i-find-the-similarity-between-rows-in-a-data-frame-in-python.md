@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-can-i-find-the-similarity-between-rows-in-a-data-frame-in-python"
 ---
 
-Okay, let's tackle this. Finding similarity between rows in a dataframe is a common task, and it’s something I’ve dealt with quite a few times, often in the context of user behavior analysis or anomaly detection. The approach you take really depends on what you mean by "similarity," and that can significantly change the techniques you'll employ. I'll break down some common methods I’ve used, focusing on practicality and code examples.
+,  Finding similarity between rows in a dataframe is a common task, and it’s something I’ve dealt with quite a few times, often in the context of user behavior analysis or anomaly detection. The approach you take really depends on what you mean by "similarity," and that can significantly change the techniques you'll employ. I'll break down some common methods I’ve used, focusing on practicality and code examples.
 
 Essentially, you’re dealing with calculating distances (or, conversely, similarities) between vectors where each row represents a vector in a multi-dimensional space. The features in your data become the dimensions. Let's talk about a few options.
 

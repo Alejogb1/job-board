@@ -4,7 +4,7 @@ date: "2024-12-11"
 id: "what-are-control-vectors-and-how-are-they-used-to-manipulate-model-behavior"
 ---
 
-Okay so you wanna know about control vectors right  pretty cool stuff actually  Its all about tweaking models to do what you want them to do  kinda like training a really smart dog but instead of treats you use data  
+ so you wanna know about control vectors right  pretty cool stuff actually  Its all about tweaking models to do what you want them to do  kinda like training a really smart dog but instead of treats you use data  
 
 Imagine you've got this amazing AI model  it's learned to translate languages write poems even compose music  but it's not perfect  sometimes it goes off the rails  says things it shouldn't or just produces gibberish  That's where control vectors come in  they're essentially levers you can pull to guide the model's output
 

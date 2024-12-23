@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-are-sub-directories-not-allowed-in-the-gcp-artifact-registry"
 ---
 
-Okay, let’s talk artifact registries, specifically why Google Cloud Platform's Artifact Registry doesn't allow nested sub-directories within a repository structure—it's a constraint that has tripped up a few teams, including one I worked with a while back on a large microservices deployment. I remember the first time we ran into this, we were coming from a more traditional file system-based approach for our container images, and the lack of subdirectories in Artifact Registry felt…well, limiting. But there’s method to the seeming madness.
+, let’s talk artifact registries, specifically why Google Cloud Platform's Artifact Registry doesn't allow nested sub-directories within a repository structure—it's a constraint that has tripped up a few teams, including one I worked with a while back on a large microservices deployment. I remember the first time we ran into this, we were coming from a more traditional file system-based approach for our container images, and the lack of subdirectories in Artifact Registry felt…well, limiting. But there’s method to the seeming madness.
 
 The core reason boils down to the way Artifact Registry manages and indexes artifacts—it’s not designed as a general-purpose file storage solution, but rather a repository optimized for package and container image management. Think of it less like a traditional filesystem and more like a specialized database that uses a specific hierarchical naming convention for artifacts.
 

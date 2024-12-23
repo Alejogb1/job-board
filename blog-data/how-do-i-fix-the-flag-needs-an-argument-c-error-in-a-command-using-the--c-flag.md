@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-fix-the-flag-needs-an-argument-c-error-in-a-command-using-the--c-flag"
 ---
 
-Alright, let's tackle this. This “flag needs an argument: ‘c’” error, particularly when it’s tied to the `-c` flag, is a classic head-scratcher for many, and I’ve certainly seen my fair share of it. It usually arises when you're working with command-line utilities that utilize the `-c` flag to execute a command or a piece of code, and the fundamental issue is that you haven't provided the *what* after telling it *how*. The `-c` flag essentially says, "Here's a command (or instructions), execute *this*." The problem? You've only said "execute," you haven't actually stated what to execute.
+Alright,  This “flag needs an argument: ‘c’” error, particularly when it’s tied to the `-c` flag, is a classic head-scratcher for many, and I’ve certainly seen my fair share of it. It usually arises when you're working with command-line utilities that utilize the `-c` flag to execute a command or a piece of code, and the fundamental issue is that you haven't provided the *what* after telling it *how*. The `-c` flag essentially says, "Here's a command (or instructions), execute *this*." The problem? You've only said "execute," you haven't actually stated what to execute.
 
 Think of it like providing a recipe but forgetting to list the ingredients; the directions alone aren't going to create a meal. I recall working on a particularly complex deployment script a few years back where this exact problem kept popping up, and I quickly learned the nuances of it the hard way. Let's break down how to fix it and prevent it from recurring, because frankly, it’s often more of a syntax misstep than a true error.
 

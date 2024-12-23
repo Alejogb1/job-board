@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-create-a-histogram-from-a-dataframe-in-tkinter"
 ---
 
-Alright, let's tackle this. Creating histograms from dataframe data directly within a tkinter application is a common need, and there are a few ways to approach it. I've had to do this myself, more times than i can count, in various data visualization projects over the years – from simple internal tools to more complex scientific apps. The key is understanding that tkinter isn't really designed for complex plotting; you’ll typically use it to manage the user interface elements, and then delegate the histogram drawing to a more suitable library.
+Alright,  Creating histograms from dataframe data directly within a tkinter application is a common need, and there are a few ways to approach it. I've had to do this myself, more times than i can count, in various data visualization projects over the years – from simple internal tools to more complex scientific apps. The key is understanding that tkinter isn't really designed for complex plotting; you’ll typically use it to manage the user interface elements, and then delegate the histogram drawing to a more suitable library.
 
 The core concept here is to use a plotting library (i prefer matplotlib, but seaborn is a viable alternative for higher-level plots) to generate the histogram, and then embed that plot as an image into our tkinter window. It’s a two-step process: first, the plot is created and saved as an image (e.g., a png file). Then, that image is loaded into tkinter and placed on a suitable widget, typically a `Label` widget.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-deeplabv3-validation-loss-nan"
 ---
 
-Okay, let's address the issue of DeepLabv3's validation loss turning into NaN. This isn't exactly a new problem, and I've certainly seen it crop up in my own projects multiple times. It's frustrating, to be sure, but usually, it boils down to a handful of common culprits. Let's break this down.
+, let's address the issue of DeepLabv3's validation loss turning into NaN. This isn't exactly a new problem, and I've certainly seen it crop up in my own projects multiple times. It's frustrating, to be sure, but usually, it boils down to a handful of common culprits. Let's break this down.
 
 First, the immediate observation: NaN, or Not a Number, specifically in the context of loss functions during neural network training, almost always indicates a numerical instability. This typically arises when you're performing calculations that result in infinities, indeterminate forms (like 0/0), or values that exceed the representational capacity of your floating-point numbers. The validation loss is particularly susceptible because it involves evaluation on unseen data, which might expose edge cases or issues not apparent during training.
 

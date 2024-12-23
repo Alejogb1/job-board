@@ -4,9 +4,9 @@ date: "2024-12-13"
 id: "how-to-use-remote-access-iot-over-internet-windows"
 ---
 
-Alright so you wanna get your IoT thingamajig accessible from anywhere using Windows over the internet right Been there done that got the scars to prove it. It’s a classic problem a rite of passage really. Been wrestling with this kinda stuff since dial-up was a thing. Back in the day I even used a literal serial port and modem to access my custom built weather station from the library computer yeah those were the days… No fancy cloud platforms or APIs just pure grit and a very slow connection.
+so you wanna get your IoT thingamajig accessible from anywhere using Windows over the internet right Been there done that got the scars to prove it. It’s a classic problem a rite of passage really. Been wrestling with this kinda stuff since dial-up was a thing. Back in the day I even used a literal serial port and modem to access my custom built weather station from the library computer yeah those were the days… No fancy cloud platforms or APIs just pure grit and a very slow connection.
 
-Okay let's break this down. Forget the smoke and mirrors you need a solid plan. You got your IoT device which I'm assuming runs some sort of web server or can be controlled via a network protocol and you got your Windows machine which you want to use to poke it remotely.
+ let's break this down. Forget the smoke and mirrors you need a solid plan. You got your IoT device which I'm assuming runs some sort of web server or can be controlled via a network protocol and you got your Windows machine which you want to use to poke it remotely.
 
 First thing first networking basics. Your IoT device needs an IP address on the same network as your router and the router needs to be able to forward a specific port to that IP. We are talking port forwarding folks classic stuff you need to dive into your router settings its different for every router manufacturer but the basic gist is you create a rule something like:
 
@@ -16,13 +16,13 @@ First thing first networking basics. Your IoT device needs an IP address on the 
 
 Don't forget to save and reboot your router if that's a thing for your model.
 
-Okay that's the simple part now comes the Windows bit. Assuming you're not behind a double NAT (which would be a headache for another day) you need your public IP address. Go to any website that shows your IP "what is my ip" on Google works just fine.
+ that's the simple part now comes the Windows bit. Assuming you're not behind a double NAT (which would be a headache for another day) you need your public IP address. Go to any website that shows your IP "what is my ip" on Google works just fine.
 
 Now you've got your public IP and your forwarded port. In theory you should now be able to type in your public ip followed by a colon and then that forwarded port number into any browser from anywhere with internet connection that is not blocked by other firewall or network policy. So like `http://your.public.ip:8080`.
 
 If it doesn't work check your firewall settings on both the router and your IoT device itself some devices have a built-in firewall or security software that needs some love and care to allow external access.
 
-Okay moving on let's talk about actual methods for remote access beyond just basic HTTP. Here’s a couple of different approaches I've used in the past with code snippets cause I know you like that.
+ moving on let's talk about actual methods for remote access beyond just basic HTTP. Here’s a couple of different approaches I've used in the past with code snippets cause I know you like that.
 
 **Option 1: SSH tunneling**
 
@@ -90,7 +90,7 @@ Now I know someone will bring it up. Yes there are other fancier solutions like 
 
 For learning more about network security specifically on IoT its very important to read good literature. Look into Bruce Schneier's "Applied Cryptography" for a good deep dive on protocols. Also you need to understand network protocols in detail there is a great series of books by W. Richard Stevens "TCP/IP Illustrated" which are very detailed and explain the underlying mechanisms of network communication.
 
-Okay so to recap. You need to:
+ so to recap. You need to:
 
 1.  Forward a port on your router to your IoT device.
 2.  Know your public IP.

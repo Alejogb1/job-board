@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "difference-between-sif-and-img-file-types"
 ---
 
-Okay so you're asking about the difference between SIF and IMG file types right Straightforward question lets dive in I've spent way too much time wrestling with image formats so I can probably shed some light
+ so you're asking about the difference between SIF and IMG file types right Straightforward question lets dive in I've spent way too much time wrestling with image formats so I can probably shed some light
 
 First off lets break it down IMG and SIF are both raster image formats which means they store images as grids of pixels not like vector formats that use mathematical descriptions or paths So far so good right We're not dealing with any wild encoding stuff at this level
 

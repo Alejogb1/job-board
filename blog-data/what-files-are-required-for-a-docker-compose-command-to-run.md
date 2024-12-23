@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-files-are-required-for-a-docker-compose-command-to-run"
 ---
 
-Okay, let's talk about docker compose and what files it needs to actually, well, *compose* your applications. The short answer is, obviously, a `docker-compose.yml` (or sometimes `docker-compose.yaml`) file, but the story doesn't end there. I've seen my fair share of setups that go beyond the basics, and it's essential to grasp the full picture, especially when things get more complicated.
+, let's talk about docker compose and what files it needs to actually, well, *compose* your applications. The short answer is, obviously, a `docker-compose.yml` (or sometimes `docker-compose.yaml`) file, but the story doesn't end there. I've seen my fair share of setups that go beyond the basics, and it's essential to grasp the full picture, especially when things get more complicated.
 
 So, let's break it down. At the very least, a Docker Compose command needs access to a correctly formatted yaml configuration file that defines the services, networks, and volumes it’s supposed to create and manage. This file acts as the blueprint for your multi-container application. The format is pretty standardized, following the docker compose file specifications, but it's the details *within* that file, and their interactions with other files, where the real complexity can lie.
 

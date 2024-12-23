@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-aggregate-multiple-inputs-into-a-single-output-using-a-submodel"
 ---
 
-Okay, let’s tackle this. I’ve seen this pattern crop up in various projects, from processing sensor data to aggregating user interactions for analytics. The core challenge, as I understand it, is taking disparate input streams and funneling them through a submodel to arrive at a unified output. This often requires careful consideration of how data is structured, preprocessed, and fed into the submodel. It’s not just about gluing things together; it's about creating a cohesive pipeline that's efficient and meaningful.
+, let’s tackle this. I’ve seen this pattern crop up in various projects, from processing sensor data to aggregating user interactions for analytics. The core challenge, as I understand it, is taking disparate input streams and funneling them through a submodel to arrive at a unified output. This often requires careful consideration of how data is structured, preprocessed, and fed into the submodel. It’s not just about gluing things together; it's about creating a cohesive pipeline that's efficient and meaningful.
 
 My experience with this dates back to a project involving distributed environmental monitoring. We had a network of sensors each collecting unique measurements—temperature, humidity, light levels, and so on—and we needed a way to combine these into a single “environmental health” score. Initially, we tried direct concatenation, but that proved… less than useful. The features were not on the same scale and were not equally important to the final score, leading to an output that was highly volatile and difficult to interpret. That's when we started employing submodels for aggregation.
 

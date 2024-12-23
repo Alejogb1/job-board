@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "hexadecimal-words-code-generation-example"
 ---
 
-Okay so you're asking about generating hexadecimal words right Like code that spits out hex values in a structured way I've been down that road before trust me This is like a bread and butter issue for anyone messing with low-level stuff or even some high-level tasks when you need raw bytes
+ so you're asking about generating hexadecimal words right Like code that spits out hex values in a structured way I've been down that road before trust me This is like a bread and butter issue for anyone messing with low-level stuff or even some high-level tasks when you need raw bytes
 
 It's a surprisingly common thing You want to represent data in a way that's easily read by machines or humans when they're debugging or looking at memory dumps or crafting protocols or dealing with binary file formats the list goes on So you end up having to generate these hexadecimal representations of your data all the time and there are a bunch of ways to do it depending on what exactly you're after
 

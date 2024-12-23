@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-does-backpropagation-calculate-local-gradients"
 ---
 
-Let's tackle this. It's something I spent a considerable amount of time on back in my days working on a custom deep learning framework for satellite image analysis – a project that really forced me to get under the hood of these algorithms.
+ It's something I spent a considerable amount of time on back in my days working on a custom deep learning framework for satellite image analysis – a project that really forced me to get under the hood of these algorithms.
 
 Backpropagation, at its core, is essentially a clever application of the chain rule of calculus, optimized for neural networks. The goal is to determine how much each weight and bias in the network contributes to the overall error, so we can adjust them and improve performance. Crucially, the process isn't about calculating some magical, global gradient; rather, we compute *local* gradients, step by step, and propagate them backward. That’s where the name comes from. It’s not a single calculation – it's a cascade.
 

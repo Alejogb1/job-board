@@ -4,9 +4,9 @@ date: "2024-12-13"
 id: "sort-port-number-ip-address"
 ---
 
-Okay I get it You're asking how to sort a list of network addresses based on port number and then IP address That's a pretty common task especially when dealing with network monitoring or log analysis I've wrestled with this beast more times than I care to admit let me tell you about my own suffering
+ I get it You're asking how to sort a list of network addresses based on port number and then IP address That's a pretty common task especially when dealing with network monitoring or log analysis I've wrestled with this beast more times than I care to admit let me tell you about my own suffering
 
-Okay so first let's talk about the data format I’m assuming we have some kind of list or array each entry containing both the IP and the port typically formatted as strings like "1921681100080" or "10101500022" Notice I’m using the simplest representation possible for the sake of clarity in code examples we might have a more complex data structure but for sorting purposes string representation is fine
+ so first let's talk about the data format I’m assuming we have some kind of list or array each entry containing both the IP and the port typically formatted as strings like "1921681100080" or "10101500022" Notice I’m using the simplest representation possible for the sake of clarity in code examples we might have a more complex data structure but for sorting purposes string representation is fine
 
 Back in my early days building network monitoring tools one of my first projects needed this exact functionality I had thousands of these address strings coming in from different sources I needed to sort them to identify services that use specific ports and correlate them to IP addresses It wasn’t pretty initial code was super inefficient but I learned from that experience you always learn from errors
 

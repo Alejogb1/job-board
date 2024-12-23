@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-suppress-library-method-call-counts-in-mocha-and-supertest"
 ---
 
-Okay, let's tackle this. I've definitely been in the weeds with Mocha and Supertest, especially when dealing with testing frameworks that involve heavy reliance on external libraries. Getting those method call counts out of your reporting can be quite beneficial. The noise from extensive library interactions can often make it difficult to focus on the specific behavior you're actually testing. It's a common problem, and luckily, there are strategies we can employ.
+,  I've definitely been in the weeds with Mocha and Supertest, especially when dealing with testing frameworks that involve heavy reliance on external libraries. Getting those method call counts out of your reporting can be quite beneficial. The noise from extensive library interactions can often make it difficult to focus on the specific behavior you're actually testing. It's a common problem, and luckily, there are strategies we can employ.
 
 My experience with this stems from a project where we were integrating a new payment gateway API. Our tests, while valid in terms of our application logic, were drowning in calls to the API client's methods—calls we weren't directly trying to assert behavior against. The sheer volume of these calls was obscuring any meaningful test failures, making debugging a nightmare. What we needed wasn't a way to ignore failures of those library calls, but rather, a way to selectively exclude them from the output. This approach allowed us to focus on the core application logic being tested and prevent noise in the console output.
 

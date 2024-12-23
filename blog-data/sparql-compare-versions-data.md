@@ -4,13 +4,13 @@ date: "2024-12-13"
 id: "sparql-compare-versions-data"
 ---
 
-Okay so you're asking about comparing versions of data in SPARQL it's not the most straightforward thing but yeah I've dealt with this a bunch of times myself lets break it down
+ so you're asking about comparing versions of data in SPARQL it's not the most straightforward thing but yeah I've dealt with this a bunch of times myself lets break it down
 
 First things first you need a way to actually *have* versions right raw triple data doesn't magically keep track of its own history you've got to put that in there manually think of it like your git commits for data instead of code
 
 I remember my early days hacking on a knowledge graph project I was so busy building the thing I just blasted updates directly into the triple store and oh boy did I regret that later when a colleague came to me asking for diffs between versions It was a whole mess of manual queries and comparisons we ended up building a custom ingestion pipeline that included versioning because lesson learned the hard way always think about versioning up front it saves you a lot of headaches later
 
-Okay so lets say you're a bit smarter than my younger self and have a system that tracks versions how do you actually query that using SPARQL
+ so lets say you're a bit smarter than my younger self and have a system that tracks versions how do you actually query that using SPARQL
 
 The core idea is to add timestamps or version ids to your triples so you can query for specific states of the data It’s not enough to just say what is the current state you need to specify the context in which that state existed
 
@@ -115,7 +115,7 @@ WHERE {
 }
 ```
 
-Okay this one is a little more involved It uses a `MINUS` operator to subtract the triples present at an earlier timestamp from the ones existing at a later timestamp it identifies the difference between two snapshots I had a huge fight with this query when starting to code in SPARQL the first time because I always struggled with the `MINUS` operator but after you get it then you are able to write much more sophisticated code
+ this one is a little more involved It uses a `MINUS` operator to subtract the triples present at an earlier timestamp from the ones existing at a later timestamp it identifies the difference between two snapshots I had a huge fight with this query when starting to code in SPARQL the first time because I always struggled with the `MINUS` operator but after you get it then you are able to write much more sophisticated code
 
 A side note about the `MINUS` operation be really careful with it because it can perform sub-optimally if not used correctly you might need to use different patterns for very large datasets and maybe you would be better off performing the query in two steps
 

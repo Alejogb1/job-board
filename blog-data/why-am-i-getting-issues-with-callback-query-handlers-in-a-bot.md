@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-issues-with-callback-query-handlers-in-a-bot"
 ---
 
-Okay, let's tackle this. Callback query handler issues in bots—it’s a familiar frustration, and I’ve certainly spent my share of late nights debugging them. The symptoms can vary, but they usually boil down to the bot not reacting as expected when a user interacts with an inline keyboard or a similar element. Here’s what I’ve observed and learned through some real-world debugging battles, coupled with the technical understanding that helped me resolve them.
+,  Callback query handler issues in bots—it’s a familiar frustration, and I’ve certainly spent my share of late nights debugging them. The symptoms can vary, but they usually boil down to the bot not reacting as expected when a user interacts with an inline keyboard or a similar element. Here’s what I’ve observed and learned through some real-world debugging battles, coupled with the technical understanding that helped me resolve them.
 
 Let's start with the fundamental concept: callback queries are messages sent *back* to your bot when a user interacts with an inline button that is associated with a message your bot has sent. Crucially, they're not regular text messages; they’re requests that carry data you embedded within that inline button. The primary problem you're likely experiencing hinges on a mismatch between what the bot expects, and what’s actually arriving in the callback query.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-log-logicaldate-or-ds-in-an-airflow-task"
 ---
 
-Okay, let's talk about logging the 'logical_date' or 'ds' within an Airflow task. It's a frequent hurdle, and I've definitely been down that rabbit hole more times than I care to count. When you're debugging or trying to understand the context of a task's execution, having that specific execution date readily available in your logs is crucial.
+, let's talk about logging the 'logical_date' or 'ds' within an Airflow task. It's a frequent hurdle, and I've definitely been down that rabbit hole more times than I care to count. When you're debugging or trying to understand the context of a task's execution, having that specific execution date readily available in your logs is crucial.
 
 Here's the thing: 'logical_date' (or its string representation, 'ds') isn't inherently a globally available variable within the context of your task's execution. Airflow uses the concept of templating, and you need to leverage that to get the information you're after. Instead of imagining it's magically floating around, you have to actively request it.
 

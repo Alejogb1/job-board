@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-repository-implementations-be-structured-across-application-domain-and-infrastructure-layers-in-ddd"
 ---
 
-Okay, let's tackle this. Structuring repositories in a DDD context – it's something I've spent considerable time refining over the years, particularly when I was knee-deep in a large-scale e-commerce platform. We hit a few snags early on, mostly due to the classic ‘database-centric’ approach leaking into our domain logic. So, let’s dissect this a bit, focusing on how to truly separate concerns and maintain a robust architecture.
+,  Structuring repositories in a DDD context – it's something I've spent considerable time refining over the years, particularly when I was knee-deep in a large-scale e-commerce platform. We hit a few snags early on, mostly due to the classic ‘database-centric’ approach leaking into our domain logic. So, let’s dissect this a bit, focusing on how to truly separate concerns and maintain a robust architecture.
 
 The core principle we’re aiming for is a clear separation of responsibilities, adhering to the layered architecture inherent in Domain-Driven Design. The goal is that our application logic (the "what") shouldn't care about the specifics of how data is persisted (the "how"). This means our repositories, acting as intermediaries between the domain and the infrastructure, need to be carefully crafted. I'll explain how I’ve typically handled that separation.
 

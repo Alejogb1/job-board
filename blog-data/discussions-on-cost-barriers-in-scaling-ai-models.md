@@ -4,7 +4,7 @@ date: '2024-11-15'
 id: 'discussions-on-cost-barriers-in-scaling-ai-models'
 ---
 
-Okay, so we're talking about the big money problem with scaling AI models, right? Like, it's one thing to train a little model for your project but when you want to make it huge, it's suddenly a whole other ball game. 
+, so we're talking about the big money problem with scaling AI models, right? Like, it's one thing to train a little model for your project but when you want to make it huge, it's suddenly a whole other ball game. 
 
 First off, the hardware. Training these big models needs tons of GPUs, we're talking racks and racks of them. Plus, you've got storage costs for all the data and the model itself. Think about it, you can't just train a model on your laptop, you need some serious infrastructure. 
 

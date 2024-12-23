@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-prevent-altair-labels-from-being-cut-off"
 ---
 
-Alright, let's tackle this. Altair label truncation, a familiar frustration indeed, particularly when working with complex visualizations or dynamically generated data. I recall a project a few years back involving sensor data from a network, where the labels were absolutely crucial for identifying specific data streams; truncated labels rendered the whole thing practically unusable. We ended up spending a fair bit of time ironing out these issues. It's not always straightforward, as various factors can contribute to the problem, but generally, the solutions fall into a few predictable categories.
+Alright,  Altair label truncation, a familiar frustration indeed, particularly when working with complex visualizations or dynamically generated data. I recall a project a few years back involving sensor data from a network, where the labels were absolutely crucial for identifying specific data streams; truncated labels rendered the whole thing practically unusable. We ended up spending a fair bit of time ironing out these issues. It's not always straightforward, as various factors can contribute to the problem, but generally, the solutions fall into a few predictable categories.
 
 The core issue stems from the interaction between the charting library, in this case Altair, and the rendering engine (usually vega-lite underneath) that determines how much space each element gets. Default settings frequently prioritize fitting the visualization within a predefined area, sometimes at the expense of complete text labels. Fortunately, Altair offers several mechanisms to mitigate this.
 

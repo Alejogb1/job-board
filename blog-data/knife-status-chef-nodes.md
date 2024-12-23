@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "knife-status-chef-nodes"
 ---
 
-Alright so knife status chef nodes eh I've been around the block with Chef and knife trust me I’ve debugged enough node failures in my time to probably write a book on it Okay so lets unpack this and ill give you the lowdown based on my experience
+so knife status chef nodes eh I've been around the block with Chef and knife trust me I’ve debugged enough node failures in my time to probably write a book on it  so lets unpack this and ill give you the lowdown based on my experience
 
 First things first knife status chef nodes is basically asking your Chef server “hey what nodes do you know about and what are their current status” It's like doing a health check on your infrastructure inventory You can expect to see stuff like node names IP addresses last check in times and their current Chef client run status
 
@@ -20,7 +20,7 @@ Now for the meat and potatoes what does the output look like and what can you ex
   node5.example.com    10.0.0.105   20 minutes ago     pending
 ```
 
-Okay so here's the breakdown
+ so here's the breakdown
 *   `node1.example.com`  `node2.example.com` etc these are the node names These are usually defined in your `client.rb` file on each node or configured within Chef server during bootstrapping
 *   `10.0.0.101` `10.0.0.102` etc these are the IP addresses of the nodes These come in handy when you need to SSH into a node for troubleshooting
 *  `10 minutes ago` `1 minute ago`  etc is the last check-in time of each node This tells you how recently the Chef client ran on each node If its a long time ago something might be up

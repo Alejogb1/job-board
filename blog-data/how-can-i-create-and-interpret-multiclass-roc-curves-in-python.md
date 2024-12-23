@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-create-and-interpret-multiclass-roc-curves-in-python"
 ---
 
-Okay, let's unpack this. Multiclass roc curves, huh? I've tackled this beast more than a few times, and it's something that often trips people up, particularly when transitioning from binary classification. It's not quite as straightforward as its two-class counterpart, and the interpretation can sometimes feel a bit fuzzy. So let’s break it down, and I’ll walk you through how I typically approach this using python, along with some of the pitfalls I've encountered over the years.
+, let's unpack this. Multiclass roc curves, huh? I've tackled this beast more than a few times, and it's something that often trips people up, particularly when transitioning from binary classification. It's not quite as straightforward as its two-class counterpart, and the interpretation can sometimes feel a bit fuzzy. So let’s break it down, and I’ll walk you through how I typically approach this using python, along with some of the pitfalls I've encountered over the years.
 
 First off, the core idea of a receiver operating characteristic (roc) curve still stands. It visualizes the trade-off between the true positive rate (sensitivity) and the false positive rate (1-specificity) at various classification thresholds. However, in a multiclass scenario, we're dealing with more than two classes, so we need to extend this concept. The common approach here is to use a 'one-vs-rest' or 'one-vs-all' strategy. Essentially, for *n* classes, we generate *n* roc curves, each treating one class as the "positive" and the remaining classes as the "negative". This way we can assess our classifier's performance for each specific class individually.
 

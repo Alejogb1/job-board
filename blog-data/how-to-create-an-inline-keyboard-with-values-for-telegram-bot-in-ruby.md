@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-create-an-inline-keyboard-with-values-for-telegram-bot-in-ruby"
 ---
 
-Okay, let's tackle this. I've definitely had my fair share of Telegram bot development headaches, and inline keyboards were definitely one of those areas where initial implementations could get… finicky. Let's break down how to properly construct them with values using Ruby, ensuring a solid and functional solution.
+,  I've definitely had my fair share of Telegram bot development headaches, and inline keyboards were definitely one of those areas where initial implementations could get… finicky. Let's break down how to properly construct them with values using Ruby, ensuring a solid and functional solution.
 
 First off, understand that Telegram's bot api uses a json-based structure for defining these inline keyboards. It’s not just a flat list; we're constructing a nested structure of buttons, each having a specific associated callback data that our bot will receive when clicked. The key here is precision and clarity in how you construct this json. Let’s dive into the technical details.
 

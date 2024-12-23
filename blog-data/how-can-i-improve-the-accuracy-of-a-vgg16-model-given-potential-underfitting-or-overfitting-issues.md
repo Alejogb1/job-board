@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-improve-the-accuracy-of-a-vgg16-model-given-potential-underfitting-or-overfitting-issues"
 ---
 
-Okay, let's tackle this. I’ve definitely been in the trenches with VGG16 before, seen its quirks and its strengths. Improving accuracy, especially when you're juggling underfitting and overfitting, can feel like a tightrope walk, but it's absolutely achievable with a systematic approach. It's not a magic bullet, but a combination of techniques applied thoughtfully. Here’s how I generally approach this, based on lessons learned.
+,  I’ve definitely been in the trenches with VGG16 before, seen its quirks and its strengths. Improving accuracy, especially when you're juggling underfitting and overfitting, can feel like a tightrope walk, but it's absolutely achievable with a systematic approach. It's not a magic bullet, but a combination of techniques applied thoughtfully. Here’s how I generally approach this, based on lessons learned.
 
 First, let's clarify the enemy, so to speak: underfitting versus overfitting. Underfitting usually means our model hasn’t learned the underlying patterns in the data well enough. It might have too few parameters, or not have trained for long enough. Overfitting, on the other hand, means the model has learned the training data too well, including the noise, leading to poor generalization on unseen data. Diagnosing which issue you have is critical before deciding on the appropriate adjustments. Looking at your training and validation curves is usually the first step: if both curves are high and close to each other, you have a case of underfitting, whereas a large gap between both indicates overfitting.
 

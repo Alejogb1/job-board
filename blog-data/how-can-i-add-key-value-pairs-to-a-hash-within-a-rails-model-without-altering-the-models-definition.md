@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-add-key-value-pairs-to-a-hash-within-a-rails-model-without-altering-the-models-definition"
 ---
 
-Okay, let’s unpack this. I’ve definitely bumped into this scenario a few times, usually when dealing with legacy systems where modifying the core model schema is either impractical or carries too much risk. The core challenge, as you’ve noted, is adding supplementary data—essentially key-value pairs—to a model without altering its database table structure or directly injecting new methods. We're aiming for a flexible, maintainable approach.
+, let’s unpack this. I’ve definitely bumped into this scenario a few times, usually when dealing with legacy systems where modifying the core model schema is either impractical or carries too much risk. The core challenge, as you’ve noted, is adding supplementary data—essentially key-value pairs—to a model without altering its database table structure or directly injecting new methods. We're aiming for a flexible, maintainable approach.
 
 My first encounter with this was several years back while working on a large e-commerce platform. Product descriptions had become incredibly nuanced, requiring attributes that were too specific to be added as columns to the product table without blowing out its schema. What we needed was a way to dynamically attach metadata to each product. That's when I really started appreciating the power of options that didn’t involve schema changes.
 

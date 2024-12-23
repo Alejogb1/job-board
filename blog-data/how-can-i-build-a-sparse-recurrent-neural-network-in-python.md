@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-build-a-sparse-recurrent-neural-network-in-python"
 ---
 
-Okay, let's tackle sparse recurrent neural networks (rnn’s). The core concept here is to reduce the computational burden and memory footprint of traditional rnn’s by leveraging the sparsity within the weight matrices. Over my years, I’ve seen this become a necessity in edge computing and scenarios with limited resources, and I've had to implement it from scratch a few times – never fun, but always enlightening.
+, let's tackle sparse recurrent neural networks (rnn’s). The core concept here is to reduce the computational burden and memory footprint of traditional rnn’s by leveraging the sparsity within the weight matrices. Over my years, I’ve seen this become a necessity in edge computing and scenarios with limited resources, and I've had to implement it from scratch a few times – never fun, but always enlightening.
 
 Typically, an rnn has dense, fully connected weight matrices connecting input to hidden state, hidden state to hidden state (recurrent), and hidden state to output. A sparse rnn, on the other hand, has many of these connections set to zero, which means fewer computations and parameters to store. Instead of using dense matrices everywhere, we leverage techniques to store and operate on the remaining non-zero elements efficiently. This can lead to significant performance gains, particularly with large networks. The underlying principle is similar to how sparse matrices are handled in linear algebra libraries, but we’re adapting it to the context of recurrent networks.
 

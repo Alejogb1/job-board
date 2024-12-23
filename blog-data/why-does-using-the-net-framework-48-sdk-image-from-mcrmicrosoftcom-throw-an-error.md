@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-using-the-net-framework-48-sdk-image-from-mcrmicrosoftcom-throw-an-error"
 ---
 
-Alright, let's tackle this. It's a situation I've personally encountered enough times to have a few insights, and it usually revolves around the subtle complexities of containerized .net framework applications. The specific error you're seeing when using the .net framework 4.8 sdk image from `mcr.microsoft.com` often stems from a mismatch between what the image *expects* and the actual execution environment it finds itself in, or misconfigurations that might initially appear unrelated.
+Alright,  It's a situation I've personally encountered enough times to have a few insights, and it usually revolves around the subtle complexities of containerized .net framework applications. The specific error you're seeing when using the .net framework 4.8 sdk image from `mcr.microsoft.com` often stems from a mismatch between what the image *expects* and the actual execution environment it finds itself in, or misconfigurations that might initially appear unrelated.
 
 Let’s frame this from my perspective after having spent a good part of a development cycle troubleshooting similar containerization issues for an older project. We'll move through a few areas, focusing on the core reasons, and then I'll illustrate some common scenarios with code.
 

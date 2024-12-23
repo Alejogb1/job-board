@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-run-a-java-program-in-eclipse-beginner"
 ---
 
-Alright, let's tackle this. I remember my early days with Java and Eclipse; it can seem a bit daunting at first, but trust me, it becomes second nature quickly. The core process is straightforward, and once you understand the basics, you'll be up and running in no time. So, let's break down how to execute a Java program within the Eclipse integrated development environment (IDE).
+Alright,  I remember my early days with Java and Eclipse; it can seem a bit daunting at first, but trust me, it becomes second nature quickly. The core process is straightforward, and once you understand the basics, you'll be up and running in no time. So, let's break down how to execute a Java program within the Eclipse integrated development environment (IDE).
 
 Essentially, Eclipse provides a structured environment to write, compile, and execute code. The key is understanding the project structure and the run configurations. Let me walk you through it from my experience with a junior team member, Sarah, a while back. She was having similar issues.
 

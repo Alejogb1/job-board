@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "do-i-need-to-label-all-images-for-adding-attributes-to-a-kerastensorflow-multi-label-image-classifier"
 ---
 
-Alright, let's tackle this. I remember a project a few years back, working on a multi-label image classifier for a medical imaging system. We faced this exact question regarding image labeling – how granular did we need to get, and how much data preparation was actually necessary? It wasn't a simple matter of 'yes' or 'no,' but rather a balancing act between accuracy and practicality.
+Alright,  I remember a project a few years back, working on a multi-label image classifier for a medical imaging system. We faced this exact question regarding image labeling – how granular did we need to get, and how much data preparation was actually necessary? It wasn't a simple matter of 'yes' or 'no,' but rather a balancing act between accuracy and practicality.
 
 The core of the issue lies in understanding what multi-label image classification actually entails. Unlike single-label classification where an image is assigned to *one* category, in multi-label classification, an image can be associated with *multiple* categories simultaneously. Think of it like classifying a scene – it might contain both a 'car' *and* a 'building,' or in our medical case, an image could show multiple pathological features. This distinction is key, because it directly impacts how we approach labeling.
 

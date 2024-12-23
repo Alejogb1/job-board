@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-multi-touch-be-used-to-select-different-brush-colors"
 ---
 
-Okay, let’s tackle this. I've seen this come up quite a few times, usually in the context of digital art applications or custom UI development for touch-enabled devices. The core challenge lies in translating multi-touch input—multiple simultaneous contact points—into distinct user actions, specifically, the selection of different brush colors. The straightforward approach of mapping one touch to one color obviously falls apart immediately, as we typically have more color options than fingers. So, we need to think beyond simple one-to-one mappings.
+, let’s tackle this. I've seen this come up quite a few times, usually in the context of digital art applications or custom UI development for touch-enabled devices. The core challenge lies in translating multi-touch input—multiple simultaneous contact points—into distinct user actions, specifically, the selection of different brush colors. The straightforward approach of mapping one touch to one color obviously falls apart immediately, as we typically have more color options than fingers. So, we need to think beyond simple one-to-one mappings.
 
 My experience developing a collaborative drawing application several years back forced me to confront this head-on. We had a multi-user, multi-touch canvas, and making color selection intuitive for multiple people working simultaneously was critical. We explored a few different strategies, and I’ll detail the ones that worked well, along with the code examples to illustrate the concepts.
 

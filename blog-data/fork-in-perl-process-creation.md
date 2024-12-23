@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "fork-in-perl-process-creation"
 ---
 
-Okay so you're asking about forking in Perl process creation right Yeah I’ve been there done that got the t-shirt like seriously I’ve probably spent more hours debugging Perl fork weirdness than I care to admit Back in the day I was working on this huge data pipeline project it was this monster perl application that was supposed to be processing like terabytes of log files every single night and the bottleneck was always the single threaded part I mean we had like 128 core machines and the poor thing was just using a single one I know a waste right So we decided forking was the way to go
+ so you're asking about forking in Perl process creation right Yeah I’ve been there done that got the t-shirt like seriously I’ve probably spent more hours debugging Perl fork weirdness than I care to admit Back in the day I was working on this huge data pipeline project it was this monster perl application that was supposed to be processing like terabytes of log files every single night and the bottleneck was always the single threaded part I mean we had like 128 core machines and the poor thing was just using a single one I know a waste right So we decided forking was the way to go
 
 Look forking in Perl is pretty straightforward at its core you call the `fork()` function and boom you have a new child process it's like mitosis but for your program but things get complicated real quick especially when you start dealing with shared resources open file descriptors database connections and all that jazz
 
@@ -34,7 +34,7 @@ if ($pid == 0) {
 print "This runs in both processes\n";
 ```
 
-Okay so this is your absolute barebones fork right You call fork and it returns the process ID if you’re the parent process it returns 0 if you’re the child and if the fork operation itself fails you get an undefined value so always check that and the most important part to remember the child process gets a copy of the parent's memory that means all variables and file handles are duplicated So if you open a file in the parent and then write to it in both the parent and the child both might think they have exclusive write access and that's where things start to break bad
+ so this is your absolute barebones fork right You call fork and it returns the process ID if you’re the parent process it returns 0 if you’re the child and if the fork operation itself fails you get an undefined value so always check that and the most important part to remember the child process gets a copy of the parent's memory that means all variables and file handles are duplicated So if you open a file in the parent and then write to it in both the parent and the child both might think they have exclusive write access and that's where things start to break bad
 
 A common error I see people make is not handling zombie processes properly you see the parent process need to use `waitpid` to see when the child process exists otherwise the child process becomes a zombie resource basically it becomes like a dead process using process id and some resources but not doing anything its like a ghost process in your system not good at all also very important is that the child processes needs to exit gracefully using `exit 0` otherwise the process can get into bad state which can cause all sort of problems later
 
@@ -134,6 +134,6 @@ Another important consideration is signal handling when you fork you might need 
 
 So what are good resources for learning more about forking in perl you should look into the classic Perl bible "Programming Perl" by Larry Wall Tom Christiansen and Randal L Schwartz its a must have for every perl programmer it explains forking in great details you can also look into the Perl documentation itself `perldoc -f fork` will show you very clearly the details of the fork call also "Advanced Programming in the UNIX Environment" by W Richard Stevens is also a very good classic read on low level operating system concepts related to process management it might be overkill for just Perl but its a very good book to understand the underlying concepts
 
-oh and by the way Why did the Perl developer quit his job? Because he didn't get arrays. Get it arrays because he was not paid hahaha okay I’ll stop
+oh and by the way Why did the Perl developer quit his job? Because he didn't get arrays. Get it arrays because he was not paid hahaha  I’ll stop
 
 Look forking in Perl is powerful but it's also tricky it's all about resource management clear understanding of what it's happening in the underlying operating system and good old debugging practice if you have any more questions feel free to ask and I'll try to help best I can

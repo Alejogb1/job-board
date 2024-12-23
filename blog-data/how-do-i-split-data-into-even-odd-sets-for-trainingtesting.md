@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-split-data-into-even-odd-sets-for-trainingtesting"
 ---
 
-Let's tackle this. It's a question that seems straightforward, but in practice, ensuring a truly representative split of even and odd data, particularly in complex datasets, can require more nuance than a simple modulo operation. Over the years, I've encountered this type of problem in various contexts, from signal processing where sample indices often hold significance, to image classification where I needed to ensure even distribution across classes during validation. There’s no single magic bullet; the approach needs tailoring to the specifics of the data and the problem.
+ It's a question that seems straightforward, but in practice, ensuring a truly representative split of even and odd data, particularly in complex datasets, can require more nuance than a simple modulo operation. Over the years, I've encountered this type of problem in various contexts, from signal processing where sample indices often hold significance, to image classification where I needed to ensure even distribution across classes during validation. There’s no single magic bullet; the approach needs tailoring to the specifics of the data and the problem.
 
 The core idea is to select data points based on whether their index is even or odd. This, on the face of it, is trivial. We leverage the modulo operator, usually the `%` symbol in most programming languages, to check the remainder when dividing the index by 2. If the remainder is 0, it’s even; if it's 1, it's odd. However, simply applying this naively can lead to imbalances, especially if your data isn't sequentially ordered according to any meaningful property you want to maintain in your split.
 

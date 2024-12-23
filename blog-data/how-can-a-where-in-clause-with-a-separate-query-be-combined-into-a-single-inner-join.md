@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-a-where-in-clause-with-a-separate-query-be-combined-into-a-single-inner-join"
 ---
 
-Okay, let’s unpack this. I’ve tackled this specific problem numerous times, usually when dealing with database performance bottlenecks that surface during stress testing. The scenario, combining a *where in* clause with a separate subquery into a single *inner join*, is something that comes up more frequently than you might initially think. The key lies in recognizing when the subquery is essentially providing a set of ids to filter the main table – and then translating that into the correct join condition.
+, let’s unpack this. I’ve tackled this specific problem numerous times, usually when dealing with database performance bottlenecks that surface during stress testing. The scenario, combining a *where in* clause with a separate subquery into a single *inner join*, is something that comes up more frequently than you might initially think. The key lies in recognizing when the subquery is essentially providing a set of ids to filter the main table – and then translating that into the correct join condition.
 
 From my experience, the subquery *where in* approach, while conceptually simple, often leads to performance issues, especially as the size of your data grows. The database engine frequently ends up executing the subquery repeatedly for each row, which can be disastrous in large tables. A single *inner join*, however, lets the database engine optimize the process much more effectively. Let's get into the details.
 

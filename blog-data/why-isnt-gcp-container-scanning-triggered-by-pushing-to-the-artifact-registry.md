@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-isnt-gcp-container-scanning-triggered-by-pushing-to-the-artifact-registry"
 ---
 
-Let's tackle this. I've spent a fair amount of time navigating the ins and outs of gcp's container infrastructure, and this particular issue, the lack of automatic scanning triggers upon pushes to artifact registry, is something I've grappled with directly. It's a common point of confusion, and understanding why requires a dive into how the different pieces interact.
+ I've spent a fair amount of time navigating the ins and outs of gcp's container infrastructure, and this particular issue, the lack of automatic scanning triggers upon pushes to artifact registry, is something I've grappled with directly. It's a common point of confusion, and understanding why requires a dive into how the different pieces interact.
 
 The core reason why pushing a container image to artifact registry doesn't *automatically* trigger container scanning lies in the design principles around control and cost within google cloud platform. It's not a bug; it’s a deliberate design decision aimed at giving users flexibility over their scanning processes. Think about it: not every push warrants an immediate scan, and triggering them all could become quite resource intensive and thus, costly.
 

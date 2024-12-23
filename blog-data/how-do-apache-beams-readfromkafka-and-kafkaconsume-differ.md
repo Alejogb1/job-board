@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-apache-beams-readfromkafka-and-kafkaconsume-differ"
 ---
 
-Okay, let's tackle this. Having spent a fair bit of time knee-deep in data pipelines, specifically ones involving Apache Beam and Kafka, the nuances between `ReadFromKafka` and `KafkaIO.read` (often used in Java, which is what I’ll focus on here as `KafkaConsume` isn’t a direct Beam class or method name, but the concept it implies is key) have become quite clear – and, frankly, it's a distinction many trip over initially. It's not as straightforward as it might seem at first glance.
+,  Having spent a fair bit of time knee-deep in data pipelines, specifically ones involving Apache Beam and Kafka, the nuances between `ReadFromKafka` and `KafkaIO.read` (often used in Java, which is what I’ll focus on here as `KafkaConsume` isn’t a direct Beam class or method name, but the concept it implies is key) have become quite clear – and, frankly, it's a distinction many trip over initially. It's not as straightforward as it might seem at first glance.
 
 The fundamental difference boils down to *how* data is sourced from Kafka and how Beam handles the lifecycle of that connection. `ReadFromKafka` (or similarly, the Python equivalent) is an older implementation within the Beam ecosystem, and while it *works*, it lacks certain features and resilience that `KafkaIO.read` (or its language-specific variations within the Apache Beam SDK) provides. Think of it as the classic versus the modern way of doing things. The older method is often simpler in its initial setup, but it doesn't scale or handle complexities as elegantly as its newer counterpart.
 

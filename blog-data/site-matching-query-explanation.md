@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "site-matching-query-explanation"
 ---
 
-Alright so you're asking about site matching given a query it's a classic problem I've wrestled with more times than I care to admit let's break it down from my perspective and yeah I've definitely been there done that got the t-shirt multiple times
+so you're asking about site matching given a query it's a classic problem I've wrestled with more times than I care to admit let's break it down from my perspective and yeah I've definitely been there done that got the t-shirt multiple times
 
 First off what are we really doing here We've got a user throwing a query at us think text input or maybe some structured data and we need to figure out which sites from our catalog are the most relevant matches It's not just about finding exact text matches that's way too simplistic This is about semantic understanding and scoring relevance based on various factors
 

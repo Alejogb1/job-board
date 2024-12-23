@@ -4,9 +4,9 @@ date: "2024-12-13"
 id: "613-lab-filter-and-sort-a-list-python"
 ---
 
-Okay so you’re looking at filtering and sorting a list in Python right I've been there more times than I can count it's a bread-and-butter task really you see this pattern everywhere. Honestly I think I've written variations of this problem probably since Python 2 days back when we had those weird lambda functions everywhere and print statements that weren’t functions I'm getting flashbacks.
+ so you’re looking at filtering and sorting a list in Python right I've been there more times than I can count it's a bread-and-butter task really you see this pattern everywhere. Honestly I think I've written variations of this problem probably since Python 2 days back when we had those weird lambda functions everywhere and print statements that weren’t functions I'm getting flashbacks.
 
-Okay so here’s the deal you've got a list you want to cherry-pick certain elements based on a condition then you want those cherry-picked elements nicely organized in some order typically ascending or descending numerical or alphabetical you know the drill.
+ so here’s the deal you've got a list you want to cherry-pick certain elements based on a condition then you want those cherry-picked elements nicely organized in some order typically ascending or descending numerical or alphabetical you know the drill.
 
 Let’s break it down first the filtering part we’re going to be leaning on something called list comprehensions or filter functions because they're usually the easiest to understand and use in everyday python. I've seen some seriously overcomplicated versions of these back in my early days and I learned the hard way simplicity is usually king.
 
@@ -30,7 +30,7 @@ print(even_numbers)  # Output: [2, 4, 6, 8, 10]
 
 In this example we use the `filter` function with a `lambda` (an anonymous function) that returns `True` if the number is even and `False` otherwise it’s functionally identical to the comprehension above.
 
-Okay now we filtered the list that's great but what about sorting well python's `sort` method is pretty useful for this and also the built-in `sorted` function. These can sort lists or any iterable in place or return a new sorted list respectively. You know what the difference is right one changes the original list the other doesn't. If you want to maintain the initial list unchanged then using `sorted` is the way to go otherwise use the list’s method `sort()`.
+ now we filtered the list that's great but what about sorting well python's `sort` method is pretty useful for this and also the built-in `sorted` function. These can sort lists or any iterable in place or return a new sorted list respectively. You know what the difference is right one changes the original list the other doesn't. If you want to maintain the initial list unchanged then using `sorted` is the way to go otherwise use the list’s method `sort()`.
 
 Let’s sort the list of even numbers we just created let’s say for some reason I need the even numbers in descending order that’s a thing I had to do for some data analysis I did involving some very weird and hard to explain patterns.
 

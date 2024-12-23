@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-wekas-linear-regression-accurately-predict-results-from-a-simple-formula"
 ---
 
-Okay, let's tackle this. It's not uncommon to question how well off-the-shelf machine learning tools, like Weka's linear regression, handle straightforward mathematical relationships. I remember a project back in 2015 involving sensor data where I had a clear, linear calibration formula. The initial thought, naturally, was to see if a simple model could pick it up without issues. Spoiler: It’s more nuanced than just "yes" or "no," and it highlighted some critical aspects of using such models.
+,  It's not uncommon to question how well off-the-shelf machine learning tools, like Weka's linear regression, handle straightforward mathematical relationships. I remember a project back in 2015 involving sensor data where I had a clear, linear calibration formula. The initial thought, naturally, was to see if a simple model could pick it up without issues. Spoiler: It’s more nuanced than just "yes" or "no," and it highlighted some critical aspects of using such models.
 
 The core of the issue revolves around understanding what linear regression *actually* does and what it *assumes* about the data. At its heart, linear regression seeks to establish a relationship between a dependent variable (the one you're trying to predict) and one or more independent variables, or predictors, by fitting a linear equation to the observed data. The model estimates the coefficients that best describe this relationship, essentially finding the line or hyperplane that minimizes some error term – often the sum of squared errors.
 

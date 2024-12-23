@@ -4,7 +4,7 @@ date: "2024-12-11"
 id: "how-does-chain-of-thought-reasoning-improve-ai-model-capabilities"
 ---
 
-Okay so you wanna know about chain of thought prompting right  pretty cool stuff  it's like giving an AI a little brain boost  imagine trying to solve a really complex math problem you wouldn't just blurt out the answer  you'd break it down into smaller steps right  that's basically what chain of thought prompting does for AI models
+ so you wanna know about chain of thought prompting right  pretty cool stuff  it's like giving an AI a little brain boost  imagine trying to solve a really complex math problem you wouldn't just blurt out the answer  you'd break it down into smaller steps right  that's basically what chain of thought prompting does for AI models
 
 Before chain of thought  you'd ask an AI something like "what's 34 multiplied by 12 then divided by 6" and it might just give you a wrong answer or maybe get it right by luck  but it wouldn't show its work  with chain of thought you'd guide it  you'd say something like "what's 34 multiplied by 12 then divided by 6 show your work" and then the AI would hopefully do this  first 34 times 12 equals 408 then 408 divided by 6 equals 68  see the difference  it's showing its reasoning process  it's thinking step by step
 

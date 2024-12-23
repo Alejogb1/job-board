@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-pkce-oauth2-be-implemented-with-react-and-doorkeeper"
 ---
 
-Okay, let's tackle this. I've seen more than my share of authorization flows go sideways, and the complexities surrounding implementing pkce with react and doorkeeper are definitely something I've spent a good chunk of time figuring out. It's not inherently difficult, but the devil, as they say, is in the details. The key is understanding the components and how they interact, which is what I’ll break down here.
+,  I've seen more than my share of authorization flows go sideways, and the complexities surrounding implementing pkce with react and doorkeeper are definitely something I've spent a good chunk of time figuring out. It's not inherently difficult, but the devil, as they say, is in the details. The key is understanding the components and how they interact, which is what I’ll break down here.
 
 First off, for those unfamiliar, pkce (proof key for code exchange) is an extension to the authorization code grant flow within oauth 2.0. It adds a layer of security, particularly crucial in single-page applications like those built with React, where the client secret cannot be safely stored. It does this by generating a dynamic secret—a verifier—and a challenge based on it, for each authorization request. This prevents an attacker from using an intercepted authorization code without the associated verifier.
 

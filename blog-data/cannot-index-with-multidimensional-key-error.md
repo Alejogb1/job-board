@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "cannot-index-with-multidimensional-key-error"
 ---
 
-Okay so you've hit the classic "cannot index with multidimensional key" error eh Been there done that got the t-shirt and a couple of late nights staring at my monitor Seriously this is like a rite of passage for anyone messing with arrays and data structures. So let's break this down in a way that actually makes sense
+ so you've hit the classic "cannot index with multidimensional key" error eh Been there done that got the t-shirt and a couple of late nights staring at my monitor Seriously this is like a rite of passage for anyone messing with arrays and data structures. So let's break this down in a way that actually makes sense
 
 First off that error message is telling you exactly what's wrong You are trying to use a multi-dimensional key like a tuple or a list to access an array or a dictionary which only accepts simple keys think integers strings or even single-element tuples. It's basically your code yelling "I don’t work this way dude".
 

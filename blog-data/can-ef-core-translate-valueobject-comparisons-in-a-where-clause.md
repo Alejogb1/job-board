@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-ef-core-translate-valueobject-comparisons-in-a-where-clause"
 ---
 
-Okay, let's unpack the complexities surrounding value object comparisons within Entity Framework Core, specifically when used in a `where` clause. It’s a topic I've had to navigate extensively in my own projects, and it definitely has some nuances that aren't always immediately obvious. I'm going to approach this from the perspective of someone who’s been in the trenches with EF Core for a good while, so bear with me as I lay out the practicalities and workarounds I've discovered.
+, let's unpack the complexities surrounding value object comparisons within Entity Framework Core, specifically when used in a `where` clause. It’s a topic I've had to navigate extensively in my own projects, and it definitely has some nuances that aren't always immediately obvious. I'm going to approach this from the perspective of someone who’s been in the trenches with EF Core for a good while, so bear with me as I lay out the practicalities and workarounds I've discovered.
 
 The short answer to the question, "Can EF Core translate value object comparisons in a `where` clause?" is: it depends. And that "depends" is heavily weighted on *how* your value object is structured and how you are attempting to perform the comparison. Direct comparisons using the equality operator (`==`) on your value object class in a `where` clause, without proper configuration, won’t typically work out of the box. EF Core struggles to translate this to an equivalent SQL query. This is because it lacks the explicit instruction on how to compare the *internal state* of your value object.
 

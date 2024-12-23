@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-are-brownie-local-tests-failing-with-ganache"
 ---
 
-Okay, let's talk about those frustrating Brownie test failures when using Ganache. It's a situation I’ve personally encountered more than once, and the culprits are often subtle, hiding just below the surface. It's rarely a direct incompatibility, but more often a mismatch in expectations between how Brownie configures its environment and how Ganache is operating. I’ve spent my share of late nights debugging similar issues, and I’ve found it's usually one of a few common pitfalls that cause the problem.
+, let's talk about those frustrating Brownie test failures when using Ganache. It's a situation I’ve personally encountered more than once, and the culprits are often subtle, hiding just below the surface. It's rarely a direct incompatibility, but more often a mismatch in expectations between how Brownie configures its environment and how Ganache is operating. I’ve spent my share of late nights debugging similar issues, and I’ve found it's usually one of a few common pitfalls that cause the problem.
 
 Fundamentally, Brownie provides a very flexible testing framework for solidity smart contracts, allowing you to easily interact with and test them using a local ethereum development network. Ganache, on the other hand, is a fantastic tool for creating this local environment, offering a blockchain sandbox with configurable parameters like block times, gas limits, and account setups. When they don't play nicely, it's usually a sign we've overlooked one of these configurations.
 

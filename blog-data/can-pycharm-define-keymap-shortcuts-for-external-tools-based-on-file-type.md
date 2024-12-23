@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-pycharm-define-keymap-shortcuts-for-external-tools-based-on-file-type"
 ---
 
-Let's tackle this. I've actually run into this specific need more than a few times, especially when working on projects with diverse technology stacks all housed within a single repository. Setting up distinct workflows for different file types, within a consistent development environment like PyCharm, is a significant efficiency booster. So, the core question, "can PyCharm define keymap shortcuts for external tools based on file type?"... yes, absolutely, with a little configuration finesse. It's not inherently obvious, but PyCharm's flexibility allows for this type of targeted shortcut customization.
+ I've actually run into this specific need more than a few times, especially when working on projects with diverse technology stacks all housed within a single repository. Setting up distinct workflows for different file types, within a consistent development environment like PyCharm, is a significant efficiency booster. So, the core question, "can PyCharm define keymap shortcuts for external tools based on file type?"... yes, absolutely, with a little configuration finesse. It's not inherently obvious, but PyCharm's flexibility allows for this type of targeted shortcut customization.
 
 The magic lies in combining the power of “External Tools” and “Keymaps,” along with a crucial understanding of how PyCharm interprets file types. Let's break this down into the constituent parts and I'll walk you through how it works in practice, drawing from some past experiences.
 

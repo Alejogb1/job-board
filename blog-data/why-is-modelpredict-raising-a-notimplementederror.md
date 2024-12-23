@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-modelpredict-raising-a-notimplementederror"
 ---
 
-Okay, let's talk about that `NotImplementedError` you’re seeing with `model.predict()`. I've definitely been down that road myself a few times, and it’s usually not a sign of a major catastrophic problem but rather an indication of how the underlying structure of your model is set up, or perhaps *not* set up, to handle predictions. Think of it like trying to plug a power cord into a socket that’s just not designed for that type of plug - it’s a mismatch.
+, let's talk about that `NotImplementedError` you’re seeing with `model.predict()`. I've definitely been down that road myself a few times, and it’s usually not a sign of a major catastrophic problem but rather an indication of how the underlying structure of your model is set up, or perhaps *not* set up, to handle predictions. Think of it like trying to plug a power cord into a socket that’s just not designed for that type of plug - it’s a mismatch.
 
 The core issue, in most cases, is that the base class or abstract class you're likely inheriting from to build your custom model—especially in frameworks like TensorFlow, PyTorch, or scikit-learn— often provides a blueprint, not a complete, ready-to-run predictive engine. This base class might define the `predict()` method, but it typically leaves the specific implementation details up to you, the model developer. It's a way to enforce a structure, to ensure that all models have this prediction capability, but it doesn't magically understand how *your* specific model works.
 

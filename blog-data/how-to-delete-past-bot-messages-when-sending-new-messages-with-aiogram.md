@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-delete-past-bot-messages-when-sending-new-messages-with-aiogram"
 ---
 
-Okay, let's unpack this one. Handling bot message history, especially when you’re aiming for a cleaner user experience, is a common challenge. I've certainly been there, wrestling with aiogram's asynchronous nature and Telegram's API quirks when trying to keep bot chats streamlined. Back in my early days with a chatbot project for a local community group – before we even thought about sophisticated NLP – we ran into exactly this problem. The bot was just spitting out updates, one after another, and it quickly became a mess. We needed a way to replace, not just add to, the existing message thread.
+, let's unpack this one. Handling bot message history, especially when you’re aiming for a cleaner user experience, is a common challenge. I've certainly been there, wrestling with aiogram's asynchronous nature and Telegram's API quirks when trying to keep bot chats streamlined. Back in my early days with a chatbot project for a local community group – before we even thought about sophisticated NLP – we ran into exactly this problem. The bot was just spitting out updates, one after another, and it quickly became a mess. We needed a way to replace, not just add to, the existing message thread.
 
 The core issue here isn't a simple “delete all past messages” function; Telegram's API doesn't work that way. Instead, the most effective and practical approach is to identify *specific* past messages that you want to remove and then delete them, either individually or in controlled sequences. This hinges on storing message IDs, so you can refer back to them later. Let's break down how this typically works in aiogram and then I’ll share a few code examples.
 

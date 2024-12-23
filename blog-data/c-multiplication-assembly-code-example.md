@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "c-multiplication-assembly-code-example"
 ---
 
-Alright so you're looking for C multiplication translated to assembly right been there done that plenty of times let me break it down for ya I've wrestled with this kinda thing since way back when I was fiddling with my old 8086 trying to make it do anything besides blink a cursor on a green screen good times good times
+so you're looking for C multiplication translated to assembly right been there done that plenty of times let me break it down for ya I've wrestled with this kinda thing since way back when I was fiddling with my old 8086 trying to make it do anything besides blink a cursor on a green screen good times good times
 
 Essentially what happens when you write a multiplication in C like say `int result = a * b` is that the compiler doesn't magically make multiplication happen it actually translates that to a specific set of assembly instructions that the processor understands natively and those instructions vary slightly based on the processor architecture we're talking about x86 ARM RISC-V each has their own flavor but the core principle remains
 

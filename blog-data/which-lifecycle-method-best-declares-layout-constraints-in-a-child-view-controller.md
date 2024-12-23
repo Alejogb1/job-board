@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "which-lifecycle-method-best-declares-layout-constraints-in-a-child-view-controller"
 ---
 
-Okay, let's tackle this one. From what I've seen over the years, the declaration of layout constraints within a child view controller's lifecycle isn’t always as straightforward as it seems. I’ve definitely seen teams grapple with this, leading to frustrating layout issues and debugging sessions. So, let's break down the best approach, focusing on clarity and best practices, not a race to the finish line.
+, let's tackle this one. From what I've seen over the years, the declaration of layout constraints within a child view controller's lifecycle isn’t always as straightforward as it seems. I’ve definitely seen teams grapple with this, leading to frustrating layout issues and debugging sessions. So, let's break down the best approach, focusing on clarity and best practices, not a race to the finish line.
 
 The core issue revolves around the timing of when the view hierarchy is fully loaded and available for constraint manipulation. The answer, unequivocally, hinges on using `viewWillAppear(_:)` or `viewWillLayoutSubviews()` for the initial setup of layout constraints in a child view controller, but with some crucial nuances depending on exactly what you are trying to achieve. While `viewDidLoad()` might seem logical, it’s actually too early. The view itself exists at this point, but its parent view (if added to another view controller’s hierarchy), might not have fully established its frame, or even have been added to the parent's view. Trying to set constraints in `viewDidLoad()` often leads to errors or unexpected layout behavior.
 

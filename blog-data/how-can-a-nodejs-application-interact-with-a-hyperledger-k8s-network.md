@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-a-nodejs-application-interact-with-a-hyperledger-k8s-network"
 ---
 
-Let's tackle this. It’s a challenge I've encountered a few times in my career, and getting Node.js applications talking to a Hyperledger Fabric network running on Kubernetes (k8s) is indeed a multi-layered task. It's less about waving a magic wand and more about understanding the interplay between the technology stacks.
+ It’s a challenge I've encountered a few times in my career, and getting Node.js applications talking to a Hyperledger Fabric network running on Kubernetes (k8s) is indeed a multi-layered task. It's less about waving a magic wand and more about understanding the interplay between the technology stacks.
 
 My first experience with this was a project aiming to build a supply chain tracking application. The backend, naturally, was Node.js due to our team's familiarity and ecosystem productivity. The blockchain component was a Fabric network deployed on k8s for scalability and ease of management. The initial struggle came from realizing that these are not directly compatible out-of-the-box. You don't simply point a Node.js app at the k8s cluster and expect seamless communication.
 

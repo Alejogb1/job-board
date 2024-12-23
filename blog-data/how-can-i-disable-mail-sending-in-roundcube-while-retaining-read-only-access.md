@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-disable-mail-sending-in-roundcube-while-retaining-read-only-access"
 ---
 
-Okay, let's dive into this. I’ve actually tackled this specific configuration with Roundcube more than once, usually in scenarios where we were decommissioning a mail server but wanted to preserve access to historical emails. The goal, as I understand it, is to prevent users from sending new mail, effectively rendering the client read-only, while still allowing them to browse their existing mailboxes. It's a delicate balance, and there are a few ways to approach it, each with its own nuances.
+, let's dive into this. I’ve actually tackled this specific configuration with Roundcube more than once, usually in scenarios where we were decommissioning a mail server but wanted to preserve access to historical emails. The goal, as I understand it, is to prevent users from sending new mail, effectively rendering the client read-only, while still allowing them to browse their existing mailboxes. It's a delicate balance, and there are a few ways to approach it, each with its own nuances.
 
 The most straightforward method, and the one I've found most reliable, involves manipulating the Roundcube configuration directly. Roundcube uses PHP, and its functionality is largely governed by settings in its main configuration file, `config/config.inc.php`. This file contains various parameters, and thankfully, there are specific options related to mail sending that can be disabled. We'll leverage those.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-a-png-export-in-cairosvg-with-a-masked-image-element-appear-to-violate-the-svg-standard"
 ---
 
-Okay, let's unpack this. This issue with cairosvg and masked image elements in PNG exports… it’s a classic, one I've encountered a few times in projects dealing with dynamic SVG generation. It’s not necessarily a direct violation of the SVG specification itself, but rather a consequence of how cairosvg interprets and renders certain SVG features, particularly in conjunction with image masking, when converting to raster formats like PNG.
+, let's unpack this. This issue with cairosvg and masked image elements in PNG exports… it’s a classic, one I've encountered a few times in projects dealing with dynamic SVG generation. It’s not necessarily a direct violation of the SVG specification itself, but rather a consequence of how cairosvg interprets and renders certain SVG features, particularly in conjunction with image masking, when converting to raster formats like PNG.
 
 The core of the problem stems from the fact that SVG, being a vector format, defines objects and their relationships mathematically. Masking in SVG uses another graphic element (often a path or shape) to define the transparency of the element it’s masking. That transparency is then rendered directly at the vector level, meaning it's calculated precisely and scalable without loss. Now, when cairosvg comes into play and rasterizes to PNG, we move into the world of pixels, and this is where complications can arise.
 

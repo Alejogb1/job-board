@@ -4,11 +4,11 @@ date: "2024-12-13"
 id: "ruby-pp-string-printing-formatting"
 ---
 
-Alright so you want to print a string in Ruby and you need some fancy formatting using `pp` right Been there done that more times than I care to admit Let's break this down because it's not always as straightforward as you might think especially if you're dealing with complex data or want something specific in your output.
+so you want to print a string in Ruby and you need some fancy formatting using `pp` right Been there done that more times than I care to admit Let's break this down because it's not always as straightforward as you might think especially if you're dealing with complex data or want something specific in your output.
 
 First off `pp` is your friend when it comes to pretty printing Ruby objects It's way better than just `puts` or `print` for inspecting data structures because it actually formats things nicely making it readable That's its main purpose debugging and visualizing data. Now I've seen a lot of people misuse it. I had this one intern once who tried to use it in production logging…yeah that was a fun cleanup. Production isn’t for pretty printing is the lesson there folks.
 
-Okay so you're asking about strings specifically. `pp` by default will print the string with quotes if it's a basic string. That's how it distinguishes it from other data types when displaying. If you have a string that contains escape sequences like newlines or tabs it'll show those escape sequences which can be handy but sometimes you might want the actual newlines and tabs to be rendered.
+ so you're asking about strings specifically. `pp` by default will print the string with quotes if it's a basic string. That's how it distinguishes it from other data types when displaying. If you have a string that contains escape sequences like newlines or tabs it'll show those escape sequences which can be handy but sometimes you might want the actual newlines and tabs to be rendered.
 
 Let's start with some basic examples to illustrate this.
 
@@ -27,7 +27,7 @@ pp str3  # Output: "Hello\\tWorld"
 
 See? The basic output is nothing too crazy just quotes around strings. The escape characters are visible as escaped sequences not as the new lines or tabs. This shows you the raw string content. Now if you want to print the actual rendered string with newlines and tabs there are a couple of ways to do it and `pp` is not your main tool here for the actual rendering. You'd use plain `puts` for that. It is one of the most basic but useful tools.
 
-Now lets delve a bit deeper into cases where formatting needs a bit more attention. What if you have very long strings or strings with special characters that you want to highlight differently? The default `pp` output might be okay for short strings but it becomes a pain when you have something substantial. This is where understanding the format string functionality with Ruby comes in handy. It is not directly a feature of `pp` but it is how `pp` might present more complicated strings. It might not be the actual feature but it is the logic and behavior.
+Now lets delve a bit deeper into cases where formatting needs a bit more attention. What if you have very long strings or strings with special characters that you want to highlight differently? The default `pp` output might be  for short strings but it becomes a pain when you have something substantial. This is where understanding the format string functionality with Ruby comes in handy. It is not directly a feature of `pp` but it is how `pp` might present more complicated strings. It might not be the actual feature but it is the logic and behavior.
 
 For example let’s say you want to print some structured data that contains strings inside. You still want to use `pp` but you want the strings to stand out a bit more. This isn’t directly related to the formatting of the string itself but the way `pp` shows you complex objects. I know I had to do this while debugging a JSON parser a while back. The JSON had all kinds of unicode characters that were just a mess until I found out how to highlight them in `pp`'s output by using a custom inspect method.
 

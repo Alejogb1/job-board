@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-a-net-and-nodejs-docker-image-be-customized-for-azure-web-containers"
 ---
 
-Alright, let's tackle this. Customizing Docker images for Azure Web Containers, particularly when dealing with both .NET and Node.js, is a topic I've spent quite a bit of time on, and it definitely has its nuances. I remember one particularly challenging project where we had a microservices architecture with some components running on .NET and others on Node.js. Orchestrating their deployments to Azure Web Containers required a very specific approach to image customization. So, let's break down what I've learned.
+Alright,  Customizing Docker images for Azure Web Containers, particularly when dealing with both .NET and Node.js, is a topic I've spent quite a bit of time on, and it definitely has its nuances. I remember one particularly challenging project where we had a microservices architecture with some components running on .NET and others on Node.js. Orchestrating their deployments to Azure Web Containers required a very specific approach to image customization. So, let's break down what I've learned.
 
 Essentially, the customization boils down to tailoring the Docker images to fit Azure's expectations for Web Apps for Containers, and the individual requirements of each application. Azure, unlike running containers in a more general environment, has particular expectations for things like port binding, startup commands, and file system access. This is not insurmountable, but requires a deliberate, informed approach. The primary goal is ensuring that each containerized application is optimized for the Azure environment and follows best practices.
 

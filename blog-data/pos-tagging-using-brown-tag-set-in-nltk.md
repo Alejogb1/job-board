@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "pos-tagging-using-brown-tag-set-in-nltk"
 ---
 
-Okay so you're asking about part-of-speech tagging using the Brown tagset in NLTK yeah I've been there done that got the t-shirt probably had more than a few late nights debugging taggers back in the day trust me it's a common road to walk down for any natural language processing enthusiast
+ so you're asking about part-of-speech tagging using the Brown tagset in NLTK yeah I've been there done that got the t-shirt probably had more than a few late nights debugging taggers back in the day trust me it's a common road to walk down for any natural language processing enthusiast
 
 Let's break this down real simple and see what we're talking about
 
@@ -42,7 +42,7 @@ def train_brown_tagger():
 
 brown_tagger = train_brown_tagger()
 ```
-Okay so this first snippet trains the unigram tagger which is the baseline for many POS tagging tasks. I've seen some folk try to start with RNNs or transformers for this problem but they overcomplicate it unigram taggers are a good start they are fast and work well most of the time anyway So we import the necessary modules train a basic model and evaluate it and then return the tagger itself You can also try other taggers. There are a bunch available in NLTK its like a candy store you have the `averaged_perceptron_tagger` which is generally better so I included a download for it and the `UnigramTagger` like the one we used above for some reason people like the UnigramTagger as it is easy to understand
+ so this first snippet trains the unigram tagger which is the baseline for many POS tagging tasks. I've seen some folk try to start with RNNs or transformers for this problem but they overcomplicate it unigram taggers are a good start they are fast and work well most of the time anyway So we import the necessary modules train a basic model and evaluate it and then return the tagger itself You can also try other taggers. There are a bunch available in NLTK its like a candy store you have the `averaged_perceptron_tagger` which is generally better so I included a download for it and the `UnigramTagger` like the one we used above for some reason people like the UnigramTagger as it is easy to understand
 
 Next up let's see how to use the tagger to actually tag some text. This is the fun part where the magic happens
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-cancan-be-used-in-rails"
 ---
 
-Okay, let's tackle CanCan in rails. I’ve seen it utilized in numerous projects, from relatively simple internal tools to more intricate, multi-tenant applications, and it always comes down to understanding how to properly define and apply your abilities. It’s not just a matter of bolting on another gem; it's about weaving a robust access control layer into your application.
+, let's tackle CanCan in rails. I’ve seen it utilized in numerous projects, from relatively simple internal tools to more intricate, multi-tenant applications, and it always comes down to understanding how to properly define and apply your abilities. It’s not just a matter of bolting on another gem; it's about weaving a robust access control layer into your application.
 
 My first encounter with a significant challenge using cancan (pre-cancancan, even) was in a financial software suite a few years back. We needed a granular access control system where users had differing levels of interaction based on their role, department, and even the specific data they were trying to access. CanCan provided the structure we needed, but it also forced us to think carefully about how we defined ‘abilities’ and how those translated to application logic.
 

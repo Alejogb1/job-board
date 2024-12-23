@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "what-are-the-different-classes-in-one-hot-encoders-and-what-are-their-implications"
 ---
 
-Okay, let's talk one-hot encoders. I've spent a fair bit of time working with these, and they're deceptively simple on the surface, but understanding the nuances is crucial for robust data processing. I remember back in '14, working on a large natural language processing project, we had a real mess with categorical data. The performance was all over the place, and it took a deep dive into encoding methods to resolve it. That’s where I really got hands-on with the implications of these seemingly basic transformations.
+, let's talk one-hot encoders. I've spent a fair bit of time working with these, and they're deceptively simple on the surface, but understanding the nuances is crucial for robust data processing. I remember back in '14, working on a large natural language processing project, we had a real mess with categorical data. The performance was all over the place, and it took a deep dive into encoding methods to resolve it. That’s where I really got hands-on with the implications of these seemingly basic transformations.
 
 So, fundamentally, a one-hot encoder's job is to convert categorical variables into a numerical format that machine learning algorithms can understand and work with effectively. Instead of trying to interpret text or labels directly, we’re translating them into binary vectors. The core idea involves representing each unique category as a column (or feature) and then, for each observation, placing a '1' in the column corresponding to the observed category and '0' in all other columns. This avoids imposing artificial ordinality on categorical data, a common pitfall when using methods like simple integer encoding.
 

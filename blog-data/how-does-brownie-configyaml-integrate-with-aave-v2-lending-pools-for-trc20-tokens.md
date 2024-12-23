@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-does-brownie-configyaml-integrate-with-aave-v2-lending-pools-for-trc20-tokens"
 ---
 
-Okay, let's tackle this. The intersection of brownie's configuration and Aave v2 lending protocols, particularly with TRC20 tokens, presents a few interesting challenges and considerations. I've spent a fair amount of time working with similar configurations in past projects, and it's not always as straightforward as the documentation might lead you to believe.
+,  The intersection of brownie's configuration and Aave v2 lending protocols, particularly with TRC20 tokens, presents a few interesting challenges and considerations. I've spent a fair amount of time working with similar configurations in past projects, and it's not always as straightforward as the documentation might lead you to believe.
 
 The core idea behind `brownie-config.yaml` is to manage and centralize settings for your brownie projects. It essentially functions as the single source of truth for your development environment—networks, addresses, compiler options, and more. When it comes to Aave v2 and TRC20 tokens, we're layering in a few more dependencies, especially considering that Aave v2 was originally built for Ethereum. So, what exactly does that interaction look like?
 

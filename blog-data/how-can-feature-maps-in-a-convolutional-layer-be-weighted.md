@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-feature-maps-in-a-convolutional-layer-be-weighted"
 ---
 
-Alright, let's tackle this. Feature map weighting in convolutional layers—it’s a nuanced topic that’s been central to a fair share of my projects, and I've seen firsthand how crucial it is to get it right. To be clear, when we talk about weighting feature maps, we're not adjusting the convolutional kernel weights themselves. Instead, we’re manipulating the *output* of a convolutional layer, applying specific weights or scaling factors to the individual feature maps generated.
+Alright,  Feature map weighting in convolutional layers—it’s a nuanced topic that’s been central to a fair share of my projects, and I've seen firsthand how crucial it is to get it right. To be clear, when we talk about weighting feature maps, we're not adjusting the convolutional kernel weights themselves. Instead, we’re manipulating the *output* of a convolutional layer, applying specific weights or scaling factors to the individual feature maps generated.
 
 The core idea stems from the recognition that not all feature maps are created equal. After a convolutional operation, each feature map encodes distinct characteristics detected by the corresponding filter. Some might be highly relevant for the task at hand, while others might be less so, or even introduce noise. Directly combining them without any form of adjustment can lead to suboptimal performance. Therefore, weighting allows us to emphasize informative features while suppressing less relevant ones. Think of it as selectively amplifying the signals that matter.
 

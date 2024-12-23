@@ -4,7 +4,7 @@ date: "2024-12-10"
 id: "what-are-the-trade-offs-between-stateless-feature-functions-and-precomputed-feature-storage-in-databases"
 ---
 
-Okay so you wanna talk about stateless feature functions versus precomputed features in databases right  Cool  It's a pretty common problem actually especially when you're dealing with any kind of machine learning pipeline or just generally large-scale data analysis  It's basically a classic compute versus storage trade-off  and it's rarely a simple answer  depends heavily on your specific use case  
+ so you wanna talk about stateless feature functions versus precomputed features in databases right  Cool  It's a pretty common problem actually especially when you're dealing with any kind of machine learning pipeline or just generally large-scale data analysis  It's basically a classic compute versus storage trade-off  and it's rarely a simple answer  depends heavily on your specific use case  
 
 Think of it this way stateless feature functions are like on-demand calculations  you need a feature you call the function it computes it and boom you've got your feature  Simple right  But if you're calling that function a million times for a million data points it's gonna be slow  Really slow  That's the compute cost hitting you hard  
 

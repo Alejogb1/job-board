@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-obtain-a-dataframe-instead-of-a-dictionary-when-using-fb-prophet-with-multiple-categories"
 ---
 
-Okay, let's unpack this. It's a common stumbling block when moving beyond basic time series forecasting with prophet, especially when you’re dealing with grouped data. I've certainly seen this myself; in a previous project predicting sales across different product categories, we ran smack into the 'dictionary instead of dataframe' issue. It's frustrating, but there are straightforward solutions once you understand how prophet handles multiple categories internally.
+, let's unpack this. It's a common stumbling block when moving beyond basic time series forecasting with prophet, especially when you’re dealing with grouped data. I've certainly seen this myself; in a previous project predicting sales across different product categories, we ran smack into the 'dictionary instead of dataframe' issue. It's frustrating, but there are straightforward solutions once you understand how prophet handles multiple categories internally.
 
 The crux of the matter lies in how prophet’s `fit()` and `predict()` methods operate when given grouped data, and this is something not always immediately obvious from the documentation. Typically, when you provide a pandas dataframe with a ‘ds’ (datetime) column and a ‘y’ (target value) column, prophet treats it as a single time series. But when you have additional columns that represent different categories or groups, you're essentially telling prophet that you have multiple time series that need independent models, a different process than just a single dataframe forecast.
 

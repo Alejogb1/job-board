@@ -4,9 +4,9 @@ date: "2024-12-13"
 id: "variable-used-in-lambda-should-be-final-java"
 ---
 
-Okay so you're asking about why variables used inside a Java lambda need to be effectively final right I've been there seen that and debugged that a few times it’s a common gotcha for people new to lambdas or closures in general
+ so you're asking about why variables used inside a Java lambda need to be effectively final right I've been there seen that and debugged that a few times it’s a common gotcha for people new to lambdas or closures in general
 
-Alright let's break this down like we're debugging a nasty NullPointerException at 3 am
+let's break this down like we're debugging a nasty NullPointerException at 3 am
 
 First off "effectively final" isn't some weird made-up Java term it just means a variable's value isn't changed after it's initialized If it's never reassigned it's effectively final Java doesn’t force you to use the `final` keyword for this but it *behaves* like it's `final` inside the lambda
 
@@ -20,7 +20,7 @@ To avoid issues like that Java decided to make variables inside a lambda effecti
 
 Now why not just use the original variable directly inside the lambda Well remember that the lambda can execute much later possibly even on a different thread than where it was created If the original variable was still in the outer scope it could be modified by the main code while the lambda is still using it this is again a race condition you never want to be part of
 
-Okay let’s look at some examples
+ let’s look at some examples
 
 **Example 1 The Bad Case**
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-customize-devises-sign-in-and-sign-out-redirect-paths-and-what-purpose-does-protectfromforgery-serve"
 ---
 
-Okay, let's tackle this. It's a common scenario, and honestly, I've spent more than a few late nights debugging these exact redirects. It always seems simple until the edge cases start surfacing. You're asking about customizing Devise's redirect behavior after sign-in and sign-out, and also about the role of `protect_from_forgery`. These are related, but let's break them down step-by-step, starting with Devise redirects.
+,  It's a common scenario, and honestly, I've spent more than a few late nights debugging these exact redirects. It always seems simple until the edge cases start surfacing. You're asking about customizing Devise's redirect behavior after sign-in and sign-out, and also about the role of `protect_from_forgery`. These are related, but let's break them down step-by-step, starting with Devise redirects.
 
 Devise, the popular authentication gem for rails, provides a good out-of-the-box experience, but real-world applications nearly always require more granular control over redirects. The default behaviour usually sends users to a predefined root path or a user profile page after a successful sign-in, and typically just back to the home page after sign-out. However, consider an instance I encountered a few years back: I was working on an e-commerce platform where users often started a shopping cart as guests, and after creating an account (or signing in), they needed to be sent right back to that cart. Default redirects were not going to cut it; they'd lose their cart, leading to poor user experience and support calls.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-resolve-sass-errors-related-to-missing-stylesheets-after-upgrading-to-webpacker-5"
 ---
 
-Okay, let's dive into this. I’ve seen this exact situation countless times, particularly after a major upgrade like moving to Webpacker 5. The core issue almost always boils down to how Webpacker handles its asset pipeline, specifically its interaction with Sass loaders and the paths they use to locate stylesheets. It’s not that Webpacker 5 *broke* things exactly, but rather that the assumptions you might have had about how paths were resolved in older versions need a refresh.
+, let's dive into this. I’ve seen this exact situation countless times, particularly after a major upgrade like moving to Webpacker 5. The core issue almost always boils down to how Webpacker handles its asset pipeline, specifically its interaction with Sass loaders and the paths they use to locate stylesheets. It’s not that Webpacker 5 *broke* things exactly, but rather that the assumptions you might have had about how paths were resolved in older versions need a refresh.
 
 From my experience, these errors manifest most often as either "file not found" messages during the Webpack compilation process, or style inconsistencies that occur in your application because styles intended to be included are simply not. I’ve debugged my fair share of these headaches, and usually, the problem lies in misconfigured `sass-loader` paths, changes in default behavior within Webpacker 5 itself, or a combination of both.
 

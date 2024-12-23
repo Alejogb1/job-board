@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "how-to-use-predict-in-r-models"
 ---
 
-Okay so you wanna use `predict` in R models right Been there done that countless times let me tell you its not rocket science but it can be a bit fiddly if youre not careful I mean Ive been wrestling with R models since like R 2.15 days so you can trust me on this one
+ so you wanna use `predict` in R models right Been there done that countless times let me tell you its not rocket science but it can be a bit fiddly if youre not careful I mean Ive been wrestling with R models since like R 2.15 days so you can trust me on this one
 
 First things first `predict` is basically the universal translator for your trained model You feed it some data that looks like what the model was trained on and it spits out predictions So the most basic usage is incredibly simple
 
@@ -21,7 +21,7 @@ See super easy right But the devil is in the details Lets break down some common
 
 **Scenario 1: Different Column Names or Column Order**
 
-Okay this is a classic one You train a model on a dataset with column names like `feature_1 feature_2 target` and then you try to predict on data with `input_1 input_2 result` Guess what R throws a fit Not the model's fault you just gave it the wrong recipe It expects the exact same column names and order as the training data
+ this is a classic one You train a model on a dataset with column names like `feature_1 feature_2 target` and then you try to predict on data with `input_1 input_2 result` Guess what R throws a fit Not the model's fault you just gave it the wrong recipe It expects the exact same column names and order as the training data
 
 ```r
 #Let's say your train data has columns "height" "weight" "age"
@@ -131,4 +131,4 @@ Instead of throwing links at you try out these papers and books that are very he
 
 `predict` seems simple on the surface but its all about consistency and attention to detail Make sure that your training data structure and the new prediction data are as close as possible this includes not only column names and order but also factors and levels as well as missing values That is my 10 cents after suffering through all of these issues many times over. Hope this helps and you get to predict stuff smoothly from now on.
 
-Oh and one last thing. Did you hear about the statistician who got lost in the woods? He found his way eventually he just kept calculating all the possible paths until one made sense. Okay I'm done now. Good luck and have fun with your R models.
+Oh and one last thing. Did you hear about the statistician who got lost in the woods? He found his way eventually he just kept calculating all the possible paths until one made sense.  I'm done now. Good luck and have fun with your R models.

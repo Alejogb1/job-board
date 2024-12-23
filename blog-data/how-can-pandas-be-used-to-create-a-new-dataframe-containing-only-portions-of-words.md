@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-pandas-be-used-to-create-a-new-dataframe-containing-only-portions-of-words"
 ---
 
-Alright, let's tackle this. I recall a project back in '18 where I needed to extract very specific segments of text strings within a large dataset – customer feedback, if I remember correctly. It wasn't about simple string slicing; the requirements involved extracting portions based on patterns and even variable start/end points within each string. This is where pandas, combined with some clever string manipulation, became invaluable.
+Alright,  I recall a project back in '18 where I needed to extract very specific segments of text strings within a large dataset – customer feedback, if I remember correctly. It wasn't about simple string slicing; the requirements involved extracting portions based on patterns and even variable start/end points within each string. This is where pandas, combined with some clever string manipulation, became invaluable.
 
 The core idea is leveraging pandas' `str` accessor along with regular expressions or string indexing. While pandas isn't natively designed for complex substring extraction, its vectorization capabilities and integration with Python’s string handling tools make it exceptionally efficient for these types of operations. The key lies in understanding how `str` methods broadcast over series of strings. Let’s break this down into a few common scenarios.
 

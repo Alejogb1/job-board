@@ -4,7 +4,7 @@ date: "2024-12-11"
 id: "how-do-models-handle-noisy-rationales-and-sequential-dependencies-in-chain-of-thought-reasoning"
 ---
 
-Okay so you wanna know how these fancy chain of thought models deal with messy rationales and stuff that happens one after another right  Its a super cool and kinda tricky problem  Think of it like this you're trying to follow a recipe but someone keeps messing with the instructions adding extra steps taking things out randomly its a nightmare  That's kinda what noisy rationales are all about  The model is trying to make sense of a bunch of possibly wrong or incomplete reasoning steps
+ so you wanna know how these fancy chain of thought models deal with messy rationales and stuff that happens one after another right  Its a super cool and kinda tricky problem  Think of it like this you're trying to follow a recipe but someone keeps messing with the instructions adding extra steps taking things out randomly its a nightmare  That's kinda what noisy rationales are all about  The model is trying to make sense of a bunch of possibly wrong or incomplete reasoning steps
 
 Sequential dependencies are like following a map where you have to go to point A then B then C you can't jump around  If you miss a step the whole thing falls apart  In chain of thought its the same  Each step depends on the previous one so if one is off the next will likely be wrong too
 

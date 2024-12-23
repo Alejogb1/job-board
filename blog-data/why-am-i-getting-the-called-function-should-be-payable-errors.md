@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-the-called-function-should-be-payable-errors"
 ---
 
-Okay, let's address this "payable function" error. I’ve seen this crop up plenty of times, and it usually boils down to a mismatch between how you’re calling a function and how that function is declared within a smart contract, specifically when interacting with the Ethereum Virtual Machine (evm). It’s a foundational concept, but the error message isn't always immediately clear, so let's unpack it.
+, let's address this "payable function" error. I’ve seen this crop up plenty of times, and it usually boils down to a mismatch between how you’re calling a function and how that function is declared within a smart contract, specifically when interacting with the Ethereum Virtual Machine (evm). It’s a foundational concept, but the error message isn't always immediately clear, so let's unpack it.
 
 The core issue revolves around the `payable` modifier. In Solidity, and by extension other languages targeting the evm, functions can be designated as `payable` or non-`payable`. A `payable` function explicitly indicates that the function is designed to receive ether (or any other native cryptocurrency of an evm-compatible chain) during its execution. If a function isn't marked as `payable`, the evm rejects any transaction that attempts to send ether along with the function call. This is a security measure to prevent unintended fund transfers and ensures contracts handle funds responsibly. The error message "The called function should be payable" simply means you’re attempting to send ether to a function that hasn't explicitly declared it’s equipped to receive it. It’s like trying to deposit cash into a vending machine that only accepts cards.
 

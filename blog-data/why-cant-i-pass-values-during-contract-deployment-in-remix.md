@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-cant-i-pass-values-during-contract-deployment-in-remix"
 ---
 
-Okay, let’s tackle this one. I’ve seen this particular hiccup surface more times than I care to count, usually with developers who are relatively new to smart contract development or are perhaps transitioning to a more complex deployment setup. The core of the issue isn't actually a limitation within Remix itself, but rather a misunderstanding of how constructor arguments work during contract creation on the ethereum virtual machine (evm). I’ll detail that in a moment.
+, let’s tackle this one. I’ve seen this particular hiccup surface more times than I care to count, usually with developers who are relatively new to smart contract development or are perhaps transitioning to a more complex deployment setup. The core of the issue isn't actually a limitation within Remix itself, but rather a misunderstanding of how constructor arguments work during contract creation on the ethereum virtual machine (evm). I’ll detail that in a moment.
 
 My first encounter with this was probably back in 2018, working on a decentralized identity management system. We were trying to deploy a complex factory contract that required an initial admin address and a few other configuration parameters. We were repeatedly scratching our heads why these values weren't being correctly passed through using the 'Deploy' button in Remix, despite explicitly setting them in the input fields. Ultimately, the realization dawned that Remix isn't directly passing constructor arguments in the way one might intuitively think.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-nginx-handle-wildcard-subdomains-as-a-reverse-proxy"
 ---
 
-Alright, let's tackle this. It's a classic scenario, and one I've definitely spent a fair bit of time debugging over the years. Setting up nginx to gracefully handle wildcard subdomains as a reverse proxy isn't necessarily complex, but it does require a solid understanding of server blocks and regular expressions within nginx configuration. We're not simply mapping a single domain; we're dealing with a pattern, which needs precise handling to avoid unexpected routing issues.
+Alright,  It's a classic scenario, and one I've definitely spent a fair bit of time debugging over the years. Setting up nginx to gracefully handle wildcard subdomains as a reverse proxy isn't necessarily complex, but it does require a solid understanding of server blocks and regular expressions within nginx configuration. We're not simply mapping a single domain; we're dealing with a pattern, which needs precise handling to avoid unexpected routing issues.
 
 Essentially, the goal here is to intercept requests coming into your server for any subdomain under a particular domain, and forward those requests to the appropriate backend service. This allows for dynamically scaling your services and providing a tailored experience based on the subdomain requested – say, `app1.example.com` goes to one container, while `app2.example.com` goes to another.
 

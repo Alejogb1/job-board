@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-fine-tune-pre-trained-dit-transformers-for-object-detection"
 ---
 
-Okay, let's tackle this. Thinking back to a particularly challenging project from a few years ago, we were tasked with deploying a real-time system to identify defects on a production line. The initial performance using a standard object detection model was, shall we say, underwhelming. That's where we began diving into the fascinating world of fine-tuning pre-trained diffusion transformers, specifically DiT models, to improve things.
+,  Thinking back to a particularly challenging project from a few years ago, we were tasked with deploying a real-time system to identify defects on a production line. The initial performance using a standard object detection model was, shall we say, underwhelming. That's where we began diving into the fascinating world of fine-tuning pre-trained diffusion transformers, specifically DiT models, to improve things.
 
 Now, understanding the fundamental concept of pre-training is crucial. A DiT (Diffusion Transformer) model, initially, is trained on a massive dataset—think millions of images—for the purpose of image generation. This is a generative process, learning the reverse of image diffusion, starting from random noise to create a realistic image. This process inherently teaches the model a very strong representation of visual features, which we can then exploit for downstream tasks like object detection. The crucial part is that we’re not starting from a blank slate, and that’s the power of transfer learning. This significantly reduces both the time and the amount of data needed to achieve acceptable performance on a task such as object detection.
 

@@ -4,7 +4,7 @@ date: "2024-12-10"
 id: "how-do-real-time-streaming-joins-work-when-integrating-data-from-diverse-sources-like-kafka-and-postgres"
 ---
 
-Okay so you wanna know about real-time streaming joins right  like merging data from different places like Kafka and Postgres in a super speedy way  It's a cool problem  lots of moving parts
+ so you wanna know about real-time streaming joins right  like merging data from different places like Kafka and Postgres in a super speedy way  It's a cool problem  lots of moving parts
 
 The basic idea is you're not doing a traditional database join  those are slow when you're dealing with constantly updating streams of data Think of it like this you've got one firehose of data (Kafka maybe sensor readings or website clicks) and another tap (Postgres maybe user profiles or product info) and you gotta combine them on the fly  without falling behind
 

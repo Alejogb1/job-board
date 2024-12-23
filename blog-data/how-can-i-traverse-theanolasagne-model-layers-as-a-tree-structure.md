@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-traverse-theanolasagne-model-layers-as-a-tree-structure"
 ---
 
-Alright, let's tackle this. I remember back when I was first playing with Theano and Lasagne, I had a similar need: I needed a way to understand and manipulate the network structure not just as a series of stacked layers but as a hierarchical, traversable tree. It's incredibly useful for things like pruning, visualizing model complexity, or even implementing custom backpropagation schemes. The direct approach isn't immediately obvious, especially with Lasagne’s layer definitions. But it’s certainly doable.
+Alright,  I remember back when I was first playing with Theano and Lasagne, I had a similar need: I needed a way to understand and manipulate the network structure not just as a series of stacked layers but as a hierarchical, traversable tree. It's incredibly useful for things like pruning, visualizing model complexity, or even implementing custom backpropagation schemes. The direct approach isn't immediately obvious, especially with Lasagne’s layer definitions. But it’s certainly doable.
 
 The crux of the issue stems from the fact that Lasagne, while it provides a clean abstraction over Theano, internally represents models as a graph of interconnected symbolic variables. These variables are interconnected according to how you’ve defined your layers in code. It’s less of a predefined tree structure and more of a network that needs to be interpreted as one. My solution, and what I found to be the most flexible approach over time, revolves around extracting the layers and building an explicit tree-like structure by inferring parent-child relationships.
 

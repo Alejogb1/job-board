@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-are-erc-721-based-daos-structured"
 ---
 
-Okay, let's dive into the intricacies of how erc-721-based daos are structured. I recall tackling a similar architecture back in my early days working on a platform for digital collectibles—it involved a fascinating intersection of token mechanics and governance. We needed a robust, yet flexible system, which led us to explore these very principles.
+, let's dive into the intricacies of how erc-721-based daos are structured. I recall tackling a similar architecture back in my early days working on a platform for digital collectibles—it involved a fascinating intersection of token mechanics and governance. We needed a robust, yet flexible system, which led us to explore these very principles.
 
 At their core, erc-721-based daos leverage the unique properties of non-fungible tokens (nfts) to facilitate governance. Unlike erc-20 tokens, where each token is identical and represents a proportional share, erc-721 tokens represent unique assets. In this context, an erc-721 token might represent a single voting right, membership to the dao, or even a specific level of influence, depending on the implementation. This difference is not merely semantic; it fundamentally alters how governance mechanisms are designed. The inherent individuality of each token allows for more complex and nuanced voting and membership structures.
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "segmented-least-squares-algorithm-dynamic-programming"
 ---
 
-Okay so you wanna talk segmented least squares and dynamic programming I've been around this block more times than I care to remember man this is old news but a goodie I guess let's dive in
+ so you wanna talk segmented least squares and dynamic programming I've been around this block more times than I care to remember man this is old news but a goodie I guess let's dive in
 
 Right off the bat segmented least squares it's about finding the best way to break a bunch of points into segments where each segment is fitted by a line or some other curve you're not dealing with one massive least squares fit that would likely be a horrific mess but a series of smaller much more manageable fits Now the cool part is how you're going to find the *optimal* segmentation and that's where dynamic programming comes in real handy it's like a cheat code but a legit one you know
 

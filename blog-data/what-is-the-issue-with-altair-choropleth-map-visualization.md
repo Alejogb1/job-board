@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-is-the-issue-with-altair-choropleth-map-visualization"
 ---
 
-Okay, let's talk about Altair choropleth maps. It's a tool I’ve spent quite a bit of time with, and I can definitely speak to the pain points I've encountered. It's not that Altair itself is inherently flawed; rather, it's more about understanding the limitations and nuances involved when you try to use it for geospatial visualizations, specifically choropleth maps. I've lost a good few hours debugging various issues over the years, so let's delve into the common pitfalls and how to avoid them.
+, let's talk about Altair choropleth maps. It's a tool I’ve spent quite a bit of time with, and I can definitely speak to the pain points I've encountered. It's not that Altair itself is inherently flawed; rather, it's more about understanding the limitations and nuances involved when you try to use it for geospatial visualizations, specifically choropleth maps. I've lost a good few hours debugging various issues over the years, so let's delve into the common pitfalls and how to avoid them.
 
 The core challenge with Altair choropleth maps, in my experience, stems from its reliance on data transformations and geographic data representation. It isn't a dedicated GIS system; it's a visualization library, and therefore it relies on pre-processed spatial data, typically in the form of GeoJSON. This isn't a bad thing, but it often leads to common issues, primarily around projection and data alignment.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-consistently-access-a-specific-key-across-multiple-arrays-within-a-json-api-response"
 ---
 
-Okay, let's tackle this. I've definitely been in the trenches with JSON APIs, particularly dealing with inconsistent structures. The challenge of reliably accessing a specific key across an array of varying JSON objects is not uncommon, and there are several strategies we can implement. Let me walk you through what I’ve found to be effective, based on experiences I’ve had working with different systems, including a particularly messy integration of a legacy content management system with a new front-end platform years back.
+,  I've definitely been in the trenches with JSON APIs, particularly dealing with inconsistent structures. The challenge of reliably accessing a specific key across an array of varying JSON objects is not uncommon, and there are several strategies we can implement. Let me walk you through what I’ve found to be effective, based on experiences I’ve had working with different systems, including a particularly messy integration of a legacy content management system with a new front-end platform years back.
 
 The core problem we’re addressing is data extraction uniformity from potentially heterogenous sources. When an API returns an array, and each element within that array *should* have a particular key, but doesn't always, we need robust handling to avoid runtime errors and ensure we're actually getting the data we need. This isn't just about graceful failure, it's about creating predictable data access patterns in your application logic.
 

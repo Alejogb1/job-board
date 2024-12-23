@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-there-a-rails-routing-error-with-no-match"
 ---
 
-Okay, let’s unpack this. The “no route matches” error in a rails application is, let’s be honest, one of those experiences that every rails developer confronts frequently. It’s less a single problem and more a symptom, a red flag indicating a mismatch between what your application *expects* and what it *receives* in a request. I've spent more late nights than I care to count tracing these down, so I've developed a fairly methodical approach to tackling them.
+, let’s unpack this. The “no route matches” error in a rails application is, let’s be honest, one of those experiences that every rails developer confronts frequently. It’s less a single problem and more a symptom, a red flag indicating a mismatch between what your application *expects* and what it *receives* in a request. I've spent more late nights than I care to count tracing these down, so I've developed a fairly methodical approach to tackling them.
 
 The core issue, as the error message states, lies in the rails router. This component is responsible for parsing incoming http requests, matching them against predefined patterns, and directing them to the appropriate controller action. When it can't find a match for the given http method (get, post, put, delete, etc.), and the url path, well, that's when you see the dreaded "no route matches" message.
 

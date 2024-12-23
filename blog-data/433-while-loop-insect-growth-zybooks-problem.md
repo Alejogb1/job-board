@@ -4,11 +4,11 @@ date: "2024-12-13"
 id: "433-while-loop-insect-growth-zybooks-problem"
 ---
 
-Okay so you're wrestling with that 433 while loop insect growth problem on Zybooks right Been there done that more times than I care to admit Lets break this down because I feel your pain trust me
+ so you're wrestling with that 433 while loop insect growth problem on Zybooks right Been there done that more times than I care to admit Lets break this down because I feel your pain trust me
 
 First off if you're new to programming specifically while loops it can be a bit of a head scratcher its not just you I remember my early days I was convinced loops were some kind of black magic that only wizards understood I spent hours staring at my screen wondering why my code wasnt spitting out the right numbers or why my program just refused to stop that's the good old infinite loop special
 
-Okay lets get into the weeds on the problem at hand This "insect growth" thing its almost always about that crucial while condition and then what you do inside the loop Its about simulating how something changes over time using a loop and its extremely common in pretty much all programming I would know I've been knee deep in simulations ranging from network traffic analysis to rudimentary particle systems and its all loops all the way down You have a starting number you grow it based on a specific rule and keep doing that until some stopping point that's the name of the game
+ lets get into the weeds on the problem at hand This "insect growth" thing its almost always about that crucial while condition and then what you do inside the loop Its about simulating how something changes over time using a loop and its extremely common in pretty much all programming I would know I've been knee deep in simulations ranging from network traffic analysis to rudimentary particle systems and its all loops all the way down You have a starting number you grow it based on a specific rule and keep doing that until some stopping point that's the name of the game
 
 Lets think about the typical approach in terms of code Ill show some basic python because it reads kind of like pseudo code which makes it easier to explain You will likely need to change it up a bit to fit zybooks environment but the principles are all there
 

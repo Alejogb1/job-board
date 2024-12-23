@@ -4,7 +4,7 @@ date: "2024-12-10"
 id: "what-are-the-capabilities-of-rest-apis-in-serving-and-querying-historical-feature-values-in-ml-systems"
 ---
 
-Okay so you wanna know about REST APIs and how they handle historical feature values in ML right  It's a pretty neat topic actually  Think about it you've got all this data from your ML system  features labels predictions the whole shebang  and you need a way to access it all neatly  that's where REST APIs come in they're like the friendly neighborhood data access points for your ML stuff
+ so you wanna know about REST APIs and how they handle historical feature values in ML right  It's a pretty neat topic actually  Think about it you've got all this data from your ML system  features labels predictions the whole shebang  and you need a way to access it all neatly  that's where REST APIs come in they're like the friendly neighborhood data access points for your ML stuff
 
 First off what even *is* a REST API  In simple terms its a way for different software systems to talk to each other over the internet using HTTP requests  You make a request like hey give me this data and the API sends it back  its all standardized and pretty easy to use once you get the hang of it  You'll often see them using JSON for data exchange its lightweight and easily parsed by most programming languages
 
@@ -78,7 +78,7 @@ WHERE customer_id = 123
 AND timestamp BETWEEN '2024-03-01' AND '2024-03-15';
 ```
 
-Now you might be thinking  okay this is all cool but how do I actually *design* a good API for my historical feature values  Well there's no one size fits all answer  it depends heavily on your specific use case  but here are a few key considerations
+Now you might be thinking   this is all cool but how do I actually *design* a good API for my historical feature values  Well there's no one size fits all answer  it depends heavily on your specific use case  but here are a few key considerations
 
 * **Data Model:** How is your data organized  What are the key features you want to expose  How are they related  A well defined data model is crucial for a good API
 * **Querying Capabilities:** What kind of queries will your users need to perform  Do you need support for filtering sorting pagination  Think about the types of analyses people might want to do

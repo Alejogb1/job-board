@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-access-luis-recognizer-results-with-verbose-set-to-true"
 ---
 
-Okay, let’s tackle this. I've spent my share of time wrangling with LUIS, especially when the need arises to extract granular details from its analysis. Specifically, accessing those verbose results can be crucial for complex conversational flows, and I've definitely been there, scratching my head over the structure of the JSON it throws back. The key, as with many things in development, lies in understanding the precise shape of the data and how to best process it programmatically.
+, let’s tackle this. I've spent my share of time wrangling with LUIS, especially when the need arises to extract granular details from its analysis. Specifically, accessing those verbose results can be crucial for complex conversational flows, and I've definitely been there, scratching my head over the structure of the JSON it throws back. The key, as with many things in development, lies in understanding the precise shape of the data and how to best process it programmatically.
 
 The ‘verbose’ parameter in LUIS API calls, when set to true, fundamentally alters the structure of the response you receive. Instead of getting just the top-scoring intent and a condensed list of entities, you’re provided with a more detailed breakdown. This includes scores for all intents, confidence levels for multiple entity recognitions (including those that might be overlapping or ambiguous), and additional metadata that can prove incredibly valuable. Without verbose mode, you're essentially only getting the highlights reel. With it, you get the full director's cut, and that makes a difference.
 

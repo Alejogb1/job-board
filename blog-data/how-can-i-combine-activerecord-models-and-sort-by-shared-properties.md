@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-combine-activerecord-models-and-sort-by-shared-properties"
 ---
 
-Alright, let's tackle this. It's a scenario I've bumped into more times than I'd like to recall, particularly when dealing with complex data structures where multiple models share common attributes. The core challenge is efficient sorting, and ActiveRecord, while powerful, doesn't natively provide this out of the box, at least not in the way one might initially expect.
+Alright,  It's a scenario I've bumped into more times than I'd like to recall, particularly when dealing with complex data structures where multiple models share common attributes. The core challenge is efficient sorting, and ActiveRecord, while powerful, doesn't natively provide this out of the box, at least not in the way one might initially expect.
 
 The issue stems from the fundamental structure of a relational database and the way ActiveRecord abstracts interactions with it. When you’re working with disparate models, each model often exists within its own table, with its own unique set of columns (and sometimes, shared ones). ActiveRecord, operating primarily on a per-table basis, doesn’t inherently understand how to perform sorting on attributes that exist across multiple different tables. We have to facilitate that ourselves.
 

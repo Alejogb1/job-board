@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-do-i-get-an-indexerror-with-a-tensor-of-dimension-3"
 ---
 
-Okay, let's tackle this. A three-dimensional tensor and an `IndexError`, that’s a combination I've certainly bumped into more than a few times throughout my years working with machine learning models. It's usually not a problem with the tensor *itself*, but rather how you’re trying to access its elements. Let me lay it out, drawing on a few past debugging sessions that come to mind.
+,  A three-dimensional tensor and an `IndexError`, that’s a combination I've certainly bumped into more than a few times throughout my years working with machine learning models. It's usually not a problem with the tensor *itself*, but rather how you’re trying to access its elements. Let me lay it out, drawing on a few past debugging sessions that come to mind.
 
 An `IndexError` generally surfaces when you attempt to access an element in a sequence (like a list, a numpy array, or, in this case, a tensor) using an index that falls outside the valid range of indices for that sequence. With a three-dimensional tensor, this means you're specifying either too many or too few indices, or using indices that exceed the size of one or more of the tensor's dimensions. It's crucial to grasp the shape and layout of your tensor. A three-dimensional tensor is fundamentally a collection of matrices, visualized conceptually as a cube. Think of it as rows, columns, and then *stacks* of those matrices forming a third dimension.
 

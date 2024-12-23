@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-a-cdn-caching-my-private-rails-active-storage-assets-without-exceeding-memory"
 ---
 
-Okay, let's tackle this. It’s a frustrating scenario when you’re dealing with what you think are private assets, especially those managed through Rails’ Active Storage, and then a CDN starts acting like it’s got full access. This is a situation I’ve personally run into several times, most memorably while scaling a large educational platform a few years back. It's never a single, obvious culprit; it's usually a combination of factors that lead to the caching of these seemingly secure files. Let's break it down systematically.
+,  It’s a frustrating scenario when you’re dealing with what you think are private assets, especially those managed through Rails’ Active Storage, and then a CDN starts acting like it’s got full access. This is a situation I’ve personally run into several times, most memorably while scaling a large educational platform a few years back. It's never a single, obvious culprit; it's usually a combination of factors that lead to the caching of these seemingly secure files. Let's break it down systematically.
 
 The core issue isn’t about the CDN magically knowing the location of your private assets without being authorized, rather it lies in how authorization and caching interact, particularly at the edge. We often assume that if our application checks for a user’s permission to access an asset *before* serving it, the CDN somehow ‘inherits’ this restriction. Unfortunately, that’s rarely the case. CDNs, by design, are optimized for rapid delivery of content, which often involves caching based on the URL itself.
 

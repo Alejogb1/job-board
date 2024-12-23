@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-make-inline-keyboards-for-telegram-bots-with-values-in-ruby"
 ---
 
-Alright, let's tackle this. It's a situation I've found myself in more than once, crafting interactive Telegram bots with Ruby, and those inline keyboards are indeed a critical component for a smoother user experience. The core challenge, as you've probably already encountered, isn't just *displaying* buttons; it's connecting those buttons to actionable data—effectively, transmitting values that your bot can then process.
+Alright,  It's a situation I've found myself in more than once, crafting interactive Telegram bots with Ruby, and those inline keyboards are indeed a critical component for a smoother user experience. The core challenge, as you've probably already encountered, isn't just *displaying* buttons; it's connecting those buttons to actionable data—effectively, transmitting values that your bot can then process.
 
 From experience, I know the standard `reply_markup` approach, while suitable for some use cases, often falls short when you need more complex interactions, where each button press triggers a distinct, data-rich operation. This is where inline keyboards with callback data shine. Let’s break down how to do this effectively in Ruby.
 

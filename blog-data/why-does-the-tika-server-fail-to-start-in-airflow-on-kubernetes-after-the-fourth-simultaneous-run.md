@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-the-tika-server-fail-to-start-in-airflow-on-kubernetes-after-the-fourth-simultaneous-run"
 ---
 
-Okay, let’s tackle this. I’ve seen this specific issue, or variations of it, pop up more times than I care to count, and it usually boils down to a combination of resource contention and how Tika server is behaving under load. It's a classic example of where seemingly innocent concurrent processes can expose unexpected limitations. It’s not just a Tika problem; it’s often a canary in the coal mine pointing to other underlying architectural aspects needing attention.
+, let’s tackle this. I’ve seen this specific issue, or variations of it, pop up more times than I care to count, and it usually boils down to a combination of resource contention and how Tika server is behaving under load. It's a classic example of where seemingly innocent concurrent processes can expose unexpected limitations. It’s not just a Tika problem; it’s often a canary in the coal mine pointing to other underlying architectural aspects needing attention.
 
 From my experience, setting up Tika as a service within a Kubernetes environment intended for parallel processing in Airflow – precisely as you describe – initially seems straightforward. You package Tika, expose the relevant port, and off you go. The first few runs might seem flawless, but then, predictably, around the fourth concurrent launch, things fall apart. The Tika server refuses to initialize. Let's break down why this happens, focusing on practicalities and offering concrete examples.
 

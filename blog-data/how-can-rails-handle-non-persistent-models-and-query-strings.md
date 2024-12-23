@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-rails-handle-non-persistent-models-and-query-strings"
 ---
 
-Okay, let's tackle this. Been there, done that a few times in my career, especially when building those complex dashboards that needed a lot of temporary data handling. It's interesting how Rails, a framework known for its strong emphasis on database-backed models, manages the ephemeral world of non-persistent data and query strings. It doesn't inherently *persist* such things, but it provides a robust set of tools to handle them effectively.
+,  Been there, done that a few times in my career, especially when building those complex dashboards that needed a lot of temporary data handling. It's interesting how Rails, a framework known for its strong emphasis on database-backed models, manages the ephemeral world of non-persistent data and query strings. It doesn't inherently *persist* such things, but it provides a robust set of tools to handle them effectively.
 
 Essentially, when we talk about non-persistent models, we're referring to ruby objects that behave like active record models but are not backed by a database table. They exist only in memory, typically within the lifespan of a request or a user session. This is crucial for situations where you're working with temporary forms, data transformations, or external api results before you decide to persist any of that data. Query strings, of course, are the ubiquitous key-value pairs appended to urls, used to transmit parameters between client and server. Rails provides mechanisms to parse, access, and work with these parameters conveniently.
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "where-to-place-the-systemverilog-interfaces-and-how-to-name-the-interfaces-and"
 ---
 
-Alright so you're asking about where to put your SystemVerilog interfaces and how to name them right I get it This is a classic problem that everyone bumps into eventually when dealing with larger more complex designs Believe me I've been there I remember back in the day when I was working on this crazy high-speed memory controller I had interfaces scattered everywhere like a digital garbage dump It was a nightmare to debug and even worse to maintain So I learned my lesson the hard way and now I'm here to share some experience
+so you're asking about where to put your SystemVerilog interfaces and how to name them right I get it This is a classic problem that everyone bumps into eventually when dealing with larger more complex designs Believe me I've been there I remember back in the day when I was working on this crazy high-speed memory controller I had interfaces scattered everywhere like a digital garbage dump It was a nightmare to debug and even worse to maintain So I learned my lesson the hard way and now I'm here to share some experience
 
 First let's talk about placement because that's often the biggest headache A lot of people just dump their interfaces into whatever file they happen to be working on at the time its a mess and its the definition of spaghetti code it should be avoided I've seen entire projects with a single file holding like a hundred interfaces Seriously it was like the wild west of digital design
 

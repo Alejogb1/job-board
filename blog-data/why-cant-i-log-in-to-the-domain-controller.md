@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-cant-i-log-in-to-the-domain-controller"
 ---
 
-Let's tackle this. A login failure against a domain controller (dc) can manifest in several distinct ways, each hinting at a different underlying problem. In my years managing enterprise environments, I've seen this scenario play out more times than I care to remember, and it rarely boils down to a simple case of incorrect password entry. Let’s break down the most common culprits and the diagnostic steps I typically take.
+ A login failure against a domain controller (dc) can manifest in several distinct ways, each hinting at a different underlying problem. In my years managing enterprise environments, I've seen this scenario play out more times than I care to remember, and it rarely boils down to a simple case of incorrect password entry. Let’s break down the most common culprits and the diagnostic steps I typically take.
 
 First, let's acknowledge that the error message displayed is often generic. "Incorrect username or password" doesn't necessarily mean that. The problem might lie deeper in the authentication process or even with the infrastructure supporting it. A first practical step is always to verify the basics from a different, known-working client machine to rule out immediate client-side issues.
 

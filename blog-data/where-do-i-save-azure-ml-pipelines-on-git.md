@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "where-do-i-save-azure-ml-pipelines-on-git"
 ---
 
-Okay, so you're facing the classic version control quandary with Azure Machine Learning pipelines. I've definitely been down that road, and let me tell you, there’s a bit more to it than just “put it in git”. My experience, especially back in the days of dealing with multi-team projects heavily leveraging Azure ML, has hammered home the importance of a structured approach. The quick answer is, yes, use Git, but where and how you organize your repo really impacts maintainability, collaboration, and ultimately, your deployment success.
+, so you're facing the classic version control quandary with Azure Machine Learning pipelines. I've definitely been down that road, and let me tell you, there’s a bit more to it than just “put it in git”. My experience, especially back in the days of dealing with multi-team projects heavily leveraging Azure ML, has hammered home the importance of a structured approach. The quick answer is, yes, use Git, but where and how you organize your repo really impacts maintainability, collaboration, and ultimately, your deployment success.
 
 The problem isn't really *where* you save them - Git handles any kind of file - but rather *how* you structure and manage the different aspects that make up an Azure ML pipeline. A typical pipeline doesn’t just consist of python code; it encompasses configuration files, script dependencies, environment definitions, and potentially even packaged data artifacts. Putting it all in one giant directory is a recipe for chaos.
 

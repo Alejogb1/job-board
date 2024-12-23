@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-puma-load-tls-certificates-from-a-configurable-source"
 ---
 
-Okay, let's tackle this. I remember a project a few years back, involving a high-throughput API gateway, where we had stringent security requirements. We absolutely had to manage our TLS certificates programmatically – no hardcoded paths, no manual restarts. The question of whether Puma, specifically, could load TLS certificates from a configurable source was something we delved deep into. The short answer is: yes, absolutely, with a bit of setup.
+,  I remember a project a few years back, involving a high-throughput API gateway, where we had stringent security requirements. We absolutely had to manage our TLS certificates programmatically – no hardcoded paths, no manual restarts. The question of whether Puma, specifically, could load TLS certificates from a configurable source was something we delved deep into. The short answer is: yes, absolutely, with a bit of setup.
 
 The crux of the matter isn’t about Puma inherently supporting a magic, dynamic certificate loader. Instead, it’s about understanding Puma's configuration capabilities and leveraging the underlying Ruby ecosystem, particularly the `OpenSSL` library. Puma loads its configuration at startup, reading primarily from a configuration file or environment variables. We can leverage this process to build our solution. The core challenge isn’t so much *if* it's possible, but how to do it cleanly, securely, and reliably in production.
 

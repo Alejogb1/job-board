@@ -4,7 +4,7 @@ date: "2024-12-11"
 id: "how-does-the-analogy-of-evolution-help-explain-the-training-dynamics-of-neural-networks"
 ---
 
-Okay so you wanna talk about neural networks and how they kinda evolve right  Like Darwinian evolution but with maths and code  It's a pretty cool analogy actually  Think about it  natural selection favors organisms that are better adapted to their environment  right  well  neural networks are kinda the same  except their environment is your training data and their adaptation is adjusting their weights and biases
+ so you wanna talk about neural networks and how they kinda evolve right  Like Darwinian evolution but with maths and code  It's a pretty cool analogy actually  Think about it  natural selection favors organisms that are better adapted to their environment  right  well  neural networks are kinda the same  except their environment is your training data and their adaptation is adjusting their weights and biases
 
 The training process is basically this brutal competition amongst the network's many different possible states  Each state represents a slightly different way the network can map inputs to outputs  Initially its a total mess  random weights  random guesses  It's like a primordial soup of neural connections  a chaotic mess of potential  most states are terrible  they give completely wrong answers  but a few by random chance might get something kinda right
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-mock-and-unit-test-asynchronous-swift-55-code-using-alamofire"
 ---
 
-Alright, let's tackle this. Been down this road more times than I can count, especially when dealing with network layers in Swift. Mocking and unit testing asynchronous code, particularly when Alamofire is involved, definitely has its nuances. It’s not as straightforward as synchronous code, but with the right approach, it’s entirely manageable. I’ve personally seen several projects bogged down by a lack of proper testing for their network interactions, so this is a topic I feel strongly about.
+Alright,  Been down this road more times than I can count, especially when dealing with network layers in Swift. Mocking and unit testing asynchronous code, particularly when Alamofire is involved, definitely has its nuances. It’s not as straightforward as synchronous code, but with the right approach, it’s entirely manageable. I’ve personally seen several projects bogged down by a lack of proper testing for their network interactions, so this is a topic I feel strongly about.
 
 The core challenge, as you probably know, comes from the asynchronous nature of network requests. Alamofire operates on background threads, and your unit tests are typically run on the main thread. To properly test this, you've got to effectively control and observe the asynchronous behavior. Simply put, we need to isolate our network layer so we're not making actual API calls during tests, and we need to handle how the results are returned.
 

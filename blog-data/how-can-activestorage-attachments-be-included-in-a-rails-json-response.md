@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-activestorage-attachments-be-included-in-a-rails-json-response"
 ---
 
-Okay, let's tackle this one. I've been down this road a few times, wrestling (oops, almost slipped there!) with ActiveStorage and API responses. It’s a common scenario, where you have files uploaded through ActiveStorage and need to expose their URLs in your JSON payloads. The standard Rails serialization often doesn't include the storage details, so we need to implement this explicitly.
+, let's tackle this one. I've been down this road a few times, wrestling (oops, almost slipped there!) with ActiveStorage and API responses. It’s a common scenario, where you have files uploaded through ActiveStorage and need to expose their URLs in your JSON payloads. The standard Rails serialization often doesn't include the storage details, so we need to implement this explicitly.
 
 The core challenge is that ActiveStorage doesn't automatically include file URLs in your models' attributes, and rightly so. It's designed to manage storage and retrieval, but not necessarily API representation. So, when we use the standard `.to_json` or similar serialization mechanisms, we only get the model's basic attributes, not the URLs for the attached files. To add them, we need to modify how our models are serialized or use serializers. I've always found explicit serialization more predictable and maintainable in the long run.
 

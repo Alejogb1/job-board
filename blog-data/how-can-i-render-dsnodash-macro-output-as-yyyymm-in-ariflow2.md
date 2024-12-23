@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-render-dsnodash-macro-output-as-yyyymm-in-ariflow2"
 ---
 
-Okay, let’s tackle this. The task of transforming the `ds_nodash` macro output in Airflow 2 into a `YYYY/MM` format is indeed a common need, and I’ve certainly bumped into this exact scenario during my time building data pipelines. It’s a classic case of needing a bit more control over the date formatting than what's directly provided by the default macros. Let me walk you through how I've typically handled this, combining python string manipulation within the airflow context.
+, let’s tackle this. The task of transforming the `ds_nodash` macro output in Airflow 2 into a `YYYY/MM` format is indeed a common need, and I’ve certainly bumped into this exact scenario during my time building data pipelines. It’s a classic case of needing a bit more control over the date formatting than what's directly provided by the default macros. Let me walk you through how I've typically handled this, combining python string manipulation within the airflow context.
 
 Firstly, it's crucial to understand that `ds_nodash` essentially returns a string in the `YYYYMMDD` format. The key is to capture this string and then restructure it using python's string handling capabilities within a task’s execution context. The airflow templating system, which leverages jinja2, is powerful enough to accomplish this. We're not dealing with any magic or unusual configurations here, just good old-fashioned string parsing.
 

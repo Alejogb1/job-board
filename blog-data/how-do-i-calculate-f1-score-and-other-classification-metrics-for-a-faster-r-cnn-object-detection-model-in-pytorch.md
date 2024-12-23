@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-calculate-f1-score-and-other-classification-metrics-for-a-faster-r-cnn-object-detection-model-in-pytorch"
 ---
 
-Okay, let's delve into calculating F1-score and other classification metrics for a Faster R-CNN object detection model. This is a recurring challenge, and I recall a particularly frustrating project back in '18 where our model was nailing the bounding boxes but the overall classification performance, as assessed by our client, seemed... off. It turned out we were focusing too much on the box regression and neglecting proper classification analysis. We weren't looking beyond simple accuracy, which as you likely know, is a very misleading metric in imbalanced datasets.
+, let's delve into calculating F1-score and other classification metrics for a Faster R-CNN object detection model. This is a recurring challenge, and I recall a particularly frustrating project back in '18 where our model was nailing the bounding boxes but the overall classification performance, as assessed by our client, seemed... off. It turned out we were focusing too much on the box regression and neglecting proper classification analysis. We weren't looking beyond simple accuracy, which as you likely know, is a very misleading metric in imbalanced datasets.
 
 The core issue here isn't *just* about applying formulas, but fundamentally about understanding how object detection outputs must be translated into the context of classification metrics. We need to bridge the gap between bounding box predictions and class predictions.
 

@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "what-are-the-implications-of-different-one-hot-encoder-classes"
 ---
 
-Okay, let's tackle this one. It's a topic I've actually dealt with firsthand on more than one occasion, usually involving machine learning pipelines where categorical data was... let's just say, 'enthusiastically' handled initially. The seemingly simple choice of one-hot encoder class can have surprisingly profound implications, far beyond just getting the data into a numerical format that a model can ingest.
+, let's tackle this one. It's a topic I've actually dealt with firsthand on more than one occasion, usually involving machine learning pipelines where categorical data was... let's just say, 'enthusiastically' handled initially. The seemingly simple choice of one-hot encoder class can have surprisingly profound implications, far beyond just getting the data into a numerical format that a model can ingest.
 
 Essentially, we're talking about the method used to transform categorical variables (think colors, cities, product types) into a format suitable for algorithms that primarily operate on numerical data. One-hot encoding does this by creating new binary columns for each unique category, setting a '1' for the column corresponding to the category and '0' for the rest. The 'implications' of different classes of one-hot encoders typically revolve around how they handle these variables and what options they provide during that transformation. We're not just talking about the mechanics of converting text to numbers, but also things like handling missing categories, dealing with potentially large numbers of categories, managing sparsity, and ensuring consistent mappings between training and deployment.
 

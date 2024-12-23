@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "does-the-order-of-taskcompletedtask-calls-affect-results"
 ---
 
-Alright, let's tackle this. From the trenches of asynchronous programming, I can tell you, the apparent simplicity of `Task.CompletedTask` can be quite deceiving, and its impact on task execution order, while seemingly trivial, can be more nuanced than one might initially assume. You ask if the order affects results, and the short answer is: it depends heavily on context, but it *can* absolutely lead to unexpected behavior if you're not paying close attention.
+Alright,  From the trenches of asynchronous programming, I can tell you, the apparent simplicity of `Task.CompletedTask` can be quite deceiving, and its impact on task execution order, while seemingly trivial, can be more nuanced than one might initially assume. You ask if the order affects results, and the short answer is: it depends heavily on context, but it *can* absolutely lead to unexpected behavior if you're not paying close attention.
 
 My experience stems from a rather hairy parallel processing system I worked on a few years back – think a multi-threaded data pipeline crunching through terabytes of scientific data. We heavily relied on async tasks for concurrent operations, and I remember a debugging session that stretched into the wee hours of the morning, all because of a seemingly innocuous ordering issue with `Task.CompletedTask`. It wasn't a bug in the framework, but rather a misinterpretation of its behavior, and that's the important thing to understand.
 

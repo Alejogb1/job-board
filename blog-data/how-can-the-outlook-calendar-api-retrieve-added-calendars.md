@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-can-the-outlook-calendar-api-retrieve-added-calendars"
 ---
 
-Okay, let's tackle this. I've spent quite a bit of time integrating with the Microsoft Graph API, specifically handling calendar functionalities, and retrieving added calendars can present some nuances that aren't immediately obvious. Let’s look into how it works, and some approaches I’ve found effective.
+,  I've spent quite a bit of time integrating with the Microsoft Graph API, specifically handling calendar functionalities, and retrieving added calendars can present some nuances that aren't immediately obvious. Let’s look into how it works, and some approaches I’ve found effective.
 
 Retrieving added calendars in Outlook via the Graph API isn't simply about grabbing a flat list. What we're dealing with are effectively ‘calendar groups,’ where the primary user's calendar sits alongside any other calendars they've added, including shared ones, group calendars, and calendars from other linked accounts. Think of it as a hierarchical structure – the user’s primary calendar is their baseline, and everything else is nested alongside it, though not necessarily 'under' it. We need to traverse this landscape appropriately.
 

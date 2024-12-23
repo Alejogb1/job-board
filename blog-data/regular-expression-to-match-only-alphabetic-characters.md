@@ -4,13 +4,13 @@ date: "2024-12-13"
 id: "regular-expression-to-match-only-alphabetic-characters"
 ---
 
-Alright so you wanna match only alphabetic characters with a regular expression right Been there done that Probably a hundred times Seems simple enough but trust me its easy to trip up on the edge cases Lets break it down and Ill share some of my war stories
+so you wanna match only alphabetic characters with a regular expression right Been there done that Probably a hundred times Seems simple enough but trust me its easy to trip up on the edge cases Lets break it down and Ill share some of my war stories
 
 First things first I mean the most basic approach if you are dealing with standard english alphabet is going to be something like `[a-zA-Z]` That seems like a no-brainer right And most of the time it works perfectly fine But here's where things get interesting You start throwing in real-world text and suddenly you're dealing with a whole zoo of characters
 
 I remember this one project I was working on way back when It was a web scraper scraping product names and reviews from some dodgy e-commerce site I figured `[a-zA-Z]` would be enough for name validation I mean who uses non-alphabetic characters in product names right I was so wrong So so wrong Turns out some products had names with all sorts of accented characters foreign letters you name it My simple regex choked and spat out garbage So I learned my lesson the hard way always test your regex against real data not just some textbook example
 
-Now you might be thinking okay I need to handle unicode What about `\p{L}` Yeah thats a good start `\p{L}` is a unicode property that matches any letter from any alphabet Its more flexible than `[a-zA-Z]` and will cover you against those nasty é á ü and all the other non-ascii characters This works wonders most of the time Its a pretty solid workhorse
+Now you might be thinking  I need to handle unicode What about `\p{L}` Yeah thats a good start `\p{L}` is a unicode property that matches any letter from any alphabet Its more flexible than `[a-zA-Z]` and will cover you against those nasty é á ü and all the other non-ascii characters This works wonders most of the time Its a pretty solid workhorse
 
 But its also not bulletproof and if you are working on extremely sensitive things like password validation you might need to be very strict about what you accept in the input Remember that you can also use different character sets like ASCII which will help to validate that the input characters are actually what you think they are and not some weird character encoded with unicode
 

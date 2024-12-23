@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-load-local-and-appgroup-nspersistentcontainers-in-coredata"
 ---
 
-Okay, let's tackle this. I remember a particularly thorny project back in 2018, a shared task manager that needed to sync across a user's main app and a widget. It became a deep dive into the nuances of `NSPersistentContainer` and how to manage data both locally and within an app group context. What you're aiming for isn't particularly difficult once you grasp the underlying mechanisms. Essentially, you're dealing with two separate data stores, potentially on different paths, each needing its own container.
+,  I remember a particularly thorny project back in 2018, a shared task manager that needed to sync across a user's main app and a widget. It became a deep dive into the nuances of `NSPersistentContainer` and how to manage data both locally and within an app group context. What you're aiming for isn't particularly difficult once you grasp the underlying mechanisms. Essentially, you're dealing with two separate data stores, potentially on different paths, each needing its own container.
 
 Let’s start with the local container, which is usually straightforward. The critical part here is setting up the `NSPersistentContainer` with the correct model and store description. This local store will generally reside in your application’s document directory. Here's a simple example showing a basic setup:
 

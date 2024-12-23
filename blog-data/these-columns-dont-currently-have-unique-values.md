@@ -4,11 +4,11 @@ date: "2024-12-13"
 id: "these-columns-dont-currently-have-unique-values"
 ---
 
-Okay so you're saying these columns don't have unique values right I've been there trust me This sounds like a data integrity headache a classic if you ask me I've wrestled with this exact beast more times than I care to admit and it's almost always a pain
+ so you're saying these columns don't have unique values right I've been there trust me This sounds like a data integrity headache a classic if you ask me I've wrestled with this exact beast more times than I care to admit and it's almost always a pain
 
 So you've got columns where the values aren't unique That means you've probably got duplicates and that's not good for a lot of operations especially if you're trying to treat these columns as primary keys or foreign keys Or even if you're just trying to do some aggregation that needs distinct values for accuracy This isn't just bad for your data it's bad for your soul So first things first let's diagnose the situation and see what we're working with
 
-Okay you need to find out which columns exactly have those duplicated values It's not always obvious even with a small dataset and a huge one well let’s not go there We can use a simple SQL query to check this I use SQL most of the times for these kind of tasks and you should too
+ you need to find out which columns exactly have those duplicated values It's not always obvious even with a small dataset and a huge one well let’s not go there We can use a simple SQL query to check this I use SQL most of the times for these kind of tasks and you should too
 
 ```sql
 SELECT column_name, COUNT(*)

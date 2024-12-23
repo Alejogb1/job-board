@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "unexpected-identifier-in-class-body-error-when-using-export-in-godot-4-0-2"
 ---
 
-Okay so you're hitting that "unexpected identifier in class body" error in Godot 4.0.2 when you're trying to use `export` inside a class body thats a classic one I've wrestled with that beast before let me break it down for you because it's not always intuitive especially if you're coming from other languages
+ so you're hitting that "unexpected identifier in class body" error in Godot 4.0.2 when you're trying to use `export` inside a class body thats a classic one I've wrestled with that beast before let me break it down for you because it's not always intuitive especially if you're coming from other languages
 
 First off the error message itself is telling you what's wrong but in that wonderfully cryptic compiler way its saying you can't just declare variables as export right in the class declaration like you might try in say C++ or Python even if you've used GDScript 3.x
 
@@ -91,6 +91,6 @@ I had a situation where I was trying to make a base class for all my custom enti
 
 Now what are some good resources for Godot specifically I'd say definitely the official Godot documentation its actually quite good and detailed they have a whole section on GDScript best practices and a lot of the stuff is in there including the details on `export`. There is a book that is quite good if you want to go in depth called "Godot Engine Game Development Projects" from Packt. If you want a more academic approach there are a few papers available on game engine architecture and how they handle scripting languages but mostly these are at a much higher level of abstraction and wont really help with this particular problem it's just mostly to learn how it works internally for engine development purposes or similar.
 
-Oh before I forget here's a little programmer joke to lighten the mood Why did the programmer quit his job? Because he didn't get arrays get it haha okay i'll stop
+Oh before I forget here's a little programmer joke to lighten the mood Why did the programmer quit his job? Because he didn't get arrays get it haha  i'll stop
 
 So yeah just remember exports aren't allowed directly in the class declaration they gotta be declared as members then initialised somewhere else and that is basically it. Hope that helps you out and feel free to ask if you are struggling with this again.

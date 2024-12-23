@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-the-user-undefined-when-a-function-returns-an-error"
 ---
 
-Okay, let's tackle this common, yet often perplexing, scenario. I've seen this pattern trip up quite a few developers over the years – myself included, back in the early days. The core issue isn't necessarily that a function *returns* an error, but rather *how* that error handling interacts with the expected return value, and how JavaScript, specifically, handles this. We're talking about situations where, expecting a user object, we find ourselves staring at an 'undefined' where we hoped for data, often after an error has seemingly occurred within the function.
+, let's tackle this common, yet often perplexing, scenario. I've seen this pattern trip up quite a few developers over the years – myself included, back in the early days. The core issue isn't necessarily that a function *returns* an error, but rather *how* that error handling interacts with the expected return value, and how JavaScript, specifically, handles this. We're talking about situations where, expecting a user object, we find ourselves staring at an 'undefined' where we hoped for data, often after an error has seemingly occurred within the function.
 
 The crucial thing to grasp is that JavaScript functions, by default, return 'undefined' if no explicit return statement is encountered. This isn't about the error itself; it’s about the path of execution within the function. If an error occurs and disrupts the normal flow, and the function doesn't explicitly handle that error with a specific return value, the implicit 'undefined' return takes effect.
 

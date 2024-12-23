@@ -4,9 +4,9 @@ date: "2024-12-13"
 id: "difference-between-master-and-transaction-table"
 ---
 
-Alright so you're asking about the difference between master tables and transaction tables right I get it This is a pretty fundamental concept in database design but it can be confusing if you haven't worked with relational databases for a while I mean I’ve been there back when I was still learning the ropes probably messing up some schema designs that would make grown database admins cry but hey we all start somewhere right I've even had to rewrite entire table structures because of this kind of stuff you can learn the hard way sometimes
+so you're asking about the difference between master tables and transaction tables right I get it This is a pretty fundamental concept in database design but it can be confusing if you haven't worked with relational databases for a while I mean I’ve been there back when I was still learning the ropes probably messing up some schema designs that would make grown database admins cry but hey we all start somewhere right I've even had to rewrite entire table structures because of this kind of stuff you can learn the hard way sometimes
 
-Okay so in the simplest terms master tables and transaction tables hold different kinds of data They serve completely different purposes I like to think of it like this master tables store static data like the core entities of your system Think of things like your products your users your stores basically all the foundational elements that don’t change too often transaction tables on the other hand they record events happenings changes These are the tables that track things like orders sales user logins stock movements all those activities that happen all the time
+ so in the simplest terms master tables and transaction tables hold different kinds of data They serve completely different purposes I like to think of it like this master tables store static data like the core entities of your system Think of things like your products your users your stores basically all the foundational elements that don’t change too often transaction tables on the other hand they record events happenings changes These are the tables that track things like orders sales user logins stock movements all those activities that happen all the time
 
 Let me break it down further master tables are your reference points your foundational data source They're designed for stability think of it as the dictionary or encyclopedia for your application They contain information about the entities that drive your application for example a `users` table would be a classic master table it stores information about each user things like their id name email address and other persistent profile attributes These fields don’t change that often that is a master table job I know I've done that too many times
 
@@ -65,6 +65,6 @@ One thing I tend to see when people don't understand the difference or the norma
 
 I hope that clears it up for you there are no magic tricks or silver bullets it is just good old fundamental database design concepts understanding when to use master and when to use transaction tables is a must when you want to create an application that has good performance and is easily maintainable in the future.
 
-Ah I think I remembered a joke from back in the day about this: What do you call a table that's always changing? A transaction table obviously haha okay okay back to the code.
+Ah I think I remembered a joke from back in the day about this: What do you call a table that's always changing? A transaction table obviously haha   back to the code.
 
 So yeah that's the main difference I hope that’s all clear enough for you I tried to be as practical as I could with real examples from what I’ve experienced in my career. Good luck out there.

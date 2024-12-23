@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-does-tensorflows-textvectorization-truncate-text"
 ---
 
-Okay, let's tackle the specifics of text truncation within TensorFlow's `TextVectorization` layer. This is a critical aspect, particularly when dealing with sequence data where consistent input lengths are necessary for many machine learning models. I've spent a fair bit of time wrestling—err, *working*—with this specific behavior across several natural language processing projects, so I can offer some insights based on practical experience, not just theory.
+, let's tackle the specifics of text truncation within TensorFlow's `TextVectorization` layer. This is a critical aspect, particularly when dealing with sequence data where consistent input lengths are necessary for many machine learning models. I've spent a fair bit of time wrestling—err, *working*—with this specific behavior across several natural language processing projects, so I can offer some insights based on practical experience, not just theory.
 
 The `TextVectorization` layer in TensorFlow isn't just about converting strings into numerical representations; it also handles pre-processing steps, including, as you've asked, truncation. The process itself is straightforward but can have subtle implications if not understood clearly. Let's break down how it operates.
 

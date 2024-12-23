@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "unwrapping-phase-signal-processing"
 ---
 
-Alright so you're wrestling with unwrapping phase I know that beast pretty well let me break down what I've learned over the years dealing with this stuff It's a common headache in signal processing especially if you're working with things like radar interferometry or magnetic resonance imaging
+so you're wrestling with unwrapping phase I know that beast pretty well let me break down what I've learned over the years dealing with this stuff It's a common headache in signal processing especially if you're working with things like radar interferometry or magnetic resonance imaging
 
 Essentially you're stuck with wrapped phase which is the output of functions like arctangent and that gives you a value between -π and +π the issue is that the actual underlying phase might have gone way beyond that range it's like having a clock that only shows hours between 1 and 12 but the day keeps rolling on You need to unwrap that thing to get the real continuous phase
 

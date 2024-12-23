@@ -4,7 +4,7 @@ date: "2024-12-11"
 id: "how-do-causal-interventions-on-models-work-and-why-are-they-important-for-understanding-ai-systems"
 ---
 
-Okay so you wanna know about causal interventions in AI models right  Pretty cool stuff actually  It's all about figuring out what *causes* what in these complex systems we've built  Not just seeing correlations like "oh this input always leads to that output" but actually understanding the underlying mechanisms  Why is that important  Well think about it  if you just have correlations you're flying blind  You could tweak something thinking it'll improve things but actually break the whole thing because you didn't understand the *why* behind the system's behavior
+ so you wanna know about causal interventions in AI models right  Pretty cool stuff actually  It's all about figuring out what *causes* what in these complex systems we've built  Not just seeing correlations like "oh this input always leads to that output" but actually understanding the underlying mechanisms  Why is that important  Well think about it  if you just have correlations you're flying blind  You could tweak something thinking it'll improve things but actually break the whole thing because you didn't understand the *why* behind the system's behavior
 
 Imagine you've got this fancy AI predicting customer churn  You see high churn correlated with low engagement but is it *because* of low engagement or is there something else going on  Maybe customers with bad customer service experiences have *both* low engagement and high churn  Correlation doesn't tell you that  A causal analysis would  You could then intervene specifically on customer service to reduce churn instead of just throwing money at generic engagement boosts which might not work
 

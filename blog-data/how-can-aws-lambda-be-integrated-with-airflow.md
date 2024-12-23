@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-aws-lambda-be-integrated-with-airflow"
 ---
 
-Okay, let's tackle this one. It’s a question that's cropped up quite a few times in projects over the years, usually when migrating legacy batch processing systems to something more scalable. integrating aws lambda with apache airflow isn't always straightforward, but the payoff can be considerable. I remember one particular project, back at "Data Dynamics Inc," where we moved a nightly data transformation job from a monolithic server to a lambda/airflow architecture; the performance and cost savings were significant. Let's delve into how you can effectively achieve this integration.
+, let's tackle this one. It’s a question that's cropped up quite a few times in projects over the years, usually when migrating legacy batch processing systems to something more scalable. integrating aws lambda with apache airflow isn't always straightforward, but the payoff can be considerable. I remember one particular project, back at "Data Dynamics Inc," where we moved a nightly data transformation job from a monolithic server to a lambda/airflow architecture; the performance and cost savings were significant. Let's delve into how you can effectively achieve this integration.
 
 The core idea revolves around using airflow to orchestrate the execution of lambda functions. Airflow, acting as the workflow manager, schedules and monitors tasks, while lambda provides the serverless compute environment. It's crucial to understand that airflow doesn’t inherently "know" about lambda; we need to provide it with the necessary mechanism. This is primarily achieved through the `boto3` library, aws’s sdk for python, and the airflow's built-in operators.
 

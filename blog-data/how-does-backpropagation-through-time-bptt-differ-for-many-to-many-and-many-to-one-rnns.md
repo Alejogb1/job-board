@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-does-backpropagation-through-time-bptt-differ-for-many-to-many-and-many-to-one-rnns"
 ---
 
-Okay, let’s tackle this one. It’s a core concept for understanding how recurrent neural networks (RNNs) learn, and the nuanced differences in backpropagation through time (BPTT) across various architectures are key to effective model building. I remember struggling with this myself early on, trying to get sequence-to-sequence models to converge. So let’s unpack it, focusing on practical differences between many-to-many and many-to-one RNN setups.
+, let’s tackle this one. It’s a core concept for understanding how recurrent neural networks (RNNs) learn, and the nuanced differences in backpropagation through time (BPTT) across various architectures are key to effective model building. I remember struggling with this myself early on, trying to get sequence-to-sequence models to converge. So let’s unpack it, focusing on practical differences between many-to-many and many-to-one RNN setups.
 
 Essentially, BPTT is the algorithm that unrolls the recurrent network across its temporal dimension, allowing us to calculate the error gradient with respect to the network’s parameters. It’s like having a regular, deep neural network but with shared weights applied across time steps. The 'through time' part implies that the error signal is propagated backward, not only through the network's layers at one specific point in time, but also across the sequence of inputs.
 

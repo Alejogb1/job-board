@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-fund-smart-contracts"
 ---
 
-Okay, let's talk about funding smart contracts. It's a question I’ve pondered a fair bit over the years, especially back when we were first deploying systems that relied heavily on them. I've seen firsthand both the immense potential and the frustrating limitations of underfunded contracts, and I can tell you, a well-funded smart contract is the foundation for a truly reliable decentralized application.
+, let's talk about funding smart contracts. It's a question I’ve pondered a fair bit over the years, especially back when we were first deploying systems that relied heavily on them. I've seen firsthand both the immense potential and the frustrating limitations of underfunded contracts, and I can tell you, a well-funded smart contract is the foundation for a truly reliable decentralized application.
 
 It's easy to think of a smart contract as just lines of code, immutable and self-executing. However, that’s an incomplete picture. Smart contracts, at their core, often require a financial backbone for their operation. This stems from several key reasons, and it’s a little more nuanced than simply the cost of gas for transaction execution.
 

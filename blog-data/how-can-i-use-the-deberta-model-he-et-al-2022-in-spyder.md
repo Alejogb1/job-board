@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-use-the-deberta-model-he-et-al-2022-in-spyder"
 ---
 
-Alright, let's tackle this. I've spent a fair amount of time integrating various transformer models, including DeBERTa, into projects, and integrating them into an environment like Spyder is generally quite straightforward, provided you’ve got the right dependencies set up. The key challenge isn't really Spyder itself, but ensuring you have a solid foundation of the required python packages, and understanding how to instantiate and use the model correctly, given that it's a bit more involved than your standard feed-forward network.
+Alright,  I've spent a fair amount of time integrating various transformer models, including DeBERTa, into projects, and integrating them into an environment like Spyder is generally quite straightforward, provided you’ve got the right dependencies set up. The key challenge isn't really Spyder itself, but ensuring you have a solid foundation of the required python packages, and understanding how to instantiate and use the model correctly, given that it's a bit more involved than your standard feed-forward network.
 
 The DeBERTa model, as you know, introduced disentangled attention, which allows the model to attend to content and position separately. That’s often where the performance gains come from, compared to models like BERT. The paper "DeBERTa: Decoding-enhanced BERT with Disentangled Attention" by He et al. (2022) is an essential read for fully grasping the architecture and its nuances. It's beneficial to go through the original paper to really understand what’s going on under the hood.
 

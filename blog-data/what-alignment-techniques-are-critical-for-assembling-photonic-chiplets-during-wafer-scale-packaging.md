@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "what-alignment-techniques-are-critical-for-assembling-photonic-chiplets-during-wafer-scale-packaging"
 ---
 
-Okay so you wanna know about aligning photonic chiplets right during that whole wafer-scale packaging thing  pretty cool stuff actually  It's way more complex than just slapping chips together you know  like Lego but way smaller and way more delicate and the light's involved which adds a whole other level of craziness  We're talking nanometer precision here not millimeters  So alignment's the absolute king  If you're off even a tiny bit your whole system's toast  Think of it like trying to thread a needle with a microscope  except the needle is a super tiny chip and the thread is a laser beam
+ so you wanna know about aligning photonic chiplets right during that whole wafer-scale packaging thing  pretty cool stuff actually  It's way more complex than just slapping chips together you know  like Lego but way smaller and way more delicate and the light's involved which adds a whole other level of craziness  We're talking nanometer precision here not millimeters  So alignment's the absolute king  If you're off even a tiny bit your whole system's toast  Think of it like trying to thread a needle with a microscope  except the needle is a super tiny chip and the thread is a laser beam
 
 The biggies for alignment are gonna be  global alignment and local alignment  Think of it like getting to the right city then finding the right house  Global is that big picture stuff getting the general area right  local's the nitty-gritty details  getting things perfectly placed within that area
 

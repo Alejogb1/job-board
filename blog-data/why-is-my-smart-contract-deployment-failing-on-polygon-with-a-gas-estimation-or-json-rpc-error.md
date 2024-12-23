@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-my-smart-contract-deployment-failing-on-polygon-with-a-gas-estimation-or-json-rpc-error"
 ---
 
-Alright, let's tackle this. Deployment failures, particularly when dealing with smart contracts and networks like Polygon, can be intensely frustrating. I've personally spent more hours than I care to recall debugging these sorts of issues, and it's rarely a single smoking gun. The error messages, especially those involving gas estimation or generic JSON-RPC errors, are often just symptoms of deeper, underlying problems.
+Alright,  Deployment failures, particularly when dealing with smart contracts and networks like Polygon, can be intensely frustrating. I've personally spent more hours than I care to recall debugging these sorts of issues, and it's rarely a single smoking gun. The error messages, especially those involving gas estimation or generic JSON-RPC errors, are often just symptoms of deeper, underlying problems.
 
 First off, a "gas estimation error" is usually your immediate clue that the Ethereum Virtual Machine (evm) is struggling to figure out how much computational work your contract deployment will entail. This could be due to a variety of reasons. The most common issue I’ve encountered is a discrepancy between what the evm expects and what the contract code requires, usually during its constructor function execution. For example, if you have intricate logic in the constructor, perhaps a complex loop or a call to another contract, the initial gas estimate might undershoot significantly, leading to a transaction failure.
 

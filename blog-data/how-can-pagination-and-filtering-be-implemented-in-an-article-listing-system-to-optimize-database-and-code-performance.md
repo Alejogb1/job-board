@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-pagination-and-filtering-be-implemented-in-an-article-listing-system-to-optimize-database-and-code-performance"
 ---
 
-Okay, let's tackle this one. I’ve seen pagination and filtering implemented, and *mis-implemented*, countless times. When dealing with article listings, or any large dataset for that matter, doing it poorly can grind your application to a halt. We aren't just aiming for a functional system; we're aiming for one that scales gracefully and provides a snappy user experience. The key is to shift as much load as possible to the database while keeping the logic clear and maintainable on the application side.
+, let's tackle this one. I’ve seen pagination and filtering implemented, and *mis-implemented*, countless times. When dealing with article listings, or any large dataset for that matter, doing it poorly can grind your application to a halt. We aren't just aiming for a functional system; we're aiming for one that scales gracefully and provides a snappy user experience. The key is to shift as much load as possible to the database while keeping the logic clear and maintainable on the application side.
 
 The primary concern is obviously avoiding retrieving the entire article table each time. Fetching everything and then filtering and paginating in memory is a recipe for disaster as your dataset grows. The goal here is to make the database do most of the heavy lifting, returning only the data required for the current page, filtered by the user's criteria.
 

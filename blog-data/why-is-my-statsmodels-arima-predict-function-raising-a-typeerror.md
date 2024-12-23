@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-my-statsmodels-arima-predict-function-raising-a-typeerror"
 ---
 
-Okay, let's tackle this. I’ve seen this `TypeError` with `statsmodels`' ARIMA `predict()` function more times than I’d like to count, often after a seemingly successful model fitting. It usually stems from a mismatch between the input you're providing to the `predict()` method and what the model expects, and it’s not always as obvious as a simple data type error.
+,  I’ve seen this `TypeError` with `statsmodels`' ARIMA `predict()` function more times than I’d like to count, often after a seemingly successful model fitting. It usually stems from a mismatch between the input you're providing to the `predict()` method and what the model expects, and it’s not always as obvious as a simple data type error.
 
 My experience in financial time series modeling, for example, taught me the importance of aligning date indices correctly. I remember a particularly frustrating situation where we were forecasting daily stock prices, and our prediction function kept throwing `TypeError`s. It took a good couple of hours of debugging to pinpoint the issue, which wasn't in the model’s implementation itself, but in the index of the dataframe used for prediction.
 

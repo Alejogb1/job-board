@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-implement-uniqueness-validation-with-activerecord-typedstore"
 ---
 
-Let's tackle this. Dealing with uniqueness constraints when using `activerecord-typedstore` can indeed present a unique set of challenges. It's not your typical database-level unique index situation, and I've definitely seen teams stumble over this in practice, particularly in larger projects where data integrity is paramount. The key here lies in understanding how `typedstore` stores data and crafting a suitable validation strategy around it.
+ Dealing with uniqueness constraints when using `activerecord-typedstore` can indeed present a unique set of challenges. It's not your typical database-level unique index situation, and I've definitely seen teams stumble over this in practice, particularly in larger projects where data integrity is paramount. The key here lies in understanding how `typedstore` stores data and crafting a suitable validation strategy around it.
 
 The core issue is that `typedstore` serializes attributes into a single database column, typically as a json or hstore data type. This means your traditional database unique indexes aren't going to directly work on specific keys within your stored data. You might define a key like 'email' within your typed store, but the database only sees a monolithic string or a json object. Therefore, directly creating an index on the email key isn't feasible; instead, the uniqueness has to be validated on the application level.
 

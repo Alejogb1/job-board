@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-am-i-getting-bad-requests-while-searching-runs-in-mlflow"
 ---
 
-Okay, let's tackle this. I've certainly seen my share of mlflow run search headaches, and bad requests are often more nuanced than a simple syntax error. It's rarely just a case of ‘oops, typo’; it usually involves a combination of factors interacting in ways that aren't immediately obvious. When encountering bad requests, my initial approach is to systematically break down the potential causes, which almost always boils down to the interaction between the client-side query and the server-side interpretation, often influenced by the underlying data structure.
+,  I've certainly seen my share of mlflow run search headaches, and bad requests are often more nuanced than a simple syntax error. It's rarely just a case of ‘oops, typo’; it usually involves a combination of factors interacting in ways that aren't immediately obvious. When encountering bad requests, my initial approach is to systematically break down the potential causes, which almost always boils down to the interaction between the client-side query and the server-side interpretation, often influenced by the underlying data structure.
 
 In my experience, there are three main areas to investigate when dealing with these persistent "bad request" errors: incorrect query syntax, issues with the underlying data within mlflow itself (sometimes resulting from previous logging patterns), or the subtle misconfigurations within your mlflow setup. Let’s explore each of these with practical examples and suggested solutions.
 

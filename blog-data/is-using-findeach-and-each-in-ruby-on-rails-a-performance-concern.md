@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "is-using-findeach-and-each-in-ruby-on-rails-a-performance-concern"
 ---
 
-Alright, let's tackle this. I've seen this question crop up time and time again in projects, and it's a good one, because the nuances between `#find_each` and `#each` on ActiveRecord relations in Rails can significantly impact your application's performance, especially when dealing with larger datasets. It’s not a simple “this one is always better than that one” situation; context is key.
+Alright,  I've seen this question crop up time and time again in projects, and it's a good one, because the nuances between `#find_each` and `#each` on ActiveRecord relations in Rails can significantly impact your application's performance, especially when dealing with larger datasets. It’s not a simple “this one is always better than that one” situation; context is key.
 
 Let's start by dissecting what each method actually *does*. When you call `.each` directly on an ActiveRecord relation, you’re typically loading *all* the records from the database into memory at once. Think of it as a single, large query that grabs every record matching the conditions of your relation and then iterates through the collection in memory. Now, this works perfectly fine for smaller datasets; you’re unlikely to even notice any performance lag. However, the problems arise when you’re working with tables containing thousands, tens of thousands, or even millions of rows. Suddenly, you’re holding a huge chunk of data in memory, and that can quickly lead to memory exhaustion, slow response times, and an overall sluggish application.
 

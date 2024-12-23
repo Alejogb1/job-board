@@ -46,7 +46,7 @@ with tf.Session(graph=graph) as sess:
     saver.save(sess, "path/to/your/model.ckpt") # save checkpoint files
 ```
 
-okay, this is your standard model training process and now you have your model weights saved as checkpoints in the `path/to/your/model.ckpt` location. the goal now is to transform all this information into a single frozen graph .pb file that you can deploy.
+, this is your standard model training process and now you have your model weights saved as checkpoints in the `path/to/your/model.ckpt` location. the goal now is to transform all this information into a single frozen graph .pb file that you can deploy.
 
 here is how you would create the frozen graph for your model, it is basically a function that accepts your model, the path where your checkpoint files are, the name of the final operation (usually the output of the model) and path to save the frozen graph.
 

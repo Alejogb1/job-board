@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-the-transform-function-failing-with-a-missing-argument-in-postman-after-ml-deployment"
 ---
 
-Alright, let's tackle this. I’ve seen this particular gremlin crop up more times than I'd care to count, especially after a fresh ML deployment. You’ve got your model humming away, presumably tested locally, and then bam—Postman starts complaining about missing arguments when you hit the `/transform` endpoint. It's almost always a mismatch between how you’re sending data in your Postman request and how your server-side code, particularly that `transform()` function, expects it. Let's break down what typically happens and how we can resolve it.
+Alright,  I’ve seen this particular gremlin crop up more times than I'd care to count, especially after a fresh ML deployment. You’ve got your model humming away, presumably tested locally, and then bam—Postman starts complaining about missing arguments when you hit the `/transform` endpoint. It's almost always a mismatch between how you’re sending data in your Postman request and how your server-side code, particularly that `transform()` function, expects it. Let's break down what typically happens and how we can resolve it.
 
 The core problem, in my experience, revolves around the data format that’s being passed to your endpoint versus what your server-side application (usually using a framework like Flask or FastAPI) is anticipating. Specifically, it’s about how arguments are extracted from the incoming request, and it’s where a disconnect often emerges. Let’s illustrate this with some concrete examples.
 

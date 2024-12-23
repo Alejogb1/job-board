@@ -4,7 +4,7 @@ date: '2024-11-15'
 id: 'high-reasoning-ability-in-cost-efficient-ai-models'
 ---
 
-Okay, so you're talking about finding ways to build powerful AI models without breaking the bank right  I'm all about that  It's like, we want the smarts but not the hefty price tag  Let's dive in
+, so you're talking about finding ways to build powerful AI models without breaking the bank right  I'm all about that  It's like, we want the smarts but not the hefty price tag  Let's dive in
 
 One big way is model compression  Basically, you take a big fancy model and shrink it down  It's like those magic tricks where they fit a whole elephant into a tiny box  We're using techniques like **quantization** and **pruning** to make the model leaner  Think of it like making a diet version of your AI model  It still packs a punch but uses fewer resources
 

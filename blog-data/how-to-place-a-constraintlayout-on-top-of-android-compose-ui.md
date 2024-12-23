@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-place-a-constraintlayout-on-top-of-android-compose-ui"
 ---
 
-Okay, let’s tackle this one. It's a scenario I've definitely encountered more times than I care to count, especially in projects transitioning to compose or integrating it incrementally within existing view-based UIs. The core challenge, as I see it, isn’t about making `ConstraintLayout` work within compose – that’s relatively straightforward once you understand the fundamentals. The real trick is ensuring you’re handling the interaction and layout correctly so they don't clash, and you maintain a cohesive visual experience.
+, let’s tackle this one. It's a scenario I've definitely encountered more times than I care to count, especially in projects transitioning to compose or integrating it incrementally within existing view-based UIs. The core challenge, as I see it, isn’t about making `ConstraintLayout` work within compose – that’s relatively straightforward once you understand the fundamentals. The real trick is ensuring you’re handling the interaction and layout correctly so they don't clash, and you maintain a cohesive visual experience.
 
 The primary thing to remember is that compose and the traditional view system, of which `ConstraintLayout` is a part, operate on fundamentally different drawing mechanisms. Compose paints everything using the `@Composable` functions, relying on a declarative approach. `ConstraintLayout`, on the other hand, still follows the imperative approach and relies on the older view system's drawing mechanics. Trying to force a direct overlay might not always yield the expected result without a proper strategy.
 

@@ -4,7 +4,7 @@ date: "2024-12-11"
 id: "how-do-subsymbolic-and-diffuse-properties-of-neural-networks-compare-to-human-reasoning"
 ---
 
-Okay so you wanna know how these AI brains – neural networks – stack up against our own squishy ones when it comes to thinking right  It's a HUGE question  like comparing apples and spaceships  Apples are kinda understandable spaceships less so
+ so you wanna know how these AI brains – neural networks – stack up against our own squishy ones when it comes to thinking right  It's a HUGE question  like comparing apples and spaceships  Apples are kinda understandable spaceships less so
 
 Neural networks are all about numbers right  Lots and lots of them  They're subsymbolic meaning they don't work with symbols like words or concepts directly  Think of it like this your brain probably uses words to think about a cat  a neural network uses a huge matrix of numbers  that somehow represents a cat  It's a diffuse representation  the "catness" isn't stored in one place its spread all across the network's connections  a bit like a hologram  smash a part of it and you still get a kinda cat but a blurry one
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "cidb-service-decode-failure-problem"
 ---
 
-Alright so you've got a `cidb service decode failure problem` right Been there done that got the t-shirt. It usually means something's not playing nice when your system's trying to interpret data from the CIDB service. Let's break it down based on my past experiences.
+so you've got a `cidb service decode failure problem` right Been there done that got the t-shirt. It usually means something's not playing nice when your system's trying to interpret data from the CIDB service. Let's break it down based on my past experiences.
 
 First off I've wrestled with this beast a few times usually back when I was knee-deep in building distributed systems. This kind of thing crops up more often than you'd think. The core issue is almost always one of these three things: encoding mismatches data corruption or just plain wrong data being sent.
 

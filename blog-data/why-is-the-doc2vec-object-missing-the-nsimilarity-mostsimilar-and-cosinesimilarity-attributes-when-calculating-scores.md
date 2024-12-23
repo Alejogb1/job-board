@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-the-doc2vec-object-missing-the-nsimilarity-mostsimilar-and-cosinesimilarity-attributes-when-calculating-scores"
 ---
 
-Okay, let's tackle this. I've seen this issue pop up quite a few times, especially when developers are transitioning from word-based embeddings to document-based ones. The frustration is understandable; you're expecting the doc2vec object to behave similarly to its word2vec cousin, and then boom, those familiar methods are just…gone. It’s not a bug, per se, but rather a fundamental difference in how these models are structured and intended to be used.
+,  I've seen this issue pop up quite a few times, especially when developers are transitioning from word-based embeddings to document-based ones. The frustration is understandable; you're expecting the doc2vec object to behave similarly to its word2vec cousin, and then boom, those familiar methods are just…gone. It’s not a bug, per se, but rather a fundamental difference in how these models are structured and intended to be used.
 
 The key discrepancy lies in the underlying mathematical representation. Word2vec, at its core, represents individual *words* as vectors within a high-dimensional space. Similarity between words is therefore a function of their vector proximity. Calculating cosine similarity, for example, becomes a relatively straightforward operation involving simple vector arithmetic on those word vectors. The methods like `n_similarity`, and `most_similar` are specifically built around the idea of measuring distances between those word-level vectors.
 

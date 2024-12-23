@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "java-transformation-informatica-usage-example"
 ---
 
-Okay so you're asking about Java transformations in Informatica powercenter specifically how to use them and maybe wanting some examples right I’ve been there man been knee-deep in the informatica trenches more times than I’d like to admit and trust me Java transformations were always either a lifesaver or a complete headache depending on how well you understood them let's break it down real simple like we're debugging some gnarly code
+ so you're asking about Java transformations in Informatica powercenter specifically how to use them and maybe wanting some examples right I’ve been there man been knee-deep in the informatica trenches more times than I’d like to admit and trust me Java transformations were always either a lifesaver or a complete headache depending on how well you understood them let's break it down real simple like we're debugging some gnarly code
 
 First off why even bother with a Java transformation right Well Informatica is great for standard ETL stuff but sometimes you need custom logic that the built-in components just can't handle Maybe you need to manipulate data in a very specific way maybe you need to integrate with an external API directly or maybe you just want to use some fancy Java library and that's where the Java transformation comes into play It lets you essentially write Java code that runs as part of your Informatica mapping
 

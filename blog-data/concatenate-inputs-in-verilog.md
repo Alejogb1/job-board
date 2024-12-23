@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "concatenate-inputs-in-verilog"
 ---
 
-Alright so you wanna concatenate inputs in Verilog right Been there done that got the t-shirt and probably a few scars from debugging late night synthesis runs let me tell you its a classic problem with a few solid solutions and some gotchas you should definitely know about
+so you wanna concatenate inputs in Verilog right Been there done that got the t-shirt and probably a few scars from debugging late night synthesis runs let me tell you its a classic problem with a few solid solutions and some gotchas you should definitely know about
 
 First off lets talk about the basics The easiest way to smash signals together is using the concatenation operator its that `{}` curly brace thing you see everywhere you can throw individual bits variables even whole vectors into it it’ll just line them up like they’re waiting for a bus kinda thing
 
@@ -67,7 +67,7 @@ Remember that synthesis tools are optimizing for resources and they might not al
 
 Another thing you should take in to account is the timing of your signals in synchronous circuits a typical concatenation will not add much delay it is just a wire but if you are using replication or very wide vectors it might need a little bit of time to propagate through the hardware and you need to account for that and that is why you should always run timing analysis after implementation of your designs to make sure your design is within the time constraints of your hardware
 
-Alright now lets talk about resources because I am a big fan of books and papers instead of random tutorials on the internet
+now lets talk about resources because I am a big fan of books and papers instead of random tutorials on the internet
 
 You definitely need a good verilog reference book I recommend "Verilog HDL" by Samir Palnitkar its a classic and goes deep into everything including concatenation It is useful for a good foundation for everything you might need to know about Verilog syntax and use cases it is a staple in many universities
 

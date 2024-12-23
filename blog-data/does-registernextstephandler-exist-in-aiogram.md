@@ -110,7 +110,7 @@ async def get_address_handler(message: types.Message, state: FSMContext):
   pizza = data.get('pizza_type')
   size = data.get('pizza_size')
   address = message.text
-  await message.answer(f"Okay, a {size} {pizza} will be delivered to {address}!")
+  await message.answer(f", a {size} {pizza} will be delivered to {address}!")
   await state.clear()
 
 async def main():
@@ -171,7 +171,7 @@ async def final_confirm(message: types.Message, state: FSMContext):
     category = data.get('category')
     product = data.get('product')
     if message.text == "yes":
-      await message.answer(f"Okay, you have ordered a {category} item: {product}")
+      await message.answer(f", you have ordered a {category} item: {product}")
     else:
        await message.answer("Order canceled")
     await state.clear()

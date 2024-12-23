@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-save-emails-from-an-imap-server-to-an-s3-bucket-using-mailkit"
 ---
 
-Alright, let's tackle this. I've actually built a system very similar to this a couple of years ago for a client who was migrating away from an on-prem email server and needed a safe and searchable archive. It wasn't quite as straightforward as the documentation sometimes suggests, so let me walk you through the essentials, and then show some code examples that can help avoid common pitfalls.
+Alright,  I've actually built a system very similar to this a couple of years ago for a client who was migrating away from an on-prem email server and needed a safe and searchable archive. It wasn't quite as straightforward as the documentation sometimes suggests, so let me walk you through the essentials, and then show some code examples that can help avoid common pitfalls.
 
 The core idea here is to use MailKit, which, in my experience, is the best .net library for handling imap and smtp operations. The goal is to connect to an imap server, fetch the emails, then persist them to an S3 bucket. We'll need to handle a few specifics along the way: fetching messages, dealing with attachments, ensuring everything is properly encoded, and finally, uploading to S3 effectively.
 

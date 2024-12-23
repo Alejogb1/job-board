@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-initiate-recording-in-quarkus-tests-using-selenium-and-testcontainers"
 ---
 
-Okay, let's tackle this. It's a scenario I've encountered quite a few times in past projects, particularly when dealing with web application testing that requires actual browser interaction. The challenge, as you've likely found, is smoothly integrating Selenium for UI actions with Testcontainers for a reproducible and isolated environment, specifically within a Quarkus test setup. It's not always straightforward, but there are several approaches that work effectively, and I've found a consistent method to achieve it.
+,  It's a scenario I've encountered quite a few times in past projects, particularly when dealing with web application testing that requires actual browser interaction. The challenge, as you've likely found, is smoothly integrating Selenium for UI actions with Testcontainers for a reproducible and isolated environment, specifically within a Quarkus test setup. It's not always straightforward, but there are several approaches that work effectively, and I've found a consistent method to achieve it.
 
 Essentially, we need to juggle several components: the Quarkus application under test, a Selenium-driven browser instance, and a Testcontainers-managed environment, often a Docker container running a browser like Chrome or Firefox. The goal is to orchestrate these so that we can programmatically initiate recording from the Selenium side, leveraging the isolation and lifecycle management provided by Testcontainers.
 

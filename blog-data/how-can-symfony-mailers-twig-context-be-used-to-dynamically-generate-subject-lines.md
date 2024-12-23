@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-symfony-mailers-twig-context-be-used-to-dynamically-generate-subject-lines"
 ---
 
-Okay, let's dive into this. I remember distinctly a project from a few years back—an e-commerce platform—where we needed highly personalized email notifications. Static subject lines simply wouldn’t cut it; they had to reflect the specific context of each order, user, and product. This is where mastering the interplay between Symfony Mailer and Twig contexts becomes crucial.
+, let's dive into this. I remember distinctly a project from a few years back—an e-commerce platform—where we needed highly personalized email notifications. Static subject lines simply wouldn’t cut it; they had to reflect the specific context of each order, user, and product. This is where mastering the interplay between Symfony Mailer and Twig contexts becomes crucial.
 
 Essentially, what you need to grasp is that Symfony Mailer, when paired with Twig, isn’t merely about rendering HTML email bodies. It allows you to pass variables, or what we call the ‘context,’ directly into the Twig template, including variables that dictate the email's subject line. Think of the context as a dictionary of key-value pairs that Twig uses to populate your templates dynamically. You’re not limited to just the email body; the subject line can also be a Twig template, meaning it can be dynamically constructed based on these contextual variables.
 

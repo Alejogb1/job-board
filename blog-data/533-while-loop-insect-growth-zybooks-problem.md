@@ -4,11 +4,11 @@ date: "2024-12-13"
 id: "533-while-loop-insect-growth-zybooks-problem"
 ---
 
-Okay so you're hitting the classic "while loop insect growth zybooks problem" right I know this one all too well been there done that got the t-shirt and by t-shirt I mean I spent like three days debugging this exact thing back in my early days when I was a fresh-faced CS student ready to conquer the world one poorly written loop at a time
+ so you're hitting the classic "while loop insect growth zybooks problem" right I know this one all too well been there done that got the t-shirt and by t-shirt I mean I spent like three days debugging this exact thing back in my early days when I was a fresh-faced CS student ready to conquer the world one poorly written loop at a time
 
 Let me break it down based on what I remember and some painful lessons I learned let me just say this this is not your average for loop this problem forces you to really understand loop control in while loops something that many people struggle with I mean I even used to struggle with it don't worry you are not alone
 
-Okay so the core issue as I recall is about simulating the population growth of some insect type over time using a while loop the Zybooks setup usually gives you some initial population size a growth rate and a target population and you have to write the loop that figures out how many time steps or "days" or whatever it takes for the population to reach that target population
+ so the core issue as I recall is about simulating the population growth of some insect type over time using a while loop the Zybooks setup usually gives you some initial population size a growth rate and a target population and you have to write the loop that figures out how many time steps or "days" or whatever it takes for the population to reach that target population
 
 The big gotcha here and where I see most people fail is not properly managing the loop's condition and the update step it is either infinite loops or skipping the proper amount of time steps It is not usually a syntax error it is just a logic error And logic errors are the worst because the code runs but it just doesn't produce the correct result
 
@@ -29,7 +29,7 @@ print(days)
 
 See that commented out days +=1 that's the exact type of dumb mistake I used to make You see the logic is right it grows the population properly but I forgot to increment the `days` counter inside the loop so the loop would run forever producing always the same `current_population` value until it crashes I mean yeah technically it is a form of infinite loop but it is one where the computer is actually still running it is not like there is a runtime error because the condition never becomes false The real problem was the logic error and that kind of error is always the hardest to spot
 
-Okay so to actually fix it here is the code:
+ so to actually fix it here is the code:
 
 ```python
 initial_population = 10
@@ -70,7 +70,7 @@ This one was also really annoying to me because I did not see it at first I ran 
 
 So that was a long time ago but still it is clear in my mind This is why it is so important to have clear well formatted and most importantly readable code with the comments because it also helps you when you are debugging and reviewing your own code months later The computer doesn't care about formatting or spacing or comments but your future self surely will
 
-Okay so back to the code for the insect growth issue here is one final code snippet that includes proper rounding to the nearest integer using the `round()` function:
+ so back to the code for the insect growth issue here is one final code snippet that includes proper rounding to the nearest integer using the `round()` function:
 
 ```python
 initial_population = 10

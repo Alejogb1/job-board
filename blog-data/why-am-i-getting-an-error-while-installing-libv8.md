@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-am-i-getting-an-error-while-installing-libv8"
 ---
 
-Okay, let's tackle this libv8 installation issue. It’s a fairly common one, and I've certainly seen my share of it over the years, particularly back when I was heavily involved in building custom JavaScript engines for embedded platforms. It's usually not a simple fix, often stemming from a combination of factors related to your environment, compiler, and dependency versions. Let’s unpack it step by step.
+, let's tackle this libv8 installation issue. It’s a fairly common one, and I've certainly seen my share of it over the years, particularly back when I was heavily involved in building custom JavaScript engines for embedded platforms. It's usually not a simple fix, often stemming from a combination of factors related to your environment, compiler, and dependency versions. Let’s unpack it step by step.
 
 First, the error you're encountering during `libv8` installation is rarely due to a problem directly within `libv8` itself. `libv8`, the library that embeds Google's V8 JavaScript engine, is a complex beast. Installation involves a build process that is sensitive to a multitude of variables. The core problem lies in the dependency management and compiler compatibility, often manifesting as link-time or compilation errors.
 

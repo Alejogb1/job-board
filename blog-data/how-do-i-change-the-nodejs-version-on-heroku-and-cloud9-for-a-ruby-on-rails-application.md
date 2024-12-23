@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-change-the-nodejs-version-on-heroku-and-cloud9-for-a-ruby-on-rails-application"
 ---
 
-Alright, let's tackle this. It's a common scenario, and I've definitely navigated this particular configuration challenge myself more than a few times, especially back when I was working on that large-scale data pipeline project – remember 'Project Chimera'? Yeah, that one. We had several teams working across different environments and maintaining consistent Node.js versions was crucial, particularly for the asset pipeline.
+Alright,  It's a common scenario, and I've definitely navigated this particular configuration challenge myself more than a few times, especially back when I was working on that large-scale data pipeline project – remember 'Project Chimera'? Yeah, that one. We had several teams working across different environments and maintaining consistent Node.js versions was crucial, particularly for the asset pipeline.
 
 The core issue here is not really *about* Ruby on Rails per se, it's about managing environment dependencies. Both Heroku and Cloud9 (or AWS Cloud9 as it's now known) offer mechanisms for specifying the Node.js version, but they're implemented differently. Let's break down each platform.
 

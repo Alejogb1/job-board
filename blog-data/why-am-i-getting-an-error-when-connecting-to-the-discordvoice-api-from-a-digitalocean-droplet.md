@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-an-error-when-connecting-to-the-discordvoice-api-from-a-digitalocean-droplet"
 ---
 
-Okay, let's tackle this. It's not uncommon to run into roadblocks when setting up discord voice bots on cloud platforms, and digitalocean droplets definitely have their quirks. I've certainly spent my share of late nights troubleshooting similar issues, back when I was managing a fairly complex community bot. The error you're seeing with `@discord/voice` on a digitalocean droplet can usually be pinned down to a few common culprits. Let's go through the usual suspects, along with some specific solutions.
+,  It's not uncommon to run into roadblocks when setting up discord voice bots on cloud platforms, and digitalocean droplets definitely have their quirks. I've certainly spent my share of late nights troubleshooting similar issues, back when I was managing a fairly complex community bot. The error you're seeing with `@discord/voice` on a digitalocean droplet can usually be pinned down to a few common culprits. Let's go through the usual suspects, along with some specific solutions.
 
 First, understand that establishing a reliable audio connection requires more than just your application code. It involves network configurations, library dependencies, and specific system setups – all of which can introduce potential failure points, particularly in a virtualized server environment. The issue is almost never the discord library itself but rather how your environment is interacting with it.
 

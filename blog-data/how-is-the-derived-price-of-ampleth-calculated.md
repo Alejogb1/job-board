@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-is-the-derived-price-of-ampleth-calculated"
 ---
 
-Let's tackle this. I remember dealing with a similar situation back in 2021, when the algorithmic stablecoin space was… let’s just say, *volatile*. Understanding the mechanics of how a pair like AMPL/ETH calculates its derived price is critical, especially if you're building or interacting with any related decentralized applications (dApps). The process isn’t as straightforward as, say, a simple exchange rate; it's a combination of on-chain data, oracle feeds, and, in the case of AMM (Automated Market Maker) pools, the particular math governing the pool itself.
+ I remember dealing with a similar situation back in 2021, when the algorithmic stablecoin space was… let’s just say, *volatile*. Understanding the mechanics of how a pair like AMPL/ETH calculates its derived price is critical, especially if you're building or interacting with any related decentralized applications (dApps). The process isn’t as straightforward as, say, a simple exchange rate; it's a combination of on-chain data, oracle feeds, and, in the case of AMM (Automated Market Maker) pools, the particular math governing the pool itself.
 
 First, let's get one thing straight: there isn’t *one* canonical derived price. Instead, you have different methods contributing to different price points, and the "most correct" price often depends on your use case. We’ll dissect the core mechanisms now.
 

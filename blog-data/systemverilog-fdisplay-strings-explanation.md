@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "systemverilog-fdisplay-strings-explanation"
 ---
 
-Okay so you're asking about `$fdisplay` in SystemVerilog specifically when it's used with strings right got it. Been there done that messed it up a few times too. So basically `$fdisplay` is your go-to for writing formatted output to a file it's not just about strings but let's focus on that aspect since that's what you're asking. It's a system task a built-in thing in the language and it's super handy for debugging and logging info about your hardware designs.
+ so you're asking about `$fdisplay` in SystemVerilog specifically when it's used with strings right got it. Been there done that messed it up a few times too. So basically `$fdisplay` is your go-to for writing formatted output to a file it's not just about strings but let's focus on that aspect since that's what you're asking. It's a system task a built-in thing in the language and it's super handy for debugging and logging info about your hardware designs.
 
 Now the thing with strings and `$fdisplay` is this it uses format specifiers kind of like `printf` in C or similar languages. When you pass a string argument without any format specifier it'll just print the string as is. But things get interesting when you want to do more than just that lets say you want to display string variable that comes with the module I mean you have to or you will never get to debug in a reasonable timeframe if it involves strings right?
 

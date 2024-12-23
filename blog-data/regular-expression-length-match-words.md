@@ -4,13 +4,13 @@ date: "2024-12-13"
 id: "regular-expression-length-match-words"
 ---
 
-Okay so you're asking about matching words with regular expressions but you're specifically concerned with their length right I get it I've been there done that probably with a server hanging in the balance and sweat dripping down my forehead trying to fix a regex gone wrong at 3 am
+ so you're asking about matching words with regular expressions but you're specifically concerned with their length right I get it I've been there done that probably with a server hanging in the balance and sweat dripping down my forehead trying to fix a regex gone wrong at 3 am
 
 It's a common thing you want to validate input check if a word fits a specific pattern and that pattern includes length well regular expressions themselves don’t directly specify length of matched text They are designed to match patterns not count characters that's what makes it fun you can't just write some sort of magic length operator inside them Instead we use anchors repetition quantifiers and lookarounds which are super useful if you get the hang of them
 
 Let’s dive in because I have fought with these problems way too many times to just leave you hanging I remember once I was working on an old chat application the kind that used to run on Java applets man I’m aging myself I needed to filter user nicknames to make sure they were between 3 and 15 characters otherwise our server would choke and the poor thing would get stuck in a loop trying to handle those massive names it was all text parsing back then everything was a regex or a string manipulation method I had to come up with a regex that both validated the characters and their length it was a good challenge but it took a few all nighters and lots of coffee fueled trial and error
 
-Okay so let's break it down how do we do this length matching thing with regex We combine different regex features
+ so let's break it down how do we do this length matching thing with regex We combine different regex features
 
 First and foremost think about anchors We need to make sure we match the entire word from beginning to end So we use `^` for start of string and `$` for end of string If you leave these out you might get a partial match instead of a complete word match and that’s usually not what you want
 

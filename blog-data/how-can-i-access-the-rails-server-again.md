@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-access-the-rails-server-again"
 ---
 
-Okay, so you've lost touch with your rails server, that familiar feeling of “where did it go?” I've been there, more times than I’d like to remember, usually after a late-night coding session. This isn’t some arcane art; it’s usually down to a few common culprits. Let's break down how to get back to that comforting `localhost:3000` (or whatever port you're using).
+, so you've lost touch with your rails server, that familiar feeling of “where did it go?” I've been there, more times than I’d like to remember, usually after a late-night coding session. This isn’t some arcane art; it’s usually down to a few common culprits. Let's break down how to get back to that comforting `localhost:3000` (or whatever port you're using).
 
 First, we’ll check the basics. It's tempting to jump straight into debugging intricate configurations, but let's start with the simplest scenarios. Did the server even start correctly? Sometimes, amidst a flurry of changes, errors during server startup might be overlooked.
 

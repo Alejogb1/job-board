@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-pause-and-resume-task-execution-in-rusts-async-tokio-context"
 ---
 
-Alright, let's tackle this. I've seen this particular challenge crop up more than a few times across projects, and there’s a few good ways to handle pausing and resuming asynchronous tasks within Rust's `tokio` ecosystem. It's not a native 'pause' and 'resume' instruction as you might find in some threading libraries; we need to leverage the building blocks `tokio` provides to construct that behavior.
+Alright,  I've seen this particular challenge crop up more than a few times across projects, and there’s a few good ways to handle pausing and resuming asynchronous tasks within Rust's `tokio` ecosystem. It's not a native 'pause' and 'resume' instruction as you might find in some threading libraries; we need to leverage the building blocks `tokio` provides to construct that behavior.
 
 The core concept we need to understand here is that async tasks in `tokio` are cooperative. They yield control back to the executor at points where they are awaiting something – often an `await` call on a future. This yielding is how the executor can switch between different tasks efficiently. If a task never yields, it blocks other tasks from running, effectively breaking the system. Therefore, any mechanism for pausing must work within this framework of yielding control. We're not ‘stopping’ the task in the same way we might stop a thread; instead, we are temporarily preventing it from being scheduled by the executor.
 

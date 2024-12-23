@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-neural-networks-predict-airflow-based-on-coordinates-and-fan-speed"
 ---
 
-Okay, let's unpack this. My experience with computational fluid dynamics (CFD) simulations, particularly when integrated with machine learning, gives me some perspective on this seemingly simple question: "Can neural networks predict airflow based on coordinates and fan speed?" The short answer is, yes, absolutely. But the nuances are where the real interest lies. It's far from a plug-and-play scenario.
+, let's unpack this. My experience with computational fluid dynamics (CFD) simulations, particularly when integrated with machine learning, gives me some perspective on this seemingly simple question: "Can neural networks predict airflow based on coordinates and fan speed?" The short answer is, yes, absolutely. But the nuances are where the real interest lies. It's far from a plug-and-play scenario.
 
 During a project at a now-defunct HVAC company, we were attempting to optimize duct design using reinforcement learning, and the core problem was predicting airflow, initially via CFD, then later with machine learning to speed things up. I remember the initial shock of realizing how complex even seemingly basic systems like a single fan in a simple enclosure could be.
 

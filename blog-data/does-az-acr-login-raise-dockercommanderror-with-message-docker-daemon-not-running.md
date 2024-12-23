@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "does-az-acr-login-raise-dockercommanderror-with-message-docker-daemon-not-running"
 ---
 
-Alright so you're hitting that classic Docker daemon not running error when trying to use `az acr login` gotcha I've wrestled with this gremlin more times than I care to admit Let's break it down and get you sorted
+so you're hitting that classic Docker daemon not running error when trying to use `az acr login` gotcha I've wrestled with this gremlin more times than I care to admit Let's break it down and get you sorted
 
 First off yeah it absolutely can happen `az acr login` itself doesn't directly interact with the Docker daemon it kind of expects it to be humming along in the background like a well-oiled machine It’s a bit like ordering food and expecting the kitchen to be open if the kitchen aka the Docker daemon is closed you ain't getting your meal aka a successful login
 
@@ -18,7 +18,7 @@ Let me walk you through some common fixes and some checks we can do because lets
 
 **First things first let’s check the Docker Daemon**
 
-Okay I know it seems obvious but really double triple check it's running this looks a bit different depending on your OS so here is a quick checklist for the most common ones
+ I know it seems obvious but really double triple check it's running this looks a bit different depending on your OS so here is a quick checklist for the most common ones
 
 *   **Windows/macOS**: Make sure Docker Desktop is running. Check the system tray icon to make sure it's active. If you can see a whale you are likely good to go If not click on it and launch it
 
@@ -30,9 +30,9 @@ After doing the steps make sure to try your `az acr login` command again if that
 
 Now it might be that Docker is running but it still isn't working. This can happen and is really annoying but trust me I went through that. Docker being running and responding means nothing if it's doing so in a wrong way.
 
-**Okay Docker's running but I still get errors what now**
+** Docker's running but I still get errors what now**
 
-Alright sometimes the daemon is up but it isn't behaving as it should and its the dreaded "it works on my machine" scenario This is where I go and check what is actually happening within docker
+sometimes the daemon is up but it isn't behaving as it should and its the dreaded "it works on my machine" scenario This is where I go and check what is actually happening within docker
 
 *   **Check Docker's logs**: Check Docker logs for any errors or warnings this one is very helpful to see what Docker itself is complaining about
 
@@ -55,7 +55,7 @@ Alright sometimes the daemon is up but it isn't behaving as it should and its th
 
 **And a little more complex problem**
 
-Alright so I've seen my share of weird issues and sometimes the problem might not be just the docker daemon being off but actually something more nasty. One of the times the problem was a corrupted docker installation. Now that is some fun I can tell you that. Lets see what you can do:
+so I've seen my share of weird issues and sometimes the problem might not be just the docker daemon being off but actually something more nasty. One of the times the problem was a corrupted docker installation. Now that is some fun I can tell you that. Lets see what you can do:
 
 *   **Restart Docker**
 Sometimes it’s just a bad day for the docker. Simply restarting the docker application from your system tray should solve it. It has solved it for me countless times. But if it fails go to the next step

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-are-gradients-computed-as-none-in-pytorch"
 ---
 
-Okay, let's tackle this. I've seen this issue crop up more times than I care to remember, usually in the wee hours of the morning when debugging seemingly straightforward models. The scenario is always the same: you're expecting backpropagation to populate your tensor gradients, but instead, you find them stubbornly `None`. It's frustrating, to say the least, but the reasons are usually quite logical once you understand the underlying mechanisms of PyTorch's computational graph and autograd engine.
+,  I've seen this issue crop up more times than I care to remember, usually in the wee hours of the morning when debugging seemingly straightforward models. The scenario is always the same: you're expecting backpropagation to populate your tensor gradients, but instead, you find them stubbornly `None`. It's frustrating, to say the least, but the reasons are usually quite logical once you understand the underlying mechanisms of PyTorch's computational graph and autograd engine.
 
 The primary reason gradients show up as `None` isn't necessarily a bug; it's often a consequence of how PyTorch tracks operations for gradient computation. Autograd, the heart of PyTorch's automatic differentiation, works by constructing a dynamic computational graph. It only keeps track of operations that involve tensors with the `requires_grad=True` attribute. If this flag isn't set or the involved tensors are not participating in any gradient-calculating operation, gradients won’t be calculated, leading to them being `None`.
 

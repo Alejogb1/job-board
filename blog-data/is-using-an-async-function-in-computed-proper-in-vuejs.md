@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "is-using-an-async-function-in-computed-proper-in-vuejs"
 ---
 
-Okay, let's dive into this. I recall a rather complex project a few years back involving a real-time dashboard built with Vue.js, where we initially tried to shoehorn async operations directly into computed properties. It quickly turned into a debugging nightmare, highlighting why that approach is generally not recommended. So, the short answer is: while technically possible, directly using async functions within computed properties in Vue.js is generally a bad practice and introduces significant complexity.
+, let's dive into this. I recall a rather complex project a few years back involving a real-time dashboard built with Vue.js, where we initially tried to shoehorn async operations directly into computed properties. It quickly turned into a debugging nightmare, highlighting why that approach is generally not recommended. So, the short answer is: while technically possible, directly using async functions within computed properties in Vue.js is generally a bad practice and introduces significant complexity.
 
 Why? Computed properties in Vue.js are designed to be synchronous and deterministic. They are meant to derive a value from existing data and return it immediately. The Vue reactivity system heavily relies on this predictable behavior. When you introduce asynchronous operations, like fetching data from an api, within a computed property, the expected flow breaks down. The reactivity system expects a return value instantly, not a promise that resolves at some future time.
 

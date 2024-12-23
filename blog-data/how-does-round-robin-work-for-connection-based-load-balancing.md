@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-does-round-robin-work-for-connection-based-load-balancing"
 ---
 
-Okay, let’s delve into the mechanics of round-robin load balancing, particularly within the context of connection-based scenarios. I've spent considerable time optimizing systems using this approach, and it’s a workhorse for a reason, although it has its limitations as well.
+, let’s delve into the mechanics of round-robin load balancing, particularly within the context of connection-based scenarios. I've spent considerable time optimizing systems using this approach, and it’s a workhorse for a reason, although it has its limitations as well.
 
 The fundamental idea behind round-robin load balancing is straightforward: distribute incoming client connections sequentially across a pool of available servers. Imagine a carousel; each connection takes a 'seat' on the next available server in the rotation. This distribution happens on a connection-by-connection basis, not request by request if we're discussing connection-based protocols like tcp or websockets. This aspect is quite crucial, and it distinguishes it from load balancing strategies better suited for stateless protocols such as http requests.
 

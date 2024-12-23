@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-use-aiogram-to-delete-past-bot-messages-when-sending-a-new-one"
 ---
 
-Okay, let's tackle this. From the perspective of someone who’s spent a fair amount of time building Telegram bots, handling message cleanup with aiogram is a task I've certainly encountered numerous times. It’s a common requirement – keeping the chat tidy, especially when the bot is frequently updating information or guiding users through multi-step processes. The key, as you might suspect, isn't just about sending messages but also effectively managing the lifespan of those preceding them.
+,  From the perspective of someone who’s spent a fair amount of time building Telegram bots, handling message cleanup with aiogram is a task I've certainly encountered numerous times. It’s a common requirement – keeping the chat tidy, especially when the bot is frequently updating information or guiding users through multi-step processes. The key, as you might suspect, isn't just about sending messages but also effectively managing the lifespan of those preceding them.
 
 Fundamentally, the process involves obtaining the `message_id` of the messages you intend to remove and then using the `delete_message` method within the aiogram library. This operation isn't inherently complex, but it demands careful handling, especially in asynchronous environments where race conditions and unexpected behaviors can quickly become an issue. Let’s break down how this is typically managed in practice, remembering that message ids are specific to a chat instance. A message id from one chat will not work in another, and this is a common mistake when you’re building bots across multiple chats.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-devbususb-be-mounted-in-a-docker-devcontainer-for-vscode"
 ---
 
-Okay, let’s tackle this. I’ve been down this rabbit hole before, debugging USB communication issues with embedded systems, and getting `/dev/bus/usb` accessible inside a Docker devcontainer can be… finicky. It’s a common hurdle, particularly when you're working on projects that need direct hardware interaction. The fundamental issue revolves around how Docker isolates containers from the host system, especially concerning low-level devices like USB buses.
+, let’s tackle this. I’ve been down this rabbit hole before, debugging USB communication issues with embedded systems, and getting `/dev/bus/usb` accessible inside a Docker devcontainer can be… finicky. It’s a common hurdle, particularly when you're working on projects that need direct hardware interaction. The fundamental issue revolves around how Docker isolates containers from the host system, especially concerning low-level devices like USB buses.
 
 Normally, Docker containers run in their own namespace, which provides isolation. This means that `/dev/bus/usb` is a resource on the *host* machine, and by default, the container doesn't see it. Accessing this within the devcontainer requires us to explicitly allow it, essentially poking a hole in the isolation barrier while maintaining a level of security. We need to go beyond the typical `docker run` flags.
 

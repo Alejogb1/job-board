@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-add-error-bars-to-an-altchart-with-binned-x-axis-values"
 ---
 
-Let's tackle this. It's a frequent requirement when visualizing aggregated data, and while `altair` provides excellent tools, working with binned data for error bar representation needs a specific approach. I've personally encountered this many times, typically when dealing with sensor data or simulation results, where you're often summarizing distributions within discrete intervals. We’re essentially looking to show the uncertainty or variability of a dataset within these pre-defined bins, and Altair, being a declarative library, handles this via transformation and layering.
+ It's a frequent requirement when visualizing aggregated data, and while `altair` provides excellent tools, working with binned data for error bar representation needs a specific approach. I've personally encountered this many times, typically when dealing with sensor data or simulation results, where you're often summarizing distributions within discrete intervals. We’re essentially looking to show the uncertainty or variability of a dataset within these pre-defined bins, and Altair, being a declarative library, handles this via transformation and layering.
 
 The crux of it lies in two parts: first, preprocessing the data to compute the necessary statistics (mean, standard deviation, or whatever error metric you choose), and second, utilizing Altair’s `mark_errorbar` functionality correctly, layering it onto the base chart. Let's break down the process.
 

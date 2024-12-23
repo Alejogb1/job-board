@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-can-useeffect-use-axios-with-asyncawait"
 ---
 
-Alright, let's tackle this. I remember back in '17, I was working on a real-time dashboard project – a classic example of needing to fetch data from an api on component mount and update the view. Using `useEffect` with `axios` and `async/await` felt clunky initially, but after some refinement, I landed on a pattern that’s been pretty reliable since. The core issue stems from `useEffect`'s design: it doesn't directly support asynchronous functions as its callback. This is because `useEffect` expects a synchronous function or a cleanup function (returned from the effect) – and an async function, inherently, returns a promise, not a cleanup callback directly.
+Alright,  I remember back in '17, I was working on a real-time dashboard project – a classic example of needing to fetch data from an api on component mount and update the view. Using `useEffect` with `axios` and `async/await` felt clunky initially, but after some refinement, I landed on a pattern that’s been pretty reliable since. The core issue stems from `useEffect`'s design: it doesn't directly support asynchronous functions as its callback. This is because `useEffect` expects a synchronous function or a cleanup function (returned from the effect) – and an async function, inherently, returns a promise, not a cleanup callback directly.
 
 To get around this, you essentially need to define an asynchronous function *inside* the `useEffect` callback and call it. This isn't a hack, but a necessary construction based on how React's effect system is structured. Let’s break down a common approach and see how it works in practice.
 

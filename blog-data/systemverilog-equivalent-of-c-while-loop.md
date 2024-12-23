@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "systemverilog-equivalent-of-c-while-loop"
 ---
 
-Okay so you want to know the SystemVerilog equivalent of a C `while` loop right I get that it's a pretty basic concept but sometimes the syntax differences between languages can throw you off especially when you're used to C and diving into hardware description languages like SystemVerilog
+ so you want to know the SystemVerilog equivalent of a C `while` loop right I get that it's a pretty basic concept but sometimes the syntax differences between languages can throw you off especially when you're used to C and diving into hardware description languages like SystemVerilog
 
 I remember the first time I had to translate a C algorithm into SystemVerilog for a digital signal processing project back in my university days it was a nightmare I kept getting synthesis errors that made no sense I spent a whole weekend just debugging a seemingly simple loop because I was mixing up the syntax between C and SystemVerilog It was one of those moments where I questioned my life choices but yeah we all have been there
 

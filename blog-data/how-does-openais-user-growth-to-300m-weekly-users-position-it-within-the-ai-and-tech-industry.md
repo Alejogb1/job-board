@@ -4,7 +4,7 @@ date: "2024-12-05"
 id: "how-does-openais-user-growth-to-300m-weekly-users-position-it-within-the-ai-and-tech-industry"
 ---
 
-Okay so OpenAI hitting 300 million weekly users that's huge right  like seriously massive  it's not just a number it's a total game changer in the AI landscape think about it for a sec  we're talking about a service  a platform a thing that more people use weekly than like  Netflix or something crazy  that's insane levels of engagement
+ so OpenAI hitting 300 million weekly users that's huge right  like seriously massive  it's not just a number it's a total game changer in the AI landscape think about it for a sec  we're talking about a service  a platform a thing that more people use weekly than like  Netflix or something crazy  that's insane levels of engagement
 
 What does that mean for OpenAI  well firstly it means they're not just some lab anymore  they're a genuine force to be reckoned with a big player  a heavyweight  before this they were kinda like the cool kid in the back of the class with the awesome projects  now they're the head cheerleader everyone wants to be friends with everyone's talking about them investing in them partnering with them
 

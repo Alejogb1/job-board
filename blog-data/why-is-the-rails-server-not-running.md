@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-the-rails-server-not-running"
 ---
 
-Okay, let’s tackle this. I’ve seen this particular headache manifest in more ways than I care to remember over the years – and it’s seldom just a single thing. "Rails server not running" – that's a broad symptom, a flashing red light on a rather complex machine. It’s rarely as straightforward as a flipped switch, so let's dive into some of the more common culprits and how to diagnose them. My experience, largely from debugging countless deployments for startups and larger firms, suggests we should approach this methodically.
+, let’s tackle this. I’ve seen this particular headache manifest in more ways than I care to remember over the years – and it’s seldom just a single thing. "Rails server not running" – that's a broad symptom, a flashing red light on a rather complex machine. It’s rarely as straightforward as a flipped switch, so let's dive into some of the more common culprits and how to diagnose them. My experience, largely from debugging countless deployments for startups and larger firms, suggests we should approach this methodically.
 
 The first place I tend to look is always the port. Is something already using the port that rails is trying to bind to? I've been burned countless times by that, especially after running multiple instances for different projects or forgetting about a rogue process. Rails default port is 3000, of course, though you might have customized this. I recall once, a junior dev had a background process using the port we needed for our staging server. It was a simple fix once we identified the collision, but tracking it down required a bit of command-line sleuthing.
 

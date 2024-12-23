@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-valueerror-no-gradients-provided-for-any-variables-with-a-custom-loss-function"
 ---
 
-Okay, let’s dissect this. That `ValueError: No gradients provided for any variables` when using a custom loss function… I’ve certainly seen that one a few times. It's usually not a problem with the *concept* of your custom loss, but rather how the gradients are being calculated, or not calculated, within your TensorFlow or PyTorch setup. Having stumbled through this a few times, debugging large-scale models, I can share some specific troubleshooting points that should help.
+, let’s dissect this. That `ValueError: No gradients provided for any variables` when using a custom loss function… I’ve certainly seen that one a few times. It's usually not a problem with the *concept* of your custom loss, but rather how the gradients are being calculated, or not calculated, within your TensorFlow or PyTorch setup. Having stumbled through this a few times, debugging large-scale models, I can share some specific troubleshooting points that should help.
 
 The fundamental issue here lies in the computation graph. Deep learning frameworks rely on a computational graph to automatically calculate derivatives, or gradients, using backpropagation. When you implement a custom loss function, the framework needs to ‘see’ the operations you’re performing as it tracks the flow of data so it can differentiate them and backpropagate. If some part of your computation doesn’t register correctly in this graph, or if you perform an operation that breaks gradient tracking, then you end up with no gradients to update your weights, and the training loop will error out.
 

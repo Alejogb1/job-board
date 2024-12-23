@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "what-are-the-performance-considerations-when-distributing-search-workloads-across-multiple-ec2-instances-for-parallel-query-execution"
 ---
 
-Okay so you wanna spread your search workload across a bunch of EC2 instances right  like a boss parallelizing queries and all that jazz  Sounds cool  but theres a bunch of stuff to think about before you just fling your data everywhere  Performance is key obviously  and its way more nuanced than just throwing more hardware at the problem
+ so you wanna spread your search workload across a bunch of EC2 instances right  like a boss parallelizing queries and all that jazz  Sounds cool  but theres a bunch of stuff to think about before you just fling your data everywhere  Performance is key obviously  and its way more nuanced than just throwing more hardware at the problem
 
 First off  networking is your enemy  or at least a major hurdle  Getting data from your main search index to all those EC2 instances isnt free  youre talking latency  bandwidth limitations  and all sorts of network jitter  Its not like data magically teleports  you gotta ship it over the wire and that wire can be a bottleneck  Think about using something like EBS optimized instances  that helps  but you still need a decent network design  Maybe look into papers on network topology optimization for distributed systems  theres a ton out there
 

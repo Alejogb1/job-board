@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-run-testcontainers-with-containerd-on-kubernetes-120-without-errors"
 ---
 
-Alright, let's tackle this. It’s a situation I’ve bumped into more than a few times, especially when teams start migrating from docker to containerd on kubernetes clusters. The transition can be a bit bumpy if you’re not careful, and Testcontainers interacting with containerd directly can expose some of those bumps. I remember back in 2021, during a large-scale deployment overhaul, we faced similar issues. The usual docker-based Testcontainers setup just wasn't cutting it anymore, causing intermittent failures and generally making the integration tests flaky.
+Alright,  It’s a situation I’ve bumped into more than a few times, especially when teams start migrating from docker to containerd on kubernetes clusters. The transition can be a bit bumpy if you’re not careful, and Testcontainers interacting with containerd directly can expose some of those bumps. I remember back in 2021, during a large-scale deployment overhaul, we faced similar issues. The usual docker-based Testcontainers setup just wasn't cutting it anymore, causing intermittent failures and generally making the integration tests flaky.
 
 The core problem isn't necessarily that Testcontainers "doesn't work" with containerd; it's more about how Testcontainers interacts with the underlying container runtime. Testcontainers by default often tries to connect to a docker socket. Containerd, on the other hand, uses a different architecture and doesn’t expose a docker-compatible socket directly. You can't just point Testcontainers at a containerd endpoint and expect it to work seamlessly.
 

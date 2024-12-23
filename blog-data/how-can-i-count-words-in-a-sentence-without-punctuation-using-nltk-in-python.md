@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-count-words-in-a-sentence-without-punctuation-using-nltk-in-python"
 ---
 
-Alright, let's tackle this. I remember a project back in my early days, a content analysis tool for a now-defunct blog network. We needed accurate word counts, but the raw text was a mess, punctuation everywhere and no consistency. Figuring out how to do this efficiently with NLTK became crucial, and it's a common task even now.
+Alright,  I remember a project back in my early days, a content analysis tool for a now-defunct blog network. We needed accurate word counts, but the raw text was a mess, punctuation everywhere and no consistency. Figuring out how to do this efficiently with NLTK became crucial, and it's a common task even now.
 
 The core problem lies in preprocessing text before you can reliably count words. Raw input often includes punctuation marks, which should not be counted as words. NLTK (Natural Language Toolkit) offers tools to help, but a direct word count isn't always the best approach. We need to tokenize the text into words, which includes handling these extraneous characters, or ensuring they are removed.
 

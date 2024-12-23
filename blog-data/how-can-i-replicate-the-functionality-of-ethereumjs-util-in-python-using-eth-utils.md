@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-replicate-the-functionality-of-ethereumjs-util-in-python-using-eth-utils"
 ---
 
-Alright, let's tackle this. It's a question I've seen crop up more times than I care to count, and it often arises when people are transitioning between javascript-centric ethereum development and python environments. You're looking to essentially mirror the common utility functions found in `ethereumjs-util`, but using python’s `eth-utils`. It's certainly achievable, and here’s how I've approached it in past projects.
+Alright,  It's a question I've seen crop up more times than I care to count, and it often arises when people are transitioning between javascript-centric ethereum development and python environments. You're looking to essentially mirror the common utility functions found in `ethereumjs-util`, but using python’s `eth-utils`. It's certainly achievable, and here’s how I've approached it in past projects.
 
 First, let’s establish what `ethereumjs-util` provides. It's a javascript library chock-full of functions for handling byte arrays, hashing, encoding, address manipulation, and various cryptographic operations specific to the ethereum ecosystem. `eth-utils`, on the other hand, is the python counterpart, providing similar core functionality but with a pythonic flavor. The key isn’t finding exact copy-paste replacements for every function, but rather understanding the *purpose* behind each function and replicating that in the python context.
 

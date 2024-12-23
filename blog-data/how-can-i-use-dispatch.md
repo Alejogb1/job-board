@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-use-dispatch"
 ---
 
-Okay, let's talk about dispatch. It’s a core concept in concurrent and parallel programming, and something I've personally spent a fair amount of time implementing across various systems. From orchestrating asynchronous tasks on backend servers to optimizing ui rendering in mobile apps, understanding how to use dispatch effectively is crucial. At its heart, dispatch is about managing the execution of tasks – essentially, it's how you schedule work to be done, often with a focus on concurrency.
+, let's talk about dispatch. It’s a core concept in concurrent and parallel programming, and something I've personally spent a fair amount of time implementing across various systems. From orchestrating asynchronous tasks on backend servers to optimizing ui rendering in mobile apps, understanding how to use dispatch effectively is crucial. At its heart, dispatch is about managing the execution of tasks – essentially, it's how you schedule work to be done, often with a focus on concurrency.
 
 Now, the term 'dispatch' itself can refer to various things depending on the context, but often, it revolves around the idea of directing work to appropriate execution contexts. These execution contexts can be threads, queues, or even specialized processing units. The main goal is to prevent bottlenecks and make efficient use of available resources. When I was working on a high-throughput data processing pipeline a few years ago, we used a custom-built dispatch system to distribute the workload across a cluster. That experience really solidified for me how critical proper task management is.
 

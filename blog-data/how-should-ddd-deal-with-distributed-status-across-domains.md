@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-should-ddd-deal-with-distributed-status-across-domains"
 ---
 
-Okay, let's tackle this. Distributed status management across domains within a domain-driven design (ddd) context is a challenge I've seen trip up many teams, including one I led back in '08 when we were migrating a monolithic billing system to microservices. The crux of the issue, as i see it, lies in how you maintain consistency and accuracy of state information when that state is relevant to multiple bounded contexts, especially when those contexts are physically separated and operating asynchronously. Simply put, shared databases are an anti-pattern, and we need a more elegant solution.
+,  Distributed status management across domains within a domain-driven design (ddd) context is a challenge I've seen trip up many teams, including one I led back in '08 when we were migrating a monolithic billing system to microservices. The crux of the issue, as i see it, lies in how you maintain consistency and accuracy of state information when that state is relevant to multiple bounded contexts, especially when those contexts are physically separated and operating asynchronously. Simply put, shared databases are an anti-pattern, and we need a more elegant solution.
 
 My experience showed me that the fundamental principle here is that each domain should own its data and manage its state independently. When status information needs to be shared, it should happen via well-defined events or queries, rather than direct database access. You're looking at a kind of eventual consistency model here, not a real-time transactional guarantee. This isn't a flaw, but rather a feature of distributed systems.
 

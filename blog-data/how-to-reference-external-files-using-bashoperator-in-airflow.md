@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-reference-external-files-using-bashoperator-in-airflow"
 ---
 
-Alright, let's tackle this. Referencing external files with `BashOperator` in Airflow is a fairly common scenario, and while it might seem straightforward initially, there are nuances that can trip you up if you're not careful. I've definitely seen my share of headaches debugging pipelines stemming from improperly handled file paths in bash commands.
+Alright,  Referencing external files with `BashOperator` in Airflow is a fairly common scenario, and while it might seem straightforward initially, there are nuances that can trip you up if you're not careful. I've definitely seen my share of headaches debugging pipelines stemming from improperly handled file paths in bash commands.
 
 Essentially, the `BashOperator` executes shell commands within the context of the Airflow worker, and that execution context is key. Think of it as running a script in a detached, sandboxed environment. Therefore, we can't just assume a relative path will work the way it might on your local machine. We need to be explicit and strategic in how we specify the location of these external resources.
 

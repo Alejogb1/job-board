@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "r-transpose-data-frame-function"
 ---
 
-Alright so you're looking to transpose a data frame in R I've been there trust me This sounds simple enough on paper but it can get tricky real fast especially when dealing with odd data types or really large frames
+so you're looking to transpose a data frame in R I've been there trust me This sounds simple enough on paper but it can get tricky real fast especially when dealing with odd data types or really large frames
 
 I remember this one time back in my grad school days I was working on this genomic dataset it was huge we're talking thousands of rows and hundreds of columns all gene expression data you can imagine it felt like a data swamp I was trying to switch from having genes as rows to having them as columns and honestly the first thing I tried was just some naive for loop approach thinking like I could manually swap rows and columns yeah that didn’t end well it took forever and also broke half way through due to some random issue it was an unmitigated disaster
 
@@ -92,6 +92,6 @@ Now let's talk about some resources for deeper dive because my little overview h
 
 And if you are still struggling I would suggest looking up online tutorials there are some great videos on YouTube on R’s data transformation capabilities If not there is always the stackoverflow community itself a great way to learn
 
-Okay I think I have covered most of the things now to wrap it all up transposing data frames in R with `t()` is very simple But be aware of data types row names and column names and potential issues that might arise You should use `as.data.frame` to get it into proper data frame again or save your row names before transposing
+ I think I have covered most of the things now to wrap it all up transposing data frames in R with `t()` is very simple But be aware of data types row names and column names and potential issues that might arise You should use `as.data.frame` to get it into proper data frame again or save your row names before transposing
 
 And just remember always check your column types after a transpose its like a rite of passage for anyone working with data frames in R it’s like getting a new pair of glasses after using the wrong prescription for years you never knew what you were missing it is a fundamental part of data science with R it’s a skill you will need and use very often

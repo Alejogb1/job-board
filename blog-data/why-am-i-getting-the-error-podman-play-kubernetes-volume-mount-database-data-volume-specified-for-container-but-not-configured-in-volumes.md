@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-the-error-podman-play-kubernetes-volume-mount-database-data-volume-specified-for-container-but-not-configured-in-volumes"
 ---
 
-Okay, let’s tackle this one. I recall facing a very similar situation a while back when I was deploying a fairly complex microservices architecture with podman, mimicking a kubernetes deployment for local testing before pushing it to the actual cluster. It’s frustrating to hit this particular error because it hints at a disconnect between your container definition and the actual volume configurations. Let me unpack it for you, and we’ll go through some working examples.
+, let’s tackle this one. I recall facing a very similar situation a while back when I was deploying a fairly complex microservices architecture with podman, mimicking a kubernetes deployment for local testing before pushing it to the actual cluster. It’s frustrating to hit this particular error because it hints at a disconnect between your container definition and the actual volume configurations. Let me unpack it for you, and we’ll go through some working examples.
 
 The `podman play kubernetes` command is designed to interpret kubernetes-style yaml definitions and translate them into podman-friendly configurations. When you get the error "volume mount database-data-volume specified for container but not configured in volumes," it means that your pod definition includes a volume mount for a volume named, in this case, `database-data-volume`, within a container specification, but the corresponding volume definition is either missing or incorrectly specified at the top level of your pod configuration. Podman is basically saying, "hey, you told me to mount something, but I can't find what that 'something' is."
 

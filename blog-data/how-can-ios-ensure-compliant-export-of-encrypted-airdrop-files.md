@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-ios-ensure-compliant-export-of-encrypted-airdrop-files"
 ---
 
-Okay, let’s delve into the complexities of securely exporting encrypted AirDrop files on iOS. It’s a topic that’s crossed my desk more than a few times, notably back when I was working on a large-scale file sharing app for healthcare professionals - privacy was absolutely paramount, and getting the intricacies of encrypted data transport *just* so was non-negotiable. We ran into several interesting challenges, and it highlighted just how much goes on under the hood.
+, let’s delve into the complexities of securely exporting encrypted AirDrop files on iOS. It’s a topic that’s crossed my desk more than a few times, notably back when I was working on a large-scale file sharing app for healthcare professionals - privacy was absolutely paramount, and getting the intricacies of encrypted data transport *just* so was non-negotiable. We ran into several interesting challenges, and it highlighted just how much goes on under the hood.
 
 The core issue isn't simply about encrypting data; it's about maintaining end-to-end encryption throughout the entire export and import process using AirDrop while adhering to any specific regulatory requirements, which can be quite stringent. Let's unpack that. iOS, by default, uses robust encryption mechanisms for data-at-rest and in-transit, including AirDrop. However, "compliance" often means more than just encryption; it entails controlling who has access to decryption keys, ensuring audit trails, and often having methods for data revocation or controlled access even after transfer.
 

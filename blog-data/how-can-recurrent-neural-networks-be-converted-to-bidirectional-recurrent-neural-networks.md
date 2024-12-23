@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-recurrent-neural-networks-be-converted-to-bidirectional-recurrent-neural-networks"
 ---
 
-Okay, let's tackle this. It's something I've actually had to implement more than a few times during my days architecting various natural language processing systems. The shift from a standard recurrent neural network (RNN) to a bidirectional RNN (BiRNN) isn't conceptually difficult, but it does involve a few crucial considerations. Fundamentally, a BiRNN offers a more complete picture of the input sequence by processing it in both forward and backward directions. This, naturally, enriches the context information available to the network.
+,  It's something I've actually had to implement more than a few times during my days architecting various natural language processing systems. The shift from a standard recurrent neural network (RNN) to a bidirectional RNN (BiRNN) isn't conceptually difficult, but it does involve a few crucial considerations. Fundamentally, a BiRNN offers a more complete picture of the input sequence by processing it in both forward and backward directions. This, naturally, enriches the context information available to the network.
 
 A standard RNN, as you likely know, processes a sequence, say a sentence, from left to right. At each time step, it receives the current input and a hidden state from the previous time step, outputs a new hidden state, and potentially a prediction. The issue with this single-directional approach is that it fails to leverage any information occurring *after* the current input in the sequence. This is where the bidirectionality comes in handy.
 

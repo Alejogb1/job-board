@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "how-does-shard-based-indexing-improve-query-parallelization-for-large-datasets-such-as-the-common-crawl-corpus"
 ---
 
-Okay so you wanna know about shard-based indexing and how it helps blast through massive datasets like the Common Crawl right  Its all about making queries super fast when you're dealing with something absolutely gigantic  Think of the Common Crawl its like a crazy huge pile of web pages  If you tried searching it all at once your computer would probably melt  That's where sharding comes in its like splitting a monster problem into smaller more manageable chunks
+ so you wanna know about shard-based indexing and how it helps blast through massive datasets like the Common Crawl right  Its all about making queries super fast when you're dealing with something absolutely gigantic  Think of the Common Crawl its like a crazy huge pile of web pages  If you tried searching it all at once your computer would probably melt  That's where sharding comes in its like splitting a monster problem into smaller more manageable chunks
 
 Imagine you have a massive library not just a building but like a whole city of libraries  Finding a specific book would take forever right  But if you divided the library into sections fiction sci-fi history etc  and then indexed each section separately you could find your book way faster  That's essentially what sharding does  It splits your data into smaller pieces called shards  each shard is indexed independently  then when you have a query you only need to search the relevant shards instead of the whole thing
 

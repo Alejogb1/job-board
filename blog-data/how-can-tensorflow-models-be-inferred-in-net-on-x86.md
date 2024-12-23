@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-tensorflow-models-be-inferred-in-net-on-x86"
 ---
 
-Okay, let's unpack this. Inference of TensorFlow models within the .NET ecosystem on x86 architecture isn't a walk in the park, but it's definitely achievable. I've spent a decent chunk of my career navigating cross-platform compatibility issues, and this one's a recurring theme. The key lies in understanding the bridge between the Python-centric world of TensorFlow and the .NET environment, which is primarily built around C#. It's less about magic and more about careful planning and leveraging the right tools.
+, let's unpack this. Inference of TensorFlow models within the .NET ecosystem on x86 architecture isn't a walk in the park, but it's definitely achievable. I've spent a decent chunk of my career navigating cross-platform compatibility issues, and this one's a recurring theme. The key lies in understanding the bridge between the Python-centric world of TensorFlow and the .NET environment, which is primarily built around C#. It's less about magic and more about careful planning and leveraging the right tools.
 
 First, let's acknowledge the elephant in the room: TensorFlow itself isn't a native .NET library. It’s predominantly a Python framework. Thus, directly running a TensorFlow model (.pb or saved_model format) within a .NET application without some kind of intermediary is a no-go. The common strategy I’ve seen (and personally employed) involves using a TensorFlow C API wrapper – essentially a set of instructions that allow C# code to interact with the compiled TensorFlow C++ libraries.
 

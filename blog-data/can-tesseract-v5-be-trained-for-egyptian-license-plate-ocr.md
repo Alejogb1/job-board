@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-tesseract-v5-be-trained-for-egyptian-license-plate-ocr"
 ---
 
-Okay, let’s talk Egyptian license plate OCR with Tesseract v5. It's a problem I've actually tackled before, back when a client needed to automate entry at their parking facilities. Let me walk you through what that involved, the challenges I faced, and how to approach it.
+, let’s talk Egyptian license plate OCR with Tesseract v5. It's a problem I've actually tackled before, back when a client needed to automate entry at their parking facilities. Let me walk you through what that involved, the challenges I faced, and how to approach it.
 
 The short answer is: yes, absolutely, Tesseract v5 *can* be trained for Egyptian license plates, but it's not a plug-and-play scenario, and it'll require a focused, methodical approach. The out-of-the-box Tesseract model, trained mostly on standard Latin characters, will struggle significantly with the distinctive Arabic script and the specific formats prevalent in Egyptian plates. We need to move beyond merely treating them as standard text.
 

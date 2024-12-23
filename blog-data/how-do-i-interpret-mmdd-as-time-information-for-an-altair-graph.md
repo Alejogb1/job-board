@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-interpret-mmdd-as-time-information-for-an-altair-graph"
 ---
 
-Okay, let's tackle this. Parsing date information, specifically `MM_DD`, for use in Altair visualizations can sometimes feel a bit like a finicky process, but it's quite manageable once you understand the underlying mechanics. I've encountered this particular issue a few times in my own projects, most notably when dealing with historical sensor data that had the unfortunate habit of omitting the year. My initial workaround, as I recall, involved some rather convoluted string manipulations, which is precisely what we want to avoid for robustness and clarity.
+,  Parsing date information, specifically `MM_DD`, for use in Altair visualizations can sometimes feel a bit like a finicky process, but it's quite manageable once you understand the underlying mechanics. I've encountered this particular issue a few times in my own projects, most notably when dealing with historical sensor data that had the unfortunate habit of omitting the year. My initial workaround, as I recall, involved some rather convoluted string manipulations, which is precisely what we want to avoid for robustness and clarity.
 
 The crux of the problem lies in the fact that `MM_DD` alone doesn't inherently represent a complete date; it lacks the all-important year component. Altair, being built on top of Vega-Lite, typically expects fully-specified dates to generate correct time-based visualizations. We need a strategy to imbue that missing year information, even if it's assumed or derived contextually, to achieve our goal.
 

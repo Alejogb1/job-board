@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-an-airflow-dag-be-scheduled-to-run-immediately-following-the-completion-of-a-previous-dag"
 ---
 
-Okay, let's talk about chaining airflow dags. I've seen this requirement surface more times than I can count, typically in situations where data pipelines have a strong dependency on sequential processing. It's not uncommon to have a ‘data ingestion’ dag that feeds into a downstream ‘data transformation’ dag, for instance. Orchestrating this in a reliable and maintainable way is key. There are a few approaches, each with its own nuances and best-use cases, but let’s dive into a couple of common methods and illustrate with some examples.
+, let's talk about chaining airflow dags. I've seen this requirement surface more times than I can count, typically in situations where data pipelines have a strong dependency on sequential processing. It's not uncommon to have a ‘data ingestion’ dag that feeds into a downstream ‘data transformation’ dag, for instance. Orchestrating this in a reliable and maintainable way is key. There are a few approaches, each with its own nuances and best-use cases, but let’s dive into a couple of common methods and illustrate with some examples.
 
 The core problem, really, is ensuring one dag starts only after another has successfully completed. Simply relying on a fixed schedule for the second dag is brittle because varying runtimes of the first dag can cause overlaps or missed dependencies. We need a more dynamic approach.
 

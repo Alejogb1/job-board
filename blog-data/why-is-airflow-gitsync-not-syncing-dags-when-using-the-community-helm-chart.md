@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-airflow-gitsync-not-syncing-dags-when-using-the-community-helm-chart"
 ---
 
-Let's tackle this. I've seen this particular issue pop up more times than I care to remember, especially in environments using the community helm chart for airflow. It's frustrating, because it *should* be a smooth process, but various factors can conspire to disrupt the gitsync. Fundamentally, the issue usually boils down to a disconnect somewhere along the path between the git repository containing your DAGs and the airflow scheduler's ability to read them.
+ I've seen this particular issue pop up more times than I care to remember, especially in environments using the community helm chart for airflow. It's frustrating, because it *should* be a smooth process, but various factors can conspire to disrupt the gitsync. Fundamentally, the issue usually boils down to a disconnect somewhere along the path between the git repository containing your DAGs and the airflow scheduler's ability to read them.
 
 From my experience, and after countless debugging sessions across various teams, this isn't a single root cause problem. Instead, it’s often a confluence of several potential issues. Let's dive into the main culprits, structured for clarity, and then we'll look at some code examples.
 

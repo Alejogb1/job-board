@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-loop-through-multiple-folders-and-subfolders-using-pyspark-in-azure-blob"
 ---
 
-Okay, let's tackle this. I've spent quite a bit of time dealing with complex data ingestion pipelines, especially those involving Azure Blob storage and PySpark. Accessing files nested within multiple directories is a common scenario, and it can become quite tricky if not handled efficiently. Let me walk you through my approach, which has evolved over numerous projects, along with some crucial considerations.
+,  I've spent quite a bit of time dealing with complex data ingestion pipelines, especially those involving Azure Blob storage and PySpark. Accessing files nested within multiple directories is a common scenario, and it can become quite tricky if not handled efficiently. Let me walk you through my approach, which has evolved over numerous projects, along with some crucial considerations.
 
 The core challenge, as I see it, isn't just about listing files; it's about doing it scalably within the PySpark framework, making the most of its distributed processing capabilities. Azure Blob storage uses a flat namespace, but we can conceptually create a folder structure using prefixes within the blob names. This is important to understand as we plan our data access strategy. I've often seen naive approaches that treat blob storage like a hierarchical filesystem, leading to performance bottlenecks. We need to think differently here.
 

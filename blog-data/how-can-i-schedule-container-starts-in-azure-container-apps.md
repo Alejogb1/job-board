@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-can-i-schedule-container-starts-in-azure-container-apps"
 ---
 
-Okay, let’s talk container starts in Azure Container Apps. It's a challenge I’ve encountered more than a few times, particularly when dealing with microservices that have specific dependencies or need phased deployments. There isn't a single, magic “schedule start” button, but rather a combination of approaches using Azure’s infrastructure to achieve the desired timing. You’re essentially orchestrating container lifecycles indirectly, using the tools at your disposal.
+, let’s talk container starts in Azure Container Apps. It's a challenge I’ve encountered more than a few times, particularly when dealing with microservices that have specific dependencies or need phased deployments. There isn't a single, magic “schedule start” button, but rather a combination of approaches using Azure’s infrastructure to achieve the desired timing. You’re essentially orchestrating container lifecycles indirectly, using the tools at your disposal.
 
 The core concept here is understanding that Azure Container Apps operates on a model of managing revisions, not individual container instances. When you push a change (including an image update or configuration change), you create a new revision. The actual scheduling is therefore often achieved via manipulating how these revisions become active. We won't directly tell a container to start at *exactly* 3:00 pm, but we will control *when* a new revision comes online, and by consequence, its constituent containers.
 

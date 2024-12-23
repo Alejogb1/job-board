@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "what-techniques-ensure-signal-integrity-in-photonic-interconnects-over-distances-required-for-large-scale-ai-training-within-data-centers"
 ---
 
-Okay so you wanna know about signal integrity in photonic interconnects for AI training right  Massive data centers huge distances its a big deal  Think about it all those GPUs talking to each other  electrical signals just wont cut it over long runs too much loss too much interference  thats where photons our little light buddies come in
+ so you wanna know about signal integrity in photonic interconnects for AI training right  Massive data centers huge distances its a big deal  Think about it all those GPUs talking to each other  electrical signals just wont cut it over long runs too much loss too much interference  thats where photons our little light buddies come in
 
 Photonic interconnects use light instead of electrons  much faster less loss  but its not a simple swap its like upgrading from a bicycle to a spaceship lots of new challenges  Signal integrity is key making sure the signal arrives clean and strong  no errors no dropped packets  otherwise your AI training grinds to a halt  think of it like a whisper getting lost in a hurricane you need a megaphone or in this case some clever techniques
 

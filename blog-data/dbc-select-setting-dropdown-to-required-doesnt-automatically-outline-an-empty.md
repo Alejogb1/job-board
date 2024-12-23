@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "dbc-select-setting-dropdown-to-required-doesnt-automatically-outline-an-empty"
 ---
 
-Okay so here's the deal you're facing a classic problem with Dash Bootstrap Components or dbc for short right the dropdown doesn't automatically outline when it's set to required and left empty it's a minor but annoying thing I've seen it countless times myself I've even debugged that exact problem late at night fuelled by too much coffee and the faint hum of my server room back in the day
+ so here's the deal you're facing a classic problem with Dash Bootstrap Components or dbc for short right the dropdown doesn't automatically outline when it's set to required and left empty it's a minor but annoying thing I've seen it countless times myself I've even debugged that exact problem late at night fuelled by too much coffee and the faint hum of my server room back in the day
 
 It's like the browser is saying "you told me it's required but you never said it should scream at the user with a red outline when it's empty" which it kinda is I guess Anyway let's break it down in a way that'll get you unstuck I mean nobody likes having a form that's all polite and quiet about missing fields it's almost passive aggressive right
 
@@ -56,7 +56,7 @@ if __name__ == '__main__':
 
 This is the most basic dropdown example with a required option set but that doesn't enforce the outline on some browsers we have this problem every day it feels like no one cares if the required fields are actually required or not so we need to do this ourselves
 
-Okay so here's where the CSS magic comes in we're targeting the select element specifically when it's both `required` and `:invalid` here's the CSS snippet to add
+ so here's where the CSS magic comes in we're targeting the select element specifically when it's both `required` and `:invalid` here's the CSS snippet to add
 
 ```css
 select:required:invalid {

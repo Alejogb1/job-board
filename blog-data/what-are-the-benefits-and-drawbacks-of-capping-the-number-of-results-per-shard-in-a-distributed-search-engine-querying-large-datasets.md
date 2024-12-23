@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "what-are-the-benefits-and-drawbacks-of-capping-the-number-of-results-per-shard-in-a-distributed-search-engine-querying-large-datasets"
 ---
 
-Okay so you're asking about limiting the number of results each part of your distributed search engine – a shard – returns right  Makes total sense when you're dealing with massive datasets you dont want one shard hogging all the resources and making everything else crawl  Its a classic scaling problem  Think of it like having a huge library instead of searching every single shelf individually you split the library into sections and then search within those sections
+ so you're asking about limiting the number of results each part of your distributed search engine – a shard – returns right  Makes total sense when you're dealing with massive datasets you dont want one shard hogging all the resources and making everything else crawl  Its a classic scaling problem  Think of it like having a huge library instead of searching every single shelf individually you split the library into sections and then search within those sections
 
 Benefits are pretty straightforward  First major win is performance  If each shard only sends back say the top 100 results instead of everything it finds the overall query time drops significantly imagine waiting for a million results from each section that's madness  Less data transfer means less network congestion and less load on your whole system  It's all about keeping things snappy
 

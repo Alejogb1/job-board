@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-access-a-session-variable-within-a-blazor-timer-loop-using-async-getterssetters"
 ---
 
-Alright, let's tackle this. It's a problem I've encountered a few times in the trenches, particularly when building real-time components in Blazor applications. The interaction between async operations, UI updates, and session state definitely introduces some complexities.
+Alright,  It's a problem I've encountered a few times in the trenches, particularly when building real-time components in Blazor applications. The interaction between async operations, UI updates, and session state definitely introduces some complexities.
 
 The core challenge lies in the way Blazor manages its rendering lifecycle and the asynchronous nature of both timer events and the methods used to retrieve and update session state. The default behaviour, where a timer callback might directly try to access a session variable, often leads to inconsistent data or concurrency issues. It’s essential to understand that session data operations, typically involving server communication or storage access, are not instantaneous. Therefore, we require a mechanism to properly synchronize these async operations with our timer loop and the component’s lifecycle.
 

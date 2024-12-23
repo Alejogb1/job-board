@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-isnt-motoko-syntax-highlightedunderlined-in-vs-code"
 ---
 
-Alright, let's tackle this. The lack of syntax highlighting for Motoko in Visual Studio Code is a common frustration, and I’ve definitely been there. In the early days of my work with the Internet Computer, this very issue was a constant annoyance. It's not that VS Code actively dislikes Motoko; rather, the process of supporting a language with proper syntax highlighting and code analysis is a significant undertaking. There’s a fair bit going on behind the scenes, more than just a simple color change for keywords.
+Alright,  The lack of syntax highlighting for Motoko in Visual Studio Code is a common frustration, and I’ve definitely been there. In the early days of my work with the Internet Computer, this very issue was a constant annoyance. It's not that VS Code actively dislikes Motoko; rather, the process of supporting a language with proper syntax highlighting and code analysis is a significant undertaking. There’s a fair bit going on behind the scenes, more than just a simple color change for keywords.
 
 Essentially, VS Code relies on what are known as language extensions to provide that rich coding experience we've grown accustomed to. These extensions are, at their core, specific software packages that define how a given programming language should be handled within the editor. They provide not only syntax highlighting, but also things like autocompletion, error checking (linting), and often even debugging support. The extension for a language needs to be explicitly developed, tested, and maintained.
 

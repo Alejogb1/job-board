@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-use-nodejss-createwritestream"
 ---
 
-Okay, let's tackle `createWriteStream`. I've definitely had my fair share of battles with file handling, and `createWriteStream` is a foundational piece of that puzzle in Node.js. It's not just about creating a file, it's about doing it efficiently and with the flexibility you need for various situations. Think of it as the primary tool for pushing data into a file, one chunk at a time, rather than loading everything into memory. This can make a significant difference when dealing with large datasets or continuous data streams.
+, let's tackle `createWriteStream`. I've definitely had my fair share of battles with file handling, and `createWriteStream` is a foundational piece of that puzzle in Node.js. It's not just about creating a file, it's about doing it efficiently and with the flexibility you need for various situations. Think of it as the primary tool for pushing data into a file, one chunk at a time, rather than loading everything into memory. This can make a significant difference when dealing with large datasets or continuous data streams.
 
 The core concept revolves around the idea of a writable stream. Instead of a monolithic `fs.writeFile` which loads all the data into memory before writing, `fs.createWriteStream` returns a *writable stream*. This stream acts as an interface. You push data into it, and the stream takes care of writing that data to the specified file in the background. This is particularly beneficial because it prevents your application from running out of memory when dealing with large files and enables handling data as it arrives, not after it's all been collected.
 

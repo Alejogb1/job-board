@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-does-wrong-constant-name-get-inferred-by-module"
 ---
 
-Alright, let's tackle this. I've definitely seen this sort of thing crop up in various projects, and it’s a good question, one that highlights some important nuances in how modules and their constant resolution mechanics function in ruby. It’s a situation that might initially appear confusing but, with a bit of exploration, becomes quite logical.
+Alright,  I've definitely seen this sort of thing crop up in various projects, and it’s a good question, one that highlights some important nuances in how modules and their constant resolution mechanics function in ruby. It’s a situation that might initially appear confusing but, with a bit of exploration, becomes quite logical.
 
 The crux of the issue with "wrong constant name" being inferred by `Module` often revolves around the interplay of lexical scope, the constant lookup chain, and how ruby's module system operates. When we say "constant," we’re not talking strictly about something you’ve defined directly with an uppercase name. Instead, ruby treats anything that's not a variable or method call as a potential constant—and then goes searching for it in a defined path.
 

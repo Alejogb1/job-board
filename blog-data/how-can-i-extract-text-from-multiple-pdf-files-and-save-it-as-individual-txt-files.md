@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-extract-text-from-multiple-pdf-files-and-save-it-as-individual-txt-files"
 ---
 
-Okay, let's get into this. I've tackled this very problem numerous times over the years, and it’s a surprisingly common requirement in various data processing pipelines. Extracting text from PDFs programmatically can seem straightforward initially, but the devil, as they say, is in the details. There’s a whole ecosystem of tools and approaches, and the “best” method often depends heavily on the nature of the PDF itself.
+, let's get into this. I've tackled this very problem numerous times over the years, and it’s a surprisingly common requirement in various data processing pipelines. Extracting text from PDFs programmatically can seem straightforward initially, but the devil, as they say, is in the details. There’s a whole ecosystem of tools and approaches, and the “best” method often depends heavily on the nature of the PDF itself.
 
 The core challenge lies in the structure of PDFs. Unlike plain text files, PDFs are designed for document presentation, containing not just textual content but also layout information, fonts, images, and potentially much more. This complexity means we need libraries designed specifically to interpret this structure and isolate the text we need. Overly simplistic approaches, like treating a PDF as a raw binary stream, will yield gibberish.
 

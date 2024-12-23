@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-use-contains-with-an-array-of-struct-in-swiftui"
 ---
 
-Okay, let’s tackle this one. I’ve definitely been in this particular corner of SwiftUI before, and it’s a common tripping point, especially when you're moving beyond simple data types. The `.contains()` method, while seemingly straightforward, requires a bit more nuance when you’re dealing with arrays of custom structs. It's not immediately obvious how to tell it what "containment" actually means in that context.
+, let’s tackle this one. I’ve definitely been in this particular corner of SwiftUI before, and it’s a common tripping point, especially when you're moving beyond simple data types. The `.contains()` method, while seemingly straightforward, requires a bit more nuance when you’re dealing with arrays of custom structs. It's not immediately obvious how to tell it what "containment" actually means in that context.
 
 The core issue stems from the fact that SwiftUI’s `.contains()` method, inherited from the `Sequence` protocol, performs an equality check. By default, it compares the memory addresses of two struct instances, not their underlying property values. This means that even if two structs have identical field values, they are considered different because they are distinct objects in memory. You're essentially asking, "Is this *exact* block of memory present in the array?" not "Is there a struct with these *values*?"
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-image-classes-be-extracted-using-r"
 ---
 
-Okay, let's tackle this. The extraction of image classes using R is something I’ve dealt with quite a bit, particularly during my time working on automated medical image analysis projects a few years back. It's not always straightforward, primarily because 'image class' can mean different things depending on context. We're essentially talking about grouping pixels or regions of pixels based on some criteria, and thankfully, R has a solid toolkit to handle this.
+,  The extraction of image classes using R is something I’ve dealt with quite a bit, particularly during my time working on automated medical image analysis projects a few years back. It's not always straightforward, primarily because 'image class' can mean different things depending on context. We're essentially talking about grouping pixels or regions of pixels based on some criteria, and thankfully, R has a solid toolkit to handle this.
 
 Essentially, the process hinges on transforming raw image data into a format we can analyze, followed by leveraging clustering algorithms or supervised learning methods to assign those pixels or regions to distinct classes. We're moving from pixel data to semantically meaningful classifications. Now, the particular techniques can change depending on if we have labeled data, or if we're embarking on the unsupervised classification journey.
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "error-train-r-function-problem"
 ---
 
-Okay so I see the question "error train r function problem" sounds like someone’s having a bad time with their R training functions probably model training issues I've definitely been there more times than I care to admit. Let me break down what I've seen myself and what might be happening.
+ so I see the question "error train r function problem" sounds like someone’s having a bad time with their R training functions probably model training issues I've definitely been there more times than I care to admit. Let me break down what I've seen myself and what might be happening.
 
 First off that question is so vague it could be anything in the wide world of R and machine learning it’s like walking into a hardware store and saying "I need something for a problem" haha I've tried that before I walked out with an adjustable wrench when I needed a specific torque driver. It’s kinda funny now.
 

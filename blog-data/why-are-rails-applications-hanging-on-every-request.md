@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-are-rails-applications-hanging-on-every-request"
 ---
 
-Okay, let’s tackle this. I've seen this particular type of deadlock more times than I’d care to recount, often under the seemingly innocent guise of 'everything was working fine yesterday.' The scenario of a Rails application hanging on every request, manifesting as an eerie silence where responsiveness should be, is frequently rooted in concurrency issues, resource exhaustion, or misconfigured components. It's almost never a single smoking gun, but rather a confluence of factors that, when aligned poorly, bring your application to its knees.
+, let’s tackle this. I've seen this particular type of deadlock more times than I’d care to recount, often under the seemingly innocent guise of 'everything was working fine yesterday.' The scenario of a Rails application hanging on every request, manifesting as an eerie silence where responsiveness should be, is frequently rooted in concurrency issues, resource exhaustion, or misconfigured components. It's almost never a single smoking gun, but rather a confluence of factors that, when aligned poorly, bring your application to its knees.
 
 From experience, I recall a rather large e-commerce platform where we had this exact problem. It was a frantic, all-hands-on-deck situation, with customer service getting hammered, and development teams scrambling. The culprit, in that instance, turned out to be a combination of poorly configured database connection pooling and an unchecked background job queue that had spiraled into a resource-hogging vortex. It taught me a lot about anticipating and planning for scale.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-tflite-model-maker-fail-to-process-jpg-images-reporting-a-bmp-decoding-error"
 ---
 
-Okay, let's tackle this. It's a frustrating problem, I've been down this road myself, back when I was working on a mobile image classification app. The issue you're seeing—TFLite Model Maker complaining about bmp decoding errors when fed jpg images—isn't actually about bmp files at all, not directly anyway. It’s a bit of a misdirection, and understanding the underlying cause is critical for resolving it.
+,  It's a frustrating problem, I've been down this road myself, back when I was working on a mobile image classification app. The issue you're seeing—TFLite Model Maker complaining about bmp decoding errors when fed jpg images—isn't actually about bmp files at all, not directly anyway. It’s a bit of a misdirection, and understanding the underlying cause is critical for resolving it.
 
 The core of the problem lies in the image decoding process employed by the TensorFlow Lite Model Maker. Model Maker, at least in its earlier iterations (and even occasionally now), relies heavily on the Pillow library (PIL) for handling image loading and pre-processing. Now, while Pillow *does* support jpg decoding, it relies on underlying system-level libraries or, sometimes, bundled libraries with the Pillow installation. When you see a “bmp decoding error” reported, it usually indicates that Pillow, or whatever it delegates to, has failed to correctly interpret the image data, and it *defaults* to a bmp check if its first attempt at decoding fails. This suggests the initial attempt at decoding the jpg failed, and the fallback test (thinking it was a BMP) unsurprisingly produced another failure.
 

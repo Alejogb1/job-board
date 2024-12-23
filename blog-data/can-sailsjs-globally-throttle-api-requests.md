@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-sailsjs-globally-throttle-api-requests"
 ---
 
-Okay, let's tackle this. I’ve certainly dealt with similar challenges in various node.js backends, and the need to globally throttle api requests in sails.js is definitely one that pops up as traffic grows. It isn’t a built-in, off-the-shelf feature, but it’s absolutely achievable with the right architectural approach.
+,  I’ve certainly dealt with similar challenges in various node.js backends, and the need to globally throttle api requests in sails.js is definitely one that pops up as traffic grows. It isn’t a built-in, off-the-shelf feature, but it’s absolutely achievable with the right architectural approach.
 
 My initial foray into this type of problem happened when I was building a real-time data aggregation platform. Initially, the API was quite straightforward. But once we started pushing the limits, we saw a few things: clients aggressively polling for updates, some even ignoring the recommended caching headers, which started to bring the database server to its knees. We needed a robust throttling mechanism, and we needed it fast.
 

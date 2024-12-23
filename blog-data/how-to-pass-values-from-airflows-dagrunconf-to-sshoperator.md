@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-pass-values-from-airflows-dagrunconf-to-sshoperator"
 ---
 
-Okay, let’s talk about passing values from Airflow’s `dag_run.conf` to the `SSHOperator`. It's a situation I’ve encountered countless times, particularly when dealing with dynamically generated configurations or orchestrating tasks that require parameters at runtime. It’s not as straightforward as simply passing a variable, but the mechanics are fairly logical once you understand how Airflow context works. This is a critical ability for building robust, data-driven workflows.
+, let’s talk about passing values from Airflow’s `dag_run.conf` to the `SSHOperator`. It's a situation I’ve encountered countless times, particularly when dealing with dynamically generated configurations or orchestrating tasks that require parameters at runtime. It’s not as straightforward as simply passing a variable, but the mechanics are fairly logical once you understand how Airflow context works. This is a critical ability for building robust, data-driven workflows.
 
 The heart of the matter lies in understanding that Airflow templates its arguments. These templates use Jinja2 templating engine and can access the execution context of the task. The `dag_run.conf` dictionary, which is what you get when you trigger a DAG with a configuration, is part of this context. So, instead of thinking about passing a variable *directly*, we actually construct strings that, when evaluated, contain the values we need.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-the-composite-pattern-be-mapped-using-ef-core-in-c"
 ---
 
-Okay, let's unpack this. I've had my fair share of encounters with complex object hierarchies in data modeling, and mapping the composite pattern with Entity Framework Core definitely falls into that category. It's not always straightforward, but it's certainly achievable with a sound understanding of EF Core's capabilities. The challenge, fundamentally, lies in representing a tree-like structure, where components can contain other components, within a relational database, which is inherently flat.
+, let's unpack this. I've had my fair share of encounters with complex object hierarchies in data modeling, and mapping the composite pattern with Entity Framework Core definitely falls into that category. It's not always straightforward, but it's certainly achievable with a sound understanding of EF Core's capabilities. The challenge, fundamentally, lies in representing a tree-like structure, where components can contain other components, within a relational database, which is inherently flat.
 
 My past experience on a project involving complex hierarchical product catalogs really hammered home the nuances. We had nested categories, each potentially containing other subcategories and individual products. Attempting to simply map this using naive, one-to-many relationships quickly turned into a performance nightmare and became incredibly cumbersome to query. That's where understanding and properly implementing the composite pattern's mapping became crucial for us.
 

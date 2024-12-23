@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-chainlinks-dynamic-upkeep-registration-example-failing-with-upkeepidconsumerexampleregisterandpredictid-errored-execution-reverted"
 ---
 
-Okay, let's dive into this. I remember dealing with a similar issue a while back when integrating Chainlink Keepers into a particularly complex smart contract system. The `execution reverted` error you're seeing with `UpkeepIDConsumerExample.registerAndPredictID` is, unfortunately, a fairly common pitfall, and it typically boils down to a few core issues within the Keeper registration process or the contract interaction itself. It's less likely to be a fundamental flaw in Chainlink and more a matter of configuration and contract logic alignment.
+, let's dive into this. I remember dealing with a similar issue a while back when integrating Chainlink Keepers into a particularly complex smart contract system. The `execution reverted` error you're seeing with `UpkeepIDConsumerExample.registerAndPredictID` is, unfortunately, a fairly common pitfall, and it typically boils down to a few core issues within the Keeper registration process or the contract interaction itself. It's less likely to be a fundamental flaw in Chainlink and more a matter of configuration and contract logic alignment.
 
 The core of the problem generally lies within how you’re interacting with the `KeeperRegistry` contract and how your target contract, `UpkeepIDConsumerExample` in this case, is configured to handle keeper registration. The error `execution reverted` means that somewhere along the line, a transaction attempted to execute an operation that failed based on pre-defined criteria or logic within the smart contract. Let's break down potential causes and solutions.
 

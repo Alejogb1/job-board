@@ -10,7 +10,7 @@ First off forget about directly accessing files like you'd do with a local file 
 
 So API keys are kinda like those keys  They're not ideal for every situation because if they're compromised then bam your entire setup is vulnerable  It's like losing the master key to your vault  Not good
 
-Okay so how else can we do this  Well one strategy involves using something like service accounts  It's like having a special dedicated user account specifically for your app  This account can have specific permissions to access certain Google Drive files or folders  You'll still need some sort of credentials  But they're not your personal account's keys so a little less risky
+ so how else can we do this  Well one strategy involves using something like service accounts  It's like having a special dedicated user account specifically for your app  This account can have specific permissions to access certain Google Drive files or folders  You'll still need some sort of credentials  But they're not your personal account's keys so a little less risky
 
 You'd configure your service account and download a JSON key file  This file acts as your "key" but it's distinct from your personal Google account  Treat this JSON file like a crown jewel its security is paramount  Keep it out of version control store it securely somewhere safe  You use this file to authenticate the app not your personal account
 

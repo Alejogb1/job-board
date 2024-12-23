@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-errors-about-unrecognized-arguments-for-the-watir-selenium-browser-constructor"
 ---
 
-Okay, let’s unpack this. I’ve seen this issue pop up more times than I can count, and it almost always comes down to a few core areas of configuration or misunderstanding around how Watir’s `Browser` constructor interacts with Selenium. You're encountering errors related to unrecognized arguments, so let's dissect the likely culprits and how to resolve them, drawing from my experience working on various automated testing setups.
+, let’s unpack this. I’ve seen this issue pop up more times than I can count, and it almost always comes down to a few core areas of configuration or misunderstanding around how Watir’s `Browser` constructor interacts with Selenium. You're encountering errors related to unrecognized arguments, so let's dissect the likely culprits and how to resolve them, drawing from my experience working on various automated testing setups.
 
 The core problem, put simply, stems from providing the `Watir::Browser` constructor with parameters that it either doesn't expect or that it can’t interpret within the current context of your setup. Watir is, at its heart, an abstraction built on top of Selenium. Thus, it leverages Selenium’s capabilities and provides a more user-friendly interface for automating browsers. However, this also means that incorrect configurations with Selenium’s own underlying mechanisms can ripple up into Watir and appear as if Watir itself is the problem. This is important: Watir is usually the messenger, not the perpetrator, in these situations.
 

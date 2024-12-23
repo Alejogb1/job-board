@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "what-exactly-is-yolo-fed"
 ---
 
-Okay, let's talk about what actually goes into the maw of a YOLO model, because it’s not as straightforward as just tossing in some images and hoping for bounding boxes. I've spent a fair amount of time tweaking these things over the years, particularly in embedded vision projects where resources were incredibly constrained, and the data pipeline ended up being just as critical as the model itself. There’s definitely more to it than meets the eye.
+, let's talk about what actually goes into the maw of a YOLO model, because it’s not as straightforward as just tossing in some images and hoping for bounding boxes. I've spent a fair amount of time tweaking these things over the years, particularly in embedded vision projects where resources were incredibly constrained, and the data pipeline ended up being just as critical as the model itself. There’s definitely more to it than meets the eye.
 
 Fundamentally, YOLO (You Only Look Once) expects a specific input format, which is why its real-world application requires careful preprocessing. This input, primarily, is a tensor of a fixed size. While the specific size can vary depending on the version and implementation of YOLO (v3, v4, v5, etc.), the general concept remains consistent: a multi-dimensional array representing an image. Crucially, the image needs to be preprocessed before becoming this tensor, going beyond the initial raw pixel data.
 

@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-am-i-getting-a-classcastexception-when-using-hashmap-in-java"
 ---
 
-Alright, let's tackle this. ClassCastException with a HashMap in Java – it's a fairly common stumbling block, and I've personally chased down a few of these over the years, usually in the wee hours after deploying some seemingly innocuous change. The core issue, generally speaking, isn't with HashMap itself being inherently faulty, but rather with a mismatch in the types you're attempting to use or extract from it, particularly in scenarios where generics aren't handled rigorously. Let's unpack that.
+Alright,  ClassCastException with a HashMap in Java – it's a fairly common stumbling block, and I've personally chased down a few of these over the years, usually in the wee hours after deploying some seemingly innocuous change. The core issue, generally speaking, isn't with HashMap itself being inherently faulty, but rather with a mismatch in the types you're attempting to use or extract from it, particularly in scenarios where generics aren't handled rigorously. Let's unpack that.
 
 The `HashMap` in Java is a versatile data structure, but it fundamentally stores key-value pairs as *Objects*. This means that at runtime, Java doesn't inherently remember the specific types you intended to store if those types haven't been properly defined, or if you're circumventing type safety somehow. The beauty of generics is that they provide compile-time type checks, avoiding potential `ClassCastException` issues before your code even runs. However, if you are working with raw types or performing casting operations that are incompatible with the actual object type within the `HashMap`, that's where the trouble starts.
 

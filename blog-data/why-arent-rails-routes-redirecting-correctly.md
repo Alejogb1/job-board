@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-arent-rails-routes-redirecting-correctly"
 ---
 
-Alright, let's tackle this. I've certainly been down that rabbit hole of baffling Rails routing issues more times than I care to remember. It’s one of those areas where things can seem straightforward on the surface, but quickly become complex when unexpected behavior surfaces. The core problem usually isn't a broken `routes.rb` file (though that's *always* worth double-checking), but rather a combination of misunderstanding the routing engine's priorities, subtle code errors, or sometimes even caching issues that can lead to these redirection problems.
+Alright,  I've certainly been down that rabbit hole of baffling Rails routing issues more times than I care to remember. It’s one of those areas where things can seem straightforward on the surface, but quickly become complex when unexpected behavior surfaces. The core problem usually isn't a broken `routes.rb` file (though that's *always* worth double-checking), but rather a combination of misunderstanding the routing engine's priorities, subtle code errors, or sometimes even caching issues that can lead to these redirection problems.
 
 For me, the most common culprits tend to fall into these categories: incorrect verb matching, ambiguous route definitions, and the often-overlooked middleware layer interfering with the redirection process. Let's break each of those down.
 

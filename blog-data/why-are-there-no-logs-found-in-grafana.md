@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-are-there-no-logs-found-in-grafana"
 ---
 
-Okay, let's tackle this. It's a situation I’ve definitely seen a few times, usually accompanied by a slightly panicked “where’d all the data go?” feeling. Troubleshooting missing logs in Grafana, especially when you're expecting them, can be a bit of a layered issue. It's rarely just one simple thing. We’ve got to approach it systematically.
+,  It's a situation I’ve definitely seen a few times, usually accompanied by a slightly panicked “where’d all the data go?” feeling. Troubleshooting missing logs in Grafana, especially when you're expecting them, can be a bit of a layered issue. It's rarely just one simple thing. We’ve got to approach it systematically.
 
 Firstly, and perhaps most commonly, is the matter of data source configuration within Grafana itself. Grafana doesn't inherently store logs; it relies on external data sources. It might seem obvious, but a frequent culprit is incorrect or incomplete setup here. Have we properly pointed Grafana towards the correct log aggregation system? I recall a particularly memorable incident where we’d migrated our logging backend from Elasticsearch to Loki, but the Grafana data source config was… still pointing to the old Elasticsearch cluster. Cue the frantic log search yielding precisely nothing. Check, double-check, and triple-check that the data source details (URL, credentials, specific query parameters) are all accurate for your chosen log backend – be it Loki, Elasticsearch, Prometheus, or something else.
 

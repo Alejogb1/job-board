@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "localparam-verilog-parameters-example"
 ---
 
-Alright so localparam in Verilog right I've been there wrestled with that beast more times than I care to admit
+so localparam in Verilog right I've been there wrestled with that beast more times than I care to admit
 
 Yeah its a common headache for beginners and sometimes for seasoned pros too when you're knee-deep in a complex design and forgetting your basic syntax localparams are those nifty little constants you define within a module or a package they're like the silent workhorses of parameterized hardware design allowing you to configure things without the hassle of re-writing massive chunks of code each time
 

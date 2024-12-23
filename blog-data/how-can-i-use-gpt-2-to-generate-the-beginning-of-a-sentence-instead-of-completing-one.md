@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-use-gpt-2-to-generate-the-beginning-of-a-sentence-instead-of-completing-one"
 ---
 
-Okay, let's tackle this. I've spent quite a bit of time working with language models, especially in the early days of GPT-2's release, and this specific task – generating sentence *starts* rather than completions – is a challenge I remember quite distinctly. It's not just about tweaking a few parameters; you need to fundamentally alter your approach to input and, sometimes, even the output handling.
+,  I've spent quite a bit of time working with language models, especially in the early days of GPT-2's release, and this specific task – generating sentence *starts* rather than completions – is a challenge I remember quite distinctly. It's not just about tweaking a few parameters; you need to fundamentally alter your approach to input and, sometimes, even the output handling.
 
 The core issue stems from how GPT-2, and most similar models, are architected and trained. These models are fundamentally *autoregressive*. This means they predict the next token (word, sub-word, character) in a sequence given the preceding tokens. They excel at continuation tasks because that's what their architecture naturally lends itself to. When you want just the beginning, the model doesn't have the context of a full sequence to guide its generation process; you essentially need to prompt it in a way that encourages it to *start* rather than continue.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-time-series-data-be-resampled-interpolated-or-reshaped-for-use-in-1d-cnn-or-1d-lstm-models"
 ---
 
-Alright, let's tackle this. From my experience, handling time-series data for deep learning, particularly for 1D convolutional or LSTM networks, often requires a good amount of preprocessing. It's not uncommon to encounter datasets with inconsistent sampling rates or shapes that don't quite fit the input expectations of these models. So, let me walk you through some techniques I've found effective, focusing on resampling, interpolation, and reshaping.
+Alright,  From my experience, handling time-series data for deep learning, particularly for 1D convolutional or LSTM networks, often requires a good amount of preprocessing. It's not uncommon to encounter datasets with inconsistent sampling rates or shapes that don't quite fit the input expectations of these models. So, let me walk you through some techniques I've found effective, focusing on resampling, interpolation, and reshaping.
 
 First off, understand that the goal is to prepare your time-series data so it becomes both compatible with the neural network architecture and beneficial for learning. A common issue is that your signal may not be sampled at a rate that's optimal or even consistent across different instances of the same phenomenon. Resampling addresses this directly. It's essentially converting your data from one sampling rate to another. We've got a couple of main approaches here: upsampling, which increases the sampling rate, effectively adding more data points, and downsampling, which does the opposite.
 

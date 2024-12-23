@@ -32,7 +32,7 @@ So advice  well  it's a pretty new field  so there's no like one size fits all p
 
 
 
-Okay now for some code examples cause you asked for it
+ now for some code examples cause you asked for it
 
 **Example 1: Probing Neuron Activation**
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-causes-wagtail-image-upload-errors-in-richtext-fields"
 ---
 
-Okay, let's talk about Wagtail image upload headaches within rich text fields. I’ve seen this issue rear its ugly head more times than I’d care to count, and it usually boils down to a few key areas. It's rarely a single, straightforward problem, more often a confluence of configurations, permissions, and sometimes just plain old code quirks.
+, let's talk about Wagtail image upload headaches within rich text fields. I’ve seen this issue rear its ugly head more times than I’d care to count, and it usually boils down to a few key areas. It's rarely a single, straightforward problem, more often a confluence of configurations, permissions, and sometimes just plain old code quirks.
 
 First, consider the fundamental mechanics of how Wagtail handles images in rich text. When you insert an image, Wagtail doesn’t directly store the base64 encoded image data within the rich text field itself. Instead, it uploads the image to your configured storage backend, saves metadata about it (like the filename and often size and alt text) in a database record, and then inserts a reference to this image using html with wagtail’s specific tag notation ` <embed alt="Image alt text" embedtype="image" id="12345" />` where `12345` is an image id. This separation is crucial for performance and scalability; imagine the bloat if every image were embedded as base64 within the text itself.
 

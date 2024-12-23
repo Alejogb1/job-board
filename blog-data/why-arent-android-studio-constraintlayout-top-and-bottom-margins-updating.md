@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-arent-android-studio-constraintlayout-top-and-bottom-margins-updating"
 ---
 
-Okay, so, let’s address this ConstraintLayout margin update issue that, admittedly, I've encountered more times than I care to recall during my Android development journey. Specifically, focusing on those top and bottom margins that sometimes seem stubbornly resistant to change. It's a frustratingly common experience, and understanding *why* it happens often boils down to a nuanced interplay of constraint logic and layout behavior within Android's view hierarchy.
+, so, let’s address this ConstraintLayout margin update issue that, admittedly, I've encountered more times than I care to recall during my Android development journey. Specifically, focusing on those top and bottom margins that sometimes seem stubbornly resistant to change. It's a frustratingly common experience, and understanding *why* it happens often boils down to a nuanced interplay of constraint logic and layout behavior within Android's view hierarchy.
 
 The problem usually isn't a bug in ConstraintLayout itself, but rather a misunderstanding of how constraints are prioritized and interpreted. I remember back on the *Project Chimera* build, we had a complex nested layout that just refused to play nicely with top and bottom margins within a scrollable view. Hours were spent trying to force margins to work as expected, and eventually, we cracked the code by focusing on the core principles of constraint relationships.
 

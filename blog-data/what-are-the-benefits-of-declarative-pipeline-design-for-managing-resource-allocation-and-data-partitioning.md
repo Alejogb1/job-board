@@ -4,7 +4,7 @@ date: "2024-12-10"
 id: "what-are-the-benefits-of-declarative-pipeline-design-for-managing-resource-allocation-and-data-partitioning"
 ---
 
-Okay so you wanna know about declarative pipelines for resource allocation and data partitioning right  cool stuff  I've been messing around with this lately and it's pretty neat  The basic idea is instead of telling your system *how* to do something you tell it *what* you want it to achieve  It's like giving a recipe to a chef instead of micromanaging every step they take  Makes things way easier to manage especially when things get complex
+ so you wanna know about declarative pipelines for resource allocation and data partitioning right  cool stuff  I've been messing around with this lately and it's pretty neat  The basic idea is instead of telling your system *how* to do something you tell it *what* you want it to achieve  It's like giving a recipe to a chef instead of micromanaging every step they take  Makes things way easier to manage especially when things get complex
 
 The biggest benefit is *flexibility*  Imagine you're working with a huge dataset  You might need to partition it differently depending on what analysis you're doing  With an imperative approach you'd have to rewrite a bunch of code every time  With a declarative one you just change the specification of what you want and the system figures out the rest  This is where things get really powerful  It's less code more abstraction and less headache for you
 

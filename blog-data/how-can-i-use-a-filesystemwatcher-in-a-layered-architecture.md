@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-can-i-use-a-filesystemwatcher-in-a-layered-architecture"
 ---
 
-Okay, let's tackle this. I've seen this pattern—using `FileSystemWatcher` in a layered architecture—go sideways more times than I care to count, often leading to tightly coupled messes and maintenance nightmares. It’s not that a `FileSystemWatcher` is inherently problematic; it's how you integrate it that matters. The key is proper abstraction and adherence to the principles of separation of concerns.
+,  I've seen this pattern—using `FileSystemWatcher` in a layered architecture—go sideways more times than I care to count, often leading to tightly coupled messes and maintenance nightmares. It’s not that a `FileSystemWatcher` is inherently problematic; it's how you integrate it that matters. The key is proper abstraction and adherence to the principles of separation of concerns.
 
 When dealing with a layered architecture, which usually consists of layers like presentation, application, and data access, you need to ask where the responsibility of monitoring the filesystem truly lies. The filesystem isn’t an application-level concern in most scenarios; it's closer to a data source or an infrastructure detail. Therefore, embedding the `FileSystemWatcher` directly into the presentation layer or the core application logic is generally a bad idea, primarily due to tight coupling. Changes in how the filesystem is monitored should not ripple through your entire application.
 

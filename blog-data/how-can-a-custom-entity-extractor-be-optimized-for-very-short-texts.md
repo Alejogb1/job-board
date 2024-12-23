@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-a-custom-entity-extractor-be-optimized-for-very-short-texts"
 ---
 
-Alright, let's tackle this. Short text, custom entity extraction, it's a classic challenge that's popped up a few times in my career. One instance I recall particularly vividly involved trying to pull specific product codes from user-generated social media posts. The posts were, as you can imagine, tweet-length at best and packed with jargon, slang, and often, not-so-great grammar. This situation highlighted the inherent difficulties with short-text processing, and it forced me to seriously think through optimization strategies beyond just throwing more data at a standard model. Here's what I've learned, broken down into manageable concepts:
+Alright,  Short text, custom entity extraction, it's a classic challenge that's popped up a few times in my career. One instance I recall particularly vividly involved trying to pull specific product codes from user-generated social media posts. The posts were, as you can imagine, tweet-length at best and packed with jargon, slang, and often, not-so-great grammar. This situation highlighted the inherent difficulties with short-text processing, and it forced me to seriously think through optimization strategies beyond just throwing more data at a standard model. Here's what I've learned, broken down into manageable concepts:
 
 The core issue with short texts stems from the lack of context. Traditional machine learning models, especially deep learning architectures, often rely on a rich contextual understanding built from longer sequences of words. When presented with a few words, they frequently struggle to discern the nuanced relationships between terms and, consequently, have a harder time reliably extracting entities. Unlike processing entire paragraphs, with short text, you're dealing with sparse feature representation, making entity disambiguation particularly tricky.
 
@@ -83,7 +83,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import Pipeline
 from sklearn.model_selection import train_test_split
 
-texts = ["product_code_xyz good", "product_code_abc bad", "great product_code_123", "product_code_456 okay"]
+texts = ["product_code_xyz good", "product_code_abc bad", "great product_code_123", "product_code_456 "]
 labels = ["product_code_xyz", "product_code_abc", "product_code_123", "product_code_456"]
 
 X_train, X_test, y_train, y_test = train_test_split(texts, labels, test_size=0.2, random_state=42)

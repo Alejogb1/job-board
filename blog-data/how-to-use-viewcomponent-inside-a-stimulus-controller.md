@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-use-viewcomponent-inside-a-stimulus-controller"
 ---
 
-Alright, let's tackle this. It’s a question I've seen come up in various contexts, and I recall struggling with it myself years ago on a project involving a complex multi-panel interface. We were migrating from a monolithic server-rendered approach to a more componentized front-end, and the seamless integration between stimulus and view_component was… not immediately obvious. So, let’s break down how to effectively use view_component inside a stimulus controller.
+Alright,  It’s a question I've seen come up in various contexts, and I recall struggling with it myself years ago on a project involving a complex multi-panel interface. We were migrating from a monolithic server-rendered approach to a more componentized front-end, and the seamless integration between stimulus and view_component was… not immediately obvious. So, let’s break down how to effectively use view_component inside a stimulus controller.
 
 The core issue centers around the inherent separation of concerns between these two powerful tools. `view_component` focuses on server-side rendering of reusable ui elements, while `stimulus` is all about adding dynamic behavior to the client-side. The challenge arises when you need to use stimulus’s event handling capabilities to interact with elements rendered by your view component. You can't just attach a controller to a component's root element and expect everything to function flawlessly, at least not without some intermediary steps.
 

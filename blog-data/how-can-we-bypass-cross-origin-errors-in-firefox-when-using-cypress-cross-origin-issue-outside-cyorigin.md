@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-we-bypass-cross-origin-errors-in-firefox-when-using-cypress-cross-origin-issue-outside-cyorigin"
 ---
 
-Okay, let's tackle this cross-origin challenge, something I've certainly dealt with more than a few times during my years in web automation. It’s a common frustration, particularly when using Cypress in environments that involve multiple domains. Firefox, while generally excellent, can be a bit more stringent with its cross-origin security policies compared to, say, Chrome, which might lead to these hiccups during automated testing.
+, let's tackle this cross-origin challenge, something I've certainly dealt with more than a few times during my years in web automation. It’s a common frustration, particularly when using Cypress in environments that involve multiple domains. Firefox, while generally excellent, can be a bit more stringent with its cross-origin security policies compared to, say, Chrome, which might lead to these hiccups during automated testing.
 
 The core issue, of course, is the Same-Origin Policy. Browsers enforce this to prevent malicious scripts on one site from accessing data on another. When Cypress attempts to navigate or interact with a different origin, the browser rightly raises a cross-origin error, halting our test. Now, `cy.origin` is the intended tool from Cypress to handle this, allowing execution within a different origin’s context, but you're asking about scenarios outside of that. This often boils down to needing some more specific configuration or understanding of your testing setup. Let's explore how we can work around this, starting from a pragmatic perspective gained from past projects.
 

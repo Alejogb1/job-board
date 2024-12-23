@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-use-the-dbcontext-interface-in-ddd"
 ---
 
-Alright, let's tackle this. I've seen this question come up quite a bit, and it’s a crucial one when you're aiming for a robust, domain-centric architecture. The core challenge, as I've experienced firsthand over the years with various projects, lies in maintaining the integrity of your domain model while using an infrastructure concern like a `dbcontext`. The temptation to bleed the persistence details into the domain is very real. Let me share what I've learned.
+Alright,  I've seen this question come up quite a bit, and it’s a crucial one when you're aiming for a robust, domain-centric architecture. The core challenge, as I've experienced firsthand over the years with various projects, lies in maintaining the integrity of your domain model while using an infrastructure concern like a `dbcontext`. The temptation to bleed the persistence details into the domain is very real. Let me share what I've learned.
 
 The `dbcontext`, typically from entity framework or similar orms, acts as your gateway to the database. In a pure domain-driven design (ddd) implementation, this represents an infrastructure concern. The domain model, on the other hand, should be completely ignorant of the database and persistence mechanisms. It's about defining your business logic and entities in terms of the problem domain, not how they are stored. This is the core principle we’ll be navigating.
 

@@ -4,11 +4,11 @@ date: "2024-12-13"
 id: "testing-my-heap"
 ---
 
-Okay so you're asking about testing your heap right I've been there done that more times than I care to admit let's break it down and get you sorted out heaps can be tricky little beasts if you're not careful
+ so you're asking about testing your heap right I've been there done that more times than I care to admit let's break it down and get you sorted out heaps can be tricky little beasts if you're not careful
 
 First things first let’s assume we're talking about a binary heap the one you typically use for priority queues or heap sort you know the classic min or max heap structure I'm not going to bore you with the theory because you probably know that already what I'm going to talk about is the nitty gritty of how to *actually* test it
 
-Alright so you've implemented a heap presumably in C++ python java go or some language like that and you’re now facing the daunting task of verifying it works as expected right Been there dude trust me the debugging sessions are legendary we all have those stories of spending hours chasing down a simple off by one error in a heap implementation I remember once I spent a whole afternoon debugging a heap where the percolate up was broken because of a misplaced i++ it was epic in the worst way
+so you've implemented a heap presumably in C++ python java go or some language like that and you’re now facing the daunting task of verifying it works as expected right Been there dude trust me the debugging sessions are legendary we all have those stories of spending hours chasing down a simple off by one error in a heap implementation I remember once I spent a whole afternoon debugging a heap where the percolate up was broken because of a misplaced i++ it was epic in the worst way
 
 So what are the common issues and how do we test for them let’s start with the basics
 
@@ -71,7 +71,7 @@ def test_heapify():
 
 ```
 
-Okay so this test uses an initial unsorted array and uses the heapify procedure to create a heap from it. Make sure to test with different array sizes, sorted array, reverse sorted arrays and arrays with duplicates
+ so this test uses an initial unsorted array and uses the heapify procedure to create a heap from it. Make sure to test with different array sizes, sorted array, reverse sorted arrays and arrays with duplicates
 
 **Stress Tests**
 

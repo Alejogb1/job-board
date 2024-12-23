@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-use-tfkerasutilsimagedatasetfromdirectory-but-get-labels-from-a-csv"
 ---
 
-Okay, let's tackle this. I’ve seen this scenario pop up quite a bit over the years, especially when dealing with datasets that aren't neatly organized into subdirectories reflecting their classes. You're wanting to leverage the convenience of `tf.keras.utils.image_dataset_from_directory` for image loading but need to pull your labels from a separate CSV file – perfectly reasonable. The direct usage of `image_dataset_from_directory` assumes labels are implicit in directory structure, which is limiting when dealing with datasets having complex annotations. Here’s how we can accomplish this by sidestepping that constraint and creating a custom data pipeline.
+,  I’ve seen this scenario pop up quite a bit over the years, especially when dealing with datasets that aren't neatly organized into subdirectories reflecting their classes. You're wanting to leverage the convenience of `tf.keras.utils.image_dataset_from_directory` for image loading but need to pull your labels from a separate CSV file – perfectly reasonable. The direct usage of `image_dataset_from_directory` assumes labels are implicit in directory structure, which is limiting when dealing with datasets having complex annotations. Here’s how we can accomplish this by sidestepping that constraint and creating a custom data pipeline.
 
 Instead of trying to force `image_dataset_from_directory` to do something it wasn’t designed for, we’ll use it to load the file paths and then augment that with label information from your CSV file using `tf.data`. Think of `image_dataset_from_directory` here primarily as a method for finding images, and we will handle labels separately.
 

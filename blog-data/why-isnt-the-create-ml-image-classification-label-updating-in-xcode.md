@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-isnt-the-create-ml-image-classification-label-updating-in-xcode"
 ---
 
-Okay, let's dive into this. I’ve spent a fair bit of time navigating the quirks of Create ML and Xcode's integration, particularly when it comes to image classification. It's a situation I’ve definitely encountered firsthand, and it’s often less straightforward than one might initially expect. The issue of the label not updating can stem from several interconnected reasons, so let's break them down methodically.
+, let's dive into this. I’ve spent a fair bit of time navigating the quirks of Create ML and Xcode's integration, particularly when it comes to image classification. It's a situation I’ve definitely encountered firsthand, and it’s often less straightforward than one might initially expect. The issue of the label not updating can stem from several interconnected reasons, so let's break them down methodically.
 
 The core of the problem usually revolves around how Xcode caches and processes machine learning models, specifically those created with Create ML. Unlike, say, a simple text file that updates instantly, a machine learning model requires a more involved workflow. The first thing to grasp is that Xcode does not automatically re-evaluate and update the `.mlmodel` file every time you make a change in Create ML. It treats it more like a static resource once it's integrated into the project. Think of it like embedding a static library rather than a constantly updating web service.
 

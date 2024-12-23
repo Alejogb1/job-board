@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-compute-diffie-hellman-key-pairs-and-shared-secrets-in-swift-for-ios"
 ---
 
-Let's tackle this. I've seen my fair share of cryptographic implementations, and Diffie-Hellman key exchange is a foundational piece. You’re looking to compute key pairs and shared secrets within Swift for iOS, which involves diving into the security framework. It's not overly complex, but precision and understanding are key.
+ I've seen my fair share of cryptographic implementations, and Diffie-Hellman key exchange is a foundational piece. You’re looking to compute key pairs and shared secrets within Swift for iOS, which involves diving into the security framework. It's not overly complex, but precision and understanding are key.
 
 My journey with this started back in the days when we were building a secure messaging app. We needed a robust way to establish encrypted channels without relying on pre-shared secrets. That’s where Diffie-Hellman really shined. Instead of directly passing the secret key, we exchanged elements derived from it, making it safe even if intercepted. I’ll walk you through the process step-by-step, showing you the crucial parts with code snippets and addressing some nuances I encountered along the way.
 

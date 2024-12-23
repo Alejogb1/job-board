@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-tensorflow-support-multiple-worker-processes-per-gpu-similar-to-pytorch"
 ---
 
-Alright, let's tackle this. I’ve spent quite a bit of time optimizing distributed training pipelines, and the nuances of multi-worker setups always seem to present interesting challenges. The short answer to whether TensorFlow supports multiple worker processes per GPU, akin to what you might see with PyTorch, is: yes, with caveats and a slightly different approach. It’s not as directly transparent as PyTorch’s `torch.distributed` might make it seem at first glance, but TensorFlow has certainly evolved to accommodate such scenarios.
+Alright,  I’ve spent quite a bit of time optimizing distributed training pipelines, and the nuances of multi-worker setups always seem to present interesting challenges. The short answer to whether TensorFlow supports multiple worker processes per GPU, akin to what you might see with PyTorch, is: yes, with caveats and a slightly different approach. It’s not as directly transparent as PyTorch’s `torch.distributed` might make it seem at first glance, but TensorFlow has certainly evolved to accommodate such scenarios.
 
 In my previous work on large-scale recommendation systems, we often encountered situations where model training became the bottleneck. Our initial single-worker-per-GPU approach couldn’t keep pace with the ever-growing datasets. Transitioning to multi-worker setups within the same GPU significantly improved throughput. While the terminology and implementation differ from PyTorch's straightforward model parallelism, the underlying concept of maximizing GPU utilization via multiple processes still holds true.
 

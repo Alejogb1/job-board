@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-send-data-to-a-mailchimp-audience"
 ---
 
-Let's tackle this. Sending data to a Mailchimp audience might seem straightforward at first, but in my experience, the devil’s often in the details. I remember back when I was managing a migration project for an e-commerce platform; ensuring customer data synced correctly with Mailchimp was a recurring headache. It's not simply a matter of 'pushing' data; it’s about doing it reliably, securely, and adhering to Mailchimp's API limitations. So, let's break down the approach, considering both simple and more complex scenarios, and I'll throw in some code examples to clarify things.
+ Sending data to a Mailchimp audience might seem straightforward at first, but in my experience, the devil’s often in the details. I remember back when I was managing a migration project for an e-commerce platform; ensuring customer data synced correctly with Mailchimp was a recurring headache. It's not simply a matter of 'pushing' data; it’s about doing it reliably, securely, and adhering to Mailchimp's API limitations. So, let's break down the approach, considering both simple and more complex scenarios, and I'll throw in some code examples to clarify things.
 
 First, the fundamental concept: Mailchimp primarily interacts with external systems through its REST API. This means we’re going to be dealing with HTTP requests, specifically POST requests for adding new subscribers or PATCH requests for updating existing ones. The critical part here is understanding how Mailchimp identifies its members – they use a unique ‘email’ as the primary key. So, every operation involves the email address.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-pull-a-private-docker-image-from-aws-ecr-and-use-it-with-testcontainers-in-javakotlin"
 ---
 
-Okay, let's tackle this. I remember dealing with this exact scenario a few years back while setting up an integration testing pipeline. We were moving away from monolithic application deployments to microservices, and private container registries like AWS ECR became essential. Pulling those images into a testing environment using Testcontainers, especially programmatically, had its nuances.
+,  I remember dealing with this exact scenario a few years back while setting up an integration testing pipeline. We were moving away from monolithic application deployments to microservices, and private container registries like AWS ECR became essential. Pulling those images into a testing environment using Testcontainers, especially programmatically, had its nuances.
 
 The core challenge lies in the authentication hurdle. AWS ECR, by design, requires authentication. We can't just grab an image like we would from Docker Hub. We need to inform Docker (and therefore, Testcontainers) about our AWS credentials. There are several ways to achieve this, each with its trade-offs.
 

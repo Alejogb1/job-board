@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-change-azureml-run-display-names"
 ---
 
-Okay, let’s tackle this. I’ve personally stumbled upon this particular nuance of Azure Machine Learning more times than I care to remember, and it’s a common frustration point for many practitioners. You're facing the issue of AzureML run names not being as informative as you'd like them to be in the portal, often defaulting to generic ids. It's not a deal-breaker, but it certainly impacts workflow efficiency, especially when trying to sift through multiple experiments.
+, let’s tackle this. I’ve personally stumbled upon this particular nuance of Azure Machine Learning more times than I care to remember, and it’s a common frustration point for many practitioners. You're facing the issue of AzureML run names not being as informative as you'd like them to be in the portal, often defaulting to generic ids. It's not a deal-breaker, but it certainly impacts workflow efficiency, especially when trying to sift through multiple experiments.
 
 Essentially, AzureML assigns default names to runs which are typically auto-generated identifiers, not human-friendly. These names are created when you initialize an `azureml.core.Run` object via `experiment.start_logging()` or similar functions. Fortunately, there's a straightforward way to override these defaults and establish more descriptive names. The crucial element here is the `display_name` property of the `Run` object, which is set *before* you submit your run. This can be achieved through the `start_logging()` method’s `display_name` parameter or by setting it directly on the created run object. Let’s explore the practical aspects with some code examples.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "is-chainlinks-aggregatorv3interface-compatible-with-an-openzeppelin-upgradable-contract"
 ---
 
-Okay, let's tackle this. I've spent a considerable amount of time navigating the intricacies of smart contracts, and the question of integrating Chainlink's data feeds with upgradeable contracts is definitely one I've encountered firsthand. It's not a straightforward 'yes' or 'no,' but rather a conditional 'yes, with careful considerations.'
+,  I've spent a considerable amount of time navigating the intricacies of smart contracts, and the question of integrating Chainlink's data feeds with upgradeable contracts is definitely one I've encountered firsthand. It's not a straightforward 'yes' or 'no,' but rather a conditional 'yes, with careful considerations.'
 
 The short answer is: yes, the `AggregatorV3Interface` can be compatible with an OpenZeppelin upgradable contract. However, you can't just blindly import and use it; there are crucial nuances to understand. The primary challenge revolves around how we handle storage and proxies in upgradable contracts. Direct, immutable storage of the Chainlink feed address in a way that's difficult to access after upgrade can quickly become a major pitfall.
 

@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "what-happens-in-the-input-transform-layer-of-pointnet"
 ---
 
-Okay, let's tackle this. I remember a particularly tricky project involving point cloud processing for robotic navigation, where understanding the intricacies of the PointNet architecture, specifically its input transform layer, became absolutely crucial. It wasn’t just theory; it was about making a robot navigate a cluttered warehouse without bumping into anything. The input transform layer, at first glance, seems simple, yet it plays a foundational role in the robustness and performance of the entire network.
+,  I remember a particularly tricky project involving point cloud processing for robotic navigation, where understanding the intricacies of the PointNet architecture, specifically its input transform layer, became absolutely crucial. It wasn’t just theory; it was about making a robot navigate a cluttered warehouse without bumping into anything. The input transform layer, at first glance, seems simple, yet it plays a foundational role in the robustness and performance of the entire network.
 
 So, what exactly is going on in that input transform layer? Fundamentally, it's about achieving *spatial invariance*. Point clouds, by their very nature, are unordered sets of 3D points. If you rotate, translate, or generally transform a point cloud, the semantic content should ideally remain the same. The object, for example, is still the same object. This is where the input transform comes into play. It’s a learned affine transformation intended to align the input points into a canonical space, mitigating the influence of random transformations, or orientations.
 

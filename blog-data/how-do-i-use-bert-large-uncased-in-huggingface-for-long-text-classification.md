@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-use-bert-large-uncased-in-huggingface-for-long-text-classification"
 ---
 
-Okay, let's tackle this. I've definitely been in the trenches with large language models and long text myself, and it’s a problem that pops up quite frequently. The crux of it is that `bert-large-uncased`, like most transformer models, has a fixed input length. If you feed it text exceeding that limit, usually around 512 tokens for BERT, it just truncates, discarding vital context. So, let’s discuss how we work around that limitation effectively for classification tasks.
+,  I've definitely been in the trenches with large language models and long text myself, and it’s a problem that pops up quite frequently. The crux of it is that `bert-large-uncased`, like most transformer models, has a fixed input length. If you feed it text exceeding that limit, usually around 512 tokens for BERT, it just truncates, discarding vital context. So, let’s discuss how we work around that limitation effectively for classification tasks.
 
 When I first encountered this issue, it was with a substantial corpus of legal documents. Naively attempting to feed them directly into BERT resulted in… well, let’s just say the performance was far from ideal. I had to rethink the approach, and that's where strategies like chunking, and sliding windows came into play.
 

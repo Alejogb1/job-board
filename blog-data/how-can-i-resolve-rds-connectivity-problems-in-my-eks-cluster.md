@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-resolve-rds-connectivity-problems-in-my-eks-cluster"
 ---
 
-Okay, let's tackle this. I’ve seen this dance before, the one where your EKS pods can't seem to find their way to the RDS database. It's a common headache, and usually, there isn't just one smoking gun, but rather a confluence of factors that need careful examination. It's not a matter of magic; it's about methodically tracing the potential points of failure.
+,  I’ve seen this dance before, the one where your EKS pods can't seem to find their way to the RDS database. It's a common headache, and usually, there isn't just one smoking gun, but rather a confluence of factors that need careful examination. It's not a matter of magic; it's about methodically tracing the potential points of failure.
 
 First, understand that the connection path from a pod in your EKS cluster to an RDS instance involves several layers, each potentially harboring issues. Let's break them down, starting from the inside of the pod, working our way outwards.
 

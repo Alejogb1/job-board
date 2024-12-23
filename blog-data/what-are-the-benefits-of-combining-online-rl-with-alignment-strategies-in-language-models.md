@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "what-are-the-benefits-of-combining-online-rl-with-alignment-strategies-in-language-models"
 ---
 
-Okay so you wanna know about combining online reinforcement learning RL with alignment strategies for language models LM  right  That's a super cool area tons of potential there  Basically we're talking about making these super powerful LMs less likely to go rogue and more likely to do what we actually want them to do which is a pretty big deal
+ so you wanna know about combining online reinforcement learning RL with alignment strategies for language models LM  right  That's a super cool area tons of potential there  Basically we're talking about making these super powerful LMs less likely to go rogue and more likely to do what we actually want them to do which is a pretty big deal
 
 The main benefit is that online RL lets you adapt the LM to real-world feedback continuously not just during some initial training phase think of it like this  you train your dog with treats initially  but then you keep rewarding good behavior and correcting bad behavior all the time  online RL is like that constant training for the LM  It makes it much more robust and adaptable to changing user needs and unexpected situations
 

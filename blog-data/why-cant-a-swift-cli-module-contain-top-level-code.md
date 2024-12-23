@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-cant-a-swift-cli-module-contain-top-level-code"
 ---
 
-Okay, let's unpack this. I've seen this particular head-scratcher come up a fair few times, especially during initial project setups when folks are transitioning from scripting languages to something with more structure, like Swift. The core issue, as you’ve pointed out, is that Swift command-line interface (cli) modules can't directly execute top-level code in the same way, say, a Python script can. It's not an arbitrary restriction; it’s deeply rooted in the way Swift’s compilation and execution models are designed.
+, let's unpack this. I've seen this particular head-scratcher come up a fair few times, especially during initial project setups when folks are transitioning from scripting languages to something with more structure, like Swift. The core issue, as you’ve pointed out, is that Swift command-line interface (cli) modules can't directly execute top-level code in the same way, say, a Python script can. It's not an arbitrary restriction; it’s deeply rooted in the way Swift’s compilation and execution models are designed.
 
 The fundamental reason boils down to Swift’s need for an entry point – a place where the program's execution should begin. Unlike scripting languages that interpret code line by line, Swift is compiled into an executable. This compilation process requires a clearly defined function, often `main()`, to serve as the starting point. When we try to place code directly at the top level, outside of any function definition, the compiler doesn’t know where to begin execution, creating an ambiguity that the language is designed to avoid. We're basically breaking the defined structure that swift expects for an executable application.
 

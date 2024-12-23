@@ -49,7 +49,7 @@ For implementing these you'd want to look up "Game Programming Patterns" by Robe
 Think about it like this  a quadtree is like a hierarchical map  You start with the whole map then you split it into four quadrants  then split those into four more and so on  until you reach a level of detail that's good enough  Spatial hashing is more like a dictionary  It uses a hash function to map coordinates to buckets  making it super fast to find tiles in a certain area
 
 
-Okay so let's say you've got your tile map figured out  what next  Well you need a way to represent the tiles themselves  You might have different tile types like grass  water  mountains  roads  each with its own properties and maybe even sprites or 3D models   This could be a simple enum or a more complex system depending on the game's complexity
+ so let's say you've got your tile map figured out  what next  Well you need a way to represent the tiles themselves  You might have different tile types like grass  water  mountains  roads  each with its own properties and maybe even sprites or 3D models   This could be a simple enum or a more complex system depending on the game's complexity
 
 
 ```cpp

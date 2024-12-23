@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "what-is-the-best-method-for-text-classification-using-spacy"
 ---
 
-Alright, let's tackle this. Text classification with spaCy is a frequent flyer on my projects, and I’ve seen it approached in a few ways over the years, some much more effective than others. It’s not so much about finding a single "best" method, but about understanding the strengths and limitations of different techniques and choosing what fits the particular data and classification problem. I'll break down the approaches that, in my experience, tend to produce the most reliable results, along with some example code to illuminate these points.
+Alright,  Text classification with spaCy is a frequent flyer on my projects, and I’ve seen it approached in a few ways over the years, some much more effective than others. It’s not so much about finding a single "best" method, but about understanding the strengths and limitations of different techniques and choosing what fits the particular data and classification problem. I'll break down the approaches that, in my experience, tend to produce the most reliable results, along with some example code to illuminate these points.
 
 First, let's move past the naive methods. You might be tempted to jump straight into spaCy's built-in text categorizer, which uses a straightforward logistic regression model. While easy to implement, it often falls short for complex scenarios. For genuinely robust classification, we typically need more sophisticated models and better feature extraction.
 

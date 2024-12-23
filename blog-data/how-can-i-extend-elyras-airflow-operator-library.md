@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-extend-elyras-airflow-operator-library"
 ---
 
-Okay, let's tackle this. Extending Elyra's Airflow operator library is something I’ve definitely spent some time on in the past, particularly when building custom machine learning pipelines that required very specific task execution logic. The default Airflow operators are excellent for general workflow management, but the real power comes in extending them to fit your specific needs. Let’s break it down into something more digestible, moving beyond the standard “it’s a class inheritance” response.
+,  Extending Elyra's Airflow operator library is something I’ve definitely spent some time on in the past, particularly when building custom machine learning pipelines that required very specific task execution logic. The default Airflow operators are excellent for general workflow management, but the real power comes in extending them to fit your specific needs. Let’s break it down into something more digestible, moving beyond the standard “it’s a class inheritance” response.
 
 Essentially, extending Elyra's Airflow operator library means you're creating new operators that inherit from, and therefore augment, the functionalities of existing Airflow operators. Elyra, being a layer on top of Airflow, will then be able to utilize these custom operators. This is critical when standard operators aren't sufficient, such as when dealing with complex data transformations, interfacing with custom apis, or specialized infrastructure components. Think of it as adding custom lego bricks to an existing lego set – you are not fundamentally changing the set, but extending its functionality by adding custom parts that interact seamlessly.
 

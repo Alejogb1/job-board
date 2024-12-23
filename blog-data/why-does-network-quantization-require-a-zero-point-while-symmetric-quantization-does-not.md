@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-network-quantization-require-a-zero-point-while-symmetric-quantization-does-not"
 ---
 
-Okay, let's unpack this. I remember tackling this very issue back when we were optimizing our convolutional neural network for deployment on a low-power embedded system. The need for a zero-point in network quantization versus its absence in symmetric quantization initially seemed like an arbitrary detail. It wasn't, of course, and getting a solid understanding of the underlying mechanics made all the difference in achieving acceptable performance on our target device.
+, let's unpack this. I remember tackling this very issue back when we were optimizing our convolutional neural network for deployment on a low-power embedded system. The need for a zero-point in network quantization versus its absence in symmetric quantization initially seemed like an arbitrary detail. It wasn't, of course, and getting a solid understanding of the underlying mechanics made all the difference in achieving acceptable performance on our target device.
 
 The core distinction arises from how data is mapped from its original, typically floating-point range to a lower-bit integer range. Let's start by defining some terms. *Quantization* in the context of neural networks refers to reducing the numerical precision of weights and activations. *Symmetric quantization* maps values such that the zero point in the original range maps to the zero point in the quantized range, effectively mirroring positive and negative values around zero. This is relatively straightforward. The common formula, in its simplified form, is *`quantized_value = round(original_value / scale)`* where `scale` is a single, positive value.
 

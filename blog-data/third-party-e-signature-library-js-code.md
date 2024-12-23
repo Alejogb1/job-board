@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "third-party-e-signature-library-js-code"
 ---
 
-Okay so you're asking about using a third party JavaScript library for e-signatures right Been there done that man Believe me I've sunk weeks maybe even months into this whole digital signature thing It's never as straightforward as it seems on the surface I mean you start thinking simple javascript easy breezy but then security and browser differences and different formats it gets gnarly real fast
+ so you're asking about using a third party JavaScript library for e-signatures right Been there done that man Believe me I've sunk weeks maybe even months into this whole digital signature thing It's never as straightforward as it seems on the surface I mean you start thinking simple javascript easy breezy but then security and browser differences and different formats it gets gnarly real fast
 
 So from what I gather you need a js library that handles electronic signatures not just like a drawing pad on the web page I’m talking about proper cryptographic signatures the kind that actually hold up in court you know the works You're not looking for some doodle thing you want something with proper backend support the type that produces verifiable digital fingerprints
 
@@ -132,7 +132,7 @@ Oh and if you find some open source libraries that have been updated recently wi
 
 And always remember even with the best library you need to do some security considerations yourself Like always use HTTPS everywhere and for the love of everything don't store private keys in git or hardcode them in your code that’s what configuration files are for
 
-I once spent 3 days debugging an issue only to realize that a colleague had committed a private key to git We all make mistakes sometimes It was a learning experience to be honest but don’t do that okay
+I once spent 3 days debugging an issue only to realize that a colleague had committed a private key to git We all make mistakes sometimes It was a learning experience to be honest but don’t do that 
 
 Ok I'm done now this should get you started now go forth and implement all of these new concepts that I just gave you and may your digital signature verification be always successful
 

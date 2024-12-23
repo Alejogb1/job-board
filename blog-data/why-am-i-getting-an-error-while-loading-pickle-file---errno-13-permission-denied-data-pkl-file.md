@@ -30,7 +30,7 @@ this will output something like `-rw-r--r-- 1 user group 1234 ...` . the first p
 chmod a+r data.pkl
 ```
 
-`a+r` grants read permissions to everyone, which might be okay if it’s a personal project. if this is for a server or a shared environment, you may want to adjust group or user access more carefully using `chown` and `chmod`.
+`a+r` grants read permissions to everyone, which might be  if it’s a personal project. if this is for a server or a shared environment, you may want to adjust group or user access more carefully using `chown` and `chmod`.
 
 for example, to change the ownership to the current user and group that is executing the command, you can use:
 

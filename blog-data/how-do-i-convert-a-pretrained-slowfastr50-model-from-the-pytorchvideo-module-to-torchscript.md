@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-convert-a-pretrained-slowfastr50-model-from-the-pytorchvideo-module-to-torchscript"
 ---
 
-Okay, let’s tackle converting a pretrained `Slowfast_r50` model from `pytorchvideo` to TorchScript. This isn't always a straightforward process, and I've certainly run into my fair share of snags attempting it in past projects involving video understanding. It mostly boils down to understanding the nuances of both the `pytorchvideo` library's model structure and how TorchScript handles dynamic graphs.
+, let’s tackle converting a pretrained `Slowfast_r50` model from `pytorchvideo` to TorchScript. This isn't always a straightforward process, and I've certainly run into my fair share of snags attempting it in past projects involving video understanding. It mostly boils down to understanding the nuances of both the `pytorchvideo` library's model structure and how TorchScript handles dynamic graphs.
 
 The primary challenge when converting a complex model like `Slowfast_r50` is that it often employs operations that don't translate perfectly into TorchScript's static graph requirements. In particular, dynamic control flow, such as conditional statements based on the batch size or variable-length sequences, can be problematic. We need to carefully examine the model's forward pass and identify these potential roadblocks. The fact that it's pre-trained from the `pytorchvideo` module adds another layer, as we’re relying on their implementation. This also means we're stuck with their choices on how the model is built.
 

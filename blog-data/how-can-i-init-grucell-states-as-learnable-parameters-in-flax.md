@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-init-grucell-states-as-learnable-parameters-in-flax"
 ---
 
-Okay, let’s tackle this. I’ve actually encountered this exact need in a previous project involving sequence-to-sequence modeling for time-series anomaly detection; we wanted the model to learn optimal initial states for the GRU to tailor the learning process for each sequence. So, let's break down how you'd achieve learnable initial states in Flax for a GRUCell.
+, let’s tackle this. I’ve actually encountered this exact need in a previous project involving sequence-to-sequence modeling for time-series anomaly detection; we wanted the model to learn optimal initial states for the GRU to tailor the learning process for each sequence. So, let's break down how you'd achieve learnable initial states in Flax for a GRUCell.
 
 The standard practice with recurrent neural networks (RNNs), including GRUs, often involves initializing their hidden states to zero. While this is a reasonable starting point, it might not always be the optimal one, particularly when the sequences demonstrate some inherent biases that could be captured by an informed initial state. Initializing to zero is effectively saying "we know nothing," which isn't always the case. So, making these states learnable parameters can be really valuable.
 

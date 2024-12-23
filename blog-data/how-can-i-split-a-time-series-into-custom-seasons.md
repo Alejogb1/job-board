@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-split-a-time-series-into-custom-seasons"
 ---
 
-Okay, let’s tackle this. It's not uncommon to encounter the need for custom seasonality in time series analysis, especially when dealing with data that doesn't conform to standard calendar-based patterns. In fact, I remember a project back in '15 involving environmental sensor data where we had to account for shifts in seasonal patterns influenced by specific weather anomalies; something off-the-shelf tools simply wouldn't handle. We needed to break away from traditional monthly or quarterly segments.
+, let’s tackle this. It's not uncommon to encounter the need for custom seasonality in time series analysis, especially when dealing with data that doesn't conform to standard calendar-based patterns. In fact, I remember a project back in '15 involving environmental sensor data where we had to account for shifts in seasonal patterns influenced by specific weather anomalies; something off-the-shelf tools simply wouldn't handle. We needed to break away from traditional monthly or quarterly segments.
 
 The core challenge isn't simply partitioning a time series—it’s *meaningfully* segmenting it according to underlying patterns, even if those patterns are unique to the specific data set. I've found that the most effective approaches involve combining a clear understanding of the data with a pragmatic strategy. Let’s dive into how we can achieve this.
 

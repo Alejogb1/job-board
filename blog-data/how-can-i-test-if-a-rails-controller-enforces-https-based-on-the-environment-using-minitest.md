@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-test-if-a-rails-controller-enforces-https-based-on-the-environment-using-minitest"
 ---
 
-Alright, let's tackle this. I've been down this road myself, several times in fact, and it's a crucial aspect of application security, especially when dealing with sensitive data in production environments. Ensuring that your rails controllers enforce https based on the environment is not just a best practice, it's essential, and testing it properly via minitest is a worthwhile endeavor.
+Alright,  I've been down this road myself, several times in fact, and it's a crucial aspect of application security, especially when dealing with sensitive data in production environments. Ensuring that your rails controllers enforce https based on the environment is not just a best practice, it's essential, and testing it properly via minitest is a worthwhile endeavor.
 
 Initially, in my early days of development, we had a close call with an application where http was accidentally enabled in production. We got away with it, thankfully, but the wake-up call was clear. Ever since, rigorous testing of https enforcement has been a non-negotiable part of my workflow. What we’re aiming for is to ensure that our controller tests mirror real-world scenarios where different configurations apply based on the environment.
 

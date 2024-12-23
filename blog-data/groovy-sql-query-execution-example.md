@@ -4,9 +4,9 @@ date: "2024-12-13"
 id: "groovy-sql-query-execution-example"
 ---
 
-Okay so you're asking about groovy and sql execution right? I've been there man believe me. I've wrestled with JDBC drivers and weird SQL dialects more times than I care to remember. It's a classic case of "it works on my machine" until it totally doesn't.
+ so you're asking about groovy and sql execution right? I've been there man believe me. I've wrestled with JDBC drivers and weird SQL dialects more times than I care to remember. It's a classic case of "it works on my machine" until it totally doesn't.
 
-Alright lets dive into it I've got some scars from past battles I can show you.
+lets dive into it I've got some scars from past battles I can show you.
 
 First off you need that JDBC driver. Seriously make sure you've got the correct one for your database I've spent hours debugging a simple connection because of that mistake. Been there done that I'm not proud. After that you need groovy. The good news is Groovy makes things way less painful than Java directly. No crazy verbose boilerplate I'm looking at you Java I love you but some times you are a pain.
 
@@ -34,7 +34,7 @@ try {
 }
 ```
 
-Okay so quick breakdown. `groovy.sql.Sql` is your friend. You need to set that up properly the first time with your database information. The `eachRow` method is nice because it iterates over the results one by one.  I tend to prefer this over trying to grab a whole list of results at once especially if we're talking big tables.
+ so quick breakdown. `groovy.sql.Sql` is your friend. You need to set that up properly the first time with your database information. The `eachRow` method is nice because it iterates over the results one by one.  I tend to prefer this over trying to grab a whole list of results at once especially if we're talking big tables.
 
 Now a quick word on those `your_database` `your_host` `your_port` `your_db` `your_username` `your_password` and `your.driver.class.name`. Obviously you need to replace these with your specifics. I've lost count how many times i've left them with placeholder values. One time in college i left the placeholders on a project that had to be presented for a grade. Lets just say I learn my lessons.
 
@@ -96,7 +96,7 @@ try {
 
 The `executeUpdate` method returns the number of rows affected. So you can actually check to see if your update went through as expected. I often find that is very helpful when doing debug. It helps to know when you messed up and the data you expected to be there is not there.
 
-Alright a couple things about the examples above. These are pretty basic and you should consider using a connection pool in any serious application. You do not want to create a new connection every time you need to query your database. Connection pools can really improve performance so do consider that.
+a couple things about the examples above. These are pretty basic and you should consider using a connection pool in any serious application. You do not want to create a new connection every time you need to query your database. Connection pools can really improve performance so do consider that.
 
 Also error handling is very limited in this examples. You should have more proper try-catch and exception handling in your production code. You will get errors on your database. Just a question of when not if.
 
@@ -104,4 +104,4 @@ Now instead of linking to a specific tutorial or something I'd suggest you take 
 
 Oh and one last thing you know why I always close my SQL connections? Because I heard they can sometimes hang around like that annoying relative who overstays his welcome ha!
 
-Alright that's the gist of it. It's a pretty wide topic but if you have any specific questions don't hesitate to ask! I've been there. I know the struggle.
+that's the gist of it. It's a pretty wide topic but if you have any specific questions don't hesitate to ask! I've been there. I know the struggle.

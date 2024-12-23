@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-reload-a-kubernetes-container"
 ---
 
-Okay, let's unpack this. Reloading a Kubernetes container, in practice, isn’t quite the same as hitting a 'refresh' button. It's a process with nuances, and the ideal approach often depends on exactly *why* you need to reload it. I’ve seen this come up countless times in my years, from simple config changes to more dramatic shifts in underlying logic. We'll cover several common scenarios and their solutions.
+, let's unpack this. Reloading a Kubernetes container, in practice, isn’t quite the same as hitting a 'refresh' button. It's a process with nuances, and the ideal approach often depends on exactly *why* you need to reload it. I’ve seen this come up countless times in my years, from simple config changes to more dramatic shifts in underlying logic. We'll cover several common scenarios and their solutions.
 
 Fundamentally, Kubernetes doesn’t offer a direct 'reload container' command. Instead, the goal is achieved by triggering a restart or re-creation of the pod in which the container is running. This ensures that changes, whether they pertain to configuration, code, or environment variables, are consistently and reliably applied. Now, let’s explore some common ways this is achieved, drawing on experiences from various projects I've worked on.
 

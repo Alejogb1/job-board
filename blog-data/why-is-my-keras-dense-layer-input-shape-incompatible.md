@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-is-my-keras-dense-layer-input-shape-incompatible"
 ---
 
-Alright, let's tackle this. It's a common stumble, and I've personally spent a fair few late nights debugging input shape mismatches in Keras dense layers. It usually boils down to a misunderstanding of how these layers expect their input data to be structured, and how that structure propagates through the network. Let's break it down, moving past the simple error message, and focusing on *why* it's happening.
+Alright,  It's a common stumble, and I've personally spent a fair few late nights debugging input shape mismatches in Keras dense layers. It usually boils down to a misunderstanding of how these layers expect their input data to be structured, and how that structure propagates through the network. Let's break it down, moving past the simple error message, and focusing on *why* it's happening.
 
 The core issue, almost invariably, lies in the dimensionality of your input tensor compared to what the dense layer is configured to receive. A dense layer, by definition, performs a matrix multiplication: `output = activation(dot(input, kernel) + bias)`. For this operation to be mathematically sound, the number of columns in your input tensor *must* match the number of rows (also known as the 'input dimension' or 'units') in the layer’s `kernel` (weight) matrix. If they don't align, you're going to get an error indicating incompatible shapes. It’s like trying to fit a square peg in a round hole, really; the operation just doesn’t compute.
 

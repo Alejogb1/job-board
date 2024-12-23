@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "in-azureml-is-startlogging-a-synchronous-or-asynchronous-call"
 ---
 
-Okay, let’s get this one sorted out. Thinking back to a particularly challenging project a couple of years back, where we were orchestrating a complex series of machine learning pipelines in AzureML, the synchronous vs. asynchronous nature of `start_logging` became quite critical. We hit a snag with race conditions in our logging and debugging processes, and it forced us to really examine how AzureML handles these operations behind the scenes.
+, let’s get this one sorted out. Thinking back to a particularly challenging project a couple of years back, where we were orchestrating a complex series of machine learning pipelines in AzureML, the synchronous vs. asynchronous nature of `start_logging` became quite critical. We hit a snag with race conditions in our logging and debugging processes, and it forced us to really examine how AzureML handles these operations behind the scenes.
 
 So, to address your question directly: in the AzureML SDK, the `start_logging` function, specifically when used within an `azureml.core.Run` context, is primarily *synchronous* in its execution from the perspective of your python script. This means that when you invoke `start_logging` from your script, the function will largely complete its initial setup and preparation before returning control to your main execution flow. However – and this is a critical caveat – the actual logging of metrics and artifacts isn't fully synchronous to the cloud. Let me clarify what I mean by this distinction.
 

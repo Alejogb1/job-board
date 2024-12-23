@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-can-i-learn-a-multivariate-normal-covariance-matrix-using-pytorch"
 ---
 
-Okay, let's tackle this. I remember back in my days working on a financial modeling project, we needed to simulate portfolio returns based on a multivariate normal distribution. Getting the covariance matrix right was critical, and torch, thankfully, provided the tools to make it relatively straightforward. It’s not as simple as a single function call, but understanding the process is key, and it's not as difficult as some might initially assume.
+,  I remember back in my days working on a financial modeling project, we needed to simulate portfolio returns based on a multivariate normal distribution. Getting the covariance matrix right was critical, and torch, thankfully, provided the tools to make it relatively straightforward. It’s not as simple as a single function call, but understanding the process is key, and it's not as difficult as some might initially assume.
 
 The fundamental idea is that you're not directly fitting a multivariate normal distribution’s parameters in the way you might fit a regression model. Instead, you're calculating the *sample* covariance matrix from your data. The multivariate normal distribution is then *parameterized* by this calculated covariance, alongside the sample mean.
 

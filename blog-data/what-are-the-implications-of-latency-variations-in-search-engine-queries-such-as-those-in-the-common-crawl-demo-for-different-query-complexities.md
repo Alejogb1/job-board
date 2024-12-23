@@ -4,7 +4,7 @@ date: "2024-12-12"
 id: "what-are-the-implications-of-latency-variations-in-search-engine-queries-such-as-those-in-the-common-crawl-demo-for-different-query-complexities"
 ---
 
-Okay, so you're curious about how those wobbly `latency` times – the delays – in search engine results, like the ones you might see in something like a Common Crawl demo, change depending on how complicated the search `query` is.  That's a really interesting question! It's like asking, "Does it take longer to find a needle in a haystack if the haystack is bigger and messier?"  Let's unpack that.
+, so you're curious about how those wobbly `latency` times – the delays – in search engine results, like the ones you might see in something like a Common Crawl demo, change depending on how complicated the search `query` is.  That's a really interesting question! It's like asking, "Does it take longer to find a needle in a haystack if the haystack is bigger and messier?"  Let's unpack that.
 
 First off, what even *is* a Common Crawl demo?  Basically, it's a peek behind the curtain of how search engines work. They grab tons of data from the web (`crawling`), and then demos let you play around with searching through that massive dataset.  Seeing the latency variations is like watching the engine itself chug along – some searches are lightning-fast, others take a while to churn.
 
@@ -12,7 +12,7 @@ Now, the "query complexity" is where things get juicy.  Let's imagine a few scen
 
 * **Simple Query:**  `“coffee shop near me”`.  This is pretty straightforward. The search engine just needs to look at location data and keywords associated with coffee shops.  It’s a relatively small piece of the total data to sift through.
 
-* **Medium Query:** `"best sustainable coffee shops with outdoor seating in Austin, Texas"`.  Okay, now we're adding layers!  We're not just looking for *any* coffee shop, but ones meeting *specific* criteria.  The search engine needs to match multiple keywords (`sustainable`, `outdoor seating`) and a location (`Austin, Texas`).  This broadens the initial search space, potentially increasing latency.
+* **Medium Query:** `"best sustainable coffee shops with outdoor seating in Austin, Texas"`.  , now we're adding layers!  We're not just looking for *any* coffee shop, but ones meeting *specific* criteria.  The search engine needs to match multiple keywords (`sustainable`, `outdoor seating`) and a location (`Austin, Texas`).  This broadens the initial search space, potentially increasing latency.
 
 * **Complex Query:** `"impact of fair trade coffee practices on smallholder farmers in Rwanda, peer-reviewed studies"`.  Whoa! This is a research-level query. The search engine has to understand nuanced concepts (`fair trade`, `smallholder farmers`), a specific geographical location (`Rwanda`), and filter for only peer-reviewed studies.  The search space is significantly larger and requires more intricate processing.
 

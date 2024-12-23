@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-use-gurobipy-how-to-add-a-constraint-that-limits-the-number-of-times-a-certain-tupledict-value-can-appear-in-the-optimal-solution"
 ---
 
-alright so, you’re facing a classic combinatorial optimization problem here, and gurobipy is definitely the tool for the job. limiting the number of times a certain tupledict value appears in the optimal solution… yeah, i’ve been there. it’s surprisingly common and can get tricky depending on how your model is structured. i've spent countless hours staring at my screen debugging similar stuff, trust me.
+so, you’re facing a classic combinatorial optimization problem here, and gurobipy is definitely the tool for the job. limiting the number of times a certain tupledict value appears in the optimal solution… yeah, i’ve been there. it’s surprisingly common and can get tricky depending on how your model is structured. i've spent countless hours staring at my screen debugging similar stuff, trust me.
 
 so, let’s break this down. i’m assuming you have a tupledict, maybe something like `x[(i,j)]`, which represents a decision variable indicating if, say, a link between node `i` and node `j` is active. and you need to restrict how many times a specific link, say `x[(3,7)]`, can be activated in the optimal solution.
 

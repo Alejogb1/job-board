@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-load-page-specific-custom-javascript-functions-in-rails-7-with-turbo-importmaps-and-stimulus"
 ---
 
-Alright, let's tackle this. Having spent quite a bit of time migrating some legacy Rails applications to the modern stack with Turbo, ImportMaps, and Stimulus, I've definitely seen a few approaches for handling page-specific JavaScript. It’s a common challenge, ensuring that the right bits of client-side logic are present only when and where they’re needed. The key here is to avoid a monolithic JavaScript file, something I've learned the hard way.
+Alright,  Having spent quite a bit of time migrating some legacy Rails applications to the modern stack with Turbo, ImportMaps, and Stimulus, I've definitely seen a few approaches for handling page-specific JavaScript. It’s a common challenge, ensuring that the right bits of client-side logic are present only when and where they’re needed. The key here is to avoid a monolithic JavaScript file, something I've learned the hard way.
 
 The core of the issue revolves around the lifecycle changes introduced by Turbo. No longer do we have full page reloads on navigation. Instead, Turbo morphs the document, and this means any directly attached event listeners and initializations we’d normally perform with document.ready don’t get re-applied. This is precisely why frameworks like Stimulus become invaluable for managing such dynamics.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-filter-statuses-using-rails-ransack"
 ---
 
-Okay, let's tackle this. It's something I’ve certainly found myself grappling with more than once, particularly back when I was working on that large social media aggregation project a few years ago. We needed extremely fine-grained control over status filtering, and simply relying on basic database queries wasn't going to cut it. Ransack became our go-to solution, and with good reason. It provides a beautiful way to turn user-facing inputs into complex database queries, all without writing a ton of custom SQL. Let’s break down how to effectively filter statuses with Ransack in Rails.
+,  It's something I’ve certainly found myself grappling with more than once, particularly back when I was working on that large social media aggregation project a few years ago. We needed extremely fine-grained control over status filtering, and simply relying on basic database queries wasn't going to cut it. Ransack became our go-to solution, and with good reason. It provides a beautiful way to turn user-facing inputs into complex database queries, all without writing a ton of custom SQL. Let’s break down how to effectively filter statuses with Ransack in Rails.
 
 The core concept with Ransack revolves around ‘search attributes’. These attributes are defined on your model and tell Ransack which fields and associations can be used for filtering. For instance, let's imagine we have a `Status` model with attributes like `content`, `user_id`, `created_at`, and a relation to `User` model via `belongs_to :user`.
 

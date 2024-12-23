@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-add-a-span-as-an-entity-in-a-spacy-doc"
 ---
 
-Okay, let's talk about spans in spaCy. I’ve grappled with this exact issue plenty of times, particularly when working on custom named entity recognition pipelines. It's not always straightforward, especially when you're trying to extend spaCy's capabilities beyond its built-in entity types. The core problem lies in understanding that `Doc` objects in spaCy are immutable, and we need to use a specific process to introduce these new, customized span entities.
+, let's talk about spans in spaCy. I’ve grappled with this exact issue plenty of times, particularly when working on custom named entity recognition pipelines. It's not always straightforward, especially when you're trying to extend spaCy's capabilities beyond its built-in entity types. The core problem lies in understanding that `Doc` objects in spaCy are immutable, and we need to use a specific process to introduce these new, customized span entities.
 
 The primary approach involves using the `Span` object and its integration with the `Doc.spans` container. You can't just randomly add a `Span` to a `Doc`. Instead, you add them to a specifically named span group within the `Doc.spans` dictionary. If that group doesn't exist, you typically create it. Let's delve into the details.
 

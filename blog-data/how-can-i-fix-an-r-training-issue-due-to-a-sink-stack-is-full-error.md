@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-fix-an-r-training-issue-due-to-a-sink-stack-is-full-error"
 ---
 
-Okay, let's talk about that frustrating "sink stack is full" error in R. I’ve seen this one pop up enough times across various projects, and it usually points to a very specific kind of issue: too many nested calls to `sink()`. In my experience, it generally surfaces when you're dealing with complex, iterative processes that involve redirecting output streams, often in ways that aren’t immediately obvious in your code. Back in my days working on large-scale data simulations, this was a recurring headache until we got a proper handle on it.
+, let's talk about that frustrating "sink stack is full" error in R. I’ve seen this one pop up enough times across various projects, and it usually points to a very specific kind of issue: too many nested calls to `sink()`. In my experience, it generally surfaces when you're dealing with complex, iterative processes that involve redirecting output streams, often in ways that aren’t immediately obvious in your code. Back in my days working on large-scale data simulations, this was a recurring headache until we got a proper handle on it.
 
 The `sink()` function in R is primarily used to redirect R output (console messages, printed results, etc.) to a file. Each time you call `sink(file = "your_file.txt")`, you are pushing a new output stream onto what R internally manages as a 'sink stack'. When the stack gets full, R throws that "sink stack is full" error you're experiencing, indicating that you've called `sink()` more times than R is configured to manage, without calling its counterpart, `sink(NULL)`, to close those streams. It's essentially a stack overflow, but specifically for output streams.
 

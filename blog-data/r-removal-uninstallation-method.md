@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "r-removal-uninstallation-method"
 ---
 
-Okay so you’re asking about removing or uninstalling stuff right like software programs or maybe even specific components that are part of a larger system I’ve been down this rabbit hole more times than I care to remember so let's talk practicalities not fluff I’ve built systems from the ground up taken down monstrosities that should never have seen the light of day and everything in between so when it comes to removal I've got a few scars to show
+ so you’re asking about removing or uninstalling stuff right like software programs or maybe even specific components that are part of a larger system I’ve been down this rabbit hole more times than I care to remember so let's talk practicalities not fluff I’ve built systems from the ground up taken down monstrosities that should never have seen the light of day and everything in between so when it comes to removal I've got a few scars to show
 
 First things first what exactly are we talking about uninstalling is it a standalone application a service running in the background a driver or even just some files that need to go If its a standard application things are usually pretty straightforward But sometimes it’s a mess of DLLs registry entries and god knows what else lurking in the shadows If you're talking about a whole operating system well that's a different can of worms and we'll have to take that into account
 
@@ -89,7 +89,7 @@ One crucial note you should have backups or know how to rollback or you are goin
 
 I know that this is really boring but I assure you it is also a very necessary thing that you have to understand or you'll be dealing with bad uninstalls for a long time and that's never fun
 
-Here is where I tell you that the most difficult thing about removals is not the removal itself but keeping track of all changes that you perform in your system so proper versioning and also configuration management is the key to a healthy system it’s like a good diet it’s not fun but it will pay off and speaking of food I had pizza last night it wasn't the best but it was okay i would rate it a 7/10
+Here is where I tell you that the most difficult thing about removals is not the removal itself but keeping track of all changes that you perform in your system so proper versioning and also configuration management is the key to a healthy system it’s like a good diet it’s not fun but it will pay off and speaking of food I had pizza last night it wasn't the best but it was  i would rate it a 7/10
 
 Oh and by the way if you are dealing with virtual environments be careful when removing those because the files are usually completely isolated from the rest of the system but they may contain configuration files and they may even contain your source code so be absolutely certain you don’t accidentally delete something useful
 

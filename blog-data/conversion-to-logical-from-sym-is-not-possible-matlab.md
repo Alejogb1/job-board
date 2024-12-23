@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "conversion-to-logical-from-sym-is-not-possible-matlab"
 ---
 
-Okay so you're hitting the wall with MATLAB's sym to logical conversion right I've been there trust me this isn't a new problem more like a recurring nightmare for anyone who's ever tried to mix symbolic math and boolean logic in MATLAB I get it you're working with symbolic expressions you expect to be able to throw them into some logical operation or use them as conditions and BAM MATLAB throws a hissy fit saying it can't directly convert sym to logical
+ so you're hitting the wall with MATLAB's sym to logical conversion right I've been there trust me this isn't a new problem more like a recurring nightmare for anyone who's ever tried to mix symbolic math and boolean logic in MATLAB I get it you're working with symbolic expressions you expect to be able to throw them into some logical operation or use them as conditions and BAM MATLAB throws a hissy fit saying it can't directly convert sym to logical
 
 Let's break this down it's not a bug it's more a design quirk of how MATLAB handles symbolic variables symbolic variables are not booleans they represent mathematical entities that might or might not resolve to a true or false value depending on their specific values you can't just say is x greater than 5 when x is a sym variable because MATLAB doesn't know what x is supposed to be numerically yet you know the difference between "x > 5" which is a relational expression a symbolic one and the logical result we expect to get after evaluating the relation like true or false so what you're trying to do is a type conversion operation and MATLAB doesn't do it like that in a simple fashion it requires to make the leap into the numerical world before evaluating if something is true or not
 
@@ -45,7 +45,7 @@ disp(logical_result) % Displays 1 which means true because the numerical conditi
 
 ```
 
-Okay this should give you a good idea of the substitution process that is the most important step when working with logical operations and symbolic variables
+ this should give you a good idea of the substitution process that is the most important step when working with logical operations and symbolic variables
 
 But what if you want to work with more complex scenarios where you need to perform logical operations on vectors of symbolic variables well you can't just vectorize the operation and expect that to work instead you need to use an elementwise approach here's an example using `arrayfun`
 

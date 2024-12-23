@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-side-effects-does-loadstatedict-have-beyond-modifying-model-parameters"
 ---
 
-Okay, let's tackle the intricacies of `load_state_dict`. I've seen quite a few developers, even experienced ones, caught off guard by its less-obvious consequences. It's far more than just a parameter-swapping operation, and understanding these side effects can be the difference between a smooth deployment and a debugging nightmare. I recall, vividly, a project where a subtle issue with batch normalization layers nearly derailed the entire training process – all because we overlooked the nuances of state loading.
+, let's tackle the intricacies of `load_state_dict`. I've seen quite a few developers, even experienced ones, caught off guard by its less-obvious consequences. It's far more than just a parameter-swapping operation, and understanding these side effects can be the difference between a smooth deployment and a debugging nightmare. I recall, vividly, a project where a subtle issue with batch normalization layers nearly derailed the entire training process – all because we overlooked the nuances of state loading.
 
 The primary and most obvious function of `load_state_dict` in PyTorch, or a similar function in other deep learning libraries, is, undeniably, to replace the current model's parameters with those provided in the loaded dictionary. But the devil, as they say, is in the details. Let's break down the less apparent side effects.
 

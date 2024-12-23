@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-pin-a-horizontal-plane-to-a-specific-altitude-in-maplibre-gl-js"
 ---
 
-Alright, let's tackle this. You're looking to lock a horizontal plane within your MapLibre GL JS map to a specific altitude, essentially creating a consistent visual reference point as you navigate the 3d space. I've certainly encountered this scenario a few times, most memorably when working on a flight simulation interface a while back. It’s a surprisingly common requirement when you need a stable reference, regardless of camera perspective.
+Alright,  You're looking to lock a horizontal plane within your MapLibre GL JS map to a specific altitude, essentially creating a consistent visual reference point as you navigate the 3d space. I've certainly encountered this scenario a few times, most memorably when working on a flight simulation interface a while back. It’s a surprisingly common requirement when you need a stable reference, regardless of camera perspective.
 
 The challenge here isn’t a built-in feature, per se. MapLibre GL JS deals primarily with layers and map elements tied to geographical coordinates; pinning to a specific *altitude* requires a bit of crafty manipulation. We're going to leverage the map’s camera properties and the transformation capabilities of custom layers to achieve this. The core concept is to generate a plane at the desired altitude and then dynamically adjust its position each frame so that it appears anchored despite camera movement.
 

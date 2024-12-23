@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-set-braintree-payment-keys-in-magentos-local-admin"
 ---
 
-Alright, let's tackle this. I've certainly had my share of encounters with integrating payment gateways, and Braintree within Magento is a scenario I’ve seen pop up more than a few times. Configuring the Braintree payment gateway in Magento’s local admin requires a few specific steps, and it's crucial to get each one correct, or you might find yourself chasing down some rather perplexing errors. It's not rocket science, but a careful approach is definitely beneficial.
+Alright,  I've certainly had my share of encounters with integrating payment gateways, and Braintree within Magento is a scenario I’ve seen pop up more than a few times. Configuring the Braintree payment gateway in Magento’s local admin requires a few specific steps, and it's crucial to get each one correct, or you might find yourself chasing down some rather perplexing errors. It's not rocket science, but a careful approach is definitely beneficial.
 
 Typically, when faced with this, the objective is to configure Braintree such that Magento can securely communicate with their servers for processing transactions. Crucially, this involves ensuring your merchant account details, specifically the keys used for authentication, are properly stored and accessed by the system. This is done through the Magento admin panel, so there is no need to edit core code or directly modify database entries for this purpose.
 

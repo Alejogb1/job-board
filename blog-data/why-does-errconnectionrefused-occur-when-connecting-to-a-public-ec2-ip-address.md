@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-errconnectionrefused-occur-when-connecting-to-a-public-ec2-ip-address"
 ---
 
-Okay, let's unpack this. I've spent my fair share of late nights troubleshooting connection issues, and `ERR_CONNECTION_REFUSED` when dealing with a public EC2 IP is a classic scenario. It's often a multi-layered problem, and just blaming the network rarely cuts it. Instead of jumping to conclusions, we need a systematic approach, focusing on a few key areas.
+, let's unpack this. I've spent my fair share of late nights troubleshooting connection issues, and `ERR_CONNECTION_REFUSED` when dealing with a public EC2 IP is a classic scenario. It's often a multi-layered problem, and just blaming the network rarely cuts it. Instead of jumping to conclusions, we need a systematic approach, focusing on a few key areas.
 
 Fundamentally, `ERR_CONNECTION_REFUSED` means that a connection request was sent to a specific port on the target IP address, but the receiving machine actively refused it. It wasn't a timeout, or a routing issue – the server *rejected* the connection. This rejection typically happens for a few reasons, and they usually boil down to something not being set up as expected on the ec2 instance.
 

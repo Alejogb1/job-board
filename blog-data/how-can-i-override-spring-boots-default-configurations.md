@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-override-spring-boots-default-configurations"
 ---
 
-Okay, let's tackle this. I've been down this road countless times, particularly back when we were migrating a monolithic application to a microservices architecture using Spring Boot. Dealing with default configurations is something you inevitably bump into. It's less about brute-force overriding and more about a careful, considered approach to understanding Spring Boot's configuration precedence and using its built-in mechanisms effectively.
+,  I've been down this road countless times, particularly back when we were migrating a monolithic application to a microservices architecture using Spring Boot. Dealing with default configurations is something you inevitably bump into. It's less about brute-force overriding and more about a careful, considered approach to understanding Spring Boot's configuration precedence and using its built-in mechanisms effectively.
 
 Spring Boot, at its heart, operates on a principle of convention over configuration, making rapid application development a breeze. This implies sane defaults, but those defaults may not always perfectly align with the nuanced needs of your application. To override these defaults, we’re presented with several strategies, all playing a role depending on the context.
 

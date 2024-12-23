@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-my-simple-rnn-input-array-shape-100-4-when-it-should-be-100-4-"
 ---
 
-Okay, let's untangle this recurrent neural network input shape discrepancy. It's a common point of confusion, and I recall facing similar situations early in my deep learning journey. It's not that your RNN *needs* the third dimension, per se, but rather that it expects the input to be organized in a way that signifies temporal or sequential information. Let's break down why your array is (100, 4) and why the expectation is (100, 4, ?).
+, let's untangle this recurrent neural network input shape discrepancy. It's a common point of confusion, and I recall facing similar situations early in my deep learning journey. It's not that your RNN *needs* the third dimension, per se, but rather that it expects the input to be organized in a way that signifies temporal or sequential information. Let's break down why your array is (100, 4) and why the expectation is (100, 4, ?).
 
 The array (100, 4) suggests you have 100 samples or observations, and each sample has 4 features. This, in itself, isn't incorrect for many types of machine learning tasks. However, the crux of the matter with an RNN – especially a vanilla, sequence-based one – lies in the treatment of *sequences*. Think of an RNN as processing data across time. Therefore, the input needs an additional dimension to represent *time steps within each sample*. This is where the question mark in the (100, 4, ?) comes into play. This '?' represents the length of each sequence that your RNN will process, also referred to as the time-step dimension.
 

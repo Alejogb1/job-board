@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-await-a-firebase-call-within-a-kotlin-loop"
 ---
 
-Alright, let's tackle this. I've seen this scenario pop up a good few times over the years, especially when dealing with batch operations against Firebase databases. The core issue revolves around the asynchronous nature of Firebase calls clashing with the synchronous execution of a loop in Kotlin. It’s a classic case of needing to manage concurrency gracefully, and often the naive approach leads to unexpected results or race conditions.
+Alright,  I've seen this scenario pop up a good few times over the years, especially when dealing with batch operations against Firebase databases. The core issue revolves around the asynchronous nature of Firebase calls clashing with the synchronous execution of a loop in Kotlin. It’s a classic case of needing to manage concurrency gracefully, and often the naive approach leads to unexpected results or race conditions.
 
 The heart of the problem is that when you initiate a Firebase operation, it doesn’t immediately return a result. Instead, it executes asynchronously, meaning your code moves onto the next iteration of the loop without waiting for the Firebase operation to complete. This often results in sending multiple requests simultaneously, rather than sequentially as intended, and can lead to data inconsistencies or unexpected behavior when Firebase attempts to process the calls. The typical pitfall occurs when developers attempt to simply place a standard `await()` call within the loop, believing it will pause each iteration until the Firebase promise is resolved. While it seems intuitive, Kotlin's coroutine scope often requires a more structured approach to ensure operations are executed correctly.
 

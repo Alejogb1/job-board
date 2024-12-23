@@ -4,7 +4,7 @@ date: "2024-12-10"
 id: "how-do-real-time-streaming-pipelines-process-data-from-sources-with-different-update-frequencies"
 ---
 
-Okay so you wanna know how streaming pipelines handle data coming in at different speeds right  like imagine one source sending updates every second and another only every hour  that's a real challenge  but it's totally doable  the key is understanding that these pipelines aren't about *waiting* for everyone to be ready they're about *managing* the flow
+ so you wanna know how streaming pipelines handle data coming in at different speeds right  like imagine one source sending updates every second and another only every hour  that's a real challenge  but it's totally doable  the key is understanding that these pipelines aren't about *waiting* for everyone to be ready they're about *managing* the flow
 
 Think of it like a highway some cars are going 70mph others are creeping along  you don't want the fast cars to hold up the slow ones or vice versa  you need lanes  or in our case  separate processing paths  or maybe even clever merging strategies
 

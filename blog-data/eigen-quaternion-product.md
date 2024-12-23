@@ -4,9 +4,9 @@ date: "2024-12-13"
 id: "eigen-quaternion-product"
 ---
 
-Okay so you want to talk about eigen quaternion products right I've been there trust me a long time ago actually back when I was still hacking away on my first flight simulator project that was a mess of linear algebra and well quaternions were the less messy part believe it or not It's a beast when you start mixing eigen concepts and these 4D things but totally manageable once you get your head around the fundamental operations
+ so you want to talk about eigen quaternion products right I've been there trust me a long time ago actually back when I was still hacking away on my first flight simulator project that was a mess of linear algebra and well quaternions were the less messy part believe it or not It's a beast when you start mixing eigen concepts and these 4D things but totally manageable once you get your head around the fundamental operations
 
-Alright so the core issue here is you're dealing with rotations basically rotations in 3D space are notoriously awkward with matrices if you try to chain a bunch of rotations with standard rotation matrices you often run into gimbal lock and numerical drift over time which are no fun at all So quaternions to the rescue they offer a compact and stable way to represent rotations So your eigenvector problem which likely deals with linear transformations in a space that might be a rotation space is being described by quaternions instead of matrices
+so the core issue here is you're dealing with rotations basically rotations in 3D space are notoriously awkward with matrices if you try to chain a bunch of rotations with standard rotation matrices you often run into gimbal lock and numerical drift over time which are no fun at all So quaternions to the rescue they offer a compact and stable way to represent rotations So your eigenvector problem which likely deals with linear transformations in a space that might be a rotation space is being described by quaternions instead of matrices
 
 Now you aren't directly taking "eigenvectors of a quaternion" that's not a thing You typically deal with eigen stuff with matrices because they are inherently linear operators But you can certainly have an eigen problem where the solution is represented by a quaternion it could be for instance the rotation axis you're looking for or something relating to a covariance matrix that describes a rotational component of data For example you have a covariance matrix describing data that is rotated in 3D space you might perform an eigenvalue decomposition on the covariance to obtain principal axes and the principal rotation associated to one of these directions will be your quaternion solution
 
@@ -20,7 +20,7 @@ So what do we do if we need to find a product of eigen-related quantities and a 
 
 Let's go through some code examples to hammer this down since I know you asked for that you just said "code snippets as examples that should work" and I always deliver that like the time I delivered a half cooked machine learning model to a client after an all nighter anyway
 
-Okay first the classic rotation application This is where you get your rotation quaternion and you need to rotate a 3D vector We assume that your eigen analysis gave you all the elements needed to construct this quaternion its axis and its rotation angle for example
+ first the classic rotation application This is where you get your rotation quaternion and you need to rotate a 3D vector We assume that your eigen analysis gave you all the elements needed to construct this quaternion its axis and its rotation angle for example
 
 ```python
 import numpy as np

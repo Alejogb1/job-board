@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-delete-an-element-from-an-array-and-maintain-contiguous-indices-without-a-gap"
 ---
 
-Okay, let's tackle this array manipulation issue. I've certainly seen my share of scenarios where efficient element removal and contiguous indexing were crucial, particularly in game development where continuous memory blocks are paramount for performance. There's no magic bullet, but rather a set of techniques that leverage the underlying mechanics of arrays, each with its own pros and cons. Let's break down the approaches I've often found myself using, complete with code examples.
+, let's tackle this array manipulation issue. I've certainly seen my share of scenarios where efficient element removal and contiguous indexing were crucial, particularly in game development where continuous memory blocks are paramount for performance. There's no magic bullet, but rather a set of techniques that leverage the underlying mechanics of arrays, each with its own pros and cons. Let's break down the approaches I've often found myself using, complete with code examples.
 
 The fundamental problem you're facing is maintaining a contiguous index space after deleting an element from an array. When you think of an array conceptually, it's helpful to picture a series of memory locations right next to each other. Deleting an item in the middle leaves a hole; if not handled correctly, you can end up with gaps in the index space or a 'null' element residing in the array.
 

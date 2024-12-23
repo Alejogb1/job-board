@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-uninstall-jetbrains-toolbox-on-ubuntu"
 ---
 
-Alright, let's tackle this. I've seen this scenario play out more times than I care to count, often involving colleagues new to linux environments battling with leftover files. Uninstalling Jetbrains Toolbox on Ubuntu isn't as straightforward as, say, using `apt remove` due to its unique installation method. Instead of relying on a package manager, it usually drops files into specific directories in your home folder. This leaves a bit of manual cleanup necessary, and that's where we’ll focus.
+Alright,  I've seen this scenario play out more times than I care to count, often involving colleagues new to linux environments battling with leftover files. Uninstalling Jetbrains Toolbox on Ubuntu isn't as straightforward as, say, using `apt remove` due to its unique installation method. Instead of relying on a package manager, it usually drops files into specific directories in your home folder. This leaves a bit of manual cleanup necessary, and that's where we’ll focus.
 
 My initial encounter with this was back in the days of Ubuntu 16.04. A junior dev, let’s call her Alice, unintentionally installed the toolbox in a rather chaotic way. It was installed multiple times, actually, each attempt leaving its own scattered remnants. This resulted in conflicts when she tried to launch any of the IDEs. After a bit of troubleshooting, I had to craft a specific process to clean it all up. And that’s where my process comes from—experience and the desire to not relive that moment.
 

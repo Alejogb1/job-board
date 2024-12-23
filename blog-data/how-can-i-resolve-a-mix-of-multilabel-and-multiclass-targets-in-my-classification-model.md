@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-resolve-a-mix-of-multilabel-and-multiclass-targets-in-my-classification-model"
 ---
 
-Alright, let's tackle this. It's a situation I've bumped into a few times during my years building recommendation systems and predictive models – the delightful (or frustrating, depending on your perspective) mix of multilabel and multiclass targets. It’s not uncommon, especially when dealing with user tagging, document categorization, or other scenarios where entities can belong to multiple categories simultaneously *and* also have mutually exclusive class assignments. It adds a layer of complexity, but with the correct approach, it's absolutely manageable.
+Alright,  It's a situation I've bumped into a few times during my years building recommendation systems and predictive models – the delightful (or frustrating, depending on your perspective) mix of multilabel and multiclass targets. It’s not uncommon, especially when dealing with user tagging, document categorization, or other scenarios where entities can belong to multiple categories simultaneously *and* also have mutually exclusive class assignments. It adds a layer of complexity, but with the correct approach, it's absolutely manageable.
 
 The core issue here, fundamentally, is that standard machine learning classification algorithms, like logistic regression or support vector machines, typically expect either a single class label per instance (multiclass) or a set of independent binary labels (multilabel). When you have both in the same dataset, you're effectively asking these algorithms to speak two different languages at the same time. This results in poor model performance and, frankly, quite a headache.
 

@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "how-can-phrase-queries-be-optimized-in-a-distributed-search-engine-to-reduce-latency-when-processing-token-positions-for-complex-queries"
 ---
 
-Okay so you wanna optimize phrase queries in a distributed search engine right  Less latency that's the goal  Complex queries mean lots of tokens and positions to track  That's a tough nut to crack but let's dive in
+ so you wanna optimize phrase queries in a distributed search engine right  Less latency that's the goal  Complex queries mean lots of tokens and positions to track  That's a tough nut to crack but let's dive in
 
 The main problem is coordinating all those tokens across potentially many machines  Each machine might hold a chunk of the index  A simple approach like broadcasting the entire query to every machine is slow especially with lots of machines and big indexes  It's like sending a postcard to everyone in a city when an email would do
 

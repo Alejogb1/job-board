@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-am-i-getting-an-expected-minndim-error-in-tensorflow"
 ---
 
-Okay, let's tackle this “expected min_ndim” error in tensorflow. I've seen this one pop up more times than I care to remember, usually when dealing with tensor manipulation. it’s a classic case of a shape mismatch that, while seemingly straightforward, can be surprisingly tricky to diagnose if you’re not aware of the underlying tensor dimensions.
+, let's tackle this “expected min_ndim” error in tensorflow. I've seen this one pop up more times than I care to remember, usually when dealing with tensor manipulation. it’s a classic case of a shape mismatch that, while seemingly straightforward, can be surprisingly tricky to diagnose if you’re not aware of the underlying tensor dimensions.
 
 Fundamentally, tensorflow operations are very particular about the shapes of the tensors they receive. The “expected min_ndim” error essentially means that a particular function or layer within your tensorflow model is expecting an input tensor to have at least a specific number of dimensions (indicated by `min_ndim`), but instead, it received a tensor with fewer dimensions. Think of it like trying to fit a 2d image into a function designed to process 3d videos; there’s simply not enough data in the required dimensionality.
 

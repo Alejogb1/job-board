@@ -4,7 +4,7 @@ date: "2024-12-05"
 id: "how-can-tools-like-notebooklm-revolutionize-personalized-podcast-creation-and-sports-journalism"
 ---
 
-Okay so you're asking about NotebookLM and how it could totally change podcasts and sports reporting right  like seriously imagine the possibilities  I'm hyped  NotebookLM is this awesome AI thing basically a super smart notebook that understands context remembers stuff and can generate text code whatever you throw at it  it's like having a hyper-caffeinated research assistant that never sleeps and actually understands sports stats  
+ so you're asking about NotebookLM and how it could totally change podcasts and sports reporting right  like seriously imagine the possibilities  I'm hyped  NotebookLM is this awesome AI thing basically a super smart notebook that understands context remembers stuff and can generate text code whatever you throw at it  it's like having a hyper-caffeinated research assistant that never sleeps and actually understands sports stats  
 
 
 For podcasting think personalized shows  no more generic sports talk  NotebookLM could analyze a listener's preferences their favorite teams players even their preferred speaking style  then boom it generates a script tailored perfectly to that individual  imagine a daily podcast about the Yankees but one version focuses on pitching stats for a die-hard pitching enthusiast another version is all about Aaron Judge's home runs for a slugger fan  each episode totally unique  

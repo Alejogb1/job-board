@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "365-is-it-an-integer-zybooks-problem"
 ---
 
-Alright let's break this down looks like someone's wrestling with a classic zybooks hiccup 365 is definitely a tricky one if you're approaching it with the wrong assumptions yeah I've been there man let me tell you about my own run-in with this exact problem
+let's break this down looks like someone's wrestling with a classic zybooks hiccup 365 is definitely a tricky one if you're approaching it with the wrong assumptions yeah I've been there man let me tell you about my own run-in with this exact problem
 
 So picture this it's probably 2015 or 16 I'm banging my head against a similar problem in a intro to programming course not zybooks specifically but the same kind of integer check concept I remember thinking "this should be trivial" and then spending an embarrassingly long time debugging something stupid like this so you're not alone alright
 

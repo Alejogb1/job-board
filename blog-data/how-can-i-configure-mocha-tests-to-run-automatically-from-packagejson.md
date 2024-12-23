@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-configure-mocha-tests-to-run-automatically-from-packagejson"
 ---
 
-Let's tackle this. I remember a particularly challenging project a few years back, a complex microservices architecture, where we needed to streamline our testing workflow. Automating mocha tests from `package.json` was crucial for consistent builds and fast feedback loops. Setting this up might seem straightforward initially, but a few nuances can catch you out. It's all about configuring the `scripts` section correctly. Let's break this down.
+ I remember a particularly challenging project a few years back, a complex microservices architecture, where we needed to streamline our testing workflow. Automating mocha tests from `package.json` was crucial for consistent builds and fast feedback loops. Setting this up might seem straightforward initially, but a few nuances can catch you out. It's all about configuring the `scripts` section correctly. Let's break this down.
 
 The key to running mocha tests automatically through `package.json` resides within the `scripts` property. Essentially, you define custom commands that npm (or yarn, pnpm, etc.) can execute. When you run, say, `npm test`, npm looks for a `test` script in your `package.json` file and executes whatever command you've defined there.
 

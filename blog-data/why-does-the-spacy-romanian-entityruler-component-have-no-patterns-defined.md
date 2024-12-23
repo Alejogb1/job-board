@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-the-spacy-romanian-entityruler-component-have-no-patterns-defined"
 ---
 
-Okay, so the question about spaCy's Romanian `entity_ruler` and its lack of pre-defined patterns is a pertinent one. I’ve bumped into this exact situation before, back when I was working on a cross-lingual information extraction project a few years ago. We were trying to streamline our pipeline for multiple languages, and the Romanian model’s empty `entity_ruler` definitely threw us a curveball. Let's break down why this happens, and what you can do about it.
+, so the question about spaCy's Romanian `entity_ruler` and its lack of pre-defined patterns is a pertinent one. I’ve bumped into this exact situation before, back when I was working on a cross-lingual information extraction project a few years ago. We were trying to streamline our pipeline for multiple languages, and the Romanian model’s empty `entity_ruler` definitely threw us a curveball. Let's break down why this happens, and what you can do about it.
 
 First, it's essential to understand what the `entity_ruler` is and its purpose within spaCy. It’s essentially a component that allows you to inject patterns into your named entity recognition (ner) process. Think of it as a rule-based system for entity identification, running alongside the statistical model. It lets you define exact string matches or more sophisticated token patterns to label entities. For instance, you can have a rule that says "if you see the phrase 'Acme Corp.', label it as an 'ORG'." This adds flexibility, especially in scenarios where statistical models may struggle—for instance, with domain-specific terminology, or uncommon proper nouns.
 

@@ -4,7 +4,7 @@ date: "2024-12-11"
 id: "what-evidence-supports-the-existence-of-planning-in-reinforcement-learning-models"
 ---
 
-Okay so you wanna know about planning in reinforcement learning right  pretty cool topic actually  lots of people are scratching their heads about it because it seems kinda magical how these things learn to do stuff without explicitly being told how  like imagine teaching a dog to fetch you dont spell out every single muscle movement  you just show them what you want and they figure it out  RL is kinda like that but with algorithms
+ so you wanna know about planning in reinforcement learning right  pretty cool topic actually  lots of people are scratching their heads about it because it seems kinda magical how these things learn to do stuff without explicitly being told how  like imagine teaching a dog to fetch you dont spell out every single muscle movement  you just show them what you want and they figure it out  RL is kinda like that but with algorithms
 
 The big question is how do these algorithms *plan*  Do they really think ahead like we do or is it all just fancy statistical tricks?  Its a bit of a philosophical debate mixed with some seriously complex math  but we can dig into some evidence
 

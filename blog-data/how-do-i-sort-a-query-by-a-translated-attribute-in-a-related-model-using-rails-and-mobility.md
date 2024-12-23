@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-sort-a-query-by-a-translated-attribute-in-a-related-model-using-rails-and-mobility"
 ---
 
-Alright, let's tackle this. I remember dealing with a similar issue back when I was optimizing a multilingual e-commerce platform – sorting products by their translated names was a performance bottleneck. It turned out to be less straightforward than it initially seemed, especially when dealing with complex relational structures in Rails and the intricacies of the `mobility` gem.
+Alright,  I remember dealing with a similar issue back when I was optimizing a multilingual e-commerce platform – sorting products by their translated names was a performance bottleneck. It turned out to be less straightforward than it initially seemed, especially when dealing with complex relational structures in Rails and the intricacies of the `mobility` gem.
 
 The crux of the matter is that when you're dealing with translated attributes, like product names in different languages, you can't directly apply standard SQL sorting. The database sees those translations as separate entries in a join table (or similar, depending on your `mobility` backend), not as a single, easily sortable field. So, we need a way to tell the database, "look at the appropriate translation for each record in the primary table and then sort based on those values."
 

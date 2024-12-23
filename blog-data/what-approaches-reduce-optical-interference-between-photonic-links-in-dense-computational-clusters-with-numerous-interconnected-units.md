@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "what-approaches-reduce-optical-interference-between-photonic-links-in-dense-computational-clusters-with-numerous-interconnected-units"
 ---
 
-Okay so you wanna minimize crosstalk between optical links in a super dense cluster right  like a crazy packed server room but with light instead of wires  thats a tough nut to crack  lots of ways to skin this cat but its all about managing those photons and keeping them where they should be
+ so you wanna minimize crosstalk between optical links in a super dense cluster right  like a crazy packed server room but with light instead of wires  thats a tough nut to crack  lots of ways to skin this cat but its all about managing those photons and keeping them where they should be
 
 First off lets talk about the *problem*  youve got tons of these optical links all buzzing with data  light's bouncing around its scattering  its leaking into other links  think of it like a really noisy party  everyone's shouting and you can barely hear your own conversation  that's crosstalk leading to errors lost data and general frustration
 

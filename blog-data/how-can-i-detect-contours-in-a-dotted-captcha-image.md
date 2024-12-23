@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-detect-contours-in-a-dotted-captcha-image"
 ---
 
-Alright, let's tackle this. I've actually spent a fair bit of time, back in the days of more rudimentary computer vision, trying to break similar systems—though mine were internal authentication mechanisms, not public CAPTCHAs. What you're describing, contour detection in dotted images, presents a particular challenge because the connectedness we typically rely on in image processing is intentionally disrupted. The dots effectively shatter the outlines we want to identify. So, you can’t just throw standard edge detection at it and expect clean results. It requires a more strategic approach.
+Alright,  I've actually spent a fair bit of time, back in the days of more rudimentary computer vision, trying to break similar systems—though mine were internal authentication mechanisms, not public CAPTCHAs. What you're describing, contour detection in dotted images, presents a particular challenge because the connectedness we typically rely on in image processing is intentionally disrupted. The dots effectively shatter the outlines we want to identify. So, you can’t just throw standard edge detection at it and expect clean results. It requires a more strategic approach.
 
 The first thing we need to understand is that we're dealing with a sparse, noisy representation of what are, hopefully, recognizable shapes. We can't directly find continuous lines because they aren't there. We need to infer the contours by identifying clustered dots and then creating plausible boundaries around those clusters. My old approach, and what I'd recommend here, involves a combination of techniques, moving away from single-step solutions to a more nuanced, multi-stage process.
 

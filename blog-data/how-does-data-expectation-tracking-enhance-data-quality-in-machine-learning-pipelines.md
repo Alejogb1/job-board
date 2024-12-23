@@ -4,7 +4,7 @@ date: "2024-12-10"
 id: "how-does-data-expectation-tracking-enhance-data-quality-in-machine-learning-pipelines"
 ---
 
-Okay so you wanna know about data expectation tracking and how it keeps things shipshape in your machine learning pipelines right  Its pretty crucial stuff actually  Think of it like this you're building a house right You wouldn't just start chucking bricks together without a blueprint would you  Same goes for your data  You need to know what kind of data you're expecting what it should look like before you even start training your models otherwise chaos ensues
+ so you wanna know about data expectation tracking and how it keeps things shipshape in your machine learning pipelines right  Its pretty crucial stuff actually  Think of it like this you're building a house right You wouldn't just start chucking bricks together without a blueprint would you  Same goes for your data  You need to know what kind of data you're expecting what it should look like before you even start training your models otherwise chaos ensues
 
 Data expectation tracking is basically setting up those blueprints for your data  You define what you expect your data to be like  Things like the number of columns the data types in each column whether there are any missing values stuff like that And then you check your actual data against these expectations  If something doesn't match boom you've got a problem
 

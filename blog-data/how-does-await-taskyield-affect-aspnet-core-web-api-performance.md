@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-does-await-taskyield-affect-aspnet-core-web-api-performance"
 ---
 
-Okay, let’s unpack how `await Task.Yield` interacts with performance in ASP.NET Core Web API applications. It's not as straightforward as one might initially assume, and I’ve definitely seen it misused, leading to some rather counterintuitive behavior over the years. Thinking back to a particularly challenging project a few years ago, we had a heavily loaded API endpoint that was sporadically experiencing latency spikes. The first place we looked was the database access layer, naturally, but it turned out the bottleneck was actually closer to home: improper use of `await Task.Yield`.
+, let’s unpack how `await Task.Yield` interacts with performance in ASP.NET Core Web API applications. It's not as straightforward as one might initially assume, and I’ve definitely seen it misused, leading to some rather counterintuitive behavior over the years. Thinking back to a particularly challenging project a few years ago, we had a heavily loaded API endpoint that was sporadically experiencing latency spikes. The first place we looked was the database access layer, naturally, but it turned out the bottleneck was actually closer to home: improper use of `await Task.Yield`.
 
 The key thing to understand is that `await Task.Yield()` forces a context switch, returning control to the caller. This might sound beneficial initially—it’s a way to release the current thread and allow other work to progress—but in an ASP.NET Core context, the implications can be detrimental if not handled with care. Let's delve into the mechanism.
 

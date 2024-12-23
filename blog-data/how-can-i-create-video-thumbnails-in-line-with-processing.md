@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-create-video-thumbnails-in-line-with-processing"
 ---
 
-Okay, let’s tackle this. I remember one particularly challenging project back in my startup days where we were building a video sharing platform. Efficient thumbnail generation was absolutely critical; a slow, external process would have killed the user experience. We needed thumbnails generated almost immediately after the video upload completed, and doing it in-line with processing was the only viable option. Let me walk you through the specifics and some code examples illustrating how we accomplished that, and some things to keep in mind.
+, let’s tackle this. I remember one particularly challenging project back in my startup days where we were building a video sharing platform. Efficient thumbnail generation was absolutely critical; a slow, external process would have killed the user experience. We needed thumbnails generated almost immediately after the video upload completed, and doing it in-line with processing was the only viable option. Let me walk you through the specifics and some code examples illustrating how we accomplished that, and some things to keep in mind.
 
 The core challenge lies in balancing speed, quality, and resource usage. We're dealing with potentially large video files, and simply dumping everything into a single processing thread is a recipe for disaster, especially under load. The ideal solution involves leveraging libraries that provide optimized video decoding and frame extraction while employing some concurrency to expedite the process.
 

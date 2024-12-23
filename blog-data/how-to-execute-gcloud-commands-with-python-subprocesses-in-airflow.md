@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-execute-gcloud-commands-with-python-subprocesses-in-airflow"
 ---
 
-Okay, let's talk about executing `gcloud` commands within Airflow using python subprocesses. It's a topic I’ve tackled many times, especially when dealing with complex cloud deployments and data pipelines. I’ve learned a few things the hard way, and I’m happy to share what I’ve found works well.
+, let's talk about executing `gcloud` commands within Airflow using python subprocesses. It's a topic I’ve tackled many times, especially when dealing with complex cloud deployments and data pipelines. I’ve learned a few things the hard way, and I’m happy to share what I’ve found works well.
 
 The core of the challenge is reliably running shell commands, specifically `gcloud`, inside an Airflow task. We often need to manipulate google cloud resources—start compute instances, manage storage buckets, or even trigger cloud functions—directly from our workflows. The direct integration with gcloud through dedicated operators might not always be flexible enough, especially when dealing with dynamic arguments or needing specific command sequences, hence the need for python subprocesses.
 

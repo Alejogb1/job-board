@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-cant-content-within-rails-dev-tags-be-displayed"
 ---
 
-Okay, let's tackle this one. I remember vividly back in my early days with rails – probably around version 3.2 – I spent a frustrating evening chasing down a similar issue, completely perplexed as to why these `<% dev %>` blocks weren’t showing up. It turned out to be a fairly straightforward, albeit easily missed, aspect of Rails’ environment configuration and template processing.
+, let's tackle this one. I remember vividly back in my early days with rails – probably around version 3.2 – I spent a frustrating evening chasing down a similar issue, completely perplexed as to why these `<% dev %>` blocks weren’t showing up. It turned out to be a fairly straightforward, albeit easily missed, aspect of Rails’ environment configuration and template processing.
 
 The reason content within Rails' `<% dev %>` tags doesn't render in most common development scenarios boils down to how Rails handles conditional rendering and its default template engine settings. Essentially, the `<% dev %>` tag, or the equivalent `<% development %>` tag, is a *conditional block*. Its purpose is to execute the enclosed code (and render its resulting output) *only when the application is running in the development environment*. This mechanism is not intended for arbitrary content display, but rather for running development-specific code or rendering development-specific data.
 

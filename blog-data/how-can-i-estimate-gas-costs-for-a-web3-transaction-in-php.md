@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-estimate-gas-costs-for-a-web3-transaction-in-php"
 ---
 
-Okay, let's tackle gas estimation for web3 transactions in PHP. I've actually had to deal with this quite a bit in the past, particularly when building a decentralized marketplace where cost transparency was paramount. Getting it wrong can lead to transactions failing or users experiencing unexpected expenses, so it's something you want to handle with care.
+, let's tackle gas estimation for web3 transactions in PHP. I've actually had to deal with this quite a bit in the past, particularly when building a decentralized marketplace where cost transparency was paramount. Getting it wrong can lead to transactions failing or users experiencing unexpected expenses, so it's something you want to handle with care.
 
 Firstly, let's clarify what we mean by "gas" in this context. On Ethereum and other EVM-compatible blockchains, gas is the unit used to measure the computational effort required to execute transactions. Each operation, from simple value transfers to complex smart contract interactions, consumes gas. The total cost of a transaction is the gas used multiplied by the gas price, which fluctuates based on network congestion. Estimating this accurately in a client-side environment like a PHP application presents a few interesting challenges.
 

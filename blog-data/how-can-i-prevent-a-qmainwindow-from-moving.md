@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-prevent-a-qmainwindow-from-moving"
 ---
 
-Alright, let's tackle this. Preventing a `QMainWindow` from moving is a surprisingly common requirement, especially when you're crafting highly specialized user interfaces. I've personally bumped into this several times over the years, usually when working on embedded systems or kiosk applications where a fixed position and size are absolutely crucial. It’s not always immediately obvious how to achieve this with Qt, and the documentation, while comprehensive, sometimes lacks the kind of direct practical examples that are most helpful.
+Alright,  Preventing a `QMainWindow` from moving is a surprisingly common requirement, especially when you're crafting highly specialized user interfaces. I've personally bumped into this several times over the years, usually when working on embedded systems or kiosk applications where a fixed position and size are absolutely crucial. It’s not always immediately obvious how to achieve this with Qt, and the documentation, while comprehensive, sometimes lacks the kind of direct practical examples that are most helpful.
 
 So, you want that `QMainWindow` glued to its initial spot, eh? There are a few ways to accomplish this, and the best approach depends somewhat on the nuances of your particular needs. We're essentially dealing with window management behaviors at the operating system level, and Qt provides us with a layer of abstraction to interact with these. The core principle revolves around controlling the window flags.
 

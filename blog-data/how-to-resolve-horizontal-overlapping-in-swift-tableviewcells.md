@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-resolve-horizontal-overlapping-in-swift-tableviewcells"
 ---
 
-Alright, let's tackle this. I've certainly had my share of battles with layout constraints and their particular brand of chaotic fun, especially when it comes to `UITableViewCells`. Horizontal overlapping, specifically, is a common culprit when custom cells become just a bit too ambitious. Here’s my approach, drawn from a few past encounters that ultimately resulted in a stable and predictable user interface.
+Alright,  I've certainly had my share of battles with layout constraints and their particular brand of chaotic fun, especially when it comes to `UITableViewCells`. Horizontal overlapping, specifically, is a common culprit when custom cells become just a bit too ambitious. Here’s my approach, drawn from a few past encounters that ultimately resulted in a stable and predictable user interface.
 
 The core issue with horizontal overlap within table view cells generally stems from a clash between the intrinsic content size of elements within the cell and the constraints you’ve set up. When the available horizontal space is less than what the combined elements *want* to occupy, you get that dreaded overlap. It’s a visual bug that screams 'constraint ambiguity' or a simple lack of specificity in your layout.
 

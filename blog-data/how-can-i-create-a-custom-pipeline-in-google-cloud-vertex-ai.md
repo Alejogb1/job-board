@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-create-a-custom-pipeline-in-google-cloud-vertex-ai"
 ---
 
-Okay, let's tackle this. I've spent considerable time architecting various machine learning workflows on Google Cloud, and creating custom pipelines within Vertex AI is definitely a core skill. It's more involved than simply using pre-built components, but the flexibility and control it offers are invaluable, particularly when dealing with complex or highly specialized modeling tasks. I'll walk you through the process, keeping it practical and grounded in my actual experience.
+,  I've spent considerable time architecting various machine learning workflows on Google Cloud, and creating custom pipelines within Vertex AI is definitely a core skill. It's more involved than simply using pre-built components, but the flexibility and control it offers are invaluable, particularly when dealing with complex or highly specialized modeling tasks. I'll walk you through the process, keeping it practical and grounded in my actual experience.
 
 Essentially, you’re constructing a directed acyclic graph (DAG) where each node represents a distinct task in your machine learning workflow. These tasks might involve data preparation, model training, evaluation, or deployment – anything you need. Vertex AI Pipelines utilizes kubeflow pipelines as its engine, so understanding the underlying concepts there is beneficial. However, we can focus on the Vertex AI specific implementation here.
 

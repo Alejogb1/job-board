@@ -4,13 +4,13 @@ date: "2024-12-13"
 id: "systemverilog-typedef-declaration"
 ---
 
-Okay so typedefs in SystemVerilog yeah I've wrestled with those enough to fill a decent sized server rack I'm talking years people years Let's break it down I'll tell you what I know based on my time in the trenches debugging some seriously hairy verification environments
+ so typedefs in SystemVerilog yeah I've wrestled with those enough to fill a decent sized server rack I'm talking years people years Let's break it down I'll tell you what I know based on my time in the trenches debugging some seriously hairy verification environments
 
 First up the basics what's a typedef Its essentially a way to create your own custom data type alias You're basically saying hey SystemVerilog from now on when I say *this* I actually mean *that* Its not creating a new type at the fundamental level mind you its just giving an existing type a new name which can help readability and manage complexity
 
 Why would you do that well lots of reasons lets be real I've seen code bases that look like spaghetti monsters with random bit widths and unclear intentions Typedefs help make that mess more manageable
 
-Okay lets get down and dirty with some examples these are real world scenarios not the textbook garbage I’m used to seeing online The thing about SystemVerilog is that the complexity is usually in the details So here's a look at how I have used this over the years
+ lets get down and dirty with some examples these are real world scenarios not the textbook garbage I’m used to seeing online The thing about SystemVerilog is that the complexity is usually in the details So here's a look at how I have used this over the years
 
 ```systemverilog
 // Example 1: A simple bit vector rename
@@ -52,7 +52,7 @@ module mem_test;
 endmodule
 ```
 
-Okay so here we’ve got `mem_packet_t` its a structured bunch of bits that represent a memory packet I've seen this kind of structure used in tons of interfaces A memory address some data and a valid flag This is more representative of how we use typedefs in a real project its all about grouping related fields into a logical type
+ so here we’ve got `mem_packet_t` its a structured bunch of bits that represent a memory packet I've seen this kind of structure used in tons of interfaces A memory address some data and a valid flag This is more representative of how we use typedefs in a real project its all about grouping related fields into a logical type
 
 Now a quick word about `packed` keyword if you don't use `packed` your struct might have implicit padding inserted during memory allocation resulting in unexpected results This can lead to head scratching and late night debugging sessions believe me I have had this kind of thing mess with me more than once it makes debugging a nightmare you might as well throw the debugger out of the window sometimes
 
@@ -105,8 +105,8 @@ Now you might be thinking that’s a lot about typedefs but these are really the
 *  **Beware implicit type conversions:** SystemVerilog allows some implicit conversions between types. These conversions can have unexpected results if you are not careful about the bit width and types used. Pay special attention to the bit width and sign when making type assignments it will save you a lot of time.
 * **Think of Type abstraction** : Don’t think of typedefs as simply renamings. Instead see it as a way to define an interface in a way. Like if you are going to use a new type of bus then create an alias name for that bus and use that across the whole module.
 
-Okay so there you have it.  A brain dump on typedefs from someone who has been there done that a few times I mean more than a few really like a crazy lot of times. If you are looking for more advanced stuff I recommend you go through the *SystemVerilog Language Reference Manual* (LRM) it’s the bible of the SystemVerilog you have to know it if you want to seriously use the language and its all for free you can download it online from IEEE. Also *SystemVerilog for Verification* by Chris Spear and Greg Tumbush has a great chapter explaining type definitions.
+ so there you have it.  A brain dump on typedefs from someone who has been there done that a few times I mean more than a few really like a crazy lot of times. If you are looking for more advanced stuff I recommend you go through the *SystemVerilog Language Reference Manual* (LRM) it’s the bible of the SystemVerilog you have to know it if you want to seriously use the language and its all for free you can download it online from IEEE. Also *SystemVerilog for Verification* by Chris Spear and Greg Tumbush has a great chapter explaining type definitions.
 
-And I’ve gotta tell you a little joke I heard last week it wasn't that bad, I swear it was from a senior verification engineer: Why did the SystemVerilog user break up with the bit vector? Because they had no common ground and she kept saying she needed more space! Okay okay I know bad joke I get it.
+And I’ve gotta tell you a little joke I heard last week it wasn't that bad, I swear it was from a senior verification engineer: Why did the SystemVerilog user break up with the bit vector? Because they had no common ground and she kept saying she needed more space!   I know bad joke I get it.
 
 But yeah typedefs are powerful when you know how to use them they are good for readability maintainability and overall code quality of your projects. I hope this long answer helps clear things up if you have any more doubts just ask me.

@@ -4,7 +4,7 @@ date: '2024-11-15'
 id: 'optimized-docker-images-for-scalable-ai-workflows'
 ---
 
-Okay, so you're looking to build Docker images that are super optimized for running AI models, right?  It's all about keeping things lean and mean so your workflows can scale like crazy.  Here's the lowdown:
+, so you're looking to build Docker images that are super optimized for running AI models, right?  It's all about keeping things lean and mean so your workflows can scale like crazy.  Here's the lowdown:
 
 First things first, you gotta think about what's actually going into your image  You don't need to pack the whole kitchen sink in there, just the bare minimum. Start with a base image tailored to your AI framework like TensorFlow or PyTorch. You can find these on Docker Hub, or build your own from scratch.
 

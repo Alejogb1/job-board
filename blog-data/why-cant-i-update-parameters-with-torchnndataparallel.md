@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-cant-i-update-parameters-with-torchnndataparallel"
 ---
 
-Okay, let's unpack this. I've seen this tripping up folks for years, and it's a legitimate head-scratcher if you're coming at it fresh. The core of the issue with `torch.nn.DataParallel` and parameter updates boils down to how PyTorch handles model distribution and gradient aggregation, coupled with the subtle way `DataParallel` operates as a module wrapper rather than a true model modification.
+, let's unpack this. I've seen this tripping up folks for years, and it's a legitimate head-scratcher if you're coming at it fresh. The core of the issue with `torch.nn.DataParallel` and parameter updates boils down to how PyTorch handles model distribution and gradient aggregation, coupled with the subtle way `DataParallel` operates as a module wrapper rather than a true model modification.
 
 Essentially, when you wrap your model with `torch.nn.DataParallel`, the original model instance you are passing to it is not directly used for parameter updates. Instead, `DataParallel` creates *replicas* of your model on different GPUs. When you feed data through this `DataParallel` module, each replica processes its assigned batch chunk, calculates its gradients, and then these gradients are aggregated back to the *master* replica — often, but not always, the one on your primary GPU. The fundamental problem arises because the optimizers you initialize are pointing to the parameters of your original model, not the parameters of the master replica that actually undergoes the aggregation.
 

@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "how-can-photonic-interposers-optimize-data-packet-routing-for-deep-learning-tasks-involving-hundreds-of-interconnected-compute-units"
 ---
 
-Okay so you wanna know how these fancy photonic interposers can speed up deep learning right  like seriously improve routing data packets between tons of compute units  hundreds even  that's a big deal  deep learning is all about moving data fast  think of it like a massive highway system for numbers
+ so you wanna know how these fancy photonic interposers can speed up deep learning right  like seriously improve routing data packets between tons of compute units  hundreds even  that's a big deal  deep learning is all about moving data fast  think of it like a massive highway system for numbers
 
 The problem is with traditional electrical interconnects  they're kinda slow and power hungry  especially when you have so many chips chatting to each other  imagine a giant city with only tiny roads  traffic jam central right  That's where photonics comes in  light travels way faster than electrons  so you get way less congestion
 

@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "how-can-alignment-and-online-rl-improve-ais-ability-to-generalize-across-diverse-tasks"
 ---
 
-Okay so you wanna know how alignment and online RL can make AIs better at doing lots of different things right  Like imagine teaching a robot to both play chess and make coffee thats kinda the dream  Generalization is the key word here its about the AI not just being good at one specific thing but being adaptable  like a human
+ so you wanna know how alignment and online RL can make AIs better at doing lots of different things right  Like imagine teaching a robot to both play chess and make coffee thats kinda the dream  Generalization is the key word here its about the AI not just being good at one specific thing but being adaptable  like a human
 
 The big problem is current AI is kinda narrow its amazing at image recognition or playing Go but throw it a curveball something completely different and it's lost  It’s like teaching a dog to fetch only tennis balls then expecting it to fetch the newspaper  Doesn't work that well  So how do we fix it
 

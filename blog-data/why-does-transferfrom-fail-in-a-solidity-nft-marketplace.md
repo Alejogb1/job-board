@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-does-transferfrom-fail-in-a-solidity-nft-marketplace"
 ---
 
-Okay, let's tackle this. It's a problem I've seen crop up more often than I'd like, particularly in early marketplace implementations, and it’s usually rooted in a few common misunderstandings about how erc-721 transfers and approvals function. The `transferFrom()` function failing in your solidity nft marketplace often boils down to issues with authorization or insufficient handling of edge cases. Allow me to explain through some real situations I encountered.
+,  It's a problem I've seen crop up more often than I'd like, particularly in early marketplace implementations, and it’s usually rooted in a few common misunderstandings about how erc-721 transfers and approvals function. The `transferFrom()` function failing in your solidity nft marketplace often boils down to issues with authorization or insufficient handling of edge cases. Allow me to explain through some real situations I encountered.
 
 Back in my early days dabbling with nft marketplaces, I vividly recall an incident where users kept getting reverted transactions when trying to list their nfts for sale. The culprit was not, as initially suspected, some intricate bug in the listing logic itself, but rather in the fundamental `transferFrom()` call. This function, as you know, is the linchpin for transferring an nft from one address to another, but it’s governed by a stringent access control mechanism.
 

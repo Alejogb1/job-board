@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-are-gnosis-safe-contracts-failing-to-deploy-to-a-custom-network"
 ---
 
-Okay, let's tackle this. I've certainly seen my share of gnosis safe deployment issues, and the "custom network" angle always adds a layer of intrigue. From my experience, it rarely boils down to a single, easily pinpointed cause. Usually, it's a confluence of factors that need careful examination. Let me walk you through what I've encountered and how I've approached these problems in the past.
+,  I've certainly seen my share of gnosis safe deployment issues, and the "custom network" angle always adds a layer of intrigue. From my experience, it rarely boils down to a single, easily pinpointed cause. Usually, it's a confluence of factors that need careful examination. Let me walk you through what I've encountered and how I've approached these problems in the past.
 
 The first, and perhaps most common, hurdle revolves around the foundational network setup itself. Often, when dealing with custom networks, we’re not leveraging the same pre-configured environment that Ethereum Mainnet or even a common testnet like Goerli provides. This means that assumptions made by the standard gnosis safe deployment scripts, specifically regarding network identifiers (chain ids) or availability of crucial precompiles, often prove inaccurate. I vividly recall one project where I was initially puzzled by deployment failures; it turned out that the custom network’s chain id was colliding with a different development network that was being used by a colleague.
 

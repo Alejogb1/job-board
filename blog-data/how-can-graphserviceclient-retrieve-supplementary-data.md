@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-graphserviceclient-retrieve-supplementary-data"
 ---
 
-Okay, let's tackle this. It's not uncommon to find ourselves needing more than just the basic data returned by a `GraphServiceClient`. I've been down this path multiple times, particularly when dealing with complex user profiles and resource relationships in large enterprise environments. The standard requests often get you the core properties, but the supplementary data – those additional fields or expanded relationships – require a bit more finesse. The `GraphServiceClient`, when used within the microsoft graph api ecosystem, is exceptionally versatile in this regard, thankfully.
+,  It's not uncommon to find ourselves needing more than just the basic data returned by a `GraphServiceClient`. I've been down this path multiple times, particularly when dealing with complex user profiles and resource relationships in large enterprise environments. The standard requests often get you the core properties, but the supplementary data – those additional fields or expanded relationships – require a bit more finesse. The `GraphServiceClient`, when used within the microsoft graph api ecosystem, is exceptionally versatile in this regard, thankfully.
 
 The key to retrieving this supplementary data lies in understanding the available mechanisms and implementing them correctly within your request. There are primarily two ways we achieve this: using `$select` to specify additional properties, and using `$expand` to retrieve related resources. We can also combine these for very specific data sets.
 

@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-is-airflow-onsuccesscallback-not-providing-proper-task-info"
 ---
 
-Okay, let’s tackle this. I've seen this specific issue pop up a fair bit over the years, and it usually boils down to a couple of key areas in how Airflow handles callbacks, particularly `on_success_callback`. It's definitely not always obvious on the surface why you aren't getting the expected task information, so let's break it down.
+, let’s tackle this. I've seen this specific issue pop up a fair bit over the years, and it usually boils down to a couple of key areas in how Airflow handles callbacks, particularly `on_success_callback`. It's definitely not always obvious on the surface why you aren't getting the expected task information, so let's break it down.
 
 First off, the core problem usually stems from the fact that `on_success_callback` (and similarly, `on_failure_callback`, or `on_retry_callback`) isn’t a magic portal directly to the completed task. Instead, it’s triggered *after* the task’s execution completes successfully, and it receives a specific context from the Airflow scheduler – the ‘context dictionary’. This context, while containing important information, doesn't always include *everything* you might need directly at that point, or in the format, you'd initially expect.
 

@@ -16,7 +16,7 @@ Next is the problem of **occlusions and artifacts**, often unseen in static data
 
 Finally, **model complexity and computational constraints** can play a role. Complex models might offer better accuracy but come at the cost of slower inference times, making real-time processing impractical. Striking a balance between model accuracy and processing speed is a critical challenge. Overly complex models, even if highly accurate in ideal conditions, may be too slow for deployment to a real-time system, leading to poor performance or latency issues.
 
-Okay, so now let's illustrate these concepts with a few concise Python code snippets. These are deliberately simplified for clarity but represent what you might encounter in practice.
+, so now let's illustrate these concepts with a few concise Python code snippets. These are deliberately simplified for clarity but represent what you might encounter in practice.
 
 **Snippet 1: Simulating Data Drift**
 

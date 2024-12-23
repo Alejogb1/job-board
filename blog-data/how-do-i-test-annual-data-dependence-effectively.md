@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-test-annual-data-dependence-effectively"
 ---
 
-Okay, let's tackle this. Been there, seen that, more times than I care to recall. Testing annual data dependence is trickier than it first seems; it's not just about running a correlation test and calling it a day. The issue is often deeply rooted in the time series nature of the data and can lead to flawed conclusions if not handled carefully. I'll draw on a project from a few years back, involving financial market data, to illustrate some common pitfalls and the approaches I've found effective.
+,  Been there, seen that, more times than I care to recall. Testing annual data dependence is trickier than it first seems; it's not just about running a correlation test and calling it a day. The issue is often deeply rooted in the time series nature of the data and can lead to flawed conclusions if not handled carefully. I'll draw on a project from a few years back, involving financial market data, to illustrate some common pitfalls and the approaches I've found effective.
 
 The crux of the problem, as I encountered it, is that annual data points are often not independent. For instance, economic indicators for one year might heavily influence those of the following year. Simply using standard statistical tests that assume independence, like a basic Pearson correlation, would therefore lead to results that are, at best, misleading, and at worst, completely incorrect. We have to look for methods that consider temporal ordering and potential autocorrelation.
 

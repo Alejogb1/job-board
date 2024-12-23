@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "line-editing-with-zshs-vared-from-within-script"
 ---
 
-Alright so line editing with `zsh`'s `vared` from inside a script right I've been there done that got the t-shirt probably several t-shirts actually This stuff can be a bit of a rabbit hole if you're not careful Let me spill the beans on what I've learned over the years dealing with this kind of thing it's not always straightforward let me tell you
+so line editing with `zsh`'s `vared` from inside a script right I've been there done that got the t-shirt probably several t-shirts actually This stuff can be a bit of a rabbit hole if you're not careful Let me spill the beans on what I've learned over the years dealing with this kind of thing it's not always straightforward let me tell you
 
 First off `vared` is your friend when you need interactive editing of a variable in `zsh` It's like a mini text editor popping up in your terminal Now the catch is it's designed for interactive use which means it plays nice when you the human are at the keyboard typing away But when you try to use it from a script things can get a little funky
 
@@ -21,7 +21,7 @@ read modified_value
 echo "Modified value: $modified_value"
 ```
 
-Okay so this snippet it's kinda like a barebones version of line editing You get the `initial_value` pre-populated you can edit it using your terminal's standard line-editing keys like arrow keys backspace etc and then `read` captures the result Now the problem is this method relies on the underlying shell's line-editing capabilities and if you are running on a headless server where some shell weirdness happens or just the term env it can be a mess
+ so this snippet it's kinda like a barebones version of line editing You get the `initial_value` pre-populated you can edit it using your terminal's standard line-editing keys like arrow keys backspace etc and then `read` captures the result Now the problem is this method relies on the underlying shell's line-editing capabilities and if you are running on a headless server where some shell weirdness happens or just the term env it can be a mess
 
 Another tactic and I know you don't want some long-winded explanation on the underlying mechanics so let's call it a "less naive approach" involved using named pipes or fifos This was after the first naive method bit me a few times Let's say you have your script and you need to edit a string you can create a named pipe pass the string into it then run vared on that pipe Here is what i mean:
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-run-a-docker-image-from-gha-or-local-cache"
 ---
 
-Alright, let's tackle this. I recall a project a few years back where we were heavily relying on docker for microservice deployments and, simultaneously, were working towards drastically reducing build times within our GitHub Actions (GHA) pipelines. The challenge of efficiently utilizing cached docker images, whether from local development or within GHA, was paramount. Getting this wrong can lead to painfully slow deployments and wasteful resource consumption. It's more about finesse than brute force, focusing on smart strategies that leverage docker’s layer caching mechanism.
+Alright,  I recall a project a few years back where we were heavily relying on docker for microservice deployments and, simultaneously, were working towards drastically reducing build times within our GitHub Actions (GHA) pipelines. The challenge of efficiently utilizing cached docker images, whether from local development or within GHA, was paramount. Getting this wrong can lead to painfully slow deployments and wasteful resource consumption. It's more about finesse than brute force, focusing on smart strategies that leverage docker’s layer caching mechanism.
 
 The core problem stems from the way docker images are built and stored. They are composed of layers, and if a layer hasn't changed, it doesn’t need to be rebuilt or re-downloaded. Understanding this is crucial. When we talk about running a docker image from a GHA cache or local cache, we’re essentially focusing on reusing existing layers and avoiding redundant operations. We need to tell docker and GitHub Actions to look for those previously built or pushed layers. This approach speeds things up dramatically.
 

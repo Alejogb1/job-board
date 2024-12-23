@@ -4,7 +4,7 @@ date: "2024-12-11"
 id: "how-can-mechanistic-interpretability-make-models-safer"
 ---
 
-Okay so you wanna know how mechanistic interpretability makes AI safer right  Cool  It's a big deal  Basically  we build these crazy powerful models  like giant black boxes  they spit out answers but we have no clue why  That's scary  right  What if it's wrong  What if it's subtly biased  What if it decides to become Skynet  Okay maybe not Skynet but you get the idea
+ so you wanna know how mechanistic interpretability makes AI safer right  Cool  It's a big deal  Basically  we build these crazy powerful models  like giant black boxes  they spit out answers but we have no clue why  That's scary  right  What if it's wrong  What if it's subtly biased  What if it decides to become Skynet   maybe not Skynet but you get the idea
 
 Mechanistic interpretability is all about opening up that black box  Instead of just looking at the final output we try to understand the *internal workings* of the model  how it actually processes information  Think of it like taking apart a clock to see how all the gears mesh instead of just looking at the time it shows  Once we understand the mechanism we can start to identify potential problems and make the model safer
 

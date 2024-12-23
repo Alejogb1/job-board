@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "what-is-the-role-of-online-reinforcement-learning-rl-techniques-in-improving-ai-alignment-processes"
 ---
 
-Okay so you wanna know about online RL and how it helps make AI nicer right  like less likely to go all Terminator on us  That's a huge question  a really really huge question  We're talking about the alignment problem the big scary thing keeping everyone up at night  And online RL it's a piece of the puzzle a potentially big one but a piece nonetheless
+ so you wanna know about online RL and how it helps make AI nicer right  like less likely to go all Terminator on us  That's a huge question  a really really huge question  We're talking about the alignment problem the big scary thing keeping everyone up at night  And online RL it's a piece of the puzzle a potentially big one but a piece nonetheless
 
 So imagine you're training a robot dog  a super smart robot dog that learns by doing  That's RL  Reinforcement Learning  It gets rewards for good behavior like fetching the newspaper  and penalties for bad behavior like chewing up your shoes  Classic RL is like teaching it offline  you program the rewards and punishments ahead of time  It learns from this pre-defined dataset
 

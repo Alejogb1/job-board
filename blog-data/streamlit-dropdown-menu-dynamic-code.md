@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "streamlit-dropdown-menu-dynamic-code"
 ---
 
-Okay I see the problem you're having with streamlit and dynamically updating dropdown menus yeah been there done that its a classic headache let me tell you I've wrestled with this issue more times than I care to remember especially back in the day when streamlit wasn't as mature as it is now feels like a lifetime ago
+ I see the problem you're having with streamlit and dynamically updating dropdown menus yeah been there done that its a classic headache let me tell you I've wrestled with this issue more times than I care to remember especially back in the day when streamlit wasn't as mature as it is now feels like a lifetime ago
 
 Right so the core problem is that streamlit reruns your entire script every time there's a UI interaction that includes changing a dropdown value and that can cause a real mess if you're not careful You've probably noticed your dropdowns not updating the way you expect or the whole app flashing like a christmas tree at times
 
@@ -94,7 +94,7 @@ Notice the pattern here with multiple level cascading each dropdown is based on 
 
 This pattern of storing selections in `st.session_state` and conditionally rendering elements is fundamental to creating responsive interactive Streamlit apps with dynamic content especially with many elements
 
-Now I'm not gonna lie there are more advanced tricks you can use like using callbacks but let’s leave that for another day for the scope of this problem you should be okay with this approach for simple cascading dropdowns
+Now I'm not gonna lie there are more advanced tricks you can use like using callbacks but let’s leave that for another day for the scope of this problem you should be  with this approach for simple cascading dropdowns
 
 In terms of resources you should take a look at the streamlit documentation which is quite comprehensive by now especially the part about session state that would be a good start The "Streamlit Cookbook" is a good place too you can find many recipes there including ones with more complex session state handling
 

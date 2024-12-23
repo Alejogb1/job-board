@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "how-can-online-rl-techniques-adapt-dynamically-to-evolving-datasets-during-training"
 ---
 
-Okay so you wanna know how online RL can keep up with datasets that are like constantly changing right  Thats a super cool question actually  its a big deal because most RL stuff assumes your data is nice and static you know  all prepped and ready to go  but real-world stuff isnt like that  think of things like recommendation systems  or robot control  the environment is always evolving new users new products new obstacles the whole shebang
+ so you wanna know how online RL can keep up with datasets that are like constantly changing right  Thats a super cool question actually  its a big deal because most RL stuff assumes your data is nice and static you know  all prepped and ready to go  but real-world stuff isnt like that  think of things like recommendation systems  or robot control  the environment is always evolving new users new products new obstacles the whole shebang
 
 
 The core problem is that traditional RL methods usually batch things up they train on a whole dataset then test it and repeat  this is fine if your dataset is stable but if its changing constantly you end up with a model that's already outdated before its even finished training  its like trying to hit a moving target with a really slow rifle  

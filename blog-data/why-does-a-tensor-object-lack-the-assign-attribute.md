@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-a-tensor-object-lack-the-assign-attribute"
 ---
 
-Okay, let's address the question of why tensor objects, in typical deep learning frameworks, don’t possess an `assign` attribute directly. It's a good one, and one that I've encountered firsthand several times, particularly when transitioning between different coding paradigms, such as going from a more traditional imperative style to one utilizing frameworks built around computation graphs.
+, let's address the question of why tensor objects, in typical deep learning frameworks, don’t possess an `assign` attribute directly. It's a good one, and one that I've encountered firsthand several times, particularly when transitioning between different coding paradigms, such as going from a more traditional imperative style to one utilizing frameworks built around computation graphs.
 
 The core reason lies in the fundamental design principle of many tensor manipulation libraries – especially those designed for deep learning – which heavily rely on the concept of *immutability* and the use of a *computational graph*. Think of tensors, in this context, not as mutable containers of data that you freely adjust in place, but rather as nodes in a graph representing mathematical operations.
 

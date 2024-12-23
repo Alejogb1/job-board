@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "automatically-convert-scala-code-to-java-code"
 ---
 
-Okay so you want to automatically convert Scala code to Java code right Been there done that got the t-shirt So listen up this ain't some magic wand waving thing it's a deep dive into language semantics and abstract syntax trees think of it like translating ancient Greek to modern English it sounds simple until you're neck deep in irregular verbs
+ so you want to automatically convert Scala code to Java code right Been there done that got the t-shirt So listen up this ain't some magic wand waving thing it's a deep dive into language semantics and abstract syntax trees think of it like translating ancient Greek to modern English it sounds simple until you're neck deep in irregular verbs
 
 My first encounter with this problem wasn't pretty back in my early days at a small startup we were experimenting with Scala for some microservices the cool kids were pushing it hard but then the infrastructure team pushed back even harder they were all Java all the time it was either rewrite everything or find some wizardry
 

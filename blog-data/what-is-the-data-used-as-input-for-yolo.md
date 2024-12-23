@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-is-the-data-used-as-input-for-yolo"
 ---
 
-Alright, let's tackle this. It's a fundamental question when working with YOLO, and the subtleties are often overlooked. In my experience, and I've spent quite some time deploying these models in diverse scenarios, the input data to YOLO, at its core, is an image represented as a numerical tensor. But that barely scratches the surface of what's actually involved. The devil, as they say, is in the preprocessing.
+Alright,  It's a fundamental question when working with YOLO, and the subtleties are often overlooked. In my experience, and I've spent quite some time deploying these models in diverse scenarios, the input data to YOLO, at its core, is an image represented as a numerical tensor. But that barely scratches the surface of what's actually involved. The devil, as they say, is in the preprocessing.
 
 Essentially, YOLO, like most deep learning vision models, expects input images as multi-dimensional arrays (tensors) of numbers. These numbers encode the pixel intensity values, and potentially information about the color channels. Crucially, these images must be prepared according to specific standards to ensure the network can interpret them correctly. It’s not just about shoving any old image in and hoping for the best.
 

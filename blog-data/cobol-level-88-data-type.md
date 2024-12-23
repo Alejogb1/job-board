@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "cobol-level-88-data-type"
 ---
 
-Okay so you're asking about COBOL level 88 data types right I get it been there done that more times than I care to remember Level 88s it's a COBOL thing and honestly if you haven't grappled with them you haven't really lived the COBOL experience let me tell you about it
+ so you're asking about COBOL level 88 data types right I get it been there done that more times than I care to remember Level 88s it's a COBOL thing and honestly if you haven't grappled with them you haven't really lived the COBOL experience let me tell you about it
 
 So first up these aren't really *data types* in the way you'd think of like INT or STRING in other languages Instead level 88s are more like condition names associated with specific values of a regular COBOL data item Think of them as named booleans tied to specific data ranges or values within another variable
 
@@ -72,7 +72,7 @@ So now you can say
        PERFORM PROCESS-HIGH-RISK
 ```
 
-Okay I think you get the gist this reduces the amount of literal values you have in your code and makes things more readable and easier to maintain But it doesn't stop there Level 88 conditions can have multiple values like this
+ I think you get the gist this reduces the amount of literal values you have in your code and makes things more readable and easier to maintain But it doesn't stop there Level 88 conditions can have multiple values like this
 
 ```cobol
        88 ACTIVE-CUSTOMER    VALUE 1 2 3.
@@ -98,7 +98,7 @@ One more gotcha and this one got me more times than I’d like to admit it's tha
 
 I remember once I spent almost a day tracking down an issue because I mixed up the level 88 order in a copybook that was loaded in multiple programs a real headache
 
-Okay time for a joke my boss kept telling me that my COBOL code was too complex I asked him “is this the best code you’ve ever seen” he said “Yes it's the best code I've ever seen” and we laughed because its so bad it’s the best I get it you had to be there Anyway I hope you see how level 88s are good now they improve readability make your code much less likely to be buggy reduce the amount of literal values in your code and just make COBOL a bit less painful to work with
+ time for a joke my boss kept telling me that my COBOL code was too complex I asked him “is this the best code you’ve ever seen” he said “Yes it's the best code I've ever seen” and we laughed because its so bad it’s the best I get it you had to be there Anyway I hope you see how level 88s are good now they improve readability make your code much less likely to be buggy reduce the amount of literal values in your code and just make COBOL a bit less painful to work with
 
 If you want to dive deeper I’d recommend picking up a copy of “COBOL for Mainframes” by Grauer and Crawford or even the older “Structured COBOL” by Stern and Stern they are good resources and while old the principles still hold true for COBOL the books give a complete picture about COBOL and level 88s and many tricks that COBOL developers use in day to day activities. Also the official IBM COBOL documentation is a really good resource but it can be hard to navigate sometimes, and the book “COBOL Programming” by Paul Noll and Michael Murach gives a more hands on approach that I used during my early COBOL coding days.
 

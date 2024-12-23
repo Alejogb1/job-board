@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "memory-limitations-in-artificial-intelligence-error-type"
 ---
 
-Okay so you're asking about memory limitations in AI errors specifically eh I've wrestled with that beast myself more times than I care to remember let me tell you it's a deep rabbit hole and it’s frustrating to the point of contemplating a career change to something less… computationally demanding like maybe competitive knitting but let’s get real and focus on AI memory errors
+ so you're asking about memory limitations in AI errors specifically eh I've wrestled with that beast myself more times than I care to remember let me tell you it's a deep rabbit hole and it’s frustrating to the point of contemplating a career change to something less… computationally demanding like maybe competitive knitting but let’s get real and focus on AI memory errors
 
 First off let's clarify a bit when you say memory limitations causing errors in AI we're usually not talking about your RAM running out and the computer crashing although that can also happen and it's a real pain in the neck especially when you're running a complex model that took 8 hours to train trust me I've been there done that and got the t-shirt that says "Segmentation Fault: 11" in bold letters
 

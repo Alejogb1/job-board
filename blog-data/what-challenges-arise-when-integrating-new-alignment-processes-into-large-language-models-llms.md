@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "what-challenges-arise-when-integrating-new-alignment-processes-into-large-language-models-llms"
 ---
 
-Okay so you wanna talk about shoving new alignment stuff into these giant language models LLMs right  its a huge mess  like seriously huge  think herding cats but the cats are sentient and can write code to make more cats and those cats can also write papers arguing why herding them is ethically problematic  It's wild
+ so you wanna talk about shoving new alignment stuff into these giant language models LLMs right  its a huge mess  like seriously huge  think herding cats but the cats are sentient and can write code to make more cats and those cats can also write papers arguing why herding them is ethically problematic  It's wild
 
 The biggest challenge isn't even a single thing it's a whole tangled web of interconnected problems  First off  scale  these models are monstrously big  training them is expensive takes ages and deploying them is a logistical nightmare  Adding alignment processes means more training more compute more everything  Its not like you can just slap on a new module and be done  you're talking about potentially rewriting fundamental parts of how the model works
 

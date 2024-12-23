@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-obtain-the-effective-learning-rate-in-pytorch"
 ---
 
-Okay, let's tackle this. I've spent a fair amount of time wrestling with optimization in various deep learning projects over the years, and extracting the effective learning rate is a crucial step for debugging and fine-tuning models. It's not always as straightforward as accessing a single variable. You might be surprised how often this surfaces as an issue. In my experience, I've noticed a pattern: people often assume the learning rate is static, set once at the beginning, but with adaptive optimizers like Adam or those using schedulers, the actual rate applied to the weights changes dynamically.
+,  I've spent a fair amount of time wrestling with optimization in various deep learning projects over the years, and extracting the effective learning rate is a crucial step for debugging and fine-tuning models. It's not always as straightforward as accessing a single variable. You might be surprised how often this surfaces as an issue. In my experience, I've noticed a pattern: people often assume the learning rate is static, set once at the beginning, but with adaptive optimizers like Adam or those using schedulers, the actual rate applied to the weights changes dynamically.
 
 So, what does 'effective' learning rate actually mean here? It's the actual value being used to update the weights *at a particular iteration*. This distinction is key, especially when using advanced optimization techniques. It's not just what you initialized the optimizer with; it's the value after any modifications by schedulers. Let's unpack how to obtain this in pytorch, considering both scenarios—optimizers with and without schedulers.
 

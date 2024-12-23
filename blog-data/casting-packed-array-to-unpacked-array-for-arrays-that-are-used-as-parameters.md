@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "casting-packed-array-to-unpacked-array-for-arrays-that-are-used-as-parameters"
 ---
 
-Okay so you want to cast a packed array to an unpacked array when those arrays are function parameters right I've been down that rabbit hole more times than I'd like to admit Let me share some scars and hopefully save you some headaches
+ so you want to cast a packed array to an unpacked array when those arrays are function parameters right I've been down that rabbit hole more times than I'd like to admit Let me share some scars and hopefully save you some headaches
 
 First off the packed vs unpacked thing in hardware description languages like SystemVerilog can be a real pain especially when it comes to interfaces and function calls You see when you define an array as packed it means all the bits are stored contiguously in memory as one large chunk Think of it like a single long register Unpacked on the other hand is treated more like a collection of individual registers or memory locations Each element exists in its own little space
 

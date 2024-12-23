@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "idle-subprocess-didnt-make-connection-python-error"
 ---
 
-Okay so you're banging your head against the wall with this "idle subprocess didn't make connection" thing in Python yeah I've been there trust me it’s like trying to debug a circuit board blindfolded after too much coffee it's a real pain
+ so you're banging your head against the wall with this "idle subprocess didn't make connection" thing in Python yeah I've been there trust me it’s like trying to debug a circuit board blindfolded after too much coffee it's a real pain
 
 First things first let’s break this down real simple this error generally happens when you’re using Python’s `subprocess` module to kick off another process and for some reason that process just hangs there refusing to communicate back with your main Python script It’s not about the subprocess being broken so to speak it’s more about the communication channel between the two being choked or simply not existing
 

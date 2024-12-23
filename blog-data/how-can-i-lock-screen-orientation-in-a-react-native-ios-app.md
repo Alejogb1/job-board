@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-lock-screen-orientation-in-a-react-native-ios-app"
 ---
 
-Okay, let's delve into screen orientation locking in React Native for iOS. It's a fairly common requirement, but achieving it seamlessly across all devices and use cases can sometimes feel… well, like it requires a little finesse. I remember wrestling with this a few years back on a client project – a real estate app, as it happened – where we needed the main map view to always be in landscape, while the other sections had to be locked to portrait. We ended up opting for a flexible approach that allowed us to control this on a per-screen basis.
+, let's delve into screen orientation locking in React Native for iOS. It's a fairly common requirement, but achieving it seamlessly across all devices and use cases can sometimes feel… well, like it requires a little finesse. I remember wrestling with this a few years back on a client project – a real estate app, as it happened – where we needed the main map view to always be in landscape, while the other sections had to be locked to portrait. We ended up opting for a flexible approach that allowed us to control this on a per-screen basis.
 
 The core concept lies in interacting with the native iOS functionality through React Native bridge. Simply put, we can't directly manipulate the `UIDevice` orientation from within Javascript land. Instead, we'll use native modules to do the heavy lifting. So, where do we begin?
 

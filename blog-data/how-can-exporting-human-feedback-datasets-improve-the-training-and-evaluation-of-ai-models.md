@@ -4,7 +4,7 @@ date: "2024-12-07"
 id: "how-can-exporting-human-feedback-datasets-improve-the-training-and-evaluation-of-ai-models"
 ---
 
-Okay so you wanna talk about using human feedback to make AI better right  That's a huge deal  Like seriously huge  We're not just talking about tweaking some numbers here we're talking about fundamentally shaping how these things learn and behave  and it all starts with good data  really really good data which means exporting human feedback datasets properly is key
+ so you wanna talk about using human feedback to make AI better right  That's a huge deal  Like seriously huge  We're not just talking about tweaking some numbers here we're talking about fundamentally shaping how these things learn and behave  and it all starts with good data  really really good data which means exporting human feedback datasets properly is key
 
 Think about it AI models they learn from data  lots and lots of data  but that data needs to be more than just raw inputs  it needs to be labeled  it needs context  it needs to reflect what humans actually *want* the AI to do  that's where human feedback comes in  it's the gold standard the ultimate truth serum for guiding the AI's development
 

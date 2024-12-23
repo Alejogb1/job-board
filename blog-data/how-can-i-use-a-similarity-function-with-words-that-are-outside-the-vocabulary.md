@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-use-a-similarity-function-with-words-that-are-outside-the-vocabulary"
 ---
 
-Alright, let's tackle this. It's a problem I've bumped into more than a few times, particularly back when I was working on that initial iteration of our semantic search engine for a client a few years ago. We were dealing with a relatively limited vocabulary initially, and seeing how the system would respond to out-of-vocabulary (oov) words was crucial. The core challenge, as you've likely discovered, is that similarity functions, especially those based on techniques like word embeddings, rely on having a vector representation for each word. If a word doesn't exist in the pre-trained model's vocabulary, you essentially have a missing piece, throwing off any direct calculation of similarity.
+Alright,  It's a problem I've bumped into more than a few times, particularly back when I was working on that initial iteration of our semantic search engine for a client a few years ago. We were dealing with a relatively limited vocabulary initially, and seeing how the system would respond to out-of-vocabulary (oov) words was crucial. The core challenge, as you've likely discovered, is that similarity functions, especially those based on techniques like word embeddings, rely on having a vector representation for each word. If a word doesn't exist in the pre-trained model's vocabulary, you essentially have a missing piece, throwing off any direct calculation of similarity.
 
 The most straightforward approach, and one I've seen used widely, involves some form of fall-back strategy. Instead of simply disregarding the oov word, you try to approximate a representation for it. There are several techniques that I've found useful over the years.
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "family-metrics-scylla-implementation"
 ---
 
-Okay so family metrics scylla implementation right Been there done that let me tell you about the joy and slight despair I encountered when tackling this beast of a task First things first why family metrics Right so in Scylla context we are talking about metrics that are inherently grouped together right metrics that belong to the same “family” think CPU usage network traffic disk I/O these all have multiple variations or subtypes. Instead of managing them as totally separate singletons you’d want to group them and access them together this grouping can simplify things at a system level and your code too.
+ so family metrics scylla implementation right Been there done that let me tell you about the joy and slight despair I encountered when tackling this beast of a task First things first why family metrics Right so in Scylla context we are talking about metrics that are inherently grouped together right metrics that belong to the same “family” think CPU usage network traffic disk I/O these all have multiple variations or subtypes. Instead of managing them as totally separate singletons you’d want to group them and access them together this grouping can simplify things at a system level and your code too.
 
 Why did I need this I used to work for this company and I was dealing with a pretty massive Scylla cluster back then huge number of nodes and data throughput and the monitoring was a complete mess trying to find the correct metrics in the monitoring systems was hell I had metrics coming at me from every direction and it felt like trying to find a specific grain of sand in the Sahara Desert. I started looking into how Scylla actually manages this internally and then started brainstorming solutions. It became pretty clear quickly that we would need a more structured approach.
 
@@ -107,7 +107,7 @@ if __name__ == "__main__":
 ```
 This code creates a latency metric family that adds a list of latencies to the metric itself. Then when exposing the data the histogram is built and filled with the latency values. This is pretty common to see in metrics systems because this can give you a better representation of the actual behavior of the system than just an average or a max value. Also Prometheus can create nice graphs with histogram data.
 
-Alright so that’s pretty much it the idea is to group metrics of the same type into a family so your monitoring code is cleaner and its easy to keep track of what is being monitored. There isn't a single right way to do it and it will depend on what you are actually trying to achieve with your monitoring.
+so that’s pretty much it the idea is to group metrics of the same type into a family so your monitoring code is cleaner and its easy to keep track of what is being monitored. There isn't a single right way to do it and it will depend on what you are actually trying to achieve with your monitoring.
 
 Now for a few tips from my past experiences here. When designing your metrics make sure you define labels wisely. Too many labels will increase cardinality and slow down your queries and too few labels will not give you enough data to actually troubleshoot anything. Its all about finding the right balance. Second thing try to use well-defined metric names so other people can understand what they mean and what they represent. We have all worked with code that uses strange metrics names and that is never fun to debug.
 
@@ -115,4 +115,4 @@ One time I spent almost a whole week troubleshooting a bug because of confusing 
 
 For resources I highly recommend looking into the original Prometheus documentation and also papers about time-series databases. Understanding the theoretical concepts behind metrics and time series will give you a better perspective on how to approach the practical side of things. Also familiarize yourself with the OpenTelemetry specification that is rapidly becoming an standard in metrics. This standard also defines and recommends how metrics should be structured and handled. You can also look for papers related to the monitoring systems that major companies are using there is a lot of knowledge that can be obtained and you can see how they tackled similar issues. A book like "Site Reliability Engineering" from google is a good place to start understanding monitoring in general.
 
-Okay thats it. Let me know if there is anything else I can help you with.
+ thats it. Let me know if there is anything else I can help you with.

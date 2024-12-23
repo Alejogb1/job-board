@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-ipykernel-throwing-a-typeerror-object-nonetype-cant-be-used-in-await-expression"
 ---
 
-Okay, let's unpack this `TypeError: object NoneType can't be used in 'await' expression`. I've certainly stumbled upon this specific error a few times in my journey, often during those late nights when I was pushing Jupyter notebooks to their limits. It's a frustrating one because, at first glance, the traceback might not immediately pinpoint the root cause. The issue stems from the asynchronous nature of `ipykernel` and how it interacts with coroutines, or asynchronous functions, within the Jupyter environment.
+, let's unpack this `TypeError: object NoneType can't be used in 'await' expression`. I've certainly stumbled upon this specific error a few times in my journey, often during those late nights when I was pushing Jupyter notebooks to their limits. It's a frustrating one because, at first glance, the traceback might not immediately pinpoint the root cause. The issue stems from the asynchronous nature of `ipykernel` and how it interacts with coroutines, or asynchronous functions, within the Jupyter environment.
 
 The core problem is that somewhere in your code, you're attempting to use `await` on something that evaluates to `None`. The `await` keyword, crucial for managing asynchronous operations, is explicitly designed to work with awaitables, which are generally coroutines, tasks, or futures. `None` is, quite obviously, not one of these.
 

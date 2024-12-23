@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-are-best-practices-for-serializing-data-in-a-rails-6-api"
 ---
 
-Okay, let’s tackle data serialization within a Rails 6 API. This is a topic I’ve spent considerable time refining over the years, often finding that a seemingly minor oversight here can snowball into significant performance issues down the line. My experience stems from building a microservices-based platform some years back, where improper serialization resulted in sluggish response times and frustrated our frontend teams. So, I'll draw on those painful yet enlightening lessons.
+, let’s tackle data serialization within a Rails 6 API. This is a topic I’ve spent considerable time refining over the years, often finding that a seemingly minor oversight here can snowball into significant performance issues down the line. My experience stems from building a microservices-based platform some years back, where improper serialization resulted in sluggish response times and frustrated our frontend teams. So, I'll draw on those painful yet enlightening lessons.
 
 Fundamentally, serialization in a Rails API involves transforming complex data structures, usually Ruby objects, into a format suitable for transmission, most commonly json. It's more than just slapping `.to_json` on a model; that’s a recipe for inefficiencies and potential security leaks. The key is to be intentional about *what* you're exposing and *how* you're exposing it. Let's drill down into the best practices I've honed.
 

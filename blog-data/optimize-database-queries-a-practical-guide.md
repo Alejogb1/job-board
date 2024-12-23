@@ -6,7 +6,7 @@ id: "optimize-database-queries-a-practical-guide"
 
 dude so i just watched this totally wild video about optimizing database queries it was like a rollercoaster of techy goodness and i gotta tell you all about it  it's all about making your database super speedy and efficient so your website or app doesn't crawl slower than a snail on valium  think of it as database ninja skills for the modern age basically they were showing how to write queries that don't make your poor database server cry into its tiny little silicon heart
 
-okay so first things first the setup was this they started with a super basic scenario a website selling like totally rad vintage t-shirts right  imagine a database table full of all these shirts with columns for id name price color size and all that jazz  the initial query they showed was like the most noob query ever it was basically grabbing everything * from the shirts table  it looked something like this
+ so first things first the setup was this they started with a super basic scenario a website selling like totally rad vintage t-shirts right  imagine a database table full of all these shirts with columns for id name price color size and all that jazz  the initial query they showed was like the most noob query ever it was basically grabbing everything * from the shirts table  it looked something like this
 
 
 ```sql

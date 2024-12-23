@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-static-analysis-identify-the-architecture-of-neural-networks"
 ---
 
-Okay, let's talk about this. I’ve actually spent a fair bit of time trying to extract architecture details from neural network code without running it, and it's a problem with some fascinating nuances. The simple answer is: it depends, but generally, yes, static analysis *can* identify key aspects of a neural network’s architecture, although it's not always trivial and has its limitations.
+, let's talk about this. I’ve actually spent a fair bit of time trying to extract architecture details from neural network code without running it, and it's a problem with some fascinating nuances. The simple answer is: it depends, but generally, yes, static analysis *can* identify key aspects of a neural network’s architecture, although it's not always trivial and has its limitations.
 
 When we say ‘architecture’, we're usually referring to things like the number and type of layers (convolutional, recurrent, fully connected, etc.), the number of neurons or filters in each layer, the activation functions used, and sometimes, even things like dropout rates or specific connections between layers, if they’re complex. Purely based on examining code – the static analysis part – we're essentially reverse engineering these details from the code itself, without executing it.
 

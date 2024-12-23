@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-my-custom-loss-function-degrade-training-speed-over-time"
 ---
 
-Okay, let’s tackle this. I’ve certainly seen this phenomenon in several projects over the years, and it can be quite frustrating. You've built a custom loss function, everything seems to be working at first, but then the training starts to slow down significantly, even stall completely. This isn’t uncommon, and there are several interrelated reasons why this might occur. It’s rarely a single cause, but often a combination of factors that cumulatively impact training performance.
+, let’s tackle this. I’ve certainly seen this phenomenon in several projects over the years, and it can be quite frustrating. You've built a custom loss function, everything seems to be working at first, but then the training starts to slow down significantly, even stall completely. This isn’t uncommon, and there are several interrelated reasons why this might occur. It’s rarely a single cause, but often a combination of factors that cumulatively impact training performance.
 
 The root cause frequently lies in how your custom loss function interacts with the optimization algorithm, usually some variant of stochastic gradient descent (sgd). The key takeaway here is that sgd, and its more advanced relatives like adam or rmsprop, rely on smoothly varying gradients to effectively navigate the loss landscape. Your custom loss function may, inadvertently, create a very different or more difficult landscape compared to the standard loss functions these optimizers are trained on.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-airflows-onfailurecallback-function-not-being-triggered-if-a-task-fails-but-the-dag-is-successful"
 ---
 
-Okay, let's tackle this. I've seen this tripped up a fair number of folks over the years, and I've personally spent time debugging this exact scenario, so I understand the frustration it can cause. It's a nuanced issue stemming from how Airflow distinguishes between task failures and dag failures.
+,  I've seen this tripped up a fair number of folks over the years, and I've personally spent time debugging this exact scenario, so I understand the frustration it can cause. It's a nuanced issue stemming from how Airflow distinguishes between task failures and dag failures.
 
 The core reason why your `on_failure_callback` isn't firing when a task fails, but the dag reports as successful, lies in Airflow’s internal logic regarding task states and dag run states. A task failing doesn't automatically equate to the dag failing. Airflow essentially sees tasks as individual units of work within a larger workflow. A dag run only fails if there's a failure that Airflow considers "terminal" for the *entire* workflow. This distinction is crucial to understand.
 

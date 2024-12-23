@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "lag-sas-function-data-analysis"
 ---
 
-Okay so you're dealing with lag in SAS functions during data analysis I've been there man let me tell you been there done that more times than I care to admit This is a classic headache I've spent way too many late nights debugging this kind of thing
+ so you're dealing with lag in SAS functions during data analysis I've been there man let me tell you been there done that more times than I care to admit This is a classic headache I've spent way too many late nights debugging this kind of thing
 
 First off what do I mean by lag lets get super clear on the terms here I'm talking about getting values from a previous row in your dataset while processing the current row You know like needing the price from yesterday to calculate todays price change or the previous week's sales to compare against current sales Stuff like that
 
@@ -40,7 +40,7 @@ data daily_sales_with_lag;
 run;
 ```
 
-Okay so what did we do here First we make sure the data is properly sorted by `date` with proc sort and the `by date` instruction. That is super important if you don't you'll have a bad result as we discussed before
+ so what did we do here First we make sure the data is properly sorted by `date` with proc sort and the `by date` instruction. That is super important if you don't you'll have a bad result as we discussed before
 
 Then in the data step we use another `by date` statement which is super important since it tells SAS that you're operating within a group of records that have the same `date` and that you want to see the difference of the current date with the previous one In many cases if you do not have the by variable SAS may generate bad values and incorrect calculations. If you do not have the `by` instruction SAS will just calculate the lag in all of the values and not just with values of the same `date`
 

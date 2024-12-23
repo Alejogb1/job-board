@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-cant-a-docker-container-connect-to-an-aws-mqtt-endpoint"
 ---
 
-Let's tackle this. I’ve encountered this scenario more times than I care to count, and it usually boils down to a few specific culprits. The fact that your Docker container isn’t connecting to your AWS MQTT endpoint is frustrating, but resolvable. It’s almost never an issue with Docker itself, but rather with the networking and security configurations involved. Let’s break down the common points of failure, and then I’ll share some practical examples with code snippets.
+ I’ve encountered this scenario more times than I care to count, and it usually boils down to a few specific culprits. The fact that your Docker container isn’t connecting to your AWS MQTT endpoint is frustrating, but resolvable. It’s almost never an issue with Docker itself, but rather with the networking and security configurations involved. Let’s break down the common points of failure, and then I’ll share some practical examples with code snippets.
 
 First off, we need to consider that a Docker container, by default, exists within its own isolated network. This means it doesn't inherently have access to external resources like your AWS IoT endpoint. Think of it as a miniature virtual machine operating in its own little bubble. This bubble needs a pathway out, and that’s where the first set of issues usually occur. I’ve spent entire afternoons tracking down issues in these layers; it's a rite of passage for anyone working with containerized systems and cloud infrastructure.
 

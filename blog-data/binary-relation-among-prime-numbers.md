@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "binary-relation-among-prime-numbers"
 ---
 
-Okay so you're asking about binary relations among prime numbers right Yeah I've been down this rabbit hole before more times than I care to admit let me tell you its a fun ride a frustrating one but a fun one
+ so you're asking about binary relations among prime numbers right Yeah I've been down this rabbit hole before more times than I care to admit let me tell you its a fun ride a frustrating one but a fun one
 
 Right off the bat when you say "binary relation" its pretty broad We're talking about sets of ordered pairs where each pair consists of two prime numbers Lets call that set R So R = {(p1 p2) | p1 p2 are prime numbers and some condition holds} The condition is the real meat of the problem
 

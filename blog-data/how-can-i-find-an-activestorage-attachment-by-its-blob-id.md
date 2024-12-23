@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-find-an-activestorage-attachment-by-its-blob-id"
 ---
 
-Okay, let's tackle this. I've encountered this specific scenario more times than I'd care to count, usually when debugging some rather convoluted file management system someone built on top of Active Storage. Finding an attachment by its blob id directly isn’t as intuitive as it might seem at first glance, but it's definitely achievable and becomes quite straightforward once you understand how the underlying database relationships are structured.
+,  I've encountered this specific scenario more times than I'd care to count, usually when debugging some rather convoluted file management system someone built on top of Active Storage. Finding an attachment by its blob id directly isn’t as intuitive as it might seem at first glance, but it's definitely achievable and becomes quite straightforward once you understand how the underlying database relationships are structured.
 
 Essentially, Active Storage manages files by creating three core database records: the `active_storage_blobs` table, which stores information about the actual file data (like the key, content type, and byte size), the `active_storage_attachments` table, which links the blob to your model, and the actual model itself where you defined the `has_one_attached` or `has_many_attached` relationship. The key to finding an attachment by its blob id is to work through these relationships in reverse. You won’t directly query the `active_storage_attachments` table with a blob id; instead, you will find the blob and use that to find its related attachments.
 

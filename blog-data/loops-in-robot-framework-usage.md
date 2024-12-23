@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "loops-in-robot-framework-usage"
 ---
 
-Okay so loops in Robot Framework yeah I’ve been there done that more times than I care to admit It’s like the bread and butter of test automation once you get past the initial "hello world" scripts So lets talk loops in RF from my perspective
+ so loops in Robot Framework yeah I’ve been there done that more times than I care to admit It’s like the bread and butter of test automation once you get past the initial "hello world" scripts So lets talk loops in RF from my perspective
 
 First off lets get one thing straight there's no one-size-fits-all way to loop in Robot Framework it's not like some languages where you have a single for loop and that's it In RF you are basically looking at variations on top of the ‘For’ keyword and how you manage data iteration through variables or lists that's where the real control lives
 

@@ -4,7 +4,7 @@ date: "2024-12-11"
 id: "how-do-internal-scratchpads-affect-goal-evaluation-and-reasoning-in-neural-networks"
 ---
 
-Okay so you wanna know about internal scratchpads in neural nets and how they mess with goal evaluation and reasoning right  Pretty cool question actually  It's like asking how a brain uses its internal mental whiteboard to figure stuff out  Except instead of a brain we've got a bunch of interconnected nodes firing away
+ so you wanna know about internal scratchpads in neural nets and how they mess with goal evaluation and reasoning right  Pretty cool question actually  It's like asking how a brain uses its internal mental whiteboard to figure stuff out  Except instead of a brain we've got a bunch of interconnected nodes firing away
 
 The thing is  these nets don't *think* like we do  They don't have intentions or beliefs or anything  They just crunch numbers based on the weights and connections they've learned  But these scratchpads  they're a way to give the network a kind of working memory a place to store and manipulate information during the process
 

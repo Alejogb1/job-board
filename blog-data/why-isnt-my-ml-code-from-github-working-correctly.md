@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-isnt-my-ml-code-from-github-working-correctly"
 ---
 
-Okay, let's tackle this. I’ve seen this scenario play out more times than I care to count – a piece of promising machine learning code from GitHub refusing to cooperate. It's a common frustration, and pinpointing the root cause often involves a bit of detective work. It's rarely a singular issue, but rather a combination of factors. In my experience, these usually fall into a few broad categories: environment discrepancies, data inconsistencies, and model configuration issues.
+,  I’ve seen this scenario play out more times than I care to count – a piece of promising machine learning code from GitHub refusing to cooperate. It's a common frustration, and pinpointing the root cause often involves a bit of detective work. It's rarely a singular issue, but rather a combination of factors. In my experience, these usually fall into a few broad categories: environment discrepancies, data inconsistencies, and model configuration issues.
 
 Let's break each of these down. First, environment discrepancies are perhaps the most prevalent gremlin. You might be running on a completely different software stack compared to the original author. Think version mismatches – the code might be written for a specific version of TensorFlow or PyTorch, while you're running a newer or older one. I remember a particular project where we spent a good day debugging a model only to find out that the author had used a custom CUDA implementation that was specific to his machine and never specified it. It’s the kind of thing that can make the same codebase behave entirely differently. This extends to your python packages, system libraries, and even the underlying hardware.
 

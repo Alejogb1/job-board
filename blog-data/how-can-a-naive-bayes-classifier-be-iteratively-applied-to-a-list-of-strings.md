@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-a-naive-bayes-classifier-be-iteratively-applied-to-a-list-of-strings"
 ---
 
-Alright, let's tackle this. It's a problem I've seen surface quite a bit, especially when dealing with evolving datasets in text classification. The core challenge with iterative application of a Naive Bayes classifier to strings comes down to how you manage the model’s state as new data comes in and how you adapt to that new information without just retraining from scratch every time. It's a balancing act between performance, accuracy, and the computational cost of rebuilding the model.
+Alright,  It's a problem I've seen surface quite a bit, especially when dealing with evolving datasets in text classification. The core challenge with iterative application of a Naive Bayes classifier to strings comes down to how you manage the model’s state as new data comes in and how you adapt to that new information without just retraining from scratch every time. It's a balancing act between performance, accuracy, and the computational cost of rebuilding the model.
 
 In my experience, I encountered this head-on while working on an internal content categorization system for a large media archive. We were dealing with thousands of new articles daily, and retraining the Naive Bayes model from the ground up every night was proving to be incredibly resource-intensive and, quite frankly, unnecessary. We needed a way to feed new data continuously into the existing model and refine it on the fly.
 

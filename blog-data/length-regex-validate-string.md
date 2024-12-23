@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "length-regex-validate-string"
 ---
 
-Okay so length regex validate string right I've been there man I've definitely been there a lot so let's break this down its actually simpler than it looks at first glance Youre basically trying to see if a string matches a certain pattern and that pattern involves how long the string is That's a fairly common use case in like data validation or when youre processing user inputs
+ so length regex validate string right I've been there man I've definitely been there a lot so let's break this down its actually simpler than it looks at first glance Youre basically trying to see if a string matches a certain pattern and that pattern involves how long the string is That's a fairly common use case in like data validation or when youre processing user inputs
 
 The core concept really boils down to these three things
 

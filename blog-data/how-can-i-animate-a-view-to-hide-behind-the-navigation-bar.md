@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-animate-a-view-to-hide-behind-the-navigation-bar"
 ---
 
-Alright, let's tackle this. You're looking to create an animation that smoothly transitions a view off-screen, specifically making it appear to slide behind the navigation bar. I've dealt with this exact scenario quite a few times in my career, and it often involves a combination of careful layout management and animation techniques. It's not always a straightforward process, especially when you're dealing with complex view hierarchies or custom navigation implementations.
+Alright,  You're looking to create an animation that smoothly transitions a view off-screen, specifically making it appear to slide behind the navigation bar. I've dealt with this exact scenario quite a few times in my career, and it often involves a combination of careful layout management and animation techniques. It's not always a straightforward process, especially when you're dealing with complex view hierarchies or custom navigation implementations.
 
 The core challenge lies in ensuring that the view you're animating doesn't just disappear abruptly but rather gracefully moves beneath the navigation bar, respecting its z-order. The typical approach involves manipulating the view's frame or transform properties while carefully managing the view hierarchy and clipping. Let’s break down the techniques and their implications, and then look at some practical code examples.
 

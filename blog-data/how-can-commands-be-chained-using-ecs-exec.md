@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-commands-be-chained-using-ecs-exec"
 ---
 
-Okay, let's talk about command chaining with `ecs-exec`. It's a topic that, admittedly, has tripped up many a developer, including myself back in the early days when we were migrating our monolithic application to ECS. I remember a particularly frustrating debugging session where we needed to trace a series of commands in a container without logging in repeatedly; that was the crucible that forged my understanding of how best to leverage command chaining.
+, let's talk about command chaining with `ecs-exec`. It's a topic that, admittedly, has tripped up many a developer, including myself back in the early days when we were migrating our monolithic application to ECS. I remember a particularly frustrating debugging session where we needed to trace a series of commands in a container without logging in repeatedly; that was the crucible that forged my understanding of how best to leverage command chaining.
 
 Now, `ecs-exec` itself, as you may know, doesn't inherently possess a direct 'chaining' mechanism in the sense of traditional shell pipelines. You won't be seeing the usual `command1 | command2` syntax. Instead, achieving a sequence of operations requires a more nuanced approach, leveraging shell scripting capabilities within the command execution context that `ecs-exec` provides. What we're fundamentally doing is constructing a mini-script within the single command parameter provided to `ecs-exec`. This single string passed is then interpreted by the container's default shell, usually `sh` or `bash`.
 

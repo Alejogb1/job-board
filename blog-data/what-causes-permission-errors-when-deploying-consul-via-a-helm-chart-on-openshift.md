@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-causes-permission-errors-when-deploying-consul-via-a-helm-chart-on-openshift"
 ---
 
-Alright, let's tackle this. I've spent a fair amount of time debugging permission issues in Kubernetes environments, particularly when deploying complex applications like Consul using Helm. It's often a multifaceted problem, not a single smoking gun, so let's break down the key areas where things typically go sideways on OpenShift specifically.
+Alright,  I've spent a fair amount of time debugging permission issues in Kubernetes environments, particularly when deploying complex applications like Consul using Helm. It's often a multifaceted problem, not a single smoking gun, so let's break down the key areas where things typically go sideways on OpenShift specifically.
 
 OpenShift's security model, built around security context constraints (sccs), is more restrictive than standard Kubernetes. This means that the default configurations, including those in many Helm charts, may not immediately work out of the box. Consul, in particular, requires certain privileges to function correctly – writing to the filesystem, binding to privileged ports (sometimes), and performing other operations that OpenShift's default SCCs might block. My experience with a large-scale microservices project a few years back comes to mind. We tried deploying Consul using a readily available Helm chart, and ran smack into this wall of permission errors. It took some detailed analysis and tweaking to get things running smoothly.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-are-input-shapes-mismatched-for-concatenation"
 ---
 
-Okay, let's tackle input shape mismatches during concatenation. I've seen this particular issue pop up more than a few times throughout my career, often in contexts where complex neural networks or data pipelines were involved. It's rarely a trivial problem, and it’s usually rooted in a fundamental misunderstanding of tensor dimensions and how concatenation operations work. Rather than simply stating the obvious -- that the shapes don't match -- let's explore the *why* and how to fix it.
+, let's tackle input shape mismatches during concatenation. I've seen this particular issue pop up more than a few times throughout my career, often in contexts where complex neural networks or data pipelines were involved. It's rarely a trivial problem, and it’s usually rooted in a fundamental misunderstanding of tensor dimensions and how concatenation operations work. Rather than simply stating the obvious -- that the shapes don't match -- let's explore the *why* and how to fix it.
 
 The core problem, as you've likely gathered, is that when we concatenate tensors, the dimensions along which we intend to stack them must align perfectly in all other dimensions. If you're trying to stack two images, each of shape (height, width, channels), horizontally, the 'height' and 'channels' dimensions must be identical. Similarly, if you are combining time series data, the length of the time axis could be different if you intend to stack it in a third axis; otherwise, their lengths must match. If any discrepancy exists, the operation will fail. It's essentially a requirement of the underlying matrix algebra.
 

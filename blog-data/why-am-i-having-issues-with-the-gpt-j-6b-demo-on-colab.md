@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-having-issues-with-the-gpt-j-6b-demo-on-colab"
 ---
 
-Okay, let’s tackle this. I’ve seen quite a few developers run into snags with the GPT-J-6B demo on Colab, and it’s usually a mix of understandable resource constraints and some common gotchas in the setup. I’ll share what I've learned over time— it’s a bit of a journey, as deploying large models always seems to be. I remember one project particularly, where I tried to integrate a custom dataset with a pre-trained GPT-J-6B. It was… enlightening, let’s say.
+, let’s tackle this. I’ve seen quite a few developers run into snags with the GPT-J-6B demo on Colab, and it’s usually a mix of understandable resource constraints and some common gotchas in the setup. I’ll share what I've learned over time— it’s a bit of a journey, as deploying large models always seems to be. I remember one project particularly, where I tried to integrate a custom dataset with a pre-trained GPT-J-6B. It was… enlightening, let’s say.
 
 First off, the primary culprit is often insufficient compute resources. GPT-J-6B, even in its “smaller” 6-billion parameter guise, is still a hefty model. Google Colab provides free tiers with varying GPU availability (Tesla T4, K80, etc.), and sometimes, even with a GPU, memory limitations become a bottleneck. The standard Colab environment simply isn’t designed for running such large models efficiently. If you're running the base notebook as provided and experiencing issues, this is likely the core of the problem. Specifically, out-of-memory (OOM) errors are incredibly common when trying to load the entire model, especially for tasks involving generation.
 

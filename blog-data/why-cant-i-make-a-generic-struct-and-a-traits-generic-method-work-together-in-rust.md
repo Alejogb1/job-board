@@ -47,7 +47,7 @@ fn main() {
 
 The `process` method on the trait object needs to work for _any_ type that might be passed as `T`. However, because `T` is a generic parameter on the `process` function, Rust has no way of knowing what concrete implementations to use at compile time since that dispatching happens at *runtime*. Each concrete `T` would require a separate monomorphized function; trait objects and dynamic dispatch cannot handle this.
 
-Okay, so what can we do about it? This is where we start thinking differently about how we structure our code, avoiding generic method signatures on traits where dynamic dispatch is needed. Here are a few strategies I’ve successfully used:
+, so what can we do about it? This is where we start thinking differently about how we structure our code, avoiding generic method signatures on traits where dynamic dispatch is needed. Here are a few strategies I’ve successfully used:
 
 **1. Associated Types:**
 

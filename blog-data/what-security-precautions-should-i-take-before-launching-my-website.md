@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-security-precautions-should-i-take-before-launching-my-website"
 ---
 
-Okay, let's talk website security. I’ve seen a few launches over the years, some smoother than others, and the one thing that consistently determines success is a solid security plan beforehand. It’s not just about slapping on some SSL certificates; there's quite a bit more to consider. Before getting into the code, I want to emphasize that security is a layered approach. Think of it like an onion – multiple protective layers work in concert.
+, let's talk website security. I’ve seen a few launches over the years, some smoother than others, and the one thing that consistently determines success is a solid security plan beforehand. It’s not just about slapping on some SSL certificates; there's quite a bit more to consider. Before getting into the code, I want to emphasize that security is a layered approach. Think of it like an onion – multiple protective layers work in concert.
 
 My approach here is going to cover three main areas: infrastructure, application, and user data. For me, these are the pillars of a secure website, and neglect in any one area can lead to significant problems.
 

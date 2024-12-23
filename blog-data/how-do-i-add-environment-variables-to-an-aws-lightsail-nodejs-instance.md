@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-add-environment-variables-to-an-aws-lightsail-nodejs-instance"
 ---
 
-Okay, let's tackle this. I've certainly spent a fair amount of time navigating the intricacies of AWS Lightsail, and setting up environment variables for Node.js instances has been a common task. It’s one of those things that seems straightforward initially, but can quickly become a head-scratcher if not approached systematically. In my experience, particularly with a project that involved a complex microservices architecture deployed across Lightsail, proper environment variable management proved crucial for maintaining consistency and flexibility across different deployment stages (dev, staging, prod, and so on).
+,  I've certainly spent a fair amount of time navigating the intricacies of AWS Lightsail, and setting up environment variables for Node.js instances has been a common task. It’s one of those things that seems straightforward initially, but can quickly become a head-scratcher if not approached systematically. In my experience, particularly with a project that involved a complex microservices architecture deployed across Lightsail, proper environment variable management proved crucial for maintaining consistency and flexibility across different deployment stages (dev, staging, prod, and so on).
 
 Fundamentally, the challenge stems from the fact that Node.js applications don’t magically know what variables you want to use. You have to explicitly provide these variables to the runtime environment where your application executes. There are several avenues available to achieve this with Lightsail, but I’ve found a couple that are consistently reliable and relatively easy to maintain.
 

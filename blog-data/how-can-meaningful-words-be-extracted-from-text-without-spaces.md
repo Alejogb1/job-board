@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-meaningful-words-be-extracted-from-text-without-spaces"
 ---
 
-Let's tackle this. I've encountered the challenge of deciphering space-less text more times than I'd care to count, often stemming from legacy data formats or, shall we say, 'creative' encoding practices. It's a tricky situation, but it's definitely not insurmountable. The core issue is that we're essentially dealing with a word segmentation problem. We need to identify where one word ends and another begins, absent the familiar whitespace cues. This is where more advanced techniques than simply tokenizing on spaces become necessary.
+ I've encountered the challenge of deciphering space-less text more times than I'd care to count, often stemming from legacy data formats or, shall we say, 'creative' encoding practices. It's a tricky situation, but it's definitely not insurmountable. The core issue is that we're essentially dealing with a word segmentation problem. We need to identify where one word ends and another begins, absent the familiar whitespace cues. This is where more advanced techniques than simply tokenizing on spaces become necessary.
 
 The fundamental principle revolves around combining statistical analysis and knowledge of language structure. We're not just guessing; we're leveraging the probability of certain letter sequences forming valid words. I'll break this down into three approaches I've found particularly effective, and provide some illustrative code snippets.
 

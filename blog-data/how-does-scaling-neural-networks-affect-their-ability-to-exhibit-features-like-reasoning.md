@@ -4,7 +4,7 @@ date: "2024-12-11"
 id: "how-does-scaling-neural-networks-affect-their-ability-to-exhibit-features-like-reasoning"
 ---
 
-Okay so you wanna know about scaling neural networks and how that messes with their reasoning abilities right  It's a super interesting question and honestly a pretty hot topic right now  People are throwing massive amounts of data and compute at these things hoping for some kind of magical leap in intelligence but it's not quite that simple  
+ so you wanna know about scaling neural networks and how that messes with their reasoning abilities right  It's a super interesting question and honestly a pretty hot topic right now  People are throwing massive amounts of data and compute at these things hoping for some kind of magical leap in intelligence but it's not quite that simple  
 
 Think of it like this you've got a tiny little neural network maybe a few hundred neurons  It's like a kid learning to add  It can handle simple sums but throw in some complicated word problems and it's gonna be confused  Now you scale it up millions billions of neurons  It's like that kid is now a super genius with access to all the world's knowledge but does it *understand* the word problems any better  Not necessarily
 

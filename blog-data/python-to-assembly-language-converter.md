@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "python-to-assembly-language-converter"
 ---
 
-Okay so you wanna go from Python to Assembly right Alright I get it Been there done that Got the scars to prove it
+ so you wanna go from Python to Assembly right I get it Been there done that Got the scars to prove it
 
 See a while back I was knee-deep in a project involving a custom embedded system something that needed to be ridiculously low-level We were talking about squeezing every single clock cycle out of this little chip and Python wasn't exactly cutting it for real-time performance So yeah I needed a way to translate Python logic into assembly I didn't need a full compiler mind you more of a translator for specific parts of the code
 
@@ -30,7 +30,7 @@ If you run that snippet you will see something like this I am using cpython so h
               6 RETURN_VALUE
 ```
 
-Okay so you see the instructions here `LOAD_FAST` `BINARY_ADD` `RETURN_VALUE` Those are basically the low level operations that the python virtual machine performs to run the high level Python code You could potentially translate those to assembly but it depends on the target architecture
+ so you see the instructions here `LOAD_FAST` `BINARY_ADD` `RETURN_VALUE` Those are basically the low level operations that the python virtual machine performs to run the high level Python code You could potentially translate those to assembly but it depends on the target architecture
 
 For example `LOAD_FAST` in x86_64 could turn into a `mov` instruction to copy a variable to a register `BINARY_ADD` would be like `add` or equivalent instruction and `RETURN_VALUE` means move to the stack or return registers
 

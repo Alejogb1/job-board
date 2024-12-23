@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-a-spark-nlp-pretrained-pipeline-be-loaded-from-hdfs"
 ---
 
-Okay, let's get into this. Loading Spark NLP pretrained pipelines from HDFS can be a bit nuanced, especially when you're dealing with diverse cluster configurations or large-scale deployments. I’ve personally encountered scenarios where seemingly straightforward file paths became the bane of my existence, and that’s where understanding the underlying mechanics becomes crucial.
+, let's get into this. Loading Spark NLP pretrained pipelines from HDFS can be a bit nuanced, especially when you're dealing with diverse cluster configurations or large-scale deployments. I’ve personally encountered scenarios where seemingly straightforward file paths became the bane of my existence, and that’s where understanding the underlying mechanics becomes crucial.
 
 The standard `PretrainedPipeline.from_pretrained()` function in Spark NLP, while incredibly convenient, defaults to searching within local file systems or relying on the Spark NLP library’s internal model repository. When your models are stored on HDFS, we need to explicitly guide the pipeline to that location. Think of it less as a magical retrieval and more as providing the correct map coordinates.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-are-the-required-azure-machine-learning-compute-properties-for-attaching-resources"
 ---
 
-Okay, let's break down what's needed when attaching compute resources to Azure Machine Learning. It's not quite as simple as pointing and clicking; there's a fair bit of configuration under the hood to ensure everything plays nicely. Over the years, I've seen plenty of teams tripped up by the seemingly minor details here, which can lead to stalled experiments, unexpected costs, and a fair bit of frustration. So, let’s make sure that doesn’t happen to you.
+, let's break down what's needed when attaching compute resources to Azure Machine Learning. It's not quite as simple as pointing and clicking; there's a fair bit of configuration under the hood to ensure everything plays nicely. Over the years, I've seen plenty of teams tripped up by the seemingly minor details here, which can lead to stalled experiments, unexpected costs, and a fair bit of frustration. So, let’s make sure that doesn’t happen to you.
 
 The process of attaching compute, whether it's a virtual machine, a Kubernetes cluster, or a databricks environment, essentially involves creating a link between that pre-existing compute resource and your Azure Machine Learning workspace. This enables your jobs to run on that resource, orchestrated through the Azure ML service. To facilitate this attachment, we need specific properties that tell the service *how* and *where* to find the resources and *how* to interact with them securely. These requirements differ depending on the compute type, so we'll look at some common scenarios and their respective configurations.
 

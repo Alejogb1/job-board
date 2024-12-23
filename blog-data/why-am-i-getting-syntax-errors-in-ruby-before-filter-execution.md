@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-am-i-getting-syntax-errors-in-ruby-before-filter-execution"
 ---
 
-Okay, let's talk about those frustrating syntax errors you're seeing in Ruby *before* your `before_filter` executes. Been there, definitely wrestled with that one a few times, especially early in my career on a large Rails project. It often stems from a misunderstanding of Ruby's loading and parsing process, specifically in the context of a Rails application. The key isn't in the `before_filter` itself, but rather what happens *prior* to its invocation.
+, let's talk about those frustrating syntax errors you're seeing in Ruby *before* your `before_filter` executes. Been there, definitely wrestled with that one a few times, especially early in my career on a large Rails project. It often stems from a misunderstanding of Ruby's loading and parsing process, specifically in the context of a Rails application. The key isn't in the `before_filter` itself, but rather what happens *prior* to its invocation.
 
 Essentially, Ruby parses all your code, including the controller, before it gets to the point of actually running any methods or filters. Syntax errors occurring before a `before_filter` aren't due to issues within the filter logic itself, but rather problems in the code structure where the filter is defined or in any code that Ruby encounters during the parsing stage. We’re talking about the initial parsing, compilation, and ultimately, the instantiation of your controller class. It’s like the foundations being laid for your app; if they're faulty, nothing will work correctly.
 

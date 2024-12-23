@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-learn-a-multivariate-normal-covariance-matrix-in-pytorch"
 ---
 
-Okay, let’s tackle this. It’s a common enough need when you’re dealing with probabilistic models or, say, trying to get a handle on the underlying structure of your data. I’ve certainly bumped into this problem more than a few times, especially during my time working on anomaly detection systems. Estimating a multivariate normal covariance matrix in PyTorch is definitely achievable, and it’s something I’ve had to implement from the ground up for custom loss functions and such.
+, let’s tackle this. It’s a common enough need when you’re dealing with probabilistic models or, say, trying to get a handle on the underlying structure of your data. I’ve certainly bumped into this problem more than a few times, especially during my time working on anomaly detection systems. Estimating a multivariate normal covariance matrix in PyTorch is definitely achievable, and it’s something I’ve had to implement from the ground up for custom loss functions and such.
 
 First things first, let's clarify what we're trying to achieve. A covariance matrix, in the context of a multivariate normal distribution, essentially describes how the different dimensions of your data vary together. The diagonal elements represent the variance of each individual dimension, and the off-diagonal elements represent the covariances between pairs of dimensions. Learning this matrix in PyTorch usually means estimating it from data samples. Unlike simpler models, you are not learning weights directly as you might with neural networks but rather, inferring these statistical properties from your dataset.
 

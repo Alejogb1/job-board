@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-wrap-a-custom-gym-environment-with-tf-agents"
 ---
 
-Okay, let's tackle this. It's a question I've seen come up quite a bit, and it echoes a project I worked on a few years back involving reinforcement learning for a custom robotics simulator. We needed to integrate our simulation environment, which wasn’t a standard OpenAI gym setup, with TF-Agents. It wasn't always straightforward, but the process, while a little involved, is certainly manageable with some careful planning.
+,  It's a question I've seen come up quite a bit, and it echoes a project I worked on a few years back involving reinforcement learning for a custom robotics simulator. We needed to integrate our simulation environment, which wasn’t a standard OpenAI gym setup, with TF-Agents. It wasn't always straightforward, but the process, while a little involved, is certainly manageable with some careful planning.
 
 The core challenge when wrapping a custom environment with tf-agents lies in ensuring your environment conforms to the interface tf-agents expects. If your environment already utilizes the gym interface, the task becomes considerably easier. However, more often than not, bespoke simulations require a bit more work. The essence of this integration process is to create a wrapper class that inherits from `tf_agents.environments.tf_environment.TFEnvironment`. This class will essentially act as a translator, converting your custom environment's state space, action space, and step function into the tensor-based representation that tf-agents prefers.
 

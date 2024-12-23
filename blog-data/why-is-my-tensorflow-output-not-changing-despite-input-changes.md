@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-my-tensorflow-output-not-changing-despite-input-changes"
 ---
 
-Okay, let’s tackle this. I've definitely seen this scenario play out a few times in my career – the frustrating moment when you’re tweaking the input to your Tensorflow model, expecting a corresponding shift in the output, only to see it stubbornly remain static. It’s not always a straightforward problem to diagnose, but there are a few common culprits we can systematically investigate. Let’s break it down.
+, let’s tackle this. I've definitely seen this scenario play out a few times in my career – the frustrating moment when you’re tweaking the input to your Tensorflow model, expecting a corresponding shift in the output, only to see it stubbornly remain static. It’s not always a straightforward problem to diagnose, but there are a few common culprits we can systematically investigate. Let’s break it down.
 
 Essentially, the unchanging output suggests that the model isn't actually learning, or it’s learning in a way that's not responsive to the changes you’re making. This almost always points to an issue in the training process, the data handling, or the model architecture itself. We’ll need to methodically check these areas. First, I want to focus on the training process and the potential reasons why backpropagation might be failing.
 

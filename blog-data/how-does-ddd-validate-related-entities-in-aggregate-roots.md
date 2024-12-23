@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-does-ddd-validate-related-entities-in-aggregate-roots"
 ---
 
-Okay, let's unpack how domain-driven design (DDD) handles validation for related entities within aggregate roots. This is an area I’ve spent considerable time navigating, both in theory and in the trenches of large-scale systems. It’s not uncommon to see teams struggle with the boundaries and validation rules within aggregate boundaries, and getting this part correct is crucial for maintaining data integrity and enforcing business rules.
+, let's unpack how domain-driven design (DDD) handles validation for related entities within aggregate roots. This is an area I’ve spent considerable time navigating, both in theory and in the trenches of large-scale systems. It’s not uncommon to see teams struggle with the boundaries and validation rules within aggregate boundaries, and getting this part correct is crucial for maintaining data integrity and enforcing business rules.
 
 My experience, particularly on a recent project involving a complex e-commerce platform, underscored the importance of a consistent approach. We had initially allowed direct modification of nested entities, which led to a tangled mess of inconsistent data. We had to backtrack, re-evaluate our aggregates, and firmly establish how validation should be handled—a very costly learning experience I don't recommend.
 

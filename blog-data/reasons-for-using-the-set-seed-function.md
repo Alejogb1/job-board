@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "reasons-for-using-the-set-seed-function"
 ---
 
-Okay so you're asking about `set.seed()` right I get it This is a common question especially if you're starting out with anything that involves random numbers and honestly I’ve been there myself more times than I care to admit
+ so you're asking about `set.seed()` right I get it This is a common question especially if you're starting out with anything that involves random numbers and honestly I’ve been there myself more times than I care to admit
 
 First things first let's be crystal clear `set.seed()` isn't some kind of magic wand It's really about reproducibility and determinism which might sound a bit counterintuitive when you’re dealing with randomness but bear with me
 
@@ -115,7 +115,7 @@ console.log("Second seeded random number with seed 123:", seededRandom(seed));
 
 ```
 
-Okay this last one is a bit different since the crypto module in javascript doesn't directly provide a seed function but its a perfect way to demonstrate that not all random number generators work with seed and there are other ways to make it deterministic. If we want we could easily create a simple deterministic random function which this does and also proves the point of it
+ this last one is a bit different since the crypto module in javascript doesn't directly provide a seed function but its a perfect way to demonstrate that not all random number generators work with seed and there are other ways to make it deterministic. If we want we could easily create a simple deterministic random function which this does and also proves the point of it
 
 Now lets talk about the implications for coding
 

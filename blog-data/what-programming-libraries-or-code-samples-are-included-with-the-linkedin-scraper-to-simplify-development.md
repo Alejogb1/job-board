@@ -4,7 +4,7 @@ date: "2024-12-10"
 id: "what-programming-libraries-or-code-samples-are-included-with-the-linkedin-scraper-to-simplify-development"
 ---
 
-Okay so you're asking about LinkedIn scrapers and what goodies come pre-packaged to make your life easier right  Cool  I get it building scrapers can be a total drag if you're constantly reinventing the wheel  Let's talk libraries and code snippets  because honestly that's where the real magic happens
+ so you're asking about LinkedIn scrapers and what goodies come pre-packaged to make your life easier right  Cool  I get it building scrapers can be a total drag if you're constantly reinventing the wheel  Let's talk libraries and code snippets  because honestly that's where the real magic happens
 
 First off forget about magic bullets there's no single perfect LinkedIn scraper library that'll do everything for you  LinkedIn's a moving target they're constantly updating their site to block scrapers so anything you find today might be obsolete tomorrow  Think of it like an arms race you vs LinkedIn's anti-scraping tech  It's a constant game of cat and mouse
 

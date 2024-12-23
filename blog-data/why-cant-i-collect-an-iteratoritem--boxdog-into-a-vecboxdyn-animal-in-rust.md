@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-cant-i-collect-an-iteratoritem--boxdog-into-a-vecboxdyn-animal-in-rust"
 ---
 
-Okay, let's tackle this. I've seen this scenario come up quite a few times over the years, and it’s a common point of confusion when working with Rust’s ownership system and traits. You're trying to collect an iterator of `Box<Dog>` into a `Vec<Box<dyn Animal>>`, which seems intuitive at first, but the compiler is rightfully flagging it. The core issue revolves around type variance and the inherent safety guarantees that Rust provides. We’re not just battling syntax here; we’re dealing with foundational concepts.
+,  I've seen this scenario come up quite a few times over the years, and it’s a common point of confusion when working with Rust’s ownership system and traits. You're trying to collect an iterator of `Box<Dog>` into a `Vec<Box<dyn Animal>>`, which seems intuitive at first, but the compiler is rightfully flagging it. The core issue revolves around type variance and the inherent safety guarantees that Rust provides. We’re not just battling syntax here; we’re dealing with foundational concepts.
 
 Let’s break this down. When you declare `dyn Animal`, you're creating a trait object, which is a dynamically sized type. This type doesn’t represent a concrete struct like `Dog`; it represents any type that implements the `Animal` trait. `Box<dyn Animal>` is a heap-allocated pointer to such an instance. Crucially, each trait object carries a hidden "vtable"—a lookup table containing the address of the implementation of methods declared in the `Animal` trait for that concrete type.
 

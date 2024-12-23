@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-apply-or-adapt-filters-from-one-activeadmin-model-to-another"
 ---
 
-Okay, let's tackle this. I've bumped into this exact scenario more times than i care to remember, usually when dealing with interconnected data structures across different administrative interfaces. The need to reuse filter logic from one ActiveAdmin model to another is surprisingly common, especially as projects grow and the relationships between your models become more complex. We're not just talking about simple copy-pasting here; we're aiming for a maintainable and efficient solution.
+,  I've bumped into this exact scenario more times than i care to remember, usually when dealing with interconnected data structures across different administrative interfaces. The need to reuse filter logic from one ActiveAdmin model to another is surprisingly common, especially as projects grow and the relationships between your models become more complex. We're not just talking about simple copy-pasting here; we're aiming for a maintainable and efficient solution.
 
 The core problem stems from ActiveAdmin's model-centric nature. Each `ActiveAdmin.register` block tends to be quite self-contained, creating a barrier to easy filter reuse. However, there are several effective patterns we can employ to overcome this. What’s key here is avoiding repetitive code and enforcing a single source of truth for our filtering logic.
 

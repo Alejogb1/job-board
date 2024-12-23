@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "ee-certificate-key-too-weak-ssl-problem"
 ---
 
-Okay so you've got an "ee certificate key too weak ssl problem" classic Been there done that got the t-shirt and probably a few server restarts under my belt Let me break this down for you in a way that I hope will make sense given my experience
+ so you've got an "ee certificate key too weak ssl problem" classic Been there done that got the t-shirt and probably a few server restarts under my belt Let me break this down for you in a way that I hope will make sense given my experience
 
 First off "ee certificate key too weak" is generally a browser error or a tool report indicating that the encryption key used in your SSL/TLS certificate isn't up to current standards In plain terms the key length is too short making it easier for someone with malicious intent to crack the encryption This is why browsers scream and rightfully so
 

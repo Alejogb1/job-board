@@ -4,7 +4,7 @@ date: "2024-12-05"
 id: "how-can-smol-talks-new-vision-feature-enhance-ai-driven-image-analysis-in-daily-personalized-recaps"
 ---
 
-Okay so you're asking how Smol Talk's new vision thingamajig can supercharge AI image analysis for those daily personalized recap things right  I'm thinking like imagine those apps that show you a summary of your day based on your photos right but way cooler and smarter
+ so you're asking how Smol Talk's new vision thingamajig can supercharge AI image analysis for those daily personalized recap things right  I'm thinking like imagine those apps that show you a summary of your day based on your photos right but way cooler and smarter
 
 Smol Talk's vision feature if it's anything like what I'm picturing is a game changer  It's not just about recognizing objects in pictures anymore it's about understanding context relationships and even emotions  Think about it  Current AI image analysis is pretty basic it sees a cat it says "cat" but Smol Talk's vision might see a cat curled up on your lap during a movie night and say "Relaxing evening with your furry friend"  See the difference
 

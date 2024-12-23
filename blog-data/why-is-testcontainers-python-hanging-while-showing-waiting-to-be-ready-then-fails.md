@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-testcontainers-python-hanging-while-showing-waiting-to-be-ready-then-fails"
 ---
 
-Okay, let’s tackle this. I’ve certainly been down that particular rabbit hole with testcontainers-python more times than I care to remember. That “waiting to be ready…” message, followed by a timeout or outright failure, is a fairly common symptom of a few underlying issues. It’s never a single, universally applicable fix, but there are patterns. Let me break down what I’ve found most frequently causes these hangs and failures, drawing from several projects where I've encountered them.
+, let’s tackle this. I’ve certainly been down that particular rabbit hole with testcontainers-python more times than I care to remember. That “waiting to be ready…” message, followed by a timeout or outright failure, is a fairly common symptom of a few underlying issues. It’s never a single, universally applicable fix, but there are patterns. Let me break down what I’ve found most frequently causes these hangs and failures, drawing from several projects where I've encountered them.
 
 First off, we have to understand what `testcontainers` is doing behind the scenes. It’s essentially spinning up a docker container and then performing health checks to determine when that container is fully operational. The “waiting to be ready…” message is emitted while these health checks are in progress. If these checks fail or never complete, that's when we get the hang, followed by eventual failure. The core problem is often related to these health checks or the configuration of the container itself. Let's delve deeper into some specific scenarios I've encountered.
 

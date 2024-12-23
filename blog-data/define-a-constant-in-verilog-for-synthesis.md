@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "define-a-constant-in-verilog-for-synthesis"
 ---
 
-Okay so you wanna define constants in Verilog for synthesis right I get it This is like Verilog 101 but with a twist because you're asking about synthesis not just simulation I've been there man trust me Been there done that and got the T-shirt well not literally a T-shirt but you get the idea
+ so you wanna define constants in Verilog for synthesis right I get it This is like Verilog 101 but with a twist because you're asking about synthesis not just simulation I've been there man trust me Been there done that and got the T-shirt well not literally a T-shirt but you get the idea
 
 So let's talk about constants in Verilog for synthesis I mean you can declare constants a bunch of ways but for synthesis it's not always straightforward Like you can't just use any old variable willy-nilly
 
@@ -58,7 +58,7 @@ In that example `MY_CONSTANT` is a `localparam` it's set to 10 and that's it No 
 
 `localparam` is the go-to when you have internal constants that must not be changed from outside the module So if you have a constant that is really local and for internal use within the module then use the `localparam` keyword and you'll be fine
 
-Okay here's a thing I ran into once This was a nightmare let me tell you it's not about using `parameter` or `localparam` but about how you use them in more complex situations
+ here's a thing I ran into once This was a nightmare let me tell you it's not about using `parameter` or `localparam` but about how you use them in more complex situations
 
 Let's say you're doing some kind of DSP processing and you need a bunch of pre-calculated constants for a look-up table You cannot just fill your source code with random numbers and magic constants We were debugging a complex system for a week before we realized the issue It was a huge mistake We could have avoided it if we used parameters or localparams correctly
 
@@ -94,20 +94,20 @@ The other really cool thing with parameters in synthesis is that in many cases t
 
 Also use `$clog2` system function that returns the ceiling of the log base 2 of the value It's quite useful for figuring out the minimum number of bits to represent a number which is handy for things like address widths and stuff I use `$clog2` all the time like in the example above
 
-Okay so here comes the part of the question which requires a joke but not really a funny one It should still be related to tech though. I'm gonna try to make it sound like someone said it on stackoverflow.
+ so here comes the part of the question which requires a joke but not really a funny one It should still be related to tech though. I'm gonna try to make it sound like someone said it on stackoverflow.
 
 Why do Verilog programmers prefer dark themes? Because light attracts bugs ha ha ha.
 
 Anyway moving on from the dad joke So just keep in mind that the way you declare constants impacts not just how your code is understood but also how the synthesizer will work to generate the physical implementation of your circuit
 
-Okay a few things that are useful to know but not strictly related to defining constants but are related to the use of constants in synthesis:
+ a few things that are useful to know but not strictly related to defining constants but are related to the use of constants in synthesis:
 
 *   **Avoid complicated constant expressions in synthesis** It's fine for simulation to have complex expressions with parameters but for synthesis try to keep things as simple as possible Synthesis tools can struggle with really complex expressions sometimes leading to synthesis failures or very poor area/timing tradeoff
 *   **Use descriptive names for your constants** This sounds obvious but sometimes people are lazy and just write some random constant names use names like `NUM_OF_BYTES` instead of just `NUM` or `WIDTH` instead of `W`. So use descriptive constant names it will make your life much easier in the long term
 *   **Use comments to explain your constants** It's always a good practice to comment on all your code but it's especially useful for documenting why you have chosen a particular value for your constants which is not always obvious from the name alone
 *   **Consider using Verilog packages** For constants that are used across multiple modules or for common design constants use packages to make your life easier so you don't have to rewrite constants all over the place again and again
 
-Alright so here are some resources that I think are very good and I recommend a lot These are more in depth and have more technical explanations of what you should expect when working with constants in hardware description languages such as verilog
+so here are some resources that I think are very good and I recommend a lot These are more in depth and have more technical explanations of what you should expect when working with constants in hardware description languages such as verilog
 
 First off definitely read the **"SystemVerilog for Design" by Sutherland et al.** This book is a classic for learning SystemVerilog which also includes Verilog and it has a very detailed chapter on parameters localparams and constants also there is a lot about synthesis considerations for constant related code. Its a must have resource
 
@@ -119,4 +119,4 @@ I've spent many years debugging things that could have been avoided by defining 
 
 So remember `parameter` for flexible constants `localparam` for fixed internal constants and don't be afraid to define your constant in a descriptive way Also keep in mind synthesis optimizations and read your books and papers. And maybe try to avoid hardcoding things in your designs It makes your life very difficult trust me on that one
 
-Okay that's about it If you have any other questions I will be glad to help I try to check stackoverflow whenever I can. Good luck with your Verilog projects hope this helps.
+ that's about it If you have any other questions I will be glad to help I try to check stackoverflow whenever I can. Good luck with your Verilog projects hope this helps.

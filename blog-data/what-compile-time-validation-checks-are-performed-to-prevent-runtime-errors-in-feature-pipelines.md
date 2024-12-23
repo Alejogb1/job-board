@@ -4,7 +4,7 @@ date: "2024-12-10"
 id: "what-compile-time-validation-checks-are-performed-to-prevent-runtime-errors-in-feature-pipelines"
 ---
 
-Okay so you wanna know about compile-time checks in feature pipelines right preventing those nasty runtime surprises  yeah I get it  nobody likes debugging a pipeline that explodes halfway through processing a million rows of data  it's a nightmare
+ so you wanna know about compile-time checks in feature pipelines right preventing those nasty runtime surprises  yeah I get it  nobody likes debugging a pipeline that explodes halfway through processing a million rows of data  it's a nightmare
 
 First off  what even *is* a feature pipeline  think of it like an assembly line for your data you feed it raw ingredients  it churns through a series of transformations  and spits out shiny polished features ready for your model  each step is a function or a transformation and the whole thing is chained together  like a superpowered data-processing sausage machine
 

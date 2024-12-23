@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-save-a-keras-model-within-a-kedro-project"
 ---
 
-Okay, let's tackle this. Saving a Keras model within a Kedro project is a task I’ve handled a number of times, and it’s one that touches on several aspects of good data engineering practices. It’s more than just about hitting “save”; it’s about ensuring reproducibility, version control, and seamless integration with your pipeline. I’ve seen it go wrong enough times to know the nuances. The key is to treat the model like any other dataset—a crucial intermediate artifact in your overall workflow.
+,  Saving a Keras model within a Kedro project is a task I’ve handled a number of times, and it’s one that touches on several aspects of good data engineering practices. It’s more than just about hitting “save”; it’s about ensuring reproducibility, version control, and seamless integration with your pipeline. I’ve seen it go wrong enough times to know the nuances. The key is to treat the model like any other dataset—a crucial intermediate artifact in your overall workflow.
 
 The standard Keras method of saving models with `.save()` or `.save_weights()` works, of course, but it’s not really suited for integration with Kedro’s approach to managing data and project structure. Kedro leverages its data catalog to maintain a record of datasets and their corresponding storage locations. Trying to manually manage the file paths for saved models outside of the catalog will lead to headaches further down the line, particularly in collaborative environments.
 

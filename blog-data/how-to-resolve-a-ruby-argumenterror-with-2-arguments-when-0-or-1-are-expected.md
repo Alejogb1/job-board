@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-resolve-a-ruby-argumenterror-with-2-arguments-when-0-or-1-are-expected"
 ---
 
-Alright, let's tackle this. I've seen this particular ArgumentError in Ruby pop up more times than I care to remember, usually in the most inconvenient places. It’s a classic case of a method expecting a specific number of arguments and receiving something else. It typically manifests as something like: `ArgumentError: wrong number of arguments (given 2, expected 0)` or `ArgumentError: wrong number of arguments (given 2, expected 1)`. And believe me, debugging it can feel like untangling a rather complex bit of wire if you're not approaching it systematically.
+Alright,  I've seen this particular ArgumentError in Ruby pop up more times than I care to remember, usually in the most inconvenient places. It’s a classic case of a method expecting a specific number of arguments and receiving something else. It typically manifests as something like: `ArgumentError: wrong number of arguments (given 2, expected 0)` or `ArgumentError: wrong number of arguments (given 2, expected 1)`. And believe me, debugging it can feel like untangling a rather complex bit of wire if you're not approaching it systematically.
 
 The crux of the issue lies in the fundamental way Ruby handles method definitions and argument passing. When you define a method, you implicitly (or explicitly) define how many arguments it expects. If, during the method call, the provided number of arguments does not align with this expectation, Ruby raises that `ArgumentError`. This is not a bug per se, but a safety mechanism preventing methods from operating on incorrect or insufficient data.
 

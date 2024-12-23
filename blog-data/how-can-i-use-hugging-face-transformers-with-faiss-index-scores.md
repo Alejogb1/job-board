@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-can-i-use-hugging-face-transformers-with-faiss-index-scores"
 ---
 
-Okay, let's get into this. I’ve certainly seen my share of challenges integrating neural network outputs with vector search, and Hugging Face Transformers coupled with FAISS indexes is a common scenario where things can get… interesting. I recall a particular project a few years back where we were building a semantic search engine for a large document repository. That experience highlighted some nuances that I think are useful to understand when working with these technologies together.
+, let's get into this. I’ve certainly seen my share of challenges integrating neural network outputs with vector search, and Hugging Face Transformers coupled with FAISS indexes is a common scenario where things can get… interesting. I recall a particular project a few years back where we were building a semantic search engine for a large document repository. That experience highlighted some nuances that I think are useful to understand when working with these technologies together.
 
 The core idea is to use a transformer model to encode your input text into vector embeddings, then use a FAISS index to quickly find the nearest neighbors (most similar embeddings) to a query vector. This combination allows you to perform semantic search, where you retrieve results based on meaning rather than just keyword matches.
 

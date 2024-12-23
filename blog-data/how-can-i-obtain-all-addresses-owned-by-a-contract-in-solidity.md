@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-obtain-all-addresses-owned-by-a-contract-in-solidity"
 ---
 
-Right, let's tackle this. Obtaining all addresses owned by a contract in Solidity—that's a problem I’ve certainly navigated a few times in my projects, and it's not as straightforward as you might initially assume. The inherent nature of the ethereum virtual machine (evm) and solidity's design doesn't provide a direct way to query "all addresses a contract controls.” Instead, we need to consider the specific patterns by which a contract manages addresses and how to programmatically track them.
+Right,  Obtaining all addresses owned by a contract in Solidity—that's a problem I’ve certainly navigated a few times in my projects, and it's not as straightforward as you might initially assume. The inherent nature of the ethereum virtual machine (evm) and solidity's design doesn't provide a direct way to query "all addresses a contract controls.” Instead, we need to consider the specific patterns by which a contract manages addresses and how to programmatically track them.
 
 The primary challenge stems from the fact that smart contracts operate within a deterministic, state-based environment. Solidity contracts don't intrinsically track what external accounts (or contracts) they 'own' or control in the traditional sense. The concept of ownership here is not explicit; it's more about the contract's interactions and state changes that *imply* ownership or control over specific addresses.
 

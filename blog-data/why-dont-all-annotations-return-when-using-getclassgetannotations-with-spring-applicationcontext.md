@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-dont-all-annotations-return-when-using-getclassgetannotations-with-spring-applicationcontext"
 ---
 
-Okay, let's talk about annotations and why they might seem a little elusive sometimes, especially within the context of a Spring `ApplicationContext`. I’ve debugged this sort of thing more times than I care to remember, and it usually boils down to a few key concepts – it’s not that annotations *aren’t* there, it’s about *when* and *how* they are being accessed.
+, let's talk about annotations and why they might seem a little elusive sometimes, especially within the context of a Spring `ApplicationContext`. I’ve debugged this sort of thing more times than I care to remember, and it usually boils down to a few key concepts – it’s not that annotations *aren’t* there, it’s about *when* and *how* they are being accessed.
 
 The crucial point is that `getClass().getAnnotations()` gives you only the annotations directly present on the class definition itself. It doesn't delve into inherited annotations, meta-annotations, or anything processed by the Spring framework during its initialization phase. So, when we’re dealing with Spring's magic, especially components instantiated via its context, there's a lot happening under the hood that influences how annotations are handled and ultimately exposed. I encountered a similar problem a few years back working on a microservices architecture where we were using custom annotations for service discovery. It took a good chunk of time to understand this nuance, which is why I'm keen to spell it out clearly.
 

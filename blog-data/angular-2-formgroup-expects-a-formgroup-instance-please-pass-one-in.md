@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "angular-2-formgroup-expects-a-formgroup-instance-please-pass-one-in"
 ---
 
-Okay so you're slamming your head against the wall with this "angular 2 formgroup expects a formgroup instance please pass one in" thing yeah I've been there buddy trust me I know the feeling it’s like Angular yelling at you in a language you thought you spoke fluently
+ so you're slamming your head against the wall with this "angular 2 formgroup expects a formgroup instance please pass one in" thing yeah I've been there buddy trust me I know the feeling it’s like Angular yelling at you in a language you thought you spoke fluently
 
 Been battling this particular beast since way back in the early Angular days think Angular 2 right after the whole alpha/beta craziness I remember sweating bullets over this back when forms were like uncharted territory especially for the new devs on my team We had this client project a super complex data entry application for a logistics company and yeah it was a beautiful mess when we started I had several rookies on my team so debugging was part of the everyday routine at that time
 

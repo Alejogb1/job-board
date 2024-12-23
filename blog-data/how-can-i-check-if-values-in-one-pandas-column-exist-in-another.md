@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-check-if-values-in-one-pandas-column-exist-in-another"
 ---
 
-Okay, let's tackle this. I've bumped into this exact scenario countless times in data wrangling, particularly when cleaning and validating datasets extracted from varied sources. It's a common need: determining the presence of elements from one column within another in a pandas dataframe. There are several efficient ways to achieve this, and the optimal approach often depends on the size of your data and what exactly you intend to do with the results.
+,  I've bumped into this exact scenario countless times in data wrangling, particularly when cleaning and validating datasets extracted from varied sources. It's a common need: determining the presence of elements from one column within another in a pandas dataframe. There are several efficient ways to achieve this, and the optimal approach often depends on the size of your data and what exactly you intend to do with the results.
 
 When I started out, I tended to use slower, iterative approaches, which, as you can imagine, became untenable with larger datasets. My epiphany came when I realized that pandas, and more broadly, numpy, provided vectorized operations that could accomplish the same task orders of magnitude faster. So, let's walk through the different methodologies I've employed, from the simplest to the most optimized.
 

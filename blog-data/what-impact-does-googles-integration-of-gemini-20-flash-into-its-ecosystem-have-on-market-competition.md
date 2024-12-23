@@ -4,7 +4,7 @@ date: "2024-12-12"
 id: "what-impact-does-googles-integration-of-gemini-20-flash-into-its-ecosystem-have-on-market-competition"
 ---
 
-Okay so lets talk about Gemini 20 Flash kinda a big deal right Its google throwing down the gauntlet again and this time its personal feels different than just another model update feels like a strategic play a real flex
+ so lets talk about Gemini 20 Flash kinda a big deal right Its google throwing down the gauntlet again and this time its personal feels different than just another model update feels like a strategic play a real flex
 
 First off the integration part thats key Its not just some standalone thing sitting in a corner its baked into everything you know everything that means search ads workspace cloud everything and that immediately changes the game you see its not just about performance numbers its about accessibility its about everyone suddenly having a piece of this tech right there in their daily tools its like giving everyone a turbocharged brain boost
 

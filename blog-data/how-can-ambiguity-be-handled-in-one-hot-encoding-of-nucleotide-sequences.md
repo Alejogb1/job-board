@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-ambiguity-be-handled-in-one-hot-encoding-of-nucleotide-sequences"
 ---
 
-Okay, let's tackle this. Having spent a considerable amount of time working with bioinformatics data, particularly genomic sequences, I've frequently encountered the challenge of dealing with ambiguities in nucleotide representations when applying one-hot encoding. It’s not uncommon for a sequence dataset to contain characters beyond the standard A, C, G, and T, and how you handle these 'ambiguous' bases significantly impacts downstream analysis.
+,  Having spent a considerable amount of time working with bioinformatics data, particularly genomic sequences, I've frequently encountered the challenge of dealing with ambiguities in nucleotide representations when applying one-hot encoding. It’s not uncommon for a sequence dataset to contain characters beyond the standard A, C, G, and T, and how you handle these 'ambiguous' bases significantly impacts downstream analysis.
 
 Let's start with the core of the problem. One-hot encoding, in its most straightforward form, creates a binary vector representation for each nucleotide. A simple four-letter alphabet (A, C, G, T) will result in vectors like [1, 0, 0, 0] for A, [0, 1, 0, 0] for C, and so on. But what happens when you encounter 'R' which represents either 'A' or 'G', or 'N' which could represent any nucleotide? These ambiguous characters are very common due to limitations of sequencing technologies or inherent genetic variations. Ignoring them outright would mean discarding valuable data, and incorrectly assigning them to one of the four basic bases will introduce noise.
 

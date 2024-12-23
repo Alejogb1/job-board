@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-use-a-rails-simpleform-element-with-data--attributes-for-stimulus"
 ---
 
-Okay, let's tackle this one. I've certainly spent my fair share of time bridging the gap between server-rendered forms and client-side javascript magic, and `simple_form` with `data-` attributes for Stimulus is a common requirement. It's a setup that, when done properly, provides a seamless user experience. Let me walk you through the process, drawing from some past project experience.
+, let's tackle this one. I've certainly spent my fair share of time bridging the gap between server-rendered forms and client-side javascript magic, and `simple_form` with `data-` attributes for Stimulus is a common requirement. It's a setup that, when done properly, provides a seamless user experience. Let me walk you through the process, drawing from some past project experience.
 
 The core challenge is that `simple_form` handles the generation of your form elements on the server-side, while Stimulus, as you know, operates entirely within the browser. We need to ensure the HTML structure created by `simple_form` includes the `data-` attributes that Stimulus controllers rely on. This boils down to effectively combining `simple_form`'s DSL with Ruby's dynamic capabilities.
 

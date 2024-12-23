@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "atomic-add-cuda-operation"
 ---
 
-Okay so atomic add in CUDA yeah I've been there done that got the t-shirt several times over. Let me break this down for you because it's not as straightforward as just slapping a '+' sign in your kernel code believe me.
+ so atomic add in CUDA yeah I've been there done that got the t-shirt several times over. Let me break this down for you because it's not as straightforward as just slapping a '+' sign in your kernel code believe me.
 
 So what do you need atomic add for? Well normally when you have multiple threads in a GPU kernel messing with the same memory location you get race conditions. It's chaos data gets corrupted you get random results that's no good. Atomic operations specifically atomic add in our case guarantee that the operation happens completely and indivisibly. One thread's add won't interrupt another threads add so you have proper updates to your shared variable.
 
@@ -49,7 +49,7 @@ __global__ void atomic_add_shared(int* global_data, int* global_index_arr, int g
 }
 ```
 
-Okay so this one's a bit more involved. `block_data` is shared memory for each block we're initializing it to zero. It is very important to zero the shared memory before using it and you have to make sure all threads within a block do so or you will get wrong numbers. I used modulo because I am assuming we are working with index mapping so if my block size is smaller than the size of my index array we would have errors or out of bound access. Remember it's important to clear this block-level memory in your shared memory and it's also very important to synchronize threads before and after the shared memory usage. You will see `__syncthreads()` calls here because without them we will also have data inconsistencies and race conditions.  `global_index_arr` is a global memory array that contains the indices for each block. So this kernel increments the right indices in shared memory. Then we add the values on the shared memory to the global memory also using atomics.
+ so this one's a bit more involved. `block_data` is shared memory for each block we're initializing it to zero. It is very important to zero the shared memory before using it and you have to make sure all threads within a block do so or you will get wrong numbers. I used modulo because I am assuming we are working with index mapping so if my block size is smaller than the size of my index array we would have errors or out of bound access. Remember it's important to clear this block-level memory in your shared memory and it's also very important to synchronize threads before and after the shared memory usage. You will see `__syncthreads()` calls here because without them we will also have data inconsistencies and race conditions.  `global_index_arr` is a global memory array that contains the indices for each block. So this kernel increments the right indices in shared memory. Then we add the values on the shared memory to the global memory also using atomics.
 
 You might be wondering about the performance impact of these operations. Well yeah they do have an overhead. Atomic operations force memory accesses to be serialized so if you have a lot of atomic operations occurring on the same location you can slow down your kernel considerably. Therefore it is crucial to reduce such instances and try to implement workarounds to avoid the need for atomics.
 

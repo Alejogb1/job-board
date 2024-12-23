@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-pass-input-datasets-directly-to-a-command-step-in-azureml-pipeline"
 ---
 
-Okay, let's talk about getting datasets directly into command steps within Azure Machine Learning pipelines. I've encountered this specific challenge more times than I can count, often with data preprocessing pipelines that needed to scale efficiently. It’s a frequent hurdle for anyone moving beyond basic notebook experimentation and into more production-ready scenarios.
+, let's talk about getting datasets directly into command steps within Azure Machine Learning pipelines. I've encountered this specific challenge more times than I can count, often with data preprocessing pipelines that needed to scale efficiently. It’s a frequent hurdle for anyone moving beyond basic notebook experimentation and into more production-ready scenarios.
 
 The core issue is ensuring that your pipeline steps have the necessary data context – in other words, knowing where to find and how to consume the datasets you intend them to process. Azure ML offers a few different mechanisms, and the one most pertinent here is using input bindings for your command steps. Think of these as pointers, carefully constructed to allow your step to access data securely and without explicit file paths within your scripts.
 

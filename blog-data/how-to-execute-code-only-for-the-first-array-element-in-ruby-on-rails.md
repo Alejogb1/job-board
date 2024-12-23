@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-execute-code-only-for-the-first-array-element-in-ruby-on-rails"
 ---
 
-Okay, let's tackle this. I recall back in my early days, during a large-scale migration project involving a complex data structure, I encountered a similar challenge – needing to execute a specific piece of logic exclusively for the initial element within an array in a Rails environment. It's a situation that arises more often than one might think. The core issue stems from iterating over collections, where you need to treat the first element differently from the rest, without resorting to messy control flow or redundant checks within the loop.
+,  I recall back in my early days, during a large-scale migration project involving a complex data structure, I encountered a similar challenge – needing to execute a specific piece of logic exclusively for the initial element within an array in a Rails environment. It's a situation that arises more often than one might think. The core issue stems from iterating over collections, where you need to treat the first element differently from the rest, without resorting to messy control flow or redundant checks within the loop.
 
 My initial, naive attempt, involved using an `if` statement with an index check inside the `each` block. Something along the lines of:
 

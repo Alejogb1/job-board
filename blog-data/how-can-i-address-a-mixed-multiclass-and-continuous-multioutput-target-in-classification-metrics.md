@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-address-a-mixed-multiclass-and-continuous-multioutput-target-in-classification-metrics"
 ---
 
-Okay, let’s tackle this. Been there, seen that kind of modeling challenge – a mix of multiclass classification alongside continuous, multioutput targets. It’s not uncommon, and frankly, the “one-size-fits-all” metric approach simply breaks down. I recall a project where we were predicting customer behavior; some aspects were discrete categories (like product interest: 'A', 'B', or 'C'), while others were continuous, reflecting expected spending across various product lines. Throwing everything into a standard accuracy calculation was…uninformative, to say the least. So, we had to get a bit more granular.
+, let’s tackle this. Been there, seen that kind of modeling challenge – a mix of multiclass classification alongside continuous, multioutput targets. It’s not uncommon, and frankly, the “one-size-fits-all” metric approach simply breaks down. I recall a project where we were predicting customer behavior; some aspects were discrete categories (like product interest: 'A', 'B', or 'C'), while others were continuous, reflecting expected spending across various product lines. Throwing everything into a standard accuracy calculation was…uninformative, to say the least. So, we had to get a bit more granular.
 
 The key here is to decompose the problem and evaluate each target type using appropriate metrics before synthesizing a final, overall assessment. We can't expect a single metric to meaningfully capture performance across both classification and regression problems. It's like trying to measure the quality of a fruit salad with only a scale; you'll get the total weight, but nothing about the individual flavors or textures.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-mail-delivery-failing-with-the-default-swift-mailer-in-yii2"
 ---
 
-Okay, let's tackle this mail delivery issue you're encountering with Swift Mailer in Yii2. I've seen this particular headache crop up countless times over the years, and it’s rarely a straightforward, single-cause problem. It's often a confluence of factors, each contributing its own small bit to the overall failure. Let's break down the usual suspects and what we can do about them, based on a few real-world scenarios I've personally debugged.
+, let's tackle this mail delivery issue you're encountering with Swift Mailer in Yii2. I've seen this particular headache crop up countless times over the years, and it’s rarely a straightforward, single-cause problem. It's often a confluence of factors, each contributing its own small bit to the overall failure. Let's break down the usual suspects and what we can do about them, based on a few real-world scenarios I've personally debugged.
 
 Often, when the default Swift Mailer setup in Yii2 doesn't play nice, the problem isn't with Swift Mailer itself, but rather how it's configured or the environment it's operating within. The first place I always start looking is at the mail server configuration specified in your Yii2 application. The default setup often assumes a local smtp server, which frequently isn’t the case in real-world deployments. It’s not uncommon to see `localhost` as the smtp host, which works in a dev environment, but fails miserably in production.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-run-two-suspend-functions-in-parallel-and-return-the-result-of-the-first"
 ---
 
-Okay, let's tackle this concurrency challenge with coroutines, and specifically address the nuances of running suspend functions in parallel, while only caring about the result of the first to complete. It's a situation I've encountered a number of times, especially when dealing with various network requests or data processing pipelines where response time variability is a significant concern.
+, let's tackle this concurrency challenge with coroutines, and specifically address the nuances of running suspend functions in parallel, while only caring about the result of the first to complete. It's a situation I've encountered a number of times, especially when dealing with various network requests or data processing pipelines where response time variability is a significant concern.
 
 My early encounters with this involved a complex data synchronization system. We were pulling data from two different sources, both capable of returning the same dataset, but with different update frequencies and latencies. The goal was to use the freshest available data as quickly as possible, and that meant leveraging parallelism. We weren't interested in the laggard, so processing the first response and discarding the rest was paramount.
 

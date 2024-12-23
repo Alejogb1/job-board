@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "branch-pricing-branch-io-api-usage"
 ---
 
-Okay so you're asking about branch pricing and using the Branch IO API right Been there done that got the t-shirt or actually more like the stackoverflow badge ha
+ so you're asking about branch pricing and using the Branch IO API right Been there done that got the t-shirt or actually more like the stackoverflow badge ha
 
 Lets dive in I've wrestled with Branch IO's stuff for a good while now and the pricing model can be a bit of a… puzzle at first glance I remember back in like 2018 I was working on this mobile app for a local bookstore you know typical small business stuff We were using Branch for deep linking mostly trying to get users from social media ads right into specific book pages in our app It worked great initially but man the billing was a head scratcher for a while
 

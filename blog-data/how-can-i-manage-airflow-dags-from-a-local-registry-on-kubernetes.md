@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-manage-airflow-dags-from-a-local-registry-on-kubernetes"
 ---
 
-Alright, let's tackle this. Managing airflow dags from a local registry on kubernetes is something I've personally grappled with on several occasions, especially when dealing with sensitive information or custom workflows that weren't suited for shared repositories. It’s a solid approach that brings quite a few advantages, including better control over dag deployments and isolation, but it requires careful orchestration.
+Alright,  Managing airflow dags from a local registry on kubernetes is something I've personally grappled with on several occasions, especially when dealing with sensitive information or custom workflows that weren't suited for shared repositories. It’s a solid approach that brings quite a few advantages, including better control over dag deployments and isolation, but it requires careful orchestration.
 
 The core idea is to decouple the dag definitions from the airflow worker nodes themselves, and instead, package them into custom images and make those images available through a local container registry accessible from your Kubernetes cluster. This approach allows you to treat DAGs as deployable artifacts. It enhances versioning, simplifies rollbacks, and can vastly improve the consistency of your airflow environment, especially in large teams where different developers might work on different DAGs.
 

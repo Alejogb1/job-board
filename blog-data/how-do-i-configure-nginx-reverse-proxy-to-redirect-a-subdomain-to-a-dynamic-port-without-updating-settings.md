@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-configure-nginx-reverse-proxy-to-redirect-a-subdomain-to-a-dynamic-port-without-updating-settings"
 ---
 
-Alright, let's tackle this. It's a common scenario, one that I've bumped into several times over the years, particularly in environments where services spin up and down on dynamically allocated ports. Manually reconfiguring Nginx every time a port changes? Absolutely not. We need a robust and, more importantly, automated solution. So, how do we achieve this dynamic redirection of a subdomain to a port that shifts around without having to touch the Nginx config? The answer lies primarily in leveraging Nginx's capabilities alongside some intelligent scripting, often in the form of a companion process.
+Alright,  It's a common scenario, one that I've bumped into several times over the years, particularly in environments where services spin up and down on dynamically allocated ports. Manually reconfiguring Nginx every time a port changes? Absolutely not. We need a robust and, more importantly, automated solution. So, how do we achieve this dynamic redirection of a subdomain to a port that shifts around without having to touch the Nginx config? The answer lies primarily in leveraging Nginx's capabilities alongside some intelligent scripting, often in the form of a companion process.
 
 The core problem stems from Nginx’s static configuration. Traditionally, you specify a `proxy_pass` directive pointing to a specific IP and port, like so: `proxy_pass http://127.0.0.1:8080;`. This works perfectly well when the backend service resides on a fixed port. But when ports are dynamically allocated, this static link becomes a point of failure and tedious maintenance.
 

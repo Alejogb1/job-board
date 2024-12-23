@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "random-5-digit-number-generation"
 ---
 
-Okay I've been wrestling with random number generation for what feels like a lifetime honestly it's one of those deceptively simple things that gets complicated fast I’ve seen my share of janky implementations over the years from undergraduate projects to real-world production code where bugs lurk like gremlins waiting to strike
+ I've been wrestling with random number generation for what feels like a lifetime honestly it's one of those deceptively simple things that gets complicated fast I’ve seen my share of janky implementations over the years from undergraduate projects to real-world production code where bugs lurk like gremlins waiting to strike
 
 So let’s talk about 5-digit random numbers specifically yeah that’s what you asked for straightforward enough right Well not quite The first thing everyone thinks of is just slapping something together like `rand() % 90000 + 10000` in C or whatever similar in your language of choice And I'm guilty of doing exactly that on a particularly sleep-deprived all-nighter trying to debug a segmentation fault related to some memory buffer over flow related to my university assignment where random numbers were required but I completely glossed over the quality of them. I remember waking up the next day thinking this is not gonna work.
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "meaning-of-letrec-in-scheme-racket"
 ---
 
-Okay so let's break down `letrec` in Scheme Racket I've wrestled with this beast plenty of times back in the day particularly when I was dabbling in building some custom interpreters it gets tricky but it’s also incredibly powerful
+ so let's break down `letrec` in Scheme Racket I've wrestled with this beast plenty of times back in the day particularly when I was dabbling in building some custom interpreters it gets tricky but it’s also incredibly powerful
 
 First off the basic `let` binding which is straightforward binds variables to values but those values can’t see the other variables defined in the same `let` block they're evaluated in isolation you know like if you try to use another variable in the same let assignment you would get unbound variable error the usual suspects
 

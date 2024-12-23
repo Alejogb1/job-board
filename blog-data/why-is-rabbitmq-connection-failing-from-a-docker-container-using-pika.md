@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-rabbitmq-connection-failing-from-a-docker-container-using-pika"
 ---
 
-Okay, let's tackle this. I've seen this particular problem crop up enough times over the years to have a pretty good handle on it. RabbitMQ connection failures from Docker containers using pika—it’s a classic combination with a few common pitfalls, and it’s rarely just a case of 'pika bad.' More often, it's a nuanced issue of network configuration within the Docker environment. Let's break down the typical culprits and, more importantly, how to fix them.
+,  I've seen this particular problem crop up enough times over the years to have a pretty good handle on it. RabbitMQ connection failures from Docker containers using pika—it’s a classic combination with a few common pitfalls, and it’s rarely just a case of 'pika bad.' More often, it's a nuanced issue of network configuration within the Docker environment. Let's break down the typical culprits and, more importantly, how to fix them.
 
 The core issue revolves around the fact that a Docker container lives in its own isolated network namespace. When your Python application inside the container tries to connect to RabbitMQ, it’s essentially making a network request. The problem emerges when the hostname or IP address used by pika to connect doesn't resolve to the actual location of your RabbitMQ server from within that isolated network.
 

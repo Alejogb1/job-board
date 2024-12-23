@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-openai-gym-handle-nested-spaces-defined-using-dataclasses"
 ---
 
-Okay, let's tackle this. It's a good question, and it touches on a common stumbling block when moving beyond the simplest OpenAI Gym environments. I've definitely seen this rear its head, particularly when dealing with complex robotics simulations or multi-agent systems that necessitate more structured observation spaces.
+,  It's a good question, and it touches on a common stumbling block when moving beyond the simplest OpenAI Gym environments. I've definitely seen this rear its head, particularly when dealing with complex robotics simulations or multi-agent systems that necessitate more structured observation spaces.
 
 The direct answer is: OpenAI Gym, at its core, does not inherently ‘understand’ or directly support nested spaces defined *solely* using dataclasses. It relies heavily on `gym.spaces` objects to define the structure of observations and actions. Dataclasses, while excellent for data organization in Python, are not automatically interpreted by Gym as valid space specifications.
 

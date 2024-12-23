@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-make-a-raw-text-file-editor-in-django-wagtail-admin"
 ---
 
-Okay, let's tackle this. It’s not every day one finds themselves needing a raw text file editor within a cms like Wagtail, but I recall a project a few years back where that exact functionality became oddly essential. The use case, if memory serves, involved managing configuration files directly from the admin interface – a bit unorthodox, I grant you, but it streamlined a very specific workflow. Building such a thing requires a careful blend of Django forms, Wagtail's admin customization, and a healthy dose of file manipulation. Let's break down how I'd approach this, aiming for practicality and maintainability.
+,  It’s not every day one finds themselves needing a raw text file editor within a cms like Wagtail, but I recall a project a few years back where that exact functionality became oddly essential. The use case, if memory serves, involved managing configuration files directly from the admin interface – a bit unorthodox, I grant you, but it streamlined a very specific workflow. Building such a thing requires a careful blend of Django forms, Wagtail's admin customization, and a healthy dose of file manipulation. Let's break down how I'd approach this, aiming for practicality and maintainability.
 
 The core challenge stems from the fact that Wagtail doesn't inherently provide a file editor within its admin panel. We’ll need to create a custom form that will handle loading the file content, displaying it as editable text, and saving changes back to the filesystem. We're not directly integrating with a full IDE or text editor; we're crafting a specialized admin interface.
 

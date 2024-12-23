@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "jpa-concurrency-issue-on-release-of-batch-it-still-contained-jdbc-statements"
 ---
 
-Okay so you're dealing with a JPA concurrency problem right specifically around batch releases and lingering JDBC statements I've been there man trust me it's a classic head-scratcher This isn't some newbie issue this is where JPA and JDBC start showing their teeth and you realize that abstraction has its limits
+ so you're dealing with a JPA concurrency problem right specifically around batch releases and lingering JDBC statements I've been there man trust me it's a classic head-scratcher This isn't some newbie issue this is where JPA and JDBC start showing their teeth and you realize that abstraction has its limits
 
 Been doing this stuff for like 15 years now started back when Java was like well less mature you know And I swear I've chased down more race conditions and concurrency bugs than I've had hot dinners So I've seen this exact scenario play out before and I have a few ideas about what might be going on and how to debug it
 
@@ -98,7 +98,7 @@ Another potential issue is how your connection pool is configured. Most applicat
 
 **Debugging:**
 
-Okay so these are the things I'd check initially and if it doesn't solve it then we need to start debugging deeper. Some things that might help are
+ so these are the things I'd check initially and if it doesn't solve it then we need to start debugging deeper. Some things that might help are
 
 *   **Enable SQL logging** JPA providers usually have options to log all SQL statements that are being executed. This gives you a clear view of what is going on and helps you to trace the exact point the statements are being executed this might help see the rogue statements.
 *   **Monitor the JDBC connection pool** Most connection pools provide tools to monitor their activity. Check to see how many connections are active idle how many have been acquired or released etc this can help diagnose resource leaks

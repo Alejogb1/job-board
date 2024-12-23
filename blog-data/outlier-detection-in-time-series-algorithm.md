@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "outlier-detection-in-time-series-algorithm"
 ---
 
-Okay so you’re asking about outlier detection in time series data yeah I’ve been there done that got the t-shirt and the battle scars frankly This is one of those problems that seems simple on paper but in the real world its a messy beast I'm gonna dump some of my knowledge here for you maybe it'll help
+ so you’re asking about outlier detection in time series data yeah I’ve been there done that got the t-shirt and the battle scars frankly This is one of those problems that seems simple on paper but in the real world its a messy beast I'm gonna dump some of my knowledge here for you maybe it'll help
 
 First off I’ve seen way too many people jump straight to complex machine learning models for this like they’re trying to nuke a mosquito with a bazooka You don’t always need that especially not when you’re first starting out and trying to just understand the baseline of your data I did that too in one of my early jobs building some monitoring tools the boss saw some paper on anomaly detection neural network something and i got tasked to implement it we burned through some GPUs for weeks just to get some results it wasn't really worth it hindsight 2020 though
 
@@ -12,7 +12,7 @@ Let's talk some simple approaches that are surprisingly effective I swear they o
 
 **The Moving Average Approach**
 
-Okay so you got your time series data right You’re thinking values changing over time I like to think about like a stock ticker or maybe some sensor reading from some hardware thing This approach just looks at the average of the data in a sliding window basically It’s super simple and it works great for catching spikes or dips If a value is significantly different from the moving average you mark it as an outlier
+ so you got your time series data right You’re thinking values changing over time I like to think about like a stock ticker or maybe some sensor reading from some hardware thing This approach just looks at the average of the data in a sliding window basically It’s super simple and it works great for catching spikes or dips If a value is significantly different from the moving average you mark it as an outlier
 
 ```python
 import numpy as np
@@ -92,7 +92,7 @@ Now before you go wild with this keep this in mind this method is sensitive to d
 
 **Interquartile Range (IQR) Approach**
 
-Okay this is the last one you’ll thank me later This is similar to the standard deviation method but it focuses on the spread of the data by percentiles using quartiles It's more robust to outliers within the data compared to standard deviation based approach as it does not calculate the mean
+ this is the last one you’ll thank me later This is similar to the standard deviation method but it focuses on the spread of the data by percentiles using quartiles It's more robust to outliers within the data compared to standard deviation based approach as it does not calculate the mean
 
 ```python
 import numpy as np

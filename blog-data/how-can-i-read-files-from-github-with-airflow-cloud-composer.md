@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-can-i-read-files-from-github-with-airflow-cloud-composer"
 ---
 
-Okay, let’s tackle this. I’ve certainly been down the road of integrating GitHub with Airflow quite a few times, particularly when trying to orchestrate data pipelines that depend on configurations or scripts stored in version control. It's a common need, and there are definitely best practices that can make this process smoother and more reliable than just throwing together a bash operator with `curl`.
+, let’s tackle this. I’ve certainly been down the road of integrating GitHub with Airflow quite a few times, particularly when trying to orchestrate data pipelines that depend on configurations or scripts stored in version control. It's a common need, and there are definitely best practices that can make this process smoother and more reliable than just throwing together a bash operator with `curl`.
 
 Frankly, the direct "reading" of files from GitHub isn't really what you want. What we're actually after is *accessing* them in a controlled way, often during task execution within Airflow. Think about it; we're not looking to parse massive repositories or do code analysis at runtime. Typically, we want specific files – perhaps a data schema definition, a configuration file, or a small utility script.
 

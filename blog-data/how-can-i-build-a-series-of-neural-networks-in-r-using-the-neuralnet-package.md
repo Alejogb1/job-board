@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-build-a-series-of-neural-networks-in-r-using-the-neuralnet-package"
 ---
 
-Alright, let's tackle this. Building a series of neural networks in `R` using the `neuralnet` package is something I've dealt with quite a bit, particularly back in my days working on that time-series forecasting project for the energy sector. It involved sequentially modeling electricity consumption patterns, each network trained on slightly different time windows to enhance predictive power across multiple segments. It wasn’t just about cranking out models, though; it was about understanding the process, limitations, and best practices.
+Alright,  Building a series of neural networks in `R` using the `neuralnet` package is something I've dealt with quite a bit, particularly back in my days working on that time-series forecasting project for the energy sector. It involved sequentially modeling electricity consumption patterns, each network trained on slightly different time windows to enhance predictive power across multiple segments. It wasn’t just about cranking out models, though; it was about understanding the process, limitations, and best practices.
 
 The `neuralnet` package provides a fairly straightforward interface for single network creation, but when you're stringing multiple networks together – whether for ensemble learning, hierarchical modelling, or simply segmenting your data – you need a bit more control and systematic approach. Here’s how I typically handle it, broken down into logical steps with some code examples.
 

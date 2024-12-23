@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-a-rails-application-getting-a-permission-denied-error-when-attempting-to-get-the-current-working-directory"
 ---
 
-Okay, let's tackle this. I recall a particularly frustrating case a few years back, debugging a deployment where a seemingly simple Rails application kept throwing "permission denied" errors when it tried to determine the current working directory. The symptoms were deceptive: everything seemed configured correctly, yet the application consistently failed. This isn't an uncommon issue, and the root cause can often be a combination of seemingly innocuous factors.
+,  I recall a particularly frustrating case a few years back, debugging a deployment where a seemingly simple Rails application kept throwing "permission denied" errors when it tried to determine the current working directory. The symptoms were deceptive: everything seemed configured correctly, yet the application consistently failed. This isn't an uncommon issue, and the root cause can often be a combination of seemingly innocuous factors.
 
 The error you're seeing, specifically a "permission denied" when accessing the current working directory, usually arises from a misunderstanding of how processes and their associated permissions function within the operating system, especially in managed environments. A Rails application, at its core, is just a series of processes executing ruby code, and like any process, it operates under specific user privileges. When the application attempts to use the `Dir.pwd` method (or any method that involves accessing directory information), it's the operating system that ultimately governs whether that access is granted.
 

@@ -115,7 +115,7 @@ def create_weak_labels(texts, positive_keywords, negative_keywords):
     return labels
 
 # Example usage:
-texts = ["I loved this product!", "This was awful.", "It was okay.", "The experience was very positive."]
+texts = ["I loved this product!", "This was awful.", "It was .", "The experience was very positive."]
 positive_keywords = ["love", "amazing", "great", "positive"]
 negative_keywords = ["awful", "terrible", "bad", "negative"]
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-kubernetes-init-containers-be-run-conditionally"
 ---
 
-Alright, let's tackle this. I've seen my fair share of Kubernetes deployments, and the question of conditional init containers always seems to pop up, often at the most inconvenient times. It's not a feature baked directly into the Kubernetes core, the way you might expect, but thankfully, there are very effective patterns to achieve that conditional behavior. Let me share my experiences and some practical approaches.
+Alright,  I've seen my fair share of Kubernetes deployments, and the question of conditional init containers always seems to pop up, often at the most inconvenient times. It's not a feature baked directly into the Kubernetes core, the way you might expect, but thankfully, there are very effective patterns to achieve that conditional behavior. Let me share my experiences and some practical approaches.
 
 First off, we need to clarify what we *mean* by “conditional.” It’s rarely about some arbitrary random condition; it's more often about things like environment variables, configuration maps, or the existence of other resources. Kubernetes itself provides no mechanism to directly execute init containers based on such conditions at the container level, so, we have to lean on some clever workarounds. I vividly recall one project where we needed to dynamically initialize our database schema *only* if it didn’t exist already, which is a perfect example of this problem in action. We initially explored using a massive bash script in the init container, full of ‘ifs,’ but it quickly turned into a brittle mess. That's when we shifted to a more declarative, Kubernetes-centric approach.
 

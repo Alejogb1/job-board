@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "how-to-generate-a-random-fraction-within-a-specific-range"
 ---
 
-Okay so you need to generate a random fraction within a specific range alright I've wrestled with this beast before back in the early days of my embedded systems work Man those were the trenches lets dive in
+ so you need to generate a random fraction within a specific range I've wrestled with this beast before back in the early days of my embedded systems work Man those were the trenches lets dive in
 
 First thing first you need to understand what we're dealing with under the hood at its core computers can't generate truly random numbers they generate pseudorandom numbers which are sequences that appear random but are actually deterministic based on a seed value most programming languages give you a way to do this with a built in function usually called something like `random()` or `rand()` these functions usually return an integer so we need to play with it to get a fraction within a range I'll show the code now
 

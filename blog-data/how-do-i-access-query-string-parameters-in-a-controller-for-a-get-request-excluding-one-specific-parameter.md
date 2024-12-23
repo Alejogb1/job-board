@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-access-query-string-parameters-in-a-controller-for-a-get-request-excluding-one-specific-parameter"
 ---
 
-Alright, let's tackle this. I've seen this scenario pop up countless times in various projects, and the approaches can subtly differ based on the framework and language you're working with. So, let’s focus on crafting a clean, maintainable solution. I’ll be working from the perspective of someone who's spent years knee-deep in web application development. You’re sending a get request, and need to retrieve parameters from the query string, with one exception – let's break it down.
+Alright,  I've seen this scenario pop up countless times in various projects, and the approaches can subtly differ based on the framework and language you're working with. So, let’s focus on crafting a clean, maintainable solution. I’ll be working from the perspective of someone who's spent years knee-deep in web application development. You’re sending a get request, and need to retrieve parameters from the query string, with one exception – let's break it down.
 
 The core concept is about parsing the query string, which essentially is the part of the url that appears after the '?' symbol. It's a series of key-value pairs separated by '&' symbols. Your controller, regardless of the framework, should provide mechanisms to extract this information. Now, let's assume for this discussion, that the problematic parameter that you don't want is named 'ignoreMe'. This is a very common situation that comes when dealing with user filters in a web app.
 

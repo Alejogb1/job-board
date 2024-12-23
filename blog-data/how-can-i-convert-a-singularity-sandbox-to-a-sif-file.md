@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-can-i-convert-a-singularity-sandbox-to-a-sif-file"
 ---
 
-Alright, let's tackle this. It’s a process I’ve had to navigate a few times, especially back when containerization workflows were a bit less streamlined. Converting a singularity sandbox directory into a `.sif` file isn't inherently complex, but understanding the nuances can save you considerable time and frustration. I’ve encountered situations where incorrect handling led to corrupted images or unexpected behavior, so it’s worth getting the specifics clear.
+Alright,  It’s a process I’ve had to navigate a few times, especially back when containerization workflows were a bit less streamlined. Converting a singularity sandbox directory into a `.sif` file isn't inherently complex, but understanding the nuances can save you considerable time and frustration. I’ve encountered situations where incorrect handling led to corrupted images or unexpected behavior, so it’s worth getting the specifics clear.
 
 Fundamentally, a singularity sandbox is just an unpacked container file system residing on your disk. Think of it as a prepared stage for a play—all the props (libraries, executables, data) are there, but it isn't yet a single packaged show. The `.sif` file, on the other hand, is the final, immutable image. Converting from the sandbox involves essentially packaging up that unpacked file system into the self-contained `.sif` format, which singularity then executes.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-efficiently-extract-photos-from-a-zip-file-in-c-without-using-ziparchive"
 ---
 
-Alright, let's tackle this. It's a situation I've encountered more than once, often when dealing with legacy systems or specific constraints that prevent the use of the `System.IO.Compression.ZipArchive` class. While that class provides a convenient and robust solution, sometimes we have to delve into the raw structure of zip files ourselves. So, yes, extracting images efficiently from a zip file in C# without relying on the convenience of `ZipArchive` is definitely achievable, though it does involve a lower level of interaction with the file format.
+Alright,  It's a situation I've encountered more than once, often when dealing with legacy systems or specific constraints that prevent the use of the `System.IO.Compression.ZipArchive` class. While that class provides a convenient and robust solution, sometimes we have to delve into the raw structure of zip files ourselves. So, yes, extracting images efficiently from a zip file in C# without relying on the convenience of `ZipArchive` is definitely achievable, though it does involve a lower level of interaction with the file format.
 
 The key is understanding the basic structure of a zip archive. Fundamentally, it consists of a series of local file headers, each followed by its corresponding compressed data, and then a central directory at the end that provides a table of contents. This central directory is critical for efficiently locating the files within the archive without having to parse through the whole thing sequentially.
 

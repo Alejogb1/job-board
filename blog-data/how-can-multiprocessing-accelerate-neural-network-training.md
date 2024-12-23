@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-multiprocessing-accelerate-neural-network-training"
 ---
 
-Alright, let's tackle this. I remember a project a few years back where we were training a particularly hefty convolutional neural network for image classification. The initial training time on a single CPU was, frankly, excruciating. Days. We explored several avenues, and leveraging multiprocessing made a significant impact. Let me explain why and how.
+Alright,  I remember a project a few years back where we were training a particularly hefty convolutional neural network for image classification. The initial training time on a single CPU was, frankly, excruciating. Days. We explored several avenues, and leveraging multiprocessing made a significant impact. Let me explain why and how.
 
 The core issue with training large neural networks is the computational cost, especially during backpropagation. Each training iteration requires numerous matrix multiplications and gradient calculations, which can overwhelm a single processor. This is where multiprocessing shines. Instead of executing these operations sequentially on a single core, we can divide the workload across multiple cores (or even multiple machines), achieving significant speedups. Specifically, the primary benefit is in **parallelizing the data loading and the computation of gradients during training**.
 

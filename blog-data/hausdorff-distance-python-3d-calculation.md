@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "hausdorff-distance-python-3d-calculation"
 ---
 
-Okay so you're asking about Hausdorff distance in 3D using Python right I get it Been there done that plenty of times it's a bit of a head-scratcher if you're not careful Especially in 3D where things get hairy fast So here’s the deal from my perspective someone who's wrestled with this monster more than a few times
+ so you're asking about Hausdorff distance in 3D using Python right I get it Been there done that plenty of times it's a bit of a head-scratcher if you're not careful Especially in 3D where things get hairy fast So here’s the deal from my perspective someone who's wrestled with this monster more than a few times
 
 First off why Hausdorff distance It's all about measuring how far apart two sets of points are from each other it’s not like calculating a distance between two points you are measuring distances between two sets of points A bit more involved than euclidean distance if you ask me In 3D this becomes crucial when you are dealing with point clouds or meshed objects and you need to know how similar or how different they are For example think of two slightly different scans of the same object the Hausdorff distance can tell you how much these differ It's a maximum of the minimum distances is how I try to remember it
 

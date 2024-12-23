@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "error-exceeded-maxredirects-redirect-loop-error"
 ---
 
-Alright so you're hitting the dreaded "exceeded maxredirects redirect loop" error classic web dev pain I've seen this rodeo a few too many times myself Let's break it down and I'll share some of the hard learned lessons I got banging my head against this particular wall back in the day
+so you're hitting the dreaded "exceeded maxredirects redirect loop" error classic web dev pain I've seen this rodeo a few too many times myself Let's break it down and I'll share some of the hard learned lessons I got banging my head against this particular wall back in the day
 
 First off what this error is telling you is simple your browser is stuck in an infinite loop It's trying to follow a redirect which points it somewhere else that then redirects it back to the original spot or close enough that it triggers a loop and eventually the browser gives up and throws this error at you It's like a digital version of that cartoon where the guy keeps opening doors and finding himself back in the same room hilarious when animated less so when debugging at 3 AM
 
@@ -108,7 +108,7 @@ The solution in these cases usually involves ensuring consistent cookie paths se
 
 **How to Debug**
 
-Alright so you've got a loop what to do This is the actual interesting part
+so you've got a loop what to do This is the actual interesting part
 
 *   **Browser Dev Tools:**  Your browser's dev tools are your best friend Open them up and go to the Network tab Watch the requests and redirects You'll see a chain of responses that lead to the loop Look at the status codes and the headers especially `location` headers to see where things are being bounced If you see the same request bouncing over and over you've got it
 *   **Server Logs:** Check your server logs for any clues. Server logs can tell you more about what's happening at the server side what redirects were triggered for which pages etc.
@@ -117,7 +117,7 @@ Alright so you've got a loop what to do This is the actual interesting part
 
 **Resources**
 
-Alright so you don't want a link fine Here are some classic reading materials and my personal recommendations:
+so you don't want a link fine Here are some classic reading materials and my personal recommendations:
 
 *   **"HTTP: The Definitive Guide" by David Gourley and Brian Totty:**  This is an old book but its still relevant if you need a deep dive into the inner workings of HTTP including redirects It's like the bible for web protocols and you'll find most of the needed information to understand what redirect rules are and how they are triggered
 *   **"Understanding the Nginx Configuration File" by Mike Shultz:**  This is a great book if you are using Nginx for web servers. It gives you examples of configuration scenarios including redirect examples and ways to correctly debug configurations.

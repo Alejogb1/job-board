@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "must-declare-the-scalar-variable-id-sql-server"
 ---
 
-Okay so you're hitting that "must declare the scalar variable id" error in SQL Server right? Yeah I've been there done that got the t-shirt and probably spilled coffee on it at 3am debugging. This is like a classic SQL noob trap but even seasoned devs fumble with it now and again. I swear it's a right of passage in SQL Server land.
+ so you're hitting that "must declare the scalar variable id" error in SQL Server right? Yeah I've been there done that got the t-shirt and probably spilled coffee on it at 3am debugging. This is like a classic SQL noob trap but even seasoned devs fumble with it now and again. I swear it's a right of passage in SQL Server land.
 
 Basically SQL Server is very particular about how you handle variables unlike say python where you just kinda throw things around and hope for the best. In SQL Server you need to explicitly tell it "hey I'm gonna use a variable and this is its name and this is its data type" It's not gonna guess or assume anything. if you don't declare it SQL Server throws that error back at you like a particularly grumpy compiler.
 
@@ -12,7 +12,7 @@ Let's talk specifics. The error means you're using a variable probably called `@
 
 I've seen this pop up in a few different contexts. Usually it’s in stored procedures triggers or just plain ad-hoc scripts where you're not careful about variable declarations. For example sometimes I'm writing a quick update statement and I just start throwing variables around forgetting that SQL Server cares about these details.
 
-Alright let's look at some actual scenarios and how to fix them.
+let's look at some actual scenarios and how to fix them.
 
 **Scenario 1: Simple Update Script**
 
@@ -72,13 +72,13 @@ BEGIN
 END;
 ```
 
-Okay now we declared the variable `@id` and we passed the value of `@itemId` to it.
+ now we declared the variable `@id` and we passed the value of `@itemId` to it.
 Notice how inside the stored procedure we have `DECLARE @id INT`. This declares a *local* variable named @id. Then I passed the value from the parameter to the variable `@id`. The procedure will now run as expected.
 
 **Scenario 3: Dynamic SQL**
 
 Dynamic SQL is fun because it can lead to all sorts of interesting problems. If you're building SQL queries as strings you gotta watch out for variable scopes.
-Okay here is a common mistake.
+ here is a common mistake.
 
 ```sql
 --Incorrect code will throw the error
@@ -116,8 +116,8 @@ In the better code I’ve passed a parameter `idParam` to `sp_executesql` it’s
 
 Always declare your variables before using them. SQL Server is not your friend here it's a stickler for the rules. Also please if your queries are getting complicated or long use stored procedures or views rather than inline sql. Keep your code organized because when it breaks at 3 am you don't want a headache trying to find out where you forgot that single declaration. Debugging is hard enough without bad code.
 
-Now for the obligatory joke: Why was the SQL query sad? Because it had too many joins. Okay back to code.
+Now for the obligatory joke: Why was the SQL query sad? Because it had too many joins.  back to code.
 
 As for resources I'd suggest getting your hands on some good old textbooks rather than relying solely on online tutorials. For general SQL Server knowledge I found "Microsoft SQL Server 2019 Query Performance Tuning" by Grant Fritchey and "SQL Server 2019 Internals" by Kalen Delaney to be incredibly helpful. They delve deeper into how SQL Server works under the hood which helps you understand why you need to declare variables and the performance implications of your choices. Another good resource is "SQL Queries for Mere Mortals" by John Viescas and Michael Hernandez for a more gentle approach. It's a classic for a reason.
 
-Okay that's pretty much it. The "must declare the scalar variable" error is a pain but once you know what causes it and how to fix it it's actually pretty straightforward. Declare your variables keep your code tidy and you'll be good. Happy coding!
+ that's pretty much it. The "must declare the scalar variable" error is a pain but once you know what causes it and how to fix it it's actually pretty straightforward. Declare your variables keep your code tidy and you'll be good. Happy coding!

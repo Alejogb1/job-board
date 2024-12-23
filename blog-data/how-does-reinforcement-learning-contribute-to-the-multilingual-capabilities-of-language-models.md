@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "how-does-reinforcement-learning-contribute-to-the-multilingual-capabilities-of-language-models"
 ---
 
-Okay so you wanna know how reinforcement learning RL  boosts multilingual language models right  It's a pretty cool area  Basically imagine you have a super smart parrot  it can kinda squeak out a few words in different languages but it's all pretty messy right  RL is like giving that parrot a really sophisticated training program  Instead of just showing it phrases and hoping it learns  you reward it for getting things right and punish it for messing up across multiple languages  That's the core idea  
+ so you wanna know how reinforcement learning RL  boosts multilingual language models right  It's a pretty cool area  Basically imagine you have a super smart parrot  it can kinda squeak out a few words in different languages but it's all pretty messy right  RL is like giving that parrot a really sophisticated training program  Instead of just showing it phrases and hoping it learns  you reward it for getting things right and punish it for messing up across multiple languages  That's the core idea  
 
 The neat thing is that RL lets you shape the model's behavior in a way that's hard to do with just standard supervised learning  With supervised learning you're basically giving the model answers  "This English sentence translates to this Spanish sentence"  But with RL you're giving it a goal "Translate this as accurately as possible in both English and Spanish and get a high score"  This is especially helpful for multilingual scenarios because you can design reward functions that explicitly encourage things like consistency across languages or fluency in each individual language
 

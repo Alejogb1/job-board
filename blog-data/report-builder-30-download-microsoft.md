@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "report-builder-30-download-microsoft"
 ---
 
-Okay so you’re asking about Microsoft Report Builder 3.0 and where to download it right Yeah I get that its a common pain point for anyone who’s been wrestling with SSRS reporting for a while
+ so you’re asking about Microsoft Report Builder 3.0 and where to download it right Yeah I get that its a common pain point for anyone who’s been wrestling with SSRS reporting for a while
 
 I've been down that rabbit hole myself believe me I’m talking way back when we were still calling it SQL Reporting Services not this fancy SSRS thing I remember clearly one project back in 2012 or maybe it was 13 where I needed to build some super complex reports for our financial guys the kind that had like nested tables and calculated fields everywhere it was insane
 

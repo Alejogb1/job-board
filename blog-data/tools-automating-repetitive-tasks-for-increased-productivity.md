@@ -4,7 +4,7 @@ date: '2024-11-15'
 id: 'tools-automating-repetitive-tasks-for-increased-productivity'
 ---
 
-Okay, so you're looking for ways to automate repetitive tasks right  That's a total game changer, trust me You can actually free up so much time and focus on the fun stuff  And I'm not just talking about like, setting reminders on your phone, I'm talking about some seriously powerful tools that can literally do your work for you  
+, so you're looking for ways to automate repetitive tasks right  That's a total game changer, trust me You can actually free up so much time and focus on the fun stuff  And I'm not just talking about like, setting reminders on your phone, I'm talking about some seriously powerful tools that can literally do your work for you  
 
 Let's get into it, the first thing that comes to mind is **automation tools**  There are tons out there and they can automate pretty much anything from scheduling social media posts to managing your emails  Take **Zapier** for example  It's basically a bridge between all your different apps  You can create these little "zaps" that connect two or more apps and automate actions  So, for instance, if you get a new email in your inbox, Zapier can automatically create a task in your to-do list  Pretty cool, right?
 

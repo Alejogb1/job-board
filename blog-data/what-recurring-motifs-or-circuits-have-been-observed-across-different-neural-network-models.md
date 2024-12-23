@@ -4,7 +4,7 @@ date: "2024-12-11"
 id: "what-recurring-motifs-or-circuits-have-been-observed-across-different-neural-network-models"
 ---
 
-Okay so you wanna know about recurring motifs in neural nets right  Cool beans  I've been digging into this stuff lately it's wild how much common ground there is even between seemingly super different architectures
+ so you wanna know about recurring motifs in neural nets right  Cool beans  I've been digging into this stuff lately it's wild how much common ground there is even between seemingly super different architectures
 
 First off forget about thinking of them as totally unique things  They're all just different ways of shuffling data around and figuring out patterns  Think LEGOs you got your basic bricks and then you make awesome things  Here the bricks are layers and activation functions and the awesome things are image classifiers or language models or whatever
 

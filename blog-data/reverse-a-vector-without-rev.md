@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "reverse-a-vector-without-rev"
 ---
 
-Okay so you wanna reverse a vector right without using the built in `rev` function I've been there dude more times than I'd like to admit You'd think its simple right but then you get some weird edge case or some crazy performance bottleneck I remember back in college when I was doing a project on image processing we had to do a lot of matrix manipulations and reversing vectors came up like all the time It was this stupid algorithm where we had to flip a color array back and forth for some convolution filter thing and well using the standard reverse was like super slow especially when working with huge images plus we were trying to be cool by implementing it ourselves you know the whole "not needing libraries" phase
+ so you wanna reverse a vector right without using the built in `rev` function I've been there dude more times than I'd like to admit You'd think its simple right but then you get some weird edge case or some crazy performance bottleneck I remember back in college when I was doing a project on image processing we had to do a lot of matrix manipulations and reversing vectors came up like all the time It was this stupid algorithm where we had to flip a color array back and forth for some convolution filter thing and well using the standard reverse was like super slow especially when working with huge images plus we were trying to be cool by implementing it ourselves you know the whole "not needing libraries" phase
 
 Anyway so the first thing you think of is a loop right just iterate backwards and copy everything to a new vector that’s fine simple easy to read maybe you use a for loop or maybe a while loop whatever floats your boat something like this works
 
@@ -37,7 +37,7 @@ int main() {
     return 0;
 }
 ```
-This is like the most basic solution possible works good for small vectors but it's kinda inefficient it creates a new vector allocates memory for each element and then copies stuff this is okay for most use cases but when things get big or you have tight loops like I had back with my image processing thing then this solution suffers from the unnecessary memory allocations so it slows things down a lot especially when you have a giant vector like the pixels of a huge image
+This is like the most basic solution possible works good for small vectors but it's kinda inefficient it creates a new vector allocates memory for each element and then copies stuff this is  for most use cases but when things get big or you have tight loops like I had back with my image processing thing then this solution suffers from the unnecessary memory allocations so it slows things down a lot especially when you have a giant vector like the pixels of a huge image
 
 Then I was messing around with pointers you know trying to get fancy you could iterate two pointers one from the start and one from the end then swap them and keep moving them towards the middle that way you can reverse the vector in place you're not allocating new memory at all like so:
 
@@ -110,7 +110,7 @@ int main() {
 
 This recursive implementation uses a helper function its kinda a divide and conquer situation you keep swapping the elements from the ends and then make a recursive call to do the same for the rest of the vector it does not need extra storage like our basic first method since it modifies the input vector and it has a very nice simplicity to it when you look at it I never use it though I admit but its good to know. My boss however thought it was the best thing since slice bread for code readability.
 
-So okay which method to use I would say it depends on the specific case for most situations the in place swapping is the fastest and most memory efficient method I would use that for any production code or when dealing with large datasets the basic looping copy method is good for when you need a copy of the reversed vector and don’t want to modify the original so it is a very reasonable approach and the recursive solution is only useful if you are doing academic stuff or wanna flex in front of someone who probably is less knowledgeable about this kind of things
+So  which method to use I would say it depends on the specific case for most situations the in place swapping is the fastest and most memory efficient method I would use that for any production code or when dealing with large datasets the basic looping copy method is good for when you need a copy of the reversed vector and don’t want to modify the original so it is a very reasonable approach and the recursive solution is only useful if you are doing academic stuff or wanna flex in front of someone who probably is less knowledgeable about this kind of things
 
 I have another funny story from when I was doing some kernel programming the compiler was acting all funny and kept reversing the vectors I needed to have in order I was going nuts thinking my code was the problem only to find out that it was some optimization bug with the compiler after wasting an entire afternoon on the issue that was my funny code story for the day.
 

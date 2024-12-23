@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-enable-a-button-with-at-least-one-checkbox-checked-using-stimulusjs"
 ---
 
-Okay, let's tackle this. I remember facing a similar challenge back when I was building a complex form wizard for a client's e-commerce platform. We had a bunch of interdependent input fields, and enabling a "next" button only when specific conditions were met, primarily involving checkboxes, was crucial for a smooth user experience. It's a fairly common scenario, and Stimulus.js provides a clean, declarative approach to solving it.
+,  I remember facing a similar challenge back when I was building a complex form wizard for a client's e-commerce platform. We had a bunch of interdependent input fields, and enabling a "next" button only when specific conditions were met, primarily involving checkboxes, was crucial for a smooth user experience. It's a fairly common scenario, and Stimulus.js provides a clean, declarative approach to solving it.
 
 The core problem is maintaining the button's enabled/disabled state based on the current state of at least one checkbox being selected. We're essentially reacting to changes in checkbox input. Stimulus's controller lifecycle, combined with its `targets` and `values` features, make this relatively straightforward.
 

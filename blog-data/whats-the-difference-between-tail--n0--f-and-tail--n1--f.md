@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "whats-the-difference-between-tail--n0--f-and-tail--n1--f"
 ---
 
-Alright, let's tackle this. I recall a particularly thorny debugging session back in my early days working with distributed systems. We had a logging setup that seemed completely opaque until I really got down into the nitty-gritty of `tail`. The distinction between `tail -n0 -f` and `tail -n1 -f` might seem minimal at first glance, but trust me, in certain scenarios it makes all the difference. It's a nuanced point that goes beyond a simple line count and fundamentally affects how you observe incoming data.
+Alright,  I recall a particularly thorny debugging session back in my early days working with distributed systems. We had a logging setup that seemed completely opaque until I really got down into the nitty-gritty of `tail`. The distinction between `tail -n0 -f` and `tail -n1 -f` might seem minimal at first glance, but trust me, in certain scenarios it makes all the difference. It's a nuanced point that goes beyond a simple line count and fundamentally affects how you observe incoming data.
 
 The core concept with `tail` is observing the *end* of a file, typically for monitoring logs or other dynamically updated data. The `-n` option specifies how many lines to display. The `-f` option, of course, is the 'follow' command which means it will remain running, waiting for new lines and displaying them as they are added to the file. Now, let's break down the specifics of these two:
 

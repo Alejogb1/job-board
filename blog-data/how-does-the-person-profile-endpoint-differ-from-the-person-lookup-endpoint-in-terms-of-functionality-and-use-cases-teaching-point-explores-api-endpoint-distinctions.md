@@ -8,7 +8,7 @@ Second suggestion: Could you elaborate on the process of handling rate limits wh
 Third suggestion:  What are some strategies to optimize the performance of API requests when retrieving large datasets? (Teaching point: Highlights performance optimization techniques.)
 Fourth Suggestion: In what scenarios might you employ caching when working with APIs, and what considerations are involved? (Teaching point: Discusses caching strategies.)
 Fifth Suggestion: How would you approach debugging issues when an API call returns unexpected results? (Teaching point: Covers debugging techniques.)
-Okay so lets break down these questions about apis seems pretty straightforward stuff we deal with everyday i guess
+ so lets break down these questions about apis seems pretty straightforward stuff we deal with everyday i guess
 
 first up the difference between a profile endpoint and a lookup endpoint its like asking whats different between my full profile and just finding me by id right the profile endpoint usually dumps everything a lot of fields details about me my connections my recent stuff everything you can think of related to a specific user think of it like a full user resource object complete with all the bells and whistles you would want for a dedicated user page or view its designed to give you a comprehensive snapshot of a single user all at once
 
@@ -55,7 +55,7 @@ data = make_api_request(url, headers)
 if data:
   print(data.json())
 ```
-okay onto optimizing api requests for large datasets this one gets tricky because often apis will just return huge amounts of data if you dont ask right the easiest one is pagination and filtering api's support these two things all the time they are standard practice
+ onto optimizing api requests for large datasets this one gets tricky because often apis will just return huge amounts of data if you dont ask right the easiest one is pagination and filtering api's support these two things all the time they are standard practice
 
 pagination is the concept of requesting data in smaller chunks its about sending an offset or page number and a limit and the api returns that segment of data instead of the entire dataset this way you dont load everything into memory and slow down everything also its efficient if you need all the data you can just repeatedly page through until there is nothing left filtering is about being specific you tell the api what kind of information you want to get using query parameters or specific filter options the api then only returns records matching your criteria rather than everything again reduces bandwidth usage and server processing time
 

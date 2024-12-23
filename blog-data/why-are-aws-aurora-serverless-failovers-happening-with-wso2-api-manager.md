@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-are-aws-aurora-serverless-failovers-happening-with-wso2-api-manager"
 ---
 
-Okay, let's tackle this. I've seen this particular headache a few times, usually when the architecture seems solid on paper but real-world load throws things into disarray. The combination of WSO2 API Manager and AWS Aurora Serverless, especially when experiencing failovers, isn’t as straightforward as one might hope. The core issue often boils down to how connection pooling, resource scaling, and database configuration interact, or rather, *don’t* interact perfectly.
+,  I've seen this particular headache a few times, usually when the architecture seems solid on paper but real-world load throws things into disarray. The combination of WSO2 API Manager and AWS Aurora Serverless, especially when experiencing failovers, isn’t as straightforward as one might hope. The core issue often boils down to how connection pooling, resource scaling, and database configuration interact, or rather, *don’t* interact perfectly.
 
 First, let’s unpack what’s likely happening. Aurora Serverless, by its nature, automatically scales resources based on demand, including the underlying compute capacity and memory. This is fantastic for cost optimization, but it introduces variability in the database endpoint itself as it adds or removes resources behind the scenes. While these transitions are designed to be transparent, WSO2 API Manager, particularly if not configured optimally, can be caught off guard.
 

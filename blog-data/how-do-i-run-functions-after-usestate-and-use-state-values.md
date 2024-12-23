@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-run-functions-after-usestate-and-use-state-values"
 ---
 
-Okay, let’s tackle this. It’s a common stumbling block when you're working with react and asynchronous updates, especially coming from a more imperative programming background. I've seen this pattern trip up developers many times, and admittedly, I've been there myself, early in my journey. The challenge lies in understanding that `useState` updates aren’t immediately applied, and attempting to use the new value directly after calling the setter function often leads to unexpected behavior.
+, let’s tackle this. It’s a common stumbling block when you're working with react and asynchronous updates, especially coming from a more imperative programming background. I've seen this pattern trip up developers many times, and admittedly, I've been there myself, early in my journey. The challenge lies in understanding that `useState` updates aren’t immediately applied, and attempting to use the new value directly after calling the setter function often leads to unexpected behavior.
 
 The core issue is that `useState` setters are asynchronous. When you call a setter (like `setCount(count + 1)`), react schedules an update to the component's state. This update doesn't happen immediately. Instead, it's enqueued, and the actual state update occurs during react's re-render cycle. Consequently, if you try to access the `count` value directly after calling `setCount`, you'll still get the *old* value until the component re-renders.
 

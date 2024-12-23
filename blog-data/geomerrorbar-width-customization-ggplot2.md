@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "geomerrorbar-width-customization-ggplot2"
 ---
 
-Okay so you're having trouble with `geom_errorbar` width in ggplot2 right I get it I've been there many times trust me. Its always something with those ggplot2 visuals. Let me break it down for you its a pretty common pain point and Ive spent way too much time on this.
+ so you're having trouble with `geom_errorbar` width in ggplot2 right I get it I've been there many times trust me. Its always something with those ggplot2 visuals. Let me break it down for you its a pretty common pain point and Ive spent way too much time on this.
 
 See the thing is ggplot2’s `geom_errorbar` doesn't directly accept a width argument that controls the error bar caps its more nuanced than that. You're not the first person who's been tripped up by this and you sure won't be the last. Back in like 2016 I remember working on this project for my old company it was all about A/B testing results for some new feature they were releasing. I was making plots and the error bars were just sticking out like sore thumbs completely unaligned with the actual data points. At that moment I knew I had to dive deep into the documentation of ggplot2 and its aesthetics options. I recall spending hours fiddling with widths to get them just right and still some times I would find a minor error that would take a lot of time to fix. You may be asking why not use the width argument if it exists well it's not what you expect it is related to the x axis values.
 
@@ -23,7 +23,7 @@ data <- data.frame(
     error = runif(15, min = 0.5, max = 1.5)
 )
 ```
-Alright with that data frame created now let’s make our first plot but without any adjustments we will see how it defaults.
+with that data frame created now let’s make our first plot but without any adjustments we will see how it defaults.
 
 ```R
 ggplot(data, aes(x = group, y = value, ymin = value - error, ymax = value + error)) +
@@ -31,7 +31,7 @@ ggplot(data, aes(x = group, y = value, ymin = value - error, ymax = value + erro
     geom_errorbar()
 
 ```
-Okay you see the problem the error bars extend across the points not what you want right. So lets add the `width` argument to `geom_errorbar` and check the result.
+ you see the problem the error bars extend across the points not what you want right. So lets add the `width` argument to `geom_errorbar` and check the result.
 
 ```R
 ggplot(data, aes(x = group, y = value, ymin = value - error, ymax = value + error)) +

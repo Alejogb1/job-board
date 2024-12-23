@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-debug-a-gas-estimation-failed-error-in-brownie-smart-contracts"
 ---
 
-Okay, let's tackle this "gas estimation failed" issue in Brownie. I’ve certainly seen my share of these over the years, and it’s usually not a straightforward problem. It often boils down to an issue within the smart contract's logic that the Ethereum Virtual Machine (evm) can't easily predict or compute the required gas for, or, sometimes, the network parameters are playing a nasty trick on us. Let’s delve into it.
+, let's tackle this "gas estimation failed" issue in Brownie. I’ve certainly seen my share of these over the years, and it’s usually not a straightforward problem. It often boils down to an issue within the smart contract's logic that the Ethereum Virtual Machine (evm) can't easily predict or compute the required gas for, or, sometimes, the network parameters are playing a nasty trick on us. Let’s delve into it.
 
 First off, the "gas estimation failed" error in Brownie primarily indicates that the transaction you're trying to execute is encountering a situation where the evm cannot determine how much gas it will ultimately need. This doesn't mean your contract is necessarily faulty, but it absolutely means something within its execution path is confusing the gas estimation process. It's crucial to understand that gas estimation precedes actual execution; if it fails, the transaction never even reaches the blockchain for processing.
 

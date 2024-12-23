@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-are-active-storage-validations-failing-in-ruby-on-rails"
 ---
 
-Alright, let's tackle this. I remember back in the early days of Rails 5.2, when Active Storage was relatively new, we encountered this validation headache more than a few times. It's definitely a common pain point, and pinpointing the exact reason can sometimes feel like tracing a faulty circuit. Let’s break down why those Active Storage validations might be throwing tantrums in your Rails application.
+Alright,  I remember back in the early days of Rails 5.2, when Active Storage was relatively new, we encountered this validation headache more than a few times. It's definitely a common pain point, and pinpointing the exact reason can sometimes feel like tracing a faulty circuit. Let’s break down why those Active Storage validations might be throwing tantrums in your Rails application.
 
 Essentially, the problem boils down to understanding the lifecycle and nature of Active Storage attachments, and how Rails hooks its validations into that process. Unlike typical model attributes, Active Storage doesn’t directly store the file data in your model’s database record. Instead, it creates records in the `active_storage_blobs` and `active_storage_attachments` tables, linking them to your model via polymorphic associations. This indirection is fantastic for scalability and flexibility, but it also means validations operate on a different landscape than, say, a simple string attribute.
 

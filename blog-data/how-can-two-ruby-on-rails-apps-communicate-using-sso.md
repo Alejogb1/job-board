@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-two-ruby-on-rails-apps-communicate-using-sso"
 ---
 
-Okay, let's unpack this. I recall a rather involved project back in '16, where we had to integrate two separate Rails applications – a customer-facing portal and an internal admin system. Both needed shared user sessions, meaning, in essence, single sign-on (SSO). The naive approach would have been to just share the user database, but that quickly gets messy and defeats the purpose of having two distinct applications. So, we opted for a more robust and flexible approach, leveraging an identity provider.
+, let's unpack this. I recall a rather involved project back in '16, where we had to integrate two separate Rails applications – a customer-facing portal and an internal admin system. Both needed shared user sessions, meaning, in essence, single sign-on (SSO). The naive approach would have been to just share the user database, but that quickly gets messy and defeats the purpose of having two distinct applications. So, we opted for a more robust and flexible approach, leveraging an identity provider.
 
 Now, when talking about SSO in this context, we’re essentially dealing with the process where a user authenticates once and can then access multiple applications without re-authenticating. The core idea is to delegate authentication to a central service, often called an identity provider (IdP), rather than each application handling it independently. There are several industry-standard protocols for accomplishing this, but in our case, and given the nature of many Rails environments, we opted for the Security Assertion Markup Language (SAML) protocol, specifically SAML 2.0, given its maturity and widespread support.
 

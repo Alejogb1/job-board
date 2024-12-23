@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-restore-nuget-packages-from-a-private-feed-during-docker-container-builds"
 ---
 
-Okay, let's tackle this. It’s a problem I’ve certainly encountered more than once, particularly during those early cloud-native migrations. Handling NuGet packages in Docker builds, especially from private feeds, requires a solid understanding of both Dockerfile mechanics and NuGet configuration. I’ve seen it go sideways in several ways, mostly revolving around authentication and caching. Here’s how I approach it, drawing from a few hard-earned lessons.
+,  It’s a problem I’ve certainly encountered more than once, particularly during those early cloud-native migrations. Handling NuGet packages in Docker builds, especially from private feeds, requires a solid understanding of both Dockerfile mechanics and NuGet configuration. I’ve seen it go sideways in several ways, mostly revolving around authentication and caching. Here’s how I approach it, drawing from a few hard-earned lessons.
 
 First off, consider the fundamental issue: by default, Docker build processes are isolated and, crucially, lack the context of your development environment’s configured NuGet sources. They don't inherently *know* about your internal package feeds, nor do they possess any credentials to access them. This is deliberate, for security reasons. So, we have to explicitly tell the container build process where to look for packages and how to authenticate if necessary.
 

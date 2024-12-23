@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-a-grails-async-subscriber-encountering-sqlexception-pooledconnection-has-already-been-closed"
 ---
 
-Okay, let's delve into this. I recall a particularly tricky debugging session several years back working on a large-scale application utilizing Grails' asynchronous messaging with RabbitMQ. We were seeing the dreaded `SQLException: PooledConnection has already been closed` in our `@Subscriber` methods, and it took a solid few days to nail down the root cause. It's not always straightforward, and I've seen this trip up many developers, so let’s unpack what's happening.
+, let's delve into this. I recall a particularly tricky debugging session several years back working on a large-scale application utilizing Grails' asynchronous messaging with RabbitMQ. We were seeing the dreaded `SQLException: PooledConnection has already been closed` in our `@Subscriber` methods, and it took a solid few days to nail down the root cause. It's not always straightforward, and I've seen this trip up many developers, so let’s unpack what's happening.
 
 The core issue isn't typically with Grails itself, or even with RabbitMQ. It revolves around how database connection pooling operates in conjunction with the asynchronous nature of `@Subscriber` methods. Let's dissect the lifecycle of a database connection when dealing with asynchronous processing, specifically within the Grails context. When a message arrives that triggers an `@Subscriber`, a thread is spawned (or pulled from a thread pool) to execute that method. This thread needs a database connection if it interacts with the data layer. Normally, this connection is obtained from the connection pool maintained by your JDBC driver and datasource configuration.
 

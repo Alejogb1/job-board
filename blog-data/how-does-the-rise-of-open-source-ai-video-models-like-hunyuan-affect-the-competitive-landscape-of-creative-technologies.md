@@ -4,7 +4,7 @@ date: "2024-12-05"
 id: "how-does-the-rise-of-open-source-ai-video-models-like-hunyuan-affect-the-competitive-landscape-of-creative-technologies"
 ---
 
-Okay so you wanna talk about Hunyuan and how it's shaking things up in the creative tech world right  It's wild isn't it  Open source AI video models  a few years ago that would have been science fiction now it's practically everyday news  Hunyuan's a big player  and its open-source nature is the real game changer
+ so you wanna talk about Hunyuan and how it's shaking things up in the creative tech world right  It's wild isn't it  Open source AI video models  a few years ago that would have been science fiction now it's practically everyday news  Hunyuan's a big player  and its open-source nature is the real game changer
 
 Think about it before this whole open-source AI thing really took off the creative tech landscape was pretty much dominated by big players  Adobe  Autodesk  Maxon  you know the usual suspects  They had their proprietary software their hefty subscription fees and their iron grip on the market  If you wanted to do serious 3D animation or video editing you pretty much had to play their game
 

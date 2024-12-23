@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-multivalent-features-be-inferred-from-a-pandas-dataframe-using-tfdv"
 ---
 
-Okay, let's tackle this one. I've dealt with multivalent features quite a bit over the years, particularly when working on recommendation systems that involved user behavior logs and product metadata. The complexity in inferring schemas for these features, especially when they're nested within a pandas dataframe, can be tricky but it's very manageable with TensorFlow Data Validation (tfdv). So, let's get down to the specifics.
+, let's tackle this one. I've dealt with multivalent features quite a bit over the years, particularly when working on recommendation systems that involved user behavior logs and product metadata. The complexity in inferring schemas for these features, especially when they're nested within a pandas dataframe, can be tricky but it's very manageable with TensorFlow Data Validation (tfdv). So, let's get down to the specifics.
 
 When we talk about multivalent features, we're referring to columns that can hold multiple values for a single instance. Think of it like a column listing all the genres a particular movie falls under or all the categories a user might be interested in. These are not your standard single-value attributes and require a different approach during schema inference. The problem isn't so much that pandas can’t store them – after all, you could use lists or other container types within a dataframe cell – but rather how tfdv understands and validates them against a predefined schema. The goal is to ensure consistency and avoid data issues down the line.
 

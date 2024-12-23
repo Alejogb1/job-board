@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-did-docker-desktop-stop-in-windows-container-mode"
 ---
 
-Okay, let's get into this. I’ve seen this particular issue rear its head more times than I care to count, particularly back when we were transitioning our legacy monolithic applications to a containerized microservices architecture. The infamous "Docker Desktop stopped in Windows container mode" message – it’s usually a symptom of a few underlying conditions, and rarely is it a straightforward fix. Let’s break down some common culprits and the strategies I've found most effective in addressing them.
+, let's get into this. I’ve seen this particular issue rear its head more times than I care to count, particularly back when we were transitioning our legacy monolithic applications to a containerized microservices architecture. The infamous "Docker Desktop stopped in Windows container mode" message – it’s usually a symptom of a few underlying conditions, and rarely is it a straightforward fix. Let’s break down some common culprits and the strategies I've found most effective in addressing them.
 
 First, it’s crucial to understand that Docker Desktop in Windows container mode fundamentally relies on the Windows container engine. It's not just a simple matter of Docker itself; we're also dealing with the intricacies of the Windows kernel's containerization features. When you see that error, it's almost always an indication that something has gone awry in the interaction between Docker Desktop and the underlying Windows container engine. This interruption often manifests with the infamous "moby" vm not being accessible. This isn’t unexpected, given the additional layers involved.
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "what-is-the-occasion-when-we-have-to-use-the-net-data-type-in-systemverilog"
 ---
 
-Okay so you're asking about `net` data types in SystemVerilog right Seems like a pretty straightforward question but I've seen newcomers trip over this so let's break it down
+ so you're asking about `net` data types in SystemVerilog right Seems like a pretty straightforward question but I've seen newcomers trip over this so let's break it down
 
 First off I've been doing this SystemVerilog thing for like ages back in the old days we were just using Verilog-95 or something ancient and the whole `net` versus `logic` thing was like a revelation It felt so clunky at the start but it actually makes sense once you grasp the fundamentals
 

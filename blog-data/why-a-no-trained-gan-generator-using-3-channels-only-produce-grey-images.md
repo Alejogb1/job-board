@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "why-a-no-trained-gan-generator-using-3-channels-only-produce-grey-images"
 ---
 
-alright, let's tackle this. so, a gan, not trained, producing only grey output when fed 3 channels. i've seen this rodeo more times than i care to remember, and it usually boils down to a few key issues. it's almost never some deep, cosmic mystery, but rather a combination of initial conditions and how the data is flowing through the network.
+alright,  so, a gan, not trained, producing only grey output when fed 3 channels. i've seen this rodeo more times than i care to remember, and it usually boils down to a few key issues. it's almost never some deep, cosmic mystery, but rather a combination of initial conditions and how the data is flowing through the network.
 
 first off, let's get this straight: an untrained gan is basically a newborn puppy with a keyboard. it doesn't know what it's doing. the generator part, that's supposed to magically whip up images, is just spitting out random noise shaped by its architecture. and that noise, if not handled properly, can easily manifest as grey or just generally bland. think of it like a chef who has all the ingredients but no recipe, so they just throw it all in a pot and hope for the best, you usually don't get anything edible from that effort.
 

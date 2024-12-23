@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-am-i-getting-incompatible-type-errors-in-scala"
 ---
 
-Let's tackle this. Type incompatibility errors in Scala, as you’ve probably noticed, can be particularly… precise. They aren’t always immediately transparent, and the compiler often feels like a very strict instructor. I've spent a fair amount of time chasing down similar issues over the years, often in large-scale systems where the interaction of types becomes intricate. It’s rarely a single, easily-spotted culprit. Instead, it often boils down to a few core concepts that, when misunderstood or overlooked, lead to frustrating compiler errors.
+ Type incompatibility errors in Scala, as you’ve probably noticed, can be particularly… precise. They aren’t always immediately transparent, and the compiler often feels like a very strict instructor. I've spent a fair amount of time chasing down similar issues over the years, often in large-scale systems where the interaction of types becomes intricate. It’s rarely a single, easily-spotted culprit. Instead, it often boils down to a few core concepts that, when misunderstood or overlooked, lead to frustrating compiler errors.
 
 The fundamental issue, broadly speaking, arises when Scala's strong, static type system detects a mismatch between the expected type and the actual type being used in a particular context. This mismatch might stem from a variety of factors: incorrect type annotations, implicit conversions gone wrong, variance issues, type erasure, or a misunderstanding of generics. Let's dive deeper.
 

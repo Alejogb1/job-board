@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "how-do-photonic-architectures-support-ai-supercomputers-with-densely-connected-topologies-where-interconnections-scale-quadratically-with-node-count"
 ---
 
-Okay so you wanna know about photonic architectures and how they help AI supercomputers deal with that crazy scaling problem right  the quadratic blowup in interconnections as you add more nodes  It's a huge headache  think about it every node needs a connection to every other node  a nightmare for electrical wiring  but light  light's different
+ so you wanna know about photonic architectures and how they help AI supercomputers deal with that crazy scaling problem right  the quadratic blowup in interconnections as you add more nodes  It's a huge headache  think about it every node needs a connection to every other node  a nightmare for electrical wiring  but light  light's different
 
 Photons are awesome for this  they're super fast they don't interfere with each other as much as electrons do  and you can cram a ton of optical fibers into a small space  so imagine a massive AI supercomputer  a network of processing units  each doing its little piece of the AI puzzle  and they need to talk to each other constantly  billions of times per second  electrical connections would create a heat generating tangled mess  a power consumption monster  and it would be super slow
 

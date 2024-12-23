@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-use-omniauth-steam-with-rails-7"
 ---
 
-Okay, let's dive into this. I recall a project back in '21, a community forum for a game, actually, that absolutely required Steam authentication. We spent a good chunk of time getting omniauth-steam playing nicely with Rails, specifically around the then-new changes in Rails 7. I learned a few things that still hold true. It's not just about dropping in a gem and calling it a day; you have to understand the moving parts. So let's walk through what you need to do.
+, let's dive into this. I recall a project back in '21, a community forum for a game, actually, that absolutely required Steam authentication. We spent a good chunk of time getting omniauth-steam playing nicely with Rails, specifically around the then-new changes in Rails 7. I learned a few things that still hold true. It's not just about dropping in a gem and calling it a day; you have to understand the moving parts. So let's walk through what you need to do.
 
 First, the basics. OmniAuth is a framework for handling authentication with multiple providers, and `omniauth-steam` specifically targets Steam. The core challenge, in my experience, comes from properly configuring the middleware and mapping the authentication callbacks.
 

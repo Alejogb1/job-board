@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-match-cnn-and-lstm-input-dimensions-in-pytorch"
 ---
 
-Okay, let's tackle this. Having spent a fair amount of time implementing various architectures, including hybrid CNN-LSTM networks for temporal data analysis, the issue of dimension matching is something that crops up quite often. It's not just about getting the code to run; it's also about ensuring the flow of information is logical and efficient within the network. So, how do we handle it in PyTorch? Let’s delve into the nuances of CNN and LSTM input dimensions.
+,  Having spent a fair amount of time implementing various architectures, including hybrid CNN-LSTM networks for temporal data analysis, the issue of dimension matching is something that crops up quite often. It's not just about getting the code to run; it's also about ensuring the flow of information is logical and efficient within the network. So, how do we handle it in PyTorch? Let’s delve into the nuances of CNN and LSTM input dimensions.
 
 Firstly, it's crucial to remember that convolutional neural networks (CNNs) are fundamentally designed to extract spatial features from data, while long short-term memory networks (LSTMs) are geared towards processing sequential data. When you're combining these two, the trick is to use the CNN's output as input to the LSTM, thereby feeding the LSTM a sequence of feature maps extracted by the CNN instead of raw pixel data, or other raw input data. This transition often requires careful management of dimensions to ensure they align correctly.
 

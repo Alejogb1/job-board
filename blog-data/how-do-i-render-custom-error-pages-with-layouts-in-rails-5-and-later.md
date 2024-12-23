@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-render-custom-error-pages-with-layouts-in-rails-5-and-later"
 ---
 
-Okay, let's tackle this. I remember a particularly challenging project a few years back where we had incredibly granular error handling requirements, way beyond the default Rails setup. We needed customized error pages, with layouts, but also with conditional content and logging. It wasn't straightforward, but it underscored the importance of mastering Rails' error handling. Here's how you can approach rendering custom error pages with layouts in Rails 5 and later, avoiding the pitfalls I encountered, and focusing on practical solutions.
+,  I remember a particularly challenging project a few years back where we had incredibly granular error handling requirements, way beyond the default Rails setup. We needed customized error pages, with layouts, but also with conditional content and logging. It wasn't straightforward, but it underscored the importance of mastering Rails' error handling. Here's how you can approach rendering custom error pages with layouts in Rails 5 and later, avoiding the pitfalls I encountered, and focusing on practical solutions.
 
 The default Rails error handling often falls short when you require branding consistency and detailed error information. Simply displaying a raw stack trace isn't user-friendly, nor is it particularly useful from a debugging standpoint in production environments. What you need is a controlled, consistent experience that provides the necessary information while maintaining user interface coherence.
 

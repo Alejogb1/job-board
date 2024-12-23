@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-a-nullpointerexception-with-the-imagelabeler"
 ---
 
-Okay, let's unpack this. A `NullPointerException` with the `ImageLabeler`, particularly in the context you're likely facing, isn't entirely uncommon, and usually it points to a few specific potential culprits. I've debugged more than my fair share of similar issues over the years, and they often circle back to the way the `ImageLabeler` expects its input, or the lifecycle management of associated resources. It's seldom a problem with the labeler itself, more often an issue with how we, as developers, are setting it up and using it.
+, let's unpack this. A `NullPointerException` with the `ImageLabeler`, particularly in the context you're likely facing, isn't entirely uncommon, and usually it points to a few specific potential culprits. I've debugged more than my fair share of similar issues over the years, and they often circle back to the way the `ImageLabeler` expects its input, or the lifecycle management of associated resources. It's seldom a problem with the labeler itself, more often an issue with how we, as developers, are setting it up and using it.
 
 My experience, specifically working on a mobile image analysis project a few years back, taught me some painful but invaluable lessons about this. We were using a fairly new version of a computer vision library, and `NullPointerException`s were almost a rite of passage. The first thing to really internalize is that the `ImageLabeler`—and most of its related components—aren't particularly forgiving when it comes to null input. Let's break it down into the key areas I've seen these issues stem from.
 

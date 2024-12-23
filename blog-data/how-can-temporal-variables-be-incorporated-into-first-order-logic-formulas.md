@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-temporal-variables-be-incorporated-into-first-order-logic-formulas"
 ---
 
-Okay, let's tackle this. It’s not every day you find yourself needing to weave time directly into the fabric of your logical propositions, but I’ve certainly been there, particularly during my stint working on automated planning systems. Incorporating temporal elements into first-order logic is a fairly advanced area, but it’s critical for representing and reasoning about systems that change over time. It’s not as straightforward as simply adding a "time" variable; it requires careful consideration of the semantics and the intended application.
+,  It’s not every day you find yourself needing to weave time directly into the fabric of your logical propositions, but I’ve certainly been there, particularly during my stint working on automated planning systems. Incorporating temporal elements into first-order logic is a fairly advanced area, but it’s critical for representing and reasoning about systems that change over time. It’s not as straightforward as simply adding a "time" variable; it requires careful consideration of the semantics and the intended application.
 
 The core challenge lies in extending the static nature of traditional first-order logic to handle the dynamic reality of temporal evolution. We’re moving beyond simply stating what is true to asserting *when* it is true, or *for how long* it remains true. Standard first-order logic doesn’t inherently possess mechanisms for this, so we need to bring in some extensions. There are primarily two paths we can take, although combinations of the two are also possible: explicit time representation and modal temporal logic.
 

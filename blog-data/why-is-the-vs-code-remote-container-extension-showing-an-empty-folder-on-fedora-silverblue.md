@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-the-vs-code-remote-container-extension-showing-an-empty-folder-on-fedora-silverblue"
 ---
 
-Okay, let's tackle this particular head-scratcher. It's happened to me before, actually, back when I was setting up a development environment for a rather intricate distributed system on a Fedora Silverblue box. The issue of an empty folder when using the VS Code remote container extension is definitely not a fun one, especially given the promises of reproducibility that Silverblue and containers are meant to provide. It's almost like a glitch in the matrix, so let’s break down what’s likely going on and how we can resolve it.
+, let's tackle this particular head-scratcher. It's happened to me before, actually, back when I was setting up a development environment for a rather intricate distributed system on a Fedora Silverblue box. The issue of an empty folder when using the VS Code remote container extension is definitely not a fun one, especially given the promises of reproducibility that Silverblue and containers are meant to provide. It's almost like a glitch in the matrix, so let’s break down what’s likely going on and how we can resolve it.
 
 Essentially, the problem stems from how VS Code's remote container extension and Fedora Silverblue interact, specifically with regards to file system mounts and permissions within the container. Silverblue, being an immutable operating system, differs fundamentally from traditional Linux distributions. This immutability is great for system stability but introduces some interesting caveats regarding how containers access your host system's files.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-constraint-programming-minimize-distinct-values-while-guaranteeing-unique-tuples-of-variables"
 ---
 
-Alright, let's tackle this. It's a situation I've faced more than once, particularly in scheduling and resource allocation problems, where the need for distinct values coupled with unique variable tuple combinations is critical. We're talking about the intersection of minimizing the cardinality of value sets and enforcing uniqueness of variable combinations within a constraint satisfaction problem (csp). It's not straightforward, but definitely solvable with constraint programming techniques.
+Alright,  It's a situation I've faced more than once, particularly in scheduling and resource allocation problems, where the need for distinct values coupled with unique variable tuple combinations is critical. We're talking about the intersection of minimizing the cardinality of value sets and enforcing uniqueness of variable combinations within a constraint satisfaction problem (csp). It's not straightforward, but definitely solvable with constraint programming techniques.
 
 The core challenge is that standard constraint satisfaction solvers are primarily focused on finding *any* solution that satisfies all constraints, often without any explicit optimization regarding the number of distinct values used. To force them to minimize distinct values, we need to guide them using specific constraints and often, search strategies. Simultaneously, we need to maintain the uniqueness of variable tuples, which isn't just about distinct values but about preventing repetitions in the assignments to our variables.
 

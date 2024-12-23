@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-efficiently-clean-all-repositories-in-azure-container-registry"
 ---
 
-Okay, let's tackle this. It's a problem I’ve certainly faced a few times during my tenure managing containerized deployments. Cleaning up Azure Container Registry (acr) repositories efficiently is not just about deleting images, it’s about managing storage costs, maintaining security, and ensuring a clean build and deployment pipeline. In my early days, I had a few near misses with bloated acrs costing a small fortune in storage, so a robust cleanup strategy became paramount.
+,  It's a problem I’ve certainly faced a few times during my tenure managing containerized deployments. Cleaning up Azure Container Registry (acr) repositories efficiently is not just about deleting images, it’s about managing storage costs, maintaining security, and ensuring a clean build and deployment pipeline. In my early days, I had a few near misses with bloated acrs costing a small fortune in storage, so a robust cleanup strategy became paramount.
 
 The challenge isn’t merely about blindly deleting things. We need to intelligently target outdated, untagged, or unused images while also being cognizant of potentially disrupting active deployments. So, let's break down my approach, which I’ve refined over years through trials, errors, and a whole lot of scripting.
 

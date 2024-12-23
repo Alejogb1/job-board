@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "how-can-photonic-waveguides-be-utilized-to-minimize-signal-attenuation-and-energy-losses-in-large-scale-ai-clusters-compared-to-copper-interconnects"
 ---
 
-Okay so you wanna talk about photonic waveguides versus copper for AI clusters right  Makes total sense copper's getting kinda creaky at these scales  signal loss is a HUGE problem  think about it  you've got millions maybe billions of connections  each one losing a tiny bit of signal  it adds up fast  like a leaky faucet eventually flooding your whole house except its your data center and the flood is latency
+ so you wanna talk about photonic waveguides versus copper for AI clusters right  Makes total sense copper's getting kinda creaky at these scales  signal loss is a HUGE problem  think about it  you've got millions maybe billions of connections  each one losing a tiny bit of signal  it adds up fast  like a leaky faucet eventually flooding your whole house except its your data center and the flood is latency
 
 Photonic waveguides are like optical fibers  they use light instead of electrons to carry data  and light's way less prone to attenuation than electrons  think about it  shine a laser pointer across a room  the light doesn't really weaken much  electrons in a copper wire?  they bump into stuff all the time  resistance is the enemy  that's why we heat up our phones when they're working hard
 

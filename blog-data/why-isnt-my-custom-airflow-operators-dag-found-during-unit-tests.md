@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-isnt-my-custom-airflow-operators-dag-found-during-unit-tests"
 ---
 
-Alright, let's tackle this. It's a classic scenario, and I’ve personally spent a good chunk of time on similar issues back in the day, debugging a fairly complex Airflow setup for a real-time data pipeline. You’ve got a custom operator, carefully crafted, and your DAG just isn't showing up during your unit tests. It can be frustrating, but generally, the root cause falls into a few specific categories. Let's break them down methodically.
+Alright,  It's a classic scenario, and I’ve personally spent a good chunk of time on similar issues back in the day, debugging a fairly complex Airflow setup for a real-time data pipeline. You’ve got a custom operator, carefully crafted, and your DAG just isn't showing up during your unit tests. It can be frustrating, but generally, the root cause falls into a few specific categories. Let's break them down methodically.
 
 The first thing to acknowledge is that Airflow's DAG discovery mechanism is heavily reliant on python's module import system. It's not a magical process, though it can sometimes feel that way. When you run an Airflow test, it's essentially trying to import your DAG files as modules. If that import fails, the DAG won't be registered. So, the most common issue lies in how Airflow is interpreting the location of your DAG definition file. It needs to find it, correctly. I've seen this happen often enough to make a checklist for debugging: module path errors, import issues, and unexpected import behaviors with custom paths.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-mnist-shard-access-causing-an-indexerror"
 ---
 
-Okay, let's break down why you're likely seeing that `indexerror` when accessing mnist shards, because trust me, I've seen this specific error more times than I care to remember. It almost always boils down to a mismatch between how you're slicing your data and how the mnist dataset is structured, especially when dealing with sharding. Consider this a kind of post-mortem analysis from a scenario I encountered a few years back while building a distributed training pipeline for image recognition.
+, let's break down why you're likely seeing that `indexerror` when accessing mnist shards, because trust me, I've seen this specific error more times than I care to remember. It almost always boils down to a mismatch between how you're slicing your data and how the mnist dataset is structured, especially when dealing with sharding. Consider this a kind of post-mortem analysis from a scenario I encountered a few years back while building a distributed training pipeline for image recognition.
 
 The core issue here isn't actually with the mnist dataset itself, but how we typically interact with it through libraries like tensorflow or pytorch datasets. The dataset, essentially, is a large array of images and corresponding labels. Sharding, on the other hand, divides this large array into smaller, manageable pieces, usually for distributed processing or easier loading. The `indexerror` pops up when we mistakenly try to access an index that falls *outside* the boundaries of a particular shard, essentially trying to access data that's not there.
 
@@ -54,7 +54,7 @@ Here, the important thing to note is that we are trying to access index 30000 *w
 
 **Scenario 2: Shard Indices Out of Range**
 
-Let's switch gears and look at what happens if you're using multiple shards, but your logic for determining which shard to access is faulty. Imagine you’re working with four shards, and your code incorrectly attempts to access a "fifth" shard (shard id equal to 4), which of course, doesn't exist, leading to an `indexerror` when trying to load data from that non-existent shard. The dataset itself is okay but our shard ID is erroneous. This happens when you don't correctly implement distributed training logic. Let's explore a simplified version:
+Let's switch gears and look at what happens if you're using multiple shards, but your logic for determining which shard to access is faulty. Imagine you’re working with four shards, and your code incorrectly attempts to access a "fifth" shard (shard id equal to 4), which of course, doesn't exist, leading to an `indexerror` when trying to load data from that non-existent shard. The dataset itself is  but our shard ID is erroneous. This happens when you don't correctly implement distributed training logic. Let's explore a simplified version:
 
 ```python
 import tensorflow as tf

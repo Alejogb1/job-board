@@ -4,9 +4,9 @@ date: "2024-12-13"
 id: "data-shuffle-python-numpy"
 ---
 
-Alright so you're hitting that classic data shuffle wall with NumPy in Python I get it been there done that a million times feels like it
+so you're hitting that classic data shuffle wall with NumPy in Python I get it been there done that a million times feels like it
 
-Okay so let's break this down no nonsense straight to the point the way we like it around here I've been wrestling with data manipulation in Python since before NumPy was even cool so trust me on this one I've tripped over this particular hurdle more than a few times.
+ so let's break this down no nonsense straight to the point the way we like it around here I've been wrestling with data manipulation in Python since before NumPy was even cool so trust me on this one I've tripped over this particular hurdle more than a few times.
 
 The first thing to understand is that NumPy doesn't shuffle in place by default that's the gotcha most newbies stumble on they expect a direct mutation of their array like with list.shuffle in Python standard library but NOPE. NumPy prefers to operate on copies and return new arrays so your original array remains pristine if that makes sense.
 

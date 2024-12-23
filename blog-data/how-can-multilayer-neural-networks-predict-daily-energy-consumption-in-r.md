@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-multilayer-neural-networks-predict-daily-energy-consumption-in-r"
 ---
 
-Okay, let’s talk about predicting daily energy consumption with multilayer neural networks in R, because, frankly, I've spent a fair bit of time wrestling with similar challenges in my career. Specifically, I recall a project a few years back where we needed to forecast energy demand for a small-scale smart grid, and the intricacies of applying neural nets to time series data became quite apparent. The initial setup, without a clear methodology, ended up being a bit of a mess, so let me walk you through a sound approach that I've found to be effective.
+, let’s talk about predicting daily energy consumption with multilayer neural networks in R, because, frankly, I've spent a fair bit of time wrestling with similar challenges in my career. Specifically, I recall a project a few years back where we needed to forecast energy demand for a small-scale smart grid, and the intricacies of applying neural nets to time series data became quite apparent. The initial setup, without a clear methodology, ended up being a bit of a mess, so let me walk you through a sound approach that I've found to be effective.
 
 Essentially, modeling energy consumption using neural networks requires meticulous data preparation, careful network architecture design, and appropriate model evaluation techniques. It's not a 'plug and play' scenario, as anyone who's attempted it will readily agree.
 
@@ -16,7 +16,7 @@ Now, let's delve into the neural network architecture itself. A multilayer perce
 
 Finally, the choice of optimizer and loss function are critical. Adam is frequently a go-to optimizer, as it’s generally effective and adaptive. For the loss function, mean squared error (mse) is very common in regression tasks like this, as well as root mean square error (rmse). However, mean absolute error (mae) can be preferable if outliers are a concern, as the mse function is much more sensitive to outliers due to the squaring operation. We would use a holdout method to evaluate our performance, generally using the last 20% to 30% of the data as testing data.
 
-Okay, let's show you some R code examples to clarify this process. We will use the `keras` and `dplyr` packages for this demonstration.
+, let's show you some R code examples to clarify this process. We will use the `keras` and `dplyr` packages for this demonstration.
 
 **Snippet 1: Data Preparation and Feature Engineering**
 

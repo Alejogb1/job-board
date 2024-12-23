@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-use-lime-text-explainer-with-a-model-with-preprocessed-input"
 ---
 
-Okay, let’s tackle this. It's a scenario I’ve actually run into more than a few times, usually when dealing with complex NLP pipelines where the input to the model is far removed from the raw text itself. The challenge is making sense of what the model is focusing on, particularly when the input has undergone significant transformations such as tokenization, vectorization, or the application of embeddings. LIME, or Local Interpretable Model-agnostic Explanations, is powerful for this, but requires a bit of careful setup.
+, let’s tackle this. It's a scenario I’ve actually run into more than a few times, usually when dealing with complex NLP pipelines where the input to the model is far removed from the raw text itself. The challenge is making sense of what the model is focusing on, particularly when the input has undergone significant transformations such as tokenization, vectorization, or the application of embeddings. LIME, or Local Interpretable Model-agnostic Explanations, is powerful for this, but requires a bit of careful setup.
 
 My team once worked on a system for sentiment analysis of customer reviews. We weren't feeding the raw reviews directly into our neural net. Instead, we had a sophisticated pre-processing pipeline: tokenization using subword units, followed by embedding lookup, a couple of lstm layers, and finally, a dense classification layer. Trying to apply LIME on the unprocessed text was essentially useless – the model wasn't "seeing" those words anymore. What the model consumed were sequences of numerical vectors. The key to applying LIME effectively in such a case lies in understanding how to bridge the gap between human-readable text and the model's input space, and in telling LIME how to generate perturbations that make sense within *that* space.
 
@@ -45,7 +45,7 @@ def prediction_function(text_strings):
 explainer = LimeTextExplainer(class_names=[0, 1]) # 0: negative, 1: positive
 
 # Explain a sample prediction
-test_text = ["This movie was okay."]
+test_text = ["This movie was ."]
 explanation = explainer.explain_instance(
     test_text[0],
     prediction_function,
@@ -105,7 +105,7 @@ def custom_perturbation_function(data_point, num_samples):
 explainer = LimeTextExplainer(class_names=[0, 1]) # 0: negative, 1: positive
 
 # Explain a sample prediction
-test_text = ["This movie was okay."]
+test_text = ["This movie was ."]
 text_embedding = embedding_model.encode(test_text)
 explanation = explainer.explain_instance(
     text_embedding[0],

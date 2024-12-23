@@ -4,7 +4,7 @@ date: "2024-12-03"
 id: "how-does-qwen-25-enhance-hugging-faces-text-to-sql-feature"
 ---
 
-Okay so you wanna chat about Hugging Face's Text-to-SQL thing powered by Qwen 2.5 right  Pretty cool stuff actually  I've been messing around with it a bit and its pretty impressive how far this tech has come  It's basically like you talk to a database in plain English and it spits out the SQL query  No more wrestling with joins and where clauses  at least not as much  its a huge time saver
+ so you wanna chat about Hugging Face's Text-to-SQL thing powered by Qwen 2.5 right  Pretty cool stuff actually  I've been messing around with it a bit and its pretty impressive how far this tech has come  It's basically like you talk to a database in plain English and it spits out the SQL query  No more wrestling with joins and where clauses  at least not as much  its a huge time saver
 
 
 The core idea is pretty straightforward  you feed it a natural language question about your data and it translates that into a structured query language  SQL is the language databases understand so its the key to getting info out   Qwen 2.5  that's the large language model powering the whole thing  its one of those massive AI brains trained on tons of text and code  it learns patterns and relationships between the way people ask questions and how those questions translate into SQL queries   its a form of semantic parsing  trying to understand the meaning behind your words

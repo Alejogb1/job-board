@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "regular-expression-for-length-check"
 ---
 
-Okay so regular expressions for length checks right Been there done that got the t-shirt and a few scars to show for it let me tell you
+ so regular expressions for length checks right Been there done that got the t-shirt and a few scars to show for it let me tell you
 
 So you're asking about regex for checking string lengths It's a classic right You'd think it'd be a simple thing but oh boy I've seen it blow up in ways you wouldn't believe In my early days I was working on this user input validation thing for this web app backend it was a mess it accepted everything and anything basically and I had this bright idea to use regex everywhere and I mean everywhere Length checks seemed easy just `^.{min,max}$` right?  Oh that was a learning experience alright
 

@@ -4,7 +4,7 @@ date: "2024-12-03"
 id: "what-role-does-the-unit-scaling-library-play-in-fp8-training"
 ---
 
-Okay so you want to talk about unit-scaling for FP8 training in a super casual way right  like we're just geeking out over coffee  cool  I'm into it
+ so you want to talk about unit-scaling for FP8 training in a super casual way right  like we're just geeking out over coffee  cool  I'm into it
 
 So the whole FP8 thing is all about squeezing more models onto your hardware right  less memory usage means more models fewer bottlenecks  but  FP8 is super low precision  like REALLY low  so you lose a lot of accuracy if you're not careful
 

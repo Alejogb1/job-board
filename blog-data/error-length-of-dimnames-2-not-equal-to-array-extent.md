@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "error-length-of-dimnames-2-not-equal-to-array-extent"
 ---
 
-Okay so you've hit the classic "length of dimnames 2 not equal to array extent" error in R haven't you I've been there man countless times trust me It's a rite of passage for anyone who messes with multidimensional data structures in R and this beast always comes back to bite you when you least expect it
+ so you've hit the classic "length of dimnames 2 not equal to array extent" error in R haven't you I've been there man countless times trust me It's a rite of passage for anyone who messes with multidimensional data structures in R and this beast always comes back to bite you when you least expect it
 
 Let me break this down for you in a way that hopefully makes sense and throws in some of my battle scars from previous debugging sessions First off the error itself is brutally honest "length of dimnames 2 not equal to array extent" What that basically screams is that you're trying to assign names to the dimensions of an array but the length of the names you're giving doesn't match the actual size of that dimension in the array It's a mismatch between what you're claiming is the size and what actually is it's like trying to put a square peg in a round hole or something
 
@@ -14,7 +14,7 @@ Usually this pops up when you're dealing with arrays or matrices that have row n
 
 The problem occurs when the length of a name vector in the dimnames list doesnt match the actual length of the corresponding dimension of your array
 
-Okay lets get into some code examples I've crafted these with some of my past experience baked in trust me you will appreciate this
+ lets get into some code examples I've crafted these with some of my past experience baked in trust me you will appreciate this
 
 **Example 1 The Basic Mismatch**
 
@@ -36,7 +36,7 @@ See what we did there? We had a 2x2 matrix two rows two columns I gave it 3 row 
 
 **Example 2 The Correct way**
 
-Okay now that we've seen it crash lets get into what makes it work Here's how you correctly assign the names
+ now that we've seen it crash lets get into what makes it work Here's how you correctly assign the names
 
 ```R
 #create a 2x2 matrix

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-isnt-the-apiconsumer-contract-receiving-chainlinkfulfilled-events-in-hardhat"
 ---
 
-Okay, let's tackle this. I've seen this particular head-scratcher more times than I care to remember, and it usually boils down to a few common culprits. When your `apiconsumer` contract isn't picking up `chainlinkfulfilled` events in your Hardhat environment, it's almost never a magic bullet – rather, it’s a confluence of factors that require methodical examination. Forget about voodoo; it's a logic puzzle disguised as a deployment headache. Let’s break it down into digestible, actionable points.
+,  I've seen this particular head-scratcher more times than I care to remember, and it usually boils down to a few common culprits. When your `apiconsumer` contract isn't picking up `chainlinkfulfilled` events in your Hardhat environment, it's almost never a magic bullet – rather, it’s a confluence of factors that require methodical examination. Forget about voodoo; it's a logic puzzle disguised as a deployment headache. Let’s break it down into digestible, actionable points.
 
 From my experience, most commonly, the issue isn't with the core logic of your contract itself, rather it's about the configuration of your Hardhat environment and how it interacts with the Chainlink infrastructure, or rather its simulated counterpart. It's a simulation, after all, not a direct connection to the real Chainlink network, and that's where the nuances creep in. The critical area to focus on is the setup of your mock or simulated oracle, and the specifics of the job specification you're using.
 

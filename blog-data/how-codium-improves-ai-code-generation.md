@@ -8,7 +8,7 @@ hey dude so i just watched this killer talk about ai code generation and man it 
 
 the whole point of the talk was to spill the beans on how they built this thing and why it's so supposedly awesome the main secret sauce apparently is their approach to "context awareness"  they're not just throwing your code at a giant language model and hoping for the best  they're doing some seriously clever stuff to make sure the model only sees the *relevant* bits  they spent like half the talk explaining how traditional methods kinda suck and why they had to build everything from scratch which is a story in itself lol
 
-okay so picture this three main ways people usually deal with context in code generation  the first one is "long context"  think of it like stuffing your entire codebase into the prompt  easy to understand in theory but practically impossible  he mentioned gemini which takes like half a minute to process a small codebase  imagine doing that with a real-world project  it'd take forever
+ so picture this three main ways people usually deal with context in code generation  the first one is "long context"  think of it like stuffing your entire codebase into the prompt  easy to understand in theory but practically impossible  he mentioned gemini which takes like half a minute to process a small codebase  imagine doing that with a real-world project  it'd take forever
 
 second method  "fine-tuning"  that's where you tweak the model itself to be super familiar with a specific codebase it's like training a custom model for each client  sounds amazing but it's insanely expensive and resource-intensive  way too much for most companies
 

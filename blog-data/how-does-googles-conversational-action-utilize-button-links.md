@@ -22,7 +22,7 @@ Here's how the corresponding JSON response from your fulfillment might look:
     {
       "text": {
         "text": [
-          "Okay, here are the instructions for that recipe. If you'd like to see the full recipe with pictures, you can use the link below."
+          ", here are the instructions for that recipe. If you'd like to see the full recipe with pictures, you can use the link below."
         ]
       }
     },
@@ -54,7 +54,7 @@ const responseJson = {
     "fulfillmentMessages": [
         {
             "text": {
-                "text": ["Okay, I found a smart thermostat. Here’s a link to the product details."]
+                "text": [", I found a smart thermostat. Here’s a link to the product details."]
             }
         },
         {
@@ -85,7 +85,7 @@ Consider an example where your action has an intent `check_order_status`. Here i
     {
       "text": {
         "text": [
-          "Okay, I've found an order that matches your request. To check the status, click the link below."
+          ", I've found an order that matches your request. To check the status, click the link below."
         ]
       }
     },

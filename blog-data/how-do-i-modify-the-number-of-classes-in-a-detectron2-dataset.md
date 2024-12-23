@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-modify-the-number-of-classes-in-a-detectron2-dataset"
 ---
 
-Alright, let's tackle this. I remember a particularly challenging project involving aerial imagery analysis a few years back. We were dealing with a heavily imbalanced dataset, and part of the solution involved strategically reducing the number of object classes our Detectron2 model needed to learn. It's not a straightforward 'change one setting' kind of situation, but rather a series of data manipulation and configuration tweaks that can significantly impact your model's performance.
+Alright,  I remember a particularly challenging project involving aerial imagery analysis a few years back. We were dealing with a heavily imbalanced dataset, and part of the solution involved strategically reducing the number of object classes our Detectron2 model needed to learn. It's not a straightforward 'change one setting' kind of situation, but rather a series of data manipulation and configuration tweaks that can significantly impact your model's performance.
 
 The core issue revolves around how Detectron2 (and other object detection frameworks) map your dataset’s annotations to the classes the model is actually trained on. Your annotations probably include multiple classes, and, often enough, you might need to focus only on a subset of those, or even combine some. Detectron2 heavily relies on the annotations, and we must properly prepare them before feeding them to the training process. Here's the breakdown of how I typically approach this, along with the practical considerations I've learned over time:
 

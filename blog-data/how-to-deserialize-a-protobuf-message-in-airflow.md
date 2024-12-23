@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-deserialize-a-protobuf-message-in-airflow"
 ---
 
-Okay, let's talk about deserializing protobuf messages in airflow—a topic I've tackled more times than I care to remember, often late on a friday. It's a common requirement when your data pipelines involve systems communicating via protobuf, and getting it wrong can lead to some rather frustrating debugging sessions. The core issue revolves around transforming the raw byte stream that represents your protobuf message back into a usable, structured data object in your airflow tasks.
+, let's talk about deserializing protobuf messages in airflow—a topic I've tackled more times than I care to remember, often late on a friday. It's a common requirement when your data pipelines involve systems communicating via protobuf, and getting it wrong can lead to some rather frustrating debugging sessions. The core issue revolves around transforming the raw byte stream that represents your protobuf message back into a usable, structured data object in your airflow tasks.
 
 First, let's establish the landscape. You're pulling data, probably from a message queue like kafka or a data store, that's serialized using protobuf. Airflow tasks are usually python-based, so the deserialization process will happen within a python operator. The critical part is to have the protobuf definition (.proto file) and its generated python modules available in your airflow environment. These generated python files are the key to unlocking the protobuf message’s structure.
 

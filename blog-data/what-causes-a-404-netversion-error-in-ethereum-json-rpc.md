@@ -14,7 +14,7 @@ Another situation involves using older or outdated node software. Some older cli
 
 The third likely culprit, and this is often the trickiest to debug, is a misconfiguration at the network level. Sometimes it appears as though everything should be working locally, but the node is actually blocked or has a firewall rule that prevents external access to this specific endpoint. It is not enough for your node to be working correctly; the client attempting to connect to it also needs to be able to successfully connect *and* have access to the exposed interface.
 
-Okay, let’s make this concrete. Here are three code examples to show these points in action, keeping it simple so we can focus on the rpc call itself.
+, let’s make this concrete. Here are three code examples to show these points in action, keeping it simple so we can focus on the rpc call itself.
 
 **Example 1: Correct JSON RPC Call (Assuming the endpoint is properly configured)**
 

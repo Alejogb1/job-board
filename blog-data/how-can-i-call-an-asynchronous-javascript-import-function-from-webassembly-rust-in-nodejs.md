@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-call-an-asynchronous-javascript-import-function-from-webassembly-rust-in-nodejs"
 ---
 
-Right, let's tackle this. It's a challenge I recall facing a few years back, when a legacy node.js service I was maintaining needed to offload heavy computation to wasm, but had a dependency on some dynamic JavaScript modules. It’s a common problem that touches on the tricky interplay between the asynchronous nature of JavaScript and the typically synchronous world of wasm. The crux of it lies in bridging that gap effectively. Here's how we can approach this, drawing on my past experience and some key concepts.
+Right,  It's a challenge I recall facing a few years back, when a legacy node.js service I was maintaining needed to offload heavy computation to wasm, but had a dependency on some dynamic JavaScript modules. It’s a common problem that touches on the tricky interplay between the asynchronous nature of JavaScript and the typically synchronous world of wasm. The crux of it lies in bridging that gap effectively. Here's how we can approach this, drawing on my past experience and some key concepts.
 
 The fundamental issue is that wasm operates synchronously. When a wasm module is invoked, it executes within its own isolated environment. The module, by its nature, cannot directly initiate asynchronous operations in the JavaScript runtime. This is where the concept of using function callbacks and promises to facilitate asynchronous interaction becomes vital. Our objective is to allow our wasm module to trigger an import, which is asynchronous in JavaScript, and then manage the result back in the wasm context.
 

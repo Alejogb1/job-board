@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-do-i-get-invalidargumenterror-exception-encountered-when-calling-layer-sequencefeatures30-type-sequencefeatures-condition-x--y-did-not-hold"
 ---
 
-Okay, let’s unpack this `InvalidArgumentError`, because, honestly, I've stared at that same error message more times than I'd care to recount, often late on a Friday evening after a 'simple' feature addition. It's usually a symptom of a mismatch between the expected input shape and the actual data arriving at a layer, specifically in TensorFlow when using sequence processing layers.
+, let’s unpack this `InvalidArgumentError`, because, honestly, I've stared at that same error message more times than I'd care to recount, often late on a Friday evening after a 'simple' feature addition. It's usually a symptom of a mismatch between the expected input shape and the actual data arriving at a layer, specifically in TensorFlow when using sequence processing layers.
 
 The error "Condition x == y did not hold" within the context of a `SequenceFeatures` layer indicates that the check for consistent sequence lengths failed. The `SequenceFeatures` layer, or similar mechanisms that operate on sequences, needs to know that your sequences are handled consistently; specifically, that each batch element's feature list has the same sequence length at this stage, usually after embedding or other feature processing. The heart of the problem is that the data fed to that particular `SequenceFeatures` layer doesn’t meet that requirement. Let me share where I've most frequently encountered this.
 

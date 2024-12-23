@@ -4,7 +4,7 @@ date: "2024-12-11"
 id: "what-are-the-trade-offs-between-training-time-compute-and-inference-time-compute-in-ai-systems"
 ---
 
-Okay so you wanna talk about training versus inference compute right  the big AI elephant in the room  Its a classic optimization problem  like choosing the perfect pizza toppings everyone has their preferences and there's no single right answer
+ so you wanna talk about training versus inference compute right  the big AI elephant in the room  Its a classic optimization problem  like choosing the perfect pizza toppings everyone has their preferences and there's no single right answer
 
 Basically training is where you build your AI model  you feed it tons of data and it learns patterns  think of it like teaching a kid  it takes time and effort  lots of compute  powerful GPUs or TPUs are your best friends here  you're basically brute forcing the model to find the optimal parameters that fit the data  the bigger and more complex the model the longer and more expensive the training  we're talking days weeks or even months sometimes for really massive models like those crazy language models
 

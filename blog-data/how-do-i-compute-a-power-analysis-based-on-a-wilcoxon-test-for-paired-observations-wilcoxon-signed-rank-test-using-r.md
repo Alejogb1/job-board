@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-compute-a-power-analysis-based-on-a-wilcoxon-test-for-paired-observations-wilcoxon-signed-rank-test-using-r"
 ---
 
-Okay, let's tackle this. I remember a particular project back at Globex Corp. where we were evaluating a new user interface design. The key performance indicator was task completion time, measured before and after the interface change. We opted for a Wilcoxon signed-rank test due to the non-normality of the differences in times. Calculating the necessary sample size beforehand using power analysis was crucial to avoid underpowered conclusions. Let me walk you through how to approach this using R, drawing on that experience.
+,  I remember a particular project back at Globex Corp. where we were evaluating a new user interface design. The key performance indicator was task completion time, measured before and after the interface change. We opted for a Wilcoxon signed-rank test due to the non-normality of the differences in times. Calculating the necessary sample size beforehand using power analysis was crucial to avoid underpowered conclusions. Let me walk you through how to approach this using R, drawing on that experience.
 
 The core challenge with power analysis for non-parametric tests like the Wilcoxon signed-rank is that they don't lend themselves to the neat, closed-form solutions we see with parametric tests like t-tests. We’re dealing with ranks, not raw means and standard deviations. Instead of directly calculating power based on parameters, we often resort to simulations or approximations. Fortunately, R provides some excellent tools to handle this effectively.
 

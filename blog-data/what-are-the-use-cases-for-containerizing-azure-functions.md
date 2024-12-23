@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-are-the-use-cases-for-containerizing-azure-functions"
 ---
 
-Okay, let's tackle this. I’ve certainly been down the rabbit hole of serverless deployments and, specifically, working out where containers fit into the azure functions ecosystem. It’s not always a clear cut answer, and I've seen projects where it was the perfect fit, and others where it was arguably an over-engineered solution. Let's break down the practical scenarios where containerizing azure functions makes a lot of sense, focusing on the "why" and "how" rather than just stating the possibilities.
+,  I’ve certainly been down the rabbit hole of serverless deployments and, specifically, working out where containers fit into the azure functions ecosystem. It’s not always a clear cut answer, and I've seen projects where it was the perfect fit, and others where it was arguably an over-engineered solution. Let's break down the practical scenarios where containerizing azure functions makes a lot of sense, focusing on the "why" and "how" rather than just stating the possibilities.
 
 Fundamentally, azure functions excel in scenarios where you need event-driven, stateless compute without managing underlying infrastructure. However, the default consumption plan does come with limitations, especially around dependency management, resource control, and cold starts. This is where containerization becomes a very appealing option.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-assertraises-behave-differently-in-these-two-cases"
 ---
 
-Alright, let's tackle this. I've seen variations of this assertRaises puzzle pop up more times than I can count, and the subtle nuances often trip even seasoned developers. It's not immediately intuitive why `assertRaises` would exhibit different behavior in what seems like very similar scenarios, so let's break it down with a bit of my own history and some practical examples.
+Alright,  I've seen variations of this assertRaises puzzle pop up more times than I can count, and the subtle nuances often trip even seasoned developers. It's not immediately intuitive why `assertRaises` would exhibit different behavior in what seems like very similar scenarios, so let's break it down with a bit of my own history and some practical examples.
 
 First, let's understand the core mechanic of `assertRaises` in Python's `unittest` framework (or more broadly, in any testing framework implementing a similar mechanism). Its primary job is to verify that a specific block of code *does* indeed raise a given exception. The critical point here, and the source of most confusion, is *how* that exception is triggered and propagated within the scope of the assertion.
 

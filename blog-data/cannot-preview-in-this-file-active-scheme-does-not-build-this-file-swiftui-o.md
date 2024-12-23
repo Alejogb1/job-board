@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "cannot-preview-in-this-file-active-scheme-does-not-build-this-file-swiftui-o"
 ---
 
-Okay I've been there dude trust me This is a classic SwiftUI headache you're not alone Let's break it down because the error message "cannot preview in this file active scheme does not build this file" is annoyingly vague but generally boils down to a few suspects
+ I've been there dude trust me This is a classic SwiftUI headache you're not alone Let's break it down because the error message "cannot preview in this file active scheme does not build this file" is annoyingly vague but generally boils down to a few suspects
 
 First off the "active scheme" bit is crucial It means Xcode is not configured to build the target that contains the SwiftUI view you're trying to preview You might have multiple targets in your project maybe for iOS macOS watchOS and your active scheme is pointing to one that doesnt contain your specific SwiftUI file You need to verify your scheme is targeting the correct build target the one your SwiftUI view belongs to
 

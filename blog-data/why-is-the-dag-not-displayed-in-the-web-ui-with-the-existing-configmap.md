@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-the-dag-not-displayed-in-the-web-ui-with-the-existing-configmap"
 ---
 
-Alright, let's tackle this. I've seen this particular issue pop up a few times throughout my years—and it’s almost always down to a handful of common culprits when a dag isn't showing up in the web ui, despite what appears to be a correctly configured configmap. I distinctly remember one project where we spent a frustrating afternoon tracking down the root cause, and it turned out to be an innocuous-looking configuration oversight. It’s usually not a single dramatic failure, but rather a combination of factors. Let’s get into the specifics.
+Alright,  I've seen this particular issue pop up a few times throughout my years—and it’s almost always down to a handful of common culprits when a dag isn't showing up in the web ui, despite what appears to be a correctly configured configmap. I distinctly remember one project where we spent a frustrating afternoon tracking down the root cause, and it turned out to be an innocuous-looking configuration oversight. It’s usually not a single dramatic failure, but rather a combination of factors. Let’s get into the specifics.
 
 First off, remember that the web ui essentially ‘discovers’ dags through the airflow scheduler which, in turn, reads configuration data. If the scheduler isn’t picking up changes from the configmap, or is misinterpreting the configurations, no dags will appear in the user interface.
 

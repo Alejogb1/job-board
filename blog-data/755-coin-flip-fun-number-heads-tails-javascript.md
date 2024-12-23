@@ -4,13 +4,13 @@ date: "2024-12-13"
 id: "755-coin-flip-fun-number-heads-tails-javascript"
 ---
 
-Okay so a coin flip in javascript right Been there done that and probably broke a few keyboards in the process It sounds simple and it is really once you get the hang of it But there are a few things to watch out for especially if you are coming from a different language background
+ so a coin flip in javascript right Been there done that and probably broke a few keyboards in the process It sounds simple and it is really once you get the hang of it But there are a few things to watch out for especially if you are coming from a different language background
 
 Let’s be frank this isn’t rocket science or even a hard interview question Its basically a random number generator thingy that gives you two options 0 or 1 in this case we interpret 0 as tails and 1 as heads The key is getting that random number generation correct and handling it nicely in your code
 
 So first let’s talk about my history with this simple problem I remember back in my early days like maybe 2012 I was working on this really janky browser game It had a lot of randomness and yes it needed a coin flip function I kid you not I used Mathrandom() like everyone else initially but then I ran into this weird bias in the distribution of outcomes My flips were landing heads like 60% of the time and that was not fun or fair I debugged like a madman for hours thinking there was something wrong with my game logic Turns out my usage of Mathrandom and bit operations were not that great My lesson learned was that even the smallest of seemingly trivial things can screw things up in a big way so paying attention to detail matters a lot
 
-Okay enough of the reminiscing Lets dive into the code First the basic version which most people use and probably the one you were trying to write yourself
+ enough of the reminiscing Lets dive into the code First the basic version which most people use and probably the one you were trying to write yourself
 
 ```javascript
 function coinFlipBasic() {
@@ -41,7 +41,7 @@ console.log(coinFlipInteger())
 
 This is more robust in my experience This version uses the same random number generator but first converts the result into a whole number 0 or 1 Its less likely to suffer from slight biases I mentioned before because the actual floating point output of Mathrandom is only used to generate an integer it wont matter that much if there were some weird subtle biases in the output distribution
 
-Okay so its important to always be skeptical especially in randomness If you need higher quality random numbers because your application is more sensitive for fairness like a lottery or something like that you can check out a technique called using a cryptographically secure random number generator You may not need it for a simple coin flip but its something good to have in the toolkit
+ so its important to always be skeptical especially in randomness If you need higher quality random numbers because your application is more sensitive for fairness like a lottery or something like that you can check out a technique called using a cryptographically secure random number generator You may not need it for a simple coin flip but its something good to have in the toolkit
 
 For the sake of showing off here is how you would use `crypto.getRandomValues` to get a more secure outcome
 

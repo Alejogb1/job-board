@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-improve-the-understandability-of-predictions-from-a-python-keras-cnn-model"
 ---
 
-Alright, let's tackle this. I remember vividly a project a few years back, where we were building a CNN for a medical imaging classification task. The model’s performance was, frankly, excellent in terms of raw accuracy. But when it came time to explain *why* it was classifying a particular image as cancerous or benign, we were essentially looking at a black box. That’s a common situation with deep learning, and improving the understandability of predictions is vital for trust and real-world deployment. So, how do you break through the opacity of a Keras CNN? Here’s how I approach it, focusing on techniques that have consistently proven useful.
+Alright,  I remember vividly a project a few years back, where we were building a CNN for a medical imaging classification task. The model’s performance was, frankly, excellent in terms of raw accuracy. But when it came time to explain *why* it was classifying a particular image as cancerous or benign, we were essentially looking at a black box. That’s a common situation with deep learning, and improving the understandability of predictions is vital for trust and real-world deployment. So, how do you break through the opacity of a Keras CNN? Here’s how I approach it, focusing on techniques that have consistently proven useful.
 
 First, understand that 'understandability' isn't a monolithic goal. We need to differentiate between techniques for *visualizing* what the network focuses on and methods that allow us to *interpret* the network’s decision-making process. They are distinct and complementary.
 

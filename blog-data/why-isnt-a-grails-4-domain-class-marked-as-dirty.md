@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-isnt-a-grails-4-domain-class-marked-as-dirty"
 ---
 
-Okay, let’s tackle this. It’s a common head-scratcher, and something I actually spent a good chunk of time investigating back when I was working on a fairly complex inventory management system built on Grails 4. We had a similar problem where we'd modify domain objects, seemingly in a straightforward fashion, and they just wouldn’t register as dirty with Hibernate, meaning no automatic updates to the database. It became clear that understanding how Grails and Hibernate track changes was paramount.
+, let’s tackle this. It’s a common head-scratcher, and something I actually spent a good chunk of time investigating back when I was working on a fairly complex inventory management system built on Grails 4. We had a similar problem where we'd modify domain objects, seemingly in a straightforward fashion, and they just wouldn’t register as dirty with Hibernate, meaning no automatic updates to the database. It became clear that understanding how Grails and Hibernate track changes was paramount.
 
 The core issue isn’t a simple matter of Grails intentionally ignoring changes. Instead, it's a nuanced interaction between how Grails handles its domain classes, how Hibernate tracks modifications, and, crucially, the way we sometimes unintentionally circumvent those tracking mechanisms. In essence, it boils down to two primary reasons: object equality and detached entities.
 

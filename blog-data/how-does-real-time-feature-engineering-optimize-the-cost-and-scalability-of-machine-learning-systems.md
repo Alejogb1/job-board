@@ -4,7 +4,7 @@ date: "2024-12-10"
 id: "how-does-real-time-feature-engineering-optimize-the-cost-and-scalability-of-machine-learning-systems"
 ---
 
-Okay so you wanna know about real-time feature engineering and how it makes machine learning cheaper and more scalable right  It's a pretty cool area lots of moving parts but the core idea is simple  Instead of prepping all your data beforehand you do it on the fly as you need it for your model Think of it like this you're not baking a whole cake at once you're making individual cupcakes as orders come in
+ so you wanna know about real-time feature engineering and how it makes machine learning cheaper and more scalable right  It's a pretty cool area lots of moving parts but the core idea is simple  Instead of prepping all your data beforehand you do it on the fly as you need it for your model Think of it like this you're not baking a whole cake at once you're making individual cupcakes as orders come in
 
 This saves you a ton of space because you dont need to store gigabytes or terabytes of pre-engineered features  Imagine if you had to store every possible combination of features for every single data point  That's a recipe for disaster storage costs would skyrocket your system would crawl and you'd probably pull your hair out
 

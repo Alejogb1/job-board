@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-set-up-actioncable-with-importmaps-in-rails-6"
 ---
 
-Okay, let's unpack this. Setting up ActionCable with importmaps in Rails 6, while seemingly straightforward, can present a few interesting configuration nuances if you’re not entirely familiar with both systems. I recall facing this myself when migrating a legacy application; it involved some unexpected quirks, specifically around module loading and ensuring everything plays nicely within the asset pipeline. Let’s dive in.
+, let's unpack this. Setting up ActionCable with importmaps in Rails 6, while seemingly straightforward, can present a few interesting configuration nuances if you’re not entirely familiar with both systems. I recall facing this myself when migrating a legacy application; it involved some unexpected quirks, specifically around module loading and ensuring everything plays nicely within the asset pipeline. Let’s dive in.
 
 The core issue stems from the way importmaps fundamentally alter how JavaScript assets are handled in Rails. Instead of relying on the traditional asset pipeline concatenation and precompilation, importmaps leverage browser-native module loading. This means that ActionCable's JavaScript client, `actioncable.js`, and any associated code you might write, need to be correctly identified and loaded as modules. This differs significantly from Rails 5 and earlier, where everything was typically bundled into a large application.js file.
 

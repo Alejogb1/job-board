@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-configure-custom-domains-for-azure-front-door"
 ---
 
-Okay, let's tackle this. I've certainly spent my fair share of hours configuring custom domains with Azure Front Door, and it's not always as straightforward as the documentation might imply. It's a crucial aspect of getting your application production-ready, so understanding the nuances is key.
+,  I've certainly spent my fair share of hours configuring custom domains with Azure Front Door, and it's not always as straightforward as the documentation might imply. It's a crucial aspect of getting your application production-ready, so understanding the nuances is key.
 
 The process revolves around a few core concepts: verifying domain ownership, associating the custom domain with your Front Door instance, and ensuring that your DNS records are configured correctly. It's a dance of configurations across different systems, and any misstep can lead to frustrating errors. In my experience, proper planning and methodical execution are your best friends here.
 

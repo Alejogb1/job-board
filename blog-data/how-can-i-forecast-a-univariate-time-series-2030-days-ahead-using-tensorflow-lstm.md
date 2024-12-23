@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-forecast-a-univariate-time-series-2030-days-ahead-using-tensorflow-lstm"
 ---
 
-Okay, let’s tackle forecasting univariate time series with LSTMs in tensorflow, focusing on that 20-30 day horizon you’ve specified. I’ve been down this road myself several times, and it’s never as straightforward as just plugging in data and hoping for the best. The key, from my experience, is in careful preparation and understanding the subtleties of your input data.
+, let’s tackle forecasting univariate time series with LSTMs in tensorflow, focusing on that 20-30 day horizon you’ve specified. I’ve been down this road myself several times, and it’s never as straightforward as just plugging in data and hoping for the best. The key, from my experience, is in careful preparation and understanding the subtleties of your input data.
 
 First off, thinking solely about the LSTM architecture is jumping the gun. Before that, we need to deal with the time series data itself. We're talking univariate here, which simplifies some things, but not all. A common issue I see repeatedly is the lack of appropriate preprocessing. Time series data often isn’t stationary; that is, the statistical properties (mean, variance) change over time. This can massively impact your model’s ability to predict the future accurately. So, think about things like differencing, where you subtract the value at time 't' from time 't+1', for example, or other more robust methods detailed in *Time Series Analysis and Its Applications* by Robert H. Shumway and David S. Stoffer – a solid, practical resource, by the way.
 

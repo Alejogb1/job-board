@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-get-a-configfile-to-access-minikube-from-outside-the-cluster-to-create-pods-delete-pods-etc"
 ---
 
-Okay, let’s tackle this. It's a common scenario, and one I’ve personally encountered a few times, usually when setting up local development environments or CI pipelines. The core challenge is ensuring your `kubectl` client, running outside the minikube VM, has the correct configuration to interact with the cluster's api server. Simply put, we need to provide it with the appropriate authentication and endpoint details.
+, let’s tackle this. It's a common scenario, and one I’ve personally encountered a few times, usually when setting up local development environments or CI pipelines. The core challenge is ensuring your `kubectl` client, running outside the minikube VM, has the correct configuration to interact with the cluster's api server. Simply put, we need to provide it with the appropriate authentication and endpoint details.
 
 Now, when you initially install minikube, it configures `kubectl` on your host machine to communicate with the newly created cluster, generating a kubeconfig file for this purpose. However, this file is usually specific to your local user context and may not be immediately accessible or usable from other environments, including those running within different terminal sessions or, crucially, from other applications outside the confines of your shell.
 

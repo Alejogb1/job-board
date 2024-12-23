@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "r-double-brackets-meaning"
 ---
 
-Okay so you're asking about `[[ ]]` in programming right It's not as scary as it looks I've seen this pop up a lot and frankly I've wrestled with it myself in the past let me share my experience and what I've learned
+ so you're asking about `[[ ]]` in programming right It's not as scary as it looks I've seen this pop up a lot and frankly I've wrestled with it myself in the past let me share my experience and what I've learned
 
 First off let's clear the air This `[[ ]]` thing its meaning isn't universal it really depends on the specific programming language or environment youre dealing with That’s why it’s super important to nail down the context when you see it popping up Otherwise it's like trying to debug with blindfolds
 

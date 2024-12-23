@@ -4,9 +4,9 @@ date: "2024-12-13"
 id: "413-body-exceeded-1mb-limit-error-nextjs"
 ---
 
-Okay so you’re hitting the infamous 413 Payload Too Large error with Nextjs specifically the 1MB limit thing classic I’ve been there trust me I mean really there I’ve battled this beast more times than I care to remember
+ so you’re hitting the infamous 413 Payload Too Large error with Nextjs specifically the 1MB limit thing classic I’ve been there trust me I mean really there I’ve battled this beast more times than I care to remember
 
-Alright so first things first that 1MB limit it’s not like some arbitrary number Nextjs just pulled out of a hat It’s a default limit imposed by most web servers and middleware to prevent malicious actors from sending huge payloads and potentially causing a denial of service attack or just generally bogging down your system. It's the gatekeeper of reasonable data flow you see.
+so first things first that 1MB limit it’s not like some arbitrary number Nextjs just pulled out of a hat It’s a default limit imposed by most web servers and middleware to prevent malicious actors from sending huge payloads and potentially causing a denial of service attack or just generally bogging down your system. It's the gatekeeper of reasonable data flow you see.
 
 So when you get that 413 error it means your client is sending a request that is larger than that 1MB threshold It's like trying to shove an elephant through a cat door it just ain't gonna happen and the server politely tells you so with a 413 status code I recall a time when a client of mine had an image upload feature with zero size limitation so the user decided to upload a 10MB 4K video directly through the form it was a disaster my logs lit up like a Christmas tree.
 
@@ -14,7 +14,7 @@ Now how do you actually tackle this thing well it depends on what exactly you’
 
 **The Easy Stuff (Client Side):**
 
-Okay let's start with the low-hanging fruit the stuff you can quickly check on the client side before we dive into the more complex solutions The most common mistake I've seen is not checking the size of data being sent before actually sending the POST/PUT request. If you are uploading files for instance which I assume you might be always validate it on client side before ever sending that request to your Nextjs api routes.
+ let's start with the low-hanging fruit the stuff you can quickly check on the client side before we dive into the more complex solutions The most common mistake I've seen is not checking the size of data being sent before actually sending the POST/PUT request. If you are uploading files for instance which I assume you might be always validate it on client side before ever sending that request to your Nextjs api routes.
 
 Here is the javascript example:
 ```javascript

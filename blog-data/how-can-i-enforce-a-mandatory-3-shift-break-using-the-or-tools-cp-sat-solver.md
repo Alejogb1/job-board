@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-enforce-a-mandatory-3-shift-break-using-the-or-tools-cp-sat-solver"
 ---
 
-Okay, so let's delve into the nuances of enforcing a mandatory 3-shift break using Google’s OR-Tools CP-SAT solver. I recall a particularly challenging project a few years back where we had to manage a crew scheduling problem for a continuous operation plant. The crux of it? Enforcing a rigid break period after a fixed number of consecutive shifts, precisely what you're tackling. We tried a few methods before landing on something that proved quite robust.
+, so let's delve into the nuances of enforcing a mandatory 3-shift break using Google’s OR-Tools CP-SAT solver. I recall a particularly challenging project a few years back where we had to manage a crew scheduling problem for a continuous operation plant. The crux of it? Enforcing a rigid break period after a fixed number of consecutive shifts, precisely what you're tackling. We tried a few methods before landing on something that proved quite robust.
 
 The challenge here isn't so much about defining the shift assignment variables – that's usually straightforward. The tricky bit is formulating the constraints that *force* a break after, say, every three shifts. Naively attempting this can lead to a combinatorially explosive set of constraints, which the solver will struggle with. Instead, the solution usually involves introducing auxiliary variables and a careful formulation to express the break requirements logically.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-my-pytorch-rnn-achieving-zero-accuracy"
 ---
 
-Let's tackle this. Seeing a PyTorch RNN consistently hit zero accuracy can be perplexing, but it's often the result of a few key issues rather than a fundamental flaw in the model itself. In my experience, I've seen this several times, particularly when training on particularly nuanced datasets or when attempting novel model architectures. I remember a project involving sentiment analysis on a corpus of very short, highly sarcastic tweets. Initially, my RNN was stuck at zero accuracy, and it took some careful debugging to pinpoint the exact cause.
+ Seeing a PyTorch RNN consistently hit zero accuracy can be perplexing, but it's often the result of a few key issues rather than a fundamental flaw in the model itself. In my experience, I've seen this several times, particularly when training on particularly nuanced datasets or when attempting novel model architectures. I remember a project involving sentiment analysis on a corpus of very short, highly sarcastic tweets. Initially, my RNN was stuck at zero accuracy, and it took some careful debugging to pinpoint the exact cause.
 
 The core reasons generally fall into a few categories: data-related problems, issues with the model's setup, or problems within the training loop. Let’s break these down systematically, focusing on the debugging process and practical steps I've used to address them.
 

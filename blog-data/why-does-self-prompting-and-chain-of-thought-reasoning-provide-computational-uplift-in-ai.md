@@ -4,7 +4,7 @@ date: "2024-12-11"
 id: "why-does-self-prompting-and-chain-of-thought-reasoning-provide-computational-uplift-in-ai"
 ---
 
-Okay so you wanna know why self-prompting and chain of thought reasoning are like supercharging AI right  its kinda cool actually  imagine you're trying to solve a really hard math problem  you wouldn't just jump to the answer right you'd break it down into smaller easier steps  that's basically what chain of thought is all about  it's like giving the AI a little internal monologue to guide its thinking process  instead of just spitting out the first thing that pops into its head it meticulously walks through each step  reasoning its way to the solution
+ so you wanna know why self-prompting and chain of thought reasoning are like supercharging AI right  its kinda cool actually  imagine you're trying to solve a really hard math problem  you wouldn't just jump to the answer right you'd break it down into smaller easier steps  that's basically what chain of thought is all about  it's like giving the AI a little internal monologue to guide its thinking process  instead of just spitting out the first thing that pops into its head it meticulously walks through each step  reasoning its way to the solution
 
 Self-prompting is even more meta its like the AI is giving itself hints or questions along the way its  basically  a form of self-teaching  it prompts itself to consider different aspects of the problem  explore alternative approaches  and generally be more thorough and less prone to making stupid mistakes  think of it as a built-in debugger or a super smart tutor that's always whispering helpful suggestions in the AI's ear
 

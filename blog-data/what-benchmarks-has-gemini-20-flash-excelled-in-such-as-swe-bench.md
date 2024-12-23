@@ -4,7 +4,7 @@ date: "2024-12-12"
 id: "what-benchmarks-has-gemini-20-flash-excelled-in-such-as-swe-bench"
 ---
 
-Okay so Gemini 2.0 Flash right lets dive into that a bit because its been making some noise yeah
+ so Gemini 2.0 Flash right lets dive into that a bit because its been making some noise yeah
 
 Its kinda cool how fast things move in AI you know like one minute were all amazed by something and the next there's something even faster and more impressive Gemini Flash feels like one of those moments its supposed to be the speedy version kinda the sprinter to Gemini Pro's marathon runner and that speed comes at a cost obviously tradeoffs right but for a lot of things its probably worth it
 
@@ -81,7 +81,7 @@ I also recommend looking at papers and literature around code generation models 
 
 Instead of specific benchmarks like these also think about broader categories like code understanding where you may see benchmarks related to code summarization or code documentation. In these kind of benchmarks you will see how well the model can make inferences from existing code For example give a complicated class in python and be asked to provide a summary of what that class does Another important category is code completion or auto completion tasks where you measure the model’s ability to predict the next line or next segment of code given a starting point
 
-So Gemini Flash its likely optimized for speed and this will come with some level of tradeoff in other areas you should think more about where you might be okay making that tradeoff for speed
+So Gemini Flash its likely optimized for speed and this will come with some level of tradeoff in other areas you should think more about where you might be  making that tradeoff for speed
 
 When you're looking at the details of benchmarks look closely at the methodology of the benchmark like what problems where chosen how were they scored how was the evaluation done All that sort of stuff makes a big difference in interpreting results Also pay attention to the metrics used were they looking at accuracy or precision or recall its essential to understand what’s being measured and how its being measured
 

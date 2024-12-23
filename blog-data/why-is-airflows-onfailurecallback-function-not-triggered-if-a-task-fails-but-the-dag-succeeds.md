@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-airflows-onfailurecallback-function-not-triggered-if-a-task-fails-but-the-dag-succeeds"
 ---
 
-Okay, let's tackle this peculiar behavior with Airflow's `on_failure_callback`. I remember facing this exact issue when we were migrating a hefty ETL pipeline to Airflow a few years back; it was baffling initially, as we expected every task failure to trigger the callback regardless of overall dag success. It took some thorough investigation to fully grasp the mechanics at play.
+, let's tackle this peculiar behavior with Airflow's `on_failure_callback`. I remember facing this exact issue when we were migrating a hefty ETL pipeline to Airflow a few years back; it was baffling initially, as we expected every task failure to trigger the callback regardless of overall dag success. It took some thorough investigation to fully grasp the mechanics at play.
 
 The core of the matter lies in the distinction between task states and dag states, and how Airflow orchestrates the execution flow. When a task within a dag encounters a failure, such as a python exception, the task's individual state is marked as "failed." This transition *does* indeed trigger the various task-level listeners like `on_failure_callback` if they're defined on that *specific task*. However, and this is the critical part, it doesn't necessarily translate into the entire dag failing.
 

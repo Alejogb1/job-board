@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-cant-i-use-await-before-a-non-async-method"
 ---
 
-Okay, let's tackle this. It's a question that surfaces quite frequently, and I've certainly seen my fair share of confusion around it, especially during those early adoption phases of async/await in various projects. From what I've observed over the years, the root cause often stems from a misunderstanding of the fundamental mechanics underpinning asynchronous operations and how `async/await` integrates with that framework.
+,  It's a question that surfaces quite frequently, and I've certainly seen my fair share of confusion around it, especially during those early adoption phases of async/await in various projects. From what I've observed over the years, the root cause often stems from a misunderstanding of the fundamental mechanics underpinning asynchronous operations and how `async/await` integrates with that framework.
 
 The core issue is that `await` is a syntactic construct intrinsically tied to asynchronous functions, specifically those declared using the `async` keyword in javascript (and similar in other languages, though I'll focus on javascript for clarity). It's not a generic command that can be used with any method call, but rather a specialized operator designed to pause execution within an `async` function until a promise is resolved or rejected. The `async` keyword, in turn, transforms the function into a state machine, essentially handling the complexities of yielding control back to the event loop while waiting for the underlying asynchronous operation to complete.
 

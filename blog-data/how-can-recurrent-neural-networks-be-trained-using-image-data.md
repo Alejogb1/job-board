@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-recurrent-neural-networks-be-trained-using-image-data"
 ---
 
-Alright, let's tackle this. It’s not the most common use case, admittedly, but training recurrent neural networks (rnns) with image data is definitely something I've encountered in a few projects. The challenge stems from the fact that rnn’s are inherently designed to process sequential data, while images are, at their core, spatially structured two-dimensional arrays. So, we need to bridge that gap. The key is treating image data as a *sequence*, and that’s where things get interesting.
+Alright,  It’s not the most common use case, admittedly, but training recurrent neural networks (rnns) with image data is definitely something I've encountered in a few projects. The challenge stems from the fact that rnn’s are inherently designed to process sequential data, while images are, at their core, spatially structured two-dimensional arrays. So, we need to bridge that gap. The key is treating image data as a *sequence*, and that’s where things get interesting.
 
 Now, my experience goes back a few years, when I was working on a rather unusual computer vision problem involving analysis of microscope slides. We needed to understand the temporal progression of cellular structures across a series of slightly varying images – essentially treating the "frames" as a kind of sequential observation. It quickly became clear that we couldn't just feed the raw pixel data into an rnn, expecting it to make sense of anything. We had to introduce some preprocessing steps, specifically focusing on feature extraction and sequence construction.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-the-bleu-score-indicate-zero-similarity-for-these-comparable-text-pairs"
 ---
 
-Alright, let's tackle this. I've definitely been down this rabbit hole before, particularly when working on a translation engine for legacy medical records. We had a series of sentence pairs that, to the human eye, were obviously very close in meaning, yet the BLEU score stubbornly reported a value of zero. Frustrating, to say the least, but it's a common scenario and one that really underscores the limitations (and underlying mechanics) of the BLEU metric.
+Alright,  I've definitely been down this rabbit hole before, particularly when working on a translation engine for legacy medical records. We had a series of sentence pairs that, to the human eye, were obviously very close in meaning, yet the BLEU score stubbornly reported a value of zero. Frustrating, to say the least, but it's a common scenario and one that really underscores the limitations (and underlying mechanics) of the BLEU metric.
 
 The core reason a BLEU score of zero arises for text pairs that are intuitively similar lies in how the metric fundamentally operates. BLEU, or Bilingual Evaluation Understudy, isn’t about semantic similarity; it’s about n-gram precision. Specifically, it compares the *n-grams* in the candidate translation (or in your case, the second text) against the *n-grams* found in one or more reference translations (or, again, your first text). If none of the n-grams, up to a predefined maximum length, are present in the reference, you get a zero score. It's a hard precision metric, and that's a crucial point to understand.
 

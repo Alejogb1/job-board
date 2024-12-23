@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-the-interface-property-undefined-in-the-required-module"
 ---
 
-Okay, let's tackle this one. I've definitely been down this rabbit hole before – probably more times than I care to remember. The situation where you’re finding that an `interface` property is mysteriously `undefined` within a required module is, more often than not, a symptom of how javascript modules, specifically those in commonjs style, handle their exports, and how those exports are ultimately accessed. Let's dissect this, shall we?
+, let's tackle this one. I've definitely been down this rabbit hole before – probably more times than I care to remember. The situation where you’re finding that an `interface` property is mysteriously `undefined` within a required module is, more often than not, a symptom of how javascript modules, specifically those in commonjs style, handle their exports, and how those exports are ultimately accessed. Let's dissect this, shall we?
 
 The key here isn't that javascript *can't* have an ‘interface’ property, rather the issue arises from how the module is designed to expose, or in this case, *not* expose, its functionality. When you're using a commonjs style module (`module.exports = ...`), what gets exported isn’t necessarily the literal object defined within the module’s scope, unless specifically assigned as such. It’s very easy to inadvertently export something other than what you expect or to misinterpret what a module exposes and the means of interacting with it. It all comes down to how you're defining and consuming your module’s exports and, crucially, understanding what JavaScript considers ‘public’ versus ‘private’ in this context.
 

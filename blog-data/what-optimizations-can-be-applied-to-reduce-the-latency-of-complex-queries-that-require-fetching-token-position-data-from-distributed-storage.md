@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "what-optimizations-can-be-applied-to-reduce-the-latency-of-complex-queries-that-require-fetching-token-position-data-from-distributed-storage"
 ---
 
-Okay so you're wrestling with latency in complex queries pulling token position data from a distributed system  that's a tough nut to crack  lots of moving parts there  Let's brainstorm some optimization strategies  it's less about one magic bullet and more about a layered approach
+ so you're wrestling with latency in complex queries pulling token position data from a distributed system  that's a tough nut to crack  lots of moving parts there  Let's brainstorm some optimization strategies  it's less about one magic bullet and more about a layered approach
 
 First thing  profiling is king  you absolutely need to pin down where the bottlenecks are before you start throwing optimizations at the wall  If you're not using something like a dedicated profiler  you're flying blind  There are tons of great profilers out there depending on your system and language  check out the performance analysis chapters in  "Computer Systems A Programmer's Perspective" by Randal Bryant and David O'Hallaron  it's a classic and will give you the fundamentals you need to really dig into your code
 

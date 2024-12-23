@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-only-about-04-accuracy-with-pytorch-for-iris"
 ---
 
-Alright, let's tackle this. It's not uncommon to hit a wall with seemingly simple datasets like iris, and a 0.4 accuracy certainly raises a flag. I’ve been down this path before, troubleshooting why a model wasn't performing as expected, and the iris dataset, despite its apparent simplicity, can highlight some fundamental issues if not handled correctly. Here’s what's likely going on and how we can address it.
+Alright,  It's not uncommon to hit a wall with seemingly simple datasets like iris, and a 0.4 accuracy certainly raises a flag. I’ve been down this path before, troubleshooting why a model wasn't performing as expected, and the iris dataset, despite its apparent simplicity, can highlight some fundamental issues if not handled correctly. Here’s what's likely going on and how we can address it.
 
 First, the iris dataset, while straightforward, isn’t entirely without nuances. It has three classes and only four features, meaning there's not a ton of room to work with, and the classes aren't perfectly separable. A model that is not properly configured can very easily latch onto a suboptimal solution. What you're observing likely points to a combination of issues. These issues, in my experience, frequently fall into the following categories: incorrect data preprocessing, inadequate model architecture, inappropriate training configuration, and finally, a lack of proper evaluation. Let's break each one down, keeping in mind I am working under the assumption that you've already implemented a basic pytorch model.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "does-an-infinite-loop-in-python-code-cause-resource-exhaustion"
 ---
 
-Alright, let's tackle this. The question of whether an infinite loop in python code leads to resource exhaustion is a nuanced one, and it isn't as straightforward as simply saying "yes" or "no." It depends heavily on the specific nature of the loop and what operations it's performing. Over my years working on various systems, I've encountered situations where seemingly innocuous infinite loops led to cascading failures, and others where they were less immediately catastrophic. Let me explain with a practical, grounded perspective.
+Alright,  The question of whether an infinite loop in python code leads to resource exhaustion is a nuanced one, and it isn't as straightforward as simply saying "yes" or "no." It depends heavily on the specific nature of the loop and what operations it's performing. Over my years working on various systems, I've encountered situations where seemingly innocuous infinite loops led to cascading failures, and others where they were less immediately catastrophic. Let me explain with a practical, grounded perspective.
 
 At its core, an infinite loop, by definition, continues executing indefinitely. This means the program will not reach its natural termination point unless explicitly broken out of (e.g., using `break` or through an unhandled exception). The potential for resource exhaustion stems from the repetitive execution of code within that loop. The specific resources most likely to be impacted are cpu time, memory, and, indirectly, the performance of other processes or services sharing the same machine.
 

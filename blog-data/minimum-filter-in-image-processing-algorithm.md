@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "minimum-filter-in-image-processing-algorithm"
 ---
 
-Alright so you're asking about a minimum filter in image processing right Been there done that trust me I've wrestled with this beast more times than I care to admit
+so you're asking about a minimum filter in image processing right Been there done that trust me I've wrestled with this beast more times than I care to admit
 
 So basically a minimum filter is a type of image processing operation that goes through an image pixel by pixel It doesn't care about the color in this context it operates on the pixel values in its neighborhood it looks around a selected pixel and finds the minimum pixel value within a predefined area and then it replaces the original pixel value with this minimum value So you can think of it as a kind of 'darkening' or 'erosion' operation which is useful in many contexts usually to reduce noise to make things more homogeneous It's not about averaging or blurring that’s a different thing this is about finding the darkest spot and making the center pixel match that darkest spot
 

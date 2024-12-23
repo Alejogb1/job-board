@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "array-construction-java-initialization"
 ---
 
-Okay so you're wrestling with array construction and initialization in Java eh I've been there trust me it's one of those things that seems simple on the surface but can lead to some head-scratching moments if you're not careful
+ so you're wrestling with array construction and initialization in Java eh I've been there trust me it's one of those things that seems simple on the surface but can lead to some head-scratching moments if you're not careful
 
 Let me break it down from my experience I've probably spent more time debugging array-related issues than I care to admit So I'll share what I've learned
 
@@ -18,7 +18,7 @@ int[] numbers = {1 2 3 4 5};
 
 This does a few things at once It declares a variable named numbers of type integer array `int[]` and initializes the array with the values 1 2 3 4 and 5 behind the scenes the Java runtime sets aside enough memory to hold 5 integers and assigns them these values This is often the easiest way to make quick arrays
 
-Now maybe you want to create the array separately from populating its values Okay you can do that too You'll need to declare the array and then create the array object by calling its constructor
+Now maybe you want to create the array separately from populating its values  you can do that too You'll need to declare the array and then create the array object by calling its constructor
 
 ```java
 int[] anotherNumbers;
@@ -68,6 +68,6 @@ A little fun fact about java arrays they are objects and inherit some of that ob
 
 One last common issue is when you try to use an array and you haven't allocated it yet You might get a `NullPointerException` because the variable is pointing to `null` not a spot in memory allocated for an array object you need to make sure that you have done the `new type[size]` part before assigning or accessing values in the array otherwise java gets a bit confused it does not know what to do with the index if it doesn't have an array object to operate on. Always check if your array variable has the object allocated or if it is still `null`.
 
-Alright so in short the key things to remember are declaration allocation initialization and checking for index out of bounds errors and not trying to use an array variable if you have not allocated it yet If you need to delve deeper into the under the hood operations of java arrays check out the "Java Virtual Machine Specification" or "Effective Java" by Joshua Bloch Those are the real deal if you are serious about knowing Java you'll find answers there
+so in short the key things to remember are declaration allocation initialization and checking for index out of bounds errors and not trying to use an array variable if you have not allocated it yet If you need to delve deeper into the under the hood operations of java arrays check out the "Java Virtual Machine Specification" or "Effective Java" by Joshua Bloch Those are the real deal if you are serious about knowing Java you'll find answers there
 
 Hope this helps you avoid some of the array related pitfalls I have encountered over the years feel free to post more questions if you run into any other issues.

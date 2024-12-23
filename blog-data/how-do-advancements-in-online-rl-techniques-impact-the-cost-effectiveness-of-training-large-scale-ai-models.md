@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "how-do-advancements-in-online-rl-techniques-impact-the-cost-effectiveness-of-training-large-scale-ai-models"
 ---
 
-Okay so you wanna talk about online RL and how it changes the whole training cost picture for massive AI models right  That's a huge topic  Like seriously huge  It's not just about saving a few bucks it's about making training even *possible* for some models we can only dream of now
+ so you wanna talk about online RL and how it changes the whole training cost picture for massive AI models right  That's a huge topic  Like seriously huge  It's not just about saving a few bucks it's about making training even *possible* for some models we can only dream of now
 
 The main thing is that training these mega models is insanely expensive  We're talking billions of parameters millions of data points and hundreds maybe thousands of powerful GPUs all running for weeks or months  The energy bill alone is enough to make your eyes water
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-does-batch-size-affect-tensorflow-model-inference-accuracy"
 ---
 
-Okay, let's dive into this. I've seen this particular issue crop up more than a few times in my career, especially when optimizing models for production environments. The interaction between batch size and inference accuracy isn't always straightforward, and understanding the nuances is key to getting the best performance from your TensorFlow models. It's certainly not as simple as 'bigger is always better' or vice versa.
+, let's dive into this. I've seen this particular issue crop up more than a few times in my career, especially when optimizing models for production environments. The interaction between batch size and inference accuracy isn't always straightforward, and understanding the nuances is key to getting the best performance from your TensorFlow models. It's certainly not as simple as 'bigger is always better' or vice versa.
 
 Fundamentally, batch size in inference, just as in training, determines the number of input samples processed simultaneously by the model. While training benefits from batching to leverage parallel processing and improve gradient estimation, the implications during inference are slightly different. We’re now focused on making predictions, not learning weights. So, how does this impact accuracy? Well, it's all about a balance of computational efficiency, memory footprint, and, indeed, accuracy.
 

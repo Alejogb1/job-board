@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-convert-an-h5-model-to-tensorflow-lite"
 ---
 
-Okay, let’s tackle this. Conversion of h5 models—typically from Keras or a similar high-level API using TensorFlow—to TensorFlow Lite (tflite) is a common task, and frankly, it's something I’ve personally had to navigate more times than I can count. I recall one particular project, a real-time object detection system for resource-constrained devices, where this was crucial for deployment. The challenge isn't always straightforward, so let's break it down with a focus on practicalities and best practices.
+, let’s tackle this. Conversion of h5 models—typically from Keras or a similar high-level API using TensorFlow—to TensorFlow Lite (tflite) is a common task, and frankly, it's something I’ve personally had to navigate more times than I can count. I recall one particular project, a real-time object detection system for resource-constrained devices, where this was crucial for deployment. The challenge isn't always straightforward, so let's break it down with a focus on practicalities and best practices.
 
 The core concept behind the conversion is to transform a complex, often large, floating-point model into a more compact, often quantized, form suitable for mobile and embedded devices. This involves several key steps, and we’ll explore them in detail. We'll also discuss situations that can throw a wrench into the works.
 

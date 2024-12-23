@@ -4,7 +4,7 @@ date: "2024-12-11"
 id: "what-are-the-challenges-of-computational-complexity-in-chain-of-thought-reasoning"
 ---
 
-Okay so you wanna talk about the headaches of computational complexity in chain of thought reasoning right  Cool beans  It's a pretty juicy topic  lots of moving parts  basically we're trying to make AI think like humans right  break down problems step by step  like a detective solving a case  but the "thinking" part is where things get hairy
+ so you wanna talk about the headaches of computational complexity in chain of thought reasoning right  Cool beans  It's a pretty juicy topic  lots of moving parts  basically we're trying to make AI think like humans right  break down problems step by step  like a detective solving a case  but the "thinking" part is where things get hairy
 
 The main challenge boils down to this explosion of possibilities  imagine you're playing chess  each move has multiple options right  and then each of those options has more options and so on  that's the branching factor  it grows exponentially  and that's the curse of combinatorics for you  It’s basically the reason why some problems are just computationally too hard for even the fastest computers
 

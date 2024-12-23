@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-do-an-outgoing-mail-configuration-redmine-on-windows-server-2019"
 ---
 
-alright, let's tackle this. configuring outgoing email for redmine on windows server 2019, it's a dance we've all done at some point. it's never quite as straightforward as it should be, is it? i've personally spent more hours than i'd like to recount wrestling with smtp settings, so i feel your pain.
+alright,  configuring outgoing email for redmine on windows server 2019, it's a dance we've all done at some point. it's never quite as straightforward as it should be, is it? i've personally spent more hours than i'd like to recount wrestling with smtp settings, so i feel your pain.
 
 the core of the problem revolves around making redmine, which is a ruby on rails application, communicate with an smtp server. this server is responsible for actually sending the email. windows server 2019, in itself, isn't directly involved in sending the emails unless you're using a local smtp server, which honestly is rarely the case in modern environments.
 

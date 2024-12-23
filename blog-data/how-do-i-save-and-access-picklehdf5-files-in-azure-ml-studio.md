@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-save-and-access-picklehdf5-files-in-azure-ml-studio"
 ---
 
-Okay, let's get down to brass tacks. When working in Azure ML Studio, managing the persistence of model artifacts or datasets, especially those using pickle or hdf5, can introduce some challenges that aren't always immediately obvious. I've seen my share of headaches trying to keep this process smooth, and I can tell you firsthand that a bit of planning and understanding how Azure ML deals with files goes a long way. Let me walk you through a systematic approach based on my experiences, which includes storing, retrieving, and best practices I've picked up.
+, let's get down to brass tacks. When working in Azure ML Studio, managing the persistence of model artifacts or datasets, especially those using pickle or hdf5, can introduce some challenges that aren't always immediately obvious. I've seen my share of headaches trying to keep this process smooth, and I can tell you firsthand that a bit of planning and understanding how Azure ML deals with files goes a long way. Let me walk you through a systematic approach based on my experiences, which includes storing, retrieving, and best practices I've picked up.
 
 First, understanding that Azure ML Studio operates within an environment where files aren't simply available as they might be on your local machine is critical. We're essentially talking about a managed compute environment, often a Docker container, where files are not inherently persistent between runs unless explicitly managed. The challenge is particularly amplified with pickle and hdf5 because these binary formats don't play well with standard text-based datastore options.
 

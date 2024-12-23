@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "how-does-the-elimination-of-resistive-losses-in-photonic-interconnects-enhance-data-transfer-rates-for-ai-model-training-compared-to-pcie-based-communication-methods"
 ---
 
-Okay so you wanna know about photonic interconnects and how they totally blow PCIe out of the water for AI training right  It's all about speed man  Pure unadulterated speed  PCIe is like that old dial-up modem from the 90s remember those agonizing waits  Photonic interconnects are more like a fiber optic cable beaming data at light speed literally
+ so you wanna know about photonic interconnects and how they totally blow PCIe out of the water for AI training right  It's all about speed man  Pure unadulterated speed  PCIe is like that old dial-up modem from the 90s remember those agonizing waits  Photonic interconnects are more like a fiber optic cable beaming data at light speed literally
 
 Think of it like this  AI training involves massive data transfers billions of parameters  all those weights and biases in your neural networks  need to flow seamlessly between GPUs or CPUs or whatever you are using for the training process  With PCIe you have those pesky resistive losses  electrical resistance causing signal degradation heat build-up and ultimately bottlenecks  It's like trying to pump water through a really narrow pipe with lots of kinks in it  some water just gets lost along the way  reducing your overall flow rate  reducing your overall training speed
 

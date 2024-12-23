@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-retrieve-a-csv-from-a-flaskform-input-using-airflow"
 ---
 
-Okay, let's tackle this. It's a scenario I’ve encountered more than a few times, usually involving a user uploading some structured data via a web interface and then needing to process it in our data pipeline. Pulling a CSV from a FlaskForm submitted via a web interface, then leveraging Airflow to handle the heavy lifting, isn’t exactly straightforward, but it’s certainly achievable with a bit of structured thinking.
+,  It's a scenario I’ve encountered more than a few times, usually involving a user uploading some structured data via a web interface and then needing to process it in our data pipeline. Pulling a CSV from a FlaskForm submitted via a web interface, then leveraging Airflow to handle the heavy lifting, isn’t exactly straightforward, but it’s certainly achievable with a bit of structured thinking.
 
 My experience stems from a project where we had a fairly rudimentary data ingestion process. Users would submit configuration parameters via a web form (Flask app, naturally) and sometimes also submit CSV files containing initialization data. We needed to move that data into our data lake, and Airflow was our tool of choice for scheduling and monitoring this pipeline. Initially, we had some real issues with correctly handling the file uploads, and it took some refining to get it into a robust and reliable state.
 

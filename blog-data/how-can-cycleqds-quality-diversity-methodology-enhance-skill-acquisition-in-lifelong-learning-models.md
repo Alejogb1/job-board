@@ -4,7 +4,7 @@ date: "2024-12-04"
 id: "how-can-cycleqds-quality-diversity-methodology-enhance-skill-acquisition-in-lifelong-learning-models"
 ---
 
-Okay so you wanna know how CycleQD this cool Quality Diversity algorithm thing can help robots or AI learn new skills throughout their whole lives right  Lifelong learning is a big deal its like teaching a kid new stuff constantly without them forgetting everything they already know  CycleQD is perfect for that because it focuses on finding diverse and high-quality solutions which is exactly what you need for a robot that has to adapt to many situations
+ so you wanna know how CycleQD this cool Quality Diversity algorithm thing can help robots or AI learn new skills throughout their whole lives right  Lifelong learning is a big deal its like teaching a kid new stuff constantly without them forgetting everything they already know  CycleQD is perfect for that because it focuses on finding diverse and high-quality solutions which is exactly what you need for a robot that has to adapt to many situations
 
 Think about it  a robot might learn to walk first then it needs to learn to pick things up and then maybe climb stairs  Each skill is a little different and they kinda build on each other CycleQD helps the robot explore many different ways to walk many ways to pick stuff up and many ways to climb stairs  It doesnt just find one solution it finds a bunch of good solutions that are all a bit different
 

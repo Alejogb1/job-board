@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-wpf-listview-not-binding-to-the-viewmodel-property"
 ---
 
-Okay, let's talk about why your WPF ListView isn't playing nice with your ViewModel property. It’s a situation I've seen, and frankly, debugged more times than I care to count, especially back when I was knee-deep in desktop application development for that manufacturing control system. The core problem, nine times out of ten, isn't that the binding *isn't* working; it’s that it's not working *as you expect*. WPF's data binding system, while powerful, can be a bit finicky if not approached with the right understanding. Let’s get into the nitty-gritty.
+, let's talk about why your WPF ListView isn't playing nice with your ViewModel property. It’s a situation I've seen, and frankly, debugged more times than I care to count, especially back when I was knee-deep in desktop application development for that manufacturing control system. The core problem, nine times out of ten, isn't that the binding *isn't* working; it’s that it's not working *as you expect*. WPF's data binding system, while powerful, can be a bit finicky if not approached with the right understanding. Let’s get into the nitty-gritty.
 
 Fundamentally, the issue stems from a few common culprits. First, the *path* in your binding expression needs to correctly identify the property within the ViewModel. Second, the property itself needs to be exposed correctly from the ViewModel, and more critically, it must notify the UI when it changes. Finally, there's the subtle, but vital, area of *threading*; WPF's UI thread and how your ViewModel updates data can cause headaches.
 

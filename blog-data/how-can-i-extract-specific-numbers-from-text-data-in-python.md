@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-extract-specific-numbers-from-text-data-in-python"
 ---
 
-Alright, let's tackle this. I've definitely been down this road more than a few times, dealing with messy text and the need to pull out precise numerical data. It’s a common problem, and thankfully Python offers a robust set of tools to handle it efficiently. We're not talking about simple find-and-replace here, we’re going for accuracy and flexibility.
+Alright,  I've definitely been down this road more than a few times, dealing with messy text and the need to pull out precise numerical data. It’s a common problem, and thankfully Python offers a robust set of tools to handle it efficiently. We're not talking about simple find-and-replace here, we’re going for accuracy and flexibility.
 
 The crux of the matter involves a combination of techniques, and the optimal approach depends largely on the nature of your text and the specific types of numbers you're after. Regular expressions are often your best friend here, but understanding when and how to use them alongside other methods is key. I'll walk you through a few examples, illustrating different scenarios and how I've approached them in the past.
 

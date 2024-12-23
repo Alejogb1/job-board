@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-the-typeerror-init-got-an-unexpected-keyword-argument-numsamples-error"
 ---
 
-Okay, let's unpack this. The `TypeError: __init__() got an unexpected keyword argument 'num_samples'` error is a classic case of mismatches between how you're trying to instantiate a class and how that class's initializer, the `__init__` method, is defined. It's a situation I've encountered countless times, usually when working with third-party libraries or poorly documented codebases – that's where the real fun begins, isn't it?
+, let's unpack this. The `TypeError: __init__() got an unexpected keyword argument 'num_samples'` error is a classic case of mismatches between how you're trying to instantiate a class and how that class's initializer, the `__init__` method, is defined. It's a situation I've encountered countless times, usually when working with third-party libraries or poorly documented codebases – that's where the real fun begins, isn't it?
 
 In essence, Python's object instantiation process hinges on the `__init__` method. When you call a class like `MyClass(some_arg=value, num_samples=10)`, Python translates that to `MyClass.__init__(self, some_arg=value, num_samples=10)`. The `self` parameter, of course, is implicitly passed and refers to the new instance being created. The error arises when `__init__` doesn't have a parameter named `num_samples` in its method signature, but your instantiation attempts to pass a keyword argument of that name.
 

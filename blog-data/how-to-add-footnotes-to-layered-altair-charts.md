@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-add-footnotes-to-layered-altair-charts"
 ---
 
-Okay, let's talk about layering altair charts and footnotes – something that's come up more than a few times in my experience. I recall one project, specifically, where I was visualizing complex geospatial data, and simple labels weren't sufficient; we needed context, sources, and explanations. Altair, while excellent for declarative charting, doesn’t offer a direct, built-in footnote mechanism. So, we had to get a bit creative.
+, let's talk about layering altair charts and footnotes – something that's come up more than a few times in my experience. I recall one project, specifically, where I was visualizing complex geospatial data, and simple labels weren't sufficient; we needed context, sources, and explanations. Altair, while excellent for declarative charting, doesn’t offer a direct, built-in footnote mechanism. So, we had to get a bit creative.
 
 The core challenge, as you likely know, is that Altair focuses on declarative specification of visual encodings. Footnotes, in the conventional sense, fall outside this model. They're more annotation than core data visualization. What we're essentially trying to do is overlay a supplementary visual element that is tied to specific parts of the chart but is not part of the data being charted.
 

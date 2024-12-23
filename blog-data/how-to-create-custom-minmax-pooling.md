@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-create-custom-minmax-pooling"
 ---
 
-Okay, let’s unpack custom min-max pooling, something I've found myself needing more than a few times in the trenches. It's not always enough to rely on the standard implementations; sometimes, the specific contours of your problem demand a tailored approach. Instead of simply grabbing the highest or lowest values within a region, you might want to apply some more complex aggregation logic. Let me illustrate.
+, let’s unpack custom min-max pooling, something I've found myself needing more than a few times in the trenches. It's not always enough to rely on the standard implementations; sometimes, the specific contours of your problem demand a tailored approach. Instead of simply grabbing the highest or lowest values within a region, you might want to apply some more complex aggregation logic. Let me illustrate.
 
 I remember back at 'InnovateDynamics,' we were processing seismic data, and the signal-to-noise ratio was atrocious. Standard max pooling amplified noise along with signal peaks, while standard min pooling did the opposite. We needed a dynamic pool, one that could, based on surrounding context, effectively reduce both, while still preserving the crucial signal features. Thus began my deep dive into creating custom min-max pooling operations.
 

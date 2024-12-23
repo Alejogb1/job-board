@@ -4,13 +4,13 @@ date: "2024-12-13"
 id: "awk-simulate-column-file-processing"
 ---
 
-Okay I see you want to wrangle some column data using `awk` yeah I've been there done that multiple times I'm pretty sure I can shed some light on this let's get to it
+ I see you want to wrangle some column data using `awk` yeah I've been there done that multiple times I'm pretty sure I can shed some light on this let's get to it
 
 First off `awk` is a beast it's way more powerful than people give it credit for you can process text files analyze logs even do simple data manipulation tasks I've even used it for quick and dirty data cleaning operations before full-on data pipelines took over back in my day in the trenches of a company doing research where no one thought about using Python and other tools you'd all use now days when I'm not sure it was good idea or not but well we had to use what we had
 
 So you're looking to simulate column processing right Imagine you've got a file say a CSV file or even a basic space delimited file or tab-separated file and you need to pick out specific columns do some calculations or even rearrange them `awk` shines in these scenarios So here's the deal `awk` treats each line as a record and by default it uses whitespace as the field separator if you have say comma separated you'd need to tell it via the `-F` option I'll show you later
 
-Now let's break it down I’ll show you some code and then we go deeper into the workings of `awk` okay
+Now let's break it down I’ll show you some code and then we go deeper into the workings of `awk` 
 
 **Example 1 Basic Column Selection**
 
@@ -40,7 +40,7 @@ This is a foundational building block so if you understand this well we're good
 
 **Example 2 Custom Field Separator**
 
-Okay now let's deal with CSV's Suppose we have `data.csv`
+ now let's deal with CSV's Suppose we have `data.csv`
 
 ```
 Name,Age,Occupation
@@ -92,7 +92,7 @@ What this does is create a `sum` variable for each line adds `$1` and `$2` and p
 
 I once spent an entire weekend debugging a very similar script the problem wasn't the `awk` part but the shell escaping rules for the parameters passed into it a nightmare I tell you the joys of unix command line manipulation always something that keeps you humble you know
 
-Alright let's get deeper into the `awk` core this is very important
+let's get deeper into the `awk` core this is very important
 
 **How `awk` Works and What You Need to Understand**
 

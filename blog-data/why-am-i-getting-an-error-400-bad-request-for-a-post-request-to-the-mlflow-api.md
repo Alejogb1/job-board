@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-an-error-400-bad-request-for-a-post-request-to-the-mlflow-api"
 ---
 
-Okay, let's delve into this. It's a frustrating situation, encountering a 400 bad request when posting to the mlflow api, especially after you've triple-checked your request. I've certainly been down that road a few times over the years. The '400 bad request' is essentially the server's way of saying, "I didn't understand what you sent." It isn't always the most informative message, but it does point to an issue within the structure or content of your request. We need to investigate the common culprits.
+, let's delve into this. It's a frustrating situation, encountering a 400 bad request when posting to the mlflow api, especially after you've triple-checked your request. I've certainly been down that road a few times over the years. The '400 bad request' is essentially the server's way of saying, "I didn't understand what you sent." It isn't always the most informative message, but it does point to an issue within the structure or content of your request. We need to investigate the common culprits.
 
 Fundamentally, a 400 response on a POST to mlflow usually boils down to one of three primary issues: incorrect request headers, malformed json payload, or missing/invalid data parameters as defined by the mlflow api endpoint you are hitting. We can systematically address each of these.
 

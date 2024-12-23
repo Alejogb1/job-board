@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "what-are-the-computational-challenges-of-integrating-nlp-tasks-such-as-extracting-noun-phrases-with-distributed-search-engine-queries"
 ---
 
-Okay so you wanna know about the headaches of mixing NLP stuff like pulling out noun phrases with the whole distributed search engine deal right  It's a messy business  Imagine this you're trying to make a search engine that's super smart not just keyword matching but actually understanding what people are asking for  That's where NLP steps in
+ so you wanna know about the headaches of mixing NLP stuff like pulling out noun phrases with the whole distributed search engine deal right  It's a messy business  Imagine this you're trying to make a search engine that's super smart not just keyword matching but actually understanding what people are asking for  That's where NLP steps in
 
 The first big problem is scale think billions of web pages  You can't just run a fancy NLP model on every single one  It'll take forever and cost a fortune  Distributed systems are the answer splitting the work across many many machines  But now you have to deal with coordinating all those machines making sure everyone's on the same page literally  Data transfer alone becomes a monster even with fast networks you're moving gigabytes maybe terabytes of text
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "line-sphere-intersection-math-geometry"
 ---
 
-Okay so you're asking about line sphere intersection classic computer graphics problem I've wrestled with this one plenty back in the day when I was really getting into 3D rendering with my old Amiga 500 yeah I'm dating myself a bit there
+ so you're asking about line sphere intersection classic computer graphics problem I've wrestled with this one plenty back in the day when I was really getting into 3D rendering with my old Amiga 500 yeah I'm dating myself a bit there
 
 The core problem is to figure out if a line and a sphere touch or intersect and if they do where those intersection points actually are  We need this for all sorts of things like collision detection ray tracing anything involving objects interacting in 3D space
 
@@ -12,12 +12,12 @@ Let's break down the math the line can be represented parametrically like this `
 
 First we calculate the vector from the lines origin to the sphere's center say `OC = O - C` then we calculate `a = D dot D` which is just the length of the direction vector squared and we do that because D is often normalized so its square is 1 then we calculate `b = 2 * (OC dot D)` which has this 2 because it's a term from the quadratic equation we will be working with and `c = (OC dot OC) - (r * r)` which is essentially the distance of line origin to sphere center minus sphere radius squared
 
-Alright things are getting interesting now The actual intersection part relies on solving a quadratic equation `at^2 + bt + c = 0` We do that with the famous quadratic formula
+things are getting interesting now The actual intersection part relies on solving a quadratic equation `at^2 + bt + c = 0` We do that with the famous quadratic formula
 `t = (-b +- sqrt(b^2 - 4ac)) / (2a)`
 
 The discriminant `delta = b^2 - 4ac` tells us everything about the intersections if `delta < 0` it means there are no real solutions no intersection if `delta = 0` then there's one solution a single tangent intersection where the line touches the sphere in one point if `delta > 0` then we have two solutions two intersections where the line goes through the sphere
 
-Okay so here's some code in a pseudo c-ish style should be easy to grasp
+ so here's some code in a pseudo c-ish style should be easy to grasp
 
 ```cpp
 struct Vec3 {

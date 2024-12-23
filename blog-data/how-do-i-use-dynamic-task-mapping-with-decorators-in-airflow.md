@@ -12,7 +12,7 @@ Let's break down how this works, and then I’ll show you a few examples that re
 
 Before diving into the code, it’s worth recommending some background material. For a solid foundation on airflow itself, I suggest *“Airflow in Action”* by Ben Weber and Marc Lamberti. Also, for a deeper dive into the concepts of parallel processing and distributed systems, a good text is *“Designing Data-Intensive Applications”* by Martin Kleppmann. These resources should provide both the practical and theoretical contexts you need to fully grasp the intricacies of dynamic task mapping.
 
-Okay, on to the first example. Imagine you're processing files from a varying number of cloud storage buckets. You don't know beforehand how many buckets there are, but at runtime you fetch this info via an api. Here's how you might implement that with dynamic task mapping and decorators:
+, on to the first example. Imagine you're processing files from a varying number of cloud storage buckets. You don't know beforehand how many buckets there are, but at runtime you fetch this info via an api. Here's how you might implement that with dynamic task mapping and decorators:
 
 ```python
 from airflow.decorators import dag, task

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-cant-a-google-drive-pretrained-model-file-be-loaded"
 ---
 
-Okay, let’s tackle this. I’ve seen this issue pop up more times than I’d like to remember, usually when folks are trying to circumvent the traditional training loop and leverage readily available models, often hosted on platforms like Google Drive. The short answer is that you generally can’t directly load a pretrained model from Google Drive using standard model loading functions, at least not without some intermediate steps. It’s not that it’s *impossible*, just that the process isn’t as straightforward as pointing your model loading function to a url or local path like you would with, say, a model saved to your machine's disk.
+, let’s tackle this. I’ve seen this issue pop up more times than I’d like to remember, usually when folks are trying to circumvent the traditional training loop and leverage readily available models, often hosted on platforms like Google Drive. The short answer is that you generally can’t directly load a pretrained model from Google Drive using standard model loading functions, at least not without some intermediate steps. It’s not that it’s *impossible*, just that the process isn’t as straightforward as pointing your model loading function to a url or local path like you would with, say, a model saved to your machine's disk.
 
 The challenge lies primarily in the way Google Drive handles files and the expectations of libraries designed for model loading, such as those found in TensorFlow or PyTorch. These libraries are built to work with local file paths or direct internet URLs that point to raw model files, not the complex, secure, and often dynamically-generated web addresses that Google Drive uses.
 

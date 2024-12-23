@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-are-all-obligations-in-the-spl-token-lending-program-identified"
 ---
 
-Okay, let’s dissect how obligations are tracked within an spl token lending program. From my experience building a similar system, this isn't just about a simple ledger; it's about establishing a robust framework to accurately represent each participant’s position within the lending pool. We're essentially creating a system where we can, at any given point, definitively identify who owes what, and who is owed what. The complexity comes from managing changing loan balances, interest accrual, and potential liquidations.
+, let’s dissect how obligations are tracked within an spl token lending program. From my experience building a similar system, this isn't just about a simple ledger; it's about establishing a robust framework to accurately represent each participant’s position within the lending pool. We're essentially creating a system where we can, at any given point, definitively identify who owes what, and who is owed what. The complexity comes from managing changing loan balances, interest accrual, and potential liquidations.
 
 Fundamentally, an obligation within an spl token lending program is a data structure, typically a program-owned account on the blockchain, that encapsulates all relevant details pertaining to a specific lender or borrower’s position. Each obligation is uniquely identified, usually using a combination of the associated user’s public key, a specific market identifier for the lending pool, and an optional seed to ensure uniqueness, even if the user participates multiple times in the same market. This structure forms the core of the lending program’s ability to enforce its rules.
 

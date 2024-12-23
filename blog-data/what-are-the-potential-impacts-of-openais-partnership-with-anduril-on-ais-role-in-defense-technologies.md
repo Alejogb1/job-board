@@ -4,7 +4,7 @@ date: "2024-12-05"
 id: "what-are-the-potential-impacts-of-openais-partnership-with-anduril-on-ais-role-in-defense-technologies"
 ---
 
-Okay so OpenAI and Anduril teaming up right that's a big deal  kinda wild actually  think about it OpenAI pushing the boundaries of AI super smart algorithms and Anduril a company deeply involved in military tech  it's like a recipe for some seriously advanced defense systems  but also some serious ethical questions  a whole can of worms  lets dive in
+ so OpenAI and Anduril teaming up right that's a big deal  kinda wild actually  think about it OpenAI pushing the boundaries of AI super smart algorithms and Anduril a company deeply involved in military tech  it's like a recipe for some seriously advanced defense systems  but also some serious ethical questions  a whole can of worms  lets dive in
 
 
 First off  the potential impacts are huge  we're talking autonomous weapons systems  that's robots making life or death decisions  potentially without human intervention  scary stuff  right  Anduril's already working on stuff like drone swarms  imagine those drones powered by OpenAI's cutting-edge AI  the level of coordination and effectiveness could be insane  like a sci-fi movie come to life  but  a scary sci-fi movie

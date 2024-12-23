@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-run-a-docker-image-on-a-different-machine"
 ---
 
-Alright, let's tackle this. It's a problem I've navigated countless times, especially back in the days of infrastructure scaling projects, which invariably involved container deployments across a multitude of servers. Running a docker image on a different machine isn't some arcane art; it's a fundamental aspect of docker's utility. The core issue boils down to transferring the image and instructing another docker daemon to instantiate it. Let's explore several common methods, focusing on practicality.
+Alright,  It's a problem I've navigated countless times, especially back in the days of infrastructure scaling projects, which invariably involved container deployments across a multitude of servers. Running a docker image on a different machine isn't some arcane art; it's a fundamental aspect of docker's utility. The core issue boils down to transferring the image and instructing another docker daemon to instantiate it. Let's explore several common methods, focusing on practicality.
 
 Essentially, you need to get your image from point a (where it currently resides) to point b (the target machine). The first method, and frankly the most straightforward for most situations, is to push the image to a registry. A registry acts as a central repository for your docker images. Docker Hub is the most prevalent public option, but you might be using private registries like Amazon ECR, Google Artifact Registry, or your own self-hosted solution.
 

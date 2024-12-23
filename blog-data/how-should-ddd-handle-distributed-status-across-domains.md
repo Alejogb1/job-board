@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-should-ddd-handle-distributed-status-across-domains"
 ---
 
-Okay, let's tackle this. I've been in the trenches with distributed systems for what feels like an eternity, and handling status across domain boundaries within a distributed domain-driven design (ddd) architecture is definitely a recurring challenge, one that I've seen go sideways many times. We're essentially dealing with the inherent tension between domain autonomy and the need for coordination. Let me walk you through how I typically approach this, drawing on my experiences.
+,  I've been in the trenches with distributed systems for what feels like an eternity, and handling status across domain boundaries within a distributed domain-driven design (ddd) architecture is definitely a recurring challenge, one that I've seen go sideways many times. We're essentially dealing with the inherent tension between domain autonomy and the need for coordination. Let me walk you through how I typically approach this, drawing on my experiences.
 
 The crux of the problem, as i see it, is that we can't let one domain reach into another to directly interrogate its state. That violates the fundamental principle of domain encapsulation. But the reality is that domains often need to react to changes in other domains, which brings us to the crux of distributed status. It's not about having one central authority that dictates the "true" status, but rather, allowing each domain to maintain its own consistent view of the world, often in relation to other domains.
 

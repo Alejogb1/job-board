@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "parallelize-apply-after-pandas-groupby"
 ---
 
-Alright so you're hitting a classic concurrency headache with Pandas groupby and apply eh I've been there man seriously more times than I can count It's like you're cruising along with your data all neat and tidy then bam you need to group it do some heavy processing and things start feeling slower than dial-up I'm talking early 2000s slow when trying to install that new game on your dad's computer.
+so you're hitting a classic concurrency headache with Pandas groupby and apply eh I've been there man seriously more times than I can count It's like you're cruising along with your data all neat and tidy then bam you need to group it do some heavy processing and things start feeling slower than dial-up I'm talking early 2000s slow when trying to install that new game on your dad's computer.
 
 So first off the `apply` after a `groupby` that's a really convenient way to handle operations on each group It's super readable but the problem is it's single-threaded by default Pandas does that loop under the hood and python's GIL basically forces each iteration to wait its turn which isn't exactly ideal when you have cores just twiddling their thumbs It's basically all your CPUs having a coffee break one at a time.
 

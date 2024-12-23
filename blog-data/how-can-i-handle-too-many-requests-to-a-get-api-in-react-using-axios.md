@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-handle-too-many-requests-to-a-get-api-in-react-using-axios"
 ---
 
-Okay, let's tackle this. I recall facing a similar bottleneck a few years back, working on a real-time dashboard application. We were pulling data via a GET API, and as the user base grew, the server started to buckle under the weight of concurrent requests, especially during peak hours. The issue isn't just about making the code *work*, it's about making it work *efficiently* and gracefully handle load. React, coupled with Axios, is powerful, but without proper management, it can easily amplify the problem if not handled correctly.
+,  I recall facing a similar bottleneck a few years back, working on a real-time dashboard application. We were pulling data via a GET API, and as the user base grew, the server started to buckle under the weight of concurrent requests, especially during peak hours. The issue isn't just about making the code *work*, it's about making it work *efficiently* and gracefully handle load. React, coupled with Axios, is powerful, but without proper management, it can easily amplify the problem if not handled correctly.
 
 The core issue lies in how React components often initiate API calls—typically on mounting or during state updates—and in the default, synchronous nature of JavaScript. Without intervention, every component instance might trigger its own API request, leading to a cascade of simultaneous requests if not handled carefully. This can manifest as slower response times, server overload, and a degraded user experience. So, the challenge is less about "handling" and more about *managing* these requests strategically.
 

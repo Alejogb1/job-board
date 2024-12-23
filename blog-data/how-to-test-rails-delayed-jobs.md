@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-test-rails-delayed-jobs"
 ---
 
-Okay, let's tackle this. Testing delayed jobs in rails can indeed feel like navigating a maze at first, but it's fundamental to maintaining robust background processing in your application. I recall my early days working on a high-throughput e-commerce platform; failing to properly test our delayed jobs led to some… *unpleasant* surprises when dealing with critical order processing. We've come a long way since those fire drills, and I've distilled some core practices to share.
+,  Testing delayed jobs in rails can indeed feel like navigating a maze at first, but it's fundamental to maintaining robust background processing in your application. I recall my early days working on a high-throughput e-commerce platform; failing to properly test our delayed jobs led to some… *unpleasant* surprises when dealing with critical order processing. We've come a long way since those fire drills, and I've distilled some core practices to share.
 
 The essence of testing delayed jobs lies in verifying that: (1) jobs are correctly enqueued when expected, (2) jobs execute the correct logic when processed, and (3) jobs handle errors gracefully. The 'correctly enqueued' part is often overlooked, but it's crucial. We don't want silent failures where nothing happens because the enqueuing logic has a subtle flaw.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-does-a-sliding-window-cnn-work"
 ---
 
-Okay, let's talk about sliding window convolutional neural networks (CNNs). This particular architecture, while not as universally prevalent as some others, holds a special place in my experience, largely due to a rather intense project I worked on involving real-time defect detection on a manufacturing assembly line. We had to deal with continuous streams of visual data where the location of potential defects was unknown, necessitating an approach that could scan the entire input without prior knowledge of interesting regions. That's where the sliding window CNN became our workhorse.
+, let's talk about sliding window convolutional neural networks (CNNs). This particular architecture, while not as universally prevalent as some others, holds a special place in my experience, largely due to a rather intense project I worked on involving real-time defect detection on a manufacturing assembly line. We had to deal with continuous streams of visual data where the location of potential defects was unknown, necessitating an approach that could scan the entire input without prior knowledge of interesting regions. That's where the sliding window CNN became our workhorse.
 
 Essentially, a sliding window CNN doesn't analyze the entire input image at once. Instead, it uses a small convolutional kernel (a matrix of weights) that 'slides' across the input, step-by-step. This process involves several key elements: the input data, the convolutional kernel, the stride, and the pooling layers (often present in these architectures). Let's break down how these elements interact.
 

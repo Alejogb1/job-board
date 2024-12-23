@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-use-lineage-os-ota-in-aosp-projects"
 ---
 
-Okay, let's tackle this. Integrating LineageOS’s over-the-air (OTA) update mechanism into a full-blown Android Open Source Project (AOSP) build is something I've had to navigate on a few projects, and it’s definitely got its quirks. It's not a simple "copy and paste" affair, but it’s entirely achievable with a solid understanding of AOSP's build system and how LineageOS structures its update process.
+,  Integrating LineageOS’s over-the-air (OTA) update mechanism into a full-blown Android Open Source Project (AOSP) build is something I've had to navigate on a few projects, and it’s definitely got its quirks. It's not a simple "copy and paste" affair, but it’s entirely achievable with a solid understanding of AOSP's build system and how LineageOS structures its update process.
 
 In my experience, the primary challenge wasn’t so much the code itself, but rather understanding the interplay between different components. Early on, I was on a project building a custom Android distribution for embedded devices, and we needed a reliable, user-friendly update mechanism. Simply reimplementing a basic update check and install was out of the question – we needed something robust and akin to the seamless experience LineageOS provides. It’s a great approach, because Lineage’s approach is well-tested and battle-hardened through years of real-world usage. The alternative, rolling your own solution from scratch, is both time consuming and riskier.
 

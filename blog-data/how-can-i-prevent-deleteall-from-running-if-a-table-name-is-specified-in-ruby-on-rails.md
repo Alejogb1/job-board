@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-prevent-deleteall-from-running-if-a-table-name-is-specified-in-ruby-on-rails"
 ---
 
-Okay, let's unpack this. I recall a particularly frustrating incident back in my early days at a fintech startup involving a rogue rake task, and it taught me a lot about the dangers of `delete_all`—especially when you're not explicitly calling it on a model. It’s a classic foot-gun scenario in Rails, and your concern about accidentally nuking data by specifying a table name is entirely valid.
+, let's unpack this. I recall a particularly frustrating incident back in my early days at a fintech startup involving a rogue rake task, and it taught me a lot about the dangers of `delete_all`—especially when you're not explicitly calling it on a model. It’s a classic foot-gun scenario in Rails, and your concern about accidentally nuking data by specifying a table name is entirely valid.
 
 The core issue stems from the fact that `delete_all`, when invoked on an active record relation (e.g., `User.where(active: false).delete_all`), respects the current scope. However, when you call `delete_all` directly with a string table name (e.g., `ActiveRecord::Base.connection.delete_all('users')`), *all bets are off*. You're bypassing the usual active record safeguards and essentially issuing raw SQL to the database. That’s where things get dicey, because, there's no model-specific logic being invoked, no before or after callbacks, and importantly, *no scoping*. This means you have the power to obliterate entire tables without much fanfare.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-build-a-generator-and-discriminator-for-a-dcgan-with-256x256-images"
 ---
 
-Okay, let's delve into building a generator and discriminator for a deep convolutional generative adversarial network (dcgan) targeting 256x256 images. This isn't a trivial undertaking, but with a structured approach, it becomes quite manageable. I’ve spent a fair bit of time in this domain, particularly debugging model convergence issues on a project involving high-resolution medical imaging, and the lessons learned from that experience have shaped my current understanding.
+, let's delve into building a generator and discriminator for a deep convolutional generative adversarial network (dcgan) targeting 256x256 images. This isn't a trivial undertaking, but with a structured approach, it becomes quite manageable. I’ve spent a fair bit of time in this domain, particularly debugging model convergence issues on a project involving high-resolution medical imaging, and the lessons learned from that experience have shaped my current understanding.
 
 The core challenge lies in constructing neural network architectures that can effectively capture the complex distribution of 256x256 images while avoiding common pitfalls like mode collapse or unstable training. Let's break this down:
 

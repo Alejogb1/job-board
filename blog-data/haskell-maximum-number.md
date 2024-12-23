@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "haskell-maximum-number"
 ---
 
-Okay so you're asking about finding the maximum number in Haskell right Yeah I've been there man it's one of those things that seems simple on the surface but you can really dig in and find some interesting stuff under the hood depending on what you mean by "maximum number"
+ so you're asking about finding the maximum number in Haskell right Yeah I've been there man it's one of those things that seems simple on the surface but you can really dig in and find some interesting stuff under the hood depending on what you mean by "maximum number"
 
 First off let's assume you're talking about a list of numbers something like `[1 5 2 9 3]` or maybe something floating point like `[3.14 2.71 1.61]` Or maybe you have a list of a custom type that you can compare or even a data structure you have to go through It can vary
 
@@ -40,7 +40,7 @@ Here I introduced `Maybe` which is your friend in Haskell for dealing with situa
 
 I've seen plenty of people jump directly into fold patterns for this but i think there are more clear ways to handle it like the `Maybe` monad This is definitely a more Haskell like way of handling such cases and its less likely to break
 
-Okay okay so now let's talk about something more obscure Lets say you don't have a list but a bunch of things you want to compare on the fly In that case you would use the max function that comes with Ord which is a typeclass for types that can be ordered
+  so now let's talk about something more obscure Lets say you don't have a list but a bunch of things you want to compare on the fly In that case you would use the max function that comes with Ord which is a typeclass for types that can be ordered
 
 ```haskell
 myMax :: (Ord a) => a -> a -> a
@@ -55,7 +55,7 @@ main = do
 
 You see how the types are inferred by the compiler if you dont give explicit types You dont always need types which is great
 
-Okay so here's a story from my past life I once had to process some sensor data from a bunch of IoT devices I was getting these streaming of data point and my job was to get the maximum of the last N sensor values in a rolling window. I didn't want to store everything just the last N numbers and i didnt want to store all the values so I did a circular buffer implementation I tried some functional approaches first but then I had to use some dirty mutability for performance. it was not fun I should have done it in a different language honestly.
+ so here's a story from my past life I once had to process some sensor data from a bunch of IoT devices I was getting these streaming of data point and my job was to get the maximum of the last N sensor values in a rolling window. I didn't want to store everything just the last N numbers and i didnt want to store all the values so I did a circular buffer implementation I tried some functional approaches first but then I had to use some dirty mutability for performance. it was not fun I should have done it in a different language honestly.
 
 So you know the `maximum` function it has a complexity of O(n) if we think about lists and we dont have any better way to process it for each point we would take each point and get all N elements of the array and call the max function that would be O(N*n) on a stream which is not optimal if you are using a streaming algorithm so a better approach is just keeping track of the max as you go This is called a max heap and can do all operations in O(log(n)) for each operation
 

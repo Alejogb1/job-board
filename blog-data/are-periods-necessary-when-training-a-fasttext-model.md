@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "are-periods-necessary-when-training-a-fasttext-model"
 ---
 
-Okay, let’s delve into this. Thinking back to a particularly tricky NLP project I tackled a few years back, involving a massive corpus of conversational data extracted from forum threads, the question of periods within the training data for FastText models was absolutely pivotal. It wasn't immediately obvious whether their presence would help or hinder the model's ability to learn meaningful word representations. We certainly explored this extensively.
+, let’s delve into this. Thinking back to a particularly tricky NLP project I tackled a few years back, involving a massive corpus of conversational data extracted from forum threads, the question of periods within the training data for FastText models was absolutely pivotal. It wasn't immediately obvious whether their presence would help or hinder the model's ability to learn meaningful word representations. We certainly explored this extensively.
 
 The short answer, and one I'll unpack here, is that periods (and punctuation in general) do influence a FastText model’s training, and whether they are 'necessary' depends entirely on what you're aiming for. It's not a black-and-white 'yes' or 'no.' The nuances lie in understanding the implications of their inclusion or exclusion on the model’s resulting word vectors.
 

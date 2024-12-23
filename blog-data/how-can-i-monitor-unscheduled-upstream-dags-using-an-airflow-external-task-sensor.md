@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-monitor-unscheduled-upstream-dags-using-an-airflow-external-task-sensor"
 ---
 
-Okay, let's talk about monitoring those tricky, unscheduled upstream dag runs with an airflow external task sensor. It’s something i've definitely encountered in my time, particularly back when we were transitioning from a more monolithic scheduling system to a micro-services-based architecture. We had some legacy processes running outside airflow, and coordinating with them was, well, let’s just say ‘interesting’. Getting that coordination solid is critical to avoid cascading failures.
+, let's talk about monitoring those tricky, unscheduled upstream dag runs with an airflow external task sensor. It’s something i've definitely encountered in my time, particularly back when we were transitioning from a more monolithic scheduling system to a micro-services-based architecture. We had some legacy processes running outside airflow, and coordinating with them was, well, let’s just say ‘interesting’. Getting that coordination solid is critical to avoid cascading failures.
 
 The crux of the issue is this: the *external task sensor* in airflow is designed to check for the successful completion of a *specific* dag run, identified by its `dag_id` and `execution_date`. However, when dealing with systems that don't adhere to a scheduled approach, those `execution_date` parameters can be a significant pain point. They aren't guaranteed to match up, or even exist, in the upstream system. So how do we reconcile this?
 

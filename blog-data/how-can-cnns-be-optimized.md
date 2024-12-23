@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-cnns-be-optimized"
 ---
 
-Okay, let's talk about optimizing convolutional neural networks (cnns). I’ve spent quite a bit of time in the trenches with these things, and it’s an area where practical experience really pays off. It’s not enough to just get a network *working*; you often need it to be fast, efficient, and accurate enough for the real world. So, we’re going to look at a few key areas where improvements are usually achievable.
+, let's talk about optimizing convolutional neural networks (cnns). I’ve spent quite a bit of time in the trenches with these things, and it’s an area where practical experience really pays off. It’s not enough to just get a network *working*; you often need it to be fast, efficient, and accurate enough for the real world. So, we’re going to look at a few key areas where improvements are usually achievable.
 
 The first area, and often the most immediately impactful, is around the architecture itself. Naive network construction, just stacking convolution layers upon convolution layers, frequently leads to suboptimal performance. I recall one project involving image recognition on embedded devices, where we initially started with a straightforward VGG-like model. It was ridiculously slow and resource-intensive. We ended up with something far more efficient after a few key architectural changes.
 

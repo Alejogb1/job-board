@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-is-the-correct-approach-for-designing-an-airflow-dag"
 ---
 
-Okay, let’s tackle this one. I’ve seen my share of airflow disasters over the years, from poorly structured dags that bring down entire platforms to unmaintainable spaghetti code. The correct approach to designing an airflow dag isn't just about getting it to *work*, it’s about building something that’s reliable, scalable, and, crucially, *understandable* by future developers (including your future self). It’s a subject that, in my experience, often requires a few hard-learned lessons. We aren't just arranging tasks; we're crafting data pipelines that should operate reliably in complex environments.
+, let’s tackle this one. I’ve seen my share of airflow disasters over the years, from poorly structured dags that bring down entire platforms to unmaintainable spaghetti code. The correct approach to designing an airflow dag isn't just about getting it to *work*, it’s about building something that’s reliable, scalable, and, crucially, *understandable* by future developers (including your future self). It’s a subject that, in my experience, often requires a few hard-learned lessons. We aren't just arranging tasks; we're crafting data pipelines that should operate reliably in complex environments.
 
 The core problem stems from the fact that airflow, at its heart, is a workflow *orchestration* tool, not a data processing engine. It directs the flow of tasks, but doesn’t inherently know what those tasks do. A good dag design separates the 'what' (the task logic) from the 'how' (the task execution orchestration). I've found that when these concerns get tangled up, maintenance becomes a nightmare.
 

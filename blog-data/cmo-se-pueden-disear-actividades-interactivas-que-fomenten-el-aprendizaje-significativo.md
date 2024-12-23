@@ -4,7 +4,7 @@ date: "2024-12-12"
 id: "cmo-se-pueden-disear-actividades-interactivas-que-fomenten-el-aprendizaje-significativo"
 ---
 
-okay so thinking about interactive activities that actually make learning stick like not just surface level memorization but deep understanding that's a pretty common challenge right? i mean anyone can throw together some multiple choice questions but meaningful learning needs more than that let's break down some approaches that seem to actually work based on my experience and reading and a bit of trial and error
+ so thinking about interactive activities that actually make learning stick like not just surface level memorization but deep understanding that's a pretty common challenge right? i mean anyone can throw together some multiple choice questions but meaningful learning needs more than that let's break down some approaches that seem to actually work based on my experience and reading and a bit of trial and error
 
 first off forget the idea of passively receiving information it’s a dead end for real learning we need to get users actively involved and actively doing something this means pushing past the typical read-this-and-answer-these-questions model
 

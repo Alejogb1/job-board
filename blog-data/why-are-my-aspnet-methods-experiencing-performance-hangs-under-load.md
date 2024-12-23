@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-are-my-aspnet-methods-experiencing-performance-hangs-under-load"
 ---
 
-Let's tackle this. I’ve seen this pattern countless times, and “performance hangs under load” in ASP.NET is rarely a single, straightforward issue. It's usually a confluence of factors, and isolating the root cause often requires a methodical approach. Based on my past projects, where we had everything from microservices handling thousands of requests per second to legacy monoliths chugging along, I've pinpointed some common culprits. Essentially, when your methods seem to be hanging under pressure, it's often a problem of resource starvation or bottlenecks in your processing pipeline.
+ I’ve seen this pattern countless times, and “performance hangs under load” in ASP.NET is rarely a single, straightforward issue. It's usually a confluence of factors, and isolating the root cause often requires a methodical approach. Based on my past projects, where we had everything from microservices handling thousands of requests per second to legacy monoliths chugging along, I've pinpointed some common culprits. Essentially, when your methods seem to be hanging under pressure, it's often a problem of resource starvation or bottlenecks in your processing pipeline.
 
 First, let's talk about thread pool exhaustion. ASP.NET utilizes a thread pool to handle incoming requests. If your methods are performing long-running synchronous operations – things like blocking I/O (database calls, external API requests without proper asynchrony, file system access) – you can quickly saturate that pool. When the pool is full, new requests queue, and your application appears to hang because no threads are available to service them. The operating system will eventually start queuing requests, but this adds latency which, under heavy load, is crippling. The symptom is long response times and, eventually, failed requests. I recall one instance where a seemingly simple data import routine, performing file reads sequentially, crippled our entire system during a scheduled task, due to exactly this thread starvation scenario.
 
@@ -31,7 +31,7 @@ public class BadController : Controller
 }
 ```
 
-In this extremely simplified example, `Thread.Sleep` simulates a blocking I/O operation. Under low traffic, it might seem okay, but if you bombard this endpoint with numerous requests, you'll quickly exhaust the thread pool and requests will begin to queue up. The key here is that `Thread.Sleep` is a synchronous blocking operation. The thread processing the request is completely blocked for 5 seconds. In real-world scenarios, this often manifests as blocking calls to filesystems, network resources, or databases.
+In this extremely simplified example, `Thread.Sleep` simulates a blocking I/O operation. Under low traffic, it might seem , but if you bombard this endpoint with numerous requests, you'll quickly exhaust the thread pool and requests will begin to queue up. The key here is that `Thread.Sleep` is a synchronous blocking operation. The thread processing the request is completely blocked for 5 seconds. In real-world scenarios, this often manifests as blocking calls to filesystems, network resources, or databases.
 
 **Example 2: Database query with poor performance**
 

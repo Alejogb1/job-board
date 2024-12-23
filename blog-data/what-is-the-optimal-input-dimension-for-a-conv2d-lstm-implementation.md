@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-is-the-optimal-input-dimension-for-a-conv2d-lstm-implementation"
 ---
 
-Okay, let's unpack this. Thinking back to the project I tackled a few years back involving video analysis for anomaly detection, I spent quite a bit of time fine-tuning the input dimension for a conv2D-LSTM hybrid. It wasn’t a straightforward matter, and the 'optimal' dimension isn't a magical number; it's highly contextual. The best choice depends on several factors, including the nature of your input data, the depth and architecture of your convolutional layers, and the complexity your LSTM needs to handle.
+, let's unpack this. Thinking back to the project I tackled a few years back involving video analysis for anomaly detection, I spent quite a bit of time fine-tuning the input dimension for a conv2D-LSTM hybrid. It wasn’t a straightforward matter, and the 'optimal' dimension isn't a magical number; it's highly contextual. The best choice depends on several factors, including the nature of your input data, the depth and architecture of your convolutional layers, and the complexity your LSTM needs to handle.
 
 The challenge with combining conv2d and LSTM lies in the fact that they operate on fundamentally different types of data. Conv2d layers excel at extracting spatial features from 2d arrays (like images or frames in a video), while LSTMs are designed to model sequential dependencies in 1d time-series data. The transition from conv2d's output to lstm's input requires careful consideration of how the spatial features extracted from the convolutional layers should be structured and fed into the temporal model.
 

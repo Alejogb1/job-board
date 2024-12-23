@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-create-even-odd-train-test-split-for-a-2d-array"
 ---
 
-Okay, let's tackle this. I’ve bumped into this particular challenge a few times, notably back when I was working on a time-series prediction project with satellite imagery. We needed to maintain temporal consistency while partitioning our dataset, and a simple random split was a no-go. The trick, as you probably suspect, lies in indexing. We're not just looking at a list of items; we're working with a structured 2d array, and we want a split based on row position.
+,  I’ve bumped into this particular challenge a few times, notably back when I was working on a time-series prediction project with satellite imagery. We needed to maintain temporal consistency while partitioning our dataset, and a simple random split was a no-go. The trick, as you probably suspect, lies in indexing. We're not just looking at a list of items; we're working with a structured 2d array, and we want a split based on row position.
 
 The core concept is to use the modulo operator (`%`) to separate the rows based on whether their index is even or odd. It's surprisingly straightforward, but a few nuances can crop up that we need to be mindful of. We want to avoid leaking information between our training and testing sets, and keep the inherent structure of the 2d data intact. Think about it this way: if you're doing image processing, you don't want patches of an image in your test set that were adjacent to patches in the training set. Doing so can lead to overly optimistic performance numbers that don't translate well to real-world scenarios.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-tensorflow-image-captioning-produce-the-same-caption-for-all-images"
 ---
 
-Okay, let's tackle this. I remember wrestling with this exact problem back when I was building a visual search engine for a client; it was intensely frustrating, to say the least. Seeing a machine confidently declare every single photograph to be "a blurry image" was not exactly the desired outcome. Let's dive into why this happens with TensorFlow image captioning models and what you can do about it.
+,  I remember wrestling with this exact problem back when I was building a visual search engine for a client; it was intensely frustrating, to say the least. Seeing a machine confidently declare every single photograph to be "a blurry image" was not exactly the desired outcome. Let's dive into why this happens with TensorFlow image captioning models and what you can do about it.
 
 The core issue, more often than not, boils down to problems within the training process or the model architecture, rather than some inherent flaw in TensorFlow itself. It's not that the model *wants* to give the same caption; it’s that it hasn't learned to discriminate properly between various image features. I’ve encountered this phenomenon across different architectures, from older RNN-based models to more recent transformer variants, so the underlying cause usually points to several potential culprits.
 

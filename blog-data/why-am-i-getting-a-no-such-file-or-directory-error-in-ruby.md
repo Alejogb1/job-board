@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-a-no-such-file-or-directory-error-in-ruby"
 ---
 
-Okay, let’s unpack that "no such file or directory" error in Ruby. It’s a classic, and something I've certainly encountered more times than I care to remember across various projects. It typically points to a situation where your Ruby program is attempting to interact with a file system object (a file, a directory) that it can’t actually find at the location specified. Now, while the message is succinct, the underlying reasons can be quite varied, and a systematic approach is key to resolving it effectively.
+, let’s unpack that "no such file or directory" error in Ruby. It’s a classic, and something I've certainly encountered more times than I care to remember across various projects. It typically points to a situation where your Ruby program is attempting to interact with a file system object (a file, a directory) that it can’t actually find at the location specified. Now, while the message is succinct, the underlying reasons can be quite varied, and a systematic approach is key to resolving it effectively.
 
 From my experience, the problem isn't always immediately obvious. I recall troubleshooting a particularly bothersome case on an internal reporting tool. We were dynamically generating report files based on user input, and occasionally, users were hitting this very error. The challenge wasn't in the file generation process itself, but in how paths were constructed and used subsequently. It forced a deep dive into string manipulation, relative paths, and environment configurations, and that experience really cemented my understanding of why this happens.
 

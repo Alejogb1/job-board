@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "does-amazon-fargate-require-high-availability"
 ---
 
-Okay, let's unpack this. I've certainly dealt with my fair share of container orchestration scenarios over the years, and the question of high availability with Fargate always comes up. It's not a simple yes or no, but rather a matter of understanding how Fargate functions and how you’re architecting your application around it. Let's dive into the specifics from a practical, experience-driven perspective.
+, let's unpack this. I've certainly dealt with my fair share of container orchestration scenarios over the years, and the question of high availability with Fargate always comes up. It's not a simple yes or no, but rather a matter of understanding how Fargate functions and how you’re architecting your application around it. Let's dive into the specifics from a practical, experience-driven perspective.
 
 When you consider 'high availability', the underlying premise typically revolves around minimizing downtime and ensuring continuous service for your end-users. Fargate itself, being a serverless compute engine, takes a significant load off your shoulders by handling the underlying infrastructure. However, it doesn't magically guarantee high availability out of the box; it simply provides the *building blocks*. The responsibility of architecting for resilience and availability still primarily rests with you.
 

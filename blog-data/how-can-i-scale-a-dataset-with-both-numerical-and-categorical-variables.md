@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-scale-a-dataset-with-both-numerical-and-categorical-variables"
 ---
 
-Alright, let's tackle this. Scaling datasets, especially those with a mix of numerical and categorical features, is a problem I’ve encountered more times than I can count over the years. It's a crucial step, often overlooked, that can drastically affect the performance of your machine learning models. Back in my early days working on predictive maintenance models for industrial machinery, we had datasets overflowing with sensor readings (numerical) and equipment types (categorical). Figuring out the best way to handle that was a baptism by fire.
+Alright,  Scaling datasets, especially those with a mix of numerical and categorical features, is a problem I’ve encountered more times than I can count over the years. It's a crucial step, often overlooked, that can drastically affect the performance of your machine learning models. Back in my early days working on predictive maintenance models for industrial machinery, we had datasets overflowing with sensor readings (numerical) and equipment types (categorical). Figuring out the best way to handle that was a baptism by fire.
 
 The core issue isn't just about putting everything on the same scale, though that's part of it. It’s about ensuring your algorithms aren't unfairly biased toward features with larger ranges. Raw numerical data can vary wildly - temperature might range from -20 to 50, while pressure might be in the thousands. Similarly, categorical variables represented numerically after encoding can have skewed distributions.
 

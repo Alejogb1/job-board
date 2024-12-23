@@ -4,7 +4,7 @@ date: "2024-12-12"
 id: "qu-estrategias-pueden-utilizarse-para-evaluar-la-efectividad-de-las-herramientas-educativas-interactivas"
 ---
 
-Alright so evaluating interactive educational tools that’s a big one right it's not just about whether kids or adults whatever age group click buttons and things light up we need actual data to see if the tool is doing its job that’s actually improving learning outcomes
+so evaluating interactive educational tools that’s a big one right it's not just about whether kids or adults whatever age group click buttons and things light up we need actual data to see if the tool is doing its job that’s actually improving learning outcomes
 
 First off we’re talking about defining what ‘effective’ even means in this context its not universal it can change with the goals of the tool like is it for memorizing facts practicing skills or developing critical thinking each demands a different kind of evaluation if the objective is memorization you'd lean towards recall tests or quizzes seeing if users can spit out the info but if its more complex problem solving assessments get trickier we're talking about performance based tasks where you see how they apply the knowledge not just if they remember it
 

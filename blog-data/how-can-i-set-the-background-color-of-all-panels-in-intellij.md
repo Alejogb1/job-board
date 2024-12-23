@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-set-the-background-color-of-all-panels-in-intellij"
 ---
 
-Okay, let's tackle this. I’ve spent a fair bit of time customizing various IDEs, including IntelliJ, so hopefully, I can shed some light on getting those panel backgrounds just the way you like them. It's a fairly common desire, actually – the default visuals aren’t always optimal for everyone’s workflow or even just aesthetic preferences.
+,  I’ve spent a fair bit of time customizing various IDEs, including IntelliJ, so hopefully, I can shed some light on getting those panel backgrounds just the way you like them. It's a fairly common desire, actually – the default visuals aren’t always optimal for everyone’s workflow or even just aesthetic preferences.
 
 The process isn't as straightforward as, say, changing the editor's theme. IntelliJ, like many robust applications, uses a layered approach to styling. Direct color manipulation on each individual panel can feel a bit like a cat-and-mouse game. The key, therefore, lies in understanding and manipulating the underlying look and feel, or "LAF," settings.
 

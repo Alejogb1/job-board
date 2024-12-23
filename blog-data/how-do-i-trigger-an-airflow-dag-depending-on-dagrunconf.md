@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-trigger-an-airflow-dag-depending-on-dagrunconf"
 ---
 
-Okay, let's delve into triggering airflow dags conditionally based on the `dag_run.conf`. This is a fairly common requirement, and I've certainly tackled it multiple times in my career. The beauty, and sometimes the challenge, lies in achieving this dynamically. It's not just about passing parameters; it's about making airflow understand those parameters *before* the dag actually starts running to decide *if* it should run.
+, let's delve into triggering airflow dags conditionally based on the `dag_run.conf`. This is a fairly common requirement, and I've certainly tackled it multiple times in my career. The beauty, and sometimes the challenge, lies in achieving this dynamically. It's not just about passing parameters; it's about making airflow understand those parameters *before* the dag actually starts running to decide *if* it should run.
 
 The core principle here hinges on leveraging airflow's capabilities for external triggers. We typically don't directly modify the dag file for conditional execution at runtime, which is a bad practice. Instead, we set up our dag to evaluate conditions at the beginning, typically within the `start_date` context of the dag or within a very early operator, and gracefully exit if those conditions aren't met.
 

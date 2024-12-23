@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-executioncontextsuppressflow-and-tasks-affect-asynclocalvalue-unexpectedly"
 ---
 
-Alright, let's tackle this. I remember back when we were migrating a complex legacy application to .net core, we hit a really confounding issue involving asynchronous operations and shared state. It took some time, a lot of debugging, and a deep dive into the inner workings of the framework to finally understand why our `AsyncLocal<T>` values were behaving erratically. The issue stemmed, specifically, from the interaction between `ExecutionContext.SuppressFlow` and tasks. Let me break it down for you.
+Alright,  I remember back when we were migrating a complex legacy application to .net core, we hit a really confounding issue involving asynchronous operations and shared state. It took some time, a lot of debugging, and a deep dive into the inner workings of the framework to finally understand why our `AsyncLocal<T>` values were behaving erratically. The issue stemmed, specifically, from the interaction between `ExecutionContext.SuppressFlow` and tasks. Let me break it down for you.
 
 The core of the problem resides in how the .net framework manages the *execution context* across asynchronous operations. The execution context, in a nutshell, is like a snapshot of the current thread's environment. It includes things like security settings, impersonation tokens, and, crucially for our discussion, `AsyncLocal<T>` values. Normally, when an async operation is initiated, the framework captures the current execution context and flows it to the newly created task, ensuring that things like `AsyncLocal.Value` are preserved. This, for the most part, is exactly what you want.
 

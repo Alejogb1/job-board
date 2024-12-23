@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-selenium-in-python-automate-clicking-a-duo-push-button-for-2fa"
 ---
 
-Okay, let's unpack this one. I’ve seen this particular problem pop up more times than I care to remember, and it's often less straightforward than it initially seems. Automating Duo push notifications with Selenium in Python is a dance between predictable web elements and timing challenges, especially since Duo’s interface isn't designed for programmatic access. My past experience working on internal security automation tools has given me a few strategies that I've found effective. It’s not about brute force; it's about understanding the underlying mechanics and employing smart waiting strategies.
+, let's unpack this one. I’ve seen this particular problem pop up more times than I care to remember, and it's often less straightforward than it initially seems. Automating Duo push notifications with Selenium in Python is a dance between predictable web elements and timing challenges, especially since Duo’s interface isn't designed for programmatic access. My past experience working on internal security automation tools has given me a few strategies that I've found effective. It’s not about brute force; it's about understanding the underlying mechanics and employing smart waiting strategies.
 
 The core issue is that the "push" button isn't a static element. It's usually dynamically loaded and might require a series of page events to complete before it becomes clickable. Moreover, Duo actively attempts to thwart bots, so relying on simple xpaths or css selectors without proper timing can lead to brittle scripts that frequently fail. We need a robust approach that accounts for these variables.
 

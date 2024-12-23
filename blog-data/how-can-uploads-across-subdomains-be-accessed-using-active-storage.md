@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-uploads-across-subdomains-be-accessed-using-active-storage"
 ---
 
-Alright, let's tackle this. I recall a project from a few years back, where we had a sprawling microservices architecture. Part of that involved users uploading files across various subdomains, and needing a unified way to access them, which of course, we opted to manage using active storage. It wasn't a completely straightforward setup, and it presented some interesting challenges with browser security and cors, so let me walk you through my experience and some solutions.
+Alright,  I recall a project from a few years back, where we had a sprawling microservices architecture. Part of that involved users uploading files across various subdomains, and needing a unified way to access them, which of course, we opted to manage using active storage. It wasn't a completely straightforward setup, and it presented some interesting challenges with browser security and cors, so let me walk you through my experience and some solutions.
 
 Fundamentally, the issue stems from the browser's same-origin policy. When an upload happens from `app.example.com`, the browser will block requests to fetch that file from, say, `api.example.com` or `cdn.example.com` without explicit permissions. Active storage itself, as a tool to abstract away file management, handles the saving and processing, but doesn’t inherently solve the cross-domain accessibility problem. You need to configure the webservers appropriately to allow cross-origin resource sharing (cors).
 

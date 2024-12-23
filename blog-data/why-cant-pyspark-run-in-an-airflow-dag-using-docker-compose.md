@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-cant-pyspark-run-in-an-airflow-dag-using-docker-compose"
 ---
 
-Alright, let's tackle this. I've seen this particular headache pop up more times than I care to remember, especially when teams start scaling their data pipelines and introducing distributed computing with pyspark alongside orchestration tools like airflow. It's not quite as straightforward as spinning up a simple python script, and the culprit usually lies in how docker-compose manages its network and resource allocation in relation to the complex needs of pyspark.
+Alright,  I've seen this particular headache pop up more times than I care to remember, especially when teams start scaling their data pipelines and introducing distributed computing with pyspark alongside orchestration tools like airflow. It's not quite as straightforward as spinning up a simple python script, and the culprit usually lies in how docker-compose manages its network and resource allocation in relation to the complex needs of pyspark.
 
 The core issue stems from the distributed nature of pyspark and how it communicates. Pyspark jobs, when launched, typically involve a driver program that coordinates tasks across multiple worker nodes. These nodes need to be able to talk to the driver and to each other. When running within a docker-compose environment, especially when that includes an airflow scheduler/worker setup, several potential roadblocks can appear that prevent this communication.
 

@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "what-are-the-technical-benefits-of-using-3d-stacked-photonic-chips-for-achieving-higher-bandwidth-in-ai-training-compared-to-gpu-interconnect-technologies-like-nvlink"
 ---
 
-Okay so you're asking about 3D stacked photonic chips versus NVLink for AI training bandwidth right  like wow that's a deep dive  I'm kinda geeked about this  Let's break it down  the core idea is speed  we need crazy fast data movement for training those massive AI models  think billions of parameters  that's a LOT of data
+ so you're asking about 3D stacked photonic chips versus NVLink for AI training bandwidth right  like wow that's a deep dive  I'm kinda geeked about this  Let's break it down  the core idea is speed  we need crazy fast data movement for training those massive AI models  think billions of parameters  that's a LOT of data
 
 GPUs are awesome they're parallel processing powerhouses  but even with NVLink which is already pretty sweet for connecting GPUs  you hit bottlenecks  think of it like a highway  NVLink is a wide highway but it still has limits on how many cars can pass at once  and those cars are data packets
 

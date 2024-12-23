@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "ldtr-instruction-assembly-usage"
 ---
 
-Okay so the question is about the `ldtr` instruction in assembly right? I've definitely wrestled with that little beast before so let me share my experience I mean its not every day you have to deal with segment descriptors manually
+ so the question is about the `ldtr` instruction in assembly right? I've definitely wrestled with that little beast before so let me share my experience I mean its not every day you have to deal with segment descriptors manually
 
 So yeah `ldtr` Load Task Register its one of those x86 assembly instructions that you might not encounter too often unless youre digging deep into operating system kernels or some serious low level work you know things way below the normal programming levels where you write high level code that has no clue about the CPU or its instruction set directly. When you normally code you are just way abstracted from all this
 

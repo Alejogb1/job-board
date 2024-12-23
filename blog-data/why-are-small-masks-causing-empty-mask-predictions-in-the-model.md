@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-are-small-masks-causing-empty-mask-predictions-in-the-model"
 ---
 
-Okay, let's tackle this. I've seen this exact issue pop up more times than I care to count, especially when dealing with object detection or segmentation tasks, and it's often more nuanced than initially appears. The problem of small masks leading to empty predictions usually boils down to a combination of factors within how our models are trained and how they ultimately operate. It's not just one isolated thing, but rather an interplay of several mechanics.
+,  I've seen this exact issue pop up more times than I care to count, especially when dealing with object detection or segmentation tasks, and it's often more nuanced than initially appears. The problem of small masks leading to empty predictions usually boils down to a combination of factors within how our models are trained and how they ultimately operate. It's not just one isolated thing, but rather an interplay of several mechanics.
 
 Essentially, what we are observing is a failure mode in the model’s ability to correctly predict bounding boxes, and consequently, the mask within them, for small objects. This often manifests as the model either entirely missing the small object (and thus predicting an empty mask) or predicting a mask that's so tiny it’s effectively negligible, also registering as empty when processed for downstream tasks.
 

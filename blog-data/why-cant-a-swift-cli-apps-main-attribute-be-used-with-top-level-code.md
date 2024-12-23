@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-cant-a-swift-cli-apps-main-attribute-be-used-with-top-level-code"
 ---
 
-Okay, let's tackle this. I've seen this tripped up a few teams, so it's worth dissecting in detail. The issue with trying to directly use a CLI app’s `main` attribute with top-level code in Swift boils down to how Swift, particularly in the context of command-line tools, handles the application entry point and the module's structure. It isn't necessarily a 'can't' in the strictest sense, but rather a 'shouldn't' or 'isn't designed for' – and for very good architectural reasons.
+,  I've seen this tripped up a few teams, so it's worth dissecting in detail. The issue with trying to directly use a CLI app’s `main` attribute with top-level code in Swift boils down to how Swift, particularly in the context of command-line tools, handles the application entry point and the module's structure. It isn't necessarily a 'can't' in the strictest sense, but rather a 'shouldn't' or 'isn't designed for' – and for very good architectural reasons.
 
 The `main` attribute, when used, signals to the compiler that a particular type contains the entry point for the application. This is a highly specific directive that says, "this type (which often implements the `Runnable` protocol) will take over the execution once the program starts". In contrast, top-level code, which consists of code statements placed directly outside of any type or function declaration, within a Swift file, is meant to be executed sequentially within a particular scope. These are fundamentally different concepts.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-word2vec--xgboostregressor-produce-a-size-mismatch-error-between-predictions-and-labels"
 ---
 
-Okay, let's tackle this. I’ve seen this type of error pop up more often than I’d like, and it generally boils down to how we’re structuring our data pipelines when blending embeddings with traditional machine learning. The issue you're facing, a size mismatch between predictions and labels using word2vec and XGBoostRegressor, stems from a fundamental disconnect in how the data is being reshaped and passed between the word embedding process and the regression model. It’s not a problem with word2vec per se, nor is it an inherent issue in xgboost; rather, it's often an oversight in the data transformations required in-between.
+,  I’ve seen this type of error pop up more often than I’d like, and it generally boils down to how we’re structuring our data pipelines when blending embeddings with traditional machine learning. The issue you're facing, a size mismatch between predictions and labels using word2vec and XGBoostRegressor, stems from a fundamental disconnect in how the data is being reshaped and passed between the word embedding process and the regression model. It’s not a problem with word2vec per se, nor is it an inherent issue in xgboost; rather, it's often an oversight in the data transformations required in-between.
 
 From my experience, the trouble usually starts when we’re not careful about the dimensionality after generating word vectors and before feeding them into a regressor like XGBoost. Remember that word2vec maps words into a continuous vector space. When you apply word2vec, you’re essentially transforming each word into a vector of a specific dimension. The output of word2vec isn't a direct aggregate of all the words into one embedding for the entire document unless you explicitly perform such an aggregation. This is where the potential for mismatch surfaces. Let me explain further, building on experiences from projects I’ve been involved with.
 
@@ -24,7 +24,7 @@ from sklearn.model_selection import train_test_split
 sentences = [
     "This is a good movie.",
     "I hated the film.",
-    "It was okay.",
+    "It was .",
     "Excellent performance.",
     "Terrible acting."
 ]
@@ -79,7 +79,7 @@ from sklearn.model_selection import train_test_split
 sentences = [
     "This is a good movie.",
     "I hated the film.",
-    "It was okay.",
+    "It was .",
     "Excellent performance.",
     "Terrible acting."
 ]
@@ -142,7 +142,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 sentences = [
     "This is a good movie.",
     "I hated the film.",
-    "It was okay.",
+    "It was .",
     "Excellent performance.",
     "Terrible acting."
 ]

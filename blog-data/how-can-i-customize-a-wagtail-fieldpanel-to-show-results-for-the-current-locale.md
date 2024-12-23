@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-customize-a-wagtail-fieldpanel-to-show-results-for-the-current-locale"
 ---
 
-Alright, let's tackle this. I've definitely been down this road before, trying to wrangle Wagtail's `FieldPanel` to play nicely with multi-locale setups. It's not always immediately obvious how to get it to respect the currently active locale, and you can quickly end up showing content from the wrong language if you’re not careful. So, here’s the breakdown, based on some past projects where I've had to implement localized content extensively.
+Alright,  I've definitely been down this road before, trying to wrangle Wagtail's `FieldPanel` to play nicely with multi-locale setups. It's not always immediately obvious how to get it to respect the currently active locale, and you can quickly end up showing content from the wrong language if you’re not careful. So, here’s the breakdown, based on some past projects where I've had to implement localized content extensively.
 
 The crux of the issue lies in understanding how Wagtail manages locale-specific content behind the scenes, and how that interacts with the `FieldPanel` abstraction. By default, a `FieldPanel` displays the value associated with the field *directly* on the model instance. If you have multiple locales, you're essentially dealing with one database record but potentially multiple translated content versions, each attached to that record. The trick is to intercept this process and ensure we’re pulling the localized value.
 

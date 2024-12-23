@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-compute-an-f1-score-for-one-hot-encoded-outputs-of-a-roberta-model"
 ---
 
-Okay, let’s tackle this. It's something I’ve definitely encountered before, specifically when fine-tuning a Roberta model for multi-label classification tasks where the output is, naturally, one-hot encoded. The process itself isn't incredibly complex, but it requires careful handling of your predictions and ground truths. It's easy to get lost in the matrix math, so let’s break it down step-by-step.
+, let’s tackle this. It's something I’ve definitely encountered before, specifically when fine-tuning a Roberta model for multi-label classification tasks where the output is, naturally, one-hot encoded. The process itself isn't incredibly complex, but it requires careful handling of your predictions and ground truths. It's easy to get lost in the matrix math, so let’s break it down step-by-step.
 
 First, a critical point: an F1 score, in essence, is the harmonic mean of precision and recall. It's a single metric useful when you need to balance false positives and false negatives. You're using one-hot encoded outputs which implies a multi-label setting, meaning a single instance can belong to multiple classes. The standard binary F1 score calculation isn't directly applicable here. We need a strategy to adapt this to our multi-label case.
 

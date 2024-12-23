@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "regex-length-of-string-validation"
 ---
 
-Okay so regex string length validation right been there done that seen the t-shirt and probably written the library for it somewhere in my dusty hard drive of code I mean it sounds simple enough right but the devil is always in the details as they say I’ve had my share of hair pulling moments with this kind of thing back in the day when I was still learning the ropes of web dev in like 2008 so lets dive in
+ so regex string length validation right been there done that seen the t-shirt and probably written the library for it somewhere in my dusty hard drive of code I mean it sounds simple enough right but the devil is always in the details as they say I’ve had my share of hair pulling moments with this kind of thing back in the day when I was still learning the ropes of web dev in like 2008 so lets dive in
 
 First off the problem is pretty straightforward you need to check if a string has a specific length or if it falls within a given length range using regular expressions and while regex isn’t always the first tool that comes to mind for length validations especially when you have direct access to the string length property it can still be helpful for more complex input validations or when you are stuck working in environments where you are constrained to using regex for input processing like I was once forced to do when working on some old legacy perl script that used regex for almost everything under the sun (and I mean everything)
 
@@ -24,7 +24,7 @@ Now things get slightly more complicated when you want to validate a range of le
 
 This regex is also anchored at the start and end and matches any character but the quantifier here `{5,15}` allows for any string that has between 5 and 15 characters inclusive and that is what you want most of the time for basic validation purposes I actually had to fix a similar bug once where the backend was not checking for proper length and it was causing some weird database errors because a long string was getting truncated there and causing all sort of data inconsistencies issues which was not fun to debug at all because the logs were very not helpful to say the least and it took me almost a day to pinpoint the exact reason for all that mess. It was indeed a bad day
 
-Okay so far so good you can check for an exact length or a length range but what about more complex scenarios what if you need to ensure that the string is of a specific length or falls within a length range but only contains certain characters well that is when you combine character classes and length quantifiers you want at most 10 characters but only a-z you would do something like this
+ so far so good you can check for an exact length or a length range but what about more complex scenarios what if you need to ensure that the string is of a specific length or falls within a length range but only contains certain characters well that is when you combine character classes and length quantifiers you want at most 10 characters but only a-z you would do something like this
 
 ```regex
 ^[a-z]{1,10}$

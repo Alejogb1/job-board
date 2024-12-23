@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-configure-celery-flower-properly-in-airflow"
 ---
 
-Alright, let's tackle this. Configuring celery flower within an airflow environment is a problem I've seen more than a few times, and it's often not as straightforward as one might initially hope. The gotcha lies in how Airflow orchestrates its various components, specifically concerning the celery executor. We need to ensure flower has access to the correct celery broker and results backend to monitor the tasks effectively. I remember one particularly challenging deployment; it took a solid afternoon of debugging to get it singing, but I learned some valuable lessons that I’m happy to share.
+Alright,  Configuring celery flower within an airflow environment is a problem I've seen more than a few times, and it's often not as straightforward as one might initially hope. The gotcha lies in how Airflow orchestrates its various components, specifically concerning the celery executor. We need to ensure flower has access to the correct celery broker and results backend to monitor the tasks effectively. I remember one particularly challenging deployment; it took a solid afternoon of debugging to get it singing, but I learned some valuable lessons that I’m happy to share.
 
 The crux of the issue is that celery flower needs to connect to the same message broker and result backend that your celery workers are using. Airflow's configuration, by default, might not directly expose these settings in a manner that flower can readily consume. Thus, we often need to explicitly pass these details through environment variables or command-line arguments when starting flower.
 

@@ -4,7 +4,7 @@ date: "2024-11-16"
 id: "pygame-game-development-tutorial-build-2d-games"
 ---
 
-okay so you wanna know about this video i watched right it was all about using python to build some seriously cool stuff with this library called pygame  it's basically like lego for making games and other interactive programs  think super mario but you're the one building the whole darn thing  the whole point was to get us noobs up to speed on making 2d games which is way more manageable than diving straight into 3d  you know the whole shebang  building things from scratch with all the bells and whistles which was totally cool but also a bit overwhelming
+ so you wanna know about this video i watched right it was all about using python to build some seriously cool stuff with this library called pygame  it's basically like lego for making games and other interactive programs  think super mario but you're the one building the whole darn thing  the whole point was to get us noobs up to speed on making 2d games which is way more manageable than diving straight into 3d  you know the whole shebang  building things from scratch with all the bells and whistles which was totally cool but also a bit overwhelming
 
 
 the setup was kinda like this they started by showing a super basic window opening up like *poof*  a little black square  no fireworks or anything just a simple window  it was funny because they acted like it was this monumental achievement which was totally endearing  it was like “hey look we have a window that's amazing right”  this totally set the tone for the whole thing super chill and no pressure to be a coding ninja

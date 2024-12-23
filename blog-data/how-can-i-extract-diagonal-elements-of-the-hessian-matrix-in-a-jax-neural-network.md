@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-extract-diagonal-elements-of-the-hessian-matrix-in-a-jax-neural-network"
 ---
 
-Okay, let's tackle this. I've definitely been down this road before, and extracting diagonal elements from a Hessian in a JAX neural network, especially for larger models, can become quite a computational challenge. It's not a straightforward, one-line affair, but with the right tools and understanding, it’s entirely manageable. My past experience involved training a complex recurrent neural network, and we needed Hessian diagonals for curvature analysis and approximating certain second-order optimization methods. It was, let's say, instructive.
+,  I've definitely been down this road before, and extracting diagonal elements from a Hessian in a JAX neural network, especially for larger models, can become quite a computational challenge. It's not a straightforward, one-line affair, but with the right tools and understanding, it’s entirely manageable. My past experience involved training a complex recurrent neural network, and we needed Hessian diagonals for curvature analysis and approximating certain second-order optimization methods. It was, let's say, instructive.
 
 The core issue is that the Hessian matrix, representing second-order partial derivatives, grows quadratically with the number of parameters. Calculating the full Hessian for even a moderate network is, practically, not feasible due to memory limitations. We are only concerned with the diagonal, which thankfully provides us with valuable information about the curvature of the loss surface per parameter without having to compute the whole thing.
 

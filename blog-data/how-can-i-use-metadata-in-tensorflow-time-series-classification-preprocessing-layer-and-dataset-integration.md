@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-use-metadata-in-tensorflow-time-series-classification-preprocessing-layer-and-dataset-integration"
 ---
 
-Okay, let’s tackle this. Time series classification with TensorFlow, incorporating metadata, is a practical challenge I’ve frequently encountered, and it's more nuanced than it might initially appear. It's not simply about bolting on extra features; we need to consider how the metadata interacts with our time series data and how best to integrate it within our model's architecture. Over the years, I’ve seen projects where neglecting this nuanced approach leads to subpar performance, so let's walk through the effective strategies.
+, let’s tackle this. Time series classification with TensorFlow, incorporating metadata, is a practical challenge I’ve frequently encountered, and it's more nuanced than it might initially appear. It's not simply about bolting on extra features; we need to consider how the metadata interacts with our time series data and how best to integrate it within our model's architecture. Over the years, I’ve seen projects where neglecting this nuanced approach leads to subpar performance, so let's walk through the effective strategies.
 
 The core idea is to leverage the metadata alongside the time series data to enhance our model's ability to classify sequences. We achieve this through a combination of preprocessing layers that transform the metadata into a format suitable for a neural network, and by carefully constructing our input datasets to ensure that both types of information are accessible during training and inference.
 

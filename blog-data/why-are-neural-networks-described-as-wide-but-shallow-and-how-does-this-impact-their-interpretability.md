@@ -4,7 +4,7 @@ date: "2024-12-11"
 id: "why-are-neural-networks-described-as-wide-but-shallow-and-how-does-this-impact-their-interpretability"
 ---
 
-Okay so you wanna know about wide but shallow neural nets right  Interesting question  It's all about the architecture right  Think of a neural network like a layered cake each layer is a bunch of neurons doing their thing  Deep networks are like a really tall cake lots and lots of layers  Wide networks are like a really big cake lots of neurons in each layer but not many layers  Shallow networks are the opposite few layers  So wide but shallow means lots of neurons per layer but only a few layers total
+ so you wanna know about wide but shallow neural nets right  Interesting question  It's all about the architecture right  Think of a neural network like a layered cake each layer is a bunch of neurons doing their thing  Deep networks are like a really tall cake lots and lots of layers  Wide networks are like a really big cake lots of neurons in each layer but not many layers  Shallow networks are the opposite few layers  So wide but shallow means lots of neurons per layer but only a few layers total
 
 Why are some described this way  Well it's often a trade-off  Deep networks are great for learning complex features  Think of it like this a deep network can learn  "this is a cat" then "this is a tabby cat" then "this is a fluffy grey tabby cat"  It goes really deep into the details  But training them takes ages and they're like black boxes you can't really see what's going on inside super hard to interpret
 

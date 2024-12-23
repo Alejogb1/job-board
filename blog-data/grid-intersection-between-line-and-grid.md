@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "grid-intersection-between-line-and-grid"
 ---
 
-Okay so grid intersection line grid right I’ve been there man countless times Actually the first time I bumped into this was way back when I was messing with game dev on a ZX Spectrum emu yeah I know fossils right But hey the fundamentals are still the same its geometry right nothing too crazy
+ so grid intersection line grid right I’ve been there man countless times Actually the first time I bumped into this was way back when I was messing with game dev on a ZX Spectrum emu yeah I know fossils right But hey the fundamentals are still the same its geometry right nothing too crazy
 
 See what we're talking about here is given a grid usually a set of equally spaced lines both horizontal and vertical we've got a line defined by two points and we need to figure out where that line hits the grid if at all and the coordinates of those intersection points
 

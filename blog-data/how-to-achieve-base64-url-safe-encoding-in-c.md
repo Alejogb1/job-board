@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "how-to-achieve-base64-url-safe-encoding-in-c"
 ---
 
-Okay so you want url safe base64 encoding in C right Yeah I get it its a common pain point especially when you start dealing with web apis or any kind of data transmission where you have to keep those pesky URL characters from messing things up been there done that got the t-shirt well not really a t-shirt but the scars of debugging session are real trust me
+ so you want url safe base64 encoding in C right Yeah I get it its a common pain point especially when you start dealing with web apis or any kind of data transmission where you have to keep those pesky URL characters from messing things up been there done that got the t-shirt well not really a t-shirt but the scars of debugging session are real trust me
 
 See the standard base64 encoding uses plus signs `+` forward slashes `/` and padding equals signs `=` and those are all no-gos in a URL they need to be swapped out for things that are url friendly like dashes `_` and underscores `-` no padding needed in this context which is kind of nice one less thing to deal with
 
@@ -138,6 +138,6 @@ Also if you’re doing this a lot and you want to avoid writing your own functio
 
 Oh and by the way make sure you free the allocated memory of `encoded_string` after you are done using it to avoid memory leaks because I know someone who never does this and I don’t want you to be like that guy
 
-Alright I think thats about everything you would need for now I hope this saves you a few hours or a few days even of debugging I remember spending days getting this to work right so feel free to ask if you have more questions but keep it to this topic though alright good luck
+I think thats about everything you would need for now I hope this saves you a few hours or a few days even of debugging I remember spending days getting this to work right so feel free to ask if you have more questions but keep it to this topic though good luck
 
 And don't forget that debugging is part of being a software developer right so dont get upset when you find bugs just take a deep breath and debug it because that's why we have tools for that

@@ -90,7 +90,7 @@ class MyCustomModelAdmin(ModelAdmin):
 
 In this first example, we introduce a custom panel that interacts with the form and fetches the user data. We also introduce a signal handler to ensure values are still updated even if the form is not submitted directly.
 
-The second snippet illustrates how to handle this scenario with a custom form field. While the custom panel in the first example is good, it assumes you are okay with not having a traditional input field. Sometimes you need to control data submission. Here, we introduce a custom field:
+The second snippet illustrates how to handle this scenario with a custom form field. While the custom panel in the first example is good, it assumes you are  with not having a traditional input field. Sometimes you need to control data submission. Here, we introduce a custom field:
 
 ```python
 from django import forms

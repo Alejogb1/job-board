@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-plaid-not-support-connections-between-bank-and-application"
 ---
 
-Let's tackle this. The absence of a direct connection between a specific bank and a financial application using Plaid is usually less about a deliberate snub and more about a complex interplay of technical, legal, and business considerations. I've encountered this scenario numerous times over the years, often needing to troubleshoot similar situations in fintech projects. Here's a breakdown of why these situations happen, drawing from my past experience and some of the common patterns I've seen.
+ The absence of a direct connection between a specific bank and a financial application using Plaid is usually less about a deliberate snub and more about a complex interplay of technical, legal, and business considerations. I've encountered this scenario numerous times over the years, often needing to troubleshoot similar situations in fintech projects. Here's a breakdown of why these situations happen, drawing from my past experience and some of the common patterns I've seen.
 
 Primarily, it comes down to a few core reasons, which aren't always transparent to the end-user. It's important to understand that Plaid, as a financial data aggregator, doesn't inherently support every single financial institution out there. Instead, they need to actively build and maintain integrations. This involves establishing protocols for secure data transfer and constant updates to accommodate changes on the bank's side, which can be a very resource-intensive process. Let's explore the major factors in detail:
 

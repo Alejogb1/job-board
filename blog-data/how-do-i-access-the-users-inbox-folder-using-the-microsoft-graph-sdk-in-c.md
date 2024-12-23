@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-access-the-users-inbox-folder-using-the-microsoft-graph-sdk-in-c"
 ---
 
-Okay, so accessing a user's inbox with the Microsoft Graph SDK in C#—that’s a common requirement, and I've certainly tackled this scenario multiple times across different projects. It’s not always as straightforward as it initially seems, partly because of the permissions and the nuances around pagination and filtering that can come into play. Let me walk you through it, drawing on some specific past challenges and how I've resolved them, and include practical code examples you can adapt.
+, so accessing a user's inbox with the Microsoft Graph SDK in C#—that’s a common requirement, and I've certainly tackled this scenario multiple times across different projects. It’s not always as straightforward as it initially seems, partly because of the permissions and the nuances around pagination and filtering that can come into play. Let me walk you through it, drawing on some specific past challenges and how I've resolved them, and include practical code examples you can adapt.
 
 The primary hurdle is often establishing the proper authorization. You need the correct scopes configured within your Azure Active Directory application registration. For reading emails, you’re typically looking at `Mail.Read` or, for more granular control, `Mail.ReadBasic`, with the former being the most common. Once the application is registered and has these permissions granted, you can begin the C# side of things.
 

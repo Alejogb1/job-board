@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-pytorch-accuracy-staying-at-0"
 ---
 
-Let's tackle this. I’ve certainly been down that particular rabbit hole, seeing a PyTorch model stubbornly refuse to learn, the accuracy flatlining at zero. It’s frustrating, to say the least, but often indicative of specific issues that, once identified, are usually straightforward to resolve. There isn't a single magic bullet here, but a systematic approach focusing on common culprits usually does the trick.
+ I’ve certainly been down that particular rabbit hole, seeing a PyTorch model stubbornly refuse to learn, the accuracy flatlining at zero. It’s frustrating, to say the least, but often indicative of specific issues that, once identified, are usually straightforward to resolve. There isn't a single magic bullet here, but a systematic approach focusing on common culprits usually does the trick.
 
 First, let’s acknowledge that an accuracy of zero in most classification scenarios (and often regression scenarios, when using metrics meant for classification) typically signifies that your model is outputting predictions that are, for all intents and purposes, random or always the same – certainly not aligning with any ground truth. This usually doesn't happen by accident; it almost always points to a fundamental problem in your setup.
 

@@ -4,7 +4,7 @@ date: "2024-12-05"
 id: "how-can-claude-35s-success-in-legal-documentation-analysis-redefine-ais-role-in-everyday-disputes"
 ---
 
-Okay so you wanna talk about Claude 3.5 and how it's shaking things up in the legal world right  yeah its pretty wild  I mean think about it before this we had AI mostly doing like spam filtering and recommending cat videos now its diving headfirst into legal stuff thats crazy  Legal docs are notoriously complex right full of jargon and subtle nuances  humans spend years mastering that stuff  and Claude seems to be getting a handle on it  pretty quickly
+ so you wanna talk about Claude 3.5 and how it's shaking things up in the legal world right  yeah its pretty wild  I mean think about it before this we had AI mostly doing like spam filtering and recommending cat videos now its diving headfirst into legal stuff thats crazy  Legal docs are notoriously complex right full of jargon and subtle nuances  humans spend years mastering that stuff  and Claude seems to be getting a handle on it  pretty quickly
 
 The success of Claude 3.5 in legal doc analysis is huge because it completely changes the game for everyday people dealing with legal issues  Think about it  most people cant afford expensive lawyers  they get stuck navigating complicated forms contracts  all that stuff on their own  and its a nightmare  
 

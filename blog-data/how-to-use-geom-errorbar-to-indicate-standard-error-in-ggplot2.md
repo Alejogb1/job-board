@@ -4,11 +4,11 @@ date: "2024-12-13"
 id: "how-to-use-geom-errorbar-to-indicate-standard-error-in-ggplot2"
 ---
 
-Okay so you're looking at how to get those error bars showing standard error onto your ggplot2 plots yeah I've been there done that got the t-shirt and probably wrote a few R scripts about it along the way
+ so you're looking at how to get those error bars showing standard error onto your ggplot2 plots yeah I've been there done that got the t-shirt and probably wrote a few R scripts about it along the way
 
 I remember back in my uni days I was knee deep in a massive dataset of sensor readings it was a nightmare of 100000 lines of data just a raw dump of information my prof basically said hey kid go visualize this and make it look like a something my mind still shutters when I think about it so I had means standard deviations the whole nine yards for different groups this was early 2000's so ggplot2 wasn't quite as mature as it is now I think I was using lattice then but boy would I have loved ggplot2 and its geom errorbar back in those days
 
-Alright let's get down to business geom errorbar is your friend when you want to show the spread of your data around a mean or median and in your case we're targeting standard error standard error isn't standard deviation it's standard deviation divided by square root of sample size remember that the whole idea is to visualize how much uncertainty there is in the estimated mean but anyway I digress
+let's get down to business geom errorbar is your friend when you want to show the spread of your data around a mean or median and in your case we're targeting standard error standard error isn't standard deviation it's standard deviation divided by square root of sample size remember that the whole idea is to visualize how much uncertainty there is in the estimated mean but anyway I digress
 
 The key is knowing how to do the calculations first and then feed those results to ggplot2's `geom_errorbar` function I mean you can do all the stats inline but I wouldn't suggest it do that for tiny things but you need to keep these processes separate for readability and reusability
 

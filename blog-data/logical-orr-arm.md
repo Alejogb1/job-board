@@ -4,9 +4,9 @@ date: "2024-12-13"
 id: "logical-orr-arm"
 ---
 
-Alright so "logical orr arm" right I've seen this kind of vague question a bunch of times on forums guess it's time to dig in
+so "logical orr arm" right I've seen this kind of vague question a bunch of times on forums guess it's time to dig in
 
-Okay first off when someone says "logical orr arm" they're usually talking about hardware logic specifically circuits that perform an OR operation on inputs and then drive some output with that result The "arm" part is the output stage of that logic gate It could be driving a transistor an LED an input to another logic gate anything really
+ first off when someone says "logical orr arm" they're usually talking about hardware logic specifically circuits that perform an OR operation on inputs and then drive some output with that result The "arm" part is the output stage of that logic gate It could be driving a transistor an LED an input to another logic gate anything really
 
 Been doing this stuff for a while I remember my early days experimenting with 74 series logic chips building crazy circuits just for kicks One time I accidentally shorted a 7408 AND gate and fried it smelled terrible I learned my lesson fast after that and started using more careful power management and circuit protection practices I definitely wasn't a "hot-swap wizard" back then I was more of a "hot-shorting rookie" lol
 

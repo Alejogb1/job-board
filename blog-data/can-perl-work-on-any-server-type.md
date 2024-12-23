@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "can-perl-work-on-any-server-type"
 ---
 
-Okay so you're asking if Perl can run anywhere right like on any server. I've been kicking around servers and coding in Perl since the late 90s and let me tell you it's a yes and a no kinda answer it's complicated but not that complicated. 
+ so you're asking if Perl can run anywhere right like on any server. I've been kicking around servers and coding in Perl since the late 90s and let me tell you it's a yes and a no kinda answer it's complicated but not that complicated. 
 
 Short answer is yes perl can run on basically any server that matters even the weird ones but it's always "it depends". Let's unpack that.
 

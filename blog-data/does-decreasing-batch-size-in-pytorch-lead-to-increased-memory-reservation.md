@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "does-decreasing-batch-size-in-pytorch-lead-to-increased-memory-reservation"
 ---
 
-Okay, let's tackle this. I've seen this exact issue crop up more times than I care to remember, especially when optimizing deep learning models for resource-constrained environments. It seems counterintuitive, doesn't it? You’d think smaller batches mean less memory, but the reality is often more nuanced, and frankly, can catch you off guard if you're not paying close enough attention.
+,  I've seen this exact issue crop up more times than I care to remember, especially when optimizing deep learning models for resource-constrained environments. It seems counterintuitive, doesn't it? You’d think smaller batches mean less memory, but the reality is often more nuanced, and frankly, can catch you off guard if you're not paying close enough attention.
 
 The core of the problem isn't simply about the raw data size of the batch itself; it's about how PyTorch’s autograd engine handles memory management, specifically when it comes to the gradient calculation and storage. When you decrease the batch size, you are inherently increasing the frequency with which gradients are calculated, updated, and discarded during each training epoch. This seems like it would be more efficient on the surface, but it can often result in more memory reservation, particularly when certain operations trigger caching mechanisms within PyTorch.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-isnt-apple-pay-appearing-in-the-react-native-braintree-dropin-ui-on-ios"
 ---
 
-Alright, let's tackle this. It's a situation I've definitely encountered more than once, and troubleshooting payment integrations can feel like navigating a maze, especially with the mix of platforms and SDKs. The fact that Apple Pay isn't showing up in your `react-native-braintree-dropin` UI on iOS is usually a symptom of a few common underlying issues. It's rarely a single glaring error, but rather a confluence of configuration and setup details needing precise alignment.
+Alright,  It's a situation I've definitely encountered more than once, and troubleshooting payment integrations can feel like navigating a maze, especially with the mix of platforms and SDKs. The fact that Apple Pay isn't showing up in your `react-native-braintree-dropin` UI on iOS is usually a symptom of a few common underlying issues. It's rarely a single glaring error, but rather a confluence of configuration and setup details needing precise alignment.
 
 First, forget assuming the Braintree SDK itself is at fault. It’s generally well-tested; the problem is nearly always related to how the integration is implemented within the React Native environment and iOS project. When I first encountered this back in my days working on a mobile marketplace app, it wasn't the Braintree code that was the culprit, but rather a series of cascading errors due to how Apple Pay had been configured at the platform level, which caused the drop-in UI to refuse to enable the feature.
 

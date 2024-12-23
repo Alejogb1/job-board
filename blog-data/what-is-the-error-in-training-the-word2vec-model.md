@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-is-the-error-in-training-the-word2vec-model"
 ---
 
-Let's tackle this. I’ve spent enough time knee-deep in embedding spaces to have a few war stories about word2vec training issues, and pinpointing the error is rarely a straightforward 'aha' moment. The problem isn't usually a single, monolithic failure, but rather a constellation of interconnected issues that manifest in various ways, primarily through poor quality embeddings. Let's break it down based on my experiences.
+ I’ve spent enough time knee-deep in embedding spaces to have a few war stories about word2vec training issues, and pinpointing the error is rarely a straightforward 'aha' moment. The problem isn't usually a single, monolithic failure, but rather a constellation of interconnected issues that manifest in various ways, primarily through poor quality embeddings. Let's break it down based on my experiences.
 
 The fundamental idea behind word2vec, whether you're using the continuous bag-of-words (cbow) or skip-gram architecture, is to learn word representations such that words appearing in similar contexts have similar vector representations. This process relies heavily on stochastic gradient descent (sgd) or its variants. And here’s where things often go sideways. The 'error' in training isn’t necessarily a bug in the algorithm itself, but often stems from how we’re feeding data, setting parameters, and ultimately interpreting the results.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-i-deploy-an-onnx-model-from-synapse-notebook-to-a-dedicated-sql-pool"
 ---
 
-Okay, let's tackle this. Deploying an ONNX model from a Synapse notebook directly to a dedicated SQL pool – that’s a question I’ve encountered a few times in my work, especially when trying to bridge the gap between machine learning workflows and traditional data warehousing. The short answer is: you won't be deploying the *model itself* directly into the SQL pool. Instead, the typical pattern involves using the model for inference in a separate environment and then storing the results within the SQL pool. Let me elaborate and provide some practical examples based on projects I've worked on.
+,  Deploying an ONNX model from a Synapse notebook directly to a dedicated SQL pool – that’s a question I’ve encountered a few times in my work, especially when trying to bridge the gap between machine learning workflows and traditional data warehousing. The short answer is: you won't be deploying the *model itself* directly into the SQL pool. Instead, the typical pattern involves using the model for inference in a separate environment and then storing the results within the SQL pool. Let me elaborate and provide some practical examples based on projects I've worked on.
 
 The dedicated SQL pool, in essence, is optimized for relational data storage and querying. It’s not designed to execute complex numerical computations like model scoring. Thus, the challenge becomes how to leverage the model’s predictive power and integrate its output into your SQL data. The ONNX format, which stands for Open Neural Network Exchange, primarily facilitates model exchange across different frameworks. It does not inherently provide a mechanism for in-database execution.
 

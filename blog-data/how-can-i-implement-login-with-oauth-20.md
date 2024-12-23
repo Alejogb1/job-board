@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-implement-login-with-oauth-20"
 ---
 
-Okay, let's tackle this. I've implemented OAuth 2.0 more times than I care to count, across various systems and for different use cases, and while the core principles are consistent, the specifics can vary quite a bit. You're asking how to implement it, which is a good question because there are a number of moving parts. It's not just about throwing some code together; a solid implementation requires understanding the underlying flow, the different grant types, and the security considerations. So, let's dive in.
+,  I've implemented OAuth 2.0 more times than I care to count, across various systems and for different use cases, and while the core principles are consistent, the specifics can vary quite a bit. You're asking how to implement it, which is a good question because there are a number of moving parts. It's not just about throwing some code together; a solid implementation requires understanding the underlying flow, the different grant types, and the security considerations. So, let's dive in.
 
 Essentially, OAuth 2.0 is an authorization framework, not an authentication protocol. It's all about granting third-party applications limited access to a user's resources without exposing their credentials. What we typically think of as "login with Google," for example, is usually OpenID Connect *on top* of OAuth 2.0. OpenID Connect adds the authentication layer, giving you an identity token that confirms the user's identity. For simplicity, I will focus on implementing a basic OAuth 2.0 flow where you're acting as the client application, and an authorization server is already established.
 

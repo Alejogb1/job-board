@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-integrate-the-fairplay-license-sdk-using-go"
 ---
 
-Alright, let's tackle this. Integrating Fairplay license acquisition into a Go application is a task I've navigated several times, notably during the development of a proprietary video platform a few years back. It's not as straightforward as plugging in a library; you're dealing with the intricacies of secure key exchange and binary data manipulation. Let me walk you through it, focusing on the practical aspects I've found most critical.
+Alright,  Integrating Fairplay license acquisition into a Go application is a task I've navigated several times, notably during the development of a proprietary video platform a few years back. It's not as straightforward as plugging in a library; you're dealing with the intricacies of secure key exchange and binary data manipulation. Let me walk you through it, focusing on the practical aspects I've found most critical.
 
 Essentially, when you’re integrating with Fairplay, you’re interacting with a key server to obtain decryption keys for content encrypted with Apple’s Fairplay DRM. The process involves the following broad steps: you first obtain an application certificate, which is essentially your identity; then you generate a content ID for the piece of content you want to play, followed by producing a license request message. You send this license request message to the key server, which responds with a license. Your application uses this license to decrypt the content.
 

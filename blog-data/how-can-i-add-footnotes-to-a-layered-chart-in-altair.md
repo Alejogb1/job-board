@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-add-footnotes-to-a-layered-chart-in-altair"
 ---
 
-Okay, let's tackle this. I've encountered this particular challenge a few times in past projects, particularly when presenting complex data visualizations that require detailed context. Footnotes, as you're likely aware, are crucial for clarity, especially when dealing with layered charts where individual elements might need specific explanations. Altair doesn't directly support footnotes as a native feature, so we need to get a bit creative with text marks and layering strategies. It's not as straightforward as flipping a switch, but it's quite achievable with some understanding of how Altair processes text and layers.
+,  I've encountered this particular challenge a few times in past projects, particularly when presenting complex data visualizations that require detailed context. Footnotes, as you're likely aware, are crucial for clarity, especially when dealing with layered charts where individual elements might need specific explanations. Altair doesn't directly support footnotes as a native feature, so we need to get a bit creative with text marks and layering strategies. It's not as straightforward as flipping a switch, but it's quite achievable with some understanding of how Altair processes text and layers.
 
 The core idea revolves around using `mark_text` along with carefully calculated positions to place your footnote text below the main chart. Essentially, we’re manually creating the footnote area. This requires a bit of precision, but it also provides a good deal of flexibility in controlling the footnote appearance. The trick is to establish a consistent positioning method that works even when the chart's dimensions might change.
 

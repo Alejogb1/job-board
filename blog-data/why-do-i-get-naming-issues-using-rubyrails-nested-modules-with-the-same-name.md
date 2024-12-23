@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-do-i-get-naming-issues-using-rubyrails-nested-modules-with-the-same-name"
 ---
 
-Okay, let's talk about those pesky naming collisions when working with nested modules in Ruby, especially within the Rails ecosystem. I've definitely bumped into this a few times, and it can be a real head-scratcher if you're not prepared for it. It stems from how Ruby's constant lookup mechanism works, and understanding it is crucial for preventing those confusing errors.
+, let's talk about those pesky naming collisions when working with nested modules in Ruby, especially within the Rails ecosystem. I've definitely bumped into this a few times, and it can be a real head-scratcher if you're not prepared for it. It stems from how Ruby's constant lookup mechanism works, and understanding it is crucial for preventing those confusing errors.
 
 Fundamentally, Ruby’s constant resolution process follows a specific path: lexical scope, then the inheritance hierarchy, and then the module inclusion chain. When you introduce nested modules with the same name, you’re essentially creating multiple possible targets for the constant resolution algorithm, and this is where the problems arise. It’s not that Ruby can’t handle it; it’s that it follows rules, and we, as developers, need to be aware of those rules to avoid unintentionally referencing the wrong constant. The issue usually manifests itself in errors such as `NameError: uninitialized constant...` or unexpected behavior where a class or module is used that isn't the one you expect.
 

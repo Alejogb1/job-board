@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-use-a-python-package-stored-in-a-private-git-repo-for-azure-functions"
 ---
 
-Okay, let's unpack this. I've encountered this specific challenge many times in my career, particularly when deploying internal tools and microservices within Azure environments. The need to utilize private python packages in azure functions isn't uncommon, and the solutions require understanding the interplay between git authentication, azure function deployment, and python package management. It’s more nuanced than a simple public PyPI package install, that’s for certain.
+, let's unpack this. I've encountered this specific challenge many times in my career, particularly when deploying internal tools and microservices within Azure environments. The need to utilize private python packages in azure functions isn't uncommon, and the solutions require understanding the interplay between git authentication, azure function deployment, and python package management. It’s more nuanced than a simple public PyPI package install, that’s for certain.
 
 My experience stems from a project involving several data processing functions which relied on a proprietary analytics library. This library, deemed sensitive, resided in a private git repository. Getting it to work seamlessly with our Azure Functions required a bit of planning, and we hit some interesting hiccups along the way that taught us valuable lessons. The core issue is that Azure Function deployment pipelines aren't directly aware of your private git credentials or, by default, how to properly fetch packages from them. We need to bridge that gap.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-conv1d-feature-maps-be-visualized-for-sequence-data"
 ---
 
-Okay, let's tackle this one. It's something I actually grappled with quite a bit back when I was working on a genomic sequence analysis project. Visualizing Conv1D feature maps, especially for sequence data, presents some unique challenges compared to, say, image data with Conv2D layers. You're essentially dealing with abstract representations of temporal relationships within a sequence, and making those tangible isn’t always straightforward. So, how do we actually peer into what these Conv1D filters are “seeing”?
+, let's tackle this one. It's something I actually grappled with quite a bit back when I was working on a genomic sequence analysis project. Visualizing Conv1D feature maps, especially for sequence data, presents some unique challenges compared to, say, image data with Conv2D layers. You're essentially dealing with abstract representations of temporal relationships within a sequence, and making those tangible isn’t always straightforward. So, how do we actually peer into what these Conv1D filters are “seeing”?
 
 The core challenge lies in the fact that a Conv1D layer operates on one-dimensional input, typically an embedding of a sequence. The output feature maps aren't inherently visual in the way that a 2D image output would be. Think of it: instead of a grid of pixel activations, we have a sequence of activation values. What we aim for is a way to translate these sequences back into a human-understandable format. There are a few common, and useful, techniques that can help achieve this, which I've found very practical over the years.
 

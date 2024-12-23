@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-are-the-errors-when-using-azure-text-analytics-asynchronous-client"
 ---
 
-Alright, let's tackle this. Having spent a fair amount of time wrangling asynchronous operations with Azure Text Analytics, I've definitely stumbled across some of the more common pitfalls that can occur. It's one thing to get a basic synchronous call working; quite another to build a robust, asynchronous pipeline that handles the complexities of real-world data. When you introduce asynchrony, error handling becomes even more critical, and Azure's Text Analytics client is no exception. Here's a breakdown of the issues I've seen and some techniques I've used to address them.
+Alright,  Having spent a fair amount of time wrangling asynchronous operations with Azure Text Analytics, I've definitely stumbled across some of the more common pitfalls that can occur. It's one thing to get a basic synchronous call working; quite another to build a robust, asynchronous pipeline that handles the complexities of real-world data. When you introduce asynchrony, error handling becomes even more critical, and Azure's Text Analytics client is no exception. Here's a breakdown of the issues I've seen and some techniques I've used to address them.
 
 First off, the primary source of errors, in my experience, stems from improper management of the asynchronous polling process. When you initiate a long-running operation, the client returns a `poller` object, which represents the ongoing analysis. Neglecting to handle its state correctly is where a lot of things can go awry.
 
@@ -16,7 +16,7 @@ Then, we have the handling of actual API errors returned by the service. These e
 
 Finally, let's not forget about resource management. Since async operations can take time, there’s the possibility of losing track of active pollers, leading to resource leaks. If your application spins up these pollers rapidly without proper clean up or a suitable way to cancel operations, you’ll hit resource exhaustion issues quickly.
 
-Okay, let's ground this with some examples. I'm going to show snippets in Python, as that’s my go-to language for this type of task, but the concepts apply across other SDKs.
+, let's ground this with some examples. I'm going to show snippets in Python, as that’s my go-to language for this type of task, but the concepts apply across other SDKs.
 
 **Code Snippet 1: Basic Asynchronous Analysis with Status Checks**
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-does-implementing-the-cross-entropy-function-with-ground-truth-probability-compare-to-using-a-one-hot-encoded-vector"
 ---
 
-Let's tackle this. I've spent a good portion of my career knee-deep in model training and loss functions, and this specific nuance between using ground truth probabilities directly versus one-hot encoding for cross-entropy crops up often. There's a common misconception that they're interchangeable, but subtle differences can lead to significant effects, particularly in nuanced scenarios.
+ I've spent a good portion of my career knee-deep in model training and loss functions, and this specific nuance between using ground truth probabilities directly versus one-hot encoding for cross-entropy crops up often. There's a common misconception that they're interchangeable, but subtle differences can lead to significant effects, particularly in nuanced scenarios.
 
 The core concept revolves around what information we're conveying to the loss function and, consequently, to the gradient updates during backpropagation. With one-hot encoding, you're essentially telling the model, "This single class is absolutely the *only* correct answer, with a probability of 1, and all others are completely incorrect, with a probability of 0." Mathematically, for a multi-class classification problem with *n* classes, the one-hot encoded vector for the *i*-th class would be a vector of *n* elements where the *i*-th element is 1 and all other elements are 0. This is a crisp, definite representation, forcing the model to strictly match this single target.
 

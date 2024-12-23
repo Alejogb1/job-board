@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-my-tensorflow-keras-model-giving-nan-nan-as-output"
 ---
 
-Okay, let's tackle this `[nan nan]` output issue. It’s a common headache, and something I’ve debugged more times than I care to count, honestly. While the exact cause can vary, it usually points to a few core issues within your TensorFlow/Keras model’s training process, rather than some mystical flaw. From my experience, it mostly boils down to numeric instability and problems during gradient calculations.
+, let's tackle this `[nan nan]` output issue. It’s a common headache, and something I’ve debugged more times than I care to count, honestly. While the exact cause can vary, it usually points to a few core issues within your TensorFlow/Keras model’s training process, rather than some mystical flaw. From my experience, it mostly boils down to numeric instability and problems during gradient calculations.
 
 First, let’s be clear on what `nan` actually represents: 'not a number.' In the context of machine learning, especially deep learning, it signifies that an arithmetic operation has produced an undefined result, usually due to problems like division by zero or taking the logarithm of a non-positive number. When this starts propagating through your network’s layers, you end up with `nan` in your output.
 

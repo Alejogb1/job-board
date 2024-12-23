@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-manage-async-web-requests-in-unity-using-coroutines"
 ---
 
-Okay, let’s talk asynchronous web requests in Unity, specifically using coroutines. I've spent a good chunk of my career dealing with the quirks and nuances of network communication in games, and believe me, doing it *well* is crucial, especially when aiming for a smooth user experience. It's not just about getting data; it's about doing it without freezing the main thread and making your game feel sluggish.
+, let’s talk asynchronous web requests in Unity, specifically using coroutines. I've spent a good chunk of my career dealing with the quirks and nuances of network communication in games, and believe me, doing it *well* is crucial, especially when aiming for a smooth user experience. It's not just about getting data; it's about doing it without freezing the main thread and making your game feel sluggish.
 
 The core challenge we face in Unity is that `UnityWebRequest` operations, by default, block the main thread while waiting for a response. This isn't acceptable for any real-time application, where rendering and game logic need to continue uninterrupted. Fortunately, coroutines come to our rescue, allowing us to write asynchronous code that can pause and resume execution, effectively letting the main thread breathe.
 

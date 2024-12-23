@@ -4,7 +4,7 @@ date: "2024-12-10"
 id: "what-advantages-does-python-native-pipeline-design-offer-compared-to-sql-based-feature-platforms"
 ---
 
-Okay so you wanna know about Python pipelines versus SQL feature platforms right  Cool  Let's dive in  It's a pretty hot topic these days everyone's building these massive data pipelines for machine learning and stuff  And choosing the right tool is like picking the right weapon for a fight you wanna win efficiently  not just survive
+ so you wanna know about Python pipelines versus SQL feature platforms right  Cool  Let's dive in  It's a pretty hot topic these days everyone's building these massive data pipelines for machine learning and stuff  And choosing the right tool is like picking the right weapon for a fight you wanna win efficiently  not just survive
 
 The thing is SQL is kinda like a trusty hammer it's great for straightforward stuff  you know  smashing data into shape querying simple things  It's reliable mature you can find a million tutorials on it  Everyone kinda knows it  But for complex ML workflows it starts to feel clunky
 

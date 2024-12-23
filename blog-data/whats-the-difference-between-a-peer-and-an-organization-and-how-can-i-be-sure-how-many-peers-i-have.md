@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "whats-the-difference-between-a-peer-and-an-organization-and-how-can-i-be-sure-how-many-peers-i-have"
 ---
 
-Okay, let's tackle this one. I've seen this come up more times than I can count, usually in the context of distributed systems and consensus algorithms, but the core issue—understanding the distinction between a peer and an organization—is fundamental even outside that realm.
+, let's tackle this one. I've seen this come up more times than I can count, usually in the context of distributed systems and consensus algorithms, but the core issue—understanding the distinction between a peer and an organization—is fundamental even outside that realm.
 
 The core difference, at its most basic, is scope and purpose. A **peer**, in a technical context, represents an individual, independent participant within a network or system. Think of it as a single node, process, or agent that operates with a certain degree of autonomy. Peers often share a common protocol or set of rules for interaction, but they are not necessarily centrally governed or managed. In a peer-to-peer (p2p) network, for instance, each participating computer acts as a peer, communicating directly with others without needing an intermediary server.
 

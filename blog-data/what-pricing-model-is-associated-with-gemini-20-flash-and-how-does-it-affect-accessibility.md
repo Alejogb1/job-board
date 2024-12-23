@@ -4,7 +4,7 @@ date: "2024-12-12"
 id: "what-pricing-model-is-associated-with-gemini-20-flash-and-how-does-it-affect-accessibility"
 ---
 
-Okay so Gemini 20 Flash pricing right it's not like one size fits all or a subscription to your favorite streaming service It's more nuanced let's unpack this thing
+ so Gemini 20 Flash pricing right it's not like one size fits all or a subscription to your favorite streaming service It's more nuanced let's unpack this thing
 
 Think pay as you go that's the core idea You're charged based on usage not a flat monthly fee That usage is usually measured in tokens a token being roughly a chunk of a word or part of a code block or something like that it's a pretty granular way of tracking consumption
 

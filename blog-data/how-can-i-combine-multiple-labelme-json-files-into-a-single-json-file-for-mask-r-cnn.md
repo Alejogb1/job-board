@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-combine-multiple-labelme-json-files-into-a-single-json-file-for-mask-r-cnn"
 ---
 
-Okay, so, the challenge of merging multiple LabelMe json files for mask r-cnn training—I've definitely been down that road before. It’s not uncommon when dealing with large datasets that have been annotated by multiple people or across different sessions. The straightforward approach might seem like just concatenating the files, but, as you’ve probably guessed, that’s not quite how things work. Let’s break down how to do this correctly, focusing on avoiding common pitfalls and ensuring your merged json is actually usable for model training.
+, so, the challenge of merging multiple LabelMe json files for mask r-cnn training—I've definitely been down that road before. It’s not uncommon when dealing with large datasets that have been annotated by multiple people or across different sessions. The straightforward approach might seem like just concatenating the files, but, as you’ve probably guessed, that’s not quite how things work. Let’s break down how to do this correctly, focusing on avoiding common pitfalls and ensuring your merged json is actually usable for model training.
 
 First, the key issue lies in how LabelMe represents individual image annotations. Each json file fundamentally stores annotations for a single image, with its own associated metadata. Merely appending these json structures wouldn’t make sense for Mask R-CNN, which expects all annotation information pertaining to training to reside in a singular file, structured to reflect the full training set. We need to essentially re-index the annotations and combine them into a new structure.
 

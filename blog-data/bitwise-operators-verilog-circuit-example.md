@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "bitwise-operators-verilog-circuit-example"
 ---
 
-Okay so you’re asking about bitwise operators in Verilog and wanting a circuit example right Been there done that countless times Seems like a simple thing but its foundational and if you mess this up downstream well you'll have a bad time Been wrestling with FPGAs and ASICs for a decade now so bitwise stuff is basically my bread and butter.
+ so you’re asking about bitwise operators in Verilog and wanting a circuit example right Been there done that countless times Seems like a simple thing but its foundational and if you mess this up downstream well you'll have a bad time Been wrestling with FPGAs and ASICs for a decade now so bitwise stuff is basically my bread and butter.
 
 Let’s get down to brass tacks. Bitwise operators they manipulate data at the individual bit level. Verilog supports the usual suspects `&` for bitwise AND `|` for bitwise OR `^` for bitwise XOR and `~` for bitwise NOT. There's also `~&` for NAND `~|` for NOR and `~^` for XNOR but those are usually just syntactic sugar you can achieve with combinations of the basic ones. The important thing to remember is these operators work on each bit independently of the others. You’re not adding numbers or doing math you’re performing logical operations on bits.
 
@@ -87,7 +87,7 @@ In this module if a bit in `bit_mask` is 1 the corresponding bit will be set in 
 
 Now a quick joke: why was the bit sad? Because it was always down... Sorry i had to add a joke even if it's a lame one but it shows you how we nerds operate.
 
-Okay lets get back to the tech.
+ lets get back to the tech.
 
 Debugging these bitwise operations can be a pain. Because the errors can be really subtle. For example if you accidentally use bitwise operators where you meant to use logical operators you’ll get strange results that can be difficult to trace. Always double check your operator precedence its like math class all over again but with bits.
 

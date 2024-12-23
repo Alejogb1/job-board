@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "postgresql-could-not-identify-equality-operator-json-error"
 ---
 
-Alright so you're banging your head against the wall with a PostgreSQL JSON equality operator issue right I've been there trust me it's a classic gotcha moment I remember back in my early days building this geospatial data platform I hit this snag hard it was like the system was mocking me with its cryptic error messages "operator does not exist json = json" or something equally infuriating
+so you're banging your head against the wall with a PostgreSQL JSON equality operator issue right I've been there trust me it's a classic gotcha moment I remember back in my early days building this geospatial data platform I hit this snag hard it was like the system was mocking me with its cryptic error messages "operator does not exist json = json" or something equally infuriating
 
 Basically what's happening is that PostgreSQL isn't automatically treating JSON columns or values as comparable using the standard `=` equality operator when you try to directly compare two JSON values without more context. It's not like comparing simple numbers or strings where it knows what you mean
 

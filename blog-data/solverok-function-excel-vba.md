@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "solverok-function-excel-vba"
 ---
 
-Okay so someone's asking about `solverok` in excel vba yeah I've been there dude many times like way way too many times alright let me just dump what I know about it its honestly not that complicated once you've wrestled it a bit
+ so someone's asking about `solverok` in excel vba yeah I've been there dude many times like way way too many times let me just dump what I know about it its honestly not that complicated once you've wrestled it a bit
 
 So `SolverOK` in VBA is basically your gateway to making Excel's Solver tool dance to your programmatic tune its part of the Solver add-in which you gotta enable first by the way if you havent done that already VBA cant see it If youre here and dont know that go to Excel Options add-ins and select the Solver Addin at the bottom Excel's settings can be surprisingly simple sometimes its like a car you have a steering wheel but that doesn't mean the engine is running you get me?
 
@@ -24,7 +24,7 @@ Sub RunSolver()
 End Sub
 ```
 
-Alright so let me explain this like we are on the same page here first `SolverReset` clears out any previous Solver settings you dont want old ghosts messing with your new solve it's like clearing your browser history before you search for something embarrasing so first things first clear the mess
+so let me explain this like we are on the same page here first `SolverReset` clears out any previous Solver settings you dont want old ghosts messing with your new solve it's like clearing your browser history before you search for something embarrasing so first things first clear the mess
 
 Then we have the main event `SolverOk` the set cell argument `SetCell:="$B$10"` that specifies where your objective function is located in this case cell B10 so B10 should have the formula that calculates the thing you are trying to maximize or minimize it's a reference to the cell containing your ultimate goal in my cake example it was a formula that added all the cost per gram of ingredients and multiplied by how much you were using
 

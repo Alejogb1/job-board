@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-model-a-cnn-with-four-separate-global-pooling-layers-gmp-gap"
 ---
 
-Okay, let's tackle this intriguing architecture you're proposing—a convolutional neural network (CNN) incorporating four distinct global pooling layers. I've actually encountered a similar scenario in the past, while working on a multi-modal classification problem for satellite imagery. We had various data channels—spectral bands, vegetation indices, and elevation—each requiring a slightly different feature reduction strategy before feeding them into a classifier.
+, let's tackle this intriguing architecture you're proposing—a convolutional neural network (CNN) incorporating four distinct global pooling layers. I've actually encountered a similar scenario in the past, while working on a multi-modal classification problem for satellite imagery. We had various data channels—spectral bands, vegetation indices, and elevation—each requiring a slightly different feature reduction strategy before feeding them into a classifier.
 
 So, straight off the bat, the key concept here is understanding that global pooling, whether global max pooling (GMP) or global average pooling (GAP), fundamentally collapses a spatial feature map into a single vector. It's not inherently restrictive to apply it just *once* in a network; you absolutely *can* apply it multiple times, each to a different feature map, and concatenate the results. In fact, it can be quite powerful for capturing different types of high-level information.
 

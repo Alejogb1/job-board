@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-tell-if-a-twiml-dial-with-queue-call-was-successful"
 ---
 
-Alright, let's tackle this. Determining the success of a twiml `<dial>` verb targeting a `<queue>` isn't as straightforward as a simple "yes" or "no" flag, and I’ve definitely seen my share of projects where this was handled sub-optimally. It's a nuanced scenario that requires understanding the flow of events and leveraging the available mechanisms provided by Twilio. Let me break it down based on experiences I've had.
+Alright,  Determining the success of a twiml `<dial>` verb targeting a `<queue>` isn't as straightforward as a simple "yes" or "no" flag, and I’ve definitely seen my share of projects where this was handled sub-optimally. It's a nuanced scenario that requires understanding the flow of events and leveraging the available mechanisms provided by Twilio. Let me break it down based on experiences I've had.
 
 The primary challenge stems from the asynchronous nature of call handling. When a `<dial>` with `<queue>` is initiated, Twilio essentially places the caller in a holding pattern, waiting for an available agent. The immediate response to your request will only confirm that the call *entered* the queue; it won't tell you about the eventual connection or lack thereof. Success, in this context, has several layers: Did the caller join the queue? Did an agent eventually pick it up? Did the call complete successfully after connecting? We need to track these events to gauge true success.
 

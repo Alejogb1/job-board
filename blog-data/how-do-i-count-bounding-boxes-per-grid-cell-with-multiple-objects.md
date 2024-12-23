@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-count-bounding-boxes-per-grid-cell-with-multiple-objects"
 ---
 
-Okay, let's tackle this. I recall a project back at "OmniVision Corp" where we were working on a multi-object tracking system. We faced this exact challenge – needing to efficiently count bounding boxes within specific grid cells. It's a common issue in applications like object detection analysis or density mapping. The core problem is transforming raw bounding box coordinates into a grid-based representation and then aggregating counts per cell, especially when those bounding boxes might overlap grid boundaries or even each other.
+,  I recall a project back at "OmniVision Corp" where we were working on a multi-object tracking system. We faced this exact challenge – needing to efficiently count bounding boxes within specific grid cells. It's a common issue in applications like object detection analysis or density mapping. The core problem is transforming raw bounding box coordinates into a grid-based representation and then aggregating counts per cell, especially when those bounding boxes might overlap grid boundaries or even each other.
 
 The process isn't conceptually complicated, but optimizing it for performance and accuracy requires a structured approach. Fundamentally, it breaks down into a few key steps: defining your grid, translating bounding box coordinates into grid indices, and then, finally, counting these occurrences.
 

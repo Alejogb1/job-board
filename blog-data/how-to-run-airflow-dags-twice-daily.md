@@ -10,7 +10,7 @@ First, the core concept: Airflow uses cron expressions or a combination of prese
 
 Before I jump into examples, let's set some ground rules. We should ensure that the start date of our DAG is set appropriately. In Airflow, the `start_date` is crucial and determines the first execution of the dag. Without a proper start date, things can go haywire with backfilling and unexpected execution times.
 
-Okay, let’s look at my first approach, using cron:
+, let’s look at my first approach, using cron:
 
 ```python
 from airflow import DAG

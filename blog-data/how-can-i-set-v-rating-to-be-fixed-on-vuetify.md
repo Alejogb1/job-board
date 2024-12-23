@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "how-can-i-set-v-rating-to-be-fixed-on-vuetify"
 ---
 
-Okay so you're wrestling with Vuetify's v-rating component and want to nail down that rating so users can't futz with it eh I've been there trust me it's a classic. Spent a good chunk of a weekend debugging a similar issue back in 2018 when I was working on a user feedback system. The user kept clicking on the rating and it was updating without proper server side validation. It was a total mess.
+ so you're wrestling with Vuetify's v-rating component and want to nail down that rating so users can't futz with it eh I've been there trust me it's a classic. Spent a good chunk of a weekend debugging a similar issue back in 2018 when I was working on a user feedback system. The user kept clicking on the rating and it was updating without proper server side validation. It was a total mess.
 
 So first thing’s first and I know this is basic but you gotta make sure you’re understanding what’s going on.  Vuetify’s `v-rating` is fundamentally a UI element that reflects and accepts user input. You are correct that it is a two way data binding component which is fine. If you want a "fixed" rating that means you want the component to display a value but not let the user change it. This means you need to use the :value prop instead of v-model to disable user interaction. Think of it like setting a default value in HTML with the difference that in v-model the user can change the value while in :value the value is set and only the value is being displayed.
 
@@ -86,7 +86,7 @@ export default {
 
 This time we're passing the value through the prop `ratingValue` instead of using it locally in the `FixedRatingComponent`. Now the parent component will call the `changeRating` function that changes the `dynamicRating` value and the child `FixedRatingComponent` will read the prop and update the rating. If you remove `:readonly` the component starts being interactive again which is what I was doing back in 2018 and was the reason for the bug. (Don’t make the same mistakes I did).
 
-Okay so I got one more example for you that might be helpful. This time what if you want to make it reactive not only through changes from the parent but you want to initialize the value from a data that is being changed in the same component. Let’s say you get data from an API and you want to show the rating once you’ve got the info:
+ so I got one more example for you that might be helpful. This time what if you want to make it reactive not only through changes from the parent but you want to initialize the value from a data that is being changed in the same component. Let’s say you get data from an API and you want to show the rating once you’ve got the info:
 
 ```vue
 <template>

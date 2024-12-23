@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "badly-placed-s-error-bash"
 ---
 
-Okay so you're running into the dreaded badly placed 's error in bash right Been there done that Got the t-shirt or rather the stack overflow badge for it This error is like that persistent mosquito that always comes back to annoy you even after you think you've swatted it away it's infuriating
+ so you're running into the dreaded badly placed 's error in bash right Been there done that Got the t-shirt or rather the stack overflow badge for it This error is like that persistent mosquito that always comes back to annoy you even after you think you've swatted it away it's infuriating
 
 Let's break this down because trust me I've spent enough late nights debugging this to make a small fortune in energy drinks You're probably seeing this because bash is getting confused about how you're using single quotes ' I mean 's' in a command that has an unclosed quote a quote that is escaped incorrectly or a quote that is interfering with other quotes. Bash is very literal in this respect which is why it can be a pain sometimes
 

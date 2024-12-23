@@ -20,7 +20,7 @@ so, from what you're saying, you're having a problem with your laravel sail setu
 
 6. **version conflicts.** sometimes there are incompatibilities between the version of sail, the version of laravel, and the version of docker. i have also seen some issues where the docker image was too old for the current laravel version.
 
-okay, so how do we check this stuff? well, lets work some examples and maybe you can find where the problem is, these commands should get you started.
+, so how do we check this stuff? well, lets work some examples and maybe you can find where the problem is, these commands should get you started.
 
 first, let’s make sure docker is running:
 
@@ -84,7 +84,7 @@ volumes:
 ```
 this is a fairly default `docker-compose.yml` file. make sure you have something similar. if you do not have a file like this it means you didn’t use the `sail install` command. look for any obvious typos, like incorrect port mapping, or something in the depends_on section. the ports should also match the .env file configurations, for example, the mysql one.
 
-if everything looks okay with the examples above, let’s check some other common things you can try.
+if everything looks  with the examples above, let’s check some other common things you can try.
 
 *   **try `sail down` and `sail up -d`:** this restarts the containers and often resolves many issues. sometimes things just get stuck, and a clean restart helps. it is the equivalent to turning your pc off and on again, but for containers.
 

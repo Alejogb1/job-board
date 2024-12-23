@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-the-airflow-task-stuck-in-the-queued-status"
 ---
 
-Alright, let's tackle this. Seeing an Airflow task perpetually stuck in the 'queued' state is a fairly common headache, and trust me, I've spent more than a few evenings debugging exactly this scenario. It’s rarely a single, straightforward issue, and pinpointing the root cause usually requires a methodical approach. So, let’s break down the typical suspects and how to investigate them.
+Alright,  Seeing an Airflow task perpetually stuck in the 'queued' state is a fairly common headache, and trust me, I've spent more than a few evenings debugging exactly this scenario. It’s rarely a single, straightforward issue, and pinpointing the root cause usually requires a methodical approach. So, let’s break down the typical suspects and how to investigate them.
 
 Firstly, understanding the Airflow scheduler's role is paramount. The scheduler’s primary function is to monitor dags, parse them, and then submit tasks for execution based on their dependencies and available resources. When a task enters the 'queued' state, it signifies that the scheduler has acknowledged the task's readiness to run but hasn't yet assigned it to a worker for processing. Hence, the problem isn't usually with the task’s logic itself but rather with the system's ability to handle it.
 

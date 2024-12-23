@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-wait-for-a-bash-script-to-complete"
 ---
 
-Okay, let's tackle this. I remember a project back in '08 involving automated system deployments where getting the timing just *perfect* between scripts was absolutely critical. Missing even a second meant cascading failures, and that was no fun. So, when we talk about waiting for a bash script to complete, it’s not just a trivial delay—it's about robust synchronization. There are several ways to accomplish this, each with its own nuances.
+,  I remember a project back in '08 involving automated system deployments where getting the timing just *perfect* between scripts was absolutely critical. Missing even a second meant cascading failures, and that was no fun. So, when we talk about waiting for a bash script to complete, it’s not just a trivial delay—it's about robust synchronization. There are several ways to accomplish this, each with its own nuances.
 
 The most fundamental approach is, of course, the straightforward sequential execution. By default, when you run a series of commands in a bash script, they execute one after the other. Bash waits for each command to finish (either successfully or with an error) before starting the next one. It's implicit, and we often overlook it. This basic mechanism is sufficient for many cases, especially where steps must occur in a rigid sequence. However, things get complicated when we need more granular control or when we’re dealing with asynchronous processes.
 

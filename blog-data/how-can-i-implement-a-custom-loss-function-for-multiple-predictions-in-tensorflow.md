@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-implement-a-custom-loss-function-for-multiple-predictions-in-tensorflow"
 ---
 
-Okay, let's dive into custom loss functions for multiple predictions in TensorFlow. I've certainly spent my fair share of late nights debugging these, particularly back when I was working on a multi-modal sensor fusion project involving image and lidar data. The trick, as with so many things in deep learning, is understanding the nuances and making sure you're crafting a loss that truly reflects the problem you're trying to solve.
+, let's dive into custom loss functions for multiple predictions in TensorFlow. I've certainly spent my fair share of late nights debugging these, particularly back when I was working on a multi-modal sensor fusion project involving image and lidar data. The trick, as with so many things in deep learning, is understanding the nuances and making sure you're crafting a loss that truly reflects the problem you're trying to solve.
 
 The core challenge arises when your model isn't just spitting out one prediction, but several. Think of things like object detection, where you're predicting bounding boxes *and* class probabilities, or in my past project, where we were predicting both 3d object positions and orientation alongside classifications. When you have multiple prediction outputs, a single, generic loss like mean squared error or categorical crossentropy doesn't cut it. You need a tailored approach.
 

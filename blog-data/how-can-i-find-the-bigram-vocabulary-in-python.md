@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-find-the-bigram-vocabulary-in-python"
 ---
 
-Alright, let's tackle this. It's a common task, and one I've bumped into more than a few times over the years, particularly when dealing with natural language processing pipelines. I recall working on a sentiment analysis project where understanding the context provided by bigrams was crucial for achieving acceptable accuracy. So, finding that bigram vocabulary in a Pythonic way? It's definitely achievable and straightforward with the right approach.
+Alright,  It's a common task, and one I've bumped into more than a few times over the years, particularly when dealing with natural language processing pipelines. I recall working on a sentiment analysis project where understanding the context provided by bigrams was crucial for achieving acceptable accuracy. So, finding that bigram vocabulary in a Pythonic way? It's definitely achievable and straightforward with the right approach.
 
 Essentially, you're looking to identify all two-word sequences present in a given text corpus. These pairs are known as bigrams, and they form the basis for many text analysis techniques. Instead of just counting individual words, you get a feel for how often word combinations appear together, giving you more context-rich information. The trick is to efficiently process your text and extract these pairs.
 

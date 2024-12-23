@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-java-exception-throwing-cause-infinite-loops"
 ---
 
-Alright, let's tackle this. It's a question that, on the surface, might seem improbable, but the intricacies of exception handling in Java absolutely make it a possibility. I’ve seen it happen more than once in production environments, usually in systems that have become, let’s say, rather ‘mature’ and haven’t had a good code review in a while. The short answer is yes, Java exceptions, when handled improperly, can absolutely lead to infinite loops. It's not a common scenario, but when it does happen, diagnosing it can be a frustrating exercise in debugging.
+Alright,  It's a question that, on the surface, might seem improbable, but the intricacies of exception handling in Java absolutely make it a possibility. I’ve seen it happen more than once in production environments, usually in systems that have become, let’s say, rather ‘mature’ and haven’t had a good code review in a while. The short answer is yes, Java exceptions, when handled improperly, can absolutely lead to infinite loops. It's not a common scenario, but when it does happen, diagnosing it can be a frustrating exercise in debugging.
 
 The core issue isn't with the exception throwing itself; it’s with the exception *handling*. An infinite loop arising from exception handling typically manifests when a catch block attempts to perform an action that itself is prone to throwing the same exception, and does so in a way that the logic loops back into the same catch block again. Think of it as a never-ending game of exception ping pong. The key to understanding how this occurs lies in how java’s try-catch-finally blocks work and, more specifically, what goes inside them.
 

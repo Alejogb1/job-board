@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-spark-nlp-failing-in-pyspark-with-a-typeerror-javapackage-object-is-not-callable-error"
 ---
 
-Alright, let's tackle this. It's an error I've definitely seen more than once, and while it might seem initially confusing, the "TypeError: 'JavaPackage' object is not callable" when using Spark NLP with PySpark often boils down to a few core issues. It’s less about Spark NLP itself being inherently faulty and more about how the Java and Python sides of the bridge are being handled. Believe me, I've spent a fair few late nights tracking these down, sometimes on projects with tight deadlines.
+Alright,  It's an error I've definitely seen more than once, and while it might seem initially confusing, the "TypeError: 'JavaPackage' object is not callable" when using Spark NLP with PySpark often boils down to a few core issues. It’s less about Spark NLP itself being inherently faulty and more about how the Java and Python sides of the bridge are being handled. Believe me, I've spent a fair few late nights tracking these down, sometimes on projects with tight deadlines.
 
 Essentially, Spark NLP, being a library built on top of Java, uses a bridge to communicate with PySpark. This error you're seeing signifies that you're attempting to call a java package directly as if it were a function or class, when it's just not set up for that in this context. This typically arises when there’s a misalignment in how you initialize or access the Java elements through Py4J. Let me break down the common scenarios, and more importantly, how I've usually resolved them.
 

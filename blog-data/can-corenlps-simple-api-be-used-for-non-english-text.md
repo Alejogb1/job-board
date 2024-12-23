@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-corenlps-simple-api-be-used-for-non-english-text"
 ---
 
-Okay, let's dive into this one. I’ve actually had a very specific experience with this, trying to get sentiment analysis working on a multilingual dataset for a project a few years back. It involved using Stanford CoreNLP – now just known as CoreNLP – and figuring out the nuances of its “simple api,” specifically when the text wasn’t in english. The short answer is: yes, but with significant considerations, and it's definitely not as straightforward as feeding it english text.
+, let's dive into this one. I’ve actually had a very specific experience with this, trying to get sentiment analysis working on a multilingual dataset for a project a few years back. It involved using Stanford CoreNLP – now just known as CoreNLP – and figuring out the nuances of its “simple api,” specifically when the text wasn’t in english. The short answer is: yes, but with significant considerations, and it's definitely not as straightforward as feeding it english text.
 
 The “simple api” you're referring to generally encompasses the convenience methods in CoreNLP designed for quick and easy usage. These often presume, by default, the processing of english language text. Under the hood, though, CoreNLP is quite adaptable thanks to its modular design. The challenge arises when you move away from the default english processing pipelines. The core of the issue isn't that the simple api can't *handle* non-english text; it’s that it often won’t process it *correctly* without the appropriate configuration.
 

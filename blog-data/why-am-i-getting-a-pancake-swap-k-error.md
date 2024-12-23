@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-am-i-getting-a-pancake-swap-k-error"
 ---
 
-Okay, let's tackle this pancake swap 'k' error. I've seen this pop up more times than I care to count, and usually, it stems from a few core issues, often related to the specific mechanics of automated market makers (amms) like pancakeswap. Forget the vague explanations you might find elsewhere; let’s dive into what's happening under the hood and how to troubleshoot it.
+, let's tackle this pancake swap 'k' error. I've seen this pop up more times than I care to count, and usually, it stems from a few core issues, often related to the specific mechanics of automated market makers (amms) like pancakeswap. Forget the vague explanations you might find elsewhere; let’s dive into what's happening under the hood and how to troubleshoot it.
 
 The error you're seeing, typically a 'k' error message, essentially indicates a discrepancy with the constant product formula that underlies most amms. In the simplest terms, an amm maintains liquidity pools for trading pairs. For a given pool of tokens x and y, it adheres (or attempts to adhere) to the rule x * y = k, where 'k' is a constant. This 'k' value is calculated based on the initial amounts of x and y provided by liquidity providers. When you try to swap tokens, you're altering the ratio of x and y in the pool. The amm then adjusts the price to maintain this constant 'k.' A 'k' error often means this delicate balance is disrupted, or the swap you're attempting is pushing against limitations within the system.
 

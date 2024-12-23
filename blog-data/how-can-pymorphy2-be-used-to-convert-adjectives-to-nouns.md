@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-pymorphy2-be-used-to-convert-adjectives-to-nouns"
 ---
 
-Okay, let’s tackle this one. It's a question that often comes up when dealing with natural language processing, particularly when you’re trying to normalize or manipulate text in a specific way. I remember a project a few years back, involving sentiment analysis of customer reviews; we needed to extract the core features being discussed, and adjectives were throwing off our models considerably. That's when I really got into understanding how to effectively use tools like pymorphy2 for this kind of transformation.
+, let’s tackle this one. It's a question that often comes up when dealing with natural language processing, particularly when you’re trying to normalize or manipulate text in a specific way. I remember a project a few years back, involving sentiment analysis of customer reviews; we needed to extract the core features being discussed, and adjectives were throwing off our models considerably. That's when I really got into understanding how to effectively use tools like pymorphy2 for this kind of transformation.
 
 The core challenge lies in the fact that not all adjectives can be directly converted to nouns. The semantic relationship between the two often requires contextual understanding, which a purely morphological analyzer can’t inherently provide. Pymorphy2, while excellent at lemmatization and part-of-speech tagging, isn't designed as a semantic transformer. Instead, we need to leverage its morphological analysis to intelligently pick the most suitable noun form.
 

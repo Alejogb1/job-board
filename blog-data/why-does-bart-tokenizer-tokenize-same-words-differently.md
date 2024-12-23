@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-bart-tokenizer-tokenize-same-words-differently"
 ---
 
-Okay, let’s tackle this. I’ve spent a decent amount of time knee-deep in NLP pipelines, and the behavior of the BART tokenizer, specifically its sometimes inconsistent treatment of identical words, is something I've bumped into more than once. It’s a situation that can initially seem baffling, but it boils down to a few core principles of how these tokenizers operate and, more specifically, how BART was trained.
+, let’s tackle this. I’ve spent a decent amount of time knee-deep in NLP pipelines, and the behavior of the BART tokenizer, specifically its sometimes inconsistent treatment of identical words, is something I've bumped into more than once. It’s a situation that can initially seem baffling, but it boils down to a few core principles of how these tokenizers operate and, more specifically, how BART was trained.
 
 My first real head-scratcher moment with this was, I recall, while working on a sentiment analysis project involving product reviews. I noticed the word "great" being tokenized differently depending on its context—sometimes as a single token, sometimes split into "gr" and "eat". At first, I assumed there was some bug in my pre-processing script or in the library itself. However, after some deeper investigation, it became clear that it wasn't a glitch, but rather a direct consequence of the underlying algorithmic decisions within the tokenizer’s training and design.
 

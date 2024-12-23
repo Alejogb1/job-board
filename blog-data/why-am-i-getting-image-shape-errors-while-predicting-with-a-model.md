@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-am-i-getting-image-shape-errors-while-predicting-with-a-model"
 ---
 
-Alright, let's tackle this. Image shape mismatches during model prediction are a frustratingly common issue, and I've seen it trip up even seasoned machine learning practitioners. From personal experience, having once spent an entire evening debugging a misbehaving classification model only to discover a single misplaced pixel during pre-processing, I understand the pain. It's almost never a problem with the model itself, but rather a mismatch between the data the model was trained on and the data it's now receiving for prediction.
+Alright,  Image shape mismatches during model prediction are a frustratingly common issue, and I've seen it trip up even seasoned machine learning practitioners. From personal experience, having once spent an entire evening debugging a misbehaving classification model only to discover a single misplaced pixel during pre-processing, I understand the pain. It's almost never a problem with the model itself, but rather a mismatch between the data the model was trained on and the data it's now receiving for prediction.
 
 The core of the problem lies in the multi-dimensional nature of image data. An image, fundamentally, is a tensor – a multi-dimensional array. For a color image, it often consists of three dimensions: height, width, and color channels (usually red, green, and blue). The shape of this tensor is critical. A convolutional neural network, or any other image processing model, expects the input to have the *exact* same dimensions, including data types, it encountered during its training phase. This is non-negotiable; if there's a deviation, even a small one, you’re going to run into shape errors.
 

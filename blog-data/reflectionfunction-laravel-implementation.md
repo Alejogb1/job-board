@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "reflectionfunction-laravel-implementation"
 ---
 
-Okay so you want to dive deep into reflection functions in Laravel right Been there done that got the t-shirt probably have the scars too Lets talk reflection in Laravel it’s like peeling back the layers of an onion but instead of tears you get code clarity I’ve wrestled with this quite a bit in the past so lets get into it
+ so you want to dive deep into reflection functions in Laravel right Been there done that got the t-shirt probably have the scars too Lets talk reflection in Laravel it’s like peeling back the layers of an onion but instead of tears you get code clarity I’ve wrestled with this quite a bit in the past so lets get into it
 
 First off when we say "reflection functions" we're talking about PHP’s reflection API right Not some magical Laravel specific thing Laravel just gives us the tools to make it more useful in our context PHP Reflection lets you inspect classes functions methods properties basically everything about your code at runtime This can be really powerful for building flexible and dynamic systems and also lets face it its often needed in some more advanced use cases
 
@@ -132,6 +132,6 @@ This piece of code grabs the constructor for the class then gets its parameters 
 
 This method is powerful when you are constructing objects dynamically and the concrete classes you want to create is unknown at the start of the process but you know the shape of its constructor parameters I’ve used this many times when building generic object factories
 
-Alright so resources for diving deeper into all this I’d steer you towards checking out *Refactoring PHP* by Matt Zandstra as it has a great chapter on reflection and it really dives into its more practical applications and how its often used in more complex software design Also *PHP Objects Patterns and Practice* by Matt Zandstra is a good read for learning more advanced techniques and design patters for PHP and how reflection enables them Both are really good at teaching the foundations of how to use reflection
+so resources for diving deeper into all this I’d steer you towards checking out *Refactoring PHP* by Matt Zandstra as it has a great chapter on reflection and it really dives into its more practical applications and how its often used in more complex software design Also *PHP Objects Patterns and Practice* by Matt Zandstra is a good read for learning more advanced techniques and design patters for PHP and how reflection enables them Both are really good at teaching the foundations of how to use reflection
 
 The PHP documentation for `ReflectionClass` `ReflectionMethod` `ReflectionFunction` is key just dig deep and keep a finger on the documentation it will prove crucial when solving harder problems Using `Reflection` feels a bit complex at first but it becomes powerful once you get used to it Remember to always use reflection responsibly only use it when needed and try to avoid excessive reflection in performance critical areas it does add extra overhead

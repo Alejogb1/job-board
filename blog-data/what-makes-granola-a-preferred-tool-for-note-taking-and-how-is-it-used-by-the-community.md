@@ -4,7 +4,7 @@ date: "2024-12-03"
 id: "what-makes-granola-a-preferred-tool-for-note-taking-and-how-is-it-used-by-the-community"
 ---
 
-Okay so Granola right its like this amazing note-taking thing  I've been using it for ages and it's seriously blown my mind  I mean sure there's Obsidian and Notion and all those heavyweight contenders but Granola just has this *vibe*  its super lightweight its blazing fast and its ridiculously extensible  That's the key really its extensibility  its not just a note-taking app its a whole ecosystem  
+ so Granola right its like this amazing note-taking thing  I've been using it for ages and it's seriously blown my mind  I mean sure there's Obsidian and Notion and all those heavyweight contenders but Granola just has this *vibe*  its super lightweight its blazing fast and its ridiculously extensible  That's the key really its extensibility  its not just a note-taking app its a whole ecosystem  
 
 It's all about the plugins man  that's where the magic happens  you can basically turn it into anything you want a Kanban board a code editor a mind mapping tool  you name it  the community is huge part of this  they're constantly creating new plugins and themes tweaking things  Its all open source so you can dive in yourself too if you're feeling adventurous  its incredibly empowering
 

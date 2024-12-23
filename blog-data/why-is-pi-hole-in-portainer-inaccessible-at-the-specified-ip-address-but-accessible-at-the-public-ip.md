@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-pi-hole-in-portainer-inaccessible-at-the-specified-ip-address-but-accessible-at-the-public-ip"
 ---
 
-Okay, let's tackle this Pi-hole in Portainer access puzzle. I've seen this exact scenario pop up a few times over the years, particularly when dealing with containerized deployments and network configurations. It's almost always a variation on network isolation or incorrect port mapping within the docker environment rather than a failure of Pi-hole itself.
+, let's tackle this Pi-hole in Portainer access puzzle. I've seen this exact scenario pop up a few times over the years, particularly when dealing with containerized deployments and network configurations. It's almost always a variation on network isolation or incorrect port mapping within the docker environment rather than a failure of Pi-hole itself.
 
 The core issue, as you're likely experiencing, is that while the Pi-hole instance within Portainer is reachable through your server's public IP, it becomes inaccessible using the internal IP assigned to that server or, more specifically, the container's assigned ip within the docker network. This divergence typically points to a problem with how network traffic is routed and managed between your host machine, the docker network, and the outside world. Here’s a breakdown of the common pitfalls and how to debug them.
 

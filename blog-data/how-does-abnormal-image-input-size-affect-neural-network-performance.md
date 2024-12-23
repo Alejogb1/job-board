@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-does-abnormal-image-input-size-affect-neural-network-performance"
 ---
 
-Okay, let's tackle this one. It’s a topic I've actually spent a considerable amount of time troubleshooting, especially back in my early days working on a computer vision system for robotic navigation. Dealing with unexpected input dimensions always leads to interesting challenges.
+, let's tackle this one. It’s a topic I've actually spent a considerable amount of time troubleshooting, especially back in my early days working on a computer vision system for robotic navigation. Dealing with unexpected input dimensions always leads to interesting challenges.
 
 At its core, neural networks, especially convolutional neural networks (cnns), are designed to operate on inputs of a specific shape. This shape, defined during the network’s architecture design, affects everything from the number of parameters to the learned features. When presented with images that deviate from this expected size, a variety of performance issues can arise. It's not just about the pixel count; it's the established spatial relationships that get disrupted.
 

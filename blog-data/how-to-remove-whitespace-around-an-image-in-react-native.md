@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-remove-whitespace-around-an-image-in-react-native"
 ---
 
-Alright, let's tackle this. I've seen this issue pop up more times than I care to count, especially when dealing with images sourced from various places in React Native. It’s rarely straightforward, and the frustrating bit is that the 'whitespace' you see isn’t always what it appears to be. Sometimes, it's actual padding or margin; sometimes, it’s the image itself. I’ll walk you through my approach, honed from experiences with countless layouts that decided to fight back.
+Alright,  I've seen this issue pop up more times than I care to count, especially when dealing with images sourced from various places in React Native. It’s rarely straightforward, and the frustrating bit is that the 'whitespace' you see isn’t always what it appears to be. Sometimes, it's actual padding or margin; sometimes, it’s the image itself. I’ll walk you through my approach, honed from experiences with countless layouts that decided to fight back.
 
 First, understand the primary culprits causing this visual whitespace. Often, it isn't inherent to the `<Image>` component itself, but rather the surrounding styles and image characteristics. We have to consider:
 

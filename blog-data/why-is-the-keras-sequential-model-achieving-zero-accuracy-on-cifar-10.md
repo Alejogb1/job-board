@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-the-keras-sequential-model-achieving-zero-accuracy-on-cifar-10"
 ---
 
-Okay, let's tackle this. I've seen this particular issue with Keras' Sequential model and CIFAR-10 more times than I care to recall. It's usually not a single catastrophic error, but rather a confluence of subtle misconfigurations. It's infuriating, I know, but let's break it down step-by-step.
+,  I've seen this particular issue with Keras' Sequential model and CIFAR-10 more times than I care to recall. It's usually not a single catastrophic error, but rather a confluence of subtle misconfigurations. It's infuriating, I know, but let's break it down step-by-step.
 
 From my experience, the most common reason a Keras Sequential model hits zero accuracy on CIFAR-10, especially in the initial stages of experimentation, stems from issues related to data preprocessing, network architecture suitability, and insufficient training procedures. It's rarely a bug in the Keras library itself, but rather how we're configuring and utilizing it. Let's delve deeper into those categories.
 

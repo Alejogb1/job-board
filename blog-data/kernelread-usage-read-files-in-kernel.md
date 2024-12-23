@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "kernelread-usage-read-files-in-kernel"
 ---
 
-Okay so you want to read files from inside the Linux kernel using `kernel_read` right Been there done that Got the scars too let me tell you This is like a deep dive into the murky depths of kernel land not for the faint of heart
+ so you want to read files from inside the Linux kernel using `kernel_read` right Been there done that Got the scars too let me tell you This is like a deep dive into the murky depths of kernel land not for the faint of heart
 
 So `kernel_read` yeah that's a kernel function It's like the VIP pass to access files directly bypassing all the user-space stuff This isn't your average `fopen` and `fread` dance it's way down there
 
@@ -12,7 +12,7 @@ Now the catch is you can't just go throwing `kernel_read` around like confetti I
 
 First things first where does this `kernel_read` magic happen Well its typically used inside kernel modules Think of those modules as tiny programs that you can insert into the kernel to extend its functionality In my earlier days I once wrote a module that was supposed to monitor system logs in real time turns out it crashed more than it monitored and debugging was a nightmare trust me
 
-Okay so here is some example code to start with it's not the holy grail but it's a good first step:
+ so here is some example code to start with it's not the holy grail but it's a good first step:
 
 ```c
 #include <linux/kernel.h>
@@ -245,7 +245,7 @@ module_exit(my_module_exit);
 
 ```
 
-Okay this one is the real deal This code is reading the file directly from the inode.
+ this one is the real deal This code is reading the file directly from the inode.
 
 *   We get a `file` structure
 *   `file_inode`: We get the underlying `inode` from the file structure The `inode` is like the heart of the file system it contains all the metadata of the file like its size and block locations

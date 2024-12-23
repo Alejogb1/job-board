@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-cant-a-boxdyn-trait-be-passed-to-a-function-expecting-a-mut-trait"
 ---
 
-Okay, let’s unpack this. I've certainly stumbled upon this particular roadblock more than once in my career, usually mid-refactor when trying to apply some good object-oriented principles to Rust code. The core issue here boils down to ownership, borrowing, and the specific semantics of `Box<dyn Trait>` versus `&mut Trait`. It’s not about arbitrary limitations; it's about maintaining Rust's core tenets around memory safety. Let's get into it.
+, let’s unpack this. I've certainly stumbled upon this particular roadblock more than once in my career, usually mid-refactor when trying to apply some good object-oriented principles to Rust code. The core issue here boils down to ownership, borrowing, and the specific semantics of `Box<dyn Trait>` versus `&mut Trait`. It’s not about arbitrary limitations; it's about maintaining Rust's core tenets around memory safety. Let's get into it.
 
 The crux of the problem is that `Box<dyn Trait>` represents an *owned* dynamically dispatched trait object, allocated on the heap. This `Box` owns the data. The `&mut Trait`, conversely, is a *mutable borrow* of a trait object; it doesn’t own the underlying data. These are fundamentally different types with distinct responsibilities. Trying to pass one to a function expecting the other is akin to trying to fit a square peg into a round hole.
 

@@ -4,13 +4,13 @@ date: "2024-12-13"
 id: "regular-expression-in-json-data-validation"
 ---
 
-Okay so yeah regular expressions and json data validation right I've been there man trust me this isn't my first rodeo with this particular tech rodeo
+ so yeah regular expressions and json data validation right I've been there man trust me this isn't my first rodeo with this particular tech rodeo
 
-So you're dealing with JSON data that needs some stricter rules than just is it valid JSON or not Right you want to ensure that specific fields within that JSON follow a specific pattern defined by a regex Okay I get it I've spent way too many late nights wrestling with this exact problem and believe me I've seen all the messy ways it can go sideways
+So you're dealing with JSON data that needs some stricter rules than just is it valid JSON or not Right you want to ensure that specific fields within that JSON follow a specific pattern defined by a regex  I get it I've spent way too many late nights wrestling with this exact problem and believe me I've seen all the messy ways it can go sideways
 
 First off let's be clear there's no built in way that standard JSON spec provides for regex validation It's just a data format not a schema language or anything like that So we can't expect JSON to magically understand our regex needs We need to roll our own solution but that's fine that's what we do right
 
-Okay so how I usually approach this is by using a programming language that I'm comfortable with Usually Python because hey it's Python and it's pretty straightforward and has libraries that make working with both JSON and regex a breeze But the concepts should translate to any language
+ so how I usually approach this is by using a programming language that I'm comfortable with Usually Python because hey it's Python and it's pretty straightforward and has libraries that make working with both JSON and regex a breeze But the concepts should translate to any language
 
 What we're going to do is to load the JSON data into a suitable data structure then iterate through the fields and perform our regex check on each one This approach gives us fine grain control over the process and lets us decide exactly which fields we want to validate and how Let's look at a concrete example
 
@@ -91,7 +91,7 @@ One thing that made me scratch my head back in the day when I first approached t
 
 I mean like really several hours.
 
-Okay so lets say we have a case where you have a nested JSON object and you want to apply regex checks there Well that can be a bit more challenging but the same principle applies Here is a possible solution
+ so lets say we have a case where you have a nested JSON object and you want to apply regex checks there Well that can be a bit more challenging but the same principle applies Here is a possible solution
 
 ```python
 import json
@@ -231,7 +231,7 @@ And of course I've made many mistakes in the past while dealing with edge cases 
 
 One thing that I'd recommend is to not re-invent the wheel and instead take a look at libraries that already provide robust solutions for schema validation there are some good ones available in all sorts of languages That way you'd avoid writing code like this from the ground up
 
-Okay so a few pointers for you now if you want to dig deeper into this topic
+ so a few pointers for you now if you want to dig deeper into this topic
 
 First regex itself its a field that needs its own time to understand it if you really want to know what you are doing so I recommend taking a look at the book "Mastering Regular Expressions" by Jeffrey Friedl it’s a deep dive into the world of regex and it's a very useful book for your daily tech life
 

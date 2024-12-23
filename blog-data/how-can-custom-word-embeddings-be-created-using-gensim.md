@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-custom-word-embeddings-be-created-using-gensim"
 ---
 
-Okay, let's tackle this. It’s something I've had to implement more than a few times in the past, especially when dealing with niche domain-specific text data that pre-trained models just didn’t quite understand. The need to create custom word embeddings using gensim arises quite often, and while it seems straightforward on the surface, there are nuances that can significantly impact the quality of your resulting vector space.
+,  It’s something I've had to implement more than a few times in the past, especially when dealing with niche domain-specific text data that pre-trained models just didn’t quite understand. The need to create custom word embeddings using gensim arises quite often, and while it seems straightforward on the surface, there are nuances that can significantly impact the quality of your resulting vector space.
 
 Essentially, we're talking about training a model – often a word2vec, FastText, or similar model – on our own corpus, tailored to capture the particular relationships and semantics within *our* data. This is crucial when your text contains jargon, specialized language, or specific contextual usages that are absent from larger, more general datasets. Think of it like teaching a language model your company's internal dialect, rather than relying on a generic english vocabulary.
 

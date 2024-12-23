@@ -4,9 +4,9 @@ date: "2024-12-13"
 id: "cache-simulator-in-c-programming"
 ---
 
-Alright so a cache simulator in C eh Been there done that got the t-shirt several times I mean this is like a rite of passage for any self-respecting systems programmer right? I remember my undergrad days fondly or maybe not so fondly trying to get these things to work without segfaulting every other line of code It wasn't pretty let me tell you but it was educational I think
+so a cache simulator in C eh Been there done that got the t-shirt several times I mean this is like a rite of passage for any self-respecting systems programmer right? I remember my undergrad days fondly or maybe not so fondly trying to get these things to work without segfaulting every other line of code It wasn't pretty let me tell you but it was educational I think
 
-Okay so you're looking at building a cache simulator in C I'm guessing you need something that can model different cache configurations probably with LRU or FIFO replacement policies maybe some write-through write-back stuff and perhaps different block sizes right I mean that's the usual drill with this kind of thing You're not gonna get the full speed benefits of a real cache without building an actual chip which is another story completely I've dabbled in FPGAs and that is a wild west not to derail this too much
+ so you're looking at building a cache simulator in C I'm guessing you need something that can model different cache configurations probably with LRU or FIFO replacement policies maybe some write-through write-back stuff and perhaps different block sizes right I mean that's the usual drill with this kind of thing You're not gonna get the full speed benefits of a real cache without building an actual chip which is another story completely I've dabbled in FPGAs and that is a wild west not to derail this too much
 
 First things first lets talk about the core data structures you'll need to handle this You're gonna be storing cache lines in some format each line probably containing a valid bit maybe a tag and a data block I typically go for a struct for this it makes it all nice and tidy
 

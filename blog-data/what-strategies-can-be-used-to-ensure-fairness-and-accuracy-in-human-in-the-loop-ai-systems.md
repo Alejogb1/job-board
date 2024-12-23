@@ -4,7 +4,7 @@ date: "2024-12-07"
 id: "what-strategies-can-be-used-to-ensure-fairness-and-accuracy-in-human-in-the-loop-ai-systems"
 ---
 
-Okay so you wanna make sure your AI is being fair and accurate right  and you're using humans in the loop that's cool  It's a big deal because AI can be kinda biased you know  like if you train it on a dataset that's mostly pictures of white dudes it's gonna think white dudes are the default human and that's not cool at all
+ so you wanna make sure your AI is being fair and accurate right  and you're using humans in the loop that's cool  It's a big deal because AI can be kinda biased you know  like if you train it on a dataset that's mostly pictures of white dudes it's gonna think white dudes are the default human and that's not cool at all
 
 So how do we fix this  Well first we gotta think about the data  Garbage in garbage out right  If your training data is biased your AI is gonna be biased too Its not rocket science  So we need diverse datasets  lots of different people backgrounds ages everything  Think about it like a recipe if you only use one type of ingredient your dish is gonna taste kinda bland you need a variety to get something really good   And this goes beyond just demographics  we need variety in the data in terms of the scenarios the types of problems its meant to solve
 

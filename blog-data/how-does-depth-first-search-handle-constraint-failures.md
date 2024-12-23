@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-does-depth-first-search-handle-constraint-failures"
 ---
 
-Okay, let's tackle this. The interplay between depth-first search (dfs) and constraint failures isn't always immediately obvious, yet it's a core concept in many problem-solving algorithms, particularly in areas like constraint satisfaction problems (csps) and logic programming. I've spent a fair amount of time debugging complex systems where this interaction is central, so I can hopefully provide a practical perspective.
+,  The interplay between depth-first search (dfs) and constraint failures isn't always immediately obvious, yet it's a core concept in many problem-solving algorithms, particularly in areas like constraint satisfaction problems (csps) and logic programming. I've spent a fair amount of time debugging complex systems where this interaction is central, so I can hopefully provide a practical perspective.
 
 Essentially, when a depth-first search encounters a constraint violation, it triggers a backtracking mechanism. Unlike a breadth-first search, which explores all possibilities at a given level before moving deeper, dfs plunges headfirst down a path until it hits a dead end – either it finds a solution or a constraint is violated. This 'dead end' is exactly where the backtracking comes into play.
 

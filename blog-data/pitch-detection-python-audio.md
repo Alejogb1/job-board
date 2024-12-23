@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "pitch-detection-python-audio"
 ---
 
-Alright so pitch detection in Python audio you say right been there done that got the t-shirt and probably a few extra gray hairs to boot Let me tell you this is not as straightforward as it might seem at first blush especially if you’re trying to get anything resembling accuracy and robustness That’s not to say it’s rocket science but it does require a bit of understanding of signal processing and the quirks of audio
+so pitch detection in Python audio you say right been there done that got the t-shirt and probably a few extra gray hairs to boot Let me tell you this is not as straightforward as it might seem at first blush especially if you’re trying to get anything resembling accuracy and robustness That’s not to say it’s rocket science but it does require a bit of understanding of signal processing and the quirks of audio
 
 I’ve wrestled with this problem a lot I recall this one time back in my college days I was working on this interactive music project think something akin to a really janky version of Guitar Hero and the pitch detection aspect nearly brought me to tears Seriously it was a nightmare of false positives and wildly inaccurate readings I tried everything from basic autocorrelation to some pretty convoluted fast Fourier transform FFT implementations I was even briefly considering using those weird hardware pitch trackers that some guitar effects pedal people use But my budget was limited back then and my stubbornness kept me going eventually leading me down a more pure software-based path
 

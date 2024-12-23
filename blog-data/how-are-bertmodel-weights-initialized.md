@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-are-bertmodel-weights-initialized"
 ---
 
-Okay, let’s dive into the fascinating topic of how BertModel weights are initialized. It's a question that, if you’ve ever peered closely into the inner workings of transformer-based models, has probably piqued your curiosity, as it did mine years ago. I remember back when I was initially experimenting with BERT, it seemed like a bit of black magic. Getting that model to converge effectively often hinged on these initial values. Now, the details are quite elegant and, thankfully, well documented.
+, let’s dive into the fascinating topic of how BertModel weights are initialized. It's a question that, if you’ve ever peered closely into the inner workings of transformer-based models, has probably piqued your curiosity, as it did mine years ago. I remember back when I was initially experimenting with BERT, it seemed like a bit of black magic. Getting that model to converge effectively often hinged on these initial values. Now, the details are quite elegant and, thankfully, well documented.
 
 Fundamentally, the weights in a BertModel, like most neural networks, aren’t simply set to zero or random numbers drawn uniformly across a large range. Initializing to all zeros leads to symmetry where all neurons learn the same thing, which inhibits learning. Similarly, overly large random values can cause instability during training, potentially leading to exploding or vanishing gradients. The initialization strategy employed is crucial for effective training. Let's break down how BERT tackles this, moving layer by layer.
 

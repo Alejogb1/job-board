@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "meta-data-xml-file-purpose"
 ---
 
-Okay so you're asking about metadata XML files their purpose right I've been wrestling with those things for what feels like forever I mean back in the day when I was a fresh grad working at some startup we literally lived and breathed XML it was the wild west of data interchange let me tell you
+ so you're asking about metadata XML files their purpose right I've been wrestling with those things for what feels like forever I mean back in the day when I was a fresh grad working at some startup we literally lived and breathed XML it was the wild west of data interchange let me tell you
 
 Look at it this way at its core a metadata XML file is just a structured way to describe *other* data It's not the data itself it's the data *about* the data Like imagine you have a massive pile of photos right Each photo is data But what about the date the photo was taken the location where it was taken who's in the photo that's all *metadata* And XML is a way to organize that information so a machine can understand it
 

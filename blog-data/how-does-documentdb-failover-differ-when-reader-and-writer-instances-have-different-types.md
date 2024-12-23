@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-does-documentdb-failover-differ-when-reader-and-writer-instances-have-different-types"
 ---
 
-Okay, let's unpack this. The question touches on a critical area in distributed database systems, and specifically how failover behaves when the read and write endpoints (instances) in a DocumentDB setup aren’t homogenous. It's something I've encountered more than once in the field, and the devil, as they say, is often in the details.
+, let's unpack this. The question touches on a critical area in distributed database systems, and specifically how failover behaves when the read and write endpoints (instances) in a DocumentDB setup aren’t homogenous. It's something I've encountered more than once in the field, and the devil, as they say, is often in the details.
 
 Frankly, the ‘standard’ failover scenario – where all instances are identical – is relatively straightforward. We’re swapping out a failing instance with a healthy one of the same type, ensuring minimal service disruption and hopefully, data consistency. However, when reader and writer instances are architecturally disparate, things get… nuanced. We're no longer just replacing a component; we're potentially dealing with different capabilities, performance characteristics, and data access paths that impact failover procedures. Let's dive into how.
 

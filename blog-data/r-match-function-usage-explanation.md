@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "r-match-function-usage-explanation"
 ---
 
-Okay so you want to understand how the `r match` function works right I've been there believe me spent way too many nights wrestling with regular expressions and R's string manipulation quirks. It's one of those things that seems simple on the surface but can get pretty hairy pretty fast. Let's break it down.
+ so you want to understand how the `r match` function works right I've been there believe me spent way too many nights wrestling with regular expressions and R's string manipulation quirks. It's one of those things that seems simple on the surface but can get pretty hairy pretty fast. Let's break it down.
 
 First off `r match` isn't one single function it's more like a family of functions all related to finding matches within strings using regular expressions. The core functions you’ll encounter are `regexpr` `gregexpr` and `regexec`. Each has its own strengths and weaknesses and knowing when to use which is half the battle. Let's get into it with some examples I'll try keep it concise
 
@@ -39,7 +39,7 @@ Key point if you want the actual match use the start pos and length to extract f
 
 **Finding All Matches: `gregexpr`**
 
-Okay `regexpr` is great for finding a single match but what if you need all occurrences of a pattern in your string Well this is what `gregexpr` is for. It's similar to `regexpr` but returns a list of match results. I had a case where I needed to extract all the timestamps from a log file and that’s when I discovered how good `gregexpr` was. I tried doing a `for loop` to do this in `regexpr` and it was not pretty or efficient it was terrible.
+ `regexpr` is great for finding a single match but what if you need all occurrences of a pattern in your string Well this is what `gregexpr` is for. It's similar to `regexpr` but returns a list of match results. I had a case where I needed to extract all the timestamps from a log file and that’s when I discovered how good `gregexpr` was. I tried doing a `for loop` to do this in `regexpr` and it was not pretty or efficient it was terrible.
 
 Let's say we want to find all the instances of the word "the" in the same sentence as above:
 

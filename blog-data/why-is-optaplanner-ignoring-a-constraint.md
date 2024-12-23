@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-optaplanner-ignoring-a-constraint"
 ---
 
-Alright, let's tackle this. It's frustrating when OptaPlanner seems to disregard a constraint; I've certainly been there, staring at a suboptimal solution, wondering what gremlins have infested the solver. Typically, the issue isn't that OptaPlanner is *intentionally* ignoring the constraint, but rather, there’s a subtle misalignment somewhere in how the constraint is defined, perceived, or scored. My experience, particularly with complex shift-scheduling scenarios in my past life at a large logistics company, has taught me to approach these issues systematically, so here’s how I would generally diagnose a case where a constraint appears to be ignored:
+Alright,  It's frustrating when OptaPlanner seems to disregard a constraint; I've certainly been there, staring at a suboptimal solution, wondering what gremlins have infested the solver. Typically, the issue isn't that OptaPlanner is *intentionally* ignoring the constraint, but rather, there’s a subtle misalignment somewhere in how the constraint is defined, perceived, or scored. My experience, particularly with complex shift-scheduling scenarios in my past life at a large logistics company, has taught me to approach these issues systematically, so here’s how I would generally diagnose a case where a constraint appears to be ignored:
 
 The first critical step is understanding how OptaPlanner calculates the score. The solver uses a scoring function to evaluate each solution. If your constraint isn't properly influencing this score, OptaPlanner won't be incentivized to satisfy it. This leads to a solution where the constraint is violated but the overall score is still (relatively) good.
 

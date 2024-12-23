@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-use-addboolor-and-addimplication-in-the-cpsat-solver"
 ---
 
-Alright, let's tackle this. I've certainly spent my share of late nights debugging constraint programming models, and understanding the nuances of `AddBoolOr` and `AddImplication` in the `cp_sat` solver is definitely crucial for building effective solutions. It’s not just about knowing *what* these functions do, but also *when* and *how* to best utilize them. We’ll break it down with some examples that reflect scenarios I’ve faced in previous projects.
+Alright,  I've certainly spent my share of late nights debugging constraint programming models, and understanding the nuances of `AddBoolOr` and `AddImplication` in the `cp_sat` solver is definitely crucial for building effective solutions. It’s not just about knowing *what* these functions do, but also *when* and *how* to best utilize them. We’ll break it down with some examples that reflect scenarios I’ve faced in previous projects.
 
 `AddBoolOr` and `AddImplication` are core tools for expressing logical relationships between boolean variables within the constraint programming (CP) framework. In essence, `AddBoolOr` allows you to enforce that *at least one* of a list of boolean variables must be true. This translates to an “or” relationship. On the flip side, `AddImplication` defines an “if-then” logic; if one boolean variable is true, then another must also be true. Let's get into the details.
 

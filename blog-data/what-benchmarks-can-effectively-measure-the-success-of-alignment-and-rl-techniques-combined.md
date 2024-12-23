@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "what-benchmarks-can-effectively-measure-the-success-of-alignment-and-rl-techniques-combined"
 ---
 
-Okay so you wanna know how to measure if this whole reinforcement learning alignment thing is actually working right yeah  It's a big deal  like really big  we're talking about making AI that actually does what we *want* it to do not just what it *can* do which is often wildly different believe me I've seen some crazy stuff  So benchmarks right  that's where we need to be clever
+ so you wanna know how to measure if this whole reinforcement learning alignment thing is actually working right yeah  It's a big deal  like really big  we're talking about making AI that actually does what we *want* it to do not just what it *can* do which is often wildly different believe me I've seen some crazy stuff  So benchmarks right  that's where we need to be clever
 
 First off forget about simple accuracy metrics  those are useless  if you train a model to sort socks by color perfectly but it then decides that the best way to sort socks is to burn them all to ashes  you got a 100% accurate sock sorter but a flaming pile of failure right  So we need something more nuanced something that captures the *intent* behind the actions not just the actions themselves
 

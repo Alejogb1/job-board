@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-horizontally-align-specified-nodes-in-a-mermaid-diagram"
 ---
 
-Alright, let's tackle this. The precise horizontal alignment of nodes in Mermaid diagrams, while seemingly straightforward, often presents a subtle challenge, particularly when you move beyond the basics. I've personally grappled with this more than a few times, particularly on a large documentation project where visual clarity was paramount. There’s not a single ‘align’ command you can sprinkle across the diagram; instead, it’s about understanding how Mermaid’s rendering engine processes node placement and using its features to your advantage.
+Alright,  The precise horizontal alignment of nodes in Mermaid diagrams, while seemingly straightforward, often presents a subtle challenge, particularly when you move beyond the basics. I've personally grappled with this more than a few times, particularly on a large documentation project where visual clarity was paramount. There’s not a single ‘align’ command you can sprinkle across the diagram; instead, it’s about understanding how Mermaid’s rendering engine processes node placement and using its features to your advantage.
 
 The primary principle for achieving horizontal alignment lies in exploiting how Mermaid interprets explicit connections and the natural layout algorithms it uses. Simply put, a single, direct connection between two nodes will often align them horizontally if no other forces are acting on those nodes. This is not always the case with complex diagrams.
 

@@ -4,7 +4,7 @@ date: "2024-12-07"
 id: "what-are-the-benefits-of-adding-communication-channels-like-email-and-slack-to-ai-driven-workflows"
 ---
 
-Okay so you wanna know about adding email and Slack to AI stuff right  like making your AI chatty  It's a pretty cool idea actually way cooler than just having it sit there crunching numbers  Think of it like this  AI is super smart at its core task whatever that may be image recognition  natural language processing whatever but it's often stuck in its own little world  It needs a way to interact  to get info to give feedback and to just generally be part of the team
+ so you wanna know about adding email and Slack to AI stuff right  like making your AI chatty  It's a pretty cool idea actually way cooler than just having it sit there crunching numbers  Think of it like this  AI is super smart at its core task whatever that may be image recognition  natural language processing whatever but it's often stuck in its own little world  It needs a way to interact  to get info to give feedback and to just generally be part of the team
 
 The big benefit is collaboration man  like real collaboration  Emails and Slack aren't just for humans anymore they're communication highways for your AI too  Imagine your AI churning away on a complex project  It hits a snag needs more data or maybe needs a human to check something  Instead of you having to constantly monitor it you just get an email or a Slack ping  It's like having a super intelligent intern who can proactively ask for help
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-my-ruby-on-rails-app-failing-to-deploy-to-the-web-server"
 ---
 
-Okay, let's tackle this deployment head-scratcher. I've seen this exact scenario play out more times than i care to count, and each time it feels like unraveling a new kind of knot. So, your rails app is refusing to play nice on the web server, eh? It's not uncommon, and the root cause can be a surprisingly diverse set of gremlins. Often, it isn’t a single showstopper, but a combination of factors that, when ignored, accumulate to a deployment nightmare.
+, let's tackle this deployment head-scratcher. I've seen this exact scenario play out more times than i care to count, and each time it feels like unraveling a new kind of knot. So, your rails app is refusing to play nice on the web server, eh? It's not uncommon, and the root cause can be a surprisingly diverse set of gremlins. Often, it isn’t a single showstopper, but a combination of factors that, when ignored, accumulate to a deployment nightmare.
 
 Let’s get down to brass tacks. Typically, the failure to deploy a rails app to a web server falls into a handful of recurring categories. The most frequent culprits, in my experience, boil down to environment misconfigurations, dependency issues, and faulty application code that only reveals itself under deployment conditions. It could also involve the server environment not having necessary system packages or configurations.
 

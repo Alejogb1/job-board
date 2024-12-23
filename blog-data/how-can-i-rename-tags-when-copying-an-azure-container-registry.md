@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-rename-tags-when-copying-an-azure-container-registry"
 ---
 
-Alright, let's tackle this. I've seen this scenario play out more times than I care to count, especially during large infrastructure migrations or when teams are adopting more stringent naming conventions. It's not a trivial copy-paste; there’s a bit more nuance when it comes to preserving your sanity while shifting container images between Azure container registries and keeping your tags consistent.
+Alright,  I've seen this scenario play out more times than I care to count, especially during large infrastructure migrations or when teams are adopting more stringent naming conventions. It's not a trivial copy-paste; there’s a bit more nuance when it comes to preserving your sanity while shifting container images between Azure container registries and keeping your tags consistent.
 
 The fundamental issue here is that Azure Container Registry (acr) copy operations, in their most basic form, aren't equipped with a simple ‘rename-on-copy’ flag. This means a straight copy operation faithfully replicates your image along with its existing tags to the destination registry. That’s helpful, but sometimes, and probably in your case, it's simply not the desired behaviour. You might have legacy naming conventions, or perhaps a new organizational structure requires adjustments. So, how do we wrangle it?
 

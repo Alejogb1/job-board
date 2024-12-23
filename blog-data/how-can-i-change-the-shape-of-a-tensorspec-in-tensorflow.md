@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-change-the-shape-of-a-tensorspec-in-tensorflow"
 ---
 
-Alright, let's tackle this. Manipulating `TensorSpec` shapes in TensorFlow is not always straightforward, and I've certainly had my share of debugging sessions related to it. It's a common pitfall, especially when transitioning between different parts of a model or dealing with dynamic input shapes. The core issue here isn’t that the shape itself of a *tensor* changes (that’s standard practice during computation), but how to adjust the *description* of the tensor, encapsulated within the `TensorSpec`.
+Alright,  Manipulating `TensorSpec` shapes in TensorFlow is not always straightforward, and I've certainly had my share of debugging sessions related to it. It's a common pitfall, especially when transitioning between different parts of a model or dealing with dynamic input shapes. The core issue here isn’t that the shape itself of a *tensor* changes (that’s standard practice during computation), but how to adjust the *description* of the tensor, encapsulated within the `TensorSpec`.
 
 For those not familiar, a `TensorSpec` is essentially a metadata description, detailing the data type (`dtype`), shape, and potentially name of a tensor. This metadata doesn't contain actual data, but it's crucial for TensorFlow's static graph building process, type checking, and interface compatibility—especially when working with `tf.data` pipelines or using functions with `tf.function` for performance optimization.
 

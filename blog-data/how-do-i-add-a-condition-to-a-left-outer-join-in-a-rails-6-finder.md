@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-add-a-condition-to-a-left-outer-join-in-a-rails-6-finder"
 ---
 
-Okay, let's tackle this. I've definitely been down this road before, specifically back when we were migrating that sprawling e-commerce platform to a more microservices-oriented architecture. We had a peculiar situation where performance was tanking, and after some analysis, we traced it back to inefficient queries involving left outer joins with conditional filters. It turned out we were inadvertently fetching a ton of unnecessary data. The straightforward `joins` method wasn't cutting it. So, let's break down how you can effectively add conditions to left outer joins in Rails 6, because it’s not always as obvious as it should be.
+,  I've definitely been down this road before, specifically back when we were migrating that sprawling e-commerce platform to a more microservices-oriented architecture. We had a peculiar situation where performance was tanking, and after some analysis, we traced it back to inefficient queries involving left outer joins with conditional filters. It turned out we were inadvertently fetching a ton of unnecessary data. The straightforward `joins` method wasn't cutting it. So, let's break down how you can effectively add conditions to left outer joins in Rails 6, because it’s not always as obvious as it should be.
 
 The core issue arises because the standard `joins` method in ActiveRecord typically generates an `INNER JOIN`. When you need to preserve all records from your primary table while also including potentially matching records from a related table—and, crucially, apply a condition only to those related records—you're venturing into the realm of left outer joins with specific filter criteria. Here's how to approach it.
 

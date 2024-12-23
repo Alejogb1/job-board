@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "79-lab-palindrome-zybooks-python"
 ---
 
-Alright so you're wrestling with a palindrome checker in Python probably Zybooks right Been there done that a thousand times seems like every intro programming course throws this one at you Let's break it down real simple and ditch the fancy talk
+so you're wrestling with a palindrome checker in Python probably Zybooks right Been there done that a thousand times seems like every intro programming course throws this one at you Let's break it down real simple and ditch the fancy talk
 
 First off what's a palindrome Right a sequence that reads the same forwards and backward ignoring case and spaces or any non alphanumeric chars Well that gives us the core of what we need to do clean the input then compare it to its reverse I remember back when I first started learning I spent way too long trying to do it with nested loops what a mess that was Luckily Python gives us a much cleaner way
 

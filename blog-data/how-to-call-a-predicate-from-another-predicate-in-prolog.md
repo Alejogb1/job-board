@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "how-to-call-a-predicate-from-another-predicate-in-prolog"
 ---
 
-Okay so you've got a situation where you need to trigger one predicate from inside another in Prolog yeah I get that it's like trying to get your function to call another function but Prolog's a bit different isn't it
+ so you've got a situation where you need to trigger one predicate from inside another in Prolog yeah I get that it's like trying to get your function to call another function but Prolog's a bit different isn't it
 
 Been there done that seen the t-shirt probably even designed the t-shirt myself at this point Let me tell you a story back in my early Prolog days I was working on this project it was a rule-based expert system for diagnosing network issues not gonna lie a bit ambitious for someone who barely knew what a cut was but hey we all start somewhere right So I had this predicate `check_connectivity(Device)` that was supposed to do a bunch of stuff like ping the device check its interfaces you know the drill And then I had this other predicate `analyze_logs(Device)` that was obviously meant to sift through the device logs for error messages
 
@@ -26,7 +26,7 @@ Yeah you can see the issue can't you It was a complete mess `analyze_logs` was g
 
 The thing you gotta remember is that Prolog is all about logical flow not imperative control It's not like Python or Java where you're explicitly telling the program to do step by step in that order Prolog tries to satisfy goals it finds what works and doesn't care about what you might think is the "flow" so my mistake was assuming that the logic was implied and it wasn't
 
-Okay lets get to the point the "how" part
+ lets get to the point the "how" part
 
 The most basic way to do this is just to literally write it in your predicate's body you just put the other predicate name where you want it like this
 
@@ -136,6 +136,6 @@ request_type(create_1, create).
 
 The main `handle_request` predicate first gets the request and it's type based on `request_type` then `process_request` figures out what specific process to trigger based on that type using `process_request_type`. The cut in there (`!`) tells prolog that if a type is matched then do not check the following cases that one might create problems so that's a quick and dirty way to handle multiple types of logic but do not use them if you are not experienced
 
-Now you're thinking "Okay this is good stuff but where do I learn more?" Well I'm not gonna give you links go read some books man or papers there's good stuff there you can find "The Craft of Prolog" by Richard O'Keefe you get a full deep-dive into Prolog best practices or "Programming in Prolog" by Clocksin and Mellish is a classic intro it gives you the fundamental knowledge you need but if you want to get more specific papers on logic programming there's tons of those on ACM or IEEE explorer do a little digging you might get some surprises
+Now you're thinking " this is good stuff but where do I learn more?" Well I'm not gonna give you links go read some books man or papers there's good stuff there you can find "The Craft of Prolog" by Richard O'Keefe you get a full deep-dive into Prolog best practices or "Programming in Prolog" by Clocksin and Mellish is a classic intro it gives you the fundamental knowledge you need but if you want to get more specific papers on logic programming there's tons of those on ACM or IEEE explorer do a little digging you might get some surprises
 
 I hope this clarifies it for you and you can now finally finish your expert system network troubleshooting like I should have done back then I remember that night i had to give up and get some sleep I just hope you don't give up on programming when things go south that's the worse you can do you gotta keep pushing no matter what

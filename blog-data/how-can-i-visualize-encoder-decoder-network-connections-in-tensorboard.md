@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-visualize-encoder-decoder-network-connections-in-tensorboard"
 ---
 
-Okay, let's tackle this. It's a question I've seen come up quite a bit, and honestly, getting a clear visualization of those encoder-decoder connections in TensorBoard can be a real game-changer when debugging or just trying to grok the architecture. I remember struggling with it myself a few years back while working on a particularly gnarly sequence-to-sequence model for a time series forecasting project. We had this incredibly deep encoder, and frankly, keeping track of the flow of information through all those layers was a nightmare until we figured out the right techniques.
+,  It's a question I've seen come up quite a bit, and honestly, getting a clear visualization of those encoder-decoder connections in TensorBoard can be a real game-changer when debugging or just trying to grok the architecture. I remember struggling with it myself a few years back while working on a particularly gnarly sequence-to-sequence model for a time series forecasting project. We had this incredibly deep encoder, and frankly, keeping track of the flow of information through all those layers was a nightmare until we figured out the right techniques.
 
 The core issue is that TensorBoard isn't inherently designed to handle the nuanced connections that arise within encoder-decoder frameworks. It excels at visualizing computational graphs, but the typical graph representation can become excessively cluttered and difficult to decipher when dealing with complex, multi-part architectures. We need to approach this with a combination of good model building practices and specific logging techniques to extract the most useful information.
 

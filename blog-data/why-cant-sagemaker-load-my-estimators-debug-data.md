@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-cant-sagemaker-load-my-estimators-debug-data"
 ---
 
-Okay, let's tackle this. It's a situation I've encountered a few times, usually right when you think everything is set to run smoothly. Debugging data not loading in SageMaker is frustrating, and it often comes down to a few common culprits rather than some singular, catastrophic failure. Let’s break it down systematically, based on what I've seen and resolved over the years.
+,  It's a situation I've encountered a few times, usually right when you think everything is set to run smoothly. Debugging data not loading in SageMaker is frustrating, and it often comes down to a few common culprits rather than some singular, catastrophic failure. Let’s break it down systematically, based on what I've seen and resolved over the years.
 
 The core issue, more often than not, isn’t some fundamental flaw in SageMaker itself, but rather a mismatch in how the debug configuration is specified or how the underlying training process is interacting with the debug hook. I’ll focus on the most prevalent scenarios. First, let's look at the configuration. Typically, we use the `DebuggerHookConfig` within our SageMaker estimator. The path where debugging data is saved needs to be correct and properly accessible by both the training job and the subsequent analysis job, which in many cases is your notebook instance or local machine. Incorrect configuration here can lead to SageMaker unable to locate or retrieve debug data.
 

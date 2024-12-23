@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-many-tokenizers-are-optimal-for-a-translation-task"
 ---
 
-Okay, let's tackle this. The question of optimal tokenizer count for translation—it’s not a trivial one, and honestly, I’ve spent a fair bit of time navigating its intricacies across various projects. I recall one particular instance, while working on a multi-lingual customer support chatbot system a few years back, where we initially opted for a single, shared tokenizer across all languages. Performance, to put it mildly, was subpar. We ended up significantly restructuring our approach and it became a valuable learning experience.
+,  The question of optimal tokenizer count for translation—it’s not a trivial one, and honestly, I’ve spent a fair bit of time navigating its intricacies across various projects. I recall one particular instance, while working on a multi-lingual customer support chatbot system a few years back, where we initially opted for a single, shared tokenizer across all languages. Performance, to put it mildly, was subpar. We ended up significantly restructuring our approach and it became a valuable learning experience.
 
 The short, perhaps unsatisfying answer, is that there isn't a magic number. The “optimal” count depends heavily on the specifics of the language pair(s), the volume of training data available, and the architectural choices in your machine translation model. A single, globally applicable tokenizer, while conceptually appealing for simplicity, often falls short. The nuances of different languages – their morphology, syntax, and character sets – typically necessitate more tailored solutions.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-access-a-docker-containers-web-address-from-windows"
 ---
 
-Okay, let's tackle this. Accessing a Docker container's web service from a Windows host isn't always as straightforward as it might seem initially, but it’s a common scenario. I've seen this tripping up both junior developers and sometimes, even experienced folks who haven’t spent a lot of time with the Docker ecosystem on windows. It's all about understanding the network layers at play.
+,  Accessing a Docker container's web service from a Windows host isn't always as straightforward as it might seem initially, but it’s a common scenario. I've seen this tripping up both junior developers and sometimes, even experienced folks who haven’t spent a lot of time with the Docker ecosystem on windows. It's all about understanding the network layers at play.
 
 Essentially, when you run a container, it's isolated in its own network namespace. Docker, by default, creates a virtual network for these containers, often referred to as the "bridge" network. This means the web server running inside your container isn’t directly accessible from your Windows host using `localhost` or `127.0.0.1` on its exposed port.
 

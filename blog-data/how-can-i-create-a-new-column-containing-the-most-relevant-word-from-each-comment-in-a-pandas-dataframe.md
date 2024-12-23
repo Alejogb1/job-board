@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-create-a-new-column-containing-the-most-relevant-word-from-each-comment-in-a-pandas-dataframe"
 ---
 
-Okay, let’s tackle this. I remember facing a similar challenge a few years back when I was working on a large-scale social media sentiment analysis project. We had thousands of text comments, and extracting the most relevant keyword from each was crucial for our topic modeling. The problem wasn't just about finding the "most frequent" word; it was about finding the *most meaningful* one. Let's explore how to approach this using pandas, which, as we all know, is often our data manipulation workhorse.
+, let’s tackle this. I remember facing a similar challenge a few years back when I was working on a large-scale social media sentiment analysis project. We had thousands of text comments, and extracting the most relevant keyword from each was crucial for our topic modeling. The problem wasn't just about finding the "most frequent" word; it was about finding the *most meaningful* one. Let's explore how to approach this using pandas, which, as we all know, is often our data manipulation workhorse.
 
 Firstly, when we talk about "relevant" words, we need to define it rigorously. We can't just grab the first non-stop word that comes along. Generally, what constitutes a relevant word depends heavily on the context, but a good starting point involves understanding two things: stop words and word frequencies, but crucially *also* incorporating some measure of importance.
 

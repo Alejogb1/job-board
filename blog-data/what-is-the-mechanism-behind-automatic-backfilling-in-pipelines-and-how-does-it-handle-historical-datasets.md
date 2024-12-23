@@ -4,7 +4,7 @@ date: "2024-12-10"
 id: "what-is-the-mechanism-behind-automatic-backfilling-in-pipelines-and-how-does-it-handle-historical-datasets"
 ---
 
-Okay so you wanna know about automatic backfilling in pipelines right  Its a pretty cool thing actually  Imagine you have this awesome data pipeline  It's chugging along processing new data every day  But then you realize  hey wait a minute  I need this pipeline to process data from like last year too  That's where backfilling comes in
+ so you wanna know about automatic backfilling in pipelines right  Its a pretty cool thing actually  Imagine you have this awesome data pipeline  It's chugging along processing new data every day  But then you realize  hey wait a minute  I need this pipeline to process data from like last year too  That's where backfilling comes in
 
 Basically its about retroactively running your pipeline on historical data  So if your pipeline's processing daily sales figures and you just built it this month  backfilling lets you go back and process all the sales data from January  It's like giving your pipeline a time machine  Pretty neat right
 

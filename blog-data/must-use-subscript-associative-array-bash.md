@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "must-use-subscript-associative-array-bash"
 ---
 
-Okay I see the question must use subscript associative array bash Right so someone’s tangled up with bash arrays again classic I’ve been there done that got the t-shirt multiple times in fact. Let’s break this down and I’ll share some war stories from my time in the trenches.
+ I see the question must use subscript associative array bash Right so someone’s tangled up with bash arrays again classic I’ve been there done that got the t-shirt multiple times in fact. Let’s break this down and I’ll share some war stories from my time in the trenches.
 
 First off yes you absolutely can use subscript associative arrays in bash that's kinda what they’re there for right bash version 4 and above has them as a core feature before that well you were stuck with string munging and those were dark times believe me. I've personally lost entire weekends to that nonsense. We had one project back at my old gig where we had to parse these massive log files they were horrible like several gigs a day and someone had this bright idea of using awk to make temporary arrays from text files to save it to a file and load later using read each line at once into a normal array. Oh boy that didn't scale well. It turned into a hot mess of race conditions memory leaks the whole shebang. That's when I learned the value of proper associative arrays. Saved my sanity and probably the server’s too.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-bash-scripts-securely-handle-private-keys"
 ---
 
-Okay, let's talk about securely managing private keys within bash scripts. I’ve seen this go wrong in so many ways during my time, and it’s absolutely crucial to get this right. The temptation to hardcode credentials directly or pass them as command line arguments is strong, especially when you're under pressure. However, that’s a recipe for disaster. You expose the keys in your script's history, process listings, and potentially in the script file itself.
+, let's talk about securely managing private keys within bash scripts. I’ve seen this go wrong in so many ways during my time, and it’s absolutely crucial to get this right. The temptation to hardcode credentials directly or pass them as command line arguments is strong, especially when you're under pressure. However, that’s a recipe for disaster. You expose the keys in your script's history, process listings, and potentially in the script file itself.
 
 The core issue is that bash scripts are, by nature, often exposed to multiple users on the system. Any user with read access to the script, or even the ability to run `ps` to view command-line arguments, can potentially compromise your keys. This isn't just a hypothetical; I once debugged a compromised server where the root cause was an improperly written script that included a hardcoded private key for database access. It took hours to isolate, and the cleanup was messy, to say the least. So, a robust security model is paramount.
 

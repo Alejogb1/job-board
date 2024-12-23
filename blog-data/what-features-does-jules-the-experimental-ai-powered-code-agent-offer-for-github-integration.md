@@ -4,7 +4,7 @@ date: "2024-12-12"
 id: "what-features-does-jules-the-experimental-ai-powered-code-agent-offer-for-github-integration"
 ---
 
-Okay so Jules this experimental AI code agent thing and GitHub integration right that's the juice we're squeezing out here I've been messing with it a bit and it's kind of wild how much it's doing even in its experimental stage
+ so Jules this experimental AI code agent thing and GitHub integration right that's the juice we're squeezing out here I've been messing with it a bit and it's kind of wild how much it's doing even in its experimental stage
 
 First off the thing that hits you immediately is code review Jules isn't just some dumb linter it actually reads your code understands the logic and spits out relevant suggestions not just style stuff but actual potential logic errors inefficient bits or security holes its like having a super experienced dev reviewing every single commit which is frankly insane it does it in a way thats not overly naggy either its more of a subtle nudge kind of suggesting you might want to rethink something rather than screaming at you
 

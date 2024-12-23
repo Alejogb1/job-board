@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-move-all-zero-values-to-the-end-of-a-postgresql-table-using-ruby-on-rails"
 ---
 
-Okay, let's tackle this. I remember back during my time working on a large e-commerce platform, we ran into a similar scenario with product inventory. Zero stock counts had a way of cluttering up our data views, and the business folks wanted those relegated to the bottom. It wasn't about just hiding the data; we needed to physically reorganize it at the database level, mainly for performance reasons when generating reports. Let’s walk through how I approached moving those zero values to the end of a PostgreSQL table, using Ruby on Rails.
+,  I remember back during my time working on a large e-commerce platform, we ran into a similar scenario with product inventory. Zero stock counts had a way of cluttering up our data views, and the business folks wanted those relegated to the bottom. It wasn't about just hiding the data; we needed to physically reorganize it at the database level, mainly for performance reasons when generating reports. Let’s walk through how I approached moving those zero values to the end of a PostgreSQL table, using Ruby on Rails.
 
 The core concept here is a carefully crafted sql query. While Rails provides an elegant abstraction layer with ActiveRecord, sometimes, for optimal performance, especially when dealing with large datasets, we need to drop down and get our hands dirty with raw SQL. It's a balancing act, knowing when to leverage the framework's power and when to write the precise query required.
 

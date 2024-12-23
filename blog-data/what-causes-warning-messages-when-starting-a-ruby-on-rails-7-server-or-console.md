@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-causes-warning-messages-when-starting-a-ruby-on-rails-7-server-or-console"
 ---
 
-Alright, let's tackle this. I've seen my share of warning messages pop up when firing up a rails server or console, especially after a major version bump like the shift to Rails 7. They can be a bit cryptic at first, but they usually boil down to a few core issues. Let's break down the most common culprits, drawing on some experiences I've had along the way, and look at how we can deal with them effectively.
+Alright,  I've seen my share of warning messages pop up when firing up a rails server or console, especially after a major version bump like the shift to Rails 7. They can be a bit cryptic at first, but they usually boil down to a few core issues. Let's break down the most common culprits, drawing on some experiences I've had along the way, and look at how we can deal with them effectively.
 
 One of the most frequent sources of these warnings, especially early in a project's lifecycle or when upgrading, stems from deprecation notices. Rails, like any active software project, is constantly evolving, and sometimes that means phasing out older methods or behaviors in favor of more modern alternatives. These changes are often preceded by deprecation warnings, letting you know that your code is relying on something that might be removed in a future release.
 

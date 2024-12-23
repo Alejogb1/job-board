@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-airflow-best-send-emails-containing-small-database-tables"
 ---
 
-Okay, let’s tackle this. Generating and sending emails with small database tables within Airflow workflows is a common need, but it can be surprisingly nuanced. I've personally been down this road numerous times, from straightforward daily reports to more intricate data validation notifications. The key is to understand Airflow's strengths and limitations, and how to best leverage Python's capabilities within its context. I'll walk you through some practical approaches, explain why they work, and provide code snippets.
+, let’s tackle this. Generating and sending emails with small database tables within Airflow workflows is a common need, but it can be surprisingly nuanced. I've personally been down this road numerous times, from straightforward daily reports to more intricate data validation notifications. The key is to understand Airflow's strengths and limitations, and how to best leverage Python's capabilities within its context. I'll walk you through some practical approaches, explain why they work, and provide code snippets.
 
 The fundamental approach here is to use Python operators within your Airflow DAGs to: a) query your database, b) format the retrieved data into a user-friendly table, and c) then compose and send that data via email. It's tempting to think Airflow itself will handle the formatting, but that's not its role; Airflow is the orchestrator, not the transformer. We have to explicitly handle that part within our tasks.
 

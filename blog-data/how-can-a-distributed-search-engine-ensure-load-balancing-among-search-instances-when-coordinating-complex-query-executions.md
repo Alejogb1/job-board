@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "how-can-a-distributed-search-engine-ensure-load-balancing-among-search-instances-when-coordinating-complex-query-executions"
 ---
 
-Okay so you wanna know how to keep a distributed search engine from melting down right  like when you have a ton of searches all hitting it at once  load balancing is the key dude its like having a bunch of servers each handling a part of the workload  no single server gets overloaded its all spread out  but coordinating complex queries across these servers thats where it gets fun
+ so you wanna know how to keep a distributed search engine from melting down right  like when you have a ton of searches all hitting it at once  load balancing is the key dude its like having a bunch of servers each handling a part of the workload  no single server gets overloaded its all spread out  but coordinating complex queries across these servers thats where it gets fun
 
 The simplest way is round robin its like a circle  each new query goes to the next server in line easy peasy But its not super smart  it doesnt account for server load some servers might be busy others chilling  so you need something more sophisticated
 

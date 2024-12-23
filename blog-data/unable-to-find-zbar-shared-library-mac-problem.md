@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "unable-to-find-zbar-shared-library-mac-problem"
 ---
 
-Okay so you're having trouble with zbar on your mac yeah I've been there a few times let's dive in this is usually a dependency hell situation I’ve spent way too many late nights wrestling with these kinds of problems
+ so you're having trouble with zbar on your mac yeah I've been there a few times let's dive in this is usually a dependency hell situation I’ve spent way too many late nights wrestling with these kinds of problems
 
 First thing first `unable to find zbar shared library` this screams library loading issue probably the dynamic linker can't find the zbar `.dylib` file think of the linker as the guy who needs to find all the books (libraries) you mentioned in your report (program) if he can't find the book you're in trouble no one can understand the report
 
@@ -51,7 +51,7 @@ Here is example of output of `file` command
 ```
 This means the `zbar.dylib` is compiled for `x86_64` if your app is a 32 bit app then this will fail so make sure your app and libraries architecture are the same the architecture must match if you know your app is 32bit and library is 64bit you have to recompile the `zbar` library for 32 bit or recompile your app for 64 bit
 
-Okay sometimes the problem is not the library itself but the path setting itself or the way the application handles it its very rare case but still important to know
+ sometimes the problem is not the library itself but the path setting itself or the way the application handles it its very rare case but still important to know
 
 Sometimes applications use `rpath` or `@rpath` and not just the `DYLD_LIBRARY_PATH` its another way to specify the library path think of it as hard coded library paths in the application itself if your application was built with rpath your changes in `DYLD_LIBRARY_PATH` are useless
 
@@ -99,6 +99,6 @@ This is a very basic example `lldb` has many commands read its manual for more i
 
 About resources I strongly recommend a book called "Linkers and Loaders" by John R Levine if you want to get deeper understanding of how dynamic linking works. Also the Apple documentation on dynamic libraries and code signing is surprisingly good and a must-read for anyone doing macOS development. I also would recommend reading about mach-o file format which is the executable format that is used on MacOS (and iOS).
 
-And if you're still pulling your hair out over this remember the classic tech mantra: "Have you tried turning it off and on again?" it always works even on libraries right Okay not really but I had to say it.
+And if you're still pulling your hair out over this remember the classic tech mantra: "Have you tried turning it off and on again?" it always works even on libraries right  not really but I had to say it.
 
-Okay I hope this helps and good luck debugging this library issue I’ve been there and I know how frustrating it can be. This should cover most cases of library loading issues let me know if you have more questions
+ I hope this helps and good luck debugging this library issue I’ve been there and I know how frustrating it can be. This should cover most cases of library loading issues let me know if you have more questions

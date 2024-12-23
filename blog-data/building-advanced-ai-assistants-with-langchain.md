@@ -8,7 +8,7 @@ yo dude so i just watched this killer talk about langchain and building these ne
 
 the whole talk's purpose is to show how we take these awesome language models like chatgpt—which are already super impressive—and make them even better by giving them some serious superpowers  the guy's talking about making ai that understands context reasons and remembers things  pretty much everything chatgpt can't do right now
 
-okay so a few key things that really stood out
+ so a few key things that really stood out
 
 first the dude uses this analogy of a new employee getting an employee handbook—that's instruction prompting  basically you tell the model exactly how to behave like a super detailed set of instructions  think  "respond in a friendly tone always check your facts"  we'll get to the code in a sec
 

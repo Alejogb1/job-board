@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "unnecessary-stubbings-detected-test-class-problem"
 ---
 
-Okay so unnecessary stubbings detected in your test class yeah I've been there man trust me This is a common issue especially when you start getting a bit more complex with your tests and you use mocking frameworks it’s like a right of passage.
+ so unnecessary stubbings detected in your test class yeah I've been there man trust me This is a common issue especially when you start getting a bit more complex with your tests and you use mocking frameworks it’s like a right of passage.
 
 Let's break it down from my experience I remember this one project a few years back some big monolithic Java application a real beast you know We had tons of integration tests and unit tests for every single micro-service and the test suites started to get really really slow like you could brew a pot of coffee before they even finished that bad so we started looking at ways to speed things up that's when we really started to deep dive into mocking and well unnecessary stubbing hell started
 

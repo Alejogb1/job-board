@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-is-the-ml-models-predictive-probability-of-future-voter-turnout"
 ---
 
-Okay, let's tackle this. I remember a particularly challenging project back in '18, where we were trying to forecast voter turnout for local elections, and it forced us to really get granular with our approach to predictive probability. It’s not a simple matter of throwing data into a black box and hoping for the best; there are intricacies that demand careful consideration. When you’re dealing with something as nuanced as voter behavior, the predictive probabilities your model outputs are rarely straightforward.
+,  I remember a particularly challenging project back in '18, where we were trying to forecast voter turnout for local elections, and it forced us to really get granular with our approach to predictive probability. It’s not a simple matter of throwing data into a black box and hoping for the best; there are intricacies that demand careful consideration. When you’re dealing with something as nuanced as voter behavior, the predictive probabilities your model outputs are rarely straightforward.
 
 The question we're addressing—what’s the ML model’s predictive probability of future voter turnout?—is really a question about uncertainty. It’s not just about getting a number, like “80% of eligible voters will turn out,” but also understanding the confidence we have in that prediction. And that confidence, that probability, is influenced by a whole range of factors, both at the data level and the model architecture level.
 

@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-get-logits-from-t5-models-without-using-labels"
 ---
 
-Alright, let's tackle this. Logits from a T5 model without using labels – it's a common scenario, especially when you're moving beyond supervised training and into areas like unsupervised learning or generating custom outputs. I’ve run into this myself quite a few times while working on sequence-to-sequence projects, and it can get tricky if you're used to relying on the standard training loop with labels readily available.
+Alright,  Logits from a T5 model without using labels – it's a common scenario, especially when you're moving beyond supervised training and into areas like unsupervised learning or generating custom outputs. I’ve run into this myself quite a few times while working on sequence-to-sequence projects, and it can get tricky if you're used to relying on the standard training loop with labels readily available.
 
 The fundamental issue here is that, in a typical supervised training scenario, your model calculates logits based on the input *and* the target labels; during training, these logits are then used to compute the loss. When you *don’t* have labels, that backpropagation step goes out the window – you're left with the raw, unadulterated output of the model. Let's clarify what we mean by "logits." In the context of a transformer model like T5, logits are the raw, pre-softmax output scores from the final linear layer of the model for each token in the output sequence. They represent the model's unnormalized prediction for each token in the vocabulary. When we want probabilities, we apply softmax to these logits, but raw logits are what we need in cases where we aren't doing standard classification.
 

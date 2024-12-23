@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-docker-compose-be-used-with-aws-ebextensions"
 ---
 
-Okay, let’s tackle this. I've spent quite a bit of time wrestling… well, *dealing* with the intricacies of integrating Docker Compose within AWS Elastic Beanstalk, particularly when .ebextensions come into play. It's a powerful combination, but it requires a clear understanding of how these two systems interact. It isn't always straightforward, and I've certainly learned some lessons along the way.
+, let’s tackle this. I've spent quite a bit of time wrestling… well, *dealing* with the intricacies of integrating Docker Compose within AWS Elastic Beanstalk, particularly when .ebextensions come into play. It's a powerful combination, but it requires a clear understanding of how these two systems interact. It isn't always straightforward, and I've certainly learned some lessons along the way.
 
 The core challenge lies in the inherent architecture of Elastic Beanstalk. Ebextensions are essentially configuration files that Elastic Beanstalk interprets *before* the application deployment itself takes place. Docker Compose, on the other hand, is typically used to orchestrate containerized applications. So, the trick is getting Elastic Beanstalk to recognize and use your Docker Compose setup, rather than trying to force it into a conventional application deployment. The .ebextensions give us the hooks we need to make this happen.
 

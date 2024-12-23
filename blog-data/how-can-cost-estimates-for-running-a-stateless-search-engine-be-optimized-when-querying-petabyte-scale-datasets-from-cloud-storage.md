@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "how-can-cost-estimates-for-running-a-stateless-search-engine-be-optimized-when-querying-petabyte-scale-datasets-from-cloud-storage"
 ---
 
-Okay so you're wrestling with cost optimization for a petabyte-scale stateless search engine right  that's a big hairy problem  lots of moving parts  but let's break it down  the key is minimizing those cloud storage read operations  because that's where the money bleeds away fast
+ so you're wrestling with cost optimization for a petabyte-scale stateless search engine right  that's a big hairy problem  lots of moving parts  but let's break it down  the key is minimizing those cloud storage read operations  because that's where the money bleeds away fast
 
 First  stateless is your friend here  no session data to worry about means we can parallelize everything  think massive scalability  but it also means every query is a cold start  we gotta fetch everything from scratch  thats where optimization gets tricky
 

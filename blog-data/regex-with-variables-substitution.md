@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "regex-with-variables-substitution"
 ---
 
-Alright alright I see you need some regex variable substitution help that's a classic one honestly I’ve been down that rabbit hole more times than I care to remember and I'm gonna break it down for you like you're a fellow dev who’s been through the coding trenches so let’s get to it
+I see you need some regex variable substitution help that's a classic one honestly I’ve been down that rabbit hole more times than I care to remember and I'm gonna break it down for you like you're a fellow dev who’s been through the coding trenches so let’s get to it
 
 First off let's clarify what we are even talking about here You've got a regex pattern and you want to plug in some values dynamically usually from variables you have in your code or maybe from user input or even some sort of data source and you want those values to get inserted into the regex before it does its matching or replacing dance Basically your regex string isn't static it's got these little placeholders or areas where you need to do some fancy variable injection and yeah string concatenation can get ugly pretty fast
 
@@ -31,7 +31,7 @@ See what we did there? We used an f-string with the f prefix before the string a
 
 Before f strings in python we used to use the `.format` method or even the `%` operator (oh god the % operator it's so old school I hope nobody is still using it) but those look messy compared to the f strings and it is less readable so please for the sake of your team and yourself do use f strings in python
 
-Okay let's switch gears and go over Javascript a lot of frontend work in my life too and this is where `template literals` come to the rescue its similar to the f strings in python with one difference the backticks `` are the main heroes here they look the same but work slightly different in context of their respective languages
+ let's switch gears and go over Javascript a lot of frontend work in my life too and this is where `template literals` come to the rescue its similar to the f strings in python with one difference the backticks `` are the main heroes here they look the same but work slightly different in context of their respective languages
 
 ```javascript
 const variable1 = "apple";
@@ -54,7 +54,7 @@ Now you need to watch out for a few gotchas here First always remember to escape
 
 And if you are thinking about performance yeah that's a good question because if you are building a complex regex every time it is going to affect your performance and in some cases you can actually compile or pre-compile your regex pattern if it's not changing every time which does give you some speed benefit so its something to keep in mind
 
-Okay here is a bash example since I did some DevOps stuff back in the day cause nobody else wanted to touch it.
+ here is a bash example since I did some DevOps stuff back in the day cause nobody else wanted to touch it.
 
 ```bash
 variable1="apple"

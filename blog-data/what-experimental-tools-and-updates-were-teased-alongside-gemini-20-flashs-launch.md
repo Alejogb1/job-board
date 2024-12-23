@@ -4,7 +4,7 @@ date: "2024-12-12"
 id: "what-experimental-tools-and-updates-were-teased-alongside-gemini-20-flashs-launch"
 ---
 
-Okay so Gemini 20 Flash launched right pretty exciting stuff a real head turner from Google's AI lab now its not just about the flashy demo videos we gotta dig a bit deeper what behind the scenes action got teased alongside this speed demon model
+ so Gemini 20 Flash launched right pretty exciting stuff a real head turner from Google's AI lab now its not just about the flashy demo videos we gotta dig a bit deeper what behind the scenes action got teased alongside this speed demon model
 
 First things first it wasnt like they just dropped Gemini 20 Flash and called it a day they hinted at some seriously cool experimental tools and updates that I think are going to be crucial for us devs and researchers like us really getting our hands dirty
 

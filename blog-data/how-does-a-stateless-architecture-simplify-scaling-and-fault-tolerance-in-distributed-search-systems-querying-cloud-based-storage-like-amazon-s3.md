@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "how-does-a-stateless-architecture-simplify-scaling-and-fault-tolerance-in-distributed-search-systems-querying-cloud-based-storage-like-amazon-s3"
 ---
 
-Okay so you wanna know about stateless architectures and how they make scaling and fault tolerance easier especially with distributed search systems hitting up cloud storage like AWS S3 right  Makes total sense its a huge headache otherwise
+ so you wanna know about stateless architectures and how they make scaling and fault tolerance easier especially with distributed search systems hitting up cloud storage like AWS S3 right  Makes total sense its a huge headache otherwise
 
 The core idea is simple  if each request is self contained  it doesn't depend on the previous one or any server's memory  This is stateless  Think of it like a vending machine you put in money get your snack no memory of past transactions right  
 

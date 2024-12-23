@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-directly-add-a-balance-to-a-users-account-on-a-website"
 ---
 
-Alright, let's tackle this. I’ve seen this exact scenario play out more than a few times, often with far more complexity than initially anticipated. Adding a balance to a user’s account directly might seem trivial on the surface, but properly implementing it requires careful consideration of data integrity, concurrency, and security. It's definitely not a place to cut corners. Here's my breakdown of how I've approached this in the past, along with some examples to illustrate key points.
+Alright,  I’ve seen this exact scenario play out more than a few times, often with far more complexity than initially anticipated. Adding a balance to a user’s account directly might seem trivial on the surface, but properly implementing it requires careful consideration of data integrity, concurrency, and security. It's definitely not a place to cut corners. Here's my breakdown of how I've approached this in the past, along with some examples to illustrate key points.
 
 The core challenge lies in ensuring that the balance update is atomic. What does that mean? Well, think of it this way: if multiple transactions are happening for the same account at almost the same instant, we can't afford to have those transactions overwrite each other, leading to incorrect balances. We need a way to make sure each update is applied correctly and in sequence, as if only one thing was happening at that moment. This is where database transactions come into play.
 

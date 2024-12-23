@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "what-advancements-in-rl-algorithms-have-enabled-more-robust-ai-alignment-processes"
 ---
 
-Okay so you wanna know about RL advancements making AI alignment better right  that's a HUGE question like seriously huge  we're talking about making sure super smart AIs don't accidentally decide humans are inefficient or something and go all Skynet on us  it's a bit dramatic but the point is  alignment is kinda a big deal
+ so you wanna know about RL advancements making AI alignment better right  that's a HUGE question like seriously huge  we're talking about making sure super smart AIs don't accidentally decide humans are inefficient or something and go all Skynet on us  it's a bit dramatic but the point is  alignment is kinda a big deal
 
 First off  let's be clear  we're not *there* yet  we're far from having perfectly aligned superintelligence  but we're making progress  and a lot of that progress is thanks to some cool stuff happening in Reinforcement Learning  RL  for short
 

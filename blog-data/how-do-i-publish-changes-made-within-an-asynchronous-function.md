@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-publish-changes-made-within-an-asynchronous-function"
 ---
 
-Okay, let's tackle this. I’ve certainly been down this road a few times, and it’s a common stumbling block when working with asynchronous operations. The core issue revolves around the non-blocking nature of async functions and ensuring that changes made within them are properly reflected in the broader program state. It’s not as straightforward as a simple variable assignment in a synchronous context, but it's entirely manageable with the right approach.
+,  I’ve certainly been down this road a few times, and it’s a common stumbling block when working with asynchronous operations. The core issue revolves around the non-blocking nature of async functions and ensuring that changes made within them are properly reflected in the broader program state. It’s not as straightforward as a simple variable assignment in a synchronous context, but it's entirely manageable with the right approach.
 
 Fundamentally, an asynchronous function, denoted using `async` in many languages (like javascript/typescript, python, c#), doesn't immediately execute. Instead, it returns a promise (or a similar construct like a future in other languages). This promise represents the eventual result of the asynchronous operation. The tricky part is that this result might not be available right away, especially if it involves waiting for i/o operations like network requests or disk reads. Thus, directly modifying external state within the async function without proper handling can lead to race conditions, where the changes might not occur in the order expected, or might get lost altogether.
 

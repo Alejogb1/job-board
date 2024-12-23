@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-can-i-improve-spacy-ner-for-a-tag-with-an-inconsistent-format"
 ---
 
-Alright, let's tackle this. Inconsistent formats when training Named Entity Recognition (ner) models, particularly with spaCy, are a recurring headache, and one I've certainly navigated more than a few times over the years. I recall a project involving extracting product codes from customer support tickets, and the variations were… well, creative. The problem, as you've likely discovered, isn't that spaCy *can't* handle it; rather, the model needs the right nudging and data to generalize effectively.
+Alright,  Inconsistent formats when training Named Entity Recognition (ner) models, particularly with spaCy, are a recurring headache, and one I've certainly navigated more than a few times over the years. I recall a project involving extracting product codes from customer support tickets, and the variations were… well, creative. The problem, as you've likely discovered, isn't that spaCy *can't* handle it; rather, the model needs the right nudging and data to generalize effectively.
 
 The core issue is that supervised learning models, like the transformer models underlying spaCy's ner, thrive on patterns. When the patterns are erratic, the model struggles to establish reliable feature associations with the entity tag. Your training data becomes a noisy signal, making it difficult to learn. The fix isn't a silver bullet, but a combination of strategies focused on better data, features, and potentially, adjustments to the model’s learning.
 

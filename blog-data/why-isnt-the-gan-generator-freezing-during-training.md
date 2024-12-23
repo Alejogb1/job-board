@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-isnt-the-gan-generator-freezing-during-training"
 ---
 
-Okay, let’s tackle this. I’ve seen my fair share of GANs exhibit some perplexing behavior during training, and the “freezing generator” issue, or rather, lack thereof, is a recurring puzzle. It's not a given that the generator will simply stop producing varied outputs, despite the apparent game theory at play with the discriminator. Let me break down why that usually isn't the case and what mechanisms keep it moving.
+, let’s tackle this. I’ve seen my fair share of GANs exhibit some perplexing behavior during training, and the “freezing generator” issue, or rather, lack thereof, is a recurring puzzle. It's not a given that the generator will simply stop producing varied outputs, despite the apparent game theory at play with the discriminator. Let me break down why that usually isn't the case and what mechanisms keep it moving.
 
 First off, the architecture itself plays a crucial role. Unlike other network setups, where weights are optimized with a single objective, GANs involve a dynamic interplay of two networks. The generator and the discriminator are essentially in an adversarial dance. The generator aims to produce data that resembles the training data, while the discriminator attempts to distinguish real data from the generated data. The training of each network affects the other. If your generator were to suddenly freeze, it'd mean the gradient updates for its parameters have stalled—usually indicating that it's found some sort of local minimum or plateau. However, the very nature of the adversarial training process is set up to dislodge this generator from such a static state.
 

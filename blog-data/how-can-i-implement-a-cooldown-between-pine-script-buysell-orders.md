@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-implement-a-cooldown-between-pine-script-buysell-orders"
 ---
 
-Okay, let's tackle this. I've seen this particular challenge pop up more times than I can count, especially when people are getting into automated trading systems with Pine Script. It’s a critical aspect of preventing over-trading and, quite frankly, blowing up your account. The core issue is introducing a temporal delay, or 'cooldown', between order executions. This isn't directly available as a built-in Pine Script function, so we need to implement it ourselves, typically by leveraging persistent variables and conditional logic.
+,  I've seen this particular challenge pop up more times than I can count, especially when people are getting into automated trading systems with Pine Script. It’s a critical aspect of preventing over-trading and, quite frankly, blowing up your account. The core issue is introducing a temporal delay, or 'cooldown', between order executions. This isn't directly available as a built-in Pine Script function, so we need to implement it ourselves, typically by leveraging persistent variables and conditional logic.
 
 In the past, during my early days implementing a momentum-based strategy, I encountered this issue head-on. I had a great set of entry conditions, but the script was firing off orders like crazy whenever price momentarily crossed a threshold, leading to incredibly high transaction costs and very little profit. It quickly became apparent that a simple buy or sell signal was not enough; I needed to implement a cooldown period to prevent continuous, rapid-fire trading based on minor fluctuations.
 

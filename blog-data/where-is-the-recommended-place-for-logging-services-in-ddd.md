@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "where-is-the-recommended-place-for-logging-services-in-ddd"
 ---
 
-Okay, let's tackle this one. I've seen this discussion come up more than a few times, and it's a detail that, while seemingly small, can have a significant impact on the maintainability and overall health of a system designed with domain-driven design (ddd). The short answer is: logging is an *infrastructure concern*, not a core domain one. Let's break down why, and how to implement it in a way that doesn't pollute your domain logic.
+, let's tackle this one. I've seen this discussion come up more than a few times, and it's a detail that, while seemingly small, can have a significant impact on the maintainability and overall health of a system designed with domain-driven design (ddd). The short answer is: logging is an *infrastructure concern*, not a core domain one. Let's break down why, and how to implement it in a way that doesn't pollute your domain logic.
 
 Let’s begin with the perspective I developed through a particularly challenging migration project about six years ago. We were transitioning a legacy monolith to a microservices architecture underpinned by ddd principles. Initially, the team had scattered logging statements across domain entities, services, and even within value objects. This made debugging a nightmare because we were drowning in irrelevant logs and struggled to extract actionable insights. What appeared as an elegant solution in isolation, soon transformed into a maintenance disaster.
 

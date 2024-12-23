@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-do-python-cnns-produce-different-results-on-different-desktops-and-how-can-reproducibility-be-ensured"
 ---
 
-Okay, let's unpack this. It’s a frustration I’ve faced more than once, especially back when i was deeply involved with distributed training systems for image recognition. A python convolutional neural network (cnn) yielding varying outputs across different machines, even when seemingly identical code is used, points to a common set of underlying issues related to non-deterministic behaviors. The problem isn't usually a flaw in the cnn architecture itself, but rather subtle differences in the execution environment.
+, let's unpack this. It’s a frustration I’ve faced more than once, especially back when i was deeply involved with distributed training systems for image recognition. A python convolutional neural network (cnn) yielding varying outputs across different machines, even when seemingly identical code is used, points to a common set of underlying issues related to non-deterministic behaviors. The problem isn't usually a flaw in the cnn architecture itself, but rather subtle differences in the execution environment.
 
 The root cause primarily resides in how parallel operations and floating-point math are handled across different hardware and software stacks. Let’s consider a few crucial factors:
 

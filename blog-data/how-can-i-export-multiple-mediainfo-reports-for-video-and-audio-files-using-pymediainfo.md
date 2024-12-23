@@ -8,7 +8,7 @@ Let's tackle this challenge of automating media information extraction using pym
 
 First, let's talk about the inherent challenge: looping through many files while ensuring each `MediaInfo` instance is properly created, used, and then disposed of to avoid any unexpected memory usage or resource leaks. We cannot simply create one instance and reuse it, as the data is inherently tied to a given file. We'll also want to consider error handling. Media files can be corrupt, malformed, or missing entirely. Ignoring these can lead to inaccurate or incomplete results and a much less reliable process. And finally, for practical use, exporting to a readable format, such as a structured format like json or csv, is preferable to just printing to the console.
 
-Okay, so let’s begin with the basic approach, moving through a more efficient and practical one, and then discussing a few caveats.
+, so let’s begin with the basic approach, moving through a more efficient and practical one, and then discussing a few caveats.
 
 **Example 1: Basic Iteration and JSON Output**
 

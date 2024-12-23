@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-create-an-aspnet-core-6-mvc-page-to-handle-complex-object-creation-with-a-list-of-child-objects"
 ---
 
-Okay, let's tackle this. I remember a project a few years back, building a custom inventory management system for a client; we ran into exactly this scenario – needing to create a parent object with a dynamic list of associated child objects. It wasn’t as straightforward as the basic tutorials make it seem. We're talking ASP.NET Core 6 MVC here, so expect some reliance on model binding and view components.
+,  I remember a project a few years back, building a custom inventory management system for a client; we ran into exactly this scenario – needing to create a parent object with a dynamic list of associated child objects. It wasn’t as straightforward as the basic tutorials make it seem. We're talking ASP.NET Core 6 MVC here, so expect some reliance on model binding and view components.
 
 The core challenge revolves around ensuring that the data posted from the form correctly maps to your complex object structure, especially when those child lists can vary in length. This requires careful consideration of form naming conventions, model binding behaviors, and sometimes, a touch of javascript for dynamic UI modifications. I’ll lay out my approach, then provide some practical code examples.
 

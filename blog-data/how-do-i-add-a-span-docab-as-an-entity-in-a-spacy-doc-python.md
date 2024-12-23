@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-add-a-span-docab-as-an-entity-in-a-spacy-doc-python"
 ---
 
-Okay, let's tackle this. I’ve been down this road more times than I care to recall, and it usually involves custom entity recognition workflows, which can get tricky if you’re not careful about how you’re handling the span creation and integration into spaCy's doc object. I remember once, working on a legal text processing pipeline, we spent a whole sprint just refining how we were adding custom entities for specific clause types. It wasn't a pretty sight, but it taught me a few things that I’ll share.
+,  I’ve been down this road more times than I care to recall, and it usually involves custom entity recognition workflows, which can get tricky if you’re not careful about how you’re handling the span creation and integration into spaCy's doc object. I remember once, working on a legal text processing pipeline, we spent a whole sprint just refining how we were adding custom entities for specific clause types. It wasn't a pretty sight, but it taught me a few things that I’ll share.
 
 Fundamentally, the issue you're facing is how to represent a continuous sequence of tokens (a span) as a distinct entity within a `spaCy` `Doc` object. This is crucial because many NLP tasks, such as information extraction, relation extraction, and custom named entity recognition (ner), rely on this representation. `spaCy` has a fairly elegant way of handling this, but understanding the underlying mechanisms is key to avoiding common pitfalls.
 

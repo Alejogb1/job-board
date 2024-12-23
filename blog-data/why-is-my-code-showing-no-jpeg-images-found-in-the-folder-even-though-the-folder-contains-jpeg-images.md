@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-my-code-showing-no-jpeg-images-found-in-the-folder-even-though-the-folder-contains-jpeg-images"
 ---
 
-Let's tackle this. I've certainly been down this particular rabbit hole a few times, and it's usually a subtle detail that’s causing the problem. The fact that your code isn't detecting .jpeg images despite their presence in the specified folder suggests a disconnect between what you *think* the code is doing and what it’s actually doing. It rarely boils down to the images themselves being corrupted, though that’s a possibility to rule out. More often than not, the issue lies within the specifics of file system interactions and string matching.
+ I've certainly been down this particular rabbit hole a few times, and it's usually a subtle detail that’s causing the problem. The fact that your code isn't detecting .jpeg images despite their presence in the specified folder suggests a disconnect between what you *think* the code is doing and what it’s actually doing. It rarely boils down to the images themselves being corrupted, though that’s a possibility to rule out. More often than not, the issue lies within the specifics of file system interactions and string matching.
 
 First off, consider the actual file extensions you’re searching for. It might seem obvious, but have you double-checked that all your images truly end in `.jpeg` and not, say, `.jpg`? Windows, in particular, has a habit of hiding extensions by default which can lead to confusion. I recall a project back in '15 where I spent a good chunk of an afternoon tracking this precise discrepancy; I had mixed `.jpeg` and `.jpg` extensions in the same folder, and the code was strictly looking for `.jpeg`.
 

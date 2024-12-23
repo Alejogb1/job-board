@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-constraints-be-added-in-docplex-with-python"
 ---
 
-Let's tackle this. I recall a particularly thorny project back in '18, developing a supply chain optimization model where we had to intricately weave in various constraints to accurately reflect the operational realities. Doplex, for all its power, sometimes requires a nuanced approach to constraint implementation. It's not always as straightforward as it seems initially. Let’s unpack how to effectively add constraints using docplex with python, focusing on the mechanics and best practices I’ve accumulated over time.
+ I recall a particularly thorny project back in '18, developing a supply chain optimization model where we had to intricately weave in various constraints to accurately reflect the operational realities. Doplex, for all its power, sometimes requires a nuanced approach to constraint implementation. It's not always as straightforward as it seems initially. Let’s unpack how to effectively add constraints using docplex with python, focusing on the mechanics and best practices I’ve accumulated over time.
 
 Constraints, in essence, are the limitations or rules that govern the solution space of our optimization problem. In docplex, we express these using expressions that relate variables to constants, or each other. The core concept revolves around the `Model` object, where we define our variables, objective, and constraints. When I say "constraint," i'm referring to restrictions like "the total cost must not exceed a certain value," or "the number of items produced cannot be negative."
 

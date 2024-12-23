@@ -7,9 +7,9 @@ id: "how-does-linkedins-session-based-architecture-enhance-data-privacy-and-secu
 My second suggestion is: Can you elaborate on the role of web sockets in real-time updates in platforms like Slack and Discord, and how it reduces the need for constant polling? (Teaching point: Explores real-time communication and efficiency in web applications.)
 My third suggestion is: How might microservices contribute to the scalability of a system like Netflix, especially concerning the distribution of content across different regions and devices? (Teaching point: Examines the benefits of microservices architecture for large-scale applications.)
 
-okay lets break this down you know like a deep dive into how these big platforms do their thing
+ lets break this down you know like a deep dive into how these big platforms do their thing
 
-first up linkedin and their session based stuff specifically how it helps with privacy and security think of it like this when you log into linkedin you're not just walking in with a blank face the system gives you a temporary key a session id stored usually in a cookie or a similar mechanism that's like your VIP pass for the site the server checks this id with each request you make its not storing your password or anything sensitive directly in your browser its like saying im user 12345 with the right access rights and the server says okay that checks out
+first up linkedin and their session based stuff specifically how it helps with privacy and security think of it like this when you log into linkedin you're not just walking in with a blank face the system gives you a temporary key a session id stored usually in a cookie or a similar mechanism that's like your VIP pass for the site the server checks this id with each request you make its not storing your password or anything sensitive directly in your browser its like saying im user 12345 with the right access rights and the server says  that checks out
 
 the cool part is this session id is usually a random string of characters and numbers practically impossible to guess and its only valid for a limited time think of it like a day or a few hours after which it expires forcing you to log in again that way if somehow someone did get hold of your session id they wouldn't be able to do much because it wouldn't be valid for long it reduces the window of opportunity for bad actors its also server side session data means it's not visible on the client except as the id. This approach is way more secure than storing say your username or password directly because if that gets compromised it's game over session ids are also server side and the actual credentials are never directly exposed to the client reducing attack surfaces it's also often paired with other mechanisms like https which encrypts the data in transit between your browser and the server so even if someone did try to snoop they would just see garbled text.
 
@@ -92,7 +92,7 @@ import (
 )
 
 func videoHandler(w http.ResponseWriter, r *http.Request) {
-        fmt.Fprintln(w, "video status okay")
+        fmt.Fprintln(w, "video status ")
 }
 func main() {
         http.HandleFunc("/videos/status", videoHandler)

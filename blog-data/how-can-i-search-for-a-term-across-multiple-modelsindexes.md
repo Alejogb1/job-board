@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-search-for-a-term-across-multiple-modelsindexes"
 ---
 
-Okay, let's unpack this. Searching across multiple models or indexes – it's a challenge I’ve faced many times over the years, especially when dealing with large and diverse datasets. Thinking back to my time working on a content management system for a major news outlet, we wrestled (oops, almost used that word) with this exact problem. We had articles, images, and videos stored in different indexing structures, each optimized for their specific data type. We needed a unified search experience for editors, and that meant finding a way to query across all of them efficiently.
+, let's unpack this. Searching across multiple models or indexes – it's a challenge I’ve faced many times over the years, especially when dealing with large and diverse datasets. Thinking back to my time working on a content management system for a major news outlet, we wrestled (oops, almost used that word) with this exact problem. We had articles, images, and videos stored in different indexing structures, each optimized for their specific data type. We needed a unified search experience for editors, and that meant finding a way to query across all of them efficiently.
 
 The core issue is that each model or index often has its own schema, query syntax, and even performance characteristics. Just directly passing the user's query to each system independently and then merging results isn't scalable or efficient, and it doesn't always produce the most relevant results. A more nuanced approach is needed, and this is where strategy becomes vital. I'm going to walk you through some of the approaches I've found most useful.
 

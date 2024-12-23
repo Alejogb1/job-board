@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "does-multi-head-attention-increase-parameter-count-or-output-dimensionality"
 ---
 
-Okay, let's tackle this. It's a common question, and one that I recall encountering fairly early in my deep learning journey, specifically when I was implementing a transformer-based sequence model for a natural language processing task back in '19. We were seeing some unexpected resource consumption, and that's when the multi-head attention mechanism really came under scrutiny. Let’s break down what’s actually going on under the hood, clarifying the impact it has on both parameter count and output dimensionality.
+,  It's a common question, and one that I recall encountering fairly early in my deep learning journey, specifically when I was implementing a transformer-based sequence model for a natural language processing task back in '19. We were seeing some unexpected resource consumption, and that's when the multi-head attention mechanism really came under scrutiny. Let’s break down what’s actually going on under the hood, clarifying the impact it has on both parameter count and output dimensionality.
 
 The essence of multi-head attention is to allow the model to attend to different parts of the input sequence with different learned representations. Instead of just one set of query, key, and value vectors – as in single-head attention – we have *h* sets, hence “multi-head.” This design enables the model to capture a wider variety of relationships within the data. Crucially, each head operates independently in its own subspace before being concatenated and projected back. So, the question hinges on how this multi-headed nature affects the overall dimensions and parameters.
 

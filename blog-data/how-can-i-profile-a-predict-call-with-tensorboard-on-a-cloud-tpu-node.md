@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-profile-a-predict-call-with-tensorboard-on-a-cloud-tpu-node"
 ---
 
-Alright, let's tackle this. Profiling predict calls, especially on a cloud tpu node, can indeed be a bit… involved, shall we say? I remember back in the early days of tpu experimentation, dealing with the idiosyncrasies of tpu performance was often more art than science. But fear not, it's absolutely doable with a strategic approach and some careful setup using TensorBoard. It's not just about the code; it’s about understanding the underlying mechanisms and properly capturing the data.
+Alright,  Profiling predict calls, especially on a cloud tpu node, can indeed be a bit… involved, shall we say? I remember back in the early days of tpu experimentation, dealing with the idiosyncrasies of tpu performance was often more art than science. But fear not, it's absolutely doable with a strategic approach and some careful setup using TensorBoard. It's not just about the code; it’s about understanding the underlying mechanisms and properly capturing the data.
 
 The primary challenge with profiling on a cloud tpu is that the compute happens on a remote device. Thus, traditional cpu-centric profiling tools aren’t directly applicable. We need to leverage tpu profiler tools, which thankfully work quite seamlessly with TensorBoard when set up correctly. The core idea is to instrument our code to emit trace events which the tpu profiler can capture and then display in TensorBoard.
 

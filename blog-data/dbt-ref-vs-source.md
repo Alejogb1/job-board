@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "dbt-ref-vs-source"
 ---
 
-Okay so you're asking about `ref` versus `source` in dbt right Been there done that like a million times. Let me break it down in a way that's probably more real than the dbt docs might.
+ so you're asking about `ref` versus `source` in dbt right Been there done that like a million times. Let me break it down in a way that's probably more real than the dbt docs might.
 
 First off let's get real. I've been wrestling with data pipelines since before dbt was even a thing. Back in my day we were writing SQL by hand copy pasting like madmen and praying to the database gods everything would work. We had this huge monolithic redshift cluster our whole company dumped data into and debugging those pipelines was like trying to find a specific grain of sand on a beach in the dark using only a potato. Then dbt came along like a breath of fresh air. It wasn't perfect but it sure as hell beat writing stored procedures that’s for sure.
 

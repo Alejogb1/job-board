@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "whats-the-chain-id-for-connecting-an-aws-private-ethereum-blockchain-with-metamask"
 ---
 
-Alright, let's tackle this. Figuring out the correct chain id for a private ethereum network on aws, particularly when trying to connect it to metamask, is a common point of friction. I've personally spent a fair few evenings troubleshooting this particular issue while building out proof-of-concepts for clients. The core problem usually stems from the fact that private chains don’t automatically have a well-known id like the public ethereum mainnet or testnets.
+Alright,  Figuring out the correct chain id for a private ethereum network on aws, particularly when trying to connect it to metamask, is a common point of friction. I've personally spent a fair few evenings troubleshooting this particular issue while building out proof-of-concepts for clients. The core problem usually stems from the fact that private chains don’t automatically have a well-known id like the public ethereum mainnet or testnets.
 
 The chain id, in essence, is a unique identifier for a particular ethereum network. It's an integer, and it serves as a critical parameter when interacting with any ethereum client, including Metamask. Metamask uses this id to differentiate between networks and ensure that transactions are routed to the correct blockchain. Incorrect chain id values will inevitably result in connection errors and failed transactions. It's not unlike trying to access a file server with the wrong address – it simply won't work.
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "nested-random-effects-mixed-model"
 ---
 
-Okay so nested random effects mixed model right I've been down this rabbit hole a few times let me tell you It's not exactly a walk in the park but definitely something you can get your head around with a bit of elbow grease.
+ so nested random effects mixed model right I've been down this rabbit hole a few times let me tell you It's not exactly a walk in the park but definitely something you can get your head around with a bit of elbow grease.
 
 First off when you say "nested" it's crucial we understand exactly what we're nesting. Essentially you've got groups within groups think of it like this you've got students within classrooms within schools that's a classic example. The key thing here is that the grouping at the lower level is completely nested within the grouping at the higher level a student isn't in multiple classrooms in this model for instance. It's not crossed or partially crossed it's purely nested. If its partially crossed then we need a different approach.
 
@@ -141,4 +141,4 @@ This Stan model defines the likelihood and priors of the parameters. You will ne
 
 For resources honestly Pinheiro and Bates' *Mixed Effects Models in S and S-PLUS* is a classic you’ll want to get your hands on. It goes deep into the theory and how to use it in R also. There is also the book *Data Analysis Using Regression and Multilevel/Hierarchical Models* by Andrew Gelman and Jennifer Hill and that also explains very well how to approach hierarchical modeling. If you are into bayesian you may want to consider *Bayesian Data Analysis* from Gelman et al. They all are great references if you want to really understand what you are doing instead of just plugging and chugging. It will definitely up your statistical modeling game if you read at least one of them.
 
-And yeah that’s a pretty good overview of nested random effects mixed models. It's not magic just a nice way to model data when you have this nested structure. Oh and did you hear about the statistician who was terrible at poker? He always folded because he was afraid of getting random draws. Okay okay I'll see myself out. If you have more questions just ask I'm always happy to ramble more about this topic.
+And yeah that’s a pretty good overview of nested random effects mixed models. It's not magic just a nice way to model data when you have this nested structure. Oh and did you hear about the statistician who was terrible at poker? He always folded because he was afraid of getting random draws.   I'll see myself out. If you have more questions just ask I'm always happy to ramble more about this topic.

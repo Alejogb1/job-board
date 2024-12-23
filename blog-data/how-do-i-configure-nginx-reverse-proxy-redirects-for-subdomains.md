@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-configure-nginx-reverse-proxy-redirects-for-subdomains"
 ---
 
-Okay, let’s tackle this. I've spent more than a few late nights wrestling with Nginx configurations, particularly those involving reverse proxy setups for subdomains. It's a common scenario, and there are a few nuanced ways to approach it, so let’s dive in. The core concept is directing traffic arriving at specific subdomains to the appropriate backend services, which might be running on different ports or even different servers entirely.
+, let’s tackle this. I've spent more than a few late nights wrestling with Nginx configurations, particularly those involving reverse proxy setups for subdomains. It's a common scenario, and there are a few nuanced ways to approach it, so let’s dive in. The core concept is directing traffic arriving at specific subdomains to the appropriate backend services, which might be running on different ports or even different servers entirely.
 
 Essentially, what we're doing is crafting Nginx server blocks that listen on specific hostnames (our subdomains) and then using the `proxy_pass` directive to route those requests to their intended destinations. This involves a combination of correctly matching the incoming `Host` header and then forwarding the request with the correct information. It’s not inherently complex, but precision is paramount; a small typo can lead to some head-scratching debugging sessions.
 

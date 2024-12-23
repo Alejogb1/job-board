@@ -4,7 +4,7 @@ date: "2024-12-11"
 id: "what-are-the-limitations-of-neural-networks-in-achieving-true-compositionality-for-explainability"
 ---
 
-Okay so you wanna dig into the limitations of neural nets when it comes to explaining themselves right specifically around this whole compositionality thing  It's a tough nut to crack honestly  Neural nets are amazing at pattern recognition they learn these crazy intricate mappings between inputs and outputs  like magic but understanding *why* they do what they do that's the real challenge Compositionality is key here it's the idea that the meaning of a complex thing should be built up from the meanings of its simpler parts  like how the meaning of "blue car" comes from understanding "blue" and "car" separately
+ so you wanna dig into the limitations of neural nets when it comes to explaining themselves right specifically around this whole compositionality thing  It's a tough nut to crack honestly  Neural nets are amazing at pattern recognition they learn these crazy intricate mappings between inputs and outputs  like magic but understanding *why* they do what they do that's the real challenge Compositionality is key here it's the idea that the meaning of a complex thing should be built up from the meanings of its simpler parts  like how the meaning of "blue car" comes from understanding "blue" and "car" separately
 
 But neural networks often don't work that way  They can be these massive black boxes  you feed them data they spit out predictions but peering inside to see how the meaning is constructed thats a different story  They might learn some shortcuts or spurious correlations that work for the training data but don't generalize well and definitely don't reflect any kind of compositional understanding
 

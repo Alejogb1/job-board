@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-a-cypress-error-that-the-chainer-colored-was-not-found-could-not-build-assertion"
 ---
 
-Okay, let's tackle this. I’ve seen this “chainer colored was not found” error in Cypress pop up more times than I care to remember, and it usually boils down to a few common underlying issues. It's one of those cryptic messages that can initially leave you scratching your head, but understanding the mechanics behind Cypress assertions helps a lot. The core problem isn't actually about the color of the assertion; it’s about Cypress's assertion engine not finding the method you're trying to use within the chain of commands. Let's break it down.
+,  I’ve seen this “chainer colored was not found” error in Cypress pop up more times than I care to remember, and it usually boils down to a few common underlying issues. It's one of those cryptic messages that can initially leave you scratching your head, but understanding the mechanics behind Cypress assertions helps a lot. The core problem isn't actually about the color of the assertion; it’s about Cypress's assertion engine not finding the method you're trying to use within the chain of commands. Let's break it down.
 
 The error "The chainer colored was not found. Could not build assertion" basically means that you're trying to use a custom or non-existent chainer in your assertion chain, and Cypress doesn't recognize it. Cypress uses a chainable interface for its commands and assertions. When you write `cy.get('selector').should('be.visible').and('have.text', 'some text')`, for example, `should`, `and`, and `have` are all chainers that modify how the assertion behaves. If you introduce a chainer that Cypress doesn’t recognize, it can't construct the assertion, hence the error.
 

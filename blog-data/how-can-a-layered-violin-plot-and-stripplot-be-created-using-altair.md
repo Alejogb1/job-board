@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-a-layered-violin-plot-and-stripplot-be-created-using-altair"
 ---
 
-Let's tackle this. Creating a layered visualization using Altair, specifically combining a violin plot and a stripplot, is something I've had to implement more than a few times over the years, often when analyzing complex, multi-dimensional datasets. The goal is usually to show both the distribution of data (the violin plot) and the individual data points themselves (the stripplot), allowing for a more nuanced understanding.
+ Creating a layered visualization using Altair, specifically combining a violin plot and a stripplot, is something I've had to implement more than a few times over the years, often when analyzing complex, multi-dimensional datasets. The goal is usually to show both the distribution of data (the violin plot) and the individual data points themselves (the stripplot), allowing for a more nuanced understanding.
 
 Now, Altair, being a declarative visualization library, makes this relatively straightforward, though there are some nuances you need to keep in mind. The key is to use `alt.layer()` to combine the two plots, ensuring that the aesthetics, like axes, scales, and data encoding, align correctly. Without that, you could easily end up with an overlapping mess that's hard to decipher.
 

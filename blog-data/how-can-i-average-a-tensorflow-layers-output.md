@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-average-a-tensorflow-layers-output"
 ---
 
-Okay, let's tackle averaging the output of a TensorFlow layer. It’s something I've found myself doing quite often, particularly in scenarios involving ensemble methods or when trying to aggregate feature maps for downstream tasks. There are a few nuanced approaches, each with its own strengths and trade-offs, and the 'best' one really depends on what you're trying to achieve. We can’t just perform a blind average; we have to carefully think about the dimensions involved.
+, let's tackle averaging the output of a TensorFlow layer. It’s something I've found myself doing quite often, particularly in scenarios involving ensemble methods or when trying to aggregate feature maps for downstream tasks. There are a few nuanced approaches, each with its own strengths and trade-offs, and the 'best' one really depends on what you're trying to achieve. We can’t just perform a blind average; we have to carefully think about the dimensions involved.
 
 The core concept here revolves around understanding the tensor's shape after a layer’s execution. Typically, a convolutional layer, or even a fully connected one, outputs a tensor with a specific shape: `[batch_size, height, width, channels]` for convolutional layers or `[batch_size, features]` for fully connected layers. Averaging needs to happen across a certain dimension. When averaging a layer’s output for each input in the batch separately we are interested in averaging across *all* dimensions *except* for `batch_size`.
 

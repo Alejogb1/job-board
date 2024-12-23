@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-use-word2vec-for-sentence-embedding"
 ---
 
-Okay, let’s talk sentence embeddings using Word2Vec, and specifically how to adapt a word-level model for this purpose. I've spent a fair bit of time on projects involving textual data, from sentiment analysis to information retrieval, and the challenge of capturing sentence-level meaning effectively using word embeddings is something I've definitely had to navigate quite a few times. It's not always as straightforward as simply averaging word vectors, but let's unpack it step by step.
+, let’s talk sentence embeddings using Word2Vec, and specifically how to adapt a word-level model for this purpose. I've spent a fair bit of time on projects involving textual data, from sentiment analysis to information retrieval, and the challenge of capturing sentence-level meaning effectively using word embeddings is something I've definitely had to navigate quite a few times. It's not always as straightforward as simply averaging word vectors, but let's unpack it step by step.
 
 First, understand that Word2Vec, at its core, is designed to generate embeddings for *words*, not sentences. It's trained on large text corpora to capture the contextual semantics of words—where words appearing in similar contexts get closer embeddings. When we're trying to get sentence embeddings, we have to take an additional step. The basic idea most people initially try is to average the word vectors within a sentence, and while it can work as a baseline, there are clear limitations.
 

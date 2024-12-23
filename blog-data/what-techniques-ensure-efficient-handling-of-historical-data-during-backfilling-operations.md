@@ -4,7 +4,7 @@ date: "2024-12-10"
 id: "what-techniques-ensure-efficient-handling-of-historical-data-during-backfilling-operations"
 ---
 
-Okay so you wanna know about backfilling historical data efficiently right  That's a total pain point I've wrestled with a bunch of times  It's not just about shoving data into a database its about doing it *smartly*  otherwise you'll end up with a system slower than a snail on Valium
+ so you wanna know about backfilling historical data efficiently right  That's a total pain point I've wrestled with a bunch of times  It's not just about shoving data into a database its about doing it *smartly*  otherwise you'll end up with a system slower than a snail on Valium
 
 First things first  understanding your data is key  What kind of data is it  How much is there  How frequently does it update  These seemingly simple questions are gold  Knowing this stuff dictates your whole strategy  Think of it like choosing the right weapon for a fight  You wouldn't use a spoon to fight a dragon would you  Similarly a tiny SQLite database is not going to cut it for terabytes of financial transactions
 

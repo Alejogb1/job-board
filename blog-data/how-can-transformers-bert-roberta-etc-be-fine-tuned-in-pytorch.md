@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-transformers-bert-roberta-etc-be-fine-tuned-in-pytorch"
 ---
 
-Okay, let’s tackle this. Fine-tuning transformer models in PyTorch is a crucial skill, and something I’ve spent quite a bit of time on, both professionally and in my personal projects. I recall one particularly challenging project where we were trying to adapt a pre-trained BERT model for a very niche sentiment analysis task in the financial domain, and it highlighted just how much nuanced understanding is required to get it performing well. It's not just about throwing data at the model and hoping for the best.
+, let’s tackle this. Fine-tuning transformer models in PyTorch is a crucial skill, and something I’ve spent quite a bit of time on, both professionally and in my personal projects. I recall one particularly challenging project where we were trying to adapt a pre-trained BERT model for a very niche sentiment analysis task in the financial domain, and it highlighted just how much nuanced understanding is required to get it performing well. It's not just about throwing data at the model and hoping for the best.
 
 The core idea behind fine-tuning is to take a pre-trained model – already proficient in general language tasks – and adapt it to a specific downstream task. These models, like BERT, RoBERTa, and others, are typically trained on massive text corpora, giving them a strong understanding of grammar, semantics, and even some factual knowledge. Fine-tuning allows us to leverage this knowledge and specialize the model without needing to train from scratch, which would require immense computational resources and time.
 

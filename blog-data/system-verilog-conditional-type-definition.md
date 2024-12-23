@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "system-verilog-conditional-type-definition"
 ---
 
-Alright so conditional type definition in SystemVerilog you're asking about that right Yeah I've been there wrestled with that beast myself more times than I care to remember It's not exactly a walk in the park but it's definitely doable once you get the hang of it lets break it down in a straightforward way
+so conditional type definition in SystemVerilog you're asking about that right Yeah I've been there wrestled with that beast myself more times than I care to remember It's not exactly a walk in the park but it's definitely doable once you get the hang of it lets break it down in a straightforward way
 
 First off when you say conditional type definition you're not really doing like a if else statement that changes the fundamental type itself at compile time like in c++ templates thats not what systemverilog is designed for Instead what we're talking about is using `typedef` to give names to types and then controlling which type name is used based on some condition often through parameters.
 

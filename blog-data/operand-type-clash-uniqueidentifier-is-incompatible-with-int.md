@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "operand-type-clash-uniqueidentifier-is-incompatible-with-int"
 ---
 
-Okay so operand type clash uniqueidentifier is incompatible with int right Yeah I’ve been there seen that movie multiple times its always a pain
+ so operand type clash uniqueidentifier is incompatible with int right Yeah I’ve been there seen that movie multiple times its always a pain
 
 So basically what this error screams is you’re trying to mix apples and oranges at the database level you’re slamming a unique identifier a GUID which is essentially a 128-bit number usually represented as a string into a place that expects a standard integer a 32-bit or 64-bit number Now the database engine is throwing its virtual hands up saying “Dude I cannot compute that”
 
@@ -76,4 +76,4 @@ Now the real question is when do I use what data type GUID or integer? Well that
 
 Also if you see this error again it means someone is not respecting data types I would suggest you to have a good talk to them or start implementing strict type checking in your code you may start using a good IDE with strong static analysis that will catch these type of problems before you even start to run your code.
 
-Okay I am done ranting and giving you my ancient stories of software engineering mistakes Hopefully this gives you a good understanding of the error and how to properly fix it. Now go out there and build something awesome just make sure to respect data types. Also one last thing you know why programmers always mix up Halloween and Christmas? Because Oct 31 equals Dec 25
+ I am done ranting and giving you my ancient stories of software engineering mistakes Hopefully this gives you a good understanding of the error and how to properly fix it. Now go out there and build something awesome just make sure to respect data types. Also one last thing you know why programmers always mix up Halloween and Christmas? Because Oct 31 equals Dec 25

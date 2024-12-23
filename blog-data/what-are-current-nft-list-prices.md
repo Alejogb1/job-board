@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-are-current-nft-list-prices"
 ---
 
-Okay, let's tackle this. It's not as straightforward as one might initially think, and the answer varies significantly depending on several factors. When someone asks about "current NFT list prices," it's important to understand they're really asking about a highly dynamic and fragmented market. It's less like checking the price of a barrel of oil and more like trying to track the value of individual, unique pieces of art scattered across numerous galleries, each with its own pricing structure.
+,  It's not as straightforward as one might initially think, and the answer varies significantly depending on several factors. When someone asks about "current NFT list prices," it's important to understand they're really asking about a highly dynamic and fragmented market. It's less like checking the price of a barrel of oil and more like trying to track the value of individual, unique pieces of art scattered across numerous galleries, each with its own pricing structure.
 
 From my time building systems for crypto exchanges and marketplaces, I’ve seen firsthand how these prices fluctuate – sometimes wildly. We can’t just pull up a single, definitive number. Instead, we need to dissect what "list price" means in the context of NFTs and how to approach the problem technically.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-ggpairs-be-formatted-to-display-only-points"
 ---
 
-Okay, let's tackle this. I've spent a fair bit of time working with `ggpairs` in different contexts, mostly during exploratory data analysis phases on large datasets where visualizing pairwise relationships is crucial. One frequent need, precisely as you've pointed out, is to have `ggpairs` render only the scatter plots—just the points—without the additional bells and whistles like the correlation values, histograms, or density plots on the diagonals or upper triangle. It's a common customization, and fortunately, it's quite achievable with the tool's flexibility.
+,  I've spent a fair bit of time working with `ggpairs` in different contexts, mostly during exploratory data analysis phases on large datasets where visualizing pairwise relationships is crucial. One frequent need, precisely as you've pointed out, is to have `ggpairs` render only the scatter plots—just the points—without the additional bells and whistles like the correlation values, histograms, or density plots on the diagonals or upper triangle. It's a common customization, and fortunately, it's quite achievable with the tool's flexibility.
 
 My experience stems from numerous data science projects where visual clarity was paramount. I remember one particular project involving sensor data; the sheer volume of data points meant that anything other than a straightforward scatter plot would quickly become visually cluttered and difficult to interpret. We had to tweak `ggpairs` significantly to make any sense of it.
 

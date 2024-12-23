@@ -4,7 +4,7 @@ date: "2024-12-10"
 id: "what-are-the-benefits-of-separating-batch-and-real-time-data-processing-in-a-unified-feature-platform"
 ---
 
-Okay so you wanna talk about splitting up batch and real-time data processing right  cool idea actually  it's a pretty hot topic these days in the whole data engineering world  lots of folks are wrestling with this  it's not a simple yes or no thing  there's a bunch of trade-offs  let's dive in
+ so you wanna talk about splitting up batch and real-time data processing right  cool idea actually  it's a pretty hot topic these days in the whole data engineering world  lots of folks are wrestling with this  it's not a simple yes or no thing  there's a bunch of trade-offs  let's dive in
 
 First off what's the big deal with having them together in one happy feature platform  well the idea is sweet  one stop shop for all your feature needs right  batch processes churning out those aggregates and summaries  real-time streams pumping in live data  all beautifully integrated  sounds amazing in theory  but in practice  things can get messy real quick
 

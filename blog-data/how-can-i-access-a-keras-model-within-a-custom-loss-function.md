@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-access-a-keras-model-within-a-custom-loss-function"
 ---
 
-Okay, let's tackle this one. I've certainly had my share of encounters with custom loss functions and the desire to pull specific elements from the model during the loss calculation, so I think I can provide a clear path forward here. It's a common requirement when you're moving beyond straightforward regression or classification and into more specialized tasks.
+, let's tackle this one. I've certainly had my share of encounters with custom loss functions and the desire to pull specific elements from the model during the loss calculation, so I think I can provide a clear path forward here. It's a common requirement when you're moving beyond straightforward regression or classification and into more specialized tasks.
 
 The core challenge is that, fundamentally, a Keras loss function, at its base, should accept two inputs: `y_true` (the true values or labels) and `y_pred` (the model's predictions). Directly accessing the model *within* that function isn't a standard operation, since loss functions are supposed to be stateless. Think of them as just a way to quantify the difference between what the model output and what you intended. However, there are ways to get the model’s internal representation and use it in the loss function by carefully combining Keras' functional api.
 

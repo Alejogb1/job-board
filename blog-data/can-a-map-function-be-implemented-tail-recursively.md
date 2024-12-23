@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-a-map-function-be-implemented-tail-recursively"
 ---
 
-Okay, let's tackle this. I've seen this come up quite a few times in different contexts, and the answer, while seemingly simple, has some interesting nuances. So, can a map function be implemented tail-recursively? The short answer is, *yes*, it can be, and it often *should* be, especially in environments where stack overflows due to deep recursion are a genuine concern. However, the way it's done often requires a different perspective than the standard iterative approach most people are used to.
+,  I've seen this come up quite a few times in different contexts, and the answer, while seemingly simple, has some interesting nuances. So, can a map function be implemented tail-recursively? The short answer is, *yes*, it can be, and it often *should* be, especially in environments where stack overflows due to deep recursion are a genuine concern. However, the way it's done often requires a different perspective than the standard iterative approach most people are used to.
 
 My first real brush with this was back in my early days, working on a heavily functional codebase for image processing. We were dealing with massive pixel arrays, and even seemingly benign map operations would, from time to time, just blow up the call stack, which, as you can imagine, isn't ideal when the entire pipeline is built around map transformations. It became pretty crucial to switch things up to iterative or, in our case, tail-recursive alternatives.
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "verilog-functions-usage-modules"
 ---
 
-Okay so verilog functions and modules right seen this one a few times definitely know the drill lets break it down and talk about how I've seen it play out in real life
+ so verilog functions and modules right seen this one a few times definitely know the drill lets break it down and talk about how I've seen it play out in real life
 
 First off functions and modules are both crucial but they are *very* different beasts It’s easy to get them confused especially when you’re just starting out I remember way back when I was designing my first FPGA based audio processor I was hitting my head against a wall because I was trying to use a function for something that clearly needed to be a module lessons were learned that day let me tell you
 

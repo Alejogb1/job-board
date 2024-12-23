@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-a-singularity-container-for-an-r-text-package-fail-to-locate-python-libraries"
 ---
 
-Okay, let's tackle this. It's a problem I've encountered more than once, and it always comes down to understanding how singularity containers and their environment interact, particularly when bridging languages like R and Python. It's not a magical failure, just a series of layered expectations that aren’t always obvious at first glance.
+,  It's a problem I've encountered more than once, and it always comes down to understanding how singularity containers and their environment interact, particularly when bridging languages like R and Python. It's not a magical failure, just a series of layered expectations that aren’t always obvious at first glance.
 
 First off, when we use an R text-package that depends on Python libraries *inside* a singularity container, we're inherently dealing with isolated environments. The container provides an execution context separate from the host system, and within that, R and Python maintain their own spaces. The failure to find Python libraries stems from a few key issues, all relating to the way paths and environment variables are established (or, more often, *not* established) within the container.
 

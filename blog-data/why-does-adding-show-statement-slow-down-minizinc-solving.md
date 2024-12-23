@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-does-adding-show-statement-slow-down-minizinc-solving"
 ---
 
-Okay, let's tackle this. I remember back in my days of heavily optimizing constraint programming models, we encountered this exact issue: inexplicably slow solve times when including `show` statements in MiniZinc. It's a question that's less about fundamental constraint satisfaction and more about the inner workings of the MiniZinc compiler and its interface with the underlying solvers. Let me break down why this happens, from a perspective built on a fair bit of practical experience.
+,  I remember back in my days of heavily optimizing constraint programming models, we encountered this exact issue: inexplicably slow solve times when including `show` statements in MiniZinc. It's a question that's less about fundamental constraint satisfaction and more about the inner workings of the MiniZinc compiler and its interface with the underlying solvers. Let me break down why this happens, from a perspective built on a fair bit of practical experience.
 
 The core issue stems from how MiniZinc handles `show` statements. At its heart, MiniZinc is a *modeling* language, not an execution language. When you declare variables, constraints, and goals, you are creating a representation of your problem. The `show` statement, however, demands a specific *runtime* action: the output of variable values. This seems simple on the surface, but that's not how constraint solvers typically operate internally.
 

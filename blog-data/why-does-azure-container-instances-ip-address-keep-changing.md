@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-does-azure-container-instances-ip-address-keep-changing"
 ---
 
-Okay, let's talk about that ever-shifting Azure Container Instance (ACI) IP address. I've personally spent a few late nights troubleshooting this exact issue, and it can definitely be frustrating if you're expecting static behavior. The core of the problem stems from ACI's design philosophy, which prioritizes ephemeral, on-demand container execution over persistent infrastructure. It's essentially a serverless container service, and its IP address behavior reflects that.
+, let's talk about that ever-shifting Azure Container Instance (ACI) IP address. I've personally spent a few late nights troubleshooting this exact issue, and it can definitely be frustrating if you're expecting static behavior. The core of the problem stems from ACI's design philosophy, which prioritizes ephemeral, on-demand container execution over persistent infrastructure. It's essentially a serverless container service, and its IP address behavior reflects that.
 
 Fundamentally, when you deploy an ACI, you’re not getting a dedicated virtual machine with a static IP assigned to it. Instead, you're requesting resources on a shared infrastructure. Each time you initiate or restart an ACI, it might be scheduled on a different underlying host within Azure's compute fabric. This re-scheduling is a cornerstone of how ACI provides its elasticity and on-demand characteristics. The associated IP address is dynamically allocated from a pool of available addresses for that compute host. Consequently, this allocated IP address is often different each time the container group is started or de-allocated and re-allocated.
 

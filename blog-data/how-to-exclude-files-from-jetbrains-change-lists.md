@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-exclude-files-from-jetbrains-change-lists"
 ---
 
-Okay, let's get into it. This is a topic I've navigated more than a few times, especially back when I was managing development on a large monolithic application. The issue of keeping certain files out of change lists in JetBrains IDEs, particularly when dealing with auto-generated files, local configuration, or anything you simply don't want committed, is surprisingly common. It's not always intuitive, and a little finesse is required.
+, let's get into it. This is a topic I've navigated more than a few times, especially back when I was managing development on a large monolithic application. The issue of keeping certain files out of change lists in JetBrains IDEs, particularly when dealing with auto-generated files, local configuration, or anything you simply don't want committed, is surprisingly common. It's not always intuitive, and a little finesse is required.
 
 Fundamentally, JetBrains IDEs, like IntelliJ IDEA or PyCharm, use version control integration to track changes. These integrations work by noticing modifications to files within your project’s scope. The challenge arises when you need to tell the IDE, “ignore these particular modifications, don’t add them to my changeset.” There's a good reason for this granularity. Committing files that should be ignored – think build artifacts or personal configurations – clutters the repository, potentially introduces conflicts and is, generally, considered poor practice.
 

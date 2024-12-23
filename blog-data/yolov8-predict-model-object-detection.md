@@ -4,11 +4,11 @@ date: "2024-12-13"
 id: "yolov8-predict-model-object-detection"
 ---
 
-Okay so you're looking at YOLOv8 and how to use its prediction capabilities for object detection right Been there done that a few times trust me I've wrestled with this thing more than I care to admit
+ so you're looking at YOLOv8 and how to use its prediction capabilities for object detection right Been there done that a few times trust me I've wrestled with this thing more than I care to admit
 
-Alright lets break it down real simple
+lets break it down real simple
 
-First off you gotta have your YOLOv8 model trained or at least one of the pretrained models readily available and yes I know the process and you know the drill but just in case you got a brand new shiny YOLOv8 model it won't do much until you feed it some data or you know the pre-trained ones so thats kinda an important point right so let's assume you have a valid model if you don't go back and train it and we can talk later when you have that crucial part nailed down okay? Cool
+First off you gotta have your YOLOv8 model trained or at least one of the pretrained models readily available and yes I know the process and you know the drill but just in case you got a brand new shiny YOLOv8 model it won't do much until you feed it some data or you know the pre-trained ones so thats kinda an important point right so let's assume you have a valid model if you don't go back and train it and we can talk later when you have that crucial part nailed down ? Cool
 
 Now lets say your model is a file called `best.pt` its just the most common name for a trained model lets get to the meat of it for predictions.  The easiest way for predictions is using the Python API and you’re probably using that anyways if you are here lets get to it.
 
@@ -30,7 +30,7 @@ for result in results:
         print(box.cls) #class indexes detected
 ```
 
-Alright there we have it the most basic prediction example you will ever see I like to keep it simple and it works for all sorts of models you know the ones in the Ultralytics ecosystem which I always recommend for a quick deployment and testing. So what’s going on here?
+there we have it the most basic prediction example you will ever see I like to keep it simple and it works for all sorts of models you know the ones in the Ultralytics ecosystem which I always recommend for a quick deployment and testing. So what’s going on here?
 
 First we import the `YOLO` class from the `ultralytics` library which you need to have installed I hope you do if you are doing this otherwise install the ultralytics package you probably need to upgrade it to get the latest features anyway. Then we create a `model` object by loading a pretrained YOLO model or you know the custom one you trained which i'm pretty sure you have because you are here asking about predictions so i'm sure you did the training part which is probably the most important of the whole process.
 

@@ -33,7 +33,7 @@ training_data = [
     ("So bad.", "negative"),
     ("Amazing!", "positive"),
     ("Awful", "negative"),
-     ("Okay.", "neutral"),  # Notice a new label, more on this later
+     (".", "neutral"),  # Notice a new label, more on this later
 ]
 
 positive_count, negative_count = count_positive_negative_basic(training_data)
@@ -59,7 +59,7 @@ def count_positive_negative_pandas(dataframe, label_column, positive_label='posi
 
 # Example usage with a dataframe
 data_dict = {
-    "text": ["This is great!", "I hate this.", "Wonderful day", "Terrible outcome", "Love it!", "So bad.", "Amazing!", "Awful", "Okay."],
+    "text": ["This is great!", "I hate this.", "Wonderful day", "Terrible outcome", "Love it!", "So bad.", "Amazing!", "Awful", "."],
     "label": ["positive", "negative", "positive", "negative", "positive", "negative", "positive", "negative", "neutral"]
 }
 df = pd.DataFrame(data_dict)
@@ -91,7 +91,7 @@ def count_label_instances(dataframe, label_column):
 
 # Example usage
 data_dict_numeric = {
-    "text": ["This is great!", "I hate this.", "Wonderful day", "Terrible outcome", "Love it!", "So bad.", "Amazing!", "Awful", "Okay."],
+    "text": ["This is great!", "I hate this.", "Wonderful day", "Terrible outcome", "Love it!", "So bad.", "Amazing!", "Awful", "."],
     "label": [5, 1, 5, 1, 5, 1, 5, 1, 3]  # Numerical labels, 5=positive, 1=negative
 }
 

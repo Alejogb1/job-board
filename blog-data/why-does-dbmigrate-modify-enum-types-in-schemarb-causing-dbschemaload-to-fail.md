@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-dbmigrate-modify-enum-types-in-schemarb-causing-dbschemaload-to-fail"
 ---
 
-Okay, let’s tackle this one. I’ve seen this particular scenario play out a few times, usually late at night when deadlines are looming and the last thing anyone needs is a schema load failing. It's a frustrating experience that stems from a combination of how Rails handles enums and how `db:migrate` and `db:schema:load` function. Let’s break down why this happens, and more importantly, how to address it effectively.
+, let’s tackle this one. I’ve seen this particular scenario play out a few times, usually late at night when deadlines are looming and the last thing anyone needs is a schema load failing. It's a frustrating experience that stems from a combination of how Rails handles enums and how `db:migrate` and `db:schema:load` function. Let’s break down why this happens, and more importantly, how to address it effectively.
 
 The core issue lies in the representation of enum types in your Rails application’s `schema.rb` file versus their actual definition in your database. When you create an enum column using Rails migrations, you’re essentially instructing your database (typically postgresql, mysql or similar) to create a specific custom type to constrain the data within that column to a predefined set of strings. The migration itself executes sql directly to create that custom type.
 

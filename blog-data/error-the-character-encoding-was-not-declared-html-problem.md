@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "error-the-character-encoding-was-not-declared-html-problem"
 ---
 
-Alright so you've got that dreaded "character encoding not declared" HTML error right Classic I've been there man Believe me I've wrestled with this beast more times than I care to admit Back in my early days when I was just starting out I remember spending a whole week debugging an online store for a friend of mine The website worked perfectly on my machine of course but on my friend’s it was a garbled mess of weird symbols and question marks Lesson learned the hard way the universe doesn’t revolve around my perfectly configured dev environment Turns out it was a missing character encoding declaration as it almost always is
+so you've got that dreaded "character encoding not declared" HTML error right Classic I've been there man Believe me I've wrestled with this beast more times than I care to admit Back in my early days when I was just starting out I remember spending a whole week debugging an online store for a friend of mine The website worked perfectly on my machine of course but on my friend’s it was a garbled mess of weird symbols and question marks Lesson learned the hard way the universe doesn’t revolve around my perfectly configured dev environment Turns out it was a missing character encoding declaration as it almost always is
 
 So here's the lowdown you're dealing with the browser’s inability to figure out how to display your webpage’s text properly It's like trying to translate a book from Spanish to English without knowing that the original text was in Spanish The browser defaults to an encoding sometimes a wrong one and everything goes south especially if your page has special characters like accents or emojis You’ll see those symbols where actual text should be
 
@@ -42,7 +42,7 @@ Let me give you an example from that website I was debugging long ago:
 </html>
 ```
 
-Notice that the title tag was there but not the charset tag that website rendered weird on my friend's computer while mine was showing no problem and that's why you got that error. So adding just the meta tag above will solve the problem and will do it correctly so that the browser knows what to do no matter what. Now if I add the `<meta charset="UTF-8">` inside the `<head>` everything becomes alright like this:
+Notice that the title tag was there but not the charset tag that website rendered weird on my friend's computer while mine was showing no problem and that's why you got that error. So adding just the meta tag above will solve the problem and will do it correctly so that the browser knows what to do no matter what. Now if I add the `<meta charset="UTF-8">` inside the `<head>` everything becomes like this:
 
 ```html
 <!DOCTYPE html>

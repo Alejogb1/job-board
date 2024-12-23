@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-batch-dataset-input-be-reshaped-for-a-trained-model"
 ---
 
-Okay, let's tackle this. I've seen this exact scenario play out countless times, especially when dealing with models trained on specific data structures and then encountering real-world inputs that don't quite match. The short answer is that you need to manipulate your batch data to fit the model’s expected input shape, and the specifics depend heavily on the original training data and the particular model architecture. It’s less about forcing data into arbitrary shapes, and more about making sure the *meaning* of the data is preserved after the transformation.
+,  I've seen this exact scenario play out countless times, especially when dealing with models trained on specific data structures and then encountering real-world inputs that don't quite match. The short answer is that you need to manipulate your batch data to fit the model’s expected input shape, and the specifics depend heavily on the original training data and the particular model architecture. It’s less about forcing data into arbitrary shapes, and more about making sure the *meaning* of the data is preserved after the transformation.
 
 The challenge often arises when a model, during its training phase, was exposed to a very neatly structured dataset—think images always sized 256x256 pixels or sequences of a certain length, for instance. In practice, incoming data rarely behaves. You might be receiving variable-sized images, time series with inconsistent lengths, or tabular data with extra features or different orders.
 

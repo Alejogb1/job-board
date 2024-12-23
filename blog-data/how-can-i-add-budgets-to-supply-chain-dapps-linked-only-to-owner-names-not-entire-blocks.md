@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-add-budgets-to-supply-chain-dapps-linked-only-to-owner-names-not-entire-blocks"
 ---
 
-Alright, let's tackle this. Thinking back to my time working on a distributed ledger system for a pharmaceutical supply chain, we wrestled with a very similar problem—allocating spending based on entity identity rather than arbitrary block boundaries. The fundamental challenge is avoiding the pitfalls of associating financial data with the global state of the blockchain. Doing so would expose sensitive budget information to anyone with access to the ledger. We need something more granular, tying spending directly to the identities involved. Here's how we approached it, and how you can too.
+Alright,  Thinking back to my time working on a distributed ledger system for a pharmaceutical supply chain, we wrestled with a very similar problem—allocating spending based on entity identity rather than arbitrary block boundaries. The fundamental challenge is avoiding the pitfalls of associating financial data with the global state of the blockchain. Doing so would expose sensitive budget information to anyone with access to the ledger. We need something more granular, tying spending directly to the identities involved. Here's how we approached it, and how you can too.
 
 The core concept is to implement a permissioned access control layer *on top of* your existing distributed application (DApp) architecture, coupled with a carefully designed state management system. Forget about directly embedding budgets into the blocks themselves; that's a recipe for disaster. Instead, we'll leverage smart contracts to enforce spending limits based on the owners you're interested in.
 

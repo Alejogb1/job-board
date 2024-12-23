@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-are-only-reference-types-stored-in-memory-in-solidity"
 ---
 
-Okay, let's tackle this. Memory management in Solidity, particularly its handling of reference types versus value types, has been a recurring point of discussion – and something I’ve had to troubleshoot a few times in past projects involving complex smart contracts. The core of the matter lies in how the Ethereum Virtual Machine (EVM) operates and how Solidity's type system is built upon it. Let me unpack why only reference types find themselves residing in memory.
+,  Memory management in Solidity, particularly its handling of reference types versus value types, has been a recurring point of discussion – and something I’ve had to troubleshoot a few times in past projects involving complex smart contracts. The core of the matter lies in how the Ethereum Virtual Machine (EVM) operates and how Solidity's type system is built upon it. Let me unpack why only reference types find themselves residing in memory.
 
 First, it’s crucial to differentiate between *value types* and *reference types*. Value types in Solidity (like `uint`, `bool`, `address`, `enum`) are stored directly within a variable’s storage space. When you assign a value type to another variable, you are essentially creating a copy of that value. Changes to one variable do not affect the other. Reference types, on the other hand, including `arrays`, `structs`, and `mappings`, are inherently more complex. These do not store the actual data in the variable location. Instead, they store a *pointer* (a memory address) referencing where the data is held.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-airtables-documentation-limited-to-react-excluding-nodejs"
 ---
 
-Okay, let's talk about the apparent "React-only" focus in Airtable's official documentation, specifically the absence of direct examples targeting Node.js. It's a valid observation, and it's something I’ve encountered a few times over the years, most notably back in 2019 when we were transitioning a legacy system to use Airtable as a CMS. We were a predominantly Node.js shop, and the initial lack of explicit guidance felt a bit...disconcerting.
+, let's talk about the apparent "React-only" focus in Airtable's official documentation, specifically the absence of direct examples targeting Node.js. It's a valid observation, and it's something I’ve encountered a few times over the years, most notably back in 2019 when we were transitioning a legacy system to use Airtable as a CMS. We were a predominantly Node.js shop, and the initial lack of explicit guidance felt a bit...disconcerting.
 
 First, it’s crucial to understand that this isn't about Airtable inherently *excluding* Node.js. It’s more about prioritization and the specific context of how Airtable is typically used and initially integrated. React, being a client-side framework, provides a natural entry point for developers aiming to create interactive interfaces that display or manage Airtable data. Think of it this way: many initial use cases involve end-users directly interacting with data, and thus a client-side library becomes the first port of call for developers. The immediate visual feedback and integration afforded by front-end frameworks often make them the starting point.
 

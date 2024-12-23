@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-does-masking-in-cairosvg-violate-the-svg-standard"
 ---
 
-Okay, let’s tackle this. I recall a project a few years back, involving complex SVG visualizations of sensor data. We were using CairoSVG as part of our backend rendering pipeline and, well, let's just say we encountered some head-scratching behavior when it came to masking. It wasn't immediately obvious why, but after some thorough investigation, it became clear that CairoSVG's interpretation of SVG masking didn’t perfectly align with the standard, particularly concerning the interaction of mask elements and the elements they affect.
+, let’s tackle this. I recall a project a few years back, involving complex SVG visualizations of sensor data. We were using CairoSVG as part of our backend rendering pipeline and, well, let's just say we encountered some head-scratching behavior when it came to masking. It wasn't immediately obvious why, but after some thorough investigation, it became clear that CairoSVG's interpretation of SVG masking didn’t perfectly align with the standard, particularly concerning the interaction of mask elements and the elements they affect.
 
 The core issue arises because the SVG standard, specifically section 13, defines masking with certain nuances that CairoSVG, as of my last deep dive, doesn’t quite adhere to in its implementation. Let's break down the expected behavior and where CairoSVG tends to deviate.
 

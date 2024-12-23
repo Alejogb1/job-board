@@ -4,7 +4,7 @@ date: "2024-12-12"
 id: "what-is-the-significance-of-gemini-20-flashs-launch-by-google-during-neurips-2024"
 ---
 
-okay cool so gemini 2.0 flash dropped at neurips 2024 right thats kinda a big deal actually its like google flexing hard in the ai arena and it wasnt just some minor update this was a whole new model or at least a significantly tweaked one its kind of the evolution we all expected but seeing it finally hit the scene during a major research conference like neurips it definitely gives it some serious street cred i mean neurips isnt exactly a casual chat room its where all the heavy hitters hang out so dropping a big release there signals they mean business
+ cool so gemini 2.0 flash dropped at neurips 2024 right thats kinda a big deal actually its like google flexing hard in the ai arena and it wasnt just some minor update this was a whole new model or at least a significantly tweaked one its kind of the evolution we all expected but seeing it finally hit the scene during a major research conference like neurips it definitely gives it some serious street cred i mean neurips isnt exactly a casual chat room its where all the heavy hitters hang out so dropping a big release there signals they mean business
 
 significance wise well it means a bunch of things first off its a clear signal google is doubling down on their multimodal capabilities that's been their big push for a while and flash seems to be taking that to the next level its not just text now its text images audio maybe even video all playing nice together thats crucial for building genuinely useful ai because real life isn't just text boxes or isolated tasks it's a messy interwoven tapestry of data types and if you want ai to truly help humans you need it to handle all that
 

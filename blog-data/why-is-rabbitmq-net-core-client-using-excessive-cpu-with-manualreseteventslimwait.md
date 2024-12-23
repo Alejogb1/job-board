@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-rabbitmq-net-core-client-using-excessive-cpu-with-manualreseteventslimwait"
 ---
 
-Let's tackle this. It’s not uncommon to see a dotnet core application utilizing RabbitMQ suddenly become a CPU hog, particularly when asynchronous operations using `ManualResetEventSlim.Wait` are in the mix. I’ve debugged this exact scenario more times than I'd like to remember, and often the culprit isn't the RabbitMQ server itself, but how the .net core client interacts with its internal mechanisms, specifically around thread management. Let's break down why this happens and explore some solutions.
+ It’s not uncommon to see a dotnet core application utilizing RabbitMQ suddenly become a CPU hog, particularly when asynchronous operations using `ManualResetEventSlim.Wait` are in the mix. I’ve debugged this exact scenario more times than I'd like to remember, and often the culprit isn't the RabbitMQ server itself, but how the .net core client interacts with its internal mechanisms, specifically around thread management. Let's break down why this happens and explore some solutions.
 
 The heart of the matter lies within the interaction between the amqp-net-client library (the core library used by many RabbitMQ .net clients) and the way asynchronous operations are managed in dotnet core. The `ManualResetEventSlim` is designed for very efficient lightweight synchronization, it is *not* designed to be abused as a polling mechanism. When you use `.Wait()` on it, it effectively parks the executing thread until the event is signaled, thus freeing resources while the thread waits. However, the tricky part is how that waiting interacts with the rabbitmq client's internal operations.
 

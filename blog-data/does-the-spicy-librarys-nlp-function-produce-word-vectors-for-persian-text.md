@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "does-the-spicy-librarys-nlp-function-produce-word-vectors-for-persian-text"
 ---
 
-Okay, let's tackle this. The question of whether the spaCy library's natural language processing (nlp) functionality natively generates word vectors for Persian text is something I've encountered firsthand, not in a hypothetical textbook scenario, but during a project involving multilingual document analysis a few years back. We were dealing with a corpus that included significant amounts of Farsi, and the initial results were, shall we say, less than stellar.
+,  The question of whether the spaCy library's natural language processing (nlp) functionality natively generates word vectors for Persian text is something I've encountered firsthand, not in a hypothetical textbook scenario, but during a project involving multilingual document analysis a few years back. We were dealing with a corpus that included significant amounts of Farsi, and the initial results were, shall we say, less than stellar.
 
 First, it's crucial to understand that spaCy, in its core distribution, primarily offers pre-trained statistical models for languages such as English, Spanish, French, and German. While spaCy is designed for extensibility, out-of-the-box support for Persian, particularly regarding word vector generation, isn't a given. This is largely due to the resource-intensive nature of training these language models and the complexities of morphologically rich languages like Persian.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-isnt-tfdatadataset-fetching-images-from-a-file-path-when-using-a-function-map"
 ---
 
-Okay, let’s talk about why `tf.data.Dataset` might seemingly ignore your file paths when you’re attempting to load images through a mapping function. I’ve seen this pattern countless times across various projects, and it often boils down to a few key misunderstandings about how `tf.data.Dataset` handles data loading and transformations, especially when asynchronous operations come into play.
+, let’s talk about why `tf.data.Dataset` might seemingly ignore your file paths when you’re attempting to load images through a mapping function. I’ve seen this pattern countless times across various projects, and it often boils down to a few key misunderstandings about how `tf.data.Dataset` handles data loading and transformations, especially when asynchronous operations come into play.
 
 The core problem usually isn’t that your file paths are incorrect—though verifying that’s a good starting point, of course—but rather that the *context* within your mapping function doesn't always align with the execution model of `tf.data.Dataset`. It's not enough for the function to *have* the path; it needs to use it correctly within the tensorflow execution graph. Let's break this down.
 

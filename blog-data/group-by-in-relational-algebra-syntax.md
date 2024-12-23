@@ -4,11 +4,11 @@ date: "2024-12-13"
 id: "group-by-in-relational-algebra-syntax"
 ---
 
-Okay so you want to understand the GROUP BY operation in relational algebra I get it been there done that lets dive right in
+ so you want to understand the GROUP BY operation in relational algebra I get it been there done that lets dive right in
 
 So you're asking about GROUP BY in relational algebra its fundamental stuff but often gets glossed over so lets break it down from the ground up think of it as a way to structure data before you perform some kind of aggregation we're essentially rearranging our data based on shared values in specified attributes
 
-Okay picture this I was tasked with this database once it was for a really old e-commerce site back in like 2008 and their product catalog was a mess We had a table called "Orders" it had columns like `orderID` `customerID` `productID` and `orderDate` it was a hot mess no real structure they wanted to see total orders per customer and back then I had like maybe a few years experience maybe I was a noob by today's standards but I remember pulling my hair out trying to get it right with like crazy nested SQL queries they looked like a spider on crack I kid you not it was pure pain
+ picture this I was tasked with this database once it was for a really old e-commerce site back in like 2008 and their product catalog was a mess We had a table called "Orders" it had columns like `orderID` `customerID` `productID` and `orderDate` it was a hot mess no real structure they wanted to see total orders per customer and back then I had like maybe a few years experience maybe I was a noob by today's standards but I remember pulling my hair out trying to get it right with like crazy nested SQL queries they looked like a spider on crack I kid you not it was pure pain
 
 Relational algebra is the conceptual foundation beneath the fancy SQL queries that’s how I actually got better at the whole thing after messing with all kinds of SQL stuff and thinking I was the master of it Turns out that SQL is a wrapper over something more fundamental and that’s what I eventually figured out by having these kinds of problems with huge messed up databases I was in a bad place lol So with relational algebra we are working with sets and operations on sets its all pure math basically which is cool
 
@@ -22,7 +22,7 @@ So conceptually we are creating groups of tuples that have the same value of A a
 
 The way that it works under the hood is this first the relation R goes to an intermediate step of partition or groupings where every tuple is assigned to a group based on its value of A and then for each group a Sum function is calculated over the value of C. And that is it.
 
-Okay so lets give a practical example say we have that same table that I mentioned called Orders lets assume it only has `customerID` and `orderValue` it could be like a simplified version of that mess of the database I told you about before.
+ so lets give a practical example say we have that same table that I mentioned called Orders lets assume it only has `customerID` and `orderValue` it could be like a simplified version of that mess of the database I told you about before.
 
 Here’s how you’d represent a GROUP BY for the total order value per customer using this relational algebra stuff its gonna look like this
 
@@ -61,6 +61,6 @@ If you want to dig deep I recommend checking out "Database System Concepts" by S
 
 I’ve seen people trying to implement grouping logic by looping through all the data and filtering it in code and thats a huge no no because its super inefficient. Remember databases are optimized to do this kind of stuff way better than any manually written loop in Python or Java or whatever language you are using. Use the database and let the database engine handle it.
 
-Relational algebra is more about the theoretical foundations but it gives you the proper mindset. Its like understanding the underlying mechanics of a car before you try to drive one. Okay maybe that was a kind of bad analogy but I tried sorry about that. I never said I was good with metaphors did I? I did? Okay well I am not! I am more of a pure technical kind of guy I prefer pure logic. Its more my style.
+Relational algebra is more about the theoretical foundations but it gives you the proper mindset. Its like understanding the underlying mechanics of a car before you try to drive one.  maybe that was a kind of bad analogy but I tried sorry about that. I never said I was good with metaphors did I? I did?  well I am not! I am more of a pure technical kind of guy I prefer pure logic. Its more my style.
 
 So anyway yeah that’s the whole thing basically its all sets operations and aggregation and grouping stuff at the end of the day. Simple stuff when you look at it from this angle but people tend to make it more complex than it should be.

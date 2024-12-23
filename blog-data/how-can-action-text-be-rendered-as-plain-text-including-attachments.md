@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-action-text-be-rendered-as-plain-text-including-attachments"
 ---
 
-Alright, let's tackle this. I've certainly found myself in the weeds with this exact issue more than a few times, particularly when dealing with systems transitioning from, say, bespoke notification schemes to something more standardized. Rendering action text as plain text, attachments and all, isn't always a straightforward 'one size fits all' solution. It often involves peeling back the layers of how these rich text formats are structured and then reassembling the pieces into a textual representation.
+Alright,  I've certainly found myself in the weeds with this exact issue more than a few times, particularly when dealing with systems transitioning from, say, bespoke notification schemes to something more standardized. Rendering action text as plain text, attachments and all, isn't always a straightforward 'one size fits all' solution. It often involves peeling back the layers of how these rich text formats are structured and then reassembling the pieces into a textual representation.
 
 The core challenge lies in the fact that action text, typically based on the Trix editor or something similar, stores data in a structured format, usually HTML, that includes not only the text itself but also formatting information and references to attachments. Extracting just the text and those attachment references, while maintaining their logical order, is where the real work begins. We're essentially performing a controlled deconstruction of the structured data.
 

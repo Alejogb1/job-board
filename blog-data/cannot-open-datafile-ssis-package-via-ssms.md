@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "cannot-open-datafile-ssis-package-via-ssms"
 ---
 
-Alright so you are having trouble opening an SSIS package's data file using SSMS got it Been there done that more times than I care to admit Let me unpack this thing from my experience and hopefully help you out
+so you are having trouble opening an SSIS package's data file using SSMS got it Been there done that more times than I care to admit Let me unpack this thing from my experience and hopefully help you out
 
 First off when we're talking about data files in the context of SSIS packages usually we mean files that the package uses as a source or a destination not the actual package itself the `.dtsx` file or maybe you have data files that are used in the package configuration these files are more of a sidecar to the main operation So I am assuming you're hitting the problem when you try to execute the package or maybe you're just trying to configure a connection manager and it's just not working right
 
@@ -12,7 +12,7 @@ Now when you say you cannot open the data file using SSMS it's not exactly a dir
 
 One classic issue I've seen a lot is the permissions puzzle It happens when the SQL Server service account running the SSIS package doesn't have the right read or write privileges on the directory or the actual file This is usually the most common culprit it's especially true if you moved the package or files from one server to another or if the file resides on a network share
 
-Okay here is what you need to do first check this right away
+ here is what you need to do first check this right away
 
 1 Verify that the SQL Server service account has the required file permissions
    For this you usually need to go to Services msc find the SQL Server Integration Services service and check the user it's running under this user needs permissions to the directory that contains the data file if you have a network share verify share permissions are also correct
@@ -60,5 +60,5 @@ For solid theory and background on SSIS I recommend you pick up a copy of "Profe
 
 Also for advanced configuration techniques and troubleshooting I suggest reading research papers on the SSIS internals There are whitepapers by Microsoft that cover the pipeline architecture the event system and performance tuning usually these papers can help you in rare and odd cases
 
-Okay I think that's all I got for you now Remember the devil is always in the details and sometimes even a simple typo can make you waste hours of work so be patient and take your time to look at all the details that is how I learned all this over time
+ I think that's all I got for you now Remember the devil is always in the details and sometimes even a simple typo can make you waste hours of work so be patient and take your time to look at all the details that is how I learned all this over time
 Good luck

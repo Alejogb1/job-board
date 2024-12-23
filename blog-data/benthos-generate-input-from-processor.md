@@ -4,11 +4,11 @@ date: "2024-12-13"
 id: "benthos-generate-input-from-processor"
 ---
 
-Alright so you’re asking about how Benthos takes data from processors right like how it gets the results of transformations or enrichments into its output stream yeah I've been there dude I've wrestled with that flow more times than I care to admit especially back in the day when I was setting up a really complex ETL pipeline for this old e-commerce company remember those good old days I’m talking about the late 2000s early 2010s before everything was serverless and fluffy in the cloud yeah those times We had this crazy setup with Kafka queues doing data ingestion and we needed Benthos to process that data in real time before we pushed it to the downstream data lake for the business analytics people always asking about sales figures like if I have a magic wand man
+so you’re asking about how Benthos takes data from processors right like how it gets the results of transformations or enrichments into its output stream yeah I've been there dude I've wrestled with that flow more times than I care to admit especially back in the day when I was setting up a really complex ETL pipeline for this old e-commerce company remember those good old days I’m talking about the late 2000s early 2010s before everything was serverless and fluffy in the cloud yeah those times We had this crazy setup with Kafka queues doing data ingestion and we needed Benthos to process that data in real time before we pushed it to the downstream data lake for the business analytics people always asking about sales figures like if I have a magic wand man
 
 So here's the deal the way Benthos works is it's all about message processing stages think of it like an assembly line for your data each processor is a stage and these processors modify the message payloads based on their configuration The core part you're getting at is how the output of these processors gets injected back into the stream Benthos uses a concept of message parts and each processor in the pipeline acts on one or more of these message parts It can transform existing parts add new ones or even remove them But these changes are internal to the message itself I repeat they happen inside the message payload think of a message like a JSON object which can have different keys and the different keys can be modified independently
 
-Okay let's break it down in a more practical and less theoretical manner think about a processor that transforms a JSON structure for instance suppose we have a Benthos config like this
+ let's break it down in a more practical and less theoretical manner think about a processor that transforms a JSON structure for instance suppose we have a Benthos config like this
 
 ```yaml
 pipeline:

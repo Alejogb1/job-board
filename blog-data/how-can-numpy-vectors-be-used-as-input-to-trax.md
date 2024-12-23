@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-numpy-vectors-be-used-as-input-to-trax"
 ---
 
-Okay, let's tackle this. I've spent a fair amount of time integrating various numerical libraries with deep learning frameworks, and bridging the gap between NumPy and Trax is something I've had to optimize quite a few times – especially back when Trax was still gaining traction in the field. It's a common hurdle, so let's break down how to make NumPy vectors play nicely as input to Trax models.
+,  I've spent a fair amount of time integrating various numerical libraries with deep learning frameworks, and bridging the gap between NumPy and Trax is something I've had to optimize quite a few times – especially back when Trax was still gaining traction in the field. It's a common hurdle, so let's break down how to make NumPy vectors play nicely as input to Trax models.
 
 The fundamental point is that Trax expects its inputs to be tensors, often represented as JAX arrays, not raw NumPy arrays directly. While they might seem similar at a glance, they’re treated differently within the JAX ecosystem, on which Trax is built. JAX arrays offer functionalities like automatic differentiation, which are core to how Trax calculates gradients and updates model parameters during training. NumPy arrays, on the other hand, are optimized for general numerical computation, and lack the critical tracing required for automatic differentiation with JAX. The key, then, is transitioning the NumPy vectors into a format that Trax can digest.
 

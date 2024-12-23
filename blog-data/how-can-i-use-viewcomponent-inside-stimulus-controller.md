@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-can-i-use-viewcomponent-inside-stimulus-controller"
 ---
 
-Okay, let's tackle this. It's a situation I've encountered more than a few times, and it’s a surprisingly nuanced problem when you dive into the specifics. Integrating `view_component` directly within a Stimulus controller isn't the typical use case, but it absolutely has its merits when you need dynamic and reusable UI elements. You’ll often find yourself in scenarios where static html templates controlled by Stimulus become too verbose, or when logic separation warrants moving rendering responsibilities to the server-side.
+,  It's a situation I've encountered more than a few times, and it’s a surprisingly nuanced problem when you dive into the specifics. Integrating `view_component` directly within a Stimulus controller isn't the typical use case, but it absolutely has its merits when you need dynamic and reusable UI elements. You’ll often find yourself in scenarios where static html templates controlled by Stimulus become too verbose, or when logic separation warrants moving rendering responsibilities to the server-side.
 
 The crux of the issue is that `view_component` generates server-rendered html, while Stimulus operates entirely in the client-side. Therefore, we can’t just instantiate a `view_component` directly from within a stimulus controller. Instead, we need to bridge the gap, and the usual approach involves fetching the rendered component from the server and then manipulating the dom using the stimulus controller. I’ve seen this become complicated in projects where data fetching isn't handled cleanly and rendering logic gets mixed into the controllers. It's a maintenance nightmare waiting to happen.
 

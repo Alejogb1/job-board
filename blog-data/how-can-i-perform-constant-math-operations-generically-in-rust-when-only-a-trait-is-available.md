@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-perform-constant-math-operations-generically-in-rust-when-only-a-trait-is-available"
 ---
 
-Alright, let's tackle this. I've certainly been down this road before, and it's a common enough challenge in Rust when you're trying to build something reusable across a variety of number types. The scenario you've described, performing constant math operations generically based on a trait, actually highlights several key aspects of Rust's type system and its commitment to performance.
+Alright,  I've certainly been down this road before, and it's a common enough challenge in Rust when you're trying to build something reusable across a variety of number types. The scenario you've described, performing constant math operations generically based on a trait, actually highlights several key aspects of Rust's type system and its commitment to performance.
 
 The core issue here stems from the fact that traits describe *behavior*, not concrete types. You might have a trait `Numeric` that defines methods like `add`, `sub`, etc., and various concrete types like `i32`, `f64`, and even custom numeric types implement that trait. But the compiler needs to know exactly what operations to perform *at compile time*. This is crucial for optimization, and that’s where the challenge arises. The trait itself doesn't tell the compiler how to perform `+` or `-` on generic types at compile time. It merely specifies what can be performed.
 

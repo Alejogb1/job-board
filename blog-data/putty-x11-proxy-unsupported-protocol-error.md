@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "putty-x11-proxy-unsupported-protocol-error"
 ---
 
-Alright so you're getting the `putty x11 proxy unsupported protocol error` right Been there done that got the t-shirt and the scars to prove it Let me tell you this isn't some arcane magic it's usually pretty straightforward but man oh man it can be frustrating if you don't know what to look for
+so you're getting the `putty x11 proxy unsupported protocol error` right Been there done that got the t-shirt and the scars to prove it Let me tell you this isn't some arcane magic it's usually pretty straightforward but man oh man it can be frustrating if you don't know what to look for
 
 So first thing first let's unpack what's happening You're trying to use PuTTY to tunnel X11 traffic which basically means you want to display graphical applications running on a remote Linux machine on your local Windows box via some ssh tunneling magic right When PuTTY throws the "unsupported protocol" error it means something in that chain is not happy generally either your settings are off or the server isn't set up to play nice with x11 forwarding
 
@@ -32,7 +32,7 @@ You see I'm a minimalist i only tick and configure what I need
 
 **2 The Server Side Setup is Important too**
 
-Okay so PuTTY settings are right next thing to look at is the server itself. X11 forwarding has to be enabled in the sshd configuration. If not PuTTY is trying to do something the server doesn't allow it's basically a recipe for error messages.
+ so PuTTY settings are right next thing to look at is the server itself. X11 forwarding has to be enabled in the sshd configuration. If not PuTTY is trying to do something the server doesn't allow it's basically a recipe for error messages.
 
 Connect to the server with a regular ssh session. I know you're trying to do X11 but let's confirm we can at least get in and the SSH connection is stable. Once connected you gotta have super user permissions to look at the sshd config. Usually it’s in `/etc/ssh/sshd_config`.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-tensors-be-saved-to-a-pt-file-for-dataset-creation"
 ---
 
-Okay, let's tackle this. From my experience building custom machine learning datasets, managing tensor serialization for `.pt` files is a frequent task, and there are nuances that are important to consider for both performance and maintainability. It's more than just a simple save; you need to think about how the data will be loaded later, any preprocessing that might be needed at the time of saving, and potential future compatibility issues.
+,  From my experience building custom machine learning datasets, managing tensor serialization for `.pt` files is a frequent task, and there are nuances that are important to consider for both performance and maintainability. It's more than just a simple save; you need to think about how the data will be loaded later, any preprocessing that might be needed at the time of saving, and potential future compatibility issues.
 
 The `.pt` extension generally implies that we’re working within the PyTorch ecosystem, and what's happening under the hood is the serialization of data using the `torch.save()` function. This function isn't exclusive to tensors, it can save any Python object, but for datasets, tensors are definitely the primary ingredient. Think of it as packaging a data structure for later use. Now, let's break down how this typically works and some key points I've learned over the years.
 

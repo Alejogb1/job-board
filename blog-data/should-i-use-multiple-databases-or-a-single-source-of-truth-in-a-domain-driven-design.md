@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "should-i-use-multiple-databases-or-a-single-source-of-truth-in-a-domain-driven-design"
 ---
 
-Okay, let's talk databases in a ddd context, a topic I’ve definitely spent my fair share of nights pondering over. You’re asking a question that cuts to the core of system architecture and, honestly, there isn't a single, definitive answer applicable to all scenarios. The short response is: it depends on your domain, its complexity, and your architectural priorities. But let’s unpack that a bit.
+, let's talk databases in a ddd context, a topic I’ve definitely spent my fair share of nights pondering over. You’re asking a question that cuts to the core of system architecture and, honestly, there isn't a single, definitive answer applicable to all scenarios. The short response is: it depends on your domain, its complexity, and your architectural priorities. But let’s unpack that a bit.
 
 Early in my career, I was involved in developing a large-scale e-commerce platform. We initially opted for a monolithic approach with a single, massive relational database serving all domain contexts – customer management, inventory, orders, payments, the whole nine yards. While seemingly simple at first, this quickly became a maintenance and performance bottleneck as the system grew. The schema was a tangled web, deployments became risky and slow, and performance suffered. Changes in one area often had unintended consequences elsewhere. This experience, among others, made me acutely aware of the tradeoffs involved in database choices within a domain-driven design (ddd).
 

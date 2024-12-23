@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-optimize-repeated-similar-queries-in-activerecord"
 ---
 
-Alright, let's tackle this. Query optimization in ActiveRecord, especially when dealing with repetitive but slightly varying requests, is a topic I've spent a fair amount of time navigating. It’s a common scenario and, frankly, a frequent bottleneck. Over the years, I've seen more than a few performance cliff-dives caused by seemingly innocuous repetitive queries, so I’m glad you've asked.
+Alright,  Query optimization in ActiveRecord, especially when dealing with repetitive but slightly varying requests, is a topic I've spent a fair amount of time navigating. It’s a common scenario and, frankly, a frequent bottleneck. Over the years, I've seen more than a few performance cliff-dives caused by seemingly innocuous repetitive queries, so I’m glad you've asked.
 
 The core issue typically stems from ActiveRecord, by default, generating and executing a new sql query each time you call a method that retrieves data from the database, even if the conditions are very similar. This isn't usually a problem for singular, distinct queries. But when these similar requests happen in a loop, or in rapid succession, it multiplies database load exponentially. We need to move beyond simply relying on ActiveRecord's default behavior and employ strategies that reduce database trips. Here are some approaches I’ve found effective, and I'll illustrate with examples based on problems I’ve encountered in past projects.
 

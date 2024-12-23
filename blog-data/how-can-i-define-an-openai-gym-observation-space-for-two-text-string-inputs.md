@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-define-an-openai-gym-observation-space-for-two-text-string-inputs"
 ---
 
-Okay, let's tackle this. It's not immediately obvious how to shoehorn strings into a standard gym observation space, especially when you're used to dealing with numerical data or images. I recall a project a few years back where I was working on a chatbot that learned through reinforcement learning; the challenge of defining a suitable observation space for the conversation history was surprisingly complex. The typical gym spaces, like `Discrete`, `Box`, or `MultiDiscrete`, aren't directly designed for text. You'll need to massage things a bit to get it working smoothly.
+,  It's not immediately obvious how to shoehorn strings into a standard gym observation space, especially when you're used to dealing with numerical data or images. I recall a project a few years back where I was working on a chatbot that learned through reinforcement learning; the challenge of defining a suitable observation space for the conversation history was surprisingly complex. The typical gym spaces, like `Discrete`, `Box`, or `MultiDiscrete`, aren't directly designed for text. You'll need to massage things a bit to get it working smoothly.
 
 The fundamental problem, as you've probably already surmised, is that text strings are not naturally represented as numerical vectors that the gym framework expects for an observation. You can't just hand over the raw text; the agent needs a numerical representation to learn from. So, we need an encoder. There are several ways to achieve this, and the best choice will depend on your specific use case. We’ll explore three broad categories.
 

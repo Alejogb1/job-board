@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-install-an-older-version-of-laravel-using-sail"
 ---
 
-Alright, let's tackle this. I remember a project a while back, where we needed to maintain a legacy system built on Laravel 5.8, and getting that to play nice with modern docker tooling like Sail was… a journey. The default sail setup tends to target the latest stable release, so rolling back to an older version needs a bit of manual intervention. It's not terribly complex, but it requires understanding a few moving parts. Essentially, we need to explicitly specify the Laravel version during the project creation process and tailor the docker configuration accordingly.
+Alright,  I remember a project a while back, where we needed to maintain a legacy system built on Laravel 5.8, and getting that to play nice with modern docker tooling like Sail was… a journey. The default sail setup tends to target the latest stable release, so rolling back to an older version needs a bit of manual intervention. It's not terribly complex, but it requires understanding a few moving parts. Essentially, we need to explicitly specify the Laravel version during the project creation process and tailor the docker configuration accordingly.
 
 First, let's focus on the initial scaffolding. When you start a new Laravel project with sail, the command `curl -s "https://laravel.build/example-app" | bash` grabs the latest build, which will install the most current Laravel version. To get the older version we need to use the --laravel argument, like so:
 

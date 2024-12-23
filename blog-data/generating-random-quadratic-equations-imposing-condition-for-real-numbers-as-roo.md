@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "generating-random-quadratic-equations-imposing-condition-for-real-numbers-as-roo"
 ---
 
-Okay so you wanna generate random quadratic equations but with a twist you need the roots to be real not just some imaginary numbers chilling in the complex plane I get it I've been there done that probably more times than I care to remember So let's dive in
+ so you wanna generate random quadratic equations but with a twist you need the roots to be real not just some imaginary numbers chilling in the complex plane I get it I've been there done that probably more times than I care to remember So let's dive in
 
 First off let's nail down what we're dealing with A quadratic equation is your classic ax² + bx + c = 0 The roots the solutions those x values are what we're after and you need them real not some i nonsense To make that happen we need to control the discriminant the part under the square root in the quadratic formula that's b² - 4ac If that discriminant is zero or positive then bingo real roots If it's negative then we're in imaginary land and we don't wanna go there today
 
@@ -45,7 +45,7 @@ for _ in range(5):
       print(f"Discriminant: {discriminant:.2f} complex roots something is wrong ")
 ```
 
-Okay so what's going on here I am generating random b with some range of values and then I am trying to make the value of 4ac small enough so that it will be less than b². This can be done by choosing range of values of c centered around 0. We have to be careful here because if a and c have different signs we are guaranteed a real result. If we don't take this into account we might get many of the generated discriminants not being real and we want to make sure all are real.
+ so what's going on here I am generating random b with some range of values and then I am trying to make the value of 4ac small enough so that it will be less than b². This can be done by choosing range of values of c centered around 0. We have to be careful here because if a and c have different signs we are guaranteed a real result. If we don't take this into account we might get many of the generated discriminants not being real and we want to make sure all are real.
 
 Now sometimes you might want more control over the roots directly If you want a particular set of real roots r1 and r2 we could just work backwards like it's highschool math all over again we can make it so a=1 and we just need to calculate b and c
 
@@ -119,4 +119,4 @@ For diving deeper into the math behind quadratic equations and their roots I'd h
 
 Now before we wrap up here's a little joke I heard in a lecture hall once Why was the math book sad Because it had too many problems and not enough real solutions get it haha ok back to the code I swear.
 
-Alright that's pretty much it you've got a few ways to generate random quadratic equations that always have real roots Just pick the method that works best for your needs. Keep in mind that different methods might have different biases in the distribution of the generated equations, so be mindful of your specific application. Happy coding and remember math is fun especially when you can make it do cool things
+that's pretty much it you've got a few ways to generate random quadratic equations that always have real roots Just pick the method that works best for your needs. Keep in mind that different methods might have different biases in the distribution of the generated equations, so be mindful of your specific application. Happy coding and remember math is fun especially when you can make it do cool things

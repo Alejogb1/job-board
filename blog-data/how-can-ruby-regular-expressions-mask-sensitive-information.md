@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-ruby-regular-expressions-mask-sensitive-information"
 ---
 
-Alright, let's tackle this. Masking sensitive data using regular expressions in Ruby is a common task, and something I've certainly spent time refining over the years, especially when dealing with logging and data sanitization pipelines. The key is to be both precise and flexible. You need patterns that effectively capture the sensitive elements, but you also need to ensure that you're not inadvertently mangling data you *don't* want to alter. The challenge lies in striking that delicate balance.
+Alright,  Masking sensitive data using regular expressions in Ruby is a common task, and something I've certainly spent time refining over the years, especially when dealing with logging and data sanitization pipelines. The key is to be both precise and flexible. You need patterns that effectively capture the sensitive elements, but you also need to ensure that you're not inadvertently mangling data you *don't* want to alter. The challenge lies in striking that delicate balance.
 
 My experience on a project involving secure payment processing, specifically, had me working with a complex Ruby on Rails application where card numbers and personal identification information needed to be scrubbed from log files. This wasn't a simple search-and-replace; we had to handle different card formats, various id patterns, and the potential for errors that could leave some data exposed. Let’s walk through the approaches, and I'll illustrate with actual code snippets I've used before.
 

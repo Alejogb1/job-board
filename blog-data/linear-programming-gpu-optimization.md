@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "linear-programming-gpu-optimization"
 ---
 
-Okay so you're asking about linear programming and optimizing it with GPUs yeah I've been there done that probably got the t-shirt somewhere in my messy closet This isn't exactly a walk in the park but it's definitely doable and can give you massive speedups if you're dealing with large problems Lets break it down like we're debugging some legacy code
+ so you're asking about linear programming and optimizing it with GPUs yeah I've been there done that probably got the t-shirt somewhere in my messy closet This isn't exactly a walk in the park but it's definitely doable and can give you massive speedups if you're dealing with large problems Lets break it down like we're debugging some legacy code
 
 First off Linear Programming LP it's not some trendy AI thing its been around for ages You got your objective function you wanna maximize or minimize subject to some linear constraints You usually start with something like the Simplex algorithm or Interior Point methods all the classic optimization stuff But when the size of your problem starts creeping up these algorithms hit a wall They were not built to harness the parallel processing power of GPUs
 

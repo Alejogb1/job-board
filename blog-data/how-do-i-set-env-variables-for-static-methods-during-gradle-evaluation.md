@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-set-env-variables-for-static-methods-during-gradle-evaluation"
 ---
 
-Okay, let's unpack this. The challenge of setting environment variables that a static method can access *during* Gradle evaluation is a common hurdle, and it's one I've bumped into myself a few times, particularly during early build lifecycle customizations. It's not as straightforward as a simple property assignment within your `build.gradle` file, and there are some nuances that are worth considering. The core issue lies in understanding the execution phases of Gradle and how static methods interact with those phases.
+, let's unpack this. The challenge of setting environment variables that a static method can access *during* Gradle evaluation is a common hurdle, and it's one I've bumped into myself a few times, particularly during early build lifecycle customizations. It's not as straightforward as a simple property assignment within your `build.gradle` file, and there are some nuances that are worth considering. The core issue lies in understanding the execution phases of Gradle and how static methods interact with those phases.
 
 The critical takeaway is this: static methods are resolved and their containing class is loaded by the jvm before Gradle ever actually *executes* any of your groovy build code. That means if your static method attempts to access environment variables at *class load time*, which is essentially the moment the jvm reads the class definition for the first time, those variables won't be populated by Gradle because Gradle hasn't started executing the build logic at that stage. I've seen this trip up many developers expecting the variables to be in place from the get-go.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-cant-internal-apps-connect-to-the-tailscale-server-using-the-specified-port"
 ---
 
-Alright, let's tackle this. From my experience, issues with internal applications not connecting to a Tailscale server on a specific port often stem from a nuanced interplay of factors, rarely pointing to a single, glaring error. We're essentially dealing with network layers, firewalls, and application-specific configurations that can all conspire to thwart a seemingly straightforward connection. I've seen this play out multiple times, often requiring a step-by-step diagnostic approach.
+Alright,  From my experience, issues with internal applications not connecting to a Tailscale server on a specific port often stem from a nuanced interplay of factors, rarely pointing to a single, glaring error. We're essentially dealing with network layers, firewalls, and application-specific configurations that can all conspire to thwart a seemingly straightforward connection. I've seen this play out multiple times, often requiring a step-by-step diagnostic approach.
 
 Firstly, let's clear up a common misconception: Tailscale itself doesn't typically block ports. Instead, it establishes a secure virtual network (a wireguard overlay network) and handles the routing. The *actual* limitations usually lie in the underlying network infrastructure or application behavior. Think of it like Tailscale is the secure courier delivering the packets. What happens *before* or *after* delivery (at the sender and receiver) is where we need to investigate further.
 

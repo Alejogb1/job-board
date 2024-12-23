@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "mpi-all-reduce-parallel-computation"
 ---
 
-Okay so MPI allreduce eh Been there done that Got the t-shirt and probably a few bug bites along the way too Let me tell you about my adventures with that beast
+ so MPI allreduce eh Been there done that Got the t-shirt and probably a few bug bites along the way too Let me tell you about my adventures with that beast
 
 First things first MPI allreduce is basically your go to for collective communication in parallel computing You have multiple processes each holding a piece of data and you need to combine those pieces into a single result available to all of them It’s super common in scientific computing simulations anything really where you're crunching numbers on a large scale
 
@@ -74,7 +74,7 @@ printf("Process %d global product: %f\n", rank, global_product);
 
 The beauty of allreduce is its simplicity and how well its performance is optimized It will scale well with increasing number of processes or cores You don't need to worry about sending messages or receiving messages everything is handled internally by the MPI library Which is very useful and really improves developer sanity I mean no more crashes due to the message queue running out
 
-Now you might be thinking okay thats cool but how does MPI actually make it fast The thing is under the hood it doesnt just do naive pair wise sums or sends This library is incredibly sophisticated and it can choose from a whole suite of algorithms to optimize the reduction Its clever and optimized algorithms will make sure things are done very efficiently depending on your hardware like tree based reductions scatter-reduce-gather strategies which will minimize communication overhead which would otherwise be a real problem if you do this yourself or use a very bad algorithm like in my first example when i was in grad school
+Now you might be thinking  thats cool but how does MPI actually make it fast The thing is under the hood it doesnt just do naive pair wise sums or sends This library is incredibly sophisticated and it can choose from a whole suite of algorithms to optimize the reduction Its clever and optimized algorithms will make sure things are done very efficiently depending on your hardware like tree based reductions scatter-reduce-gather strategies which will minimize communication overhead which would otherwise be a real problem if you do this yourself or use a very bad algorithm like in my first example when i was in grad school
 
 It is not just about speed you get correctness too MPI Allreduce ensures all processes receive the same combined result and this is very important when you're running complex simulations and doing numerical operations You don’t want different processes having different results because of some race condition you just want the result and that’s what MPI Allreduce gives to you
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-mochachai-testing-be-enhanced-with-middleware-headers"
 ---
 
-Alright, let's tackle this. I remember a project back in 2018, where we were building a complex microservices architecture. Authenticating requests between these services became quite a challenge, and we quickly realized that relying solely on traditional unit tests wasn't enough. We needed to test the entire flow, including the middleware that managed our authorization headers. It was then I delved deeper into using Mocha and Chai in conjunction with middleware manipulation.
+Alright,  I remember a project back in 2018, where we were building a complex microservices architecture. Authenticating requests between these services became quite a challenge, and we quickly realized that relying solely on traditional unit tests wasn't enough. We needed to test the entire flow, including the middleware that managed our authorization headers. It was then I delved deeper into using Mocha and Chai in conjunction with middleware manipulation.
 
 So, how do we enhance Mocha/Chai testing with middleware headers? The key lies in programmatically manipulating headers within your tests to simulate various scenarios, particularly when dealing with authorization, session management, or API versioning. Instead of only testing isolated units, you're testing the interaction of your units within the context of a complete request. This gives you a more realistic picture of how your system behaves.
 

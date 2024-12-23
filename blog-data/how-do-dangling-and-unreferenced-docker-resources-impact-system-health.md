@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-dangling-and-unreferenced-docker-resources-impact-system-health"
 ---
 
-Okay, let’s tackle this one. I recall a particularly hairy incident back in my days scaling a microservices architecture, where we first really felt the sting of neglected docker resources. It’s not always immediately apparent, but those orphaned containers, volumes, images, and networks can collectively cause more trouble than they're worth. We learned that lesson the hard way, and I’d like to share some practical insights on why managing these is critical for maintaining a healthy system.
+, let’s tackle this one. I recall a particularly hairy incident back in my days scaling a microservices architecture, where we first really felt the sting of neglected docker resources. It’s not always immediately apparent, but those orphaned containers, volumes, images, and networks can collectively cause more trouble than they're worth. We learned that lesson the hard way, and I’d like to share some practical insights on why managing these is critical for maintaining a healthy system.
 
 The core issue boils down to resource exhaustion. Docker, while fantastic for containerization, doesn't inherently clean up after itself. When you create a container, you’re often also pulling or building an image. These, along with any volumes or custom networks created alongside, consume space and potentially other system resources. If not actively managed, they become “dangling” (no associated running container) or “unreferenced” (no longer tagged, in the case of images). Over time, this accumulates and degrades performance.
 

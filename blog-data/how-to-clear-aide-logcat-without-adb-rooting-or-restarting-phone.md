@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-clear-aide-logcat-without-adb-rooting-or-restarting-phone"
 ---
 
-Okay so you've got a logcat issue right I've been there believe me Been wrestling with Android internals since the days of Gingerbread and let me tell you debugging without root or ADB access is like trying to find a specific grain of sand on a beach at night yeah not fun But I've cracked this nut before so let's break it down
+ so you've got a logcat issue right I've been there believe me Been wrestling with Android internals since the days of Gingerbread and let me tell you debugging without root or ADB access is like trying to find a specific grain of sand on a beach at night yeah not fun But I've cracked this nut before so let's break it down
 
 First off let's be real Why would you *need* to clear logcat without adb or root or a full restart That screams like a very specific problem usually its like those pesky embedded devices where you have very little control over the environment Or maybe youre dealing with a locked down device for field testing where you are not allowed to push code or change a thing I had one project back in 2016 working on medical grade embedded devices they were ultra restricted It was a nightmare when the logcat would get swamped with repetitive error messages you had to think of some sort of method to avoid a device reboot just to see whats going on If you had to perform a reboot every time for the logs you wouldn't have a working device
 
@@ -69,7 +69,7 @@ object LogClearer {
 
 The Kotlin code is basically the same thing It's a bit cleaner with the loops but the logic remains the same You can add this as an object to be called wherever you need a `logcat` flush It's pretty straightforward
 
-Now some of you may be thinking okay but isnt there a way to target a specific buffer rather than flooding all of them Sadly no theres no clean way to do that programmatically The Android API is intentionally limiting access to the low-level buffer operations So what we are doing here is kind of the next best thing If you could access the C/C++ layer of android the log buffers are exposed as files and you could technically wipe them but this would require a rooted device and its not in the spirit of the original question
+Now some of you may be thinking  but isnt there a way to target a specific buffer rather than flooding all of them Sadly no theres no clean way to do that programmatically The Android API is intentionally limiting access to the low-level buffer operations So what we are doing here is kind of the next best thing If you could access the C/C++ layer of android the log buffers are exposed as files and you could technically wipe them but this would require a rooted device and its not in the spirit of the original question
 
 Now I remember one time I was trying to debug a critical crash on an older Android TV box back in 2018 we had no way to pull the logcat because we were not able to set up adb The TV box didn't have wifi either so it was very isolated We ended up installing a debugging service that would write to a file and when we had a critical issue we had to copy that file over through a USB stick because we also did not have root access. And you know whats the worst thing about Android debugging? The moment you think you've found the solution, you hit another roadblock. its like a never ending game of whack a mole with bugs hahahaha
 

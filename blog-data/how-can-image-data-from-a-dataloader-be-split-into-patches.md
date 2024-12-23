@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-image-data-from-a-dataloader-be-split-into-patches"
 ---
 
-Okay, let’s delve into the intricacies of patch extraction from image data within a dataloader context. This is a task I've encountered quite a few times in my career, particularly when dealing with high-resolution imagery or when training models that benefit from local contextual information, such as those for object detection or segmentation. It's a necessary step in many complex image processing pipelines, and there are several ways to tackle it, each with its own trade-offs in terms of performance and flexibility.
+, let’s delve into the intricacies of patch extraction from image data within a dataloader context. This is a task I've encountered quite a few times in my career, particularly when dealing with high-resolution imagery or when training models that benefit from local contextual information, such as those for object detection or segmentation. It's a necessary step in many complex image processing pipelines, and there are several ways to tackle it, each with its own trade-offs in terms of performance and flexibility.
 
 Typically, when we work with deep learning models, data is loaded in batches through a dataloader. These images might come in various sizes and formats. The crux of the matter is, how do we efficiently carve out smaller, uniform patches from these larger images that have already been through the loading process? Let’s consider a few practical approaches using Python, primarily focusing on libraries that are common in the machine learning space like PyTorch and NumPy.
 

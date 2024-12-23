@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "yoga-schema-resolvers-import"
 ---
 
-Okay so you're asking about yoga schema resolvers and import setups right I get it been there done that a million times it feels like
+ so you're asking about yoga schema resolvers and import setups right I get it been there done that a million times it feels like
 
 Let me break it down for ya because this is one of those things that can bite you in the butt if you're not careful especially when your project gets bigger and more complicated Believe me I've seen it first hand
 

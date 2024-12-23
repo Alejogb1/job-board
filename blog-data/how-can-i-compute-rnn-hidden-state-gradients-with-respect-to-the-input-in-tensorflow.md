@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-compute-rnn-hidden-state-gradients-with-respect-to-the-input-in-tensorflow"
 ---
 
-Okay, let's tackle this. You're looking to understand how to compute the gradients of an RNN's hidden states with respect to its input in TensorFlow. I remember facing a similar challenge a few years back when I was working on a sequence-to-sequence model for time-series prediction. It's a bit more involved than typical backpropagation, but definitely manageable.
+,  You're looking to understand how to compute the gradients of an RNN's hidden states with respect to its input in TensorFlow. I remember facing a similar challenge a few years back when I was working on a sequence-to-sequence model for time-series prediction. It's a bit more involved than typical backpropagation, but definitely manageable.
 
 The core issue lies in the recurrent nature of RNNs. Each hidden state at time *t* is dependent on the hidden state at *t-1* and the current input. Consequently, the gradient of a hidden state with respect to an input is influenced by all the previous interactions. We aren’t dealing with a straightforward, layer-by-layer computation. We have to consider the unfolding of the network over time.
 

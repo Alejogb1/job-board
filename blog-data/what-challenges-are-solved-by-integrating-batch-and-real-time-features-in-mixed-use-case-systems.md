@@ -4,7 +4,7 @@ date: "2024-12-10"
 id: "what-challenges-are-solved-by-integrating-batch-and-real-time-features-in-mixed-use-case-systems"
 ---
 
-Okay so you wanna talk about mixing batch and real-time processing right  like a crazy Frankenstein monster of a system  It's actually way cooler than it sounds  The whole point is you get the best of both worlds  Imagine a system that needs to crunch a massive dataset overnight for some analytical magic  then also needs to respond instantly to user requests during the day  That's where the fun begins
+ so you wanna talk about mixing batch and real-time processing right  like a crazy Frankenstein monster of a system  It's actually way cooler than it sounds  The whole point is you get the best of both worlds  Imagine a system that needs to crunch a massive dataset overnight for some analytical magic  then also needs to respond instantly to user requests during the day  That's where the fun begins
 
 The challenges solved are mostly about efficiency and responsiveness  Think of it like this  batch processing is like a slow meticulous craftsman  perfect for detail work  but terrible at speed  Real-time is your speedy ninja  lightning fast  but can't handle huge amounts of data gracefully
 

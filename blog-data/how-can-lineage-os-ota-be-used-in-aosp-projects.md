@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-can-lineage-os-ota-be-used-in-aosp-projects"
 ---
 
-Okay, let's talk about integrating LineageOS's over-the-air (ota) update system into a generic android open source project (aosp). I've certainly been down this road before, and it's a journey that involves understanding quite a few interlocking pieces. My particular experience was with a heavily customized Android build for embedded devices, where we needed the robust update mechanisms offered by LineageOS, but not the complete rom itself.
+, let's talk about integrating LineageOS's over-the-air (ota) update system into a generic android open source project (aosp). I've certainly been down this road before, and it's a journey that involves understanding quite a few interlocking pieces. My particular experience was with a heavily customized Android build for embedded devices, where we needed the robust update mechanisms offered by LineageOS, but not the complete rom itself.
 
 The crux of leveraging LineageOS’s ota system in AOSP boils down to two key elements: the update client (essentially the software on the device handling the download and application of updates) and the server-side components (which prepare and serve the update packages). LineageOS doesn't use a generic aosp ota server; it has its own suite of scripts and tools tailored to its specific structure. However, we don't necessarily need *everything*.
 

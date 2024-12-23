@@ -54,7 +54,7 @@ async def get_age_handler(message: types.Message, state: FSMContext):
        data['age'] = message.text
        name = data.get('name')
        age = data.get('age')
-   await message.answer(f"Okay {name}, you are {age} years old! Thank you")
+   await message.answer(f" {name}, you are {age} years old! Thank you")
    await state.finish()
 
 async def on_startup(dispatcher):

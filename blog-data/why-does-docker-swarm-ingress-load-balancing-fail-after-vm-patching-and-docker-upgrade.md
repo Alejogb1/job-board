@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-docker-swarm-ingress-load-balancing-fail-after-vm-patching-and-docker-upgrade"
 ---
 
-Alright, let's tackle this. I've actually seen this scenario play out a few times in my career, particularly after large-scale infrastructure maintenance. The problem you’re describing, where Docker Swarm ingress load balancing hiccups after virtual machine patching and docker upgrades, is usually a confluence of factors related to network state, internal service discovery, and the way docker manages updates. It's rarely a single point of failure but more a cascade of subtle issues.
+Alright,  I've actually seen this scenario play out a few times in my career, particularly after large-scale infrastructure maintenance. The problem you’re describing, where Docker Swarm ingress load balancing hiccups after virtual machine patching and docker upgrades, is usually a confluence of factors related to network state, internal service discovery, and the way docker manages updates. It's rarely a single point of failure but more a cascade of subtle issues.
 
 Let's break it down. The core of the issue lies in how Docker Swarm handles routing mesh updates and endpoint reconciliation after changes to the underlying infrastructure. When you patch your VMs, you're essentially triggering a potential network state change. Upgrading docker itself also introduces new software versions which may include changes in how these routing decisions are made. The ingress load balancing in Swarm is achieved through a routing mesh where each swarm node participates in routing requests to services. This routing is based on internal DNS resolution, specific port mapping, and kernel-level networking features.
 

@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-is-featureengine-failing-with-a-pandas-dataframe-in-selection"
 ---
 
-Okay, let's delve into why you might be encountering issues with `feature_engine` when selecting columns within a pandas dataframe. I've personally run into similar snags more than a few times, so I understand the frustration. Often, it's not a straightforward bug but rather a confluence of factors related to how `feature_engine` expects input data, and the way pandas dataframes behave, especially when dealing with nuanced selection mechanisms.
+, let's delve into why you might be encountering issues with `feature_engine` when selecting columns within a pandas dataframe. I've personally run into similar snags more than a few times, so I understand the frustration. Often, it's not a straightforward bug but rather a confluence of factors related to how `feature_engine` expects input data, and the way pandas dataframes behave, especially when dealing with nuanced selection mechanisms.
 
 First, it’s crucial to understand that `feature_engine`'s transformers aren’t directly vectorized operations on the whole dataframe, like some pandas methods. Instead, they're generally designed to operate on specific columns at a time, or in some cases, groups of specified columns. When selection seems to fail, it often boils down to a mismatch between what the transformer expects and what you're providing as input.
 

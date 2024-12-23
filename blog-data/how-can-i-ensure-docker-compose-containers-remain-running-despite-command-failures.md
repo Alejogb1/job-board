@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-ensure-docker-compose-containers-remain-running-despite-command-failures"
 ---
 
-Okay, let’s unpack this. I remember a particularly hairy incident a few years back where a seemingly benign update to an internal service kept crashing our whole dev environment because of a poorly handled dependency. Docker Compose, in its default configuration, isn’t particularly resilient to individual container failures. It will happily bring down the entire stack if one service goes belly up. This experience hammered home the importance of robust restart policies, and that's exactly what we need to discuss here.
+, let’s unpack this. I remember a particularly hairy incident a few years back where a seemingly benign update to an internal service kept crashing our whole dev environment because of a poorly handled dependency. Docker Compose, in its default configuration, isn’t particularly resilient to individual container failures. It will happily bring down the entire stack if one service goes belly up. This experience hammered home the importance of robust restart policies, and that's exactly what we need to discuss here.
 
 The core issue is that Docker Compose, by default, treats any container exit as a reason to stop the service, and consequently the whole Compose setup if other services are dependent on the failing one. We need to explicitly tell it *how* to react to these non-zero exit codes, and that’s where `restart` policies come in. They dictate under what circumstances Docker should attempt to restart a container.
 

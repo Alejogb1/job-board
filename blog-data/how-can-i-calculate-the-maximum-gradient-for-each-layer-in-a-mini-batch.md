@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-calculate-the-maximum-gradient-for-each-layer-in-a-mini-batch"
 ---
 
-Okay, let's unpack this. Calculating the maximum gradient for each layer in a mini-batch is something I've tackled quite a few times, particularly when diagnosing training instabilities in deep learning models. It’s a valuable metric for understanding how your model's layers are behaving during learning. We’re not just talking about finding a single max gradient value, but rather assessing the maximum gradient *within* each individual layer for a given mini-batch update. This granularity is key.
+, let's unpack this. Calculating the maximum gradient for each layer in a mini-batch is something I've tackled quite a few times, particularly when diagnosing training instabilities in deep learning models. It’s a valuable metric for understanding how your model's layers are behaving during learning. We’re not just talking about finding a single max gradient value, but rather assessing the maximum gradient *within* each individual layer for a given mini-batch update. This granularity is key.
 
 Let's break down the process and why this information is useful. Typically, when training a neural network with gradient descent, the gradients of the loss with respect to the model parameters are calculated. This calculation happens within a mini-batch context, meaning the gradients are averaged (or summed) over all samples in that mini-batch before being used to update the model weights. The ‘maximum gradient’ we are talking about here, is the *largest absolute value* of the gradient within each layer's parameter set before averaging occurs across the mini-batch samples.
 

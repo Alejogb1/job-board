@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-go-function-determines-the-15-minute-time-bin-for-the-current-time"
 ---
 
-Okay, let's tackle this. I've dealt with time binning in Go quite a few times, especially when working on systems that process temporal data, like telemetry streams or log aggregation pipelines. It's one of those seemingly straightforward problems that quickly reveals its subtleties. The core challenge, as you’ve posed, is taking a given `time.Time` value and mapping it to a 15-minute interval. We want to find the beginning of the 15-minute period that encompasses that time. No fuss, no muss.
+,  I've dealt with time binning in Go quite a few times, especially when working on systems that process temporal data, like telemetry streams or log aggregation pipelines. It's one of those seemingly straightforward problems that quickly reveals its subtleties. The core challenge, as you’ve posed, is taking a given `time.Time` value and mapping it to a 15-minute interval. We want to find the beginning of the 15-minute period that encompasses that time. No fuss, no muss.
 
 Before jumping into code, let’s break down the logic. We need to, first, extract the hour and minute from the provided timestamp. Then, we have to figure out which 15-minute interval it resides within. If the minute is, say, 7, it belongs to the 0-15 minute bin. If it's 23, it falls into the 15-30 minute bin, and so on. Once we have this, constructing the corresponding `time.Time` object is just a matter of zeroing the seconds and nanoseconds, and using the determined minute value.
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "alter-session-for-current-schema"
 ---
 
-Okay so you're asking about `ALTER SESSION` for the current schema in a database context most likely relational like Oracle or PostgreSQL This is a common thing that comes up and it's definitely got some quirks and nuances I’ve been around the block with databases so let me break it down from my perspective it’s not as straightforward as you might think
+ so you're asking about `ALTER SESSION` for the current schema in a database context most likely relational like Oracle or PostgreSQL This is a common thing that comes up and it's definitely got some quirks and nuances I’ve been around the block with databases so let me break it down from my perspective it’s not as straightforward as you might think
 
 First things first we’re not talking about changing the schema's structure permanently like adding a column We are talking about the active session environment settings that are temporary and impact query execution or user behavior within that specific connection Think of it as setting up your work area for that connection only and it doesn’t impact any other connections or the overall database setup
 

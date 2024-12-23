@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "does-libtorch-offer-a-normal-distribution-equivalent-to-pytorchs-torchdistributionsnormal"
 ---
 
-Okay, let's tackle this. It's a common point of confusion, particularly for those transitioning between the Python and C++ realms of PyTorch. The short answer is: not *directly*, not with a one-to-one mapping. LibTorch, being the C++ implementation, approaches probability distributions differently than its Python counterpart. Let's delve into what that means practically.
+,  It's a common point of confusion, particularly for those transitioning between the Python and C++ realms of PyTorch. The short answer is: not *directly*, not with a one-to-one mapping. LibTorch, being the C++ implementation, approaches probability distributions differently than its Python counterpart. Let's delve into what that means practically.
 
 In my past work, migrating a complex reinforcement learning model from a research prototype in Python to a production environment in C++, this difference became painfully apparent. The `torch.distributions.Normal` class in Python is a highly convenient, object-oriented abstraction, providing methods for sampling, calculating log probabilities, and evaluating probability density functions (PDFs), all handled within a neat little package. LibTorch, however, provides the fundamental building blocks, which you then assemble to achieve similar results. It's less about a pre-packaged class and more about working with the raw math directly on tensors. This has its advantages for fine-grained control and performance optimization once you get the hang of it.
 

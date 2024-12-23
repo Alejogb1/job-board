@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-median-and-quartile-lines-be-added-to-an-altair-violin-plot"
 ---
 
-Alright, let's tackle this. I remember struggling with this exact visualization challenge years ago, back when I was optimizing performance analysis dashboards. Getting those median and quartile lines onto an Altair violin plot can indeed be a bit finicky, but it's crucial for adding that extra layer of statistical context. Here's how I've approached it, and it involves a little more than just a direct function call, given Altair's declarative nature.
+Alright,  I remember struggling with this exact visualization challenge years ago, back when I was optimizing performance analysis dashboards. Getting those median and quartile lines onto an Altair violin plot can indeed be a bit finicky, but it's crucial for adding that extra layer of statistical context. Here's how I've approached it, and it involves a little more than just a direct function call, given Altair's declarative nature.
 
 The key here is understanding that Altair doesn't inherently draw median and quartile lines *within* the violin plot shape itself. Instead, we need to generate the data for these lines separately and then layer them on top. This process uses a combination of data aggregation and encoding. Think of it as a two-step process: first, crunch the numbers; second, display the result.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-accuracy-decrease-when-switching-to-the-cifar-dataset"
 ---
 
-Alright, let's tackle this. It’s a common pain point, and one I’ve certainly bumped into myself more than once. We often see a model perform admirably on a simpler dataset, like perhaps MNIST, only to stumble when faced with the complexities of CIFAR-10 or CIFAR-100. It’s not some inherent flaw in your architecture, more often a clash between the model's assumptions and the reality of the new data. The drop in accuracy when moving to CIFAR isn't a single monolithic problem but rather a confluence of several interconnected factors.
+Alright,  It’s a common pain point, and one I’ve certainly bumped into myself more than once. We often see a model perform admirably on a simpler dataset, like perhaps MNIST, only to stumble when faced with the complexities of CIFAR-10 or CIFAR-100. It’s not some inherent flaw in your architecture, more often a clash between the model's assumptions and the reality of the new data. The drop in accuracy when moving to CIFAR isn't a single monolithic problem but rather a confluence of several interconnected factors.
 
 First, let’s think about the visual complexity. MNIST images are 28x28 grayscale digits. They're clean, high-contrast, and very structured. CIFAR images, on the other hand, are 32x32 colour images, featuring varied objects, backgrounds, and lighting conditions. This means a lot more variance, and a lot more features that the model needs to learn and distinguish. It’s not simply about the increased pixel count. The relationships between pixels, the textures, edges, and colour distributions, all contribute to this increase in complexity. A model trained on MNIST might learn to identify simple patterns or edge orientations very well, but these are rarely sufficient to generalise to the noisy, colourful, real-world-like images of CIFAR. Think of it as trying to use a basic set of tools that were great for carving simple wooden shapes, and then expecting them to be equally effective when trying to carve detailed sculptures.
 
@@ -12,7 +12,7 @@ Second, the sheer number of classes plays a role. MNIST has 10 classes (digits 0
 
 Third, and this is often overlooked, is the effect of data augmentation. MNIST usually doesn’t benefit as much from strong augmentation due to its simplicity. Applying the same simple rotations, flips, and translations that *might* help for MNIST, are often insufficient when dealing with colour and complexity found in CIFAR. In my experience, the proper data augmentation strategy is incredibly crucial for CIFAR. Without a robust approach, you’re essentially training your model on only a subset of the potential variance within the data, leaving a lot of learning opportunities on the table. We need to be doing things like colour jitter, random cropping, and possibly even more advanced techniques, which may seem redundant on something simple like the MNIST digits.
 
-Okay, let’s dive into some code examples. I'll use Python with PyTorch for these, because it’s what I find most straightforward for demonstration:
+, let’s dive into some code examples. I'll use Python with PyTorch for these, because it’s what I find most straightforward for demonstration:
 
 **Example 1: Simple CNN (Demonstrating the problem)**
 

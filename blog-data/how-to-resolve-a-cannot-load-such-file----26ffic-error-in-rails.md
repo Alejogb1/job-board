@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-resolve-a-cannot-load-such-file----26ffic-error-in-rails"
 ---
 
-Alright, let's tackle this. I recall wrestling (though I suppose *solving* is a better word) with this particular `cannot load such file -- 2.6/ffi_c` error on a legacy Rails application a few years back. It’s a classic, frustrating issue stemming from inconsistencies in the way native extensions, particularly those built using `ffi`, are handled across different ruby versions and environments. It's a gem version and architecture mismatch dance, fundamentally.
+Alright,  I recall wrestling (though I suppose *solving* is a better word) with this particular `cannot load such file -- 2.6/ffi_c` error on a legacy Rails application a few years back. It’s a classic, frustrating issue stemming from inconsistencies in the way native extensions, particularly those built using `ffi`, are handled across different ruby versions and environments. It's a gem version and architecture mismatch dance, fundamentally.
 
 The core issue here isn't necessarily that the `ffi` gem itself is broken; it's usually about its compiled C extensions being incompatible with the runtime environment where the Rails application is being launched. The error, `cannot load such file -- 2.6/ffi_c`, is ruby's way of saying "hey, I'm looking for a compiled binary for ffi specifically built for ruby version 2.6, and I can’t find it, or what I found doesn't work here". This typically happens when you switch between ruby versions using tools like `rvm` or `rbenv`, or when deploying to a server with a different environment than your development machine.
 

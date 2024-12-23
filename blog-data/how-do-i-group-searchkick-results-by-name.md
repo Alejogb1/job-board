@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-group-searchkick-results-by-name"
 ---
 
-Alright, let's tackle this. I remember dealing with a similar situation a few years back while building a product catalog search for a mid-sized retailer; the users needed results grouped by product *name*, despite variations in other attributes like color or size. Searchkick is quite effective at indexing, but grouping directly within the query requires a nuanced approach. It's not something Searchkick handles automatically out-of-the-box, which can be a bit of a stumbling block if you are coming from pure relational database thinking.
+Alright,  I remember dealing with a similar situation a few years back while building a product catalog search for a mid-sized retailer; the users needed results grouped by product *name*, despite variations in other attributes like color or size. Searchkick is quite effective at indexing, but grouping directly within the query requires a nuanced approach. It's not something Searchkick handles automatically out-of-the-box, which can be a bit of a stumbling block if you are coming from pure relational database thinking.
 
 Essentially, what you’re aiming for isn't standard full-text search behavior, which focuses on relevance scores across documents. We’re moving into aggregation territory – grouping documents based on a shared field. While Elasticsearch, which Searchkick leverages, has sophisticated aggregation capabilities, Searchkick's interface doesn’t expose them directly for the purpose of grouping query *results* in a single step. Hence we’ll need to be a bit strategic.
 

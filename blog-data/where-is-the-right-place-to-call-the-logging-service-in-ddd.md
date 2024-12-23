@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "where-is-the-right-place-to-call-the-logging-service-in-ddd"
 ---
 
-Okay, let's tackle this. I’ve certainly seen my share of logging debates, particularly when domain-driven design (ddd) enters the picture. It's not as straightforward as just dumping log statements everywhere, especially if you're aiming for a clean, maintainable architecture. The 'right' place, as always, is nuanced and depends on what exactly you're logging and why. From my experience working on a large e-commerce platform—let's call it "GlobalMart"—we really grappled with this and found a few effective strategies.
+,  I’ve certainly seen my share of logging debates, particularly when domain-driven design (ddd) enters the picture. It's not as straightforward as just dumping log statements everywhere, especially if you're aiming for a clean, maintainable architecture. The 'right' place, as always, is nuanced and depends on what exactly you're logging and why. From my experience working on a large e-commerce platform—let's call it "GlobalMart"—we really grappled with this and found a few effective strategies.
 
 The core issue is separating concerns. We don’t want logging logic bleeding into our domain model. Domain entities should be focused solely on business logic, unaware of infrastructure concerns like logging. Similarly, application services should orchestrate business workflows and not be bogged down with logging details. Instead, logging should generally be treated as a cross-cutting concern, managed by infrastructure-level components, but invoked strategically.
 

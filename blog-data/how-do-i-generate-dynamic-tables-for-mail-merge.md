@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-generate-dynamic-tables-for-mail-merge"
 ---
 
-Okay, let’s tackle dynamic tables in mail merge. This is a scenario I’ve encountered several times over the years, often when dealing with systems that need to generate highly personalized reports or invoices. The core challenge, as i see it, is that standard mail merge functionality generally expects a one-to-one or one-to-many relationship with a static number of fields. When you introduce variable length tables, that paradigm starts to fall apart.
+, let’s tackle dynamic tables in mail merge. This is a scenario I’ve encountered several times over the years, often when dealing with systems that need to generate highly personalized reports or invoices. The core challenge, as i see it, is that standard mail merge functionality generally expects a one-to-one or one-to-many relationship with a static number of fields. When you introduce variable length tables, that paradigm starts to fall apart.
 
 Here’s a breakdown of how I've approached this, generally avoiding the limitations of simple mail merge fields and leaning more towards controlled programmatic generation.
 

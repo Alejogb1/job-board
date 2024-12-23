@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-calculate-a-previous-years-metric-value-in-power-bi-for-a-given-country"
 ---
 
-Okay, let's tackle this. I remember a particularly challenging reporting project a few years back where precisely this problem became a persistent hurdle. The requirement was to display year-over-year performance for various product lines across different global markets, and pulling out the previous year's metric value for a given country proved less straightforward than initially anticipated. There are a few effective techniques you can use in Power BI, leveraging DAX (Data Analysis Expressions), to accomplish this. Let's break down the approaches, and I’ll give you some concrete code examples.
+,  I remember a particularly challenging reporting project a few years back where precisely this problem became a persistent hurdle. The requirement was to display year-over-year performance for various product lines across different global markets, and pulling out the previous year's metric value for a given country proved less straightforward than initially anticipated. There are a few effective techniques you can use in Power BI, leveraging DAX (Data Analysis Expressions), to accomplish this. Let's break down the approaches, and I’ll give you some concrete code examples.
 
 The core challenge stems from the need to manipulate the time context. In Power BI, calculations are often performed within the context of the selected filters and slicers, which means a straight aggregation of a measure may not necessarily give you the value from the previous year. We need to tell DAX to explicitly shift the time frame by one year before calculating the metric.
 

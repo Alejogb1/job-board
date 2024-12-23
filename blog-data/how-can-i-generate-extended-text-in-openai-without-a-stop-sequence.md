@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-generate-extended-text-in-openai-without-a-stop-sequence"
 ---
 
-Okay, so, let's talk about generating longer text with OpenAI models when you *don’t* want a stop sequence to prematurely halt the output. I've been down this road more than a few times, particularly when crafting automated documentation generators and complex data narratives. The need to produce substantial chunks of text, without being abruptly cut off, while also maintaining coherence and quality, is a recurring challenge.
+, so, let's talk about generating longer text with OpenAI models when you *don’t* want a stop sequence to prematurely halt the output. I've been down this road more than a few times, particularly when crafting automated documentation generators and complex data narratives. The need to produce substantial chunks of text, without being abruptly cut off, while also maintaining coherence and quality, is a recurring challenge.
 
 The core issue stems from how language models like those in OpenAI's suite are trained. They predict the next token in a sequence, based on the preceding context and training data. When provided with a stop sequence, the model recognizes this as an intended termination point. Without it, the model will naturally try to maintain the text's “flow,” but there's no inherent mechanism, short of length constraints, to tell it to just…stop on its own. This often results in the model hallucinating further text, possibly going off-topic, repeating itself, or exhibiting other less desirable behaviors.
 

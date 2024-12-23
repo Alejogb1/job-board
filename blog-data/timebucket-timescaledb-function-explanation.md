@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "timebucket-timescaledb-function-explanation"
 ---
 
-Alright so you're asking about `time_bucket` in TimescaleDB right Been there done that wrestled with that beast a few times myself Let me break it down for you like I'm explaining it to my younger self before I knew any better You see `time_bucket` isn't some magical time wizard it's just a super useful function to group data based on time intervals It's like taking a big mess of timestamps and sorting them into neatly labeled buckets making it way easier to aggregate and analyze
+so you're asking about `time_bucket` in TimescaleDB right Been there done that wrestled with that beast a few times myself Let me break it down for you like I'm explaining it to my younger self before I knew any better You see `time_bucket` isn't some magical time wizard it's just a super useful function to group data based on time intervals It's like taking a big mess of timestamps and sorting them into neatly labeled buckets making it way easier to aggregate and analyze
 
 Imagine you have a table full of sensor readings that are coming in every few seconds Maybe you want to see the average reading every hour or the total readings every day If you try to do that without `time_bucket` it's a mess lots of complicated date functions and you'll end up with something convoluted that even you won't understand in a week
 
@@ -72,7 +72,7 @@ ORDER BY bucket;
 
 In this case `generate_series` produces all the possible buckets and the `LEFT JOIN` will return all the buckets even those where the `sensor_data` didn't have readings for that bucket. The `COALESCE` function is used to set 0 if count is null. I remember back in the day I wrote a whole complex query that tried to do that by hand and I nearly cried. Lesson learned the hard way. I should have used `time_bucket_gapfill` or in this case `generate_series` and a `LEFT JOIN` it's really just another way to accomplish it and its cleaner and more maintainable
 
-Okay let's talk about some common pitfalls you might encounter The first is forgetting to use `GROUP BY` which will cause your queries to return a single row because the aggregate functions will be applied on the entire result set. It's like asking for the total sum and not asking to group by which category these numbers belongs to
+ let's talk about some common pitfalls you might encounter The first is forgetting to use `GROUP BY` which will cause your queries to return a single row because the aggregate functions will be applied on the entire result set. It's like asking for the total sum and not asking to group by which category these numbers belongs to
 
 Another common issue is inconsistent time zones Make sure all your timestamps are in the same time zone or you will be comparing apples and oranges and your results will be completely wrong you'll end up scratching your head asking why time isn't linear and believe me I've had those thoughts many times not on purpose but yeah.. I'm being completely honest about that
 

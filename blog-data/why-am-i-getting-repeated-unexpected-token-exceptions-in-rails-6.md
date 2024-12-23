@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-am-i-getting-repeated-unexpected-token-exceptions-in-rails-6"
 ---
 
-Okay, let's tackle this. The dreaded "unexpected token" exception in Rails 6 – I've seen it haunt more projects than I care to remember. It's usually not a problem with the ruby code itself, but rather, a malformed javascript, or more often than not, an issue during asset compilation. Let's break down the common causes and some practical debugging strategies.
+,  The dreaded "unexpected token" exception in Rails 6 – I've seen it haunt more projects than I care to remember. It's usually not a problem with the ruby code itself, but rather, a malformed javascript, or more often than not, an issue during asset compilation. Let's break down the common causes and some practical debugging strategies.
 
 From my past work, I recall a large e-commerce platform I helped migrate from Rails 4 to Rails 6. We encountered this error repeatedly, particularly after introducing some new javascript components. It wasn't immediately obvious, and that's the nature of this beast; it pops up when the parser hits something it simply does not expect. The error doesn’t always pin point the exact line or file, and it's often misleading, pointing at a symptom rather than the root cause. I’ve found that the issue often stems from the asset pipeline, and it can be a mixture of a few contributing factors.
 

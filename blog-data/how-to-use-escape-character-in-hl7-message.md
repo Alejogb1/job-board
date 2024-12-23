@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "how-to-use-escape-character-in-hl7-message"
 ---
 
-Alright so you're wrestling with HL7 escape sequences right Been there done that more times than I care to remember Let me give you the lowdown based on my experiences and how I tackled this gnarly problem myself
+so you're wrestling with HL7 escape sequences right Been there done that more times than I care to remember Let me give you the lowdown based on my experiences and how I tackled this gnarly problem myself
 
 First off for the uninitiated HL7 is this old school standard for exchanging healthcare data Think of it as the lingua franca between hospital systems It's text based and uses pipes `|` and other delimiters to structure data into segments fields and components But like any good text based protocol it needs escape sequences to handle those special characters that might mess up the parsing So when you see something like `\E\` or `\F\` in an HL7 message that's an escape sequence doing its job
 

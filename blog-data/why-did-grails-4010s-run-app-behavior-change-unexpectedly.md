@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-did-grails-4010s-run-app-behavior-change-unexpectedly"
 ---
 
-Okay, let's tackle this. I’ve definitely seen my fair share of unexpected runtime shifts, and the move to Grails 4.0.10 is a case that reminds me of the subtle complexities that can lurk in seemingly minor version bumps. It’s not unusual, unfortunately. I distinctly remember a project back in '21—it was a microservices application for inventory management—where we experienced precisely this with Grails upgrades. The `run-app` command, which we relied on heavily during development, started exhibiting rather...peculiar behavior.
+,  I’ve definitely seen my fair share of unexpected runtime shifts, and the move to Grails 4.0.10 is a case that reminds me of the subtle complexities that can lurk in seemingly minor version bumps. It’s not unusual, unfortunately. I distinctly remember a project back in '21—it was a microservices application for inventory management—where we experienced precisely this with Grails upgrades. The `run-app` command, which we relied on heavily during development, started exhibiting rather...peculiar behavior.
 
 The crux of the issue, and what many probably experienced with 4.0.10, wasn't necessarily a fundamental flaw in the framework but often a confluence of changes surrounding how Grails handled class reloading and application context initialization. The pre-4.x versions had a different mechanism for dealing with these things. Specifically, in earlier versions, Grails used a more naive approach that often involved classloader tricks to achieve hot reloading. While fast, these methods could be brittle and sometimes led to unpredictable outcomes, especially under more complex configurations.
 

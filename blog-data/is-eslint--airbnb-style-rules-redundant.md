@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "is-eslint--airbnb-style-rules-redundant"
 ---
 
-Okay, let's delve into this. I remember a particularly challenging project a few years back, a sprawling single-page application built with react. we were a mid-sized team, and while everyone was fairly experienced, coding styles varied wildly. the result was a codebase that, while functional, was incredibly difficult to navigate and maintain. this experience solidified my perspective on linters and style guides, specifically regarding eslint and the airbnb configuration, which i'll discuss.
+, let's delve into this. I remember a particularly challenging project a few years back, a sprawling single-page application built with react. we were a mid-sized team, and while everyone was fairly experienced, coding styles varied wildly. the result was a codebase that, while functional, was incredibly difficult to navigate and maintain. this experience solidified my perspective on linters and style guides, specifically regarding eslint and the airbnb configuration, which i'll discuss.
 
 the fundamental question here is whether incorporating both eslint and the airbnb style guide leads to redundancy. the short answer is: generally, no, they aren’t redundant, but the specifics demand a more nuanced exploration.
 

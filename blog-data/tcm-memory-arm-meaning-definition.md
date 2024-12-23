@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "tcm-memory-arm-meaning-definition"
 ---
 
-Okay so you're asking about TCM on ARM right I've been down this rabbit hole a few times myself and let me tell you it can be confusing if you're not knee deep in embedded systems architecture
+ so you're asking about TCM on ARM right I've been down this rabbit hole a few times myself and let me tell you it can be confusing if you're not knee deep in embedded systems architecture
 
 Basically TCM stands for Tightly Coupled Memory and on ARM architectures it's a special type of memory that's directly connected to the processor core It's not like your regular RAM which goes through a memory bus instead it's a really high-speed local memory block think of it as the processor's own personal scratchpad
 

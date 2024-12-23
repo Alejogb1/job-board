@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "124-lab-expression-for-calories-burned-workout-zybooks"
 ---
 
-Okay so you're hitting the 1.24 zybooks lab problem on calorie calculation during a workout right been there done that let's break it down it's not rocket science but getting the expression right takes a little bit of thinking and debugging that i'm very familiar with
+ so you're hitting the 1.24 zybooks lab problem on calorie calculation during a workout right been there done that let's break it down it's not rocket science but getting the expression right takes a little bit of thinking and debugging that i'm very familiar with
 
 First off let’s recap the core of the problem because it sounds like we're talking about the zybooks calorie calculation lab specifically the one usually tagged with "1.24" i've seen different variations of these but the basic idea remains consistent we’re given some user input representing workout metrics and need to compute estimated calories burned
 

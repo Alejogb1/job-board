@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-disable-usernamepassword-authentication-in-keycloak"
 ---
 
-Alright, let's tackle this. Disabling username/password authentication in Keycloak isn't a single toggle; it requires a careful understanding of the authentication flows and how Keycloak handles identity brokering. In my experience, I've seen this requested primarily in two contexts: either migrating to a solely federated authentication model or simplifying a development/testing environment. Neither is trivial, and both require a solid plan to prevent inadvertently locking out users, especially in production scenarios.
+Alright,  Disabling username/password authentication in Keycloak isn't a single toggle; it requires a careful understanding of the authentication flows and how Keycloak handles identity brokering. In my experience, I've seen this requested primarily in two contexts: either migrating to a solely federated authentication model or simplifying a development/testing environment. Neither is trivial, and both require a solid plan to prevent inadvertently locking out users, especially in production scenarios.
 
 My journey with this started during a rather complex migration project for a financial services application. We were moving away from local database user management to Azure AD for all authentications. The initial attempt at simply disabling the username/password login form directly resulted in a frustrating lockout situation, underscoring the importance of understanding the underlying authentication mechanisms. Therefore, let’s walk through how to accomplish this while maintaining a functional system.
 

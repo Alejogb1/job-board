@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-install-native-jai-on-geoserver-219x-and-220x"
 ---
 
-Alright, let's tackle this. Instead of jumping straight into the installation steps, let's briefly consider *why* native JAI is often necessary, especially in geospatial processing contexts like GeoServer. We're not just ticking boxes here; it's about performance gains, specifically when dealing with complex image operations. I've personally seen the difference in my past work with high-resolution satellite imagery—a process that often bottlenecked without proper acceleration. Let’s get down to it.
+Alright,  Instead of jumping straight into the installation steps, let's briefly consider *why* native JAI is often necessary, especially in geospatial processing contexts like GeoServer. We're not just ticking boxes here; it's about performance gains, specifically when dealing with complex image operations. I've personally seen the difference in my past work with high-resolution satellite imagery—a process that often bottlenecked without proper acceleration. Let’s get down to it.
 
 Installing Native JAI (Java Advanced Imaging) on GeoServer 2.19.x and 2.20.x isn't inherently complex, but it does require careful attention to library versions and environment setup. The crucial point is that the standard JAI included with the Java Development Kit (JDK) is, well, a pure Java implementation, which is notoriously slow for many common image processing tasks. Native JAI, on the other hand, leverages underlying platform-specific libraries written in C or C++, drastically improving performance.
 

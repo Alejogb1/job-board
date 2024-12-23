@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-use-two-images-as-a-training-dataset-in-pytorch"
 ---
 
-Okay, let's tackle this. I've certainly seen my share of, shall we say, 'creative' attempts to wrangle image data into usable training sets. You're aiming to use *two* images for training in pytorch, which on the face of it, seems…limited, but it's actually a great starting point to understand fundamental concepts. It’s the sort of thing I encountered early on when experimenting with generative models, or trying to debug some odd data loader pipeline. What you are really asking is how to represent and handle this data, and how to feed that into your model.
+,  I've certainly seen my share of, shall we say, 'creative' attempts to wrangle image data into usable training sets. You're aiming to use *two* images for training in pytorch, which on the face of it, seems…limited, but it's actually a great starting point to understand fundamental concepts. It’s the sort of thing I encountered early on when experimenting with generative models, or trying to debug some odd data loader pipeline. What you are really asking is how to represent and handle this data, and how to feed that into your model.
 
 The core issue here isn't that you have two images, it's that you have a very small dataset. Usually, deep learning thrives on large, varied datasets to learn robust features and avoid overfitting. Two images won't let you train a robust image classifier or detector, but they're perfect for learning how to build a pytorch dataset and data loader correctly. Essentially, what we need to do is create a custom dataset class, and then use a data loader to iterate over it. I'm going to walk through how I would handle this situation, including a basic example.
 

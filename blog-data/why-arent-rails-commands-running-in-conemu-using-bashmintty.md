@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-arent-rails-commands-running-in-conemu-using-bashmintty"
 ---
 
-Okay, let's dive into this. I've certainly tripped over the *Rails-on-ConEmu-with-mintty* issue more times than I'd like to recall, and it almost always stems from the intricate dance of shell environments and process handling. It's not inherently a Rails problem *per se*, but rather how the interaction between ConEmu, the bash shell (provided perhaps by Git Bash or WSL), and the gem-provided `rails` executable plays out, especially when mintty is in the mix.
+, let's dive into this. I've certainly tripped over the *Rails-on-ConEmu-with-mintty* issue more times than I'd like to recall, and it almost always stems from the intricate dance of shell environments and process handling. It's not inherently a Rails problem *per se*, but rather how the interaction between ConEmu, the bash shell (provided perhaps by Git Bash or WSL), and the gem-provided `rails` executable plays out, especially when mintty is in the mix.
 
 First, let's clarify that `mintty` is a terminal emulator, and ConEmu is a more general console emulator that can host various shells, including the bash shell, which itself is an interpreter for commands. When you run a Rails command, like `rails server` or `rails generate model`, you’re essentially asking the bash shell to find and execute the appropriate ruby script provided by the Rails gem. Now, why does it *not* work correctly within ConEmu using the bash::mintty connector? The issue primarily boils down to environment variable discrepancies and, sometimes, process signal handling peculiarities.
 

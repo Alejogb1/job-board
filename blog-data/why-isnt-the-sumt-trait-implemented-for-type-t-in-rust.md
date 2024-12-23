@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-isnt-the-sumt-trait-implemented-for-type-t-in-rust"
 ---
 
-Okay, let's dive into this. It's a question I've definitely pondered before, particularly back when I was wrestling with a large numerical simulation library where these kinds of subtleties could cause some serious friction in the code.
+, let's dive into this. It's a question I've definitely pondered before, particularly back when I was wrestling with a large numerical simulation library where these kinds of subtleties could cause some serious friction in the code.
 
 The core issue, as you've identified, is that `std::iter::Sum<T>` is not automatically implemented for a generic type `T`, even when we might naively expect it should be. Instead, it's implemented for `Sum<&T>` (where `T` itself needs to implement `Add<T>`). The reasoning behind this design decision is multifaceted but fundamentally revolves around Rust's emphasis on ownership, borrowing, and avoiding implicit copying that might introduce unexpected performance bottlenecks or data mutation issues.
 

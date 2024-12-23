@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-idp-post-data-be-converted-to-a-samesitestrict-session-cookie"
 ---
 
-Okay, let's tackle this. Handling IdP responses and translating them into secure session cookies, particularly with `SameSite=Strict`, is a topic I’ve navigated quite a bit in past projects, particularly when dealing with sensitive data across different domains. The crux of the matter lies in the careful orchestration of the IdP’s response and how we leverage that to establish a secure and reliable session within our application. It’s not always straightforward, but understanding the mechanics helps significantly.
+,  Handling IdP responses and translating them into secure session cookies, particularly with `SameSite=Strict`, is a topic I’ve navigated quite a bit in past projects, particularly when dealing with sensitive data across different domains. The crux of the matter lies in the careful orchestration of the IdP’s response and how we leverage that to establish a secure and reliable session within our application. It’s not always straightforward, but understanding the mechanics helps significantly.
 
 The core challenge, as you rightly pointed out, involves receiving data, often as a `POST` request from an identity provider (IdP), and using that data to establish a session managed by a `SameSite=Strict` cookie. This means we're dealing with a cross-site context which, in a standard setup, would block the setting of the cookie. However, there's a workaround: the temporary redirect.
 

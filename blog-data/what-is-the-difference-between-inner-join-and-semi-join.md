@@ -4,13 +4,13 @@ date: "2024-12-13"
 id: "what-is-the-difference-between-inner-join-and-semi-join"
 ---
 
-Okay so you're asking about inner joins and semi joins right Been there done that more times than I care to admit Let's break this down in a way that hopefully makes sense without getting bogged down in theory okay
+ so you're asking about inner joins and semi joins right Been there done that more times than I care to admit Let's break this down in a way that hopefully makes sense without getting bogged down in theory 
 
 First off understand that both inner joins and semi joins are ways to combine data from two tables or relations depending on your background but they behave very differently in what they return and how they return it which is kinda what we're getting at here
 
 **Inner Join Basics**
 
-Alright let's start with the classic inner join The goal here is to produce a result set where each row in the result represents a matching pair of rows from the two tables based on a given condition You're essentially creating a Cartesian product of the two sets and then filtering it down to only the matching rows So a full match of all columns from both the tables are what you get if you've never seen the Cartesian product of two sets just think of a multiplication table that's kinda what's going on at the basic level
+let's start with the classic inner join The goal here is to produce a result set where each row in the result represents a matching pair of rows from the two tables based on a given condition You're essentially creating a Cartesian product of the two sets and then filtering it down to only the matching rows So a full match of all columns from both the tables are what you get if you've never seen the Cartesian product of two sets just think of a multiplication table that's kinda what's going on at the basic level
 
 Think of it this way if table A has customer data and table B has order data an inner join on the customer ID would give you a result with each row representing a customer-order pair only if that customer actually placed an order That's why they call it an *inner* join you're keeping only the records where there's a match *inside* both tables
 
@@ -70,7 +70,7 @@ The choice really boils down to what you need
 
 So the semi join is much faster since you aren't extracting data you don't need from the other table unlike the inner join that could waste a lot of time retrieving information that you don't need
 
-And a little joke about databases: Why did the database break up with the SQL query? Because they couldn’t commit. Okay okay I had to get it out of my system back to serious stuff
+And a little joke about databases: Why did the database break up with the SQL query? Because they couldn’t commit.   I had to get it out of my system back to serious stuff
 
 **Performance Notes**
 

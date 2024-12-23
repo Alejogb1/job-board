@@ -4,7 +4,7 @@ date: "2024-12-11"
 id: "what-are-the-benefits-of-pair-programming-and-mentorship-in-mechanistic-interpretability-research"
 ---
 
-Okay so you wanna know about pair programming and mentorship in mechanistic interpretability right cool  It's a seriously cool area  I mean understanding how these crazy deep learning models actually *think*  that's the big goal  and it's hard  really hard  like trying to decipher an alien language but the aliens are also constantly changing their language  anyway  pair programming and mentorship totally help
+ so you wanna know about pair programming and mentorship in mechanistic interpretability right cool  It's a seriously cool area  I mean understanding how these crazy deep learning models actually *think*  that's the big goal  and it's hard  really hard  like trying to decipher an alien language but the aliens are also constantly changing their language  anyway  pair programming and mentorship totally help
 
 Pair programming is like having a buddy system for your brain  you're both staring at the same code the same confusing model outputs  and you're talking it through  explaining your ideas  challenging each other  catching bugs before they become monsters  it's awesome for debugging obviously  but it's even better for idea generation  you get different perspectives different approaches  sometimes one person will see a pattern the other missed completely  it's a synergistic thing a 1+1=3 situation
 
@@ -18,7 +18,7 @@ Mentorship is even more crucial  especially when you're starting out in this fie
 And this is where the real power of mentorship comes in  it's not just about technical skills  it's about navigating the research landscape  knowing which conferences to attend  which papers to read  how to write a strong research paper  how to present your work effectively  how to get your work noticed  these are all super important  and a mentor who's been through it all can give you invaluable advice  plus you get that emotional support  that sense of community  because this kind of work can be isolating  really isolating
 
 
-Okay so code examples  you want some code right  well  mechanistic interpretability code is super diverse  it depends on what kind of model you're looking at  what kind of interpretability technique you're using  but I can give you a flavor  let's start with something relatively simple  let's say you're trying to understand the internal representations of a convolutional neural network  you might look at feature visualization
+ so code examples  you want some code right  well  mechanistic interpretability code is super diverse  it depends on what kind of model you're looking at  what kind of interpretability technique you're using  but I can give you a flavor  let's start with something relatively simple  let's say you're trying to understand the internal representations of a convolutional neural network  you might look at feature visualization
 
 
 ```python

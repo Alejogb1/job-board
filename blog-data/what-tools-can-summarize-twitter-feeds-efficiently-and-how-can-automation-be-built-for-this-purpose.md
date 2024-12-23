@@ -54,7 +54,7 @@ from textblob import TextBlob
 tweets = [
     "I love this product!",
     "This is terrible",
-    "It's okay I guess",
+    "It's  I guess",
     "I'm feeling neutral about this",
     "This is absolutely amazing"
 ]

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-get-rails-chewy-to-return-dates-instead-of-strings"
 ---
 
-Let's tackle this. I've seen this exact issue crop up a fair few times over the years, and it often boils down to how elasticsearch and chewy interpret data types, particularly dates. It's a common enough head-scratcher when you start mixing rails’ active record with the search capabilities of elasticsearch via chewy.
+ I've seen this exact issue crop up a fair few times over the years, and it often boils down to how elasticsearch and chewy interpret data types, particularly dates. It's a common enough head-scratcher when you start mixing rails’ active record with the search capabilities of elasticsearch via chewy.
 
 The core problem is that when chewy indexes your data, it often infers the data type of fields based on what it first encounters. Dates, which are stored as `date` or `datetime` objects in rails, can sometimes end up being indexed as strings in elasticsearch. This happens because elasticsearch doesn’t inherently ‘know’ the structure of your rails model when it’s first populating the index. This leads to your search results returning date fields as strings rather than their intended date or datetime objects, which makes further manipulation quite awkward in ruby.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-batch-size-epochs-and-learning-rate-affect-training-with-distributeddataparallel"
 ---
 
-Okay, let’s tackle this. I've spent quite a bit of time wrestling with distributed training setups, and the interplay of batch size, epochs, and learning rate with `DistributedDataParallel` (DDP) is absolutely critical for achieving efficient and effective model training. It’s something you need a firm handle on, especially as you scale your models.
+, let’s tackle this. I've spent quite a bit of time wrestling with distributed training setups, and the interplay of batch size, epochs, and learning rate with `DistributedDataParallel` (DDP) is absolutely critical for achieving efficient and effective model training. It’s something you need a firm handle on, especially as you scale your models.
 
 First off, let's consider these parameters individually within the context of DDP, then how they interact. Batch size, in a distributed training environment, isn't just about the number of samples processed per update *per device*. Instead, the *effective batch size* becomes the sum of the batch sizes across *all* devices. If you have, say, 4 GPUs each with a batch size of 32, then your effective batch size is 128. This is a crucial distinction. The gradient updates derived from this effective batch size, while aggregated across devices, still need to be scaled appropriately according to the number of devices to maintain consistency.
 

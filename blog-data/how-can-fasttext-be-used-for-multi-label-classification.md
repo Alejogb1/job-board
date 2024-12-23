@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-fasttext-be-used-for-multi-label-classification"
 ---
 
-Okay, let's talk about using FastText for multi-label classification. It's a challenge I've encountered a few times, particularly when working with large corpora that necessitate efficient processing. I remember a project involving social media sentiment analysis where we had posts tagged with multiple emotion categories – ‘joyful,’ ‘angry,’ ‘sarcastic’ – and the conventional single-label methods simply weren't cutting it. It needed something faster and scalable.
+, let's talk about using FastText for multi-label classification. It's a challenge I've encountered a few times, particularly when working with large corpora that necessitate efficient processing. I remember a project involving social media sentiment analysis where we had posts tagged with multiple emotion categories – ‘joyful,’ ‘angry,’ ‘sarcastic’ – and the conventional single-label methods simply weren't cutting it. It needed something faster and scalable.
 
 The inherent design of FastText, while excellent for single-label problems, requires some adjustment to handle situations where an instance can belong to more than one class simultaneously. Specifically, FastText's built-in classification model outputs a single probability distribution over the classes, making it unsuitable for true multi-label scenarios where multiple labels can coexist. This means we can't directly leverage the default `fasttext supervised` command and need to be a bit more creative.
 

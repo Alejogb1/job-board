@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-isnt-my-kafkaio-subsequent-pipeline-triggering"
 ---
 
-Okay, let's tackle this. It's frustrating when your KafkaIO pipeline seems to just… stall. I've certainly been in that spot more times than I care to recall. The issue you're describing – where a KafkaIO read isn't triggering the subsequent steps in your data processing pipeline – often boils down to a few core culprits, and it's rarely a problem inherent to KafkaIO itself, more likely in how the data is structured or how the pipeline is configured to receive it.
+,  It's frustrating when your KafkaIO pipeline seems to just… stall. I've certainly been in that spot more times than I care to recall. The issue you're describing – where a KafkaIO read isn't triggering the subsequent steps in your data processing pipeline – often boils down to a few core culprits, and it's rarely a problem inherent to KafkaIO itself, more likely in how the data is structured or how the pipeline is configured to receive it.
 
 The first place I usually investigate – and this has saved my skin countless times – is whether the data you're sending to Kafka is even being *read* by your pipeline. This seems basic, but you'd be surprised how frequently there's a disconnect here. For starters, check your kafka topic configuration. Is the topic the right topic? Is the consumer group correct? Is your application deployed and configured to connect to Kafka correctly? A quick double-check, perhaps through the kafka console consumer with the same consumer group, could save a huge headache here. Then, is there an actual schema being enforced and does the producer adhere to that? Do you have auto commit or manual commit enabled and are you handling errors correctly on processing? I often find it's these foundational details that get overlooked amidst the complexity of distributed pipelines.
 
@@ -12,7 +12,7 @@ Another frequent issue arises with how the data is being deserialized. Kafka sto
 
 A slightly more nuanced scenario involves the commit offset behavior. KafkaIO, depending on the specific framework (like Apache Beam), manages offsets to track its progress through the topic partitions. If commit settings are not correct, the consumer may start reading at the same offset, re-processing data or if it doesn't properly commit or reset to the right offset, then it won't be able to read new data. Look at the logs, especially those coming from the commit manager of your framework, you will probably find there is a problem here. For example, are your offsets being committed asynchronously but then you pipeline crashes before it has time to actually commit?
 
-Okay, let's get into some code. Here are a few examples, focusing on common areas where things can go wrong:
+, let's get into some code. Here are a few examples, focusing on common areas where things can go wrong:
 
 **Snippet 1: Simple Deserialization with String Values (and a common mistake)**
 

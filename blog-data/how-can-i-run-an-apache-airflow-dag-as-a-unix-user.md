@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-run-an-apache-airflow-dag-as-a-unix-user"
 ---
 
-Okay, let's get into this. You're looking to trigger an Apache Airflow dag as a specific unix user – it's a common requirement, and I’ve definitely encountered the nuances of this setup multiple times in my past roles. Getting this configured correctly involves several key aspects, which we’ll need to address step-by-step. Essentially, the challenge boils down to ensuring the airflow processes, particularly the task execution, happen under the desired user context rather than the default airflow user.
+, let's get into this. You're looking to trigger an Apache Airflow dag as a specific unix user – it's a common requirement, and I’ve definitely encountered the nuances of this setup multiple times in my past roles. Getting this configured correctly involves several key aspects, which we’ll need to address step-by-step. Essentially, the challenge boils down to ensuring the airflow processes, particularly the task execution, happen under the desired user context rather than the default airflow user.
 
 Firstly, it's critical to understand that Airflow runs different components, each potentially with different user privileges. The scheduler, webserver, and the workers can all operate under different accounts. In most deployments, you likely have a primary user running the core airflow processes (often named `airflow`), and you want to execute the actual tasks, your python code, under a specific different user. You won’t directly change the user who owns the main services (that’s a system-level change often better left to the deployment tooling) but rather change how *tasks* are executed.
 

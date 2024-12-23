@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-my-database-replica-not-working-in-a-test-environment"
 ---
 
-Okay, let's unpack this. I've seen this specific scenario play out more times than I'd care to count – a database replica merrily chugging along in production, but then it throws a tantrum in the test environment. It's usually not as simple as flipping a switch, unfortunately. There are a bunch of interconnected issues that could be at play, and diagnosing it requires a systematic approach. So, let's get into it.
+, let's unpack this. I've seen this specific scenario play out more times than I'd care to count – a database replica merrily chugging along in production, but then it throws a tantrum in the test environment. It's usually not as simple as flipping a switch, unfortunately. There are a bunch of interconnected issues that could be at play, and diagnosing it requires a systematic approach. So, let's get into it.
 
 First off, when a database replica fails in a test environment, it’s almost never because the replication mechanism *itself* is fundamentally broken, unless there’s a gross misconfiguration. Production systems are typically much better maintained in this regard. The culprit often lies within the subtle differences between the two environments. Here are some common factors I've encountered, going roughly from the most obvious to the more insidious:
 

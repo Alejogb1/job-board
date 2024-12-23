@@ -43,7 +43,7 @@ impl DataSource for NetworkSource {
     }
 }
 ```
-Okay, now let’s try defining our `DataProcessor`:
+, now let’s try defining our `DataProcessor`:
 
 ```rust
 struct DataProcessor<T: DataSource> {

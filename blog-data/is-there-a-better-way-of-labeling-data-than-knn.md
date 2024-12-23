@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "is-there-a-better-way-of-labeling-data-than-knn"
 ---
 
-Okay so you're asking if there's anything *better* than KNN for labeling data Right I get it KNN it's like the bread and butter of simple classification It's easy to understand easy to implement but man it can get kinda clunky real fast especially with high-dimensional data or big datasets I've been there trust me I've spent countless nights staring at KNN outputs wondering if there's a better way and spoiler there is like a whole universe of better ways
+ so you're asking if there's anything *better* than KNN for labeling data Right I get it KNN it's like the bread and butter of simple classification It's easy to understand easy to implement but man it can get kinda clunky real fast especially with high-dimensional data or big datasets I've been there trust me I've spent countless nights staring at KNN outputs wondering if there's a better way and spoiler there is like a whole universe of better ways
 
 Let's break it down first why KNN sometimes feels like a sledgehammer when you need a scalpel
 
@@ -12,7 +12,7 @@ The core problem with KNN is its reliance on distances It computes the distance 
 
 And the cherry on top is that KNN has no learning phase there is no model generalization there is no actual "learning" to be honest you just remember every single training example and then do a voting based on distances so what are we really doing here
 
-Alright so enough complaining I know you're asking for alternatives that are actually worth looking at Let me give you a few of my favorites that I’ve used extensively and found to be good for different situations
+so enough complaining I know you're asking for alternatives that are actually worth looking at Let me give you a few of my favorites that I’ve used extensively and found to be good for different situations
 
 First up you got Logistic Regression yeah it might seem boring but it's powerful and a great first step beyond KNN especially if you are dealing with binary classification its fast its easy to interpret and its memory efficient It models the probability of a data point belonging to a certain class and it does so by fitting a curve and the curve is actually a line in a higher dimensional space so its not that complicated I know the name suggests otherwise
 

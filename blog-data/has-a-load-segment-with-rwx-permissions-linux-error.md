@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "has-a-load-segment-with-rwx-permissions-linux-error"
 ---
 
-Okay so you're seeing a load segment with rwx permissions on Linux right been there done that so many times it's practically a rite of passage for a kernel dev or someone messing with low-level stuff like me Let's break this down real quick.
+ so you're seeing a load segment with rwx permissions on Linux right been there done that so many times it's practically a rite of passage for a kernel dev or someone messing with low-level stuff like me Let's break this down real quick.
 
 First off rwx permissions that's read write execute all in one place not exactly something you see every day on purpose Usually we're talking about code or data segments and they have stricter permissions. Code generally has rx and data usually rw or just r but rwx is kinda a red flag. The kernel doesn't like it because it's basically an open invitation for all sorts of security problems if you’re dealing with untrusted input. Think of it as a hacker's dream basically.
 
@@ -18,7 +18,7 @@ What about shared libraries? Oh yes, that was fun too. It wasn't code I was actu
 
 So yeah, this is usually not intended behavior. If you're seeing this consistently it's almost certainly a bug somewhere. If you are an Operating system kernel developer this is something that you might have seen at least once. Or if you were a student doing some low level programing or if you were like me just a poor guy who just wanted to build something with c and got into this mess.
 
-Okay let's see some code examples here to illustrate.
+ let's see some code examples here to illustrate.
 
 First a simple example how *not* to do it:
 

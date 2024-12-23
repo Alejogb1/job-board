@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-create-a-vector-of-pairs-from-a-single-vector-in-c"
 ---
 
-Okay, let's tackle this. It's a common enough task, transforming data structures, and one I've certainly encountered more than once in my time. Back in my early days working on a large data processing pipeline, we had a raw data feed that arrived as a flat vector of integers, and we frequently needed to process them as adjacent pairs for subsequent analysis. It felt cumbersome dealing with individual elements, so I had to figure out a clean way to consistently turn that flat vector into a vector of pairs. The core idea here is to iterate through the original vector, taking elements two at a time and creating `std::pair` objects. Simple in theory, but you need to handle boundary conditions and decide what to do with odd-sized vectors.
+,  It's a common enough task, transforming data structures, and one I've certainly encountered more than once in my time. Back in my early days working on a large data processing pipeline, we had a raw data feed that arrived as a flat vector of integers, and we frequently needed to process them as adjacent pairs for subsequent analysis. It felt cumbersome dealing with individual elements, so I had to figure out a clean way to consistently turn that flat vector into a vector of pairs. The core idea here is to iterate through the original vector, taking elements two at a time and creating `std::pair` objects. Simple in theory, but you need to handle boundary conditions and decide what to do with odd-sized vectors.
 
 The approach we'll take here relies heavily on the standard library, particularly `std::vector` and `std::pair`. We’ll also be using iterators which are the backbone of generic algorithms in c++.
 

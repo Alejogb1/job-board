@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-an-apriori-algorithm-in-python-be-modified"
 ---
 
-Okay, let's talk about modifying the Apriori algorithm. I've spent a fair amount of time working with association rule mining, and I've encountered several situations where the basic Apriori just didn't cut it. It's a solid foundation, sure, but it often needs tweaking to handle real-world datasets and specific analytical goals. So, instead of a textbook definition, let me share some of the practical alterations I've found useful.
+, let's talk about modifying the Apriori algorithm. I've spent a fair amount of time working with association rule mining, and I've encountered several situations where the basic Apriori just didn't cut it. It's a solid foundation, sure, but it often needs tweaking to handle real-world datasets and specific analytical goals. So, instead of a textbook definition, let me share some of the practical alterations I've found useful.
 
 The standard Apriori algorithm works by iteratively generating candidate itemsets and pruning those that don’t meet a minimum support threshold. However, that iterative approach can be computationally expensive, particularly when dealing with large datasets or low support thresholds, which is often the reality. Therefore, we need strategies to reduce the computational load or adapt the algorithm's behaviour to specific data attributes. I’ll break it down into a few key areas.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-display-image-previews-on-thumbnail-clicks-in-android"
 ---
 
-Okay, let's tackle this. I recall a project back in '18, a social media app, where we had precisely this requirement: displaying larger previews when users tapped on image thumbnails. It sounds simple on paper, but the devil, as they say, is in the details – especially when you want it smooth and performant, even with hundreds of images. This isn't a trivial "copy-paste" situation, and it warrants a considered, multi-faceted approach.
+,  I recall a project back in '18, a social media app, where we had precisely this requirement: displaying larger previews when users tapped on image thumbnails. It sounds simple on paper, but the devil, as they say, is in the details – especially when you want it smooth and performant, even with hundreds of images. This isn't a trivial "copy-paste" situation, and it warrants a considered, multi-faceted approach.
 
 The core challenge revolves around efficiency and memory management. Loading full-resolution images directly into an activity or fragment is a surefire recipe for out-of-memory errors, especially on lower-end devices or when dealing with a large number of images. Therefore, we need to be smart about how we handle this. The basic pattern generally involves:
 

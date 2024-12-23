@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-make-a-raw-text-file-editor-in-the-django-wagtail-admin"
 ---
 
-Okay, let's tackle this. The concept of embedding a raw text file editor directly within the Wagtail admin panel is something I've actually dealt with a couple of times in past projects, and it always brings up interesting challenges. It's less about directly manipulating the file system within the browser and more about providing a safe and user-friendly way to view and modify text-based content associated with your Wagtail pages or settings.
+,  The concept of embedding a raw text file editor directly within the Wagtail admin panel is something I've actually dealt with a couple of times in past projects, and it always brings up interesting challenges. It's less about directly manipulating the file system within the browser and more about providing a safe and user-friendly way to view and modify text-based content associated with your Wagtail pages or settings.
 
 The core issue isn't about "editing a raw file" directly in the sense of a local filesystem, but rather, providing a UI within Wagtail’s admin to handle string-based content that *represents* the content of a hypothetical text file, or potentially loads from an actual text file stored server-side. We don't want the user poking around actual files. Instead, we focus on the text, which we store in our model or settings, or pull from the file, edit, and then potentially re-save if desired.
 

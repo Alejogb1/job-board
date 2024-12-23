@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-does-airflow-behave-with-dockerized-repositories"
 ---
 
-Okay, let's talk about Airflow and Docker. It's a topic I've spent a fair amount of time navigating, especially during the early days of transitioning our data engineering pipelines at my previous company. We moved away from a monolithic deployment to a more containerized approach, and let me tell you, it wasn't without its nuances. Understanding the interplay between Airflow and Docker, especially when managing repositories, is crucial for a robust, scalable, and maintainable system.
+, let's talk about Airflow and Docker. It's a topic I've spent a fair amount of time navigating, especially during the early days of transitioning our data engineering pipelines at my previous company. We moved away from a monolithic deployment to a more containerized approach, and let me tell you, it wasn't without its nuances. Understanding the interplay between Airflow and Docker, especially when managing repositories, is crucial for a robust, scalable, and maintainable system.
 
 The core issue lies in how Airflow executes tasks. By default, Airflow executes tasks within its own environment. When you introduce Docker, you're essentially shifting the execution context. Instead of running a Python script directly on the worker node, you're telling Airflow to spin up a Docker container and execute the script inside *that* container. This seemingly simple shift introduces layers of complexity that you need to be aware of, primarily concerning how your code and dependencies are managed.
 

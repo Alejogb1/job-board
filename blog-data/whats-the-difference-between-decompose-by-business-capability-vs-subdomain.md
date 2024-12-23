@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "whats-the-difference-between-decompose-by-business-capability-vs-subdomain"
 ---
 
-Okay, let's unpack this. It's a distinction that, while sometimes seemingly subtle, can have profound implications for how you architect and manage complex software systems. I've seen projects get derailed by conflating these two concepts, and conversely, others thrive by carefully delineating their boundaries. My perspective here comes from years of wrestling—*ahem*, carefully managing—large-scale systems where the organization’s structure and software architecture had to work in tandem.
+, let's unpack this. It's a distinction that, while sometimes seemingly subtle, can have profound implications for how you architect and manage complex software systems. I've seen projects get derailed by conflating these two concepts, and conversely, others thrive by carefully delineating their boundaries. My perspective here comes from years of wrestling—*ahem*, carefully managing—large-scale systems where the organization’s structure and software architecture had to work in tandem.
 
 The core difference hinges on perspective. **Decomposition by business capability** is about modeling your system around what your *business* does. Think about it: what are the fundamental activities, the core competencies, that enable your organization to deliver value? These are your capabilities. Examples might include "order management," "customer relationship management," "inventory tracking," or "payment processing." Each capability encapsulates a set of related business functions and processes. These are typically higher-level views that might span across various teams or even multiple departments within a business.
 

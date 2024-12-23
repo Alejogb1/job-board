@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "is-allennlp-biased-towards-bert"
 ---
 
-Okay, let's tackle this. It's a question I've pondered myself, particularly when working on a project a few years back that aimed to generalize across various transformer architectures. The short answer is: AllenNLP isn't inherently *biased* towards BERT in the sense that it’s coded to only work optimally with BERT and poorly with others. However, there are definitely strong tendencies, and it's crucial to understand why.
+,  It's a question I've pondered myself, particularly when working on a project a few years back that aimed to generalize across various transformer architectures. The short answer is: AllenNLP isn't inherently *biased* towards BERT in the sense that it’s coded to only work optimally with BERT and poorly with others. However, there are definitely strong tendencies, and it's crucial to understand why.
 
 My experience back then involved fine-tuning various pre-trained models for a complex information extraction task, and I quickly realized that while AllenNLP provided good abstractions, certain choices and defaults did make BERT a more natural, often easier, fit. This isn't some inherent flaw of the library, but more an artifact of BERT’s dominance and AllenNLP’s development timeline.
 

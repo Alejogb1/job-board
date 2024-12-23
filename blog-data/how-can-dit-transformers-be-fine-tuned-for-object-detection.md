@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-can-dit-transformers-be-fine-tuned-for-object-detection"
 ---
 
-Okay, let's tackle this. The fine-tuning of Diffusion Transformer (DiT) models for object detection is certainly an area where things can get interesting, and I've definitely seen my share of head-scratching moments dealing with this. It's not as straightforward as, say, fine-tuning a convolutional network. The underlying architecture of a DiT, focusing on diffusion models and their iterative denoising process, presents a unique set of challenges, particularly when adapting to the task of bounding box prediction.
+,  The fine-tuning of Diffusion Transformer (DiT) models for object detection is certainly an area where things can get interesting, and I've definitely seen my share of head-scratching moments dealing with this. It's not as straightforward as, say, fine-tuning a convolutional network. The underlying architecture of a DiT, focusing on diffusion models and their iterative denoising process, presents a unique set of challenges, particularly when adapting to the task of bounding box prediction.
 
 Now, when we talk about fine-tuning, it's crucial to remember that DiTs are typically pre-trained for image generation. This pre-training focuses on learning the underlying data distribution by learning to reverse a noising process. Object detection, conversely, demands spatial understanding and the precise localization of objects within an image. This means the fine-tuning process needs to bridge this gap effectively.
 

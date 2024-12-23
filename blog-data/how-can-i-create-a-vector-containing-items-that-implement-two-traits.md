@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-create-a-vector-containing-items-that-implement-two-traits"
 ---
 
-Alright, let's tackle this. I've bumped into this scenario a good number of times over the years, particularly when dealing with systems that require composable behaviors. The challenge, as you've presented it, is how to construct a `Vec` (or similar data structure) that holds items conforming to *two* distinct traits. It's not about concrete types; it’s about ensuring that the items we store can exhibit behaviors defined by multiple interfaces. This might seem straightforward at first glance but can become a bit nuanced.
+Alright,  I've bumped into this scenario a good number of times over the years, particularly when dealing with systems that require composable behaviors. The challenge, as you've presented it, is how to construct a `Vec` (or similar data structure) that holds items conforming to *two* distinct traits. It's not about concrete types; it’s about ensuring that the items we store can exhibit behaviors defined by multiple interfaces. This might seem straightforward at first glance but can become a bit nuanced.
 
 The core issue here is that rust doesn't support multiple inheritance in the way some object-oriented languages do. You can't just say "this type implements both trait a and trait b, and I want a `vec` of those" as a direct type declaration. We need to approach this problem with some careful consideration of rust's type system.
 

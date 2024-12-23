@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-my-tensorflow-models-accuracy-zero"
 ---
 
-Okay, let’s get into this. Zero accuracy in a TensorFlow model is definitely a frustrating place to be, but it's not uncommon, especially when starting out or when introducing a significant change. From my experience, seeing a model output absolute zero, rather than low-but-improving, usually points to specific categories of errors. Instead of broadly theorizing, let’s break down what I've seen causing this in the trenches, focusing on practical scenarios and how to tackle them.
+, let’s get into this. Zero accuracy in a TensorFlow model is definitely a frustrating place to be, but it's not uncommon, especially when starting out or when introducing a significant change. From my experience, seeing a model output absolute zero, rather than low-but-improving, usually points to specific categories of errors. Instead of broadly theorizing, let’s break down what I've seen causing this in the trenches, focusing on practical scenarios and how to tackle them.
 
 First off, let's ditch the assumption that the model itself is inherently flawed. More often than not, the issue isn't the architecture but what we're feeding it or how we’re training it. I’ve debugged countless hours thinking my layers were broken only to discover the problem was staring at me from the data preprocessing pipeline.
 

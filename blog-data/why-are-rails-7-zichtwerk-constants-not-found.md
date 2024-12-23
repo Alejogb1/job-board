@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-are-rails-7-zichtwerk-constants-not-found"
 ---
 
-Okay, let's tackle this. The issue of `zichtwerk` constants not being found in Rails 7, specifically, is something I encountered a couple of years back during a large-scale refactoring effort on a legacy Rails project. It's frustrating, to say the least, especially since the `zichtwerk` functionality is supposed to make constants readily available across the application. It points to a deeper understanding of how Rails autoloading, eager loading, and its interaction with constants—particularly within the zeitwerk system—works.
+,  The issue of `zichtwerk` constants not being found in Rails 7, specifically, is something I encountered a couple of years back during a large-scale refactoring effort on a legacy Rails project. It's frustrating, to say the least, especially since the `zichtwerk` functionality is supposed to make constants readily available across the application. It points to a deeper understanding of how Rails autoloading, eager loading, and its interaction with constants—particularly within the zeitwerk system—works.
 
 First, it's important to clarify that `zichtwerk` is the new, default code loading mechanism introduced in Rails 6 and heavily relied upon in Rails 7. Gone are the days of classic autoloading; `zichtwerk` is a more robust and deterministic solution, primarily operating under the principle of 'code first.' This means the constant's name directly corresponds to the file path in which the code defining it resides. If the file isn't where `zichtwerk` expects it, the constant simply won’t be found.
 

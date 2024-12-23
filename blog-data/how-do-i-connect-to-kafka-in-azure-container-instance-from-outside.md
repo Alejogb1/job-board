@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-connect-to-kafka-in-azure-container-instance-from-outside"
 ---
 
-Alright, let's tackle this. Connecting to a kafka cluster hosted outside of an azure container instance (aci) can definitely present some interesting networking challenges, and i've certainly spent my fair share of time troubleshooting similar setups. i remember back when we were first migrating our microservices to containers, we hit this exact issue when our data pipelines started producing data into an externally hosted kafka cluster; it wasn't pretty at first. the key, as it almost always is, lies in understanding the network pathways and properly configuring access controls.
+Alright,  Connecting to a kafka cluster hosted outside of an azure container instance (aci) can definitely present some interesting networking challenges, and i've certainly spent my fair share of time troubleshooting similar setups. i remember back when we were first migrating our microservices to containers, we hit this exact issue when our data pipelines started producing data into an externally hosted kafka cluster; it wasn't pretty at first. the key, as it almost always is, lies in understanding the network pathways and properly configuring access controls.
 
 the first thing to grasp is that an aci, by default, operates within its own virtual network (vnet) context or the default azure network. that means you need to establish a route for your aci to reach your kafka brokers, which are often not in the same network scope. furthermore, kafka itself has specific configurations related to advertised listeners and broker addresses that must be carefully aligned with how your clients (in this case, your aci) will connect.
 

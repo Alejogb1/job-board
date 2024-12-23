@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "unit-testing-mfc-ui-applications"
 ---
 
-Alright so unit testing MFC UI yeah been there done that got the t-shirt And probably a few scars too Let's dive in because it's not exactly sunshine and rainbows is it
+so unit testing MFC UI yeah been there done that got the t-shirt And probably a few scars too Let's dive in because it's not exactly sunshine and rainbows is it
 
 Look MFC I gotta say it's old school It's like coding in the Jurassic era Sometimes I think dinosaurs left better documentation Seriously though this whole UI intertwined with logic thing it’s a classic recipe for testing hell I remember my first big MFC project back in oh gosh 2008-ish it was a monster of a thing it had more dialogs than a therapist's office and trying to untangle the business logic from the UI spaghetti was like trying to solve a Rubik's Cube blindfolded I learned the hard way that directly testing UI elements is a nightmare You're basically playing whack-a-mole with Windows messages and window handles trust me it's not a good time
 
@@ -29,7 +29,7 @@ void CMyDialog::OnCalculateButtonClicked()
 
 ```
 
-Okay you see the problem right That calculation is buried in the UI class This makes it a pain to test Now here’s how you extract it
+ you see the problem right That calculation is buried in the UI class This makes it a pain to test Now here’s how you extract it
 
 ```cpp
 // Calculator.h
@@ -209,4 +209,4 @@ A word on resources because we don’t do random internet links here Look for bo
 
 Oh and one joke real quick Why was the MFC app always tired Because it had too many windows open.
 
-Alright that's the gist of it Unit testing MFC isn't a walk in the park but it is doable with a bit of planning and some architectural changes Is it going to be easy No but is it worth it Definitely because otherwise you're signing up for constant debugging hell trust me I know.
+that's the gist of it Unit testing MFC isn't a walk in the park but it is doable with a bit of planning and some architectural changes Is it going to be easy No but is it worth it Definitely because otherwise you're signing up for constant debugging hell trust me I know.

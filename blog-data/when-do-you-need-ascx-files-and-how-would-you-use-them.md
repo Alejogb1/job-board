@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "when-do-you-need-ascx-files-and-how-would-you-use-them"
 ---
 
-Okay so you're asking about ascx files right Been there done that got the t-shirt and probably a few stress-induced grey hairs dealing with them over the years. Let's dive in
+ so you're asking about ascx files right Been there done that got the t-shirt and probably a few stress-induced grey hairs dealing with them over the years. Let's dive in
 
 First things first ascx files they're not some arcane mystery they're just user controls in the good old ASPNET web forms world Think of them as reusable bits of UI little lego bricks you can snap together to build your web pages. I mean in web forms everything’s a control right? Page’s a control its controls all the way down.
 
@@ -95,7 +95,7 @@ namespace WebApplication1
 
 ```
 
-Okay what’s happening here?
+ what’s happening here?
 
 -  `<%@ Control ... %>` At the top of the ascx file that’s basically saying “Hey I’m a user control not a full page”.
 -  The `CodeBehind` links the ascx to the csharp code file that has the logic behind it.
@@ -183,7 +183,7 @@ Here we have a more realistic scenario a `ProductSummary` control that takes pro
 
 **Resources instead of links**
 
-Okay so about resources. I’m not one for throwing links around like everyone else. I’d rather steer you toward stuff that actually digs deeper.
+ so about resources. I’m not one for throwing links around like everyone else. I’d rather steer you toward stuff that actually digs deeper.
 
 1.  **"Pro ASP.NET 4.5 in C#" by Matthew MacDonald":** This is like the bible for ASPNET web forms. It covers everything in detail including user controls with specific chapters dedicated to it. If you want a solid foundation this book is a must.
 

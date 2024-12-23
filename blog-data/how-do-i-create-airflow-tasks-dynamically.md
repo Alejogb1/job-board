@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-create-airflow-tasks-dynamically"
 ---
 
-Let's tackle this. I remember the early days of a project where we needed to process data from hundreds of different sources, each with its own quirks and schedules. Hardcoding Airflow tasks for every single one was a maintenance nightmare, to say the least. That's where dynamic task generation became indispensable, not just a nice-to-have. It's essentially about building your dag structure on the fly, based on external information like configurations or database records. There are several ways to approach it, and I'll share what's worked best for me.
+ I remember the early days of a project where we needed to process data from hundreds of different sources, each with its own quirks and schedules. Hardcoding Airflow tasks for every single one was a maintenance nightmare, to say the least. That's where dynamic task generation became indispensable, not just a nice-to-have. It's essentially about building your dag structure on the fly, based on external information like configurations or database records. There are several ways to approach it, and I'll share what's worked best for me.
 
 The core concept behind dynamic task creation in Airflow revolves around leveraging Python's capabilities to generate tasks within the scope of your dag definition. Instead of statically declaring each task, we use loops, function calls, or other programmatic constructs to determine which tasks need to exist and how they should be configured, at dag parse time. This doesn't happen at runtime – it's all evaluated during the initial parsing of the dag file. Let me unpack three methods I’ve used successfully in practice, complete with code examples.
 

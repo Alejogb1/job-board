@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-did-the-hyperledger-fabric-orderer-fail-to-deliver-a-client-for-an-order"
 ---
 
-Okay, let's tackle this. I’ve seen this particular issue pop up more than a few times over the years, especially during some rather intense deployments of Hyperledger Fabric networks. When an orderer fails to deliver a client’s order, it’s usually not a single, straightforward problem; it's often a confluence of factors. Let’s break down some of the more common culprits, leaning on my experience working with Fabric in various enterprise settings.
+,  I’ve seen this particular issue pop up more than a few times over the years, especially during some rather intense deployments of Hyperledger Fabric networks. When an orderer fails to deliver a client’s order, it’s usually not a single, straightforward problem; it's often a confluence of factors. Let’s break down some of the more common culprits, leaning on my experience working with Fabric in various enterprise settings.
 
 The core issue, as you know, stems from the fact that the orderer service in Hyperledger Fabric is the consensus mechanism. It's responsible for ordering transactions into blocks and then distributing these blocks to the peers. Therefore, when a client’s transaction fails to get through, it almost always points to a breakdown in this process. I've found the problem can generally be categorized into network, configuration, or consensus-specific concerns. Let's look at each of these.
 

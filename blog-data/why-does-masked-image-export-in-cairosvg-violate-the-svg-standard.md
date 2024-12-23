@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-masked-image-export-in-cairosvg-violate-the-svg-standard"
 ---
 
-Okay, let's talk about masked image export in CairoSVG and why it sometimes goes sideways when compared to the svg standard. It’s a situation I’ve encountered a few times over the years, particularly when dealing with complex vector graphics destined for different platforms. The crux of the issue lies in how CairoSVG handles rasterization and compositing of masked images, which, while often sufficient, can deviate from the fine-grained control offered in the SVG specification.
+, let's talk about masked image export in CairoSVG and why it sometimes goes sideways when compared to the svg standard. It’s a situation I’ve encountered a few times over the years, particularly when dealing with complex vector graphics destined for different platforms. The crux of the issue lies in how CairoSVG handles rasterization and compositing of masked images, which, while often sufficient, can deviate from the fine-grained control offered in the SVG specification.
 
 Fundamentally, the SVG specification allows for very precise control over masking. It provides a way to use another graphic element (a shape, another image, etc.) as a stencil. Essentially, the mask determines the alpha channel of the target, revealing portions of it based on the mask's shape and opacity. Now, CairoSVG, while generally a robust tool for svg rendering, doesn't always implement this behavior to the exact letter, leading to those violations. The problem typically surfaces when using complex mask elements, involving things like gradients, multiple layers, or even nested masks.
 

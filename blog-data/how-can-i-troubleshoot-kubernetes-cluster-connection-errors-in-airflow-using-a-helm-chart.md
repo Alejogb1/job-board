@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-troubleshoot-kubernetes-cluster-connection-errors-in-airflow-using-a-helm-chart"
 ---
 
-Okay, let's tackle this. I’ve certainly had my fair share of wrestling – *ahem*, I mean, *dealing with* – Kubernetes connection issues in Airflow deployments, particularly those managed by Helm. It’s a fairly common pitfall, especially with complex configurations, and I've found a systematic approach to be most effective. So, let’s break down the common culprits and how to address them using Helm charts as our context.
+,  I’ve certainly had my fair share of wrestling – *ahem*, I mean, *dealing with* – Kubernetes connection issues in Airflow deployments, particularly those managed by Helm. It’s a fairly common pitfall, especially with complex configurations, and I've found a systematic approach to be most effective. So, let’s break down the common culprits and how to address them using Helm charts as our context.
 
 Fundamentally, when your Airflow pods can't connect to the Kubernetes cluster, the problem usually boils down to one of three broad areas: network configuration, role-based access control (rbac), or incorrect Kubernetes client configuration within Airflow itself. My experience indicates these are almost always where you will find your issues. Let's examine each in detail.
 

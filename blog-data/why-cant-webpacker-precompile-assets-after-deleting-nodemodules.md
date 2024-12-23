@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-cant-webpacker-precompile-assets-after-deleting-nodemodules"
 ---
 
-Alright, let's tackle this. I've seen this specific head-scratcher pop up more times than I'd like to recall, and it always boils down to a fundamental misunderstanding of how Webpack, or in this case, Webpacker within the Rails ecosystem, manages its dependency graph and compilation process. The short version is: deleting `node_modules` essentially wipes out the foundation upon which Webpack builds its bundles. It's akin to demolishing the blueprint and expecting the house to stand just fine afterward. But, let's unpack the why and how in more detail.
+Alright,  I've seen this specific head-scratcher pop up more times than I'd like to recall, and it always boils down to a fundamental misunderstanding of how Webpack, or in this case, Webpacker within the Rails ecosystem, manages its dependency graph and compilation process. The short version is: deleting `node_modules` essentially wipes out the foundation upon which Webpack builds its bundles. It's akin to demolishing the blueprint and expecting the house to stand just fine afterward. But, let's unpack the why and how in more detail.
 
 My experience with this often comes from those moments after a major dependency update, or a developer new to the project accidentally commits a `node_modules` deletion (we’ve all been there). We’d see the build pipeline just grind to a halt, completely unable to proceed, and the debugging session would begin. The root cause was almost always this exact issue, and I'd spent some time making sure the team understood the why.
 

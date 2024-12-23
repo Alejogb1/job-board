@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-azure-container-instances-run-on-a-private-network-with-a-domain"
 ---
 
-Okay, let's tackle this one. I remember dealing with a similar challenge back when we were migrating a monolithic application to a microservices architecture at my previous gig. We wanted to leverage Azure Container Instances (ACI) for some of the background processing components, but security was paramount, so a public internet presence was out of the question. The short answer to your question is a resounding yes, Azure Container Instances absolutely can run within a private network, complete with domain integration. However, the "how" is where it gets interesting and where we need to be specific.
+, let's tackle this one. I remember dealing with a similar challenge back when we were migrating a monolithic application to a microservices architecture at my previous gig. We wanted to leverage Azure Container Instances (ACI) for some of the background processing components, but security was paramount, so a public internet presence was out of the question. The short answer to your question is a resounding yes, Azure Container Instances absolutely can run within a private network, complete with domain integration. However, the "how" is where it gets interesting and where we need to be specific.
 
 The critical aspect here revolves around deploying ACI within an Azure Virtual Network (VNet). Essentially, you're creating a private network boundary where your container instances can reside, shielded from public internet access and able to communicate with other resources on the same VNet, including domain controllers for authentication and DNS resolution.
 

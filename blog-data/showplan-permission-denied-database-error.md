@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "showplan-permission-denied-database-error"
 ---
 
-Okay so "showplan permission denied database error" classic right I've seen this more times than I care to admit Let me break it down from my experience and how you can likely get this sorted it's a permission thing usually straightforward but the devil's always in the details
+ so "showplan permission denied database error" classic right I've seen this more times than I care to admit Let me break it down from my experience and how you can likely get this sorted it's a permission thing usually straightforward but the devil's always in the details
 
 So basically you're hitting this error probably when you're trying to get the query execution plan right That's the plan SQL Server uses to figure out how to fetch your data The SHOWPLAN permission is what allows you to view that plan without running the actual query and this permission problem is pretty common especially when you're not the database administrator or you're working with complex permission setups It's a little bit like asking to see the chef's recipe but you're not allowed in the kitchen
 

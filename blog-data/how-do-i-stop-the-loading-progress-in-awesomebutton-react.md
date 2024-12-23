@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-stop-the-loading-progress-in-awesomebutton-react"
 ---
 
-Right then, let's tackle this. You're looking to halt the loading progress of an `AwesomeButton` component in React. I've been down that road myself, more times than I care to count, and it’s usually tied to some asynchronous operation that didn’t quite play nice with the UI. The core issue isn’t usually the button component itself, but rather how you're managing the loading state and triggering the reset. The key is to have fine-grained control over your loading logic. It's not just about stopping, but about graceful transitions.
+Right then,  You're looking to halt the loading progress of an `AwesomeButton` component in React. I've been down that road myself, more times than I care to count, and it’s usually tied to some asynchronous operation that didn’t quite play nice with the UI. The core issue isn’t usually the button component itself, but rather how you're managing the loading state and triggering the reset. The key is to have fine-grained control over your loading logic. It's not just about stopping, but about graceful transitions.
 
 The `AwesomeButton` component, like many other UI libraries, relies heavily on state management. The "loading" or "progress" state is generally tied to a boolean or a numerical value, and toggling that usually controls the visual cues of a loading indicator or similar. When you want to stop the loading prematurely, you are essentially looking to directly manipulate this state variable.
 

@@ -4,7 +4,7 @@ date: "2024-12-12"
 id: "qu-retos-presenta-la-implementacin-de-adaptaciones-significativas-y-poco-significativas-en-plataformas-tecnolgicas"
 ---
 
-Okay so you're asking about the challenges with implementing significant and insignificant adaptations on tech platforms right like the nitty-gritty stuff. Let's break it down.
+ so you're asking about the challenges with implementing significant and insignificant adaptations on tech platforms right like the nitty-gritty stuff. Let's break it down.
 
 First off the whole significant vs insignificant adaptation thing is kind of a spectrum not a hard line. What seems minor to one person or system can be a huge deal for another. A lot of it depends on the scale the complexity of the platform and the user base it serves.
 

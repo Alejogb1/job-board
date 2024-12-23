@@ -4,7 +4,7 @@ date: "2024-12-03"
 id: "how-can-llms-be-used-to-summarize-daily-chat-logs-and-extract-actionable-insights-from-discord-channels"
 ---
 
-Okay so you wanna use LLMs to summarize Discord chats right  like get the juicy bits the action items the stuff that actually matters  Sounds cool  It's totally doable and honestly kinda awesome
+ so you wanna use LLMs to summarize Discord chats right  like get the juicy bits the action items the stuff that actually matters  Sounds cool  It's totally doable and honestly kinda awesome
 
 First off  you gotta think about the data you're dealing with Discord chats are messy  lots of emojis memes random stuff  LLMs aren't magic they need clean data to work well  so preprocessing is key
 

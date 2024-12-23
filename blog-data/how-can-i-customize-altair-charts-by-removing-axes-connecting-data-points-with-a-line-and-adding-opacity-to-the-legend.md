@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-customize-altair-charts-by-removing-axes-connecting-data-points-with-a-line-and-adding-opacity-to-the-legend"
 ---
 
-Alright, let's tackle this. I've spent quite a bit of time crafting visualizations with altair, and I've certainly encountered situations where the defaults just don't cut it. Your request to remove axes, connect points with lines, and apply opacity to the legend is a common scenario, and achieving it is pretty straightforward once you understand the underlying principles of altair's declarative approach.
+Alright,  I've spent quite a bit of time crafting visualizations with altair, and I've certainly encountered situations where the defaults just don't cut it. Your request to remove axes, connect points with lines, and apply opacity to the legend is a common scenario, and achieving it is pretty straightforward once you understand the underlying principles of altair's declarative approach.
 
 To begin, remember that altair works by composing marks (like points, lines, bars) and encoding channels (like x, y, color, size). When you see a chart with axes, it's a consequence of altair's default configuration for those encodings. Removing axes essentially boils down to overriding those defaults.
 

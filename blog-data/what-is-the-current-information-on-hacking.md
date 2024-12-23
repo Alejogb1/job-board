@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-is-the-current-information-on-hacking"
 ---
 
-Okay, let's unpack the current state of "hacking," a term that, frankly, encompasses a vast and ever-evolving landscape. It's not the Hollywood depiction of frantic typing in a dimly lit room; the reality is often more nuanced, and significantly more varied. It’s important to move beyond the sensationalism and address the core technical aspects. My experience, particularly working on secure systems for a large fintech firm several years back, involved constant vigilance against real-world attacks, which provides a perspective I can share.
+, let's unpack the current state of "hacking," a term that, frankly, encompasses a vast and ever-evolving landscape. It's not the Hollywood depiction of frantic typing in a dimly lit room; the reality is often more nuanced, and significantly more varied. It’s important to move beyond the sensationalism and address the core technical aspects. My experience, particularly working on secure systems for a large fintech firm several years back, involved constant vigilance against real-world attacks, which provides a perspective I can share.
 
 So, to define our scope, “hacking” isn't a singular activity; it's a broad collection of methods used to exploit vulnerabilities in systems, networks, and software. Currently, we see a complex interplay of automated attacks and targeted campaigns, often fueled by sophisticated malware and advanced techniques. The spectrum ranges from script kiddies using readily available tools to state-sponsored actors employing zero-day exploits.
 

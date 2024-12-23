@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "is-symfony-mailer-6x-compatible-with-antiflood-plugins"
 ---
 
-Alright, let's tackle this. From my past experiences managing several large-scale applications, I've had my fair share of encounters with email delivery challenges, especially when dealing with high-volume transactional emails and the potential for abuse. So, concerning Symfony Mailer 6.x's compatibility with anti-flood mechanisms, the answer isn't a straightforward "yes" or "no," but rather a nuanced "it depends on how you approach it."
+Alright,  From my past experiences managing several large-scale applications, I've had my fair share of encounters with email delivery challenges, especially when dealing with high-volume transactional emails and the potential for abuse. So, concerning Symfony Mailer 6.x's compatibility with anti-flood mechanisms, the answer isn't a straightforward "yes" or "no," but rather a nuanced "it depends on how you approach it."
 
 Symfony Mailer itself doesn’t inherently provide built-in anti-flood features. It’s primarily a library designed for constructing and sending emails. The responsibility of implementing flood control rests on the shoulders of the application developer, or more accurately, on the configuration of your transport layer and surrounding logic. Let's break down why, and how we can approach it.
 

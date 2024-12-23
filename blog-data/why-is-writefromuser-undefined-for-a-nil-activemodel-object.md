@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-writefromuser-undefined-for-a-nil-activemodel-object"
 ---
 
-Alright, let's tackle this. It's a situation I've encountered more times than I’d care to count, and it always boils down to a fundamental aspect of object-oriented programming, particularly within the context of rails’ ActiveModel. The crux of the issue revolves around the concept of method invocation on nil objects, and the behavior of Ruby’s messaging system.
+Alright,  It's a situation I've encountered more times than I’d care to count, and it always boils down to a fundamental aspect of object-oriented programming, particularly within the context of rails’ ActiveModel. The crux of the issue revolves around the concept of method invocation on nil objects, and the behavior of Ruby’s messaging system.
 
 Essentially, when you see a `NoMethodError: undefined method 'write_from_user' for nil:NilClass` error stemming from an ActiveModel object context, it's a clear indication that you’re attempting to call a method on a variable or object that is currently `nil`. In essence, your object, instead of being a concrete instance of your desired ActiveModel class, is nothing, zero, nada. Ruby, being a dynamic language, tries its best to find a method called `write_from_user` in the class hierarchy of the object it's asked to interact with. But when that object *is* `nil`, there's no object, and therefore, no method to invoke, leading to the error you’re seeing. This isn't some Rails peculiarity, but rather a very basic principle of how Ruby operates.
 

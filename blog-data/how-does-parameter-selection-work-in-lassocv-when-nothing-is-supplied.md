@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "how-does-parameter-selection-work-in-lassocv-when-nothing-is-supplied"
 ---
 
-Okay so you're asking about how LassoCV handles parameter selection when you don't give it any specific values right yeah I've been there wrestled with that beast more times than I care to admit it's actually a pretty interesting under the hood situation lets dive in
+ so you're asking about how LassoCV handles parameter selection when you don't give it any specific values right yeah I've been there wrestled with that beast more times than I care to admit it's actually a pretty interesting under the hood situation lets dive in
 
 So first off let's just get this straight LassoCV like a lot of these sklearn cross-validation things is all about finding the optimal regularization strength alpha right and if you don't tell it what alphas to check it's gotta figure it out on its own that's the crux of your question
 
@@ -112,4 +112,4 @@ Also the original Lasso paper by Tibshirani is a good source if you want to go b
 
 Oh and by the way a programmer walks into a library asks for books about paranoia the librarian whispers "they're right behind you"
 
-Alright I think that should cover it let me know if you have any more questions I've seen my fair share of stuff related to Lasso and I might have some other tips or tricks that I can share
+I think that should cover it let me know if you have any more questions I've seen my fair share of stuff related to Lasso and I might have some other tips or tricks that I can share

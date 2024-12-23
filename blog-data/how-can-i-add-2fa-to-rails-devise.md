@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-add-2fa-to-rails-devise"
 ---
 
-Okay, let's talk about bolstering the security of your Rails application with two-factor authentication (2FA) using Devise. It's a crucial step these days, and thankfully Devise, a staple authentication solution for Rails, is quite extensible in this regard. I’ve actually tackled this on a project where we were handling sensitive user data for a financial platform; the experience definitely hammered home just how critical this security layer is. We weren’t relying solely on passwords, and neither should you.
+, let's talk about bolstering the security of your Rails application with two-factor authentication (2FA) using Devise. It's a crucial step these days, and thankfully Devise, a staple authentication solution for Rails, is quite extensible in this regard. I’ve actually tackled this on a project where we were handling sensitive user data for a financial platform; the experience definitely hammered home just how critical this security layer is. We weren’t relying solely on passwords, and neither should you.
 
 My approach tends to favor simplicity and maintainability. Therefore, while you'll find several options out there – from building your own custom solution to using a full-fledged service – I typically lean towards using the 'devise-two-factor' gem. It's well-maintained, integrates seamlessly with Devise, and offers a good balance between ease of use and flexibility. The gem uses the Time-based One-time Password (TOTP) algorithm, which is widely accepted and supported by authenticator apps like Google Authenticator, Authy, and many others.
 

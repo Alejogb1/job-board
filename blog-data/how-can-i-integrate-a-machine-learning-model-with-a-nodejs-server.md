@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-integrate-a-machine-learning-model-with-a-nodejs-server"
 ---
 
-Okay, let's unpack integrating machine learning models with a Node.js server. This is a topic I've actually grappled with quite a bit over the years, particularly back in my time at 'Synapse Solutions' where we were pushing the boundaries of real-time analytics. There are a few reliable strategies, each with its own set of trade-offs, and I'll walk you through what I've found to work well.
+, let's unpack integrating machine learning models with a Node.js server. This is a topic I've actually grappled with quite a bit over the years, particularly back in my time at 'Synapse Solutions' where we were pushing the boundaries of real-time analytics. There are a few reliable strategies, each with its own set of trade-offs, and I'll walk you through what I've found to work well.
 
 Essentially, you're looking at getting your pre-trained model—built perhaps in Python with TensorFlow or PyTorch—to become accessible via an API served by Node.js. This isn’t typically a direct "plug-and-play" situation, but with the right architecture, it’s quite manageable. We'll explore three main methods: using a separate process with inter-process communication (IPC), leveraging a dedicated serving framework, and employing a native Node.js binding.
 

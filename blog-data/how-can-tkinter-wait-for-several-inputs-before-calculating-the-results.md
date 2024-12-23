@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-tkinter-wait-for-several-inputs-before-calculating-the-results"
 ---
 
-Okay, let's tackle this. It’s a fairly common scenario when building interactive applications—needing to collect multiple inputs before kicking off a computation. I've definitely found myself staring at a flickering Tkinter window, wishing it was a bit more cooperative, back in my early days developing interactive data visualization tools. The issue often arises from Tkinter’s event-driven nature; it’s not inherently built to pause and wait. Instead, it continuously monitors for events like button clicks, keystrokes, and window resizes. We need to manage this asynchronous flow explicitly.
+,  It’s a fairly common scenario when building interactive applications—needing to collect multiple inputs before kicking off a computation. I've definitely found myself staring at a flickering Tkinter window, wishing it was a bit more cooperative, back in my early days developing interactive data visualization tools. The issue often arises from Tkinter’s event-driven nature; it’s not inherently built to pause and wait. Instead, it continuously monitors for events like button clicks, keystrokes, and window resizes. We need to manage this asynchronous flow explicitly.
 
 The basic problem is that straightforward procedural coding, like reading input sequentially, doesn't work well with Tkinter’s main loop. If you try to ‘wait’ for input within the main loop’s execution, your application will freeze. The window becomes unresponsive because the main thread is blocked. The solution involves using event handlers, which are functions triggered by specific events, coupled with data storage mechanisms to collect the inputs.
 

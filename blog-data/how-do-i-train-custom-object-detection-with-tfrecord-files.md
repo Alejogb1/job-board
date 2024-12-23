@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-train-custom-object-detection-with-tfrecord-files"
 ---
 
-Okay, let’s break down training a custom object detector using tfrecord files. I've navigated this terrain quite a few times, particularly during that large-scale image analysis project we had a couple of years back. We were dealing with millions of images, and without tfrecords, things would have bogged down to a crawl. So, trust me, getting this process right is crucial for efficiency and performance.
+, let’s break down training a custom object detector using tfrecord files. I've navigated this terrain quite a few times, particularly during that large-scale image analysis project we had a couple of years back. We were dealing with millions of images, and without tfrecords, things would have bogged down to a crawl. So, trust me, getting this process right is crucial for efficiency and performance.
 
 The core idea behind tfrecords is straightforward: they're a binary file format optimized for reading data efficiently, especially when working with large datasets. Instead of constantly accessing individual image files from disk during training, we pre-process the images and package them into these records, along with their corresponding labels. This leads to significant speedups in the data loading phase, a classic bottleneck in deep learning. Let's unpack the process and see how it actually works.
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "garbage-collection-with-com-objects-in-powershell"
 ---
 
-Okay so you're wrestling with garbage collection and COM objects in PowerShell right I've been there man trust me it's a special kind of headache
+ so you're wrestling with garbage collection and COM objects in PowerShell right I've been there man trust me it's a special kind of headache
 
 Let me tell you a little something about my past life with this exact scenario I had this script that was automating some ancient Excel stuff interacting with a COM object provided by a third-party library and boy did it leak memory like a sieve I mean it wasn't just leaking it was gushing like a fire hydrant had sprung a leak after a few hours of operation the script would just fall over flat on its face and I'd have to restart it and it was so unreliable that it felt like dealing with a toddler throwing a tantrum every few minutes
 

@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-can-i-trigger-airflow-dags-with-post-requests-and-parameters"
 ---
 
-Let's tackle this. I've personally seen this exact need arise several times over the past decade working with various orchestration platforms, particularly when integrating data pipelines with external services. The challenge of triggering Airflow dags via post requests and, more importantly, passing parameters, is a common hurdle that requires a bit of setup but pays off significantly in flexibility.
+ I've personally seen this exact need arise several times over the past decade working with various orchestration platforms, particularly when integrating data pipelines with external services. The challenge of triggering Airflow dags via post requests and, more importantly, passing parameters, is a common hurdle that requires a bit of setup but pays off significantly in flexibility.
 
 The core of the solution lies in leveraging Airflow’s REST api, specifically the 'trigger_dag' endpoint. This isn’t something you’d typically do directly in a browser but instead through another application or a custom script. We’ll need to form a structured http post request to this endpoint, and here's where the parameters come in. These parameters are essentially metadata you attach to the dag run that your dag can subsequently use. Think of it as passing initial configuration to your workflow as it kicks off.
 

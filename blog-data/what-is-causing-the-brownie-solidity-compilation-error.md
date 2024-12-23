@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-is-causing-the-brownie-solidity-compilation-error"
 ---
 
-Okay, let's tackle this. I remember a project a few years back where I was migrating a significant chunk of our Solidity codebase to a new version, and Brownie suddenly started throwing errors left and right. It was a headache, but it taught me a lot about how these compilation issues can manifest. The error isn't always as straightforward as the error message might suggest, so let’s unpack some common reasons.
+,  I remember a project a few years back where I was migrating a significant chunk of our Solidity codebase to a new version, and Brownie suddenly started throwing errors left and right. It was a headache, but it taught me a lot about how these compilation issues can manifest. The error isn't always as straightforward as the error message might suggest, so let’s unpack some common reasons.
 
 Brownie uses solc, the Solidity compiler, under the hood. The “Brownie compilation error,” often a catch-all, generally indicates a problem with how solc processes your Solidity code, or sometimes with how Brownie interacts with it. We can break the primary causes into a few buckets, each with distinct resolutions.
 

@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-minimize-element-counts-above-a-threshold-using-keras"
 ---
 
-Okay, let's unpack this. From the trenches, I've encountered situations where model predictions result in dense output vectors, where the number of elements above a particular threshold needs to be controlled. This isn't uncommon, particularly with sequence-to-sequence models or in tasks where the cardinality of output features is large. Minimizing this count effectively requires a nuanced approach, and while Keras doesn’t offer a single ‘minimize_elements_above_threshold’ function, we can achieve this with clever loss function design and careful model architecture. I've found that a combination of custom loss functions incorporating a penalty term and strategically placed regularization can help achieve this.
+, let's unpack this. From the trenches, I've encountered situations where model predictions result in dense output vectors, where the number of elements above a particular threshold needs to be controlled. This isn't uncommon, particularly with sequence-to-sequence models or in tasks where the cardinality of output features is large. Minimizing this count effectively requires a nuanced approach, and while Keras doesn’t offer a single ‘minimize_elements_above_threshold’ function, we can achieve this with clever loss function design and careful model architecture. I've found that a combination of custom loss functions incorporating a penalty term and strategically placed regularization can help achieve this.
 
 Let's start by breaking down the key challenges:
 

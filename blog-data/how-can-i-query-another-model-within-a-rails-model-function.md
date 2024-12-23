@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-query-another-model-within-a-rails-model-function"
 ---
 
-Alright, let's tackle this. I've seen this come up quite a bit over the years, and while it might seem straightforward, there are nuances to handling queries across different models from within a model function in Rails that you’ll want to get a firm grip on. Specifically, you're asking how to query one model from inside a function defined within another model. This isn't necessarily bad practice, but the *how* and *why* are essential to get *right*.
+Alright,  I've seen this come up quite a bit over the years, and while it might seem straightforward, there are nuances to handling queries across different models from within a model function in Rails that you’ll want to get a firm grip on. Specifically, you're asking how to query one model from inside a function defined within another model. This isn't necessarily bad practice, but the *how* and *why* are essential to get *right*.
 
 The general idea is that your model code, like any other code in your application, can invoke methods that interact with your database. And within a model, you might need to access data that’s represented by a different model. However, this can quickly become unwieldy if not managed properly. We want our models to remain focused on their primary responsibilities, while still allowing them to access related data. I've personally seen applications where this pattern is abused, creating spaghetti code that’s a nightmare to maintain. My old team even spent weeks refactoring a system that had this kind of inter-model query proliferation.
 

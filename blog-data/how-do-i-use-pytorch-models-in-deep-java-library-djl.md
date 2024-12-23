@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-use-pytorch-models-in-deep-java-library-djl"
 ---
 
-Alright, let's tackle this. Integrating PyTorch models into a Java environment using Deep Java Library (DJL) is something I’ve frequently navigated over the years, often in contexts where server-side processing demanded the robust nature of Java coupled with the power of PyTorch-trained models. It's a fairly common requirement, and thankfully, DJL streamlines the process quite effectively, although a few nuances need attention to ensure smooth sailing.
+Alright,  Integrating PyTorch models into a Java environment using Deep Java Library (DJL) is something I’ve frequently navigated over the years, often in contexts where server-side processing demanded the robust nature of Java coupled with the power of PyTorch-trained models. It's a fairly common requirement, and thankfully, DJL streamlines the process quite effectively, although a few nuances need attention to ensure smooth sailing.
 
 Essentially, what we’re doing is moving a model trained within the Python-centric ecosystem of PyTorch into the Java realm. DJL acts as an abstraction layer, providing a common api that shields us from the direct intricacies of both the backend deep learning engine and the differences between languages. The process, at a high level, involves saving your PyTorch model in a format DJL understands, and then loading and running that model through DJL in your Java application.
 

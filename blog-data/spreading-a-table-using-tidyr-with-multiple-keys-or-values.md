@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "spreading-a-table-using-tidyr-with-multiple-keys-or-values"
 ---
 
-Alright so you're wrestling with spreading a table using tidyr with multiple keys or values eh Been there done that got the t-shirt and the caffeine jitters to prove it This isn't exactly rocket science but tidyr can feel a bit cryptic sometimes when you’re trying to bend it to your will
+so you're wrestling with spreading a table using tidyr with multiple keys or values eh Been there done that got the t-shirt and the caffeine jitters to prove it This isn't exactly rocket science but tidyr can feel a bit cryptic sometimes when you’re trying to bend it to your will
 
 Let me tell you about the time I was elbow deep in genomic data My supervisor wanted a specific data format and tidyr was my only hope I had a table that was almost there but the spread operation kept giving me headaches I was dealing with multiple keys a classic problem really but it wasn't intuitive at first
 

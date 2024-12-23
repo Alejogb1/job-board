@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-extract-all-adjectives-from-a-string-and-store-them-in-an-array"
 ---
 
-Okay, let's tackle this. From my experience, working with natural language processing (NLP) often throws these kinds of parsing problems your way, and it’s rarely as straightforward as it first appears. A simple string of words needs to be deconstructed into its parts of speech, and identifying adjectives among them requires a more nuanced approach than just looking for words that "describe" something. I've actually been in a similar situation, developing a sentiment analysis tool for customer feedback, and the accuracy of adjective extraction was critical.
+,  From my experience, working with natural language processing (NLP) often throws these kinds of parsing problems your way, and it’s rarely as straightforward as it first appears. A simple string of words needs to be deconstructed into its parts of speech, and identifying adjectives among them requires a more nuanced approach than just looking for words that "describe" something. I've actually been in a similar situation, developing a sentiment analysis tool for customer feedback, and the accuracy of adjective extraction was critical.
 
 The challenge isn't just about identifying *any* word that might function as an adjective in isolation. Context matters immensely. The same word can be a noun, verb, or adjective depending on its usage. Therefore, a purely rule-based solution is usually brittle and fails in edge cases. Instead, the most reliable way involves leveraging part-of-speech (POS) tagging using existing NLP libraries. This process annotates each word with its grammatical category, allowing for precise adjective extraction.
 

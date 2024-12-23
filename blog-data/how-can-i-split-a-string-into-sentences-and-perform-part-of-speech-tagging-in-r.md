@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-split-a-string-into-sentences-and-perform-part-of-speech-tagging-in-r"
 ---
 
-Okay, let's tackle this. It's a common task, and I remember encountering similar requirements back in my early days building text processing pipelines for a large-scale document analysis project. Splitting text into sentences and then tagging parts-of-speech (POS) is foundational for many natural language processing (NLP) tasks. Here’s a breakdown of how you can approach this in R, drawing from my experiences and what I consider best practices.
+,  It's a common task, and I remember encountering similar requirements back in my early days building text processing pipelines for a large-scale document analysis project. Splitting text into sentences and then tagging parts-of-speech (POS) is foundational for many natural language processing (NLP) tasks. Here’s a breakdown of how you can approach this in R, drawing from my experiences and what I consider best practices.
 
 The fundamental challenge lies in the nuances of natural language. Periods, question marks, and exclamation points aren't always sentence terminators, especially when considering abbreviations, quotations, and other contextual factors. We also need robust POS tagging that considers the linguistic context of each word, not just its isolated form.
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "silhouette-r-calculation-tutorial"
 ---
 
-Alright so you're asking about silhouette score calculation I get it Been there done that countless times it's a staple in unsupervised learning and clustering evaluation
+so you're asking about silhouette score calculation I get it Been there done that countless times it's a staple in unsupervised learning and clustering evaluation
 
 First off let's break down why we even care about silhouette scores This isn't just some random metric someone threw at us it's actually a pretty intuitive way to gauge how well your data points are clustered Put simply it tells you how similar an object is to its own cluster compared to other clusters A high score means the data point is well-clustered while a low or negative score suggests it might be in the wrong spot or that your clusters are not well-separated
 

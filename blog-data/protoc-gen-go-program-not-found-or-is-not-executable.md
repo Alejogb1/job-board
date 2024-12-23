@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "protoc-gen-go-program-not-found-or-is-not-executable"
 ---
 
-Okay I see the question protoc-gen-go program not found or is not executable Been there done that so many times it's basically my coding origin story Feels like I've spent half my life debugging this specific issue lets unpack this I bet its probably a pathing or install problem it usually is
+ I see the question protoc-gen-go program not found or is not executable Been there done that so many times it's basically my coding origin story Feels like I've spent half my life debugging this specific issue lets unpack this I bet its probably a pathing or install problem it usually is
 
 So here's the deal and trust me I've been in the trenches with this more than I care to admit This error the "protoc-gen-go program not found or is not executable" it screams loud and clear that the protoc compiler which handles your proto files doesnt know where to find the `protoc-gen-go` plugin This plugin is vital it's what translates your protocol buffer definition files .proto into Go code
 

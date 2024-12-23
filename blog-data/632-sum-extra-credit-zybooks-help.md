@@ -4,9 +4,9 @@ date: "2024-12-13"
 id: "632-sum-extra-credit-zybooks-help"
 ---
 
-Alright so you're hitting the 6.3.2 sum extra credit on zybooks that one's a bit of a classic right I've been there trust me I've stared at that problem way too long back in my uni days it's one of those that seems simple enough on the surface but then you dig a little deeper and suddenly you're debugging till 3 AM you know the drill
+so you're hitting the 6.3.2 sum extra credit on zybooks that one's a bit of a classic right I've been there trust me I've stared at that problem way too long back in my uni days it's one of those that seems simple enough on the surface but then you dig a little deeper and suddenly you're debugging till 3 AM you know the drill
 
-Okay so let's talk about what we're really dealing with this "extra credit" part they added is basically asking you to do a summation with an added constraint usually the normal sum is fine you iterate through the collection or array whatever they're throwing at you and add them up nothing fancy but this extra credit part wants to sum only certain elements based on some condition usually it involves some kind of filtering or selection logic before adding up
+ so let's talk about what we're really dealing with this "extra credit" part they added is basically asking you to do a summation with an added constraint usually the normal sum is fine you iterate through the collection or array whatever they're throwing at you and add them up nothing fancy but this extra credit part wants to sum only certain elements based on some condition usually it involves some kind of filtering or selection logic before adding up
 
 I remember when I first saw this I tried this brute force approach it was like the most obvious thing to do I grabbed every single value and then ran a conditional check on it inside the loop. I thought "easy peasy" it wasn't. Here is that abomination
 

@@ -4,9 +4,9 @@ date: "2024-12-13"
 id: "spread-r-function-usage-examples"
 ---
 
-Okay so you're asking about `spread` in R right? Yeah I've been down that road plenty of times. It’s one of those functions that seems simple on the surface but you run into edge cases real quick. I’ve probably spent a week cumulatively debugging `spread` misuses in my old projects. Let’s talk practical experience I've had with this function instead of getting lost in abstract theory.
+ so you're asking about `spread` in R right? Yeah I've been down that road plenty of times. It’s one of those functions that seems simple on the surface but you run into edge cases real quick. I’ve probably spent a week cumulatively debugging `spread` misuses in my old projects. Let’s talk practical experience I've had with this function instead of getting lost in abstract theory.
 
-Okay first things first `spread` is your go-to function when you need to go from a long format data frame to a wide one. Think about it if you have data where each observation is represented by multiple rows and you want one row per observation with different columns that’s where `spread` shines. It's part of the `tidyr` package so make sure you have that installed. `install.packages("tidyr")`. I usually load it with `library(tidyverse)` just a habit.
+ first things first `spread` is your go-to function when you need to go from a long format data frame to a wide one. Think about it if you have data where each observation is represented by multiple rows and you want one row per observation with different columns that’s where `spread` shines. It's part of the `tidyr` package so make sure you have that installed. `install.packages("tidyr")`. I usually load it with `library(tidyverse)` just a habit.
 
 Let’s start with a basic example. I remember working with some old log data for a web server once. It looked something like this at the start.
 
@@ -49,7 +49,7 @@ The code above transformed the log data into.
 
 Now you're seeing the timestamp per row. `spread` takes two main arguments here `key` which is the name of the column that contains the new column names and `value` the name of the column containing the values for those new columns. Basic but fundamental. I've found myself using this particular setup for a myriad of data from user behavior data to financial tracking data. It's a workhorse.
 
-Here's where things get a bit more nuanced. What if you have missing values in your data? Okay the default behavior for `spread` is to fill missing values with `NA` which is often what you want. Let's assume some of our server logs missed a beat for memory usage at some point.
+Here's where things get a bit more nuanced. What if you have missing values in your data?  the default behavior for `spread` is to fill missing values with `NA` which is often what you want. Let's assume some of our server logs missed a beat for memory usage at some point.
 
 ```r
 log_data_missing <- data.frame(
@@ -92,7 +92,7 @@ This results in.
 
 Much cleaner if you ask me. The `fill` argument isn’t just limited to `0` I've used it with text too to create clear placeholder values when you are doing text-based analysis. It's very versatile for cleaning data before further processing.
 
-Okay now for the one gotcha that has burned me a few times. Duplicated key values. `spread` throws an error if it finds multiple rows with the same combination of keys. The classic case for me was when I was trying to analyze some user event data and somehow there were accidental duplicate events within the same timestamp. Let’s create a situation like this.
+ now for the one gotcha that has burned me a few times. Duplicated key values. `spread` throws an error if it finds multiple rows with the same combination of keys. The classic case for me was when I was trying to analyze some user event data and somehow there were accidental duplicate events within the same timestamp. Let’s create a situation like this.
 
 ```r
 event_data_duplicate <- data.frame(
@@ -125,7 +125,7 @@ This code gives you.
 ```
 This aggregates values for duplicated keys then spreads the data. This is probably the most common use case I've dealt with. You almost always need some kind of data cleaning before using spread.
 
-Okay that’s a lot of detail but it covers a lot of my personal experience with `spread`. No joke I have spent so long debugging these edge cases. I think its one of those functions that you just need to learn through doing. Don't just read the documentation which by the way is quite good.
+ that’s a lot of detail but it covers a lot of my personal experience with `spread`. No joke I have spent so long debugging these edge cases. I think its one of those functions that you just need to learn through doing. Don't just read the documentation which by the way is quite good.
 
 If you want deeper dives on data transformation techniques in R I would highly recommend the "R for Data Science" book by Hadley Wickham. I used that book a lot to get a grasp on these concepts. It’s free online you should check it out. Also if you are working with more advanced data manipulation consider reading more into the theory of relational data manipulation from Codd's original papers on the subject that should give you a good grounding in the general principles.
 

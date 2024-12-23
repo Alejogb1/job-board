@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-azureml-pipelines-share-data-effectively"
 ---
 
-Okay, let's tackle this. I’ve spent my fair share of time architecting and debugging AzureML pipelines, and data sharing, or rather, *efficient* data sharing, is a recurring theme that can easily become a bottleneck if not addressed properly. It's not just about making the data available; it's about doing it in a way that minimizes latency, avoids unnecessary duplication, and aligns with the larger goal of reproducible and scalable machine learning workflows.
+,  I’ve spent my fair share of time architecting and debugging AzureML pipelines, and data sharing, or rather, *efficient* data sharing, is a recurring theme that can easily become a bottleneck if not addressed properly. It's not just about making the data available; it's about doing it in a way that minimizes latency, avoids unnecessary duplication, and aligns with the larger goal of reproducible and scalable machine learning workflows.
 
 In my experience, back when we were scaling our fraud detection models, we started running into significant inefficiencies because each pipeline step was essentially fetching the same raw data from blob storage. Imagine the time and resources wasted. We quickly realized that treating data as a transient entity and relying solely on blob storage was a non-starter. We needed a more structured and streamlined approach for intra-pipeline data movement.
 

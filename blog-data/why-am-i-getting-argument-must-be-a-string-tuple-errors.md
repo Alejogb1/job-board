@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-am-i-getting-argument-must-be-a-string-tuple-errors"
 ---
 
-Okay, let's talk about "argument must be a string" errors when a tuple pops up unexpectedly. I've seen this more times than I care to remember, usually when dealing with complex data transformations or legacy code that hasn't quite caught up with best practices. It’s often a case of a mismatch between what a function *expects* and what it *receives*, especially when strings are in play. The core of the issue revolves around the type checking occurring implicitly within functions that are designed to operate solely on string data.
+, let's talk about "argument must be a string" errors when a tuple pops up unexpectedly. I've seen this more times than I care to remember, usually when dealing with complex data transformations or legacy code that hasn't quite caught up with best practices. It’s often a case of a mismatch between what a function *expects* and what it *receives*, especially when strings are in play. The core of the issue revolves around the type checking occurring implicitly within functions that are designed to operate solely on string data.
 
 The error message itself, though simple, is quite specific: the function encountered an argument that wasn't a string, but instead, a tuple. This suggests the function is either (a) being passed a tuple directly, or (b) receiving a tuple indirectly, likely as a result of another function's operation or by unpacking a data structure inadvertently. In my experience, the second case is far more common and can be much more challenging to track down without a structured approach.
 

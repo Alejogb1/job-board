@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-the-dqn-agent-failing-the-test-due-to-incorrect-input-shape"
 ---
 
-Okay, let's tackle this. It’s a classic issue, one I’ve seen pop up more times than I care to remember, especially in the early stages of a reinforcement learning project. Specifically, when your Deep Q-Network (DQN) agent is failing the test, and the error points to incorrect input shape, it's almost certainly a mismatch between how your environment represents states and how your neural network expects them. It's rarely the network's fault at its core, but rather how we, as developers, present the data.
+,  It’s a classic issue, one I’ve seen pop up more times than I care to remember, especially in the early stages of a reinforcement learning project. Specifically, when your Deep Q-Network (DQN) agent is failing the test, and the error points to incorrect input shape, it's almost certainly a mismatch between how your environment represents states and how your neural network expects them. It's rarely the network's fault at its core, but rather how we, as developers, present the data.
 
 I recall a project back in 2018, attempting to train a DQN to play a simplified version of a real-time strategy game. We were using a combination of pixel data and game-state variables as input. Initially, it seemed straightforward enough. I diligently constructed a convolutional neural network (cnn) architecture, fed it the pixel data, and expected great results. What I got, however, was consistent failure and the telltale input shape error. The problem was not a fundamental misunderstanding of the DQN algorithm, but a fundamental misunderstanding of how my data was structured, and how it needed to conform to the layers in my neural network.
 

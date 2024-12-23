@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-react-and-stimulus-be-used-together-in-a-rails-6-application"
 ---
 
-Okay, let's tackle this. I've seen a fair bit of frontend integration in my time, and the React-Stimulus combo within a Rails 6 environment is a pattern that, while initially seeming a little unusual, can actually become quite powerful when leveraged correctly. The key is understanding their distinct roles and how they can play off each other without stepping on each other’s toes. It's not about shoehorning them together, but rather about creating a harmonious balance.
+,  I've seen a fair bit of frontend integration in my time, and the React-Stimulus combo within a Rails 6 environment is a pattern that, while initially seeming a little unusual, can actually become quite powerful when leveraged correctly. The key is understanding their distinct roles and how they can play off each other without stepping on each other’s toes. It's not about shoehorning them together, but rather about creating a harmonious balance.
 
 My experience stems from a rather large project back in 2019 – a complex e-commerce platform where certain interactive components needed the full flexibility of React, but we weren't ready to completely abandon the Rails view rendering for the entire application, or commit entirely to a client-side rendering approach. We had legacy code using turbolinks and needed something more refined and manageable. This led us down this specific path of integration between the two.
 

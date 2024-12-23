@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "index-of-algorithm-time-complexity-analysis"
 ---
 
-Okay so you're asking about the index of algorithm time complexity analysis specifically like how to know what's up with that right I've been there man like knee deep in code trying to figure out why my stuff is running slower than molasses in January
+ so you're asking about the index of algorithm time complexity analysis specifically like how to know what's up with that right I've been there man like knee deep in code trying to figure out why my stuff is running slower than molasses in January
 
 So here's the lowdown first things first we're talking about how an algorithm's runtime scales with the input size That's what time complexity analysis is all about It's not about measuring the actual time in seconds or milliseconds that would depend on your hardware and a bunch of other stuff It's about how the runtime grows as your input gets bigger And we use Big O notation to express that stuff
 
@@ -68,7 +68,7 @@ def has_duplicates_nested_loops(arr):
                  return True
     return False
 ```
-Okay so that code might work but this is O(n^2) right I bet you guys know why Two loops one inside another and it is iterating up to the size of the array that means we have to think of alternative approaches
+ so that code might work but this is O(n^2) right I bet you guys know why Two loops one inside another and it is iterating up to the size of the array that means we have to think of alternative approaches
 
 Now check this one out which uses a set
 

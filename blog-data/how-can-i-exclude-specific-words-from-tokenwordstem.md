@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-exclude-specific-words-from-tokenwordstem"
 ---
 
-Alright, let's tackle this. I've definitely encountered situations where fine-tuning the tokenization process, particularly in relation to stemming, becomes crucial. Specifically, the problem of excluding certain words when using `token_wordstem()` isn't something directly built into many stemming libraries, so it often requires a bit of creative pre-processing.
+Alright,  I've definitely encountered situations where fine-tuning the tokenization process, particularly in relation to stemming, becomes crucial. Specifically, the problem of excluding certain words when using `token_wordstem()` isn't something directly built into many stemming libraries, so it often requires a bit of creative pre-processing.
 
 The `token_wordstem()` function, often part of natural language processing toolkits, aims to reduce words to their root form. This is fantastic for unifying variations (e.g., 'running,' 'ran,' 'runs' all become 'run'). However, certain words might become meaningless or detrimental to analysis if they're stemmed; these words are ideally left untouched. From personal experience, I remember one project where we were analyzing customer feedback about a particular product. Certain product feature names, such as "ProVision," were being incorrectly stemmed and losing their semantic significance. It was a mess. We needed to preserve those terms exactly, and that's where the selective exclusion comes in.
 

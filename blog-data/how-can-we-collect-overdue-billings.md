@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-we-collect-overdue-billings"
 ---
 
-Okay, let's talk overdue billings. It’s a problem I've faced multiple times, often finding myself in the weeds after a project launch. The key, I’ve learned, isn't about chasing payments after they're already late; it's about structuring systems that minimize late payments in the first place and, when they do happen, handle them effectively and systematically. Let's dive into some strategies and code examples that have proven valuable in my experience.
+, let's talk overdue billings. It’s a problem I've faced multiple times, often finding myself in the weeds after a project launch. The key, I’ve learned, isn't about chasing payments after they're already late; it's about structuring systems that minimize late payments in the first place and, when they do happen, handle them effectively and systematically. Let's dive into some strategies and code examples that have proven valuable in my experience.
 
 The initial approach always starts with prevention. Clear, concise billing processes are paramount. This includes automated invoicing systems that trigger at predefined intervals, offering multiple payment options, and sending reminder notifications before the actual due date. I've seen situations where simply clarifying payment terms upfront in the contract, and then reinforcing them via automated notifications, significantly reduces the likelihood of late payments. Lack of clarity breeds ambiguity, which directly translates to payment delays.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-prevent-mermaid-graph-links-from-obscuring-subgraph-titles"
 ---
 
-Okay, let's tackle this. I remember wrestling with this exact issue a few years back when building an internal documentation platform. Mermaid diagrams were fantastic for visualizing complex processes, but those pesky link overlays were a real pain, particularly when you had subgraphs nestled inside larger ones. The default rendering often resulted in link arrows running smack-dab over subgraph titles, making the whole thing look like a jumbled mess. So, let's break down how to avoid that specific scenario using a few techniques I've found effective.
+,  I remember wrestling with this exact issue a few years back when building an internal documentation platform. Mermaid diagrams were fantastic for visualizing complex processes, but those pesky link overlays were a real pain, particularly when you had subgraphs nestled inside larger ones. The default rendering often resulted in link arrows running smack-dab over subgraph titles, making the whole thing look like a jumbled mess. So, let's break down how to avoid that specific scenario using a few techniques I've found effective.
 
 The core problem arises from how Mermaid's layout engine positions links in relation to other graph elements. It’s a geometric calculation, placing arrows based on node boundaries and ignoring whether there's text overlaying that path. Unfortunately, there's no single, perfect, universal setting that completely solves this in every conceivable scenario. Instead, it often requires a combination of strategies and careful graph structuring. We'll primarily deal with adjusting link paths and using whitespace to our advantage.
 

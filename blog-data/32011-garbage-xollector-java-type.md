@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "32011-garbage-xollector-java-type"
 ---
 
-Okay so you're asking about Java's garbage collector and specifically something related to the 32011 build I'm assuming that's some internal build number or maybe a very very old version we're talking ancient history here right This is kind of like excavating a digital fossil I've been knee deep in JVM internals for what feels like forever so I think I can shed some light on this
+ so you're asking about Java's garbage collector and specifically something related to the 32011 build I'm assuming that's some internal build number or maybe a very very old version we're talking ancient history here right This is kind of like excavating a digital fossil I've been knee deep in JVM internals for what feels like forever so I think I can shed some light on this
 
 First things first there's no singular "32011 garbage collector type" in the way you might think of different GC algorithms like G1 or CMS We're talking about the implementation details of the garbage collection mechanism used in a specific build I doubt Oracle would even recognize this specific build from a support perspective Its probably not an official release or is a very very old one but I'll help you out as if its a real one and we are on the same page The core issue is likely about how that particular build might be handling memory reclamation which changes slightly from version to version and between different GCs
 

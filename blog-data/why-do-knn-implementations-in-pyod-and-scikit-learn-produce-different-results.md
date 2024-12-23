@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-do-knn-implementations-in-pyod-and-scikit-learn-produce-different-results"
 ---
 
-Alright, let's tackle this. It's a common observation, and one I’ve definitely encountered firsthand in past projects dealing with anomaly detection. The disparity in results between k-nearest neighbors (knn) implementations in `pyod` and `scikit-learn` often catches people off guard. It's not so much about one being *correct* and the other being *incorrect*, but rather differences in how they're implemented, the specific problem they're optimized for, and the underlying distance metrics being applied.
+Alright,  It's a common observation, and one I’ve definitely encountered firsthand in past projects dealing with anomaly detection. The disparity in results between k-nearest neighbors (knn) implementations in `pyod` and `scikit-learn` often catches people off guard. It's not so much about one being *correct* and the other being *incorrect*, but rather differences in how they're implemented, the specific problem they're optimized for, and the underlying distance metrics being applied.
 
 Essentially, both libraries utilize the knn algorithm, but the variations in implementation lead to the observed differences. `scikit-learn`, generally, prioritizes versatile machine learning tasks, encompassing classification, regression, and dimensionality reduction. Its knn implementation is designed with broader applications in mind. On the other hand, `pyod` is specifically designed for outlier detection. Its knn implementation and associated distance measures are calibrated to identify anomalies. This seemingly small difference has profound implications.
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "globalfree-give-an-error-debugger-does-not-explain"
 ---
 
-Okay so you've got a globalfree error and the debugger is being a pain classic right Been there seen that bought the t-shirt Probably several actually My early days were riddled with these it felt like a daily occurrence back when I was working with embedded systems and memory was this precious resource you had to fight for constantly
+ so you've got a globalfree error and the debugger is being a pain classic right Been there seen that bought the t-shirt Probably several actually My early days were riddled with these it felt like a daily occurrence back when I was working with embedded systems and memory was this precious resource you had to fight for constantly
 
 Let me tell you debugging `globalfree` errors is like trying to find a single grain of sand on a beach at night with a broken flashlight The debugger usually just points somewhere in the vicinity but never quite at the root cause and yeah that's because the actual problem isn’t where the error pops up It's almost always a few steps removed It's a memory corruption thing and those are the worst
 

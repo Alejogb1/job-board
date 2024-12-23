@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-configure-environment-variables-in-an-azure-container-app"
 ---
 
-Okay, let's tackle this. Environment variables in Azure Container Apps, that’s a topic I’ve encountered numerous times, particularly when migrating existing applications from more traditional platforms. I've seen first-hand how crucial they are for managing configurations, especially when dealing with microservices and ensuring consistent behavior across different deployment stages. Let me walk you through the process and share some insights I've picked up.
+,  Environment variables in Azure Container Apps, that’s a topic I’ve encountered numerous times, particularly when migrating existing applications from more traditional platforms. I've seen first-hand how crucial they are for managing configurations, especially when dealing with microservices and ensuring consistent behavior across different deployment stages. Let me walk you through the process and share some insights I've picked up.
 
 At its core, Azure Container Apps relies on Kubernetes under the hood. However, you don't directly interact with Kubernetes configuration files. Instead, Microsoft abstracts this complexity, offering a streamlined interface for managing your containerized applications, including how you handle environment variables. There are several ways to configure these, and the method you choose often depends on the complexity and specific needs of your deployment.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-add-a-timestamp-to-a-smart-contract"
 ---
 
-Okay, let's talk timestamps in smart contracts – a seemingly simple task, but one that demands a nuanced understanding of blockchain mechanics. It's something I’ve grappled with myself, especially during my early days building decentralized applications for a supply chain project where accurate tracking was paramount. The naive approach, of course, is to assume that any timestamp is easily available and reliable. However, the decentralized nature of blockchains introduces complexities that require careful consideration.
+, let's talk timestamps in smart contracts – a seemingly simple task, but one that demands a nuanced understanding of blockchain mechanics. It's something I’ve grappled with myself, especially during my early days building decentralized applications for a supply chain project where accurate tracking was paramount. The naive approach, of course, is to assume that any timestamp is easily available and reliable. However, the decentralized nature of blockchains introduces complexities that require careful consideration.
 
 Essentially, you don't simply grab the current time like you would in a traditional application. Smart contracts operate within the context of the blockchain, which dictates that timestamps come from block headers. The `block.timestamp` variable in Solidity is your primary access point. This timestamp represents the time at which a block was mined, and it's essential to understand that it's *miner-provided*, which has implications for its accuracy and potential manipulation.
 

@@ -4,13 +4,13 @@ date: "2024-12-13"
 id: "deciphering-encoding-packet-analysis-tools"
 ---
 
-Okay so you want to talk about encoding and packet analysis right I get it it's a messy corner of the internet that a lot of people avoid but somebody's gotta do it right
+ so you want to talk about encoding and packet analysis right I get it it's a messy corner of the internet that a lot of people avoid but somebody's gotta do it right
 
 I've been wrestling with this stuff for years probably since before you were born actually back when modems shrieked like banshees and the internet was mostly text I’ve seen my share of encoding nightmares From the good old days of ASCII and EBCDIC where a single character mismatch would crash your entire program to the more modern unicode encoding hellscapes with UTF-8 and its variants I’ve debugged protocols that look like spaghetti code written by a drunk octopus. I've seen things you wouldn't believe.
 
 Let's be real packet analysis tools are pretty much useless if you don't understand the encoding involved you get a bunch of binary data or a bunch of scrambled text and are stuck there I've spent countless nights staring at Wireshark trying to understand why my application wasn't talking properly And believe me that experience makes you understand a lot about how these packets are built
 
-The problem isn't just seeing the raw bytes it's about knowing how those bytes are supposed to be interpreted if you treat utf8 encoded text as ascii well it's gonna be a party alright a party of garbage characters and errors. Decoding is everything.
+The problem isn't just seeing the raw bytes it's about knowing how those bytes are supposed to be interpreted if you treat utf8 encoded text as ascii well it's gonna be a party a party of garbage characters and errors. Decoding is everything.
 
 First off understanding the difference between character encodings is critical. ASCII is simple each character maps to 7 bits easy but that covers just the bare minimum English characters. Then came extended ASCII adding the next bit but that still doesn’t get us everything.
 

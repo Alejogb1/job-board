@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "typeerror-bad-operand-type-for-unary-str-python-error"
 ---
 
-Okay so you're getting that "TypeError bad operand type for unary str" in Python right Been there done that let me tell you it's usually a simple mixup but those can be the most annoying to debug
+ so you're getting that "TypeError bad operand type for unary str" in Python right Been there done that let me tell you it's usually a simple mixup but those can be the most annoying to debug
 
 First off let's break it down that error message is Python's way of saying hey you're trying to do something with a string that you shouldn't be doing specifically it's telling you that you've used a unary operator on a string when that operator is designed for numeric values think plus or minus but in front of the string instead of between two numbers
 

@@ -4,7 +4,7 @@ date: "2024-12-07"
 id: "what-frameworks-are-most-effective-for-integrating-human-feedback-into-ai-driven-processes"
 ---
 
-Okay so you wanna know about  integrating human feedback into AI right  pretty big deal these days  AI is all hype and algorithms but  it's totally blind without us humans  we're the ultimate reality check  the ground truth  you know the deal  So which frameworks actually work  it's not just slapping a survey onto your AI project that's like putting a band-aid on a broken leg  You need a structured approach  something robust  
+ so you wanna know about  integrating human feedback into AI right  pretty big deal these days  AI is all hype and algorithms but  it's totally blind without us humans  we're the ultimate reality check  the ground truth  you know the deal  So which frameworks actually work  it's not just slapping a survey onto your AI project that's like putting a band-aid on a broken leg  You need a structured approach  something robust  
 
 Think about it  your AI is doing something cool maybe image recognition  or natural language processing or something wild like predicting stock prices  but it's gonna make mistakes  always  it's just the nature of the beast  So you need a system to catch those mistakes  learn from them and improve your AI  That's where the human-in-the-loop comes in  
 

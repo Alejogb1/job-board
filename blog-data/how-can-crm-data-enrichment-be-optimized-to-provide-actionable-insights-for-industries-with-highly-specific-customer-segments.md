@@ -20,7 +20,7 @@ Then there's market research databases  companies like Statista or Nielsen  they
 
 And don't forget about web scraping  with tools like Beautiful Soup in Python you can extract data from company websites or industry-specific forums   I know some people are wary of it but done properly with respect for robots.txt and terms of service its a huge untapped goldmine.  Think about identifying key decision-makers in companies for example.
 
-Okay so let's look at some code examples  keep in mind this is simplified for clarity but it illustrates the core concepts
+ so let's look at some code examples  keep in mind this is simplified for clarity but it illustrates the core concepts
 
 First  a Python snippet showing how to access a public API like Twitter to get user data  naturally you'll need the Twitter API keys and a clear understanding of the rate limits and terms of use this is just a basic illustration.
 

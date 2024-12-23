@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-does-fork-interact-with-select-in-c-sockets"
 ---
 
-Okay, let's dive into this; it's a corner of system programming I've spent more than a few late nights navigating. The interplay between `fork()` and `select()` when dealing with sockets in C can initially seem a bit tricky, but breaking down the components and their interactions clarifies the behavior significantly. Specifically, we're dealing with the process creation and I/O multiplexing, which are both powerful but require careful handling to avoid common pitfalls.
+, let's dive into this; it's a corner of system programming I've spent more than a few late nights navigating. The interplay between `fork()` and `select()` when dealing with sockets in C can initially seem a bit tricky, but breaking down the components and their interactions clarifies the behavior significantly. Specifically, we're dealing with the process creation and I/O multiplexing, which are both powerful but require careful handling to avoid common pitfalls.
 
 The core challenge arises from the fact that `fork()` creates a new process that's an almost-exact duplicate of the parent. Crucially, file descriptors, including socket descriptors, are copied. This means both parent and child process initially *share* the same socket descriptor pointing to the same underlying socket data structure in the kernel. The `select()` function, being a system call, interacts directly with the kernel's representation of these sockets. Now, things can get interesting, and sometimes unexpected.
 

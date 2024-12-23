@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-similar-are-vectors-of-the-same-length"
 ---
 
-Okay, let's tackle this. I've definitely spent a good chunk of my career knee-deep in linear algebra, and the seemingly simple question of how similar vectors of the same length are actually has some surprisingly nuanced answers. It's a question that pops up more often than you might think, especially when dealing with things like machine learning, graphics, or signal processing. The key here isn't a binary "similar" or "dissimilar;" rather, it's about the specific metric you choose to quantify that similarity.
+,  I've definitely spent a good chunk of my career knee-deep in linear algebra, and the seemingly simple question of how similar vectors of the same length are actually has some surprisingly nuanced answers. It's a question that pops up more often than you might think, especially when dealing with things like machine learning, graphics, or signal processing. The key here isn't a binary "similar" or "dissimilar;" rather, it's about the specific metric you choose to quantify that similarity.
 
 The core issue is that "similarity" isn't a well-defined mathematical operation without a clear definition. We're dealing with multiple vectors residing in the same dimensional space, and their "sameness" hinges on how we decide to measure the relationships between them. Because they have the same length, we’ve already taken the initial step of comparing them on the same dimensional basis; but that just means we can directly compare their components. Their similarities are most commonly assessed by looking at angle and/or magnitude in various combinations. Here are three common metrics, and some concrete examples:
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-resolve-jsondecodeerror-when-using-airflows-googlebasehook"
 ---
 
-Okay, let's talk about `JSONDecodeError` when interacting with Google services via Airflow's `GoogleBaseHook`. It's a surprisingly common snag, and one I've definitely spent my fair share of time debugging, particularly in those early days scaling our data pipelines. The good news is it's usually a matter of carefully handling the response format, not a fundamental problem with the hook itself.
+, let's talk about `JSONDecodeError` when interacting with Google services via Airflow's `GoogleBaseHook`. It's a surprisingly common snag, and one I've definitely spent my fair share of time debugging, particularly in those early days scaling our data pipelines. The good news is it's usually a matter of carefully handling the response format, not a fundamental problem with the hook itself.
 
 The core issue stems from how the `GoogleBaseHook` interacts with google apis. It fetches data, which often comes back as a json-formatted string, or at least it's *supposed* to. However, sometimes, due to various reasons – from unexpected error codes to partial responses or even issues with how the api serializes data – you get something that isn't a valid json string. Then, when `json.loads` (which the hook uses internally) tries to interpret it, boom, `JSONDecodeError`.
 

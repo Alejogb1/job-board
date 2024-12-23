@@ -4,7 +4,7 @@ date: "2024-12-11"
 id: "what-role-does-mechanistic-interpretability-play-in-addressing-existential-risks-from-agi"
 ---
 
-Okay so you wanna know about mechanistic interpretability and how it tackles those scary AGI existential risks right  It's a huge question  like really huge  but I'll try to break it down in a way that's not totally overwhelming hopefully  
+ so you wanna know about mechanistic interpretability and how it tackles those scary AGI existential risks right  It's a huge question  like really huge  but I'll try to break it down in a way that's not totally overwhelming hopefully  
 
 The basic idea is this  we're building these super smart AI systems  AGI  and we don't really understand how they work  it's like building a super powerful spaceship without understanding how the engine works  kinda terrifying right  We might accidentally launch it into the sun or worse  launch it into some kind of unintended existential crisis scenario  
 

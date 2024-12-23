@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-resolve-jpeg-resizing-errors-in-python-for-machine-learning"
 ---
 
-Okay, let's tackle this. Dealing with JPEG resizing issues in a machine learning pipeline is something I've seen trip up many teams, and frankly, it’s a problem that can manifest in some surprisingly subtle ways. I remember one project, a facial recognition system, where the image preprocessing was the silent killer of our model's accuracy for weeks before we pinned it down to these exact issues. So, let’s talk specifics about how we can go about fixing it.
+,  Dealing with JPEG resizing issues in a machine learning pipeline is something I've seen trip up many teams, and frankly, it’s a problem that can manifest in some surprisingly subtle ways. I remember one project, a facial recognition system, where the image preprocessing was the silent killer of our model's accuracy for weeks before we pinned it down to these exact issues. So, let’s talk specifics about how we can go about fixing it.
 
 The problem with resizing JPEGs, particularly for machine learning, isn't simply about the scaling process itself. It’s often an accumulation of factors: library choices, interpolation algorithms, color space handling, and even the compression artifacts inherent in the JPEG format itself. When you resize an image, especially downsampling, you’re essentially discarding pixel data. If done improperly, this can lead to blurring, aliasing, or even the introduction of new, undesirable patterns that your model will learn, resulting in reduced performance and even misclassifications.
 

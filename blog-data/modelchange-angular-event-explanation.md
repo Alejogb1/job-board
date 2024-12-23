@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "modelchange-angular-event-explanation"
 ---
 
-Alright so you're asking about model change events in Angular I get it I've been there man it's like diving into a pool that's sometimes crystal clear and other times a murky swamp depends on what you're touching
+so you're asking about model change events in Angular I get it I've been there man it's like diving into a pool that's sometimes crystal clear and other times a murky swamp depends on what you're touching
 
 So basically when we talk about model changes in Angular we're usually referring to how Angular keeps track of alterations to your data the data that drives your UI think of it like the brain of your application and the UI is just its visible projection you mess with the brain the UI needs to know right? That's the job of change detection
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-rails-trigger-aasm-events-on-nested-associations-autosave"
 ---
 
-Alright, let's tackle this. It's a fairly nuanced challenge you’ve stumbled upon, and it's something I recall spending a fair bit of time on back when I was building a fairly complex order management system. We had a situation where order line items needed to trigger events in the order itself based on their status changes, and the autosave functionality of rails with nested attributes made it... interesting.
+Alright,  It's a fairly nuanced challenge you’ve stumbled upon, and it's something I recall spending a fair bit of time on back when I was building a fairly complex order management system. We had a situation where order line items needed to trigger events in the order itself based on their status changes, and the autosave functionality of rails with nested attributes made it... interesting.
 
 The crux of the problem lies in the fact that while rails happily saves the nested associations through `accepts_nested_attributes_for`, it doesn’t intrinsically trigger any lifecycle callbacks or custom events on the parent based on changes within those nested attributes *during the autosave process*. This means we need to manually orchestrate event triggers based on changes to the nested models. Let's break down a reasonable strategy and then look at some implementation options.
 

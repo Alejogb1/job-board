@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-is-ruby-221-failing-to-install-on-a-mac"
 ---
 
-Alright, let's tackle this. I've seen my share of Ruby installation headaches over the years, and a refusal to install version 2.2.1 on macOS is definitely a familiar tune. It’s often less about ruby itself and more about the environment it's trying to inhabit. From my experience, issues with older Ruby versions on modern macOS systems usually stem from a few primary suspects, and we can approach troubleshooting them methodically.
+Alright,  I've seen my share of Ruby installation headaches over the years, and a refusal to install version 2.2.1 on macOS is definitely a familiar tune. It’s often less about ruby itself and more about the environment it's trying to inhabit. From my experience, issues with older Ruby versions on modern macOS systems usually stem from a few primary suspects, and we can approach troubleshooting them methodically.
 
 The first, and perhaps most frequent cause, is the incompatibility of the version of `openssl` that Ruby 2.2.1 depends on. Ruby versions prior to 2.4 (and arguably even later for some edge cases) relied on older `openssl` libraries. macOS versions released after 2016 typically ship with newer versions which aren’t compatible out of the box. When Ruby 2.2.1 tries to compile, it looks for specific headers and libraries that are no longer present or organized differently by the system.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-does-rails-7-integrate-devise-with-token-authentication"
 ---
 
-Okay, let's delve into how Rails 7 handles Devise alongside token authentication. This is a subject I’ve spent considerable time on in past projects, specifically when scaling a microservices architecture for an e-commerce platform. Getting this combination just so is crucial, and there are a few key patterns to grasp, especially now with the shift towards apis and front-end frameworks taking over the UI layer.
+, let's delve into how Rails 7 handles Devise alongside token authentication. This is a subject I’ve spent considerable time on in past projects, specifically when scaling a microservices architecture for an e-commerce platform. Getting this combination just so is crucial, and there are a few key patterns to grasp, especially now with the shift towards apis and front-end frameworks taking over the UI layer.
 
 Fundamentally, Devise, a flexible authentication solution, primarily operates on cookie-based sessions. When transitioning to an api-centric approach, where a client might be a javascript application or a mobile app, cookie-based auth becomes less practical. This is where token authentication via something like JWT (JSON Web Tokens) comes into play. The integration with Devise in Rails 7 isn't built into the core of Devise itself; it requires layering some additional logic.
 

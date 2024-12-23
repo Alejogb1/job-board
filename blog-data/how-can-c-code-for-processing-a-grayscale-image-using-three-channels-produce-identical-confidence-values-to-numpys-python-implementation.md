@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-c-code-for-processing-a-grayscale-image-using-three-channels-produce-identical-confidence-values-to-numpys-python-implementation"
 ---
 
-Alright, let's tackle this. I’ve seen this exact scenario play out more than once, actually. Specifically, I recall working on a computer vision project a few years back where we were porting a heavily NumPy-based image processing pipeline into a C++ backend for performance reasons. The discrepancy in confidence values, even after seemingly straightforward porting, was… let's say, frustrating. The root of the issue often boils down to subtle differences in data handling and floating-point arithmetic that aren’t immediately obvious.
+Alright,  I’ve seen this exact scenario play out more than once, actually. Specifically, I recall working on a computer vision project a few years back where we were porting a heavily NumPy-based image processing pipeline into a C++ backend for performance reasons. The discrepancy in confidence values, even after seemingly straightforward porting, was… let's say, frustrating. The root of the issue often boils down to subtle differences in data handling and floating-point arithmetic that aren’t immediately obvious.
 
 First, let's clarify the problem: we have a grayscale image that we're treating as a three-channel entity in both the C++ and NumPy implementations. This is common in situations where the input format for, say, a neural network expects RGB or a similar multi-channel structure, even though the content is grayscale. The goal is to ensure both environments produce precisely the same confidence scores or processed pixel values following any given operation.
 

@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "whats-pytorchs-equivalent-of-registerbuffer-in-flaxjax"
 ---
 
-Okay, let's talk about replicating the behavior of pytorch’s `register_buffer` within a flax/jax environment. It’s a question that comes up quite a bit, especially when transitioning between the two frameworks. I remember dealing with this very issue a few years back when my team was migrating a complex forecasting model from pytorch to jax. We had relied heavily on `register_buffer` for various state variables, and finding the correct approach in flax took some careful consideration and a bit of experimentation.
+, let's talk about replicating the behavior of pytorch’s `register_buffer` within a flax/jax environment. It’s a question that comes up quite a bit, especially when transitioning between the two frameworks. I remember dealing with this very issue a few years back when my team was migrating a complex forecasting model from pytorch to jax. We had relied heavily on `register_buffer` for various state variables, and finding the correct approach in flax took some careful consideration and a bit of experimentation.
 
 At its core, `register_buffer` in pytorch is designed to hold tensors that are part of a module's state, but which are *not* considered model parameters that should be optimized during backpropagation. These buffers are typically used for things like running mean and variance in batch normalization, fixed embeddings, or any other persistent state that evolves through forward passes but shouldn’t be updated via gradient descent.
 

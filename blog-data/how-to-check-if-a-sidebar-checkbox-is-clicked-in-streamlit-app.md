@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "how-to-check-if-a-sidebar-checkbox-is-clicked-in-streamlit-app"
 ---
 
-Okay so you want to know how to check if a sidebar checkbox is clicked in a Streamlit app right Been there done that a few times actually It's one of those things that seems simple but can trip you up if you're not paying attention
+ so you want to know how to check if a sidebar checkbox is clicked in a Streamlit app right Been there done that a few times actually It's one of those things that seems simple but can trip you up if you're not paying attention
 
 So the core issue here is that Streamlit widgets like checkboxes rerun your entire script whenever they're interacted with This is kinda key to understand because it dictates how you check for that click You don't get some callback function or event listener like you might in other frameworks It's all about the state of your script during each rerun and how you use it
 
@@ -31,7 +31,7 @@ else:
 
 See how easy that is We set `checkbox_state` to the returned value and then the conditional logic just works as expected This is the bread and butter of Streamlit interactions and it works pretty consistently when used like that
 
-Now you might be thinking okay that's cool for a single checkbox what about multiple Well it's the same principle you create more widgets and then you evaluate their states in your conditional logic Let's say you had a few filter checkboxes
+Now you might be thinking  that's cool for a single checkbox what about multiple Well it's the same principle you create more widgets and then you evaluate their states in your conditional logic Let's say you had a few filter checkboxes
 
 ```python
 import streamlit as st

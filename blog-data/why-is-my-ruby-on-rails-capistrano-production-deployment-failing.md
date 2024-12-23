@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-my-ruby-on-rails-capistrano-production-deployment-failing"
 ---
 
-Okay, let's dissect this. Having spent a fair share of late nights debugging similar deployment issues, I've learned that a failing Capistrano deployment, especially in a Rails environment, often boils down to a handful of common culprits. It's rarely just *one* thing; rather, it's frequently a combination of seemingly small misconfigurations or overlooked environmental nuances. We're talking about a process with a lot of moving parts: your code, the remote server, Capistrano’s configurations, the database, and more. Each is a potential point of failure.
+, let's dissect this. Having spent a fair share of late nights debugging similar deployment issues, I've learned that a failing Capistrano deployment, especially in a Rails environment, often boils down to a handful of common culprits. It's rarely just *one* thing; rather, it's frequently a combination of seemingly small misconfigurations or overlooked environmental nuances. We're talking about a process with a lot of moving parts: your code, the remote server, Capistrano’s configurations, the database, and more. Each is a potential point of failure.
 
 From my experience, the failure usually falls into one of these categories: incorrect configuration, dependency issues, permission problems, or network connectivity glitches. Let's unpack each with some specific examples and code to illuminate potential solutions.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-call-sap-conversational-ai-apis-using-oauth-in-postman"
 ---
 
-Alright, let's tackle this. I recall a particularly thorny project back in '18 where we needed to integrate a custom service with SAP Conversational AI, and the authentication flow was, shall we say, *interesting*. We opted for OAuth, and it definitely had its nuances. So, you're aiming to make those API calls from Postman, and that requires a specific workflow. It's not simply a matter of pasting a key; it’s a structured dance of requests.
+Alright,  I recall a particularly thorny project back in '18 where we needed to integrate a custom service with SAP Conversational AI, and the authentication flow was, shall we say, *interesting*. We opted for OAuth, and it definitely had its nuances. So, you're aiming to make those API calls from Postman, and that requires a specific workflow. It's not simply a matter of pasting a key; it’s a structured dance of requests.
 
 First things first, the core of the process is obtaining an access token. You won’t be interacting directly with your SAP Conversational AI credentials each time. Instead, you’ll use them once to get a token, and that token becomes your passport for subsequent API calls until it expires. This is OAuth 2.0 in action.
 

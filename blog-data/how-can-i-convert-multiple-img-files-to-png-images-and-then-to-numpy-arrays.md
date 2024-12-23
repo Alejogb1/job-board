@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-convert-multiple-img-files-to-png-images-and-then-to-numpy-arrays"
 ---
 
-Alright, let's tackle this. I've seen this particular challenge quite a few times in my work, usually when dealing with legacy systems or specialized data formats that output images as raw disk images (.img). It's not exactly a straightforward process, but it’s certainly manageable with the right tools and techniques. The crux of the issue lies in several stages: extracting the image data from the .img file, converting it to a standard image format like .png, and then loading that .png into a NumPy array.
+Alright,  I've seen this particular challenge quite a few times in my work, usually when dealing with legacy systems or specialized data formats that output images as raw disk images (.img). It's not exactly a straightforward process, but it’s certainly manageable with the right tools and techniques. The crux of the issue lies in several stages: extracting the image data from the .img file, converting it to a standard image format like .png, and then loading that .png into a NumPy array.
 
 From my experience, the most common pitfall stems from the fact that .img files don't adhere to a standardized image structure like a jpeg or png. They're essentially raw disk images, containing blocks of data that may represent an image, but without any header metadata explicitly stating image size, bit depth, color encoding, or similar information that an image library would typically require to decode an image. Therefore, we need to make certain assumptions, based upon the known structure (or probable structure) of your original .img files.
 

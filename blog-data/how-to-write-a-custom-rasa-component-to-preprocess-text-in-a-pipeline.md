@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-write-a-custom-rasa-component-to-preprocess-text-in-a-pipeline"
 ---
 
-Okay, let's tackle this. Preprocessing text in a Rasa pipeline using a custom component is something I've spent a decent amount of time with over the years, particularly when dealing with niche linguistic quirks or very domain-specific terminology. It's often the case that the standard components aren't quite enough and a tailored approach is necessary. Here's how I usually go about crafting such a component, and a few things I’ve learned along the way.
+,  Preprocessing text in a Rasa pipeline using a custom component is something I've spent a decent amount of time with over the years, particularly when dealing with niche linguistic quirks or very domain-specific terminology. It's often the case that the standard components aren't quite enough and a tailored approach is necessary. Here's how I usually go about crafting such a component, and a few things I’ve learned along the way.
 
 The core idea is to create a class that adheres to the `Component` interface defined by Rasa. This interface provides the necessary methods for integrating your code seamlessly into the existing pipeline. Importantly, the component needs to handle the `train`, `process`, and, depending on your use case, the `persist` and `load` methods. Let’s focus on training and processing first, as these are usually the most crucial.
 

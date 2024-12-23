@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "block-join-solr-lucene-explanation"
 ---
 
-Okay so you're asking about block join in Solr and Lucene eh I get it I've been there done that bought the t-shirt and probably even spilled coffee on it
+ so you're asking about block join in Solr and Lucene eh I get it I've been there done that bought the t-shirt and probably even spilled coffee on it
 
 Let me break this down for you from a perspective of someone who's actually wrestled with this beast not just read the documentation although you should totally do that too I'm not your mom
 
@@ -76,7 +76,7 @@ public class BlockJoinExample {
 
 This java code uses a simple loop to add the parent document and the child documents all together to the index this is the magic it allows lucene to see all these documents together and allow to query using block join and also see how there is a type field to discriminate the parent and the children documents
 
-Now you might be thinking "okay so where do we tell solr that they are connected in parent-child fashion?" well my friend you tell Solr using the schema.xml file Here is a snippet of the relevant parts
+Now you might be thinking " so where do we tell solr that they are connected in parent-child fashion?" well my friend you tell Solr using the schema.xml file Here is a snippet of the relevant parts
 
 ```xml
  <schema name="example" version="1.6">
@@ -143,7 +143,7 @@ public class BlockJoinQuery {
 }
 ```
 
-Okay so what’s happening here? We’re using the `{!parent}` query parser it’s like saying “Hey Solr give me the parent documents that have these child characteristics” `which="type_s:post"` tells Solr to look for the parent type documents and `text_t:great` looks for the child documents with this text
+ so what’s happening here? We’re using the `{!parent}` query parser it’s like saying “Hey Solr give me the parent documents that have these child characteristics” `which="type_s:post"` tells Solr to look for the parent type documents and `text_t:great` looks for the child documents with this text
 
 The key part is that it’s not matching the posts that contain “great” it's matching the posts that have *children* that contain the word “great” that’s the power of block join. It lets you traverse the relation between parents and child documents to create complex search logic
 

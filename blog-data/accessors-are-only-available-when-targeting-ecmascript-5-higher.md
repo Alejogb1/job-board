@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "accessors-are-only-available-when-targeting-ecmascript-5-higher"
 ---
 
-Alright so this old chestnut right Been there done that got the t-shirt and probably a few compiler warnings too Let me tell you about the time I wrestled with this accessor thing back in the day It was the early days of JavaScript frameworks you know pre-React pre-Vue pre-everything It was a wild west of prototypes and weird behaviors I was tasked with building this data binding library it was gonna be the next big thing I swear but yeah that didnt quite pan out
+so this old chestnut right Been there done that got the t-shirt and probably a few compiler warnings too Let me tell you about the time I wrestled with this accessor thing back in the day It was the early days of JavaScript frameworks you know pre-React pre-Vue pre-everything It was a wild west of prototypes and weird behaviors I was tasked with building this data binding library it was gonna be the next big thing I swear but yeah that didnt quite pan out
 
 Anyway this data binding thingy needed to automatically update the UI when the data changed Sounds simple right ha Yeah it was everything but I started by simply using objects and properties You'd update it and things would update that was the whole goal But then I stumbled upon this little gem the world of get and set accessors and boy did things get complicated
 

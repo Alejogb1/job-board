@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "how-can-inverted-indexes-stored-on-s3-be-structured-to-achieve-efficient-data-retrieval-for-full-text-search-queries"
 ---
 
-Okay so you wanna store inverted indexes on S3 for fast full-text searching right thats a cool problem  lots of moving parts there  S3 isnt exactly built for random access lookups its more of a big blob storage thing you know so we gotta get clever
+ so you wanna store inverted indexes on S3 for fast full-text searching right thats a cool problem  lots of moving parts there  S3 isnt exactly built for random access lookups its more of a big blob storage thing you know so we gotta get clever
 
 First off what kind of inverted index are we talking about  Are we going full monty with positional indexes allowing for phrase searches or are we keeping it simpler just term frequencies per document  Phrase searches are way more complex but also way more powerful so its a tradeoff  For this chat lets assume we are aiming for phrase search capability because why not go big or go home right
 

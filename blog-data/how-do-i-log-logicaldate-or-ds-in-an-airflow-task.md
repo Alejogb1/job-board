@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-log-logicaldate-or-ds-in-an-airflow-task"
 ---
 
-Okay, let's tackle this. I’ve definitely had my share of encounters with date handling in Airflow, particularly when trying to ensure consistency across my DAGs, so I think I can shed some light on this. The question of accessing ‘logical_date’ or ‘ds’ (the execution date) within your Airflow tasks is fundamental for most workflows, especially those dealing with time-series data. It’s not just about getting the date; it’s about getting *the* date, the one Airflow uses to define that particular execution.
+,  I’ve definitely had my share of encounters with date handling in Airflow, particularly when trying to ensure consistency across my DAGs, so I think I can shed some light on this. The question of accessing ‘logical_date’ or ‘ds’ (the execution date) within your Airflow tasks is fundamental for most workflows, especially those dealing with time-series data. It’s not just about getting the date; it’s about getting *the* date, the one Airflow uses to define that particular execution.
 
 The magic here lies in Airflow's templating system. When you define a task within a DAG, Airflow makes certain context variables available to you through Jinja templating. The variables `ds` and `logical_date` are among these crucial context pieces.
 

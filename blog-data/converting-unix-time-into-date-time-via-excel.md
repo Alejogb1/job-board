@@ -4,13 +4,13 @@ date: "2024-12-13"
 id: "converting-unix-time-into-date-time-via-excel"
 ---
 
-Okay so you've got a bunch of unix timestamps and you need to wrangle them into something Excel understands aka date and time I've been there believe me it's like a rite of passage for anyone who's ever touched data that wasn't born inside an Excel spreadsheet
+ so you've got a bunch of unix timestamps and you need to wrangle them into something Excel understands aka date and time I've been there believe me it's like a rite of passage for anyone who's ever touched data that wasn't born inside an Excel spreadsheet
 
 First off let's get this straight Unix time it’s not a calendar it’s a number the seconds since January 1 1970 0000 UTC that's your starting point Excel on the other hand thinks of dates as serial numbers days since January 1 1900 with time as the fractional part of the day So yeah you can see we're gonna need a translation layer
 
 I remember this one time back in like 2015 I was scraping this ancient web API that just dumped data with unix timestamps all over the place I was building an internal dashboard and was struggling with it It was a mess I used to handle it with those online converters but it was so tedious after a while I had to build a process to do it on the fly This issue you are facing is exactly what I went through years ago
 
-Okay so how do we go from this number to something we can actually read First thing you need is to understand the core concept Excel's date system has a base of January 1 1900 while Unix has January 1 1970 We need to account for that difference that is the starting point so you need to figure out the offset in days
+ so how do we go from this number to something we can actually read First thing you need is to understand the core concept Excel's date system has a base of January 1 1900 while Unix has January 1 1970 We need to account for that difference that is the starting point so you need to figure out the offset in days
 
 We can accomplish this with a simple formula in excel You'll need to take that Unix timestamp and then convert it to days Add a fixed number of days for the epoch difference and then multiply by 86400 which is seconds per day and divide by it to get the fraction
 
@@ -22,7 +22,7 @@ That DATE function gives us Excel's January 1 1970 date and the whole thing toge
 
 Let's try a practical example Suppose you have a unix timestamp like `1678886400` that corresponds to March 15 2023 000000 UTC If you punch that number into the A1 cell and use this formula you will see Excel display 2023-03-15 or the proper date format
 
-Okay let's say you are doing this programmatically maybe with VBA that's a bit more involved but still manageable The VBA approach is similar
+ let's say you are doing this programmatically maybe with VBA that's a bit more involved but still manageable The VBA approach is similar
 
 ```vba
 Function UnixTimeToExcelDate(unixTime As Long) As Date

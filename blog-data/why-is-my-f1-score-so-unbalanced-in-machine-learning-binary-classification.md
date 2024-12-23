@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-my-f1-score-so-unbalanced-in-machine-learning-binary-classification"
 ---
 
-Okay, let's tackle this f1 score imbalance you’re experiencing. I've seen this pattern more times than I can count, and it's almost always a symptom of underlying issues with your data or model training. It’s definitely a common challenge, especially when dealing with imbalanced binary classification problems, and before we dive into code, let’s break down the typical culprits.
+, let's tackle this f1 score imbalance you’re experiencing. I've seen this pattern more times than I can count, and it's almost always a symptom of underlying issues with your data or model training. It’s definitely a common challenge, especially when dealing with imbalanced binary classification problems, and before we dive into code, let’s break down the typical culprits.
 
 First, it's important to understand that the f1-score is the harmonic mean of precision and recall. It's calculated as `2 * (precision * recall) / (precision + recall)`. This makes it particularly useful when you have class imbalances since it’s sensitive to both false positives and false negatives. Precision tells you how accurate your positive predictions are (out of all positive predictions, how many are truly positive), while recall shows how well you're capturing all actual positive cases (out of all actual positives, how many did you correctly identify). If you see an imbalance in the f1-score, it usually means that either precision or recall, or both, are significantly lower for one class than the other, which in the case of binary classification usually means you have an imbalance in the underlying true classes.
 

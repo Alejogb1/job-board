@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-an-actioncontrollerroutingerror-related-to-stimulus-loadingjs-and-importmap-rails"
 ---
 
-Okay, let's tackle this. I've seen this exact scenario crop up a few times in projects, and it can be a bit frustrating if you’re not familiar with the intricacies of how `importmap-rails` and Stimulus interact. It usually stems from a misalignment in how your application expects to find the necessary JavaScript modules, and here’s a breakdown of why and what you can do.
+,  I've seen this exact scenario crop up a few times in projects, and it can be a bit frustrating if you’re not familiar with the intricacies of how `importmap-rails` and Stimulus interact. It usually stems from a misalignment in how your application expects to find the necessary JavaScript modules, and here’s a breakdown of why and what you can do.
 
 The `ActionController::RoutingError` in this case isn't directly about your Rails routes in the traditional sense, but rather, it indicates that the browser is requesting a resource (in this case, `stimulus-loading.js`) at a URL that Rails can't map to a file on disk. This happens because `importmap-rails` alters how your JavaScript dependencies are handled. Instead of relying on Webpack or a similar bundler, it leverages browser-native JavaScript modules and an import map.
 

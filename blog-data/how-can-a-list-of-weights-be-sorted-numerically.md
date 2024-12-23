@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-a-list-of-weights-be-sorted-numerically"
 ---
 
-Okay, let’s tackle this one. Sorting a list of weights numerically might seem straightforward on the surface, but, as I've seen countless times over the years, the devil is often in the details. It's not just about calling `.sort()` and being done with it; we need to understand the nuances, the edge cases, and the performance implications. I've personally debugged systems where seemingly innocuous sorting issues caused data inconsistencies and even performance bottlenecks that crippled entire workflows, so trust me, getting this right matters.
+, let’s tackle this one. Sorting a list of weights numerically might seem straightforward on the surface, but, as I've seen countless times over the years, the devil is often in the details. It's not just about calling `.sort()` and being done with it; we need to understand the nuances, the edge cases, and the performance implications. I've personally debugged systems where seemingly innocuous sorting issues caused data inconsistencies and even performance bottlenecks that crippled entire workflows, so trust me, getting this right matters.
 
 The core of the problem involves comparing the elements in the list to determine their relative order. Generally, when you're dealing with simple numerical types like integers or floating-point numbers, many built-in sorting algorithms function perfectly well. However, the context of 'weights' can sometimes complicate things. Are these raw numeric values? Are they strings that need parsing? Do we need to handle units or special characters?
 

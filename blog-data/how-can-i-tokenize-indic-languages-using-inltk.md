@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-tokenize-indic-languages-using-inltk"
 ---
 
-Okay, let's tackle tokenization of Indic languages using inltk. I've seen this issue pop up quite a few times over the years, and it's definitely one that needs careful handling. The complexities arise primarily from the morphological richness of these languages, which differ significantly from English and many other languages that often serve as the default in NLP pipelines.
+, let's tackle tokenization of Indic languages using inltk. I've seen this issue pop up quite a few times over the years, and it's definitely one that needs careful handling. The complexities arise primarily from the morphological richness of these languages, which differ significantly from English and many other languages that often serve as the default in NLP pipelines.
 
 First, it's important to recognize that ‘tokenization’ isn't a monolithic process. In essence, it's about splitting a continuous text into smaller, meaningful units, which can be words, sub-words, or even characters. The best choice depends heavily on the language you’re working with and the downstream task you intend to perform.
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "ant-proxy-configuration-setup"
 ---
 
-Okay so you're wrestling with `ant` proxy settings right Been there man I've spent way too many late nights debugging build processes that just refuse to connect to the internet because of some stupid proxy issue Lets talk this out I've seen a thing or two about this so I got you
+ so you're wrestling with `ant` proxy settings right Been there man I've spent way too many late nights debugging build processes that just refuse to connect to the internet because of some stupid proxy issue Lets talk this out I've seen a thing or two about this so I got you
 
 First off understand that `ant`'s proxy handling is not always the most intuitive It relies on Java's underlying networking capabilities so what you're effectively doing is configuring how the JVM that runs `ant` handles network requests through your proxy server
 
@@ -31,7 +31,7 @@ Here's a snippet you might see in a typical `build.xml`:
 </project>
 
 ```
-Okay so let's walk through this Each `<property>` tag defines a system property name with a corresponding value In this case `http.proxyHost` and `http.proxyPort` specify the proxy for http connections `https.proxyHost` and `https.proxyPort` handle https connections
+ so let's walk through this Each `<property>` tag defines a system property name with a corresponding value In this case `http.proxyHost` and `http.proxyPort` specify the proxy for http connections `https.proxyHost` and `https.proxyPort` handle https connections
 
 Now that `http.nonProxyHosts` line this is key It's a pipe-separated list of hosts that should bypass the proxy For example this set of configurations the example shows local connections and addresses of the internal network These connections will not be sent through the proxy server
 
@@ -83,7 +83,7 @@ Pretty easy right? All you do is use the `<property file="proxy.properties"/>` t
 
 **Debugging Common Issues**
 
-Alright so you've tried all that and still things aren't working I feel your pain Here are some common pitfalls to watch out for:
+so you've tried all that and still things aren't working I feel your pain Here are some common pitfalls to watch out for:
 
 *   **Typos:** Double check hostnames port numbers property names especially under pressure you might make simple mistakes check that carefully. I once spent an hour tracking down a typo in `http.prxyHost` it was ridiculous
 *   **Protocol Mismatches:** `http.proxyHost` for http connections and `https.proxyHost` for https connection are not interchangeable make sure you are using the right proxy for the protocol being used

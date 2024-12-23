@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-docker-be-configured-to-ignore-a-daemonjson-file-on-startup"
 ---
 
-Okay, let's tackle this. I've certainly run into situations where a misconfigured daemon.json nearly brought my development environment to a halt, so the need to bypass it is something I’ve experienced firsthand. Ignoring the daemon.json isn't directly supported by Docker as a primary command-line option or a straightforward environment variable. It's designed to be the central configuration point for the Docker daemon. However, there are valid workarounds, and they involve understanding how the daemon loads its settings and then selectively modifying or overriding this process.
+,  I've certainly run into situations where a misconfigured daemon.json nearly brought my development environment to a halt, so the need to bypass it is something I’ve experienced firsthand. Ignoring the daemon.json isn't directly supported by Docker as a primary command-line option or a straightforward environment variable. It's designed to be the central configuration point for the Docker daemon. However, there are valid workarounds, and they involve understanding how the daemon loads its settings and then selectively modifying or overriding this process.
 
 The primary method is to manipulate how the daemon is invoked rather than trying to convince it to ignore a specific file entirely. Let's break down the approaches I’ve found effective over the years, moving from simpler to more nuanced techniques.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-purge-a-file-on-attaching-a-new-file-in-rails-7"
 ---
 
-Okay, let's tackle this. The scenario of needing to purge an existing file when attaching a new one in Rails 7 using Active Storage is a surprisingly common hiccup, and I've certainly encountered it more than once in production environments. It's not something that's handled automatically by Rails, so you do have to be explicit about managing this lifecycle.
+,  The scenario of needing to purge an existing file when attaching a new one in Rails 7 using Active Storage is a surprisingly common hiccup, and I've certainly encountered it more than once in production environments. It's not something that's handled automatically by Rails, so you do have to be explicit about managing this lifecycle.
 
 First, let's be clear that "purging" here, in the context of Active Storage, means completely removing the stored file from your chosen service (be it AWS S3, Google Cloud Storage, or a local disk). It’s more than just deleting the database association; we need the file gone from storage, otherwise, you'll be accumulating old, potentially large files, consuming unnecessary storage space and potentially impacting costs.
 

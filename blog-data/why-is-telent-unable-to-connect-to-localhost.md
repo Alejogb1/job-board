@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-telent-unable-to-connect-to-localhost"
 ---
 
-Let's tackle this. I've seen this particular issue crop up countless times across different development environments, so I can relate to the frustration. The problem of telnet failing to connect to localhost is typically a symptom of a few underlying issues, rather than a singular root cause. It's never just a simple "it's broken" situation, but rather a series of potential misconfigurations or misunderstandings about network behavior.
+ I've seen this particular issue crop up countless times across different development environments, so I can relate to the frustration. The problem of telnet failing to connect to localhost is typically a symptom of a few underlying issues, rather than a singular root cause. It's never just a simple "it's broken" situation, but rather a series of potential misconfigurations or misunderstandings about network behavior.
 
 From my experience debugging similar networking problems, often involving custom embedded systems or containerized microservices, the first thing I’d check, before anything else, is that there’s actually something listening on the port you’re trying to reach. Telnet is a very basic tool; it doesn't magically create a service. It’s a client, expecting a server to be available at the specified address and port. So, assuming you’re trying to reach localhost on, say, port 23 (the traditional telnet port) or any other port for a custom service, we need to verify that a server process is actively listening.
 

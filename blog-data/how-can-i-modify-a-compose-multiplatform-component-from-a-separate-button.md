@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-modify-a-compose-multiplatform-component-from-a-separate-button"
 ---
 
-Okay, let's tackle this. It’s a common scenario, and I’ve certainly been down this road more than a few times across various projects. Coordinating state changes between a composable and an external button in a Compose Multiplatform application isn't inherently straightforward, but it’s definitely achievable with a bit of structured approach. I recall a particularly challenging project involving a real-time data visualization dashboard; we had a central graph composable that had to dynamically update based on user selections in a separate control panel, which, in essence, is the same challenge you're facing.
+,  It’s a common scenario, and I’ve certainly been down this road more than a few times across various projects. Coordinating state changes between a composable and an external button in a Compose Multiplatform application isn't inherently straightforward, but it’s definitely achievable with a bit of structured approach. I recall a particularly challenging project involving a real-time data visualization dashboard; we had a central graph composable that had to dynamically update based on user selections in a separate control panel, which, in essence, is the same challenge you're facing.
 
 The key is to establish a mechanism for the button to communicate its intent to the composable, avoiding direct manipulation of the composable’s internal state from the outside. This directly leads us to state management, a fundamental aspect of declarative UI. You shouldn’t try to reach into the composable's internals and directly set its state – that breaks the reactive flow and can make things unpredictable.
 

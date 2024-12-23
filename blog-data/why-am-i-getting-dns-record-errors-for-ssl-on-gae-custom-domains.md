@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-dns-record-errors-for-ssl-on-gae-custom-domains"
 ---
 
-Okay, let's tackle this. It’s a situation I've bumped into a few times over the years, and it can be frustrating. When you’re seeing dns record errors related to ssl on custom domains with google app engine (gae), it usually boils down to a handful of common culprits—or, more often, a combination of them. It's rarely just one thing. I remember wrestling with a similar setup a while back for a client’s e-commerce platform, and the debugging was… thorough.
+,  It’s a situation I've bumped into a few times over the years, and it can be frustrating. When you’re seeing dns record errors related to ssl on custom domains with google app engine (gae), it usually boils down to a handful of common culprits—or, more often, a combination of them. It's rarely just one thing. I remember wrestling with a similar setup a while back for a client’s e-commerce platform, and the debugging was… thorough.
 
 The core issue stems from the fact that ssl certificates require domain validation. To prove that you genuinely control the domain you're requesting an ssl certificate for, certificate authorities (cas) need to see specific dns records in place. For gae custom domains, the process involves google’s certificate management system (gcm), which needs to find these verification records. The lack of proper records, incorrect configuration, or propagation delays can all manifest as ssl errors.
 

@@ -4,7 +4,7 @@ date: "2024-12-05"
 id: "what-advancements-in-multimodal-ai-applications-are-being-driven-by-awss-nova-foundation-models"
 ---
 
-Okay so you wanna know what's up with AWS Nova and its crazy multimodal AI stuff right  I've been digging into this  it's pretty wild  the whole multimodal thing is exploding  like images text audio video all mashed together  and Nova is a big player  
+ so you wanna know what's up with AWS Nova and its crazy multimodal AI stuff right  I've been digging into this  it's pretty wild  the whole multimodal thing is exploding  like images text audio video all mashed together  and Nova is a big player  
 
 First off  what even *is* multimodal AI  it's basically AI that can understand and process multiple types of data simultaneously  not just images or just text  it's the whole shebang  think of it like this  instead of having separate AI models for image recognition and natural language processing  you have one model that can do both and maybe even video analysis and audio transcription all at once  it's way more powerful  way more flexible  and it's leading to some seriously cool applications
 

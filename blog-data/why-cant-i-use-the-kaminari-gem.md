@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-cant-i-use-the-kaminari-gem"
 ---
 
-Alright, let's tackle this. It’s a situation I've definitely encountered more than once throughout my years working with Ruby on Rails—the dreaded "Kaminari gem won't work." Before we jump into troubleshooting, let’s understand that the inability to use Kaminari isn't usually because of some inherent flaw in the gem itself. More often than not, it points towards integration problems, incorrect configuration, or a mismatch between expectations and implementation. I’ve personally spent frustrating hours debugging this, so I can appreciate the situation.
+Alright,  It’s a situation I've definitely encountered more than once throughout my years working with Ruby on Rails—the dreaded "Kaminari gem won't work." Before we jump into troubleshooting, let’s understand that the inability to use Kaminari isn't usually because of some inherent flaw in the gem itself. More often than not, it points towards integration problems, incorrect configuration, or a mismatch between expectations and implementation. I’ve personally spent frustrating hours debugging this, so I can appreciate the situation.
 
 Let's break this down from my experiences, aiming for practical insights rather than just theoretical explanations. The core issue often stems from the fact that Kaminari, as a pagination engine, expects your data retrieval to be done in a very specific way. It relies on methods to count total records and fetch subsets of data for display on different pages. If you're not adhering to these expectations, it's going to throw a wrench into your application. This isn’t a problem with Kaminari; it’s more often an issue with how the data is being retrieved.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-configure-vscode-to-find-my-rufo-ruby-on-rails-extension"
 ---
 
-Okay, let's tackle this. I recall a particularly frustrating incident a few years back, debugging an authentication flow, when my formatter suddenly decided it wasn't going to play nice with the project. Turns out, the issue boiled down to a seemingly simple configuration mishap, echoing your present predicament. Getting VS Code to correctly recognize your `rufo` extension, especially within a Ruby on Rails environment, often boils down to a few common points, and it's not as elusive as it might initially feel. Let's break it down.
+,  I recall a particularly frustrating incident a few years back, debugging an authentication flow, when my formatter suddenly decided it wasn't going to play nice with the project. Turns out, the issue boiled down to a seemingly simple configuration mishap, echoing your present predicament. Getting VS Code to correctly recognize your `rufo` extension, especially within a Ruby on Rails environment, often boils down to a few common points, and it's not as elusive as it might initially feel. Let's break it down.
 
 First off, the core of the problem typically resides in the fact that VS Code, while generally adept, doesn't automatically know the location of every gem-installed executable. This is because it's operating outside of your project's bundle context by default. When your formatter, `rufo` in this case, is installed as a gem within your project’s `Gemfile`, VS Code needs explicit direction to locate and utilize it. This isn’t a VS Code flaw; it’s a feature that grants us flexibility across different project setups and environments.
 

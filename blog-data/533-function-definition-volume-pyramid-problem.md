@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "533-function-definition-volume-pyramid-problem"
 ---
 
-Okay so you're looking at calculating the volume of a pyramid using a function sounds like a common math problem we all faced back in school and now its back to haunt us in code its not really that complicated but alright lets break it down its about a function definition so let's get to it
+ so you're looking at calculating the volume of a pyramid using a function sounds like a common math problem we all faced back in school and now its back to haunt us in code its not really that complicated but lets break it down its about a function definition so let's get to it
 
 First things first a pyramid's volume is one-third of the base area times its height so we need those two components to calculate it also it seems we are talking about pyramids here specifically maybe its a square base pyramid or maybe it can be any type I will assume its a square base pyramid for simplicity since it is the most common I will code with that assumption in mind
 

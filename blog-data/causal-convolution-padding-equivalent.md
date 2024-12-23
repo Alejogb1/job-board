@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "causal-convolution-padding-equivalent"
 ---
 
-Okay so you're asking about causal convolution and how to handle padding to get the same output length as the input length right Been there done that a few times let me tell you
+ so you're asking about causal convolution and how to handle padding to get the same output length as the input length right Been there done that a few times let me tell you
 
 First off causal convolution It's that convolution where you're only looking at past or current input values no future values Think of it like predicting the next word in a sentence you can't use the words that haven't been said yet right This is super useful in time series data audio processing natural language processing where sequence order matters a whole lot
 
@@ -117,7 +117,7 @@ With dilation the padding is now `(k-1)*d` where k is kernel size and d is dilat
 
 **Resources**
 
-Okay so instead of giving you some random links I'd suggest looking into a few solid resources if you really want to dig deeper into this topic
+ so instead of giving you some random links I'd suggest looking into a few solid resources if you really want to dig deeper into this topic
 
 *   **"Deep Learning" by Ian Goodfellow et al.:** It has a solid chapter on convolutional networks that explains the basics and the mathematics very clearly it is dense and it will give you the bases for any kind of work you will perform in Deep learning if you haven't read it yet it is a must I cannot stress enough it provides a comprehensive overview of convolution operation including practical considerations for padding and dilation
 *   **"Speech and Language Processing" by Daniel Jurafsky and James H. Martin**: A classic for anything related to language processing you'll find great insights into how causal convolutions are used in sequence models particularly relevant for natural language processing tasks the section about the models are specially relevant in that context it's not related to deep learning in particular but more about natural language processing models

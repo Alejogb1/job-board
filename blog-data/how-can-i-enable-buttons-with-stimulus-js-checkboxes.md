@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-enable-buttons-with-stimulus-js-checkboxes"
 ---
 
-Okay, let's dive into this. The task of enabling and disabling buttons based on the state of checkboxes is a pretty common front-end scenario, and, thankfully, Stimulus.js provides a clean and efficient way to handle it. I remember facing a similar challenge a few years back when building a complex user configuration interface. We had a whole grid of options that would enable or disable different processing pipelines, and managing it all with vanilla javascript was turning into a maintenance headache. Stimulus became a lifesaver, allowing us to encapsulate this logic neatly within controllers.
+, let's dive into this. The task of enabling and disabling buttons based on the state of checkboxes is a pretty common front-end scenario, and, thankfully, Stimulus.js provides a clean and efficient way to handle it. I remember facing a similar challenge a few years back when building a complex user configuration interface. We had a whole grid of options that would enable or disable different processing pipelines, and managing it all with vanilla javascript was turning into a maintenance headache. Stimulus became a lifesaver, allowing us to encapsulate this logic neatly within controllers.
 
 The core idea is to use data attributes to establish the connection between your checkboxes, buttons, and the Stimulus controller. You'll be primarily leveraging the `targets` and `classes` features of Stimulus to achieve this. Here’s the breakdown:
 

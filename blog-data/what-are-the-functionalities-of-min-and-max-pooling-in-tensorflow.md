@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "what-are-the-functionalities-of-min-and-max-pooling-in-tensorflow"
 ---
 
-Okay, let's talk about min and max pooling in TensorFlow. I've spent a good chunk of my career working with convolutional neural networks, and these operations, while seemingly simple, are fundamental building blocks. It’s not just about knowing what they *do*, but also *why* and *when* to use them effectively, which is what I’ll try to get across.
+, let's talk about min and max pooling in TensorFlow. I've spent a good chunk of my career working with convolutional neural networks, and these operations, while seemingly simple, are fundamental building blocks. It’s not just about knowing what they *do*, but also *why* and *when* to use them effectively, which is what I’ll try to get across.
 
 So, min and max pooling, at their core, are downsampling operations. They reduce the spatial dimensions of an input, typically a feature map resulting from a convolutional layer. Think of a feature map as a grid of activations; each location represents a specific region in the input image and carries a certain value indicating how strongly a particular feature was detected. Pooling shrinks this grid, effectively making the network focus on the most salient features and reducing computational complexity. The key difference between them is, of course, *how* they do the downsampling.
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "rhome-must-be-set-environment-registry-error"
 ---
 
-Okay so this 'r\_home must be set environment registry error' thing yeah I’ve seen that one too many times trust me I’ve wrestled with this beast since like well before some of you were even thinking about coding. It’s a classic head scratcher but it's not voodoo it's usually a straightforward config problem.
+ so this 'r\_home must be set environment registry error' thing yeah I’ve seen that one too many times trust me I’ve wrestled with this beast since like well before some of you were even thinking about coding. It’s a classic head scratcher but it's not voodoo it's usually a straightforward config problem.
 
 Let's break it down first the error message itself 'r\_home must be set' pretty much screams that your R installation or more specifically the system can't find where R is actually located. R uses this `R_HOME` environment variable to know where its core files are located think of it as a GPS for your R installation. If the GPS is missing or has the wrong address R is lost and throws this error.
 
@@ -16,7 +16,7 @@ First thing’s first let’s figure out how to even diagnose this problem
 
 **How to Check the R_HOME**
 
-Okay before we start trying to fix things let's confirm the issue. On Windows the best way to do this is via command prompt not some GUI tool that hides everything under pretty icons. Open up a cmd or Powershell window it's the black box that every developer learns to love or hate. Type the following command:
+ before we start trying to fix things let's confirm the issue. On Windows the best way to do this is via command prompt not some GUI tool that hides everything under pretty icons. Open up a cmd or Powershell window it's the black box that every developer learns to love or hate. Type the following command:
 
 ```shell
 echo %R_HOME%

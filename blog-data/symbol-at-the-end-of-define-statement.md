@@ -4,11 +4,11 @@ date: "2024-12-13"
 id: "symbol-at-the-end-of-define-statement"
 ---
 
-Okay so you're asking about that weird symbol at the end of a `define` statement right specifically in the context of some programming language or tool well I've been there man I've spent hours staring at seemingly innocuous symbols wondering if I'd accidentally stumbled into some ancient ritualistic coding practice let me tell you
+ so you're asking about that weird symbol at the end of a `define` statement right specifically in the context of some programming language or tool well I've been there man I've spent hours staring at seemingly innocuous symbols wondering if I'd accidentally stumbled into some ancient ritualistic coding practice let me tell you
 
 From what I'm gathering you're probably dealing with a preprocessor directive of some sort something like C C++ or maybe even some assembler variant where you're seeing a `#define` that's been used to define a constant or a macro and then there's this extra character like a semicolon or maybe something else I've seen it all trust me
 
-Okay so lets break this down specifically what that trailing symbol means because there's a few possible culprits each with its own nuanced use and purpose from my own personal experience I've banged my head against my desk more times than I can count over this kind of thing back in the day I was working on this embedded system project for a ridiculously power sensitive application where every bit mattered Every extra instruction was basically sucking the life out of our battery and for a week or two I was chasing my tail because of a similar issue where there was just one rogue trailing semicolon at the end of some macro definition it just totally broke my brain
+ so lets break this down specifically what that trailing symbol means because there's a few possible culprits each with its own nuanced use and purpose from my own personal experience I've banged my head against my desk more times than I can count over this kind of thing back in the day I was working on this embedded system project for a ridiculously power sensitive application where every bit mattered Every extra instruction was basically sucking the life out of our battery and for a week or two I was chasing my tail because of a similar issue where there was just one rogue trailing semicolon at the end of some macro definition it just totally broke my brain
 
 So lets look at some specifics in this problem
 

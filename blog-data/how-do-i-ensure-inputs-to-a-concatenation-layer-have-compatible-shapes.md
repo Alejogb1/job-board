@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-ensure-inputs-to-a-concatenation-layer-have-compatible-shapes"
 ---
 
-Let's tackle this. I’ve certainly spent more than a few late nights debugging shape mismatches in neural network architectures, and concatenation layers are a common culprit. Ensuring compatible shapes before concatenation is not just good practice, it's absolutely essential for avoiding runtime errors and achieving correct model behavior. It’s a situation where proactive thinking can save you a world of grief later on.
+ I’ve certainly spent more than a few late nights debugging shape mismatches in neural network architectures, and concatenation layers are a common culprit. Ensuring compatible shapes before concatenation is not just good practice, it's absolutely essential for avoiding runtime errors and achieving correct model behavior. It’s a situation where proactive thinking can save you a world of grief later on.
 
 The core issue revolves around the tensor dimensions that you intend to concatenate. Think of it like joining pieces of a jigsaw puzzle: the edges have to match for the pieces to fit together. For concatenation to function without errors, all tensors involved must have identical shapes across *all* dimensions except the dimension you're concatenating along.
 

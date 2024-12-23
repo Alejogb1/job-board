@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-get-logits-from-a-t5-hugging-face-model-using-the-forward-method-without-labels"
 ---
 
-Alright, let's tackle this. It’s a situation I've found myself in more than a few times, particularly when I was experimenting with T5 for various text generation tasks beyond straightforward supervised fine-tuning. You need the raw logits from a T5 model, specifically using the `forward()` method, but you don't have labels. That's completely valid, and in many cases, it’s the precise thing you need for advanced manipulation or analysis.
+Alright,  It’s a situation I've found myself in more than a few times, particularly when I was experimenting with T5 for various text generation tasks beyond straightforward supervised fine-tuning. You need the raw logits from a T5 model, specifically using the `forward()` method, but you don't have labels. That's completely valid, and in many cases, it’s the precise thing you need for advanced manipulation or analysis.
 
 The core concept is understanding what the `forward()` method of a Hugging Face model returns. With T5, typically it yields an `EncoderDecoderModelOutput` object if you pass in both `input_ids` and `labels`, or a `Seq2SeqModelOutput` when no labels are present. Crucially, these objects contain the `logits` attribute, which is exactly what you're after.
 

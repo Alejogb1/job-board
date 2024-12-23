@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-to-send-a-random-pdf-file-to-aigram-from-a-folder"
 ---
 
-alright, let's tackle this. so, you're aiming to pick a pdf at random from a directory and then ship it off to telegram using aigram, cool. i've bumped into similar things myself, a few times over the years.
+alright,  so, you're aiming to pick a pdf at random from a directory and then ship it off to telegram using aigram, cool. i've bumped into similar things myself, a few times over the years.
 
 first off, grabbing a random file. it's actually simpler than it might look. python’s `random` and `os` modules are our friends here. i remember, back when i was first messing with automating some report generation, i needed to do this exact thing – choose one of the output pdfs for archiving. i started by thinking i needed some complex weighted random selection, which, looking back, is just ridiculous for the task at hand.
 

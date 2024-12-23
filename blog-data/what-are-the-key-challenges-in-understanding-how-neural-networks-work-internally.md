@@ -4,7 +4,7 @@ date: "2024-12-11"
 id: "what-are-the-key-challenges-in-understanding-how-neural-networks-work-internally"
 ---
 
-Okay so you wanna know why understanding neural networks is like trying to decipher ancient hieroglyphs  right  it's tricky  really tricky  The main problem isn't that they're super complicated in a way that's like you know rocket science  it's more that they're complicated in a way that's *opaque*  like you can see the input and the output but the stuff happening inside is a black box a massive beautiful messy black box  
+ so you wanna know why understanding neural networks is like trying to decipher ancient hieroglyphs  right  it's tricky  really tricky  The main problem isn't that they're super complicated in a way that's like you know rocket science  it's more that they're complicated in a way that's *opaque*  like you can see the input and the output but the stuff happening inside is a black box a massive beautiful messy black box  
 
 One huge challenge is the sheer scale  even a relatively small network has millions maybe billions of parameters  weights and biases and activations and all that jazz  it's just too much for a human brain to comprehend all at once   Think about it trying to trace the flow of information through a network with a million nodes  yeah good luck with that   It's like trying to map every single street in a massive sprawling metropolis   you'd get lost before you even left your house
 

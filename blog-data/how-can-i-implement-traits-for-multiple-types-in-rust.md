@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-implement-traits-for-multiple-types-in-rust"
 ---
 
-Alright, let's tackle this. Been around the block with Rust a few times, and this specific issue of implementing traits for multiple types pops up more often than one might think. It's a foundational concept when you're aiming for that sweet spot of code reusability and type safety. Instead of jumping straight to the examples, let’s unpack *why* we even need this. In essence, we want to define behavior that's not specific to a single concrete type, but applicable across a range of types, without resorting to dynamic dispatch or other runtime penalties if possible. Traits are Rust’s answer to this challenge.
+Alright,  Been around the block with Rust a few times, and this specific issue of implementing traits for multiple types pops up more often than one might think. It's a foundational concept when you're aiming for that sweet spot of code reusability and type safety. Instead of jumping straight to the examples, let’s unpack *why* we even need this. In essence, we want to define behavior that's not specific to a single concrete type, but applicable across a range of types, without resorting to dynamic dispatch or other runtime penalties if possible. Traits are Rust’s answer to this challenge.
 
 Now, when I first encountered this, I was working on a micro-service responsible for processing incoming data from various sources – json, csv, flat files – you name it. Each data source had different structures, but ultimately, I needed a unified way to extract, transform, and persist them. This is where traits really shined. Instead of writing separate functions for each data format, I defined a trait, `DataSource`, for example.
 

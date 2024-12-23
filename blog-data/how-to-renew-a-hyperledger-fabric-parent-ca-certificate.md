@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-renew-a-hyperledger-fabric-parent-ca-certificate"
 ---
 
-Okay, let’s tackle this one. Having spent a considerable amount of time wrangling Hyperledger Fabric deployments, I’ve faced the “parent CA certificate renewal” scenario more times than I’d prefer. It’s a critical operation, and if not handled meticulously, it can bring your network to a grinding halt. The key here is understanding the certificate hierarchy and the precise steps involved. I’ll walk you through it with both conceptual explanations and some code examples to make it clearer.
+, let’s tackle this one. Having spent a considerable amount of time wrangling Hyperledger Fabric deployments, I’ve faced the “parent CA certificate renewal” scenario more times than I’d prefer. It’s a critical operation, and if not handled meticulously, it can bring your network to a grinding halt. The key here is understanding the certificate hierarchy and the precise steps involved. I’ll walk you through it with both conceptual explanations and some code examples to make it clearer.
 
 Firstly, let's be very clear: the parent CA certificate is the root of trust for your entire Fabric network. If that certificate expires or is compromised, all certificates issued by it will become invalid, rendering your network unusable. This isn't something you want to discover on a Friday afternoon. Therefore, a planned, well-executed renewal strategy is paramount. The process involves generating a new parent CA certificate, carefully replacing the old one in the appropriate configurations, and ensuring all subordinate certificates (issued by this CA) remain valid and trusted.
 

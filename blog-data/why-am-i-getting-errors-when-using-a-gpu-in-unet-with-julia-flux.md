@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-am-i-getting-errors-when-using-a-gpu-in-unet-with-julia-flux"
 ---
 
-Alright, let's tackle this. It’s a common scenario, and I've certainly been down that road a few times myself, particularly when first exploring parallel processing with neural networks. Seeing errors pop up when moving UNET to a GPU in Flux with Julia is, frankly, a rite of passage. Let’s break down why this might be occurring and some solid steps to debug it effectively.
+Alright,  It’s a common scenario, and I've certainly been down that road a few times myself, particularly when first exploring parallel processing with neural networks. Seeing errors pop up when moving UNET to a GPU in Flux with Julia is, frankly, a rite of passage. Let’s break down why this might be occurring and some solid steps to debug it effectively.
 
 From my own experience, transitioning deep learning models from CPU to GPU can introduce a cascade of subtle issues. The underlying reasons are often related to data movement, type compatibility, or even misconfigurations within the CUDA environment itself. You're not alone in this; it’s a delicate dance between the high-level model definition in Flux and the low-level hardware acceleration provided by CUDA.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-query-tag-manager-data"
 ---
 
-Alright, let's tackle this. Querying Tag Manager data, eh? It's something I've spent a fair bit of time on over the years, particularly when trying to nail down the specifics of data layer pushes or debugging complex tracking setups. It's definitely not always as straightforward as one might initially hope.
+Alright,  Querying Tag Manager data, eh? It's something I've spent a fair bit of time on over the years, particularly when trying to nail down the specifics of data layer pushes or debugging complex tracking setups. It's definitely not always as straightforward as one might initially hope.
 
 The primary challenge, I've found, isn't so much about the *what*—we're essentially trying to extract information about how our tags and triggers are behaving—but rather the *how*. Google Tag Manager, in its native environment, doesn't offer a direct querying interface like, say, a database. Instead, we’re largely working through its user interface, developer tools, and, for more sophisticated needs, leveraging the Tag Manager API. So, let me break down a few approaches that I've used successfully and some nuances you'll probably encounter.
 

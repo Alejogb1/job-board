@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "verilog-generate-for-loop-usage"
 ---
 
-Okay so you're asking about `generate` for loops in Verilog right Been there done that countless times Let's break it down I've seen my share of headaches with this feature so I'm gonna give you the real deal no fluff
+ so you're asking about `generate` for loops in Verilog right Been there done that countless times Let's break it down I've seen my share of headaches with this feature so I'm gonna give you the real deal no fluff
 
 First things first `generate` for loops are your go-to when you need to instantiate multiple instances of the same module or create repeated logic structures that vary slightly These loops are evaluated at compile time not during simulation or actual hardware runtime This is a critical distinction a lot of newcomers miss Think of it like a preprocessor directive in C but more powerful
 
@@ -155,7 +155,7 @@ module memory #(parameter SIZE = 1024, parameter WORD_WIDTH = 8)
 endmodule
 ```
 
-Okay jokes aside let's make one thing clear you need to use `localparam` to calculate the address width of the memory because you cant use parameters in array definitions only constants You also can't generate an always block which is why I have a `generate if` statement to create the write logic This creates an array of `SIZE` number of register elements where each register is `WORD_WIDTH` wide
+ jokes aside let's make one thing clear you need to use `localparam` to calculate the address width of the memory because you cant use parameters in array definitions only constants You also can't generate an always block which is why I have a `generate if` statement to create the write logic This creates an array of `SIZE` number of register elements where each register is `WORD_WIDTH` wide
 
 When using `generate` blocks, you need to be mindful of scope especially with name collisions I always try to use the `loop_name` after the `begin` statement because it helps greatly when debugging Also its not the most efficient way to build memory you can instead use a RAM module provided by the FPGA vendor in that case the `generate` statements are not needed
 

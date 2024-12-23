@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-piecewise-function-constraints-be-modeled-in-gurobi"
 ---
 
-Okay, let's tackle piecewise functions in Gurobi. This isn't always straightforward, and I've certainly had my share of headaches dealing with them, particularly when performance is critical. It’s a situation that often comes up when you're modeling non-linear phenomena within a linear or mixed-integer programming framework. I recall once, back in my quant days, when we were trying to model the price impact of trades in a highly fragmented market – the non-linearities were a significant challenge.
+, let's tackle piecewise functions in Gurobi. This isn't always straightforward, and I've certainly had my share of headaches dealing with them, particularly when performance is critical. It’s a situation that often comes up when you're modeling non-linear phenomena within a linear or mixed-integer programming framework. I recall once, back in my quant days, when we were trying to model the price impact of trades in a highly fragmented market – the non-linearities were a significant challenge.
 
 The key to handling piecewise functions in Gurobi, or indeed any similar optimization solver, lies in transforming the discontinuous or non-linear function into a set of linear constraints. This often involves introducing auxiliary variables and constraints to properly represent the different segments or "pieces" of your function. There are a few common approaches depending on the function's characteristics, but they all revolve around this linearization technique. We'll go through a few of the more prevalent methods and look at some concrete examples.
 

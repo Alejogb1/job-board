@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-airflow-dag-parameters-be-overwritten-using-the-command-line"
 ---
 
-Okay, let's talk about overriding airflow dag parameters from the command line. It’s a capability I’ve leaned on heavily, particularly during those messy migration projects where constants seem to shift daily. I’ve seen many folks initially stumble with this, so let's break it down systematically. The core idea, when you get past the documentation jargon, is straightforward: you're essentially leveraging Jinja templating in your DAG definition combined with command-line arguments that airflow then makes available to the rendering context.
+, let's talk about overriding airflow dag parameters from the command line. It’s a capability I’ve leaned on heavily, particularly during those messy migration projects where constants seem to shift daily. I’ve seen many folks initially stumble with this, so let's break it down systematically. The core idea, when you get past the documentation jargon, is straightforward: you're essentially leveraging Jinja templating in your DAG definition combined with command-line arguments that airflow then makes available to the rendering context.
 
 Think of airflow dag parameters, or configurations, as variables that can influence the behavior of your tasks. These parameters can be default values specified within your dag definition itself, but to inject flexibility, we want the ability to adjust these values externally, specifically from the command line when triggering the dag. This is where airflow's templating and command-line execution intertwine.
 

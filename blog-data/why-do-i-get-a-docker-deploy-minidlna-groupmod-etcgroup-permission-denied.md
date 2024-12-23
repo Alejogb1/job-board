@@ -30,7 +30,7 @@ services:
     user: "root"
 ```
 
-but please, tread carefully here. running as root adds risks. it might be okay for a development environment, or when you are testing but not in production.
+but please, tread carefully here. running as root adds risks. it might be  for a development environment, or when you are testing but not in production.
 
 a more secure, and often preferred approach is to modify the dockerfile so that you don't need to modify system files at runtime. instead of using `groupmod` during the container run, what if you add the user to the group during the image build phase?. this way we preconfigure the needed group membership before container starts and prevent our app from trying to modify system files in the first place.
 

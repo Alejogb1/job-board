@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-music-be-classified-by-beats-per-minute-bpm"
 ---
 
-Alright, let's tackle this. You're asking about classifying music based on beats per minute, or bpm. It's a seemingly straightforward concept, but the implementation and challenges involved can quickly get intricate. From my experience building audio analysis tools, specifically a small-scale music library project a few years back, I've learned that while the core idea of bpm detection is simple – counting beats within a minute – the execution requires nuanced techniques to handle the variability inherent in music.
+Alright,  You're asking about classifying music based on beats per minute, or bpm. It's a seemingly straightforward concept, but the implementation and challenges involved can quickly get intricate. From my experience building audio analysis tools, specifically a small-scale music library project a few years back, I've learned that while the core idea of bpm detection is simple – counting beats within a minute – the execution requires nuanced techniques to handle the variability inherent in music.
 
 Essentially, we're aiming to quantify the tempo of a musical piece. A high bpm typically indicates faster music, like dance tracks or electronic compositions, while a lower bpm is often associated with slower genres such as ballads or classical pieces. The problem arises in accurately identifying those beats, especially when dealing with complex rhythmic patterns, variations in instrumentation, and percussive elements that aren't clearly distinguishable beats. A simple peak detection approach won’t suffice – it might pick up spurious sounds as beats if it’s not fine-tuned.
 

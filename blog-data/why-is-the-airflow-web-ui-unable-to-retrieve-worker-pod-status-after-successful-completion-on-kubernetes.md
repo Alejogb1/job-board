@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-the-airflow-web-ui-unable-to-retrieve-worker-pod-status-after-successful-completion-on-kubernetes"
 ---
 
-Okay, let’s unpack this—it’s a recurring issue that I’ve seen surface in many production environments. The situation where your Airflow web UI shows successful task completions but struggles to reflect the final status of worker pods on Kubernetes is definitely frustrating, and it usually points to a few common underlying causes. This isn't necessarily a bug in Airflow itself, but rather a mismatch in expectations or a configuration oversight, often involving the interplay between the Kubernetes executor, the Airflow scheduler, and Kubernetes APIs.
+, let’s unpack this—it’s a recurring issue that I’ve seen surface in many production environments. The situation where your Airflow web UI shows successful task completions but struggles to reflect the final status of worker pods on Kubernetes is definitely frustrating, and it usually points to a few common underlying causes. This isn't necessarily a bug in Airflow itself, but rather a mismatch in expectations or a configuration oversight, often involving the interplay between the Kubernetes executor, the Airflow scheduler, and Kubernetes APIs.
 
 From my experience, the problem boils down to the ephemeral nature of worker pods created by the Kubernetes executor. These pods aren't designed to linger after task completion; they’re meant to execute, report back, and then gracefully exit. The Airflow scheduler monitors the state of these tasks via the Kubernetes API, but the web UI’s understanding of this is not always directly tied to the raw API events after the pod itself has been terminated. This separation of reporting and pod lifetime is crucial.
 

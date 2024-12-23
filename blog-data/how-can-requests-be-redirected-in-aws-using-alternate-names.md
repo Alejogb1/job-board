@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-requests-be-redirected-in-aws-using-alternate-names"
 ---
 
-Alright, let's tackle this. It's a situation I’ve found myself in countless times, especially when juggling multi-tenant environments or migrating between services. Redirecting requests using alternate names in aws, whether for load balancing, service discovery, or simple vanity URLs, is actually quite common and has a few effective approaches, each with its own nuances. It’s more than just a simple configuration switch; understanding the underlying mechanics is crucial for robust implementation.
+Alright,  It's a situation I’ve found myself in countless times, especially when juggling multi-tenant environments or migrating between services. Redirecting requests using alternate names in aws, whether for load balancing, service discovery, or simple vanity URLs, is actually quite common and has a few effective approaches, each with its own nuances. It’s more than just a simple configuration switch; understanding the underlying mechanics is crucial for robust implementation.
 
 When we talk about “alternate names,” we're generally referring to domain names or host headers that differ from the primary or canonical name associated with a service. These might be subdomains, entirely different domain names pointing to the same application, or even just aliases within your internal network. In aws, we have multiple tools that can handle this redirection process. I'll walk through the most practical ones from my own experiences, starting with the fundamental components.
 

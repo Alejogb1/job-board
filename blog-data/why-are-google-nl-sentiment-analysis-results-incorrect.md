@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-are-google-nl-sentiment-analysis-results-incorrect"
 ---
 
-Alright, let's tackle this. I've seen my fair share of surprising results from various sentiment analysis APIs over the years, Google's included, and it's not always a case of the algorithm being outright *wrong*, but rather a matter of understanding its limitations and the complexities of natural language itself. It's not a black box of magical processing; it's a sophisticated set of techniques based on mathematical models trained on vast datasets, but they're not perfect. In my previous role at a social media analytics company, we frequently used sentiment analysis as part of our overall insights pipeline, and believe me, we hit these snags all the time.
+Alright,  I've seen my fair share of surprising results from various sentiment analysis APIs over the years, Google's included, and it's not always a case of the algorithm being outright *wrong*, but rather a matter of understanding its limitations and the complexities of natural language itself. It's not a black box of magical processing; it's a sophisticated set of techniques based on mathematical models trained on vast datasets, but they're not perfect. In my previous role at a social media analytics company, we frequently used sentiment analysis as part of our overall insights pipeline, and believe me, we hit these snags all the time.
 
 One primary reason for inaccurate sentiment scores is the inherent ambiguity in human language. Consider sarcasm, for example. A phrase like "Oh, fantastic, another meeting," delivered with a flat tone in a text message, could easily be flagged as positive by an algorithm that solely focuses on the presence of "fantastic" without considering the context and the human nuances of tone and delivery. These models, including Google's, are primarily trained on data that lacks this real-world richness – tone, vocal inflections, facial cues are simply not present in the training set. This limitation stems from a reliance on textual data, primarily.
 
@@ -27,14 +27,14 @@ def analyze_sentiment(text):
       return {"score": 0.8, "magnitude": 0.5}  # positive result, incorrectly
     elif "not good" in text:
       return {"score": -0.6, "magnitude": 0.9} # correct negative score
-    elif "okay" in text:
+    elif "" in text:
        return {"score": 0.0, "magnitude": 0.2} # neutral, likely correct
     else:
         return {"score": 0.0, "magnitude": 0.1} # neutral in default case
 
 text1 = "Oh, fantastic, another meeting"
 text2 = "The food was not good."
-text3 = "The project was okay."
+text3 = "The project was ."
 
 result1 = analyze_sentiment(text1)
 result2 = analyze_sentiment(text2)

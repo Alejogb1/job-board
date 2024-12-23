@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "what-are-user-i-o-wait-events-like-cell-single-block-physical-read-cell-mult"
 ---
 
-Okay so you’re asking about user I/O wait events specifically those "cell single block physical read" and "cell multiblock physical read" ones right I’ve been there seen that many times its a pretty common pain point especially when you're diving deep into Oracle database performance tuning
+ so you’re asking about user I/O wait events specifically those "cell single block physical read" and "cell multiblock physical read" ones right I’ve been there seen that many times its a pretty common pain point especially when you're diving deep into Oracle database performance tuning
 
 First off lets get this straight user I/O wait events are basically the times your database sessions are chilling waiting for something usually data I/O like reading from disk but it’s not always as simple as disk i/o directly It's a signal from the kernel to oracle its telling oracle that this session is stuck doing something related to I/O not actually doing calculations or other CPU stuff
 
@@ -32,7 +32,7 @@ The query is retrieving one row based on a primary key or unique index access th
 
 Now **Cell Multiblock Physical Read**
 
-Okay so this one means your database session is waiting for a bunch of blocks to be read from a storage cell Usually because of a table scan or a full index scan the session is requesting multiple blocks from disk and reading them consecutively not skipping any block it can be many blocks at a time not just few
+ so this one means your database session is waiting for a bunch of blocks to be read from a storage cell Usually because of a table scan or a full index scan the session is requesting multiple blocks from disk and reading them consecutively not skipping any block it can be many blocks at a time not just few
 
 This is usually much less efficient than single block reads since its usually not targeted or selective its just sequentially reads data from disk
 
@@ -107,4 +107,4 @@ Now a random joke... why was the database server bad at poker? Because it always
 *   **"Oracle Performance Tuning" by Donald K. Burleson**: This classic book covers all aspects of Oracle performance tuning including I/O. I have read it twice.
 *   **Jonathan Lewis' Blog**: Jonathan Lewis is a guru on Oracle internals. His blog is a treasure trove of information about wait events and performance analysis.
 
-Okay this should give you a good start to dive into the issue Remember that database performance is a journey not a destination and these wait events are just one piece of the puzzle good luck debugging!
+ this should give you a good start to dive into the issue Remember that database performance is a journey not a destination and these wait events are just one piece of the puzzle good luck debugging!

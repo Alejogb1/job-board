@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-handle-filenames-when-loading-a-tensorflow-dataset"
 ---
 
-Okay, let’s unpack this. Dealing with filenames in TensorFlow datasets can become quite tricky, especially when you’re scaling up or handling complex data pipelines. I've spent more hours than I care to count debugging seemingly innocuous file-related errors, and I’ve learned a few things along the way that might help you avoid some of those headaches.
+, let’s unpack this. Dealing with filenames in TensorFlow datasets can become quite tricky, especially when you’re scaling up or handling complex data pipelines. I've spent more hours than I care to count debugging seemingly innocuous file-related errors, and I’ve learned a few things along the way that might help you avoid some of those headaches.
 
 The core issue often boils down to how TensorFlow’s `tf.data.Dataset` API interacts with your file system. You’re essentially feeding it a list of strings, each representing a path to a data file. The devil, as always, is in the details. A simple list of filenames is often insufficient to get your data flowing smoothly. We need to think about potential issues like inconsistent naming conventions, distributed training considerations, and the diverse data formats that we may encounter.
 

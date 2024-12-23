@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-isnt-the-devise-login-error-message-displayed-in-my-rails-70-application"
 ---
 
-Okay, let's tackle this. It's a classic issue, actually, and I've seen it more than a few times over the years. You've got a Rails 7.0 app using Devise, and for some reason, the login error messages aren't showing up. It's frustrating, because Devise *should* handle this out of the box, but sometimes the defaults aren't quite what you expect. From what I've observed, there are a few common culprits, and we can dive into them with a bit of code analysis.
+,  It's a classic issue, actually, and I've seen it more than a few times over the years. You've got a Rails 7.0 app using Devise, and for some reason, the login error messages aren't showing up. It's frustrating, because Devise *should* handle this out of the box, but sometimes the defaults aren't quite what you expect. From what I've observed, there are a few common culprits, and we can dive into them with a bit of code analysis.
 
 The usual suspect is usually related to how you're handling form rendering and error display within your views. Devise controllers handle authentication and set errors in flash messages, specifically `flash[:alert]`. The view, however, needs to actively check for and then display that message, and it's very easy for that part to go amiss, especially after you've customized the view.
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "building-web-applications-with-uml-diagrams"
 ---
 
-Okay so you wanna build web apps using UML diagrams right alright I’ve been there done that and got the T-shirt and maybe even a few scars so let's break this down in a way that hopefully makes sense.
+ so you wanna build web apps using UML diagrams right I’ve been there done that and got the T-shirt and maybe even a few scars so let's break this down in a way that hopefully makes sense.
 
 First off I’m not gonna sugarcoat it using UML directly to build web apps isn't the most common path nowadays it's more of a design tool than a code generation tool and in my experience it can be kinda clunky if you try to make it do more than it's meant to but don't get me wrong it has its place mainly in the initial planning stage I guess
 
@@ -114,7 +114,7 @@ The `ProductCard` component would probably be mapped as a UML class in the class
 
 **3 Don't try to generate code from UML**
 
-Okay here's where I draw the line and this is where some developers mess up because they believe in this idea so much, there are some UML tools that promise code generation and in my experience they often fall short they are not smart enough to map your UML to the complexities of the web frameworks the real world uses like Spring Boot or React you know there's a lot of stuff you need to take care like security and persistence and those frameworks have all that so if you try to do this with code generated from UML you're probably going to have a hard time.
+ here's where I draw the line and this is where some developers mess up because they believe in this idea so much, there are some UML tools that promise code generation and in my experience they often fall short they are not smart enough to map your UML to the complexities of the web frameworks the real world uses like Spring Boot or React you know there's a lot of stuff you need to take care like security and persistence and those frameworks have all that so if you try to do this with code generated from UML you're probably going to have a hard time.
 
 I mean I once saw a guy try to generate a complex Spring application from a UML model. Let's just say it didn't end well. He spent more time debugging the generated code than it would have taken to write it from scratch. It's better to write the code yourself I mean that's why you became a programmer right?
 

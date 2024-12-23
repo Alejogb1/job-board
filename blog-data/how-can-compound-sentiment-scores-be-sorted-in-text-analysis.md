@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-compound-sentiment-scores-be-sorted-in-text-analysis"
 ---
 
-Let's tackle this. It’s a question that, frankly, I've spent a fair amount of time addressing, particularly when building some early iterations of customer feedback analysis tools. The challenge isn't just about computing the sentiment scores; it’s about making sense of them afterwards, especially when you’re dealing with composite values like compound scores. So, to sort them effectively, you first have to understand what that compound score actually represents.
+ It’s a question that, frankly, I've spent a fair amount of time addressing, particularly when building some early iterations of customer feedback analysis tools. The challenge isn't just about computing the sentiment scores; it’s about making sense of them afterwards, especially when you’re dealing with composite values like compound scores. So, to sort them effectively, you first have to understand what that compound score actually represents.
 
 Typically, a compound sentiment score, often produced by libraries like vader or nltk's sentiment analyzers, is a normalized score ranging from -1 to 1. It's designed to give an overall indication of the text's sentiment. A score close to 1 signifies a highly positive sentiment, -1 a highly negative one, and 0 a neutral one. The nuances come from its being a *compound* score – meaning it attempts to aggregate the sentiments of individual words within the text.
 
@@ -27,7 +27,7 @@ analyzer = SentimentIntensityAnalyzer()
 
 texts = [
     "This is absolutely terrible.",
-    "The service was okay.",
+    "The service was .",
     "I had a wonderful time!",
     "It was a decent experience.",
     "The worst meal I've ever had."
@@ -59,7 +59,7 @@ analyzer = SentimentIntensityAnalyzer()
 
 texts = [
     "This is absolutely terrible.",
-    "The service was okay.",
+    "The service was .",
     "I had a wonderful time!",
     "It was a decent experience.",
     "The worst meal I've ever had.",
@@ -106,7 +106,7 @@ analyzer = SentimentIntensityAnalyzer()
 critical_words = ["failure", "awful", "broken"]
 texts = [
     "This is an awful failure.",
-    "The service was okay.",
+    "The service was .",
     "I had a wonderful time!",
     "It was a decent experience.",
     "The worst meal I've ever had."

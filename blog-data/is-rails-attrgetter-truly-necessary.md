@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "is-rails-attrgetter-truly-necessary"
 ---
 
-Okay, let's tackle this one. I've definitely been around the block with Rails enough to have a strong opinion on `attr_accessor`, `attr_reader`, and `attr_writer`, and when they are genuinely useful, or when other approaches might be more suitable. Honestly, it’s a question I’ve internally debated with codebases I’ve inherited and built. The short answer is, no, `attr_reader` itself isn't *strictly* necessary. You can achieve the same result via direct method definitions. But that's not really the point.
+, let's tackle this one. I've definitely been around the block with Rails enough to have a strong opinion on `attr_accessor`, `attr_reader`, and `attr_writer`, and when they are genuinely useful, or when other approaches might be more suitable. Honestly, it’s a question I’ve internally debated with codebases I’ve inherited and built. The short answer is, no, `attr_reader` itself isn't *strictly* necessary. You can achieve the same result via direct method definitions. But that's not really the point.
 
 The real value of `attr_reader`, and its siblings, lies in conciseness and clarity. They provide a clean, declarative way to manage instance variable access, which directly reduces boilerplate. I recall a particularly hairy project from my early days – a content management system. We had several models with numerous attributes that required read-only access from external services. Without these convenient accessors, we'd have been drowning in verbose method definitions like this:
 

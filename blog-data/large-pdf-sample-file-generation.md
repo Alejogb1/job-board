@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "large-pdf-sample-file-generation"
 ---
 
-Alright so you're asking about large PDF generation specifically sample files I've wrestled with this beast before it's a classic case of "sounds simple until you actually try it" believe me I know a thing or two
+so you're asking about large PDF generation specifically sample files I've wrestled with this beast before it's a classic case of "sounds simple until you actually try it" believe me I know a thing or two
 
 Let's get down to the gritty details here generating a PDF isn't inherently complex the problem comes when you're talking about large files either huge page counts or lots of complex content or a combination of both that's where things can get slow and memory intensive fast
 

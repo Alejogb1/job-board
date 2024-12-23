@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "how-does-one-perform-the-exp-operation-element-wise-in-juila"
 ---
 
-Okay so you need to element-wise exponentiate in Julia right Been there done that Seems like a simple question but it trips up a lot of folks new to Julia And frankly I’ve seen some pretty horrific code trying to get around this one
+ so you need to element-wise exponentiate in Julia right Been there done that Seems like a simple question but it trips up a lot of folks new to Julia And frankly I’ve seen some pretty horrific code trying to get around this one
 
 Let me tell you about this one project I worked on back in the day It was some signal processing stuff involving large arrays I was using NumPy in Python at the time and honestly the syntax was so clean it was one of the only things that worked I had a python notebook going and all that with `np.exp(my_array)` doing the thing Then I was told by my boss that I had to port it to Julia because "performance" yeah yeah So I jumped right into Julia thinking it would be the same right I naively just tried `exp(my_array)` and boom error city
 
@@ -106,4 +106,4 @@ And then if you want to go a bit deeper into Julia’s performance and how this 
 
 Oh and one more thing since we're talking about Julia performance did you hear about the programmer who got lost in the documentation He kept going in circles because he got into an infinite loop haha
 
-Okay okay I’m done But yeah that dot its your friend remember it for all the element-wise stuff
+  I’m done But yeah that dot its your friend remember it for all the element-wise stuff

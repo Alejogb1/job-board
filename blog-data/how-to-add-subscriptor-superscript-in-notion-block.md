@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "how-to-add-subscriptor-superscript-in-notion-block"
 ---
 
-Okay so you're banging your head against the Notion wall trying to get that sweet subscript and superscript action going right I feel your pain been there myself more times than I care to admit This is a weird quirk in Notion not a bug but a feature I guess lets call it an unpolished diamond
+ so you're banging your head against the Notion wall trying to get that sweet subscript and superscript action going right I feel your pain been there myself more times than I care to admit This is a weird quirk in Notion not a bug but a feature I guess lets call it an unpolished diamond
 
 So yeah you can't just hit some magic formatting button and boom subscript or superscript There isnt one There arent any shortcuts like Control plus Shift plus plus for superscript or similar Nothing like that
 

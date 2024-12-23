@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-retrieve-added-calendars-using-the-outlook-calendar-api"
 ---
 
-Okay, let's tackle this. I’ve spent a fair amount of time working with the Outlook Calendar API, particularly around the complexities of managing not just primary calendars, but those additional ones users often create or subscribe to. The initial assumption is usually, “get calendars, done,” but it's never quite that simple, is it? Let's break down how to reliably retrieve these added calendars, drawing from experiences where a straightforward approach simply didn't cut it.
+,  I’ve spent a fair amount of time working with the Outlook Calendar API, particularly around the complexities of managing not just primary calendars, but those additional ones users often create or subscribe to. The initial assumption is usually, “get calendars, done,” but it's never quite that simple, is it? Let's break down how to reliably retrieve these added calendars, drawing from experiences where a straightforward approach simply didn't cut it.
 
 Fundamentally, when you’re querying the Outlook Calendar API, it’s essential to understand the underlying data model. There's a distinct difference between a user's primary calendar and the collection of secondary, or added, calendars. These added calendars aren't just copies; they have their own unique properties and identifiers. The standard graph api endpoint `/me/calendars` often gets you the user's default calendar, but won't necessarily give the others without some additional care.
 

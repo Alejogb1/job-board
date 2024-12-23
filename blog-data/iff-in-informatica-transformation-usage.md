@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "iff-in-informatica-transformation-usage"
 ---
 
-Okay so "iff in informatica transformation usage" right Been there wrestled with that beast a few times let me tell ya
+ so "iff in informatica transformation usage" right Been there wrestled with that beast a few times let me tell ya
 
 First off "iff" as in "if and only if" yeah that's kinda tricky in Informatica transformations Its not a direct keyword you'll find lying around more like a concept you gotta build yourself I mean it's not like you can just type `IFF(condition, value_if_true, value_if_false)` like some SQL thing No no Informatica loves to be different which as you might know is one of the reasons some of us have such a love-hate relationship with it
 
@@ -29,7 +29,7 @@ IIF(old_field = 'A', 'X',
 ```
 This is very readable and easy to maintain and modify if the requirements change in the future and the best part it worked perfectly. Its essentially mimicking the "if and only if" pattern It's not a true `iff` keyword but it gives you the desired effect This will return 'X' *only* if the `old_field` is 'A' and 'Y' *only* if the `old_field` is 'B' and 'Z' *only* if it's neither 'A' nor 'B' All those pesky edge cases got handled correctly
 
-Okay so you might ask "why didn't I use CASE WHEN" right? Well in PowerCenter the transformation language doesn't directly support `CASE WHEN` like SQL So you’re stuck with nesting IIF statements which can get messy if your conditions start getting complicated. It is what it is So there is this one thing I learnt in life dealing with Informatica it is that the simpler the better specially when you have to go back and try to figure out what you did 2 years ago
+ so you might ask "why didn't I use CASE WHEN" right? Well in PowerCenter the transformation language doesn't directly support `CASE WHEN` like SQL So you’re stuck with nesting IIF statements which can get messy if your conditions start getting complicated. It is what it is So there is this one thing I learnt in life dealing with Informatica it is that the simpler the better specially when you have to go back and try to figure out what you did 2 years ago
 
 Now lets say you have a much more complicated requirement like you need to check if the old field equals A and another field equals C to return X or if the old field equals B or D and another field equals E to return Y or in any other case return Z. Then we need to add more nested `IIF` functions
 

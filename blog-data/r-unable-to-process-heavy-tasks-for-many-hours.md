@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "r-unable-to-process-heavy-tasks-for-many-hours"
 ---
 
-Okay so you're saying you're hitting a wall with long running heavy tasks right Been there done that got the t-shirt And yeah it's a pain point especially when things just decide to crawl or worse crash without a goodbye
+ so you're saying you're hitting a wall with long running heavy tasks right Been there done that got the t-shirt And yeah it's a pain point especially when things just decide to crawl or worse crash without a goodbye
 
 I’ve seen this rodeo a few times and it usually boils down to a couple of key areas resource contention memory leaks and sometimes just straight up inefficient code Lets break this down like a badly structured JSON object shall we
 

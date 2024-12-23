@@ -4,9 +4,9 @@ date: "2024-12-13"
 id: "start-process-msiexec-powershell-scripting"
 ---
 
-Alright so you wanna kick off an msiexec process using PowerShell right I've been down that road more times than I care to remember trust me it's not always a smooth ride I remember my early days battling with MSI installers it felt like wrestling a greased pig sometimes
+so you wanna kick off an msiexec process using PowerShell right I've been down that road more times than I care to remember trust me it's not always a smooth ride I remember my early days battling with MSI installers it felt like wrestling a greased pig sometimes
 
-Okay so first things first why are you even trying this You've probably got a Windows application that needs to be installed or maybe you are doing some kind of unattended deployment thing and msiexec is your ticket to the show Fine I get it That's how it is sometimes
+ so first things first why are you even trying this You've probably got a Windows application that needs to be installed or maybe you are doing some kind of unattended deployment thing and msiexec is your ticket to the show Fine I get it That's how it is sometimes
 
 Now you're thinking PowerShell because well let's be honest it's the Swiss Army knife of Windows automation It's not as pretty as some other things but it gets the job done most of the time So let's break down how you do this thing effectively avoiding the common pitfalls along the way
 

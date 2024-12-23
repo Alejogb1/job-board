@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-use-await-with-dbrefset-correctly-in-an-asynchronous-javascript-context"
 ---
 
-Alright, let's tackle this. I've spent a good chunk of time navigating the ins and outs of asynchronous database operations, especially when dealing with something like Firebase’s realtime database and its `set` method. The core issue, as I understand it, is properly managing the asynchronous nature of `dbRef.set` using `await` in JavaScript. It's not a terribly complex concept, but it's one that can lead to some head-scratching moments if not approached correctly.
+Alright,  I've spent a good chunk of time navigating the ins and outs of asynchronous database operations, especially when dealing with something like Firebase’s realtime database and its `set` method. The core issue, as I understand it, is properly managing the asynchronous nature of `dbRef.set` using `await` in JavaScript. It's not a terribly complex concept, but it's one that can lead to some head-scratching moments if not approached correctly.
 
 The `dbRef.set` operation, like many database interactions, doesn't complete instantaneously. Instead, it returns a *promise*. Promises, in JavaScript, represent the eventual result of an asynchronous operation. This is where `async` and `await` come into play. Essentially, `async` declares a function as asynchronous and allows us to use `await` inside it to pause execution until the promise resolves (or rejects). This helps to achieve more linear and readable code than nested `.then` callbacks. I've seen a lot of codebases bogged down by that.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-causes-assertion-errors-in-truffle-unit-tests-involving-chai-and-truffle-contract"
 ---
 
-Okay, let's tackle this. I've seen my fair share of assertion errors in Truffle tests, especially when combining Chai with `truffle-contract`, so I can definitely shed some light on this. It’s often not a single thing, but a combination of factors that can trip you up. Fundamentally, these errors boil down to a mismatch between what your tests *expect* and what the actual smart contract code delivers. This mismatch manifests itself in a few common ways.
+,  I've seen my fair share of assertion errors in Truffle tests, especially when combining Chai with `truffle-contract`, so I can definitely shed some light on this. It’s often not a single thing, but a combination of factors that can trip you up. Fundamentally, these errors boil down to a mismatch between what your tests *expect* and what the actual smart contract code delivers. This mismatch manifests itself in a few common ways.
 
 One frequent culprit, in my experience, stems from misunderstandings around asynchronous operations. Truffle, at its core, interacts with a blockchain, and these interactions are inherently asynchronous. We send transactions, wait for them to be mined into blocks, and *then* we can check their outcomes. Chai's assertions, however, are synchronous. This means we can't directly assert on a pending promise – it simply hasn't resolved yet. When I first started working with truffle, I remember countless hours wasted because I wasn't correctly handling promises. I was trying to check a value before the transaction had even finalized!
 

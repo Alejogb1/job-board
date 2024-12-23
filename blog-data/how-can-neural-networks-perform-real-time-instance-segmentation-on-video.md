@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-neural-networks-perform-real-time-instance-segmentation-on-video"
 ---
 
-Okay, let's tackle this. I've spent a good chunk of my career working with various computer vision problems, including real-time instance segmentation, so I can offer some insights that go beyond the theoretical. Specifically, video presents unique challenges not always apparent in static image analysis, namely temporal coherence and processing speed. Achieving real-time performance adds another layer of complexity.
+,  I've spent a good chunk of my career working with various computer vision problems, including real-time instance segmentation, so I can offer some insights that go beyond the theoretical. Specifically, video presents unique challenges not always apparent in static image analysis, namely temporal coherence and processing speed. Achieving real-time performance adds another layer of complexity.
 
 The core challenge isn’t just about identifying objects, but delineating *each* individual instance of those objects with pixel-level precision *and* doing it frame by frame without lagging significantly. Traditional object detection, which provides bounding boxes, simply isn't sufficient. For real-time video, we're talking about frame rates of at least 25-30 frames per second for a fluid experience. This requires a specific architecture and optimization approach.
 

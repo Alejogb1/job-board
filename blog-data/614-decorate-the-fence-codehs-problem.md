@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "614-decorate-the-fence-codehs-problem"
 ---
 
-Alright so you're wrestling with the "decorate the fence" problem from CodeHS eh Been there done that let me tell you this one brings back memories I remember back in my early days of coding college it was a rite of passage you know like the first time you encounter a null pointer exception or accidentally write an infinite loop and bring down the university server ah good times
+so you're wrestling with the "decorate the fence" problem from CodeHS eh Been there done that let me tell you this one brings back memories I remember back in my early days of coding college it was a rite of passage you know like the first time you encounter a null pointer exception or accidentally write an infinite loop and bring down the university server ah good times
 
 So from "decorate the fence codehs problem" I'm guessing you're dealing with a situation where you have a sequence of fence posts maybe represented as numbers or booleans and you need to "decorate" them based on certain rules Usually it involves some kind of pattern recognition or conditional logic like "if this post is like that then do this else do that" classic stuff
 

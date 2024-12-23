@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-detect-activerecord-changes-for-either-creation-or-updates"
 ---
 
-Okay, let's tackle this. From my experience building a fairly complex inventory management system several years back, tracking model changes, especially for auditing purposes, was crucial. The core issue, as I recall, was knowing precisely when an ActiveRecord record was either created or updated, and specifically what changed. ActiveRecord provides a decent set of tools, but getting the granularity you often need requires a slightly deeper understanding of its lifecycle.
+,  From my experience building a fairly complex inventory management system several years back, tracking model changes, especially for auditing purposes, was crucial. The core issue, as I recall, was knowing precisely when an ActiveRecord record was either created or updated, and specifically what changed. ActiveRecord provides a decent set of tools, but getting the granularity you often need requires a slightly deeper understanding of its lifecycle.
 
 The fundamental approach revolves around leveraging ActiveRecord’s callbacks. These are essentially hooks that ActiveRecord executes at various points in a record's lifecycle, like before validation, after saving, and so on. For our purposes, `after_create` and `after_update` are prime candidates for detecting when records are either created or updated, respectively. However, the challenge isn’t just about *knowing* something happened; it's often about *knowing what* happened. That’s where ActiveRecord’s built-in `changes` method becomes incredibly useful.
 

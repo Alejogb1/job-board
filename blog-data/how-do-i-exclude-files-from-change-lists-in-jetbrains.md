@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-exclude-files-from-change-lists-in-jetbrains"
 ---
 
-Alright, let's tackle this. I've seen this exact issue crop up quite a few times across different projects, and while JetBrains IDEs offer a fairly robust change list system, it's definitely not always intuitive how to effectively exclude files. Especially when you’re dealing with automatically generated files or temporary build artifacts cluttering your diffs. It's a common annoyance, and thankfully, solvable with a few different approaches. I’ll walk you through the methods that have served me well over the years.
+Alright,  I've seen this exact issue crop up quite a few times across different projects, and while JetBrains IDEs offer a fairly robust change list system, it's definitely not always intuitive how to effectively exclude files. Especially when you’re dealing with automatically generated files or temporary build artifacts cluttering your diffs. It's a common annoyance, and thankfully, solvable with a few different approaches. I’ll walk you through the methods that have served me well over the years.
 
 The key thing to understand is that JetBrains IDEs, like IntelliJ IDEA, PyCharm, or WebStorm, manage changes through change lists and the underlying version control system (typically Git, but also Mercurial or others). Excluding a file from a change list does *not* mean it's removed from your project or from Git's tracking, but rather that its modifications are not included in the specific changelist you are currently working with. This allows you to keep your commits focused, isolating work on different features or bug fixes, and avoiding accidentally staging changes you don't want to commit.
 

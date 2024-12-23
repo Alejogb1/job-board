@@ -4,7 +4,7 @@ date: "2024-12-10"
 id: "what-are-the-implications-of-using-pandas-based-data-transformations-in-machine-learning-pipelines"
 ---
 
-Okay so you wanna talk about Pandas in machine learning pipelines right  cool stuff  Pandas is like the Swiss Army knife of data manipulation in Python super versatile  but using it everywhere in a machine learning pipeline  well that's a whole other story  lots of implications good and bad
+ so you wanna talk about Pandas in machine learning pipelines right  cool stuff  Pandas is like the Swiss Army knife of data manipulation in Python super versatile  but using it everywhere in a machine learning pipeline  well that's a whole other story  lots of implications good and bad
 
 First off the good stuff Pandas is awesome for exploratory data analysis  EDA  you know cleaning up your data getting a feel for it  plotting histograms  scatter plots  all that jazz  It's super intuitive and the syntax is pretty straightforward  you can slice and dice your data  filter rows  add columns  basically anything you need to prep your data for modeling  For example
 

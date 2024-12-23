@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "kubernetes-http-probe-failed-with-statuscode-404"
 ---
 
-Alright so you're hitting that classic Kubernetes liveness probe 404 right I've seen this one more times than I've had lukewarm coffee at 3 am believe me. It's a pain in the neck but usually it's something straightforward. I've been wrestling with Kubernetes since version 1.2 which was like trying to tame a wild badger with a rubber chicken but we got through it somehow and honestly this specific error feels like a rite of passage.
+so you're hitting that classic Kubernetes liveness probe 404 right I've seen this one more times than I've had lukewarm coffee at 3 am believe me. It's a pain in the neck but usually it's something straightforward. I've been wrestling with Kubernetes since version 1.2 which was like trying to tame a wild badger with a rubber chicken but we got through it somehow and honestly this specific error feels like a rite of passage.
 
 First off let's break down what's probably going on that 404 error code means the Kubernetes probe is hitting your application at the specified path and your application is saying "nope I don't know what you're talking about" Basically the probe which is a really simple http request is not finding anything at the endpoint you configured. It's not a Kubernetes problem exactly it's your app not playing nice at the path.
 

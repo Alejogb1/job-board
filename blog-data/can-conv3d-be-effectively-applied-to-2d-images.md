@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-conv3d-be-effectively-applied-to-2d-images"
 ---
 
-Okay, let's unpack this. The question of whether you can effectively apply a 3d convolutional neural network (conv3d) to 2d images is, at first glance, a bit of a square peg in a round hole situation, but as we delve deeper, the potential becomes clearer. From my experience, it's less about a direct, out-of-the-box application and more about how we creatively reinterpret the data and tailor the architecture.
+, let's unpack this. The question of whether you can effectively apply a 3d convolutional neural network (conv3d) to 2d images is, at first glance, a bit of a square peg in a round hole situation, but as we delve deeper, the potential becomes clearer. From my experience, it's less about a direct, out-of-the-box application and more about how we creatively reinterpret the data and tailor the architecture.
 
 Early in my career, I encountered a project involving medical imaging analysis. We had a seemingly insurmountable pile of 2d x-ray images and an aspiration for temporal analysis that, frankly, outpaced our available 3d ct scans. The challenge led me to explore whether manipulating conv3d to extract meaningful features from 2d data was feasible. The conclusion, after extensive experimentation, is yes, but with a critical caveat: it requires careful pre-processing and a specific understanding of the limitations and advantages.
 

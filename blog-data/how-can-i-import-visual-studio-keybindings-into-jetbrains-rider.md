@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-import-visual-studio-keybindings-into-jetbrains-rider"
 ---
 
-Okay, let's tackle this. I recall a time, back when I was deeply involved in a large, multi-platform project, where we faced this very issue. We had developers transitioning between Visual Studio and Rider, and the productivity hit from inconsistent keybindings was significant. So, I've been down this road and can offer some practical insights.
+,  I recall a time, back when I was deeply involved in a large, multi-platform project, where we faced this very issue. We had developers transitioning between Visual Studio and Rider, and the productivity hit from inconsistent keybindings was significant. So, I've been down this road and can offer some practical insights.
 
 Importing Visual Studio keybindings into JetBrains Rider isn't a native, one-click process, unfortunately. The underlying architectures and philosophies behind keyboard shortcut management are different between the two IDEs. However, the good news is that it's entirely achievable through a combination of Rider's keymap customization features and, for more complex cases, a manual workaround. Fundamentally, it’s about mapping specific Visual Studio commands to their closest equivalent in Rider.
 

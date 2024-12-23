@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "are-airflow-scheduled-dags-functioning-correctly"
 ---
 
-Okay, let's tackle this. I’ve spent more than a few nights staring at Airflow logs, so I have a reasonable sense of the common pitfalls when scheduled dags seem…off. The deceptively simple question of “are my dags working correctly?” actually unravels into a pretty complex set of considerations. It's rarely a binary yes or no. It’s much more nuanced than that. We're essentially probing the health and behavior of a system, and that requires looking at multiple facets.
+,  I’ve spent more than a few nights staring at Airflow logs, so I have a reasonable sense of the common pitfalls when scheduled dags seem…off. The deceptively simple question of “are my dags working correctly?” actually unravels into a pretty complex set of considerations. It's rarely a binary yes or no. It’s much more nuanced than that. We're essentially probing the health and behavior of a system, and that requires looking at multiple facets.
 
 One of the first things I learned, painfully I might add, is that “scheduled” doesn’t always mean “executed as anticipated.” The scheduler component within Airflow is fairly sophisticated, but it’s also sensitive to its environment and the configuration it’s given. When a DAG isn't running when and how you expect it, the diagnosis requires a systematic approach. We can’t just assume the code is broken. It's crucial to eliminate infrastructure issues first. I've seen cases where network outages, database contention, or even simply resource exhaustion on the scheduler server prevented dags from initiating.
 

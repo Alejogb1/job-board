@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-hide-directory-output-in-jetbrains-riders-console"
 ---
 
-Alright, let's tackle this. I’ve spent more than a few late nights debugging through console outputs, and I understand the frustration of having directory listings cluttering up what should be a focused stream of program execution information. Dealing with this in Rider specifically has some nuances, so I'll walk you through the common culprits and the best ways to tame them.
+Alright,  I’ve spent more than a few late nights debugging through console outputs, and I understand the frustration of having directory listings cluttering up what should be a focused stream of program execution information. Dealing with this in Rider specifically has some nuances, so I'll walk you through the common culprits and the best ways to tame them.
 
 First off, it's worth noting that "hiding" directory output isn't typically a single toggle switch; it’s often about understanding where that output is coming from and then configuring your environment accordingly. In my experience, these noisy outputs often arise from external processes or shell commands you invoke within your application or testing setup. It's rarely Rider itself that's actively generating them.
 

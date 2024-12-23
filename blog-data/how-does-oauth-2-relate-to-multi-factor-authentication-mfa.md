@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-does-oauth-2-relate-to-multi-factor-authentication-mfa"
 ---
 
-Okay, let's talk about OAuth 2 and its relationship with multi-factor authentication, or MFA. I’ve seen this pairing come up countless times, especially when designing secure systems with third-party integrations, so it's definitely a core area of understanding. People often confuse their roles, so let me clarify how they work together—and crucially, how they don't.
+, let's talk about OAuth 2 and its relationship with multi-factor authentication, or MFA. I’ve seen this pairing come up countless times, especially when designing secure systems with third-party integrations, so it's definitely a core area of understanding. People often confuse their roles, so let me clarify how they work together—and crucially, how they don't.
 
 First, understand that OAuth 2 is fundamentally an *authorization* protocol. It's about granting access to resources, not directly authenticating the user *per se*. The core flow involves a client application requesting access to protected resources on behalf of a user, typically via an authorization server. This is done using tokens—access tokens, refresh tokens—rather than the user's actual credentials. The primary focus is delegated authorization; the user is not revealing their login to the client app.
 

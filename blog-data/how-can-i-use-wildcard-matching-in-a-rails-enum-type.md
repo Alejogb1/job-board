@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-use-wildcard-matching-in-a-rails-enum-type"
 ---
 
-Let's tackle this. Wildcard matching with Rails enums isn't a baked-in feature, as enums generally deal with explicit, predefined values. However, we can certainly achieve the desired functionality through creative use of database queries and a little bit of Ruby logic. I’ve had to implement this a few times over the years, particularly in systems where data inputs weren’t always perfectly consistent, or we had to accommodate varied user-defined categories. It invariably comes up when you move from a tightly controlled data model into something that deals with the messy realities of user input.
+ Wildcard matching with Rails enums isn't a baked-in feature, as enums generally deal with explicit, predefined values. However, we can certainly achieve the desired functionality through creative use of database queries and a little bit of Ruby logic. I’ve had to implement this a few times over the years, particularly in systems where data inputs weren’t always perfectly consistent, or we had to accommodate varied user-defined categories. It invariably comes up when you move from a tightly controlled data model into something that deals with the messy realities of user input.
 
 The core issue is that Rails enums map to database integers, and straightforward database-level wildcard matching (using `LIKE 'value%'`, for instance) on those integers would be meaningless. Therefore, we need to translate the wildcard concept to the string representations before querying. There are several approaches we can consider, each with its pros and cons. We'll look at what I’ve found most effective.
 

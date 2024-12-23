@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "is-there-any-numerical-error-in-pytorchs-nnlayernorm"
 ---
 
-Okay, let’s unpack the question of potential numerical errors in PyTorch’s `nn.LayerNorm`. It's something I've actually had to debug in a complex model related to audio processing once, and it wasn't immediately obvious. The short answer is: yes, there can be numerical errors, although they're usually small and often inconsequential, but it’s crucial to understand *why* and *when* they might matter.
+, let’s unpack the question of potential numerical errors in PyTorch’s `nn.LayerNorm`. It's something I've actually had to debug in a complex model related to audio processing once, and it wasn't immediately obvious. The short answer is: yes, there can be numerical errors, although they're usually small and often inconsequential, but it’s crucial to understand *why* and *when* they might matter.
 
 Let’s delve into the mechanics first. `nn.LayerNorm`, at its core, computes the mean and variance of the activations across a specified dimension within each sample of a batch. It then normalizes the activations using these statistics. The formula looks like this:
 

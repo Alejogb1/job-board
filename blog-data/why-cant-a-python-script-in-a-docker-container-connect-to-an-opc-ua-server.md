@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-cant-a-python-script-in-a-docker-container-connect-to-an-opc-ua-server"
 ---
 
-Okay, let's tackle this. Been there, done that, quite a few times actually. The frustration of a seemingly straightforward python script failing to connect to an OPC UA server from inside a docker container is a fairly common hiccup, and usually not indicative of any deep-seated flaw in your code. It's almost always an environment configuration issue, and most often revolves around networking. I’ve debugged these scenarios in various industrial settings, from process automation in manufacturing to energy grid monitoring, so I’ve seen the patterns repeat themselves.
+,  Been there, done that, quite a few times actually. The frustration of a seemingly straightforward python script failing to connect to an OPC UA server from inside a docker container is a fairly common hiccup, and usually not indicative of any deep-seated flaw in your code. It's almost always an environment configuration issue, and most often revolves around networking. I’ve debugged these scenarios in various industrial settings, from process automation in manufacturing to energy grid monitoring, so I’ve seen the patterns repeat themselves.
 
 The root cause typically boils down to several intertwined factors, primarily network isolation, port mapping, and name resolution within the containerized environment. Let's unpack these.
 

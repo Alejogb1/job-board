@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-shuffle-a-tensorflow-dataset-without-using-a-buffer"
 ---
 
-Okay, let's tackle this. Shuffling a TensorFlow dataset without relying on a buffer—it’s a challenge that’s come up a few times in my career, particularly when dealing with massive datasets that don’t play nicely with memory limitations. I recall one project, crunching through telemetry data from a fleet of satellites, where buffering was simply not feasible. We had to get creative.
+,  Shuffling a TensorFlow dataset without relying on a buffer—it’s a challenge that’s come up a few times in my career, particularly when dealing with massive datasets that don’t play nicely with memory limitations. I recall one project, crunching through telemetry data from a fleet of satellites, where buffering was simply not feasible. We had to get creative.
 
 The fundamental issue with a bufferless shuffle lies in the way datasets are traditionally shuffled. The standard `tf.data.Dataset.shuffle(buffer_size)` method essentially grabs a subset of your data (determined by `buffer_size`), shuffles it in memory, and then uses that subset to provide batches. This works great for moderate-sized datasets, but once you scale up, that `buffer_size` can quickly become a problem. So, how do we achieve randomness in the ordering of the elements without that temporary storage? The solution typically hinges on leveraging the inherent properties of the dataset itself and incorporating a bit of clever mapping and prefetching.
 

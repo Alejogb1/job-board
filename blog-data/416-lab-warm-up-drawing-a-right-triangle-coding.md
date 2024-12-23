@@ -4,9 +4,9 @@ date: "2024-12-13"
 id: "416-lab-warm-up-drawing-a-right-triangle-coding"
 ---
 
-Alright so you're looking to draw a right triangle using code right been there done that countless times. I remember back in college when we had to do this for graphics class man that was a trip we were using like really low level stuff then and now we got these fancy libraries. We're not talking about complex 3D rendering or anything just your basic right triangle. This thing is fundamentally basic like a "Hello World" of geometric programming. So I get your question.
+so you're looking to draw a right triangle using code right been there done that countless times. I remember back in college when we had to do this for graphics class man that was a trip we were using like really low level stuff then and now we got these fancy libraries. We're not talking about complex 3D rendering or anything just your basic right triangle. This thing is fundamentally basic like a "Hello World" of geometric programming. So I get your question.
 
-Okay first thing first we need to figure out what you want to use for the rendering right some people use canvas others want terminal outputs others are in game engines. So let's go through a couple of options here.
+ first thing first we need to figure out what you want to use for the rendering right some people use canvas others want terminal outputs others are in game engines. So let's go through a couple of options here.
 
 Let's assume you’re going for a simple textual representation which is like the og way to do graphics so here’s how you do it with basic characters in your standard terminal output using python because python is always the go to for this stuff.
 
@@ -18,7 +18,7 @@ def draw_right_triangle(height):
 draw_right_triangle(5)
 ```
 
-Alright so what’s happening there? We’re looping through rows from one up to the height you specify that’s the number of rows and for each row we’re printing `i` amount of `*` characters. `i` is basically the length of the horizontal side each iteration. This is very basic but gives a very readable output in your standard text-based terminal it’s good enough for lab warm up exercises.
+so what’s happening there? We’re looping through rows from one up to the height you specify that’s the number of rows and for each row we’re printing `i` amount of `*` characters. `i` is basically the length of the horizontal side each iteration. This is very basic but gives a very readable output in your standard text-based terminal it’s good enough for lab warm up exercises.
 
 Now if you wanna go a little fancier maybe you wanna use an actual library like pygame well if that’s your case here's a way to do it in pygame I'm gonna assume that you have pygame set up so not gonna go through that whole step if you don’t just do pip install pygame
 
@@ -57,7 +57,7 @@ So what is going on here? First we initiate pygame then we set up a window basic
 
 Then I display the drawing with `pygame.display.flip()` and initiate the game loop which allows the window to stay open until you manually close it. It’s basically a very standard way to draw any shape in pygame. It’s pretty useful when you want more control over visual output like colors and positioning.
 
-Okay let’s look at one more example because why not suppose you want to do this in JavaScript inside a basic HTML canvas. We are doing the full setup here this time so let me drop it here.
+ let’s look at one more example because why not suppose you want to do this in JavaScript inside a basic HTML canvas. We are doing the full setup here this time so let me drop it here.
 
 ```html
 <!DOCTYPE html>

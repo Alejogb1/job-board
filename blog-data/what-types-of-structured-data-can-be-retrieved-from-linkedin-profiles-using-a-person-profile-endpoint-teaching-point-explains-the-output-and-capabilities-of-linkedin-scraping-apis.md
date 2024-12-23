@@ -4,7 +4,7 @@ date: "2024-12-12"
 id: "what-types-of-structured-data-can-be-retrieved-from-linkedin-profiles-using-a-person-profile-endpoint-teaching-point-explains-the-output-and-capabilities-of-linkedin-scraping-apis"
 ---
 
-okay so youre asking about linkedin profile scraping using their person profile endpoint right what kind of structured data can you actually pull out thats a good question lets dive in and see whats available
+ so youre asking about linkedin profile scraping using their person profile endpoint right what kind of structured data can you actually pull out thats a good question lets dive in and see whats available
 
 first off you need to understand these endpoints they dont just hand over raw html like a browser does they give you clean structured data usually in json which makes parsing and using it a whole lot easier its about specific fields or properties think of it like database fields or a json object structure
 

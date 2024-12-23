@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-my-machine-learning-and-binary-classification-model-giving-great-f1-scores-in-one-class-and-terrible-in-another"
 ---
 
-Okay, let's unpack this. I’ve seen this pattern emerge more times than I care to count in my years working with machine learning models, and it's almost never a simple fix. The symptom—great f1-score for one class and abysmal for another in a binary classification task—usually points to a combination of issues, often interlinked. It’s not necessarily indicative of an *inherently bad* model, but rather a model that hasn't been sufficiently challenged or refined against the underlying data dynamics.
+, let's unpack this. I’ve seen this pattern emerge more times than I care to count in my years working with machine learning models, and it's almost never a simple fix. The symptom—great f1-score for one class and abysmal for another in a binary classification task—usually points to a combination of issues, often interlinked. It’s not necessarily indicative of an *inherently bad* model, but rather a model that hasn't been sufficiently challenged or refined against the underlying data dynamics.
 
 Let's break down the likely culprits. Firstly, and most commonly, we are dealing with *class imbalance*. In many real-world scenarios, one class dominates the dataset by a wide margin. Think of fraud detection, where fraudulent transactions are significantly outnumbered by legitimate ones, or medical diagnoses, where the incidence of a particular disease may be low. If, let's say, 90% of your training data belongs to class ‘A’ and only 10% belongs to class ‘B’, a model that predicts everything as ‘A’ would still achieve a 90% accuracy. But, accuracy alone is a terrible metric in such cases. F1 score, being the harmonic mean of precision and recall, addresses this better, but not perfectly. If you look into the f1-score calculation, you see it still benefits from correctly predicting the dominant class, hence it can appear great for it and terrible for minority classes. The model gets rewarded for learning well what it already has in abundance in the dataset.
 
@@ -14,7 +14,7 @@ Thirdly, and sometimes overlooked, the *choice of model and its regularization*.
 
 Fourth, a more subtle issue is insufficient or misleading *data preprocessing*. If you applied heavy feature scaling or some kind of dimension reduction without considering individual class characteristics, you may have inadvertently made the minority class even harder to classify. The scale of the features might be more informative for the majority class than for the minority class, or vice versa, and a blanket scaling may dilute useful signals.
 
-Okay, let's solidify this with some examples. Imagine I was tasked with building a model to identify rare species of plants from images a couple of years ago, and it performed great on common plants but poorly on the ones I needed. This wasn’t a toy problem; it had conservation implications. Here's the breakdown using python, with some code snippets:
+, let's solidify this with some examples. Imagine I was tasked with building a model to identify rare species of plants from images a couple of years ago, and it performed great on common plants but poorly on the ones I needed. This wasn’t a toy problem; it had conservation implications. Here's the breakdown using python, with some code snippets:
 
 **Example 1: Addressing Class Imbalance with Class Weights in Scikit-Learn**
 

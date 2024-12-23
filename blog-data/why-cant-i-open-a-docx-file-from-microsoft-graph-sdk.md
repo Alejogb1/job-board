@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-cant-i-open-a-docx-file-from-microsoft-graph-sdk"
 ---
 
-Alright, let's tackle this. It’s a common pitfall I’ve seen over the years, and frankly, it tripped me up pretty badly on a project back in ‘18 involving a custom document management system leveraging Microsoft 365. The surface answer – "you can't open it directly" – is true, but not entirely helpful. The devil, as is often the case, is in the details.
+Alright,  It’s a common pitfall I’ve seen over the years, and frankly, it tripped me up pretty badly on a project back in ‘18 involving a custom document management system leveraging Microsoft 365. The surface answer – "you can't open it directly" – is true, but not entirely helpful. The devil, as is often the case, is in the details.
 
 The primary issue stems from the fact that the Microsoft Graph SDK, by itself, doesn’t provide a mechanism to render or display the contents of a `.docx` file directly within your application's UI. The SDK is geared towards *accessing* and *managing* data within the Microsoft ecosystem, not necessarily presenting it to end-users in its native format. It's designed to interact with the document's underlying representation in the form of bytes, streams, or metadata. A common misconception is that the SDK will magically handle file type rendering. It won’t.
 

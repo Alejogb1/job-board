@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "nnsequential-pytorch-model-definition"
 ---
 
-Okay so you're asking about `nn.Sequential` in PyTorch right Been there done that let's talk
+ so you're asking about `nn.Sequential` in PyTorch right Been there done that let's talk
 
 First off `nnSequential` it's basically PyTorch's way of letting you build a neural network by just stacking layers one after the other like lego bricks Think of it as a container where you throw in your layers and it automatically handles the data flow for you in that specific sequence It simplifies things a whole lot especially if you're dealing with feedforward networks that is things where the output of one layer becomes the input of the next
 
@@ -41,7 +41,7 @@ Now here's something to consider though `nnSequential` it's great but it's also 
 
 **Example 2: Convolutional Neural Network (CNN)**
 
-Okay let's step things up a notch How about a simple CNN with `nnSequential`
+ let's step things up a notch How about a simple CNN with `nnSequential`
 
 ```python
 import torch
@@ -100,7 +100,7 @@ Easy peasy right Just throw in `nnBatchNorm1d` after the linear layers and `nnDr
 
 Now someone asked me one time what the most confusing part about tensor dimensions was and I told them the 3rd dimension it's a bit of a pain in the *neck* heheh
 
-Okay I'll stop now
+ I'll stop now
 
 Resources
 

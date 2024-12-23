@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-are-the-weights-of-a-keras-lstm-model-interpreted"
 ---
 
-Okay, let’s tackle this one. I've actually spent a fair bit of time troubleshooting some rather… peculiar behavior in LSTM networks, and it often boiled down to a deeper understanding of those weights. It's not always a straight path to intuition, but let’s break down how Keras, specifically, represents these weights and how we can begin to interpret their meaning.
+, let’s tackle this one. I've actually spent a fair bit of time troubleshooting some rather… peculiar behavior in LSTM networks, and it often boiled down to a deeper understanding of those weights. It's not always a straight path to intuition, but let’s break down how Keras, specifically, represents these weights and how we can begin to interpret their meaning.
 
 At its core, an LSTM (Long Short-Term Memory) network, as implemented in Keras, doesn’t use a single weight matrix per layer. Instead, it manages multiple weight matrices and bias vectors, meticulously orchestrated to perform the core operations that enable it to capture sequential dependencies. These are not just simple multipliers; they are transformation matrices that, in conjunction with the various activation functions, drive the entire process of remembering and forgetting information in a sequence. Specifically, the weights can be grouped as follows, considering a single LSTM layer:
 

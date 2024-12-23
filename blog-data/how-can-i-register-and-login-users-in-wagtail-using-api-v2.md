@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-register-and-login-users-in-wagtail-using-api-v2"
 ---
 
-Okay, let's tackle user registration and login with Wagtail’s API v2. It’s a common challenge, and I’ve certainly seen a few implementations of varying degrees of robustness over the years, especially when trying to decouple the frontend from the Django/Wagtail backend. Let’s just dive into the practicalities of getting this done correctly, without much fluff.
+, let's tackle user registration and login with Wagtail’s API v2. It’s a common challenge, and I’ve certainly seen a few implementations of varying degrees of robustness over the years, especially when trying to decouple the frontend from the Django/Wagtail backend. Let’s just dive into the practicalities of getting this done correctly, without much fluff.
 
 From my experience, successfully setting this up hinges on a solid understanding of how Wagtail’s API interacts with Django's authentication framework and how to expose those mechanisms securely and efficiently. We're essentially creating custom endpoints to manage users through a dedicated api. Wagtail itself doesn't natively handle user management directly through its API v2, so we need to extend that functionality. Let’s go over that in some detail.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-create-a-dictionary-of-contextual-words-excluding-stop-words"
 ---
 
-Okay, let's tackle this. I’ve spent a fair amount of time refining text processing pipelines, and generating contextual word dictionaries while excluding stop words is a fairly common requirement. I’ve seen this used in everything from building basic search indexes to more complex text analysis tasks, so I'm happy to share some of the methodologies I've found most effective.
+,  I’ve spent a fair amount of time refining text processing pipelines, and generating contextual word dictionaries while excluding stop words is a fairly common requirement. I’ve seen this used in everything from building basic search indexes to more complex text analysis tasks, so I'm happy to share some of the methodologies I've found most effective.
 
 The core challenge, as I see it, involves two main steps: first, tokenizing the text into individual words, and second, filtering out the “stop words” – common words that usually don’t carry significant meaning in the context of the document (like 'the', 'is', 'a', and so on). Here’s a breakdown of how I usually approach this, along with some concrete code examples.
 

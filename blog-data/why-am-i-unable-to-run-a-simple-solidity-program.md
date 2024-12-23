@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-am-i-unable-to-run-a-simple-solidity-program"
 ---
 
-Alright, let's tackle this. The frustration of seeing a seemingly straightforward solidity program refuse to run is something I've encountered more times than I care to remember, and the root causes, while often simple, can be tricky to pinpoint if you're not intimately familiar with the entire development ecosystem. It's not a matter of your code necessarily being 'wrong' in the logic sense; rather, it's often about the environmental setup, the tooling you're using, or perhaps a misunderstanding of the compilation and deployment process.
+Alright,  The frustration of seeing a seemingly straightforward solidity program refuse to run is something I've encountered more times than I care to remember, and the root causes, while often simple, can be tricky to pinpoint if you're not intimately familiar with the entire development ecosystem. It's not a matter of your code necessarily being 'wrong' in the logic sense; rather, it's often about the environmental setup, the tooling you're using, or perhaps a misunderstanding of the compilation and deployment process.
 
 Over the years, I've seen several common pitfalls that lead to this particular problem. Let's break down some of the typical scenarios and how to troubleshoot them. We'll go through the stages you'd typically move through when deploying a simple solidity smart contract.
 

@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-can-i-run-functions-after-usestate-and-use-the-updated-state"
 ---
 
-Alright, let's tackle this. I've seen this particular hurdle countless times in react projects – the timing dance between `useState` and wanting to immediately utilize that updated state. It's a common point of confusion, and getting it nailed down is absolutely key for smooth, predictable behavior. Let me walk you through it based on a few situations I’ve encountered personally, and hopefully, it'll clear up any ambiguity you might have.
+Alright,  I've seen this particular hurdle countless times in react projects – the timing dance between `useState` and wanting to immediately utilize that updated state. It's a common point of confusion, and getting it nailed down is absolutely key for smooth, predictable behavior. Let me walk you through it based on a few situations I’ve encountered personally, and hopefully, it'll clear up any ambiguity you might have.
 
 The core issue stems from the asynchronous nature of state updates in React. When you call a state setter function from `useState`, like `setState(newValue)`, React doesn't instantly change the state and immediately re-render the component. Instead, it schedules this update. This scheduling enables React to batch multiple updates, optimizing performance and preventing unnecessary re-renders. The result is that if you try to access the state immediately after calling its setter, you’ll still get the previous value. We need to use a different mechanism to ensure code executes after the state has actually updated and the component re-rendered.
 

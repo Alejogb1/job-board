@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-is-causing-problems-with-detaching-aks-cluster-via-azure-ml-sdk"
 ---
 
-Okay, let's dissect this AKS detach issue with Azure Machine Learning SDK. I've seen this pattern pop up in a few past projects, and it usually boils down to a few key areas, none of which are particularly straightforward, unfortunately. It's rarely just one thing, more often a combination of configuration mismatches, permissions snafus, and subtle inconsistencies in how the Azure ML workspace interacts with the AKS cluster itself.
+, let's dissect this AKS detach issue with Azure Machine Learning SDK. I've seen this pattern pop up in a few past projects, and it usually boils down to a few key areas, none of which are particularly straightforward, unfortunately. It's rarely just one thing, more often a combination of configuration mismatches, permissions snafus, and subtle inconsistencies in how the Azure ML workspace interacts with the AKS cluster itself.
 
 First, before diving into specifics, let's frame the process. Detaching an AKS cluster from an Azure ML workspace *should* be a relatively clean operation, severing the logical link that allows Azure ML to orchestrate jobs on that specific Kubernetes environment. However, because Azure ML relies on a complex set of managed identities, control plane communications, and resource registrations, any hiccup in these areas can block the detach process and potentially leave resources in an inconsistent state. It’s not a simple toggle switch, there are layered dependencies that need to be resolved.
 

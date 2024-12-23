@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-are-all-outputs-of-a-relu-neural-network-identical"
 ---
 
-Okay, let's tackle this one. I've seen this happen a few times during my tenure, usually when junior colleagues are diving into neural networks for the first time. It's a frustrating situation when you're expecting diverse outputs and instead get a sea of identical values. The culprit, when this happens with a ReLU network, almost always points to an issue with initialization or a specific architecture problem related to ReLU’s inherent characteristics.
+, let's tackle this one. I've seen this happen a few times during my tenure, usually when junior colleagues are diving into neural networks for the first time. It's a frustrating situation when you're expecting diverse outputs and instead get a sea of identical values. The culprit, when this happens with a ReLU network, almost always points to an issue with initialization or a specific architecture problem related to ReLU’s inherent characteristics.
 
 When all outputs from a ReLU network converge to the same value, it's a strong indicator that a significant portion of the neurons aren't learning effectively. ReLU, or Rectified Linear Unit, is an activation function defined as *f(x) = max(0, x)*. This function introduces non-linearity into the network, allowing it to learn complex patterns. However, its behavior also presents a specific pitfall: the ‘dying ReLU’ problem.
 

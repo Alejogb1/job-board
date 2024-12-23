@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-deploying-a-java-jar-to-app-engine-flexible-failing-health-checks"
 ---
 
-Okay, let's tackle this one. I've seen this particular headache more times than I'd care to count, and it often boils down to a few common culprits when dealing with Java JARs on App Engine Flexible. Let's unpack the usual suspects and how to debug them, shall we?
+, let's tackle this one. I've seen this particular headache more times than I'd care to count, and it often boils down to a few common culprits when dealing with Java JARs on App Engine Flexible. Let's unpack the usual suspects and how to debug them, shall we?
 
 Firstly, health checks on App Engine Flexible are designed to ensure that instances are healthy and ready to serve traffic. If an instance fails these checks, App Engine will usually terminate and recreate it. The whole point is resilience, so we really need to pay attention to what these checks are actually testing. A failing health check typically means one of two things: the application isn’t starting correctly, or it's not responding to the requests made by the health checker. Let’s break these down.
 

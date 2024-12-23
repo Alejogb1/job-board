@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-my-pytorch-logistic-regression-model-predict-the-same-label-regardless-of-input"
 ---
 
-Okay, let's tackle this. I've seen this particular issue with logistic regression models in pytorch quite a few times over the years, and it's almost always down to a handful of common pitfalls. You're getting consistent, unchanging predictions, which points to the model essentially ignoring the input features. It’s not learning, which means the output is always defaulting to some bias. Let's break down what's probably happening, and I’ll share some code examples from things I've actually had to debug.
+,  I've seen this particular issue with logistic regression models in pytorch quite a few times over the years, and it's almost always down to a handful of common pitfalls. You're getting consistent, unchanging predictions, which points to the model essentially ignoring the input features. It’s not learning, which means the output is always defaulting to some bias. Let's break down what's probably happening, and I’ll share some code examples from things I've actually had to debug.
 
 First off, we can’t assume the model is inherently faulty. PyTorch’s core functionality for logistic regression is robust, so we should focus our investigation elsewhere. The root cause usually lies within one of three broad categories: data issues, poor initialization or optimization parameters, or a severely flawed model structure. Let's go through each of them in detail, because one of these is definitely the culprit for this consistent output.
 

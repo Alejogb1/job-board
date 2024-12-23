@@ -4,9 +4,9 @@ date: "2024-12-13"
 id: "osql-command-usage-examples"
 ---
 
-Okay so you need osql examples right Been there done that let me tell you
+ so you need osql examples right Been there done that let me tell you
 
-Alright lets dive right in osql man I've wrestled with that command line beast more times than I care to remember back in the day we're talking early 2000s when GUIs were still considered optional yeah that's how far back I go I was managing some massive SQL servers you know the kind that would make your laptop cry just thinking about them and osql was my main tool It was like my Swiss army knife but less stylish and way more command-liney
+lets dive right in osql man I've wrestled with that command line beast more times than I care to remember back in the day we're talking early 2000s when GUIs were still considered optional yeah that's how far back I go I was managing some massive SQL servers you know the kind that would make your laptop cry just thinking about them and osql was my main tool It was like my Swiss army knife but less stylish and way more command-liney
 
 So the thing with osql is it's direct it's brutal it doesn't sugarcoat anything you give it a query it runs it you see the result no fluff no pretty icons just raw data thats why it was and for some is the go to for automation and scripting
 
@@ -72,7 +72,7 @@ This will read the SQL statements in your script and run them on the specified d
 
 **Tips and Gotchas**
 
-Alright I've spilled enough coffee over the command line to know some quirks of osql lets be real
+I've spilled enough coffee over the command line to know some quirks of osql lets be real
 
 *   **Quoting:** If your query has double quotes or apostrophes things can get tricky. Make sure to escape them correctly especially when using the `-q` parameter its better to use apostrophes in SQL and double quotes when you are using your OS
 *   **Error Handling:** osql doesn't always give the most user-friendly error messages. Sometimes you might have to dig deeper into the SQL Server error logs to see what went wrong. I remember spending hours troubleshooting a script only to realize a small syntax error I hadn’t seen it’s a humbling experience trust me.

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-sentence-similarity-be-computed-faster-using-spacy-in-python"
 ---
 
-Okay, let's tackle this. I've spent considerable time optimizing text processing pipelines, and sentence similarity with spaCy is a frequent bottleneck if not handled carefully. The key isn’t necessarily about magically speeding up spaCy itself, which is already quite performant, but rather about understanding how we leverage its capabilities and, more importantly, where we introduce inefficiencies. I’ve seen projects where a naive approach, processing one sentence against every other sentence, leads to computational nightmares, particularly with large datasets.
+,  I've spent considerable time optimizing text processing pipelines, and sentence similarity with spaCy is a frequent bottleneck if not handled carefully. The key isn’t necessarily about magically speeding up spaCy itself, which is already quite performant, but rather about understanding how we leverage its capabilities and, more importantly, where we introduce inefficiencies. I’ve seen projects where a naive approach, processing one sentence against every other sentence, leads to computational nightmares, particularly with large datasets.
 
 The first, crucial aspect to grasp is spaCy's processing model. It performs tokenization, part-of-speech tagging, dependency parsing, and named entity recognition—all that goodness—by default on every sentence you throw at it. If all we need for sentence similarity are sentence embeddings, then we're doing a whole lot of extra, wasted work. The solution is to use spaCy's `pipe()` method effectively and selectively load only the pipeline components necessary to generate sentence embeddings.
 

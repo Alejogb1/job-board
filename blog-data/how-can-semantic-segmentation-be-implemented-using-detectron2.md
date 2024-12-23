@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-semantic-segmentation-be-implemented-using-detectron2"
 ---
 
-Okay, let's dive into semantic segmentation using Detectron2. I've seen this implemented across a range of projects, from robotics to medical image analysis, and it's a genuinely powerful technique when applied correctly. From my experience, while Detectron2 provides a high-level abstraction, there are nuances that warrant careful consideration. So, we aren't just talking about running a pre-trained model here; we'll explore some practical aspects to get you up and running effectively.
+, let's dive into semantic segmentation using Detectron2. I've seen this implemented across a range of projects, from robotics to medical image analysis, and it's a genuinely powerful technique when applied correctly. From my experience, while Detectron2 provides a high-level abstraction, there are nuances that warrant careful consideration. So, we aren't just talking about running a pre-trained model here; we'll explore some practical aspects to get you up and running effectively.
 
 The core idea behind semantic segmentation is assigning a class label to each pixel in an image. This goes beyond simple object detection, where you might only get bounding boxes. With semantic segmentation, you get a detailed understanding of the shapes and regions within an image, which makes it exceptionally useful in scenarios requiring pixel-level accuracy.
 

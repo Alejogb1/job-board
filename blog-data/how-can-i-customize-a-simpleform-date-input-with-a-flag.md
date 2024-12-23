@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-customize-a-simpleform-date-input-with-a-flag"
 ---
 
-Okay, let's get into it. This isn't as straightforward as it initially seems, and i've certainly had my share of head-scratching moments working with simple_form and date inputs over the years. The challenge, as you've presented it, is to not just display a date input, but to also include a flag alongside it. It's a visual cue that's often needed for context or validation purposes, and simple_form itself doesn't directly provide this out of the box.
+, let's get into it. This isn't as straightforward as it initially seems, and i've certainly had my share of head-scratching moments working with simple_form and date inputs over the years. The challenge, as you've presented it, is to not just display a date input, but to also include a flag alongside it. It's a visual cue that's often needed for context or validation purposes, and simple_form itself doesn't directly provide this out of the box.
 
 The underlying issue, as I see it, stems from the fact that simple_form aims to simplify form creation by abstracting away a lot of the underlying html. When you need to incorporate something that isn't part of its standard set of features like this, you have to think about how to extend its functionality without breaking the abstractions it provides. In the projects where i've encountered similar situations, typically, the quickest solutions have been through some combination of custom wrappers, custom input classes, or in some cases, just going for raw html (but we want to avoid that last one as much as possible).
 

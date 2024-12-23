@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-are-there-performance-differences-in-bert-training-across-platforms"
 ---
 
-Okay, let’s dive into this. I remember back in 2019, when BERT first started becoming a dominant force, we were seeing significant performance variations across different hardware during our research at the lab. It wasn't just about raw compute; it was a complex interplay of factors that significantly affected training speed and even, in some subtle ways, the final model quality.
+, let’s dive into this. I remember back in 2019, when BERT first started becoming a dominant force, we were seeing significant performance variations across different hardware during our research at the lab. It wasn't just about raw compute; it was a complex interplay of factors that significantly affected training speed and even, in some subtle ways, the final model quality.
 
 The question of why BERT training performance varies across platforms is multifaceted. It's tempting to think it's simply about the floating-point operations per second (FLOPS), but that’s a drastic oversimplification. What we're really looking at is the efficiency with which different hardware and software stacks utilize those FLOPS for the particular workload of BERT training.
 

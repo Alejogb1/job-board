@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "semantic-triples-rdf-meaning-usage"
 ---
 
-Okay so you're asking about semantic triples and RDF right I've been down this rabbit hole more times than I care to admit. It’s like a rite of passage for anyone dealing with data that needs a little structure a little *meaning* not just rows and columns or json blobs. Let’s break it down from someone who's wrestled with it for years.
+ so you're asking about semantic triples and RDF right I've been down this rabbit hole more times than I care to admit. It’s like a rite of passage for anyone dealing with data that needs a little structure a little *meaning* not just rows and columns or json blobs. Let’s break it down from someone who's wrestled with it for years.
 
 First semantic triples what are they actually? Think of it as the most basic way to represent a fact it’s a statement made up of three parts a subject a predicate and an object. Subject is like the thing you're talking *about* the predicate is like the relationship you’re describing and the object is like what that subject is related *to*.
 

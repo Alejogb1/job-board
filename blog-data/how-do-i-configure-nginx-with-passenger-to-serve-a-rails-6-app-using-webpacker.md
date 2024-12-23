@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-configure-nginx-with-passenger-to-serve-a-rails-6-app-using-webpacker"
 ---
 
-Alright, let's tackle this. It's a question I've encountered countless times, and honestly, each project throws its unique curveball. The combination of Nginx, Passenger, and Webpacker in a Rails 6 environment definitely has some nuances, but it's manageable if we approach it systematically.
+Alright,  It's a question I've encountered countless times, and honestly, each project throws its unique curveball. The combination of Nginx, Passenger, and Webpacker in a Rails 6 environment definitely has some nuances, but it's manageable if we approach it systematically.
 
 From memory, back when I was optimizing a high-traffic e-commerce site – lets call it ‘Project Phoenix’ – we initially struggled with slow asset loading and deployment headaches. We ultimately settled on this architecture, and I learned some solid lessons along the way. The configuration revolves around several key aspects: ensuring Passenger plays nicely with Webpacker's output, setting up the necessary Nginx directives, and understanding the interplay between these components.
 

@@ -4,9 +4,9 @@ date: "2024-12-13"
 id: "837-exclamat-on-po-nts-codehs-problem"
 ---
 
-Alright so you're banging your head against the wall with that pesky 837 exclamation points codehs problem right I get it Been there done that Got the t-shirt and probably spilled coffee on it while debugging something similar You know how it is
+so you're banging your head against the wall with that pesky 837 exclamation points codehs problem right I get it Been there done that Got the t-shirt and probably spilled coffee on it while debugging something similar You know how it is
 
-Okay first off let's just clarify what we're talking about here We're dealing with a situation where you've got some input probably a string and you need to figure out how many exclamation points are in it Now this sounds dead simple like beginner-level stuff and it is but the devil's in the details as always right CodeHS especially can be particular about how they want the solution It's about the specific way you approach the problem I’ve seen it make people crazy just trying to figure out how the grader thinks trust me I’ve seen things man things I wish I could unsee involving while loops and off-by-one errors
+ first off let's just clarify what we're talking about here We're dealing with a situation where you've got some input probably a string and you need to figure out how many exclamation points are in it Now this sounds dead simple like beginner-level stuff and it is but the devil's in the details as always right CodeHS especially can be particular about how they want the solution It's about the specific way you approach the problem I’ve seen it make people crazy just trying to figure out how the grader thinks trust me I’ve seen things man things I wish I could unsee involving while loops and off-by-one errors
 
 Anyway I remember one time back in my early days I had a similar issue but with counting question marks instead of exclamation points it was for some internal project at a place that shall not be named Let's just say the codebase was uh "unique" Yeah that's a good word for it "Unique" anyway the whole thing was written in Javascript and let me tell you dealing with strings in Javascript back then pre-ES6 it was...an experience and it was a string search function that I had a problem with the specific problem was not exactly about just counting symbols but i had to count symbols and i had a hard time dealing with the string encoding and the char mapping then we had weird symbols coming out of somewhere I could not decode back then it was a mess but it thought me a lot of stuff I had to rewrite the whole thing and make sure we were using UTF-8 with proper encoding and the specific search character we are looking for the lessons learned were a whole library worth of information
 
@@ -50,7 +50,7 @@ This is the shorter version of the first code snippet that i shared with you I u
 
 **Third Method List Comprehension**
 
-Okay now if you want to show off a little or if you want to do things on one line because why not this is where list comprehensions come in They're a bit more advanced but they're super useful and very Pythonic It's a way of creating lists from other lists with a bit of conditional logic It's like a mini-for loop in one line it has its uses
+ now if you want to show off a little or if you want to do things on one line because why not this is where list comprehensions come in They're a bit more advanced but they're super useful and very Pythonic It's a way of creating lists from other lists with a bit of conditional logic It's like a mini-for loop in one line it has its uses
 
 ```python
 def count_exclamations_list_comp(text):
@@ -78,4 +78,4 @@ If you are really serious about learning this stuff and go beyond CodeHS here ar
 
 And here's my one joke for the entire answer Why don’t scientists trust atoms Because they make up everything I had to I'm sorry I'll show myself out
 
-Okay back to seriousness though If you’re still stuck paste the exact code you’ve written and the exact error message you're getting. Trust me we've all been there debugging simple stuff for hours you have a lot of company don’t think you are the only one and that's how you learn. Good luck you’ve got this just keep testing different things and try all methods i showed you. You'll solve it!
+ back to seriousness though If you’re still stuck paste the exact code you’ve written and the exact error message you're getting. Trust me we've all been there debugging simple stuff for hours you have a lot of company don’t think you are the only one and that's how you learn. Good luck you’ve got this just keep testing different things and try all methods i showed you. You'll solve it!

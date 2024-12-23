@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "nested-anova-in-r-statistical-analysis"
 ---
 
-Okay so nested ANOVA in R right Been there done that seen the t-shirt more like seen the script crash and burn a few times let me tell you
+ so nested ANOVA in R right Been there done that seen the t-shirt more like seen the script crash and burn a few times let me tell you
 
 This isn't exactly rocket science but it has its quirks You know how it is with statistical modeling things can get tangled up pretty quick
 
@@ -63,7 +63,7 @@ anova(model)
 
 ```
 
-Okay so what’s happening here `lmer` is the function from `lme4` that allows mixed models The formula is `score ~ method + (1 | district/school)` the score is the dependent variable that you want to understand the effect of the method factor `method` is fixed effect we want to know if the mean is statistically different for each level
+ so what’s happening here `lmer` is the function from `lme4` that allows mixed models The formula is `score ~ method + (1 | district/school)` the score is the dependent variable that you want to understand the effect of the method factor `method` is fixed effect we want to know if the mean is statistically different for each level
 
 `(1 | district/school)` this part is the crucial bit Its telling R that schools are nested within districts The `1` means it’s a random intercept model for each school and each district We could have other random coefficients but for the purpose of our problem, a random intercept model works well
 

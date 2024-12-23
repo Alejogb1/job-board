@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-group-users-by-age-range-in-rails"
 ---
 
-Okay, let’s talk about grouping users by age range in a Rails application. It’s something I've handled more than a few times, especially when dealing with analytics or feature segmentation. There are several ways to approach this, and the "best" solution often depends on the size of your dataset and how frequently you need to perform this grouping operation. My experience tells me to prioritize database optimization when dealing with larger datasets, so I’ll lean into that here.
+, let’s talk about grouping users by age range in a Rails application. It’s something I've handled more than a few times, especially when dealing with analytics or feature segmentation. There are several ways to approach this, and the "best" solution often depends on the size of your dataset and how frequently you need to perform this grouping operation. My experience tells me to prioritize database optimization when dealing with larger datasets, so I’ll lean into that here.
 
 The naive approach is, of course, to do the age calculation on the fly each time you need to group users. This is acceptable for small user bases or when you need it for a one-off report. However, doing this repeatedly across a million users can slow things down considerably, so let’s consider alternatives.
 

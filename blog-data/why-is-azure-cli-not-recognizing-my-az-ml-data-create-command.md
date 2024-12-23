@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-is-azure-cli-not-recognizing-my-az-ml-data-create-command"
 ---
 
-Okay, let's unpack this 'az ml data create' command recognition issue. It's not uncommon, and I’ve certainly seen variations of this several times over the years, particularly when setting up new Azure Machine Learning environments. Let's tackle this with a bit of methodical troubleshooting based on my past experiences. I remember a particularly frustrating project where a colleague was banging his head against this wall for an entire afternoon, which ultimately led to me documenting the common pitfalls, which I’ll share here.
+, let's unpack this 'az ml data create' command recognition issue. It's not uncommon, and I’ve certainly seen variations of this several times over the years, particularly when setting up new Azure Machine Learning environments. Let's tackle this with a bit of methodical troubleshooting based on my past experiences. I remember a particularly frustrating project where a colleague was banging his head against this wall for an entire afternoon, which ultimately led to me documenting the common pitfalls, which I’ll share here.
 
 First off, when the azure cli refuses to acknowledge a specific command like 'az ml data create', it's almost never a simple case of the command being straight-up removed. Azure CLI updates are frequent, but breaking changes are usually handled more gracefully than complete removal of established commands. Generally, the problem lies in one of three main areas: incorrect versioning, missing extensions, or improper command structure.
 

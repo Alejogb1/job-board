@@ -4,7 +4,7 @@ date: "2024-12-12"
 id: "what-lessons-can-developers-learn-about-designing-apis-that-respect-data-privacy-while-providing-functional-access-teaching-point-explores-the-balance-of-api-design-and-ethical-considerations"
 ---
 
-Okay so about API design and data privacy its a big deal right like we need APIs to work well for users but also keep their stuff secure not an easy balance. The core problem is how to expose functionality without giving away too much sensitive data. This isn't just about legal stuff it’s about building trust.
+ so about API design and data privacy its a big deal right like we need APIs to work well for users but also keep their stuff secure not an easy balance. The core problem is how to expose functionality without giving away too much sensitive data. This isn't just about legal stuff it’s about building trust.
 
 One big lesson is to think minimal data exposure. Like why send the entire user object when you just need their ID for a specific action. This is a principle of least privilege but for data. When you build an API always ask what’s the absolute minimum data needed for this request and nothing more. You see a lot of bad APIs returning full user profiles even for simple things. That's a leak waiting to happen.
 

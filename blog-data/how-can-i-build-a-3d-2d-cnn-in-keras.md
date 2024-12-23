@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-build-a-3d-2d-cnn-in-keras"
 ---
 
-Okay, let's tackle this. Building a 3d-2d convolutional neural network in keras isn't as straightforward as stringing together layers; it requires a careful consideration of data dimensionality and how information flows through your network. I've grappled with this challenge myself on a past project involving spatiotemporal analysis of medical imaging, specifically analyzing dynamic contrast-enhanced mri sequences. I initially underestimated the complexities of fusing 3d and 2d representations, but the experience taught me some valuable lessons.
+,  Building a 3d-2d convolutional neural network in keras isn't as straightforward as stringing together layers; it requires a careful consideration of data dimensionality and how information flows through your network. I've grappled with this challenge myself on a past project involving spatiotemporal analysis of medical imaging, specifically analyzing dynamic contrast-enhanced mri sequences. I initially underestimated the complexities of fusing 3d and 2d representations, but the experience taught me some valuable lessons.
 
 The core concept hinges on leveraging the strengths of both 3d and 2d convolutions. 3d convolutions are ideal for capturing volumetric or spatiotemporal features; imagine them as a moving window across a 3d volume, detecting patterns across x, y, and z dimensions (or x, y, and time). 2d convolutions, in contrast, are designed for spatial feature extraction, operating on 2d slices of data. The challenge, and where the 'magic' happens, is figuring out how to interweave these two.
 

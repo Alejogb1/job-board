@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-view-debug-logs-about-document-convergence-during-gensim-lda-model-training"
 ---
 
-Okay, let's tackle this. I recall a rather complex project involving topic modeling on a corpus of legal documents some years back, where precisely this issue of understanding LDA convergence via debug logs became critical. The sheer size of the dataset made iterative debugging less than ideal, and relying solely on perplexity scores felt like flying blind. What we needed was granular insight into how the algorithm was behaving during each training epoch, and that, of course, meant looking into the logs.
+,  I recall a rather complex project involving topic modeling on a corpus of legal documents some years back, where precisely this issue of understanding LDA convergence via debug logs became critical. The sheer size of the dataset made iterative debugging less than ideal, and relying solely on perplexity scores felt like flying blind. What we needed was granular insight into how the algorithm was behaving during each training epoch, and that, of course, meant looking into the logs.
 
 Gensim, bless its heart, does provide mechanisms to expose this kind of information, but they are not always immediately obvious. Primarily, what you're after is enabling and interpreting the debug logging from the core `lda_worker` processes. These are responsible for the actual heavy lifting of calculating variational parameters and updating model parameters, and their output is where you'll find your convergence insights.
 

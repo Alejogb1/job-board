@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-a-raw-training-dataset-be-split-into-features-and-targets-for-basic-neural-networks"
 ---
 
-Okay, let's tackle this. I've been in the trenches with data science and machine learning for quite some time, and the process of preparing datasets, specifically splitting them into features and targets, is foundational. It’s one of those steps that, while seemingly simple, can have a dramatic impact on model performance and requires a solid understanding. You absolutely cannot effectively train a network without it.
+,  I've been in the trenches with data science and machine learning for quite some time, and the process of preparing datasets, specifically splitting them into features and targets, is foundational. It’s one of those steps that, while seemingly simple, can have a dramatic impact on model performance and requires a solid understanding. You absolutely cannot effectively train a network without it.
 
 My experience comes from several projects, from working on predictive maintenance systems in industrial settings to personalized recommendation engines for e-commerce. Each time, data wrangling and this split have been crucial. Let me walk you through it.
 

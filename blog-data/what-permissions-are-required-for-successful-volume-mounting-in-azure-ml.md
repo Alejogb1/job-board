@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-permissions-are-required-for-successful-volume-mounting-in-azure-ml"
 ---
 
-Okay, let's tackle this. It's a topic I’ve spent quite a bit of time navigating, having been caught out myself a few times with seemingly inexplicable volume mount failures in Azure Machine Learning. It’s never a simple matter of flipping one switch, and understanding the nuances makes a substantial difference to your workflow. The short answer is, several layered permissions are crucial, and overlooking any one can lead to frustrating dead ends.
+,  It's a topic I’ve spent quite a bit of time navigating, having been caught out myself a few times with seemingly inexplicable volume mount failures in Azure Machine Learning. It’s never a simple matter of flipping one switch, and understanding the nuances makes a substantial difference to your workflow. The short answer is, several layered permissions are crucial, and overlooking any one can lead to frustrating dead ends.
 
 Essentially, for a successful volume mount within Azure ML, we need to ensure three primary layers of authorization are correctly configured: the compute context, the storage account or resource being mounted, and the network connectivity. These interact, and a failure at any point can block the entire process. I've seen it happen; spent a full afternoon chasing a permission issue that turned out to be an oversight in the *compute context*, of all places.
 

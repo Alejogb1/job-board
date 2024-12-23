@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-does-adding-show-to-minizinc-models-slow-down-solving"
 ---
 
-Okay, let's talk about why appending a `show` statement to a MiniZinc model can sometimes lead to a frustrating slowdown. It's a question I've encountered more times than I care to remember, often while debugging seemingly simple constraint models. The first time I ran into this, it was on a rather complex resource allocation problem. The model itself solved quickly, but adding a `show` statement to view the output turned the entire process into an exercise in patience. I spent a fair bit of time profiling and trying to figure out what was going on.
+, let's talk about why appending a `show` statement to a MiniZinc model can sometimes lead to a frustrating slowdown. It's a question I've encountered more times than I care to remember, often while debugging seemingly simple constraint models. The first time I ran into this, it was on a rather complex resource allocation problem. The model itself solved quickly, but adding a `show` statement to view the output turned the entire process into an exercise in patience. I spent a fair bit of time profiling and trying to figure out what was going on.
 
 The fundamental issue isn't that the `show` statement itself is computationally expensive. Instead, it changes the underlying problem *presented to the solver*. Let me explain. MiniZinc's architecture is such that it separates the *modeling* language, which is what we use to describe constraints, from the *solving* process. The model file we write is compiled into a FlatZinc representation, which is then passed to the solver. This separation allows us to switch between different solvers (like Gecode, Chuffed, or CP-SAT) without altering the model itself.
 

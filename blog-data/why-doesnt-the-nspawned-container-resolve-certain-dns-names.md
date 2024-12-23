@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-doesnt-the-nspawned-container-resolve-certain-dns-names"
 ---
 
-Okay, let’s tackle this. It's a question I've seen crop up more times than I'd care to count, and usually, the solution boils down to a few common culprits when it comes to `systemd-nspawn` containers and DNS resolution issues. I've personally spent a good chunk of time debugging similar problems, particularly back when we were migrating our microservices over to a container-based architecture, and I remember the frustration vividly. So let's break it down.
+, let’s tackle this. It's a question I've seen crop up more times than I'd care to count, and usually, the solution boils down to a few common culprits when it comes to `systemd-nspawn` containers and DNS resolution issues. I've personally spent a good chunk of time debugging similar problems, particularly back when we were migrating our microservices over to a container-based architecture, and I remember the frustration vividly. So let's break it down.
 
 The core of the problem often revolves around how `nspawn` containers handle network namespaces and their interactions with the host system's DNS configuration. By default, `nspawn` uses a virtual network interface within the container. This interface, while providing network connectivity, doesn't automatically inherit all of the host's networking setup, particularly DNS resolution. When you encounter a scenario where a container resolves some names but not others, the discrepancy usually points to a misconfigured or incomplete DNS setup within the container itself.
 

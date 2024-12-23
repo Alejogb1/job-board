@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-call-an-async-function-through-a-put-api-call"
 ---
 
-Let's tackle this. I remember a project a few years back, integrating a real-time data pipeline with an existing RESTful service. We needed to update complex records asynchronously based on incoming PUT requests. This brought the question you've raised front and center: how exactly do you reliably trigger an asynchronous process from a synchronous http endpoint, specifically a PUT? It’s a very common scenario, and there are several ways to handle it; it's more a matter of architectural fit than any single "correct" solution.
+ I remember a project a few years back, integrating a real-time data pipeline with an existing RESTful service. We needed to update complex records asynchronously based on incoming PUT requests. This brought the question you've raised front and center: how exactly do you reliably trigger an asynchronous process from a synchronous http endpoint, specifically a PUT? It’s a very common scenario, and there are several ways to handle it; it's more a matter of architectural fit than any single "correct" solution.
 
 The crucial point is that http by default is a synchronous request-response protocol. A PUT request expects a response. You can’t just hang indefinitely waiting for your async job to finish before returning, especially with complex or long running operations; that would tie up resources on the server and potentially lead to timeouts.
 

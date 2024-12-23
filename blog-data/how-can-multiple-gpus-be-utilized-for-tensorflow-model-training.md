@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-multiple-gpus-be-utilized-for-tensorflow-model-training"
 ---
 
-Right then, let's tackle this. I've spent a fair amount of time orchestrating large-scale training runs, and multi-gpu TensorFlow is definitely a frequent flyer in that domain. It's not just about slapping in more cards; there are nuances to how TensorFlow leverages them efficiently, and it's crucial to understand those. We're talking significant speed-ups, but only when done correctly. Let's break it down, shall we?
+Right then,  I've spent a fair amount of time orchestrating large-scale training runs, and multi-gpu TensorFlow is definitely a frequent flyer in that domain. It's not just about slapping in more cards; there are nuances to how TensorFlow leverages them efficiently, and it's crucial to understand those. We're talking significant speed-ups, but only when done correctly. Let's break it down, shall we?
 
 Essentially, when we talk about multi-gpu training with TensorFlow, we're primarily dealing with parallelization – specifically data parallelism. This means we distribute different subsets of the training data across different GPUs. Each GPU computes gradients based on its batch, and then these gradients are aggregated to update the model weights. Now, this aggregation is where things get interesting, and where we often see bottlenecks if not handled properly. There are several strategies we can employ to orchestrate this process, and your choice will often be dictated by your hardware setup, model complexity, and the desired balance between speed and resource utilization.
 

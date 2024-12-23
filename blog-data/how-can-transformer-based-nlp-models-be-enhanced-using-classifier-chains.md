@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-transformer-based-nlp-models-be-enhanced-using-classifier-chains"
 ---
 
-Okay, let's tackle this. I remember back in '19, working on a particularly thorny multi-label classification problem in a customer feedback analysis pipeline. We were wrestling, or rather, *engaging* with the limitations of standard transformer outputs when faced with multiple interrelated labels. That’s when I really started to appreciate the power of classifier chains, and their potential to enhance these transformer models, not as a replacement but as a critical augmentation.
+,  I remember back in '19, working on a particularly thorny multi-label classification problem in a customer feedback analysis pipeline. We were wrestling, or rather, *engaging* with the limitations of standard transformer outputs when faced with multiple interrelated labels. That’s when I really started to appreciate the power of classifier chains, and their potential to enhance these transformer models, not as a replacement but as a critical augmentation.
 
 The core challenge with direct multi-label classification using transformers often boils down to ignoring the inherent dependencies between labels. We typically output a sigmoid activated vector of logits, representing the probability of each label being present. This treats labels as completely independent events, which, in reality, they rarely are. Classifier chains, on the other hand, embrace these dependencies by constructing a sequential classification process.
 

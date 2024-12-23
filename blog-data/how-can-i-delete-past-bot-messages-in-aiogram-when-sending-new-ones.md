@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-delete-past-bot-messages-in-aiogram-when-sending-new-ones"
 ---
 
-Okay, let's tackle this. I’ve actually run into this exact scenario a few times back when I was setting up a Telegram bot for monitoring server metrics. It’s a pretty common challenge, and getting it smooth requires understanding how aiogram handles message updates. The core issue, as you're finding, isn't simply that aiogram lacks a `delete_previous_messages` function, but rather that the bot needs to actively manage message ids and their deletion, as Telegram doesn't inherently "replace" a message; it's a new message altogether.
+,  I’ve actually run into this exact scenario a few times back when I was setting up a Telegram bot for monitoring server metrics. It’s a pretty common challenge, and getting it smooth requires understanding how aiogram handles message updates. The core issue, as you're finding, isn't simply that aiogram lacks a `delete_previous_messages` function, but rather that the bot needs to actively manage message ids and their deletion, as Telegram doesn't inherently "replace" a message; it's a new message altogether.
 
 The main strategy here revolves around storing the message id of the previous bot message and then using `bot.delete_message` with that id before sending the new one. This involves a few key steps: firstly, sending the initial message, retaining its id, secondly, storing this id somewhere persistent (like a dictionary in memory, a database, or even a simple file). Lastly, when a new message needs to be sent, retrieve the stored id, delete the message and send the new one, finally updating the stored id.
 

@@ -4,7 +4,7 @@ date: "2024-12-11"
 id: "why-might-zeroing-out-components-during-causal-interventions-break-a-model-and-what-alternatives-exist"
 ---
 
-Okay so you're asking about why zeroing out parts of a model during causal inference goes boom sometimes and what's a better way to do it right  It's a super common problem actually and its kinda tricky  The basic idea behind interventions is we want to see what happens if we *force* a certain variable to take on a specific value  like what if we magically made everyone's income exactly 100k a year what would happen to housing prices  Zeroing out a variable is like that magic wand but often its a really clumsy wand
+ so you're asking about why zeroing out parts of a model during causal inference goes boom sometimes and what's a better way to do it right  It's a super common problem actually and its kinda tricky  The basic idea behind interventions is we want to see what happens if we *force* a certain variable to take on a specific value  like what if we magically made everyone's income exactly 100k a year what would happen to housing prices  Zeroing out a variable is like that magic wand but often its a really clumsy wand
 
 The problem is that most models aren't built to handle such brute force  Think about it a neural network learns complex relationships between variables it doesn't just treat them as independent LEGO blocks you can just pop out  When you zero something out you're suddenly breaking all those learned relationships  It's like taking a wrench to a finely tuned watch  You might think you're fixing something but you're probably just making it worse
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-cant-i-perform-data-augmentation-on-images-in-tensorflow"
 ---
 
-Okay, let's tackle this. I've seen this particular hurdle pop up more times than I care to remember, especially back when we were deploying those early deep learning models for medical imaging analysis at the clinic. It's a common frustration, but the "why" behind TensorFlow data augmentation hiccups usually boils down to a few distinct, and often interconnected, reasons. Simply put, the issue isn't that TensorFlow *can't* do data augmentation; it's more often about *how* it's being attempted and understood within the larger TensorFlow pipeline.
+,  I've seen this particular hurdle pop up more times than I care to remember, especially back when we were deploying those early deep learning models for medical imaging analysis at the clinic. It's a common frustration, but the "why" behind TensorFlow data augmentation hiccups usually boils down to a few distinct, and often interconnected, reasons. Simply put, the issue isn't that TensorFlow *can't* do data augmentation; it's more often about *how* it's being attempted and understood within the larger TensorFlow pipeline.
 
 Fundamentally, data augmentation in TensorFlow is typically performed through layers within your model or using the `tf.data` api. Each has its specific implementation mechanics and limitations. Misunderstanding these can quickly lead to seemingly inexplicable failures. If you're encountering the problem, it's important to pinpoint where in your pipeline the augmentation is failing to materialize.
 

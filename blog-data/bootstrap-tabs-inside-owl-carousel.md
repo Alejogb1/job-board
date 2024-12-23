@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "bootstrap-tabs-inside-owl-carousel"
 ---
 
-Okay I see the problem bootstrap tabs inside owl carousel yep been there done that let me tell you it's not as straightforward as it seems trust me
+ I see the problem bootstrap tabs inside owl carousel yep been there done that let me tell you it's not as straightforward as it seems trust me
 
 So you want those sweet looking bootstrap tabs behaving nicely inside an owl carousel right sounds easy enough on paper but no the world isn't that kind to us is it
 

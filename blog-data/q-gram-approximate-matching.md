@@ -4,9 +4,9 @@ date: "2024-12-13"
 id: "q-gram-approximate-matching"
 ---
 
-Okay so you're asking about q-gram approximate matching right Been there done that got the t-shirt and probably several more t-shirts with slightly different versions of the same q-gram code printed on them I've spent way too much of my life wrestling with this stuff lets just say I didn't have a social life for a while there
+ so you're asking about q-gram approximate matching right Been there done that got the t-shirt and probably several more t-shirts with slightly different versions of the same q-gram code printed on them I've spent way too much of my life wrestling with this stuff lets just say I didn't have a social life for a while there
 
-Alright let me break it down for you from the perspective of someone who's actually coded this stuff not just read about it in textbooks First off q-gram matching in case you're not entirely familiar at its core its about breaking down strings into smaller chunks called q-grams and comparing those chunks instead of the entire strings That's like saying "hey we have these long sentences instead of comparing the whole sentence lets just compare if they have the same few words within them" That makes it easier to find similarity in strings even if they are not exactly identical you have typos you got word order difference you have extra characters its all handled way better with q grams
+let me break it down for you from the perspective of someone who's actually coded this stuff not just read about it in textbooks First off q-gram matching in case you're not entirely familiar at its core its about breaking down strings into smaller chunks called q-grams and comparing those chunks instead of the entire strings That's like saying "hey we have these long sentences instead of comparing the whole sentence lets just compare if they have the same few words within them" That makes it easier to find similarity in strings even if they are not exactly identical you have typos you got word order difference you have extra characters its all handled way better with q grams
 
 The 'q' in q-gram well that's the length of each of these chunks so if you use a q-gram of size 3 every chunk will be three characters long if you have "hello" with q = 3 you get "hel" "ell" and "llo" pretty straightforward If the words are "help" you have "hel" and "elp" now you can compute how much similar are the two sentences that look like "hel ell llo" and "hel elp" in a better way using different comparison metrics
 
@@ -16,7 +16,7 @@ Let me tell you I remember a project back in the late 2000s I was working on thi
 
 We used something called cosine similarity on the bag of q-grams vectors and it really helped a lot we used a q of 3 so that small typos would still match the original words it was not perfect but it did the job pretty well It even helped on typos in the middle of the words like "laptoos" as long as the word had enough common q-grams with "laptops" it would match in the ranking
 
-Alright lets get to some code because thats what really matters Here is a quick python snippet to show you how to generate q grams
+lets get to some code because thats what really matters Here is a quick python snippet to show you how to generate q grams
 
 ```python
 def generate_qgrams(text, q):

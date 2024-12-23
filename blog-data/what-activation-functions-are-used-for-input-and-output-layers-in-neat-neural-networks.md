@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-activation-functions-are-used-for-input-and-output-layers-in-neat-neural-networks"
 ---
 
-Okay, let's get into this. Thinking back to a particularly intricate robotics project, I remember facing this very challenge – how to effectively handle input and output transformations in a neuroevolutionary context, specifically using NEAT (NeuroEvolution of Augmenting Topologies). We weren't dealing with simple classification tasks; our robots had to learn complex sensorimotor coordination. So, selecting appropriate activation functions wasn't just academic, it was mission-critical.
+, let's get into this. Thinking back to a particularly intricate robotics project, I remember facing this very challenge – how to effectively handle input and output transformations in a neuroevolutionary context, specifically using NEAT (NeuroEvolution of Augmenting Topologies). We weren't dealing with simple classification tasks; our robots had to learn complex sensorimotor coordination. So, selecting appropriate activation functions wasn't just academic, it was mission-critical.
 
 The core of the matter is this: NEAT doesn’t prescribe specific activation functions for input or output layers like a standard backpropagation-trained network might. Instead, the activation functions for those layers, like all other layers, are generally evolved as part of the network structure. It's a key feature that contributes to NEAT’s flexibility and ability to discover unconventional solutions. We don't hard-code a specific sigmoid or tanh for the final layer, for instance. Instead, we allow the evolutionary process to determine which functions are most effective at handling the outputs in relation to the fitness function we've defined.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "is-there-numerical-instability-in-pytorchs-nnlayernorm"
 ---
 
-Let's tackle this. Numerical instability in `nn.LayerNorm` within PyTorch, it’s a subject I’ve bumped into a few times in my career, usually in deep learning models pushed to the edge of their design limits, or when dealing with datasets that had surprisingly wide value ranges. It’s not a binary ‘yes/no’ kind of answer; it’s more about understanding under which specific conditions these issues can arise, and how to mitigate them.
+ Numerical instability in `nn.LayerNorm` within PyTorch, it’s a subject I’ve bumped into a few times in my career, usually in deep learning models pushed to the edge of their design limits, or when dealing with datasets that had surprisingly wide value ranges. It’s not a binary ‘yes/no’ kind of answer; it’s more about understanding under which specific conditions these issues can arise, and how to mitigate them.
 
 The core of the problem stems from the mathematical operations inherent in layer normalization. Fundamentally, `nn.LayerNorm` calculates the mean and variance of inputs across the feature dimension for each sample in a batch, then normalizes those inputs using these statistics. While seemingly straightforward, this involves subtractions of large numbers (for mean centering) and division by standard deviation (the square root of the variance). These operations, particularly with single precision floating-point representations (float32), which is the default in PyTorch, can lead to precision loss when these numbers are vastly different in scale.
 

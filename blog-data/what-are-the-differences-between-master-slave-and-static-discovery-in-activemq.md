@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "what-are-the-differences-between-master-slave-and-static-discovery-in-activemq"
 ---
 
-Okay, let's unpack the intricacies of master-slave and static discovery in ActiveMQ. Having spent a good chunk of my career elbows-deep in messaging infrastructure, including my fair share of late nights battling broker configurations, I’ve seen firsthand how these setup choices directly impact system reliability and scalability. It’s not just about getting the messages flowing; it’s about ensuring they keep flowing even when the unexpected occurs.
+, let's unpack the intricacies of master-slave and static discovery in ActiveMQ. Having spent a good chunk of my career elbows-deep in messaging infrastructure, including my fair share of late nights battling broker configurations, I’ve seen firsthand how these setup choices directly impact system reliability and scalability. It’s not just about getting the messages flowing; it’s about ensuring they keep flowing even when the unexpected occurs.
 
 So, diving straight in, we need to distinguish the core mechanisms. *Master-slave* is essentially a failover strategy. It involves two (or sometimes more, but commonly two) broker instances. Only one broker, the 'master,' actively handles messages at any given time. The other broker, the 'slave,' sits idle, monitoring the master’s status. Should the master fail, the slave takes over, becoming the new master and continuing to process messages. This is a crucial aspect of achieving high availability. Think of it as a hot standby system designed for minimal interruption.
 

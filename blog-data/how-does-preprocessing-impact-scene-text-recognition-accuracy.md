@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-does-preprocessing-impact-scene-text-recognition-accuracy"
 ---
 
-Okay, let's dive in. I've spent a fair bit of time wrangling with scene text recognition (str) systems, and let me tell you, the quality of your preprocessing pipeline is often the make-or-break factor between a usable system and one that just throws random characters at you. The impact is profound, and it’s not something you can just handwave away. It’s a nuanced problem, so let's break it down a bit more.
+, let's dive in. I've spent a fair bit of time wrangling with scene text recognition (str) systems, and let me tell you, the quality of your preprocessing pipeline is often the make-or-break factor between a usable system and one that just throws random characters at you. The impact is profound, and it’s not something you can just handwave away. It’s a nuanced problem, so let's break it down a bit more.
 
 Preprocessing, in the context of str, essentially refers to all the operations performed on an input image *before* it’s fed to the core recognition model. Think of it as the stage-setting for the main event. The goal here isn't just to make the image "look good"; it's to maximize the signal-to-noise ratio for the subsequent recognition step. If your input is noisy, distorted, or poorly oriented, even the most sophisticated recognition model will struggle. Conversely, proper preprocessing can elevate even simpler models to achieve surprisingly accurate results.
 

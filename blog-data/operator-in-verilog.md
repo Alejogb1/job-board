@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "operator-in-verilog"
 ---
 
-Okay so verilog operators yeah I've been there done that more times than I care to admit It's like the bread and butter of hardware description but sometimes it feels like a whole bakery went haywire especially for a newbie or someone switching from software thinking C++ math is gonna magically work
+ so verilog operators yeah I've been there done that more times than I care to admit It's like the bread and butter of hardware description but sometimes it feels like a whole bakery went haywire especially for a newbie or someone switching from software thinking C++ math is gonna magically work
 
 First off let's not get all tangled up in the syntax tree because verilog isn't exactly Python or even JavaScript you know It’s a hardware description language meaning we’re talking about actual physical circuits not abstract computations It needs to be precise because we’re making something that will be burned into silicon so if your description is all wacky your circuit is gonna be wacky and that's not a good time trust me on that
 
@@ -81,7 +81,7 @@ endmodule
 ```
 And finally this is a very simple example of using a ternary operator to select between two values
 
-Okay so there is a lot more ground to cover like operator precedence type casting and sign extension but I'm pretty sure we are already stretching the limits of a simple stackoverflow post If you are interested in really diving deep I would highly recommend checking out "Digital Design and Computer Architecture" by David Money Harris and Sarah L Harris Its a great book which helped me a lot back in the day It gives a very clear understanding of the fundamental concepts behind hardware design using the verilog language It also includes many practical examples and is written by actual experts
+ so there is a lot more ground to cover like operator precedence type casting and sign extension but I'm pretty sure we are already stretching the limits of a simple stackoverflow post If you are interested in really diving deep I would highly recommend checking out "Digital Design and Computer Architecture" by David Money Harris and Sarah L Harris Its a great book which helped me a lot back in the day It gives a very clear understanding of the fundamental concepts behind hardware design using the verilog language It also includes many practical examples and is written by actual experts
 
 Another book you might want to check is “Computer Organization and Design” by Patterson and Hennessy It’s not verilog specific but it will help you build a more solid understanding of the underlying hardware concepts which is critical when writing verilog code Trust me the better you understand the hardware the easier it will be to describe the hardware in verilog
 

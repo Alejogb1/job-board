@@ -18,7 +18,7 @@ Second, text alignment and anchor points need careful consideration. SVG support
 
 Finally, the `text` element doesn't consider the bounds of other shapes. It does not have any automatic clipping or wrapping mechanisms associated with them. So, the issue isn't a matter of svg not ‘understanding’ the shape; it’s that the text element and the shape are independent entities, unless we specifically engineer a relationship.
 
-Okay, let's move to the actual code. I'll illustrate these points with a few specific examples, and explain the fixes:
+, let's move to the actual code. I'll illustrate these points with a few specific examples, and explain the fixes:
 
 **Example 1: Simple Misaligned Text**
 

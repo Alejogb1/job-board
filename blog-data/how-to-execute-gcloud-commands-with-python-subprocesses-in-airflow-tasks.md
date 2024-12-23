@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-execute-gcloud-commands-with-python-subprocesses-in-airflow-tasks"
 ---
 
-Okay, let’s tackle this. I’ve been down this particular rabbit hole more times than I care to remember, and it’s always a subtle dance between getting the subprocess management correct, the gcloud authentication sorted, and ensuring it’s all playing nicely within the airflow context. Let's get into it.
+, let’s tackle this. I’ve been down this particular rabbit hole more times than I care to remember, and it’s always a subtle dance between getting the subprocess management correct, the gcloud authentication sorted, and ensuring it’s all playing nicely within the airflow context. Let's get into it.
 
 The core challenge when using `gcloud` commands within an Airflow task, particularly via Python’s `subprocess` module, revolves around orchestrating the shell environment, handling potential errors, and ensuring proper resource cleanup. We aren't just executing a script; we’re building a piece of infrastructure, and so we must treat it with that same care. The objective is to make sure that our airflow task can seamlessly invoke `gcloud`, passing it the necessary parameters, and reacting appropriately to its output.
 

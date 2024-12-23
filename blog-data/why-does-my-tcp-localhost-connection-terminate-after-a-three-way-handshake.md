@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-my-tcp-localhost-connection-terminate-after-a-three-way-handshake"
 ---
 
-Okay, let's tackle this. It's a frustrating situation, a successful three-way handshake only to see the connection vanish. I’ve personally spent countless hours troubleshooting scenarios like this, often under intense pressure to get systems back online. The core of the problem, nine times out of ten, isn't with the handshake itself, but what happens *after*. It's a classic case of a seemingly healthy start ending abruptly due to issues residing deeper within the system or application logic.
+,  It's a frustrating situation, a successful three-way handshake only to see the connection vanish. I’ve personally spent countless hours troubleshooting scenarios like this, often under intense pressure to get systems back online. The core of the problem, nine times out of ten, isn't with the handshake itself, but what happens *after*. It's a classic case of a seemingly healthy start ending abruptly due to issues residing deeper within the system or application logic.
 
 To clarify, the three-way handshake – SYN, SYN-ACK, ACK – is fundamentally about establishing a communication channel. It confirms that both the client (in this case, a program on your localhost) and the server (another program also often on your localhost) can indeed send and receive packets. But that’s just the doorway; it doesn't guarantee the house is in order.
 

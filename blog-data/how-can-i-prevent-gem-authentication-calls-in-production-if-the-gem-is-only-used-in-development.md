@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-prevent-gem-authentication-calls-in-production-if-the-gem-is-only-used-in-development"
 ---
 
-Okay, let's tackle this. It’s a situation I've certainly navigated a few times in my career, and it often comes down to managing your gem dependencies carefully and utilizing environment-specific configurations. The goal, of course, is to avoid unnecessary authentication calls in a production environment for gems that are exclusively development or testing tools. Let me break down my approach and provide some practical examples that should help you nail this down.
+,  It’s a situation I've certainly navigated a few times in my career, and it often comes down to managing your gem dependencies carefully and utilizing environment-specific configurations. The goal, of course, is to avoid unnecessary authentication calls in a production environment for gems that are exclusively development or testing tools. Let me break down my approach and provide some practical examples that should help you nail this down.
 
 The core issue stems from a misalignment between how you’re managing your gem dependencies and how your application is configured across different environments. Gems, like `pry` for debugging or `factory_bot` for test data generation, are invaluable during development and testing, but they have no place being loaded or used in production where they add unnecessary overhead and potentially introduce security vulnerabilities. Authentication calls to repositories to check for updates or install gems can also be a bottleneck in production, even if those gems are never actively used.
 

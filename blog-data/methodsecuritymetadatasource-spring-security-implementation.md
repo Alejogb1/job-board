@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "methodsecuritymetadatasource-spring-security-implementation"
 ---
 
-Okay so you're asking about `MethodSecurityMetadataSource` in Spring Security right? I've been down that rabbit hole a few times let me tell you it's not always sunshine and roses but it gets the job done once you wrangle it I'll give you the lowdown based on my experience
+ so you're asking about `MethodSecurityMetadataSource` in Spring Security right? I've been down that rabbit hole a few times let me tell you it's not always sunshine and roses but it gets the job done once you wrangle it I'll give you the lowdown based on my experience
 
 Basically `MethodSecurityMetadataSource` is the unsung hero the brains behind method level authorization in Spring Security It's the interface responsible for figuring out what security attributes apply to a given method invocation Think of it as a map that links methods to the access control rules that should be enforced
 

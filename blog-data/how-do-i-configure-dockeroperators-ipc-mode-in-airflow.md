@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-configure-dockeroperators-ipc-mode-in-airflow"
 ---
 
-Okay, let's tackle configuring DockerOperator's ipc mode in Airflow. It's a topic I’ve had to delve into quite a few times, particularly when dealing with tasks that need shared memory or inter-process communication. The default settings can often be limiting, and understanding how to manipulate the ipc mode becomes crucial for certain use cases.
+, let's tackle configuring DockerOperator's ipc mode in Airflow. It's a topic I’ve had to delve into quite a few times, particularly when dealing with tasks that need shared memory or inter-process communication. The default settings can often be limiting, and understanding how to manipulate the ipc mode becomes crucial for certain use cases.
 
 First, let's clarify what IPC mode in docker essentially means. It controls how the namespaces related to inter-process communication are managed for a container. By default, each docker container gets its own ipc namespace. However, there are situations where this isolation hinders functionality. For example, if a container needs to interact with shared memory segments created by another container or by the host, this default isolation would be a problem. The DockerOperator in Airflow gives you the ability to adjust this through its `ipc_mode` parameter.
 

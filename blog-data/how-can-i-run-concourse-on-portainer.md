@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-run-concourse-on-portainer"
 ---
 
-Alright, let's tackle this. It’s a scenario I've personally encountered a couple of times while setting up CI/CD pipelines in resource-constrained environments. You’re aiming to get Concourse, a powerful CI/CD system, running within Portainer, a container management platform. It’s a practical need, especially when you’re aiming for a more contained or managed Docker environment.
+Alright,  It’s a scenario I've personally encountered a couple of times while setting up CI/CD pipelines in resource-constrained environments. You’re aiming to get Concourse, a powerful CI/CD system, running within Portainer, a container management platform. It’s a practical need, especially when you’re aiming for a more contained or managed Docker environment.
 
 First, let’s clarify what we're dealing with. Portainer isn't an orchestrator itself like Kubernetes, so we won’t be using its features to schedule and scale Concourse like we would in a Kubernetes setup. Instead, we’re leveraging Portainer to manage the lifecycle of the containers needed for Concourse: the web node, the worker(s), and optionally, any supporting databases. Portainer provides the graphical interface to manage them as individual docker containers, which is exactly how we'll set them up. This will mean that the Concourse architecture itself remains standard, just that Portainer helps manage its containers.
 

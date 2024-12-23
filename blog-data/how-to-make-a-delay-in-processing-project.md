@@ -4,9 +4,9 @@ date: "2024-12-13"
 id: "how-to-make-a-delay-in-processing-project"
 ---
 
-Okay so you need to put a delay into your project yeah I've been there man a bunch of times it’s almost always a pain in the butt if you don’t handle it right
+ so you need to put a delay into your project yeah I've been there man a bunch of times it’s almost always a pain in the butt if you don’t handle it right
 
-Let me tell you a story once back in my early days like maybe 2010 or something i was building this real time data processing system It was supposed to ingest stock market data calculate some indicators then fire off alerts I thought i was a god programmer back then haha anyway i had this naive implementation where i was just hammering the API for stock prices without any consideration I mean seriously no delays just constantly asking for data It worked okay initially for a tiny sample but when I scaled up man oh man the API just started throwing errors like crazy i was hitting rate limits getting throttled everything you can imagine It was a disaster i didn’t think about backoff or proper pacing It taught me some hard lessons about putting in proper delays not just for API limits but for a bunch of things like resource management and data consistency
+Let me tell you a story once back in my early days like maybe 2010 or something i was building this real time data processing system It was supposed to ingest stock market data calculate some indicators then fire off alerts I thought i was a god programmer back then haha anyway i had this naive implementation where i was just hammering the API for stock prices without any consideration I mean seriously no delays just constantly asking for data It worked  initially for a tiny sample but when I scaled up man oh man the API just started throwing errors like crazy i was hitting rate limits getting throttled everything you can imagine It was a disaster i didn’t think about backoff or proper pacing It taught me some hard lessons about putting in proper delays not just for API limits but for a bunch of things like resource management and data consistency
 
 Anyways enough about my youthful folly lets get to it you've got options depending on what you need precisely here are a few ways I've used in the past
 
@@ -46,7 +46,7 @@ processData(data);
 
 This is better since the main thread won’t block it'll just schedule the function to execute sometime in the future and do whatever else it needs to do. This is awesome for event driven stuff and non blocking io.
 
-Okay so if you are dealing with async or concurrent operations you can also use techniques like `asyncio` or `futures` with specific time delay functionalities depending on the language If you are looking at dealing with high volume of operations and want to run a lot of things in parallel with delays in between those use asynchronous operation and delays in those contexts its way more optimal If you don’t have concurrency then these are not for you because you would make the project unnecessarily complex .
+ so if you are dealing with async or concurrent operations you can also use techniques like `asyncio` or `futures` with specific time delay functionalities depending on the language If you are looking at dealing with high volume of operations and want to run a lot of things in parallel with delays in between those use asynchronous operation and delays in those contexts its way more optimal If you don’t have concurrency then these are not for you because you would make the project unnecessarily complex .
 
 Here is an example of python with asyncio which gives the asynchronous capabilities
 

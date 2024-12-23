@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-autofselector-and-autotuner-models-be-combined-for-benchmark-analysis"
 ---
 
-Okay, let's tackle this. I’ve been involved in performance engineering for quite some time, and the intersection of autofselector and autotuner models for benchmarking is something I’ve actually put into practice on a number of occasions, each with its own set of particular wrinkles. The goal is, of course, not just to pick a configuration *per se*, but to systematically assess how a given system behaves across a wide parameter space, and that requires a nuanced approach.
+,  I’ve been involved in performance engineering for quite some time, and the intersection of autofselector and autotuner models for benchmarking is something I’ve actually put into practice on a number of occasions, each with its own set of particular wrinkles. The goal is, of course, not just to pick a configuration *per se*, but to systematically assess how a given system behaves across a wide parameter space, and that requires a nuanced approach.
 
 So, how can these two seemingly separate mechanisms – autofselectors which automatically determine *which* algorithm to use, and autotuners which optimize the *parameters* for a given algorithm – work in concert for benchmark analysis? Let's think of it as building a two-tiered optimization process. The autofselector sits at the top level, deciding on the best candidate *algorithm* from a pool of options, based on the given input or environment state. Beneath it, the autotuner works within the chosen algorithm, exploring the space of possible parameters to find the optimal settings. The benchmark analysis then comes into play, using metrics derived from that optimized algorithm's performance.
 

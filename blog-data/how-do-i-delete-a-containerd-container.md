@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-delete-a-containerd-container"
 ---
 
-Okay, let's tackle this. It's a problem I've certainly encountered more than a few times, and I’ve definitely seen newcomers trip over the nuances. Deleting a containerd container, while conceptually straightforward, has a few subtleties that are good to understand, particularly when things don't go according to plan. I'm going to assume you’ve already got containerd installed and functioning correctly. The core of deleting a container involves using the `ctr` command-line tool, which comes bundled with containerd, as that is the most direct interface.
+,  It's a problem I've certainly encountered more than a few times, and I’ve definitely seen newcomers trip over the nuances. Deleting a containerd container, while conceptually straightforward, has a few subtleties that are good to understand, particularly when things don't go according to plan. I'm going to assume you’ve already got containerd installed and functioning correctly. The core of deleting a container involves using the `ctr` command-line tool, which comes bundled with containerd, as that is the most direct interface.
 
 Before we dive into the commands, it's crucial to appreciate that containerd manages containers at a lower level than, say, docker. This means there isn’t a singular “container” entity like you might perceive in higher-level container runtimes. Instead, it deals more directly with tasks, processes, and their associated resources (namespaces, images, snapshots, etc.). This architectural difference is essential to keep in mind when trying to delete a container. You're effectively cleaning up these various elements.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-filter-airtable-get-queries-with-json-data"
 ---
 
-Let's tackle this. Over the years, I've seen my share of complex data manipulation challenges, and filtering Airtable records using JSON payloads during GET requests is certainly one that crops up frequently. The crux of the issue usually boils down to understanding how Airtable's API expects structured query parameters, and how we can effectively translate our JSON-based filtering criteria into that format. It's not as straightforward as simply shoving a JSON object into the query string; we need to dissect it and represent it as a specific type of encoded URL parameter.
+ Over the years, I've seen my share of complex data manipulation challenges, and filtering Airtable records using JSON payloads during GET requests is certainly one that crops up frequently. The crux of the issue usually boils down to understanding how Airtable's API expects structured query parameters, and how we can effectively translate our JSON-based filtering criteria into that format. It's not as straightforward as simply shoving a JSON object into the query string; we need to dissect it and represent it as a specific type of encoded URL parameter.
 
 The primary difficulty lies in the fact that Airtable’s API, while powerful, doesn't natively understand arbitrary JSON as a filter criteria. Instead, it relies on a specific query language that uses URL parameters, especially the ‘filterByFormula’ parameter. This parameter takes a formula string based on Airtable’s own formula language, and that’s where our challenge lies. We need to transform parts of the JSON data into compatible Airtable formulas.
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "311-lab-smallest-number-zybooks-coding"
 ---
 
-Okay so you’re looking at the classic "find the smallest number" problem specifically from Zybooks coding lab 311 I've been there done that more times than I care to admit let me tell you
+ so you’re looking at the classic "find the smallest number" problem specifically from Zybooks coding lab 311 I've been there done that more times than I care to admit let me tell you
 
 It’s usually one of the first few things people tackle when they're learning to code like a rite of passage and it might seem deceptively simple but there are definitely some nuances I've seen people trip up on over the years
 
@@ -46,7 +46,7 @@ That's the python way clean simple and readable I've spent so many late nights i
 
 **JavaScript approach**
 
-Okay moving onto JavaScript I ran into this one a lot when I was doing front end development and some NodeJS stuff so similar logic but a bit different syntax obviously
+ moving onto JavaScript I ran into this one a lot when I was doing front end development and some NodeJS stuff so similar logic but a bit different syntax obviously
 
 ```javascript
 function findSmallest(numbers) {
@@ -123,6 +123,6 @@ C++ uses a vector instead of a list and here I use the range based loop I think 
 
 Also you see here the handling of size is a little different also it’s important to know what to expect from different languages and their implementations that's why I’m going over these languages
 
-Okay so that's pretty much the gist of it for Zybooks coding lab 311 remember the important thing here is not just getting a solution that works for the sample test cases they give you but also that your code is robust and handle edge cases and well-documented for anyone to read through your code and understand why you have coded something in a certain way
+ so that's pretty much the gist of it for Zybooks coding lab 311 remember the important thing here is not just getting a solution that works for the sample test cases they give you but also that your code is robust and handle edge cases and well-documented for anyone to read through your code and understand why you have coded something in a certain way
 
 As for learning resources if you are interested in more in depth understanding of algorithms and data structures and how they are implemented I would recommend you grab a copy of "Introduction to Algorithms" by Thomas H Cormen Charles E Leiserson Ronald L Rivest and Clifford Stein its a great reference text and has a lot of detail on the different approaches to these kind of problems and it is considered the bible of algorithms for many CS students and professionals Also If you are interested in more detail with C++ I highly recommend getting a copy of "Effective Modern C++" by Scott Meyers its a great resource to dive deep into all the features and best practices of modern C++ but if you are learning python I’d recommend starting with "Python Crash Course" by Eric Matthes it is a book that teaches you the basics of python and has a lot of real-world coding examples.

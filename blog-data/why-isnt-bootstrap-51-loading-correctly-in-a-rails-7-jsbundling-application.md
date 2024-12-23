@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-isnt-bootstrap-51-loading-correctly-in-a-rails-7-jsbundling-application"
 ---
 
-Okay, let's unpack this. I've spent my fair share of time debugging front-end asset pipelines, especially when integrating frameworks like Bootstrap into Rails. The issue you're seeing with Bootstrap 5.1 not loading correctly in a Rails 7 JSBundling application often boils down to a few common culprits. It's rarely a single, glaring error, but rather a combination of setup nuances that can throw things off. Based on my experience, here’s what we should consider, moving step-by-step:
+, let's unpack this. I've spent my fair share of time debugging front-end asset pipelines, especially when integrating frameworks like Bootstrap into Rails. The issue you're seeing with Bootstrap 5.1 not loading correctly in a Rails 7 JSBundling application often boils down to a few common culprits. It's rarely a single, glaring error, but rather a combination of setup nuances that can throw things off. Based on my experience, here’s what we should consider, moving step-by-step:
 
 First, let's clarify what we mean by “not loading correctly.” Are we seeing no styling at all, partially applied styles, or perhaps console errors related to missing components? These details are critical to diagnosing the issue. Let's assume, for now, you're seeing minimal styling and that JavaScript-based Bootstrap components aren't working.
 

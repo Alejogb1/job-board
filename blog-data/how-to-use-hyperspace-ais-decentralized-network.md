@@ -28,7 +28,7 @@ five key moments that blew my mind:
 5. **python execution inside the node editor**:  the ability to execute python code directly within the node editor is a game-changer  this adds a ton of flexibility and it lets users customize each step in the process.  imagine you need to do some complex data manipulation that requires a specific python script —boom you just insert a python node into your dag and it all happens automatically, within the workflow.
 
 
-okay now let's talk code examples.  i’m not gonna write full implementations but i'll give you the flavor:
+ now let's talk code examples.  i’m not gonna write full implementations but i'll give you the flavor:
 
 
 example 1:  puppeteer web scraping (simplified):

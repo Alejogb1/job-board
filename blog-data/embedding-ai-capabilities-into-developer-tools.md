@@ -4,7 +4,7 @@ date: '2024-11-15'
 id: 'embedding-ai-capabilities-into-developer-tools'
 ---
 
-Alright so you wanna talk about AI in dev tools  that's pretty cool  you know  like everyone's doing it right now  AI is the big buzzword  but what's actually happening   
+so you wanna talk about AI in dev tools  that's pretty cool  you know  like everyone's doing it right now  AI is the big buzzword  but what's actually happening   
 
 Well  first  let's think about what a dev tool is  right  it's something that helps us build software  so  when we talk about AI in dev tools we're really talking about using AI to make software development  faster  easier  and better  
 

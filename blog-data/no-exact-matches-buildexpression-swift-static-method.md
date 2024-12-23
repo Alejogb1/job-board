@@ -4,9 +4,9 @@ date: "2024-12-13"
 id: "no-exact-matches-buildexpression-swift-static-method"
 ---
 
-Okay so you're hitting that "no exact matches buildexpression swift static method" wall right I get it been there done that like literally yesterday it feels like Let's break this down I mean I spent the better part of last week wrestling with something similar so trust me I know the pain
+ so you're hitting that "no exact matches buildexpression swift static method" wall right I get it been there done that like literally yesterday it feels like Let's break this down I mean I spent the better part of last week wrestling with something similar so trust me I know the pain
 
-Alright so you want a static method in Swift that somehow builds something via this `buildExpression` deal and the Swift compiler is just throwing fits at you saying it can't find the right match or something like that right It's usually a problem with type constraints or generics which is like the compilers kryptonite it always finds some hidden edge case you totally missed Let me tell you about my little adventure with this a while back
+so you want a static method in Swift that somehow builds something via this `buildExpression` deal and the Swift compiler is just throwing fits at you saying it can't find the right match or something like that right It's usually a problem with type constraints or generics which is like the compilers kryptonite it always finds some hidden edge case you totally missed Let me tell you about my little adventure with this a while back
 
 So I was working on this internal DSL thingy for parsing configurations think something along the lines of like a simplified YAML or something not exactly that but close I needed a way to take like a flat list of tokens and construct a complex hierarchical data structure Now this DSL had a bunch of different node types and the whole thing was super generic I had this builder class which had this method `buildExpression` that was supposed to figure out which type of node to build from those token inputs And it was declared static because well because it makes sense in a builder context right That was my first mistake
 

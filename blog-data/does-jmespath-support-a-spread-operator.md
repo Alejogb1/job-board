@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "does-jmespath-support-a-spread-operator"
 ---
 
-Okay, let’s tackle this JMESPath question. It's a common point of confusion, and I've personally had to navigate it multiple times in past projects. I wouldn’t call it a straightforward ‘yes’ or ‘no’, and it definitely requires a nuanced understanding of what JMESPath offers and where it falls short. The short answer is: no, JMESPath doesn’t have a spread operator in the way, say, javascript or python does. But, and this is crucial, it offers different mechanisms to achieve similar outcomes, often in a more specific and declarative way.
+, let’s tackle this JMESPath question. It's a common point of confusion, and I've personally had to navigate it multiple times in past projects. I wouldn’t call it a straightforward ‘yes’ or ‘no’, and it definitely requires a nuanced understanding of what JMESPath offers and where it falls short. The short answer is: no, JMESPath doesn’t have a spread operator in the way, say, javascript or python does. But, and this is crucial, it offers different mechanisms to achieve similar outcomes, often in a more specific and declarative way.
 
 I remember working on a data aggregation tool for a distributed system. We were pulling a massive amount of json data, and the need for flattening and restructuring nested arrays was paramount. We initially hoped a spread operator would come to our rescue, but quickly learned that it was not included in the JMESPath spec. Instead, we had to become proficient with alternative techniques, primarily utilizing multi-select lists, flatten projections, and even a touch of piping for more complex operations.
 

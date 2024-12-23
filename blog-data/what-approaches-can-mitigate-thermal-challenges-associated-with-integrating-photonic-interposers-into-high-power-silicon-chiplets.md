@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "what-approaches-can-mitigate-thermal-challenges-associated-with-integrating-photonic-interposers-into-high-power-silicon-chiplets"
 ---
 
-Okay so you want to cool down these super-hot photonic interposers wedged between your crazy powerful silicon chiplets right  Yeah I get it that's a real heat problem  These things pump out serious wattage and shoving them all together is like building a tiny furnace  We gotta think smart about this
+ so you want to cool down these super-hot photonic interposers wedged between your crazy powerful silicon chiplets right  Yeah I get it that's a real heat problem  These things pump out serious wattage and shoving them all together is like building a tiny furnace  We gotta think smart about this
 
 First off let's be clear about *why* this is such a big deal  Photonic interposers are awesome for speed and bandwidth they're the future of high-speed communication within these crazy densely packed chips  But the lasers and modulators inside they're power hogs  Combine that with the already sizzling chiplets and you've got a recipe for disaster  Meltdown is not just a bad movie plot it's a real thing in chip design
 
@@ -83,7 +83,7 @@ print(f"Temperature rise 3D: {deltaT_3D} ")
 
 This isn't a realistic thermal model  Accurate thermal simulation demands finite element analysis using tools like COMSOL or ANSYS  But this code gives you a flavour of how packaging choices directly affect the overall thermal resistance  And lower thermal resistance is better  Much better
 
-**4  Advanced Heat Sinks and Active Cooling:**  Okay we can improve passive cooling  But for the really hardcore applications active cooling might be necessary  This is where we start talking fans liquid cooling systems or even Peltier elements which are thermoelectric coolers  These actively pump heat away
+**4  Advanced Heat Sinks and Active Cooling:**   we can improve passive cooling  But for the really hardcore applications active cooling might be necessary  This is where we start talking fans liquid cooling systems or even Peltier elements which are thermoelectric coolers  These actively pump heat away
 
 Consider exploring books and papers about "Thermal Management of High-Power Electronics"  This domain includes the design of complex heat sinks using fins and other structures optimized for airflow  It also involves understanding fan characteristics and pumping power requirements
 

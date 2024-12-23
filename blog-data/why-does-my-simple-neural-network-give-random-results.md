@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-does-my-simple-neural-network-give-random-results"
 ---
 
-Alright, let's tackle this. I remember back in the early days of my machine learning journey, I spent a frustrating week chasing down what seemed like a ghost in my network’s output. The problem, like yours, was that my simple neural network was spitting out random, unpredictable results. It's a surprisingly common issue, and the reasons behind it aren’t always immediately obvious. Let’s unpack some potential culprits and then I'll show you some examples in code.
+Alright,  I remember back in the early days of my machine learning journey, I spent a frustrating week chasing down what seemed like a ghost in my network’s output. The problem, like yours, was that my simple neural network was spitting out random, unpredictable results. It's a surprisingly common issue, and the reasons behind it aren’t always immediately obvious. Let’s unpack some potential culprits and then I'll show you some examples in code.
 
 The root cause, more often than not, isn't some fundamental flaw in the network architecture itself, especially if we're dealing with something relatively basic. Instead, it typically lies in the nuances of the training process or the data itself. Here's a breakdown of the key areas to investigate:
 

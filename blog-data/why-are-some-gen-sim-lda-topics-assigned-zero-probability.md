@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-are-some-gen-sim-lda-topics-assigned-zero-probability"
 ---
 
-Okay, let's tackle this interesting issue with Gensim's Latent Dirichlet Allocation (LDA) models and the zero-probability topic problem. This isn't an uncommon situation, and I’ve personally run into it a few times over the years. It often crops up when dealing with real-world datasets that have inherent complexities.
+, let's tackle this interesting issue with Gensim's Latent Dirichlet Allocation (LDA) models and the zero-probability topic problem. This isn't an uncommon situation, and I’ve personally run into it a few times over the years. It often crops up when dealing with real-world datasets that have inherent complexities.
 
 The core issue stems from how LDA operates and its mathematical underpinnings. LDA is a probabilistic generative model, and essentially what it does is try to explain a collection of documents (your corpus) as a mixture of topics, where each topic is a distribution over words. When a topic is assigned zero probability, it means that, according to the model’s learned parameters, no documents are considered to be associated with that particular topic. In a perfect world, where data is neatly structured and conforms nicely to LDA’s assumptions, this would be less common. However, the real world is noisy.
 

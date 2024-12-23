@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-convolution-function-latency-be-reduced"
 ---
 
-Alright, let's tackle this. Reducing convolution function latency is something I've spent a fair amount of time on, particularly when optimizing real-time image processing pipelines back in my days developing embedded systems for autonomous vehicles. The goal, as always, was to squeeze every last millisecond out, and it often involved a multi-pronged approach. So, to clarify, we’re discussing the time it takes to complete a convolution operation, primarily in deep learning or signal processing contexts. Let's break down what contributes to this latency and how we can alleviate it.
+Alright,  Reducing convolution function latency is something I've spent a fair amount of time on, particularly when optimizing real-time image processing pipelines back in my days developing embedded systems for autonomous vehicles. The goal, as always, was to squeeze every last millisecond out, and it often involved a multi-pronged approach. So, to clarify, we’re discussing the time it takes to complete a convolution operation, primarily in deep learning or signal processing contexts. Let's break down what contributes to this latency and how we can alleviate it.
 
 First, understand that convolution is inherently computationally expensive. You're essentially sliding a kernel (a small matrix) across the input data, performing element-wise multiplications and sums at each position. These operations add up quickly. The key latency drivers usually fall into a few categories: algorithm inefficiency, memory access patterns, and hardware limitations.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-train-an-lstm-model-using-multiple-datasets-within-a-for-loop"
 ---
 
-Alright, let's tackle this. It's a situation I've found myself in more than once – handling multiple datasets for LSTM training, especially when you're looping through them. The essence of the problem comes down to properly managing state between loops and ensuring that your model learns effectively from each dataset without introducing unwanted bias or forgetting. I'll walk you through how I usually handle this, drawing on some personal experience and the techniques I've found most reliable.
+Alright,  It's a situation I've found myself in more than once – handling multiple datasets for LSTM training, especially when you're looping through them. The essence of the problem comes down to properly managing state between loops and ensuring that your model learns effectively from each dataset without introducing unwanted bias or forgetting. I'll walk you through how I usually handle this, drawing on some personal experience and the techniques I've found most reliable.
 
 The primary challenge when using a `for` loop to train an LSTM on different datasets stems from the inherent sequential nature of LSTMs themselves. LSTMs maintain an internal state—both cell state and hidden state—which carries information across time steps within a *single sequence*. If you simply feed a new dataset into the model after finishing training on the previous one, you risk the following:
 

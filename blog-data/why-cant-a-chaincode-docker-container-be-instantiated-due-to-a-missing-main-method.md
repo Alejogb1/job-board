@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-cant-a-chaincode-docker-container-be-instantiated-due-to-a-missing-main-method"
 ---
 
-Alright, let's tackle this. It’s a situation I’ve encountered more than a few times, particularly when working with early adopters of hyperledger fabric, and it always comes down to a fundamental misunderstanding of how chaincode is structured and executed within that environment. It's not about a missing ‘main’ method in the traditional java or go sense, but rather how the chaincode lifecycle interfaces with the peer network.
+Alright,  It’s a situation I’ve encountered more than a few times, particularly when working with early adopters of hyperledger fabric, and it always comes down to a fundamental misunderstanding of how chaincode is structured and executed within that environment. It's not about a missing ‘main’ method in the traditional java or go sense, but rather how the chaincode lifecycle interfaces with the peer network.
 
 The core issue isn't that a `main` method is literally missing in a compiled binary. When you say a chaincode docker container can’t be instantiated because of a missing main method, what's actually happening is that the peer node is failing to find the necessary entry point that the fabric runtime requires for executing your chaincode. Think of it less as a conventional application that starts with `public static void main(string[] args)` and more as an interface that fabric interacts with.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-round-column-values-to-two-decimal-places-in-an-h2o-data-frame"
 ---
 
-Okay, let's tackle this. The task of rounding numeric columns to a specific number of decimal places is a common one when working with data, especially for presentation or downstream analysis. I've bumped into this countless times, particularly when dealing with financial or scientific datasets where precision is critical but excessive decimal places can clutter the view. Let’s walk through how to do it effectively with H2O data frames.
+,  The task of rounding numeric columns to a specific number of decimal places is a common one when working with data, especially for presentation or downstream analysis. I've bumped into this countless times, particularly when dealing with financial or scientific datasets where precision is critical but excessive decimal places can clutter the view. Let’s walk through how to do it effectively with H2O data frames.
 
 H2O, being designed for scalable machine learning, provides several ways to manipulate data. We're not limited to simple, in-place modifications. We can create new columns, effectively working in a functional programming paradigm, which I generally find cleaner and safer when dealing with large datasets. This avoids any unexpected mutations of our original data.
 

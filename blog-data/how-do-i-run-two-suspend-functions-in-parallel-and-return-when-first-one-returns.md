@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-run-two-suspend-functions-in-parallel-and-return-when-first-one-returns"
 ---
 
-Okay, let's tackle this. I’ve seen this particular problem pop up quite a bit in asynchronous systems, especially when dealing with microservices or data pipelines that rely on concurrent operations. Effectively, you're asking how to launch two coroutines that execute concurrently, but only proceed once *either* of them has completed, disregarding the other's eventual result. The trick here is knowing which kotlin coroutine primitives to use, and understanding their behaviors.
+,  I’ve seen this particular problem pop up quite a bit in asynchronous systems, especially when dealing with microservices or data pipelines that rely on concurrent operations. Effectively, you're asking how to launch two coroutines that execute concurrently, but only proceed once *either* of them has completed, disregarding the other's eventual result. The trick here is knowing which kotlin coroutine primitives to use, and understanding their behaviors.
 
 I recall back in my early days on a large data processing team, we were building an ETL system for real-time log ingestion. One crucial component needed to fetch metadata about incoming logs from two separate sources. The first source was typically faster but occasionally experienced latency spikes, while the second was slower but more consistent. The requirement was to immediately use whichever metadata source responded first, abandoning the slower one. This is precisely the scenario we’re discussing, and the standard `async/await` pattern wouldn’t fit because we didn't need *both* results, just the first one.
 

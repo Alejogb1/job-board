@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "can-i-increase-containerd-log-limits-above-16k"
 ---
 
-Okay, let's tackle this. You're hitting a common pain point with containerd’s default log handling, and I've certainly been there myself, particularly when troubleshooting verbose applications. The short answer, thankfully, is yes, you absolutely can increase those 16K log limits. It’s not a setting you’ll find exposed directly in a single config file, though, so let’s dive into the mechanics of it.
+,  You're hitting a common pain point with containerd’s default log handling, and I've certainly been there myself, particularly when troubleshooting verbose applications. The short answer, thankfully, is yes, you absolutely can increase those 16K log limits. It’s not a setting you’ll find exposed directly in a single config file, though, so let’s dive into the mechanics of it.
 
 That default 16k limit you’re experiencing isn’t a static, hardcoded constraint in containerd proper, but rather an artifact of the `cri-containerd` plugin and the way it interfaces with the underlying log-handling mechanisms of your operating system. Specifically, it's tied to how the container runtime interacts with the `fifo` or socket, if one is configured, through which application logs are streamed.
 

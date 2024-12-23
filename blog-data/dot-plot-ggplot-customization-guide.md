@@ -4,15 +4,15 @@ date: "2024-12-13"
 id: "dot-plot-ggplot-customization-guide"
 ---
 
-Okay so dot plots in ggplot yeah I've wrestled with those beasts more times than I care to admit Let's dive in I've seen countless variations of this question over the years on Stack Overflow so I kinda know where you're coming from
+ so dot plots in ggplot yeah I've wrestled with those beasts more times than I care to admit Let's dive in I've seen countless variations of this question over the years on Stack Overflow so I kinda know where you're coming from
 
 First off ggplot2 it's powerful flexible but sometimes getting exactly what you want can feel like pulling teeth I've spent hours staring at the screen debugging plot aesthetics let me tell you
 
-So you're after dot plot customization right That can mean a lot of things but I'm guessing you're thinking about things like dot size dot color spacing between dots maybe even grouping or layering them Alright let's break it down like we're debugging a messy code file
+So you're after dot plot customization right That can mean a lot of things but I'm guessing you're thinking about things like dot size dot color spacing between dots maybe even grouping or layering them let's break it down like we're debugging a messy code file
 
 **Basic Dot Plot**
 
-Alright to start we need a basic dot plot using ggplot2 It's straightforward enough Here's some example code you can run
+to start we need a basic dot plot using ggplot2 It's straightforward enough Here's some example code you can run
 
 ```r
 library(ggplot2)
@@ -57,7 +57,7 @@ Here you can see the jitter is controlled by the `width` argument.  This code wi
 
 **Other Customizations**
 
-Okay so now that we have the basic idea let's keep adding more complex customizations
+ so now that we have the basic idea let's keep adding more complex customizations
 
 *   **Dot Shape** You can change the point shapes using `shape =` in the aesthetic.  There are a good number of shapes you can choose from check the documentation for more details or just google "ggplot point shapes"
 
@@ -73,7 +73,7 @@ The other day I was working with some weather data and needed a quick visual to 
 
 **Further Resources**
 
-Okay so you want to go deep into ggplot2 customization There are some good books I've used myself along the way:
+ so you want to go deep into ggplot2 customization There are some good books I've used myself along the way:
 
 *   **"R Graphics Cookbook" by Winston Chang:** A very useful resource for plot types and more specific customizations it's like a big collection of recipes you just copy and paste and adapt to your own data it's really useful.
 
@@ -91,4 +91,4 @@ One common pitfall I see people make is trying to cram too much information into
 
 And just because I am a good person (and I feel bad for making you read this much) a random joke for your enjoyment: Why did the R programmer break up with the statistician? Because they just couldn't 'mean' anything to each other
 
-Okay I am done with this if you have any other question just ask
+ I am done with this if you have any other question just ask

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "in-verilog-is-it-possible-to-check-the-conditions-of-a-loop-after-executing-the"
 ---
 
-Alright so you wanna know if you can check loop conditions *after* the loop body executes in Verilog right Been there done that countless times trust me It's a common head scratcher especially when you're moving from other languages where that's more straightforward Lets break it down
+so you wanna know if you can check loop conditions *after* the loop body executes in Verilog right Been there done that countless times trust me It's a common head scratcher especially when you're moving from other languages where that's more straightforward Lets break it down
 
 Basically Verilog for loops are designed to work more like a hardware description than a procedural programming language Which means they dont have the same post-execution conditional logic you might be used to The typical for loop in Verilog evaluates the loop condition *before* each iteration think about that the loop condition is tested before each run not after So a structure where you want to run the loop *once* and then check the condition is kind of alien to how hardware normally runs or how Verilog is meant to be used So a typical for loop looks like this
 

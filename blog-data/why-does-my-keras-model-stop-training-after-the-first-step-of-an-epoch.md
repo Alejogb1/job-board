@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-my-keras-model-stop-training-after-the-first-step-of-an-epoch"
 ---
 
-Okay, let's tackle this. I've seen this specific issue crop up more often than one might expect, especially when moving between different Keras versions or when working with custom training loops. It's a maddening experience, particularly when everything appears to be set up correctly. The frustration is understandable. So, let's break down why your Keras model might be stalling after just a single training step within an epoch and, importantly, how to troubleshoot it.
+,  I've seen this specific issue crop up more often than one might expect, especially when moving between different Keras versions or when working with custom training loops. It's a maddening experience, particularly when everything appears to be set up correctly. The frustration is understandable. So, let's break down why your Keras model might be stalling after just a single training step within an epoch and, importantly, how to troubleshoot it.
 
 From my experience, this problem usually stems from one of a few core issues – incorrect batching, improperly configured generators, problems with gradient updates, or subtle tensor shape mismatches. It's rarely ever the model architecture itself (although we'll touch on that), but rather how the data flows to it and how updates are applied. It's not as complex as it might initially feel; more often than not, it’s a tiny configuration detail that's causing the problem.
 

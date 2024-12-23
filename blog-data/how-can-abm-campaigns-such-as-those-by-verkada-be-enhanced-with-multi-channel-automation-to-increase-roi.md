@@ -4,7 +4,7 @@ date: "2024-12-03"
 id: "how-can-abm-campaigns-such-as-those-by-verkada-be-enhanced-with-multi-channel-automation-to-increase-roi"
 ---
 
-Okay so you wanna boost Verkada's ABM game with multi-channel automation right  More ROI that's the name of the game  Totally get it  Verkada's already doing a decent job with their targeted approach but we can supercharge it with some clever automation magic
+ so you wanna boost Verkada's ABM game with multi-channel automation right  More ROI that's the name of the game  Totally get it  Verkada's already doing a decent job with their targeted approach but we can supercharge it with some clever automation magic
 
 Think about it  Verkada sells security cameras and stuff  pretty high ticket items  So you don't want to blast out generic emails to everyone you need a laser focus  That's where ABM shines  But ABM can get kinda manual and slow  That's where automation comes in to save the day
 

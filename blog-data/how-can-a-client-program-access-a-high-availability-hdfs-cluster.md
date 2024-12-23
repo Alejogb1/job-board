@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-a-client-program-access-a-high-availability-hdfs-cluster"
 ---
 
-Okay, let's tackle this. It's a question I've seen variations of countless times, and the solution, while seemingly straightforward, requires a careful understanding of the underlying architecture to avoid common pitfalls. I recall a particularly hair-raising incident back in my early days where a poorly configured client kept triggering failovers, not fun. Anyway, let's break down how to reliably access a high-availability hdfs cluster.
+,  It's a question I've seen variations of countless times, and the solution, while seemingly straightforward, requires a careful understanding of the underlying architecture to avoid common pitfalls. I recall a particularly hair-raising incident back in my early days where a poorly configured client kept triggering failovers, not fun. Anyway, let's break down how to reliably access a high-availability hdfs cluster.
 
 The core challenge here revolves around the fact that a high-availability (ha) hdfs cluster is built on redundancy. Unlike a single-namenode setup, ha uses two or more namenodes, only one of which is active at any given moment. This active namenode handles all client requests and manages the filesystem namespace. The standby namenodes exist to take over should the active one fail. Our clients, therefore, need to be able to discover and connect to the currently active namenode seamlessly without manual intervention. This process is handled using a mechanism known as "failover," managed by either zookeeper or using a simpler shared storage setup, although the latter is considerably less robust and less common for true ha clusters.
 

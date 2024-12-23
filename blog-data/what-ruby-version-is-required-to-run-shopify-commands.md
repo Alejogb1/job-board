@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-ruby-version-is-required-to-run-shopify-commands"
 ---
 
-Okay, let's tackle this. It's a question that's tripped up more than a few folks working with Shopify’s command-line interface (CLI), and I've personally debugged similar issues countless times in past projects. The straightforward answer—and the one you’ll typically see in the official documentation—is that Shopify’s CLI requires a supported version of Ruby. However, that “supported” part is where things get a bit nuanced, and that’s what we need to break down.
+,  It's a question that's tripped up more than a few folks working with Shopify’s command-line interface (CLI), and I've personally debugged similar issues countless times in past projects. The straightforward answer—and the one you’ll typically see in the official documentation—is that Shopify’s CLI requires a supported version of Ruby. However, that “supported” part is where things get a bit nuanced, and that’s what we need to break down.
 
 The quick answer is: *currently*, as of my writing this, Shopify CLI officially supports Ruby versions 3.0, 3.1, 3.2, and 3.3. It’s critical, and I’ll emphasize this, to consistently check the *official* Shopify documentation for the most up-to-date compatibility list. These things can shift with releases, and relying on anecdotal information will lead to headaches. In my earlier experiences managing e-commerce deployments, I had to learn this lesson the hard way when a seemingly innocuous update to Ruby broke all my development tooling.
 

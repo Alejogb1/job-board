@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-large-files-be-efficiently-uploaded-to-a-rails-app-from-a-reactelectron-front-end"
 ---
 
-Alright, let's tackle this. I remember a project a few years back – a large-scale document management system – where we faced a similar challenge: efficiently uploading hefty files from our Electron-based desktop client to our Rails backend. Handling that efficiently involved a mix of techniques, each playing a crucial role. We definitely couldn’t just dump the entire file in a single request; that would've choked everything.
+Alright,  I remember a project a few years back – a large-scale document management system – where we faced a similar challenge: efficiently uploading hefty files from our Electron-based desktop client to our Rails backend. Handling that efficiently involved a mix of techniques, each playing a crucial role. We definitely couldn’t just dump the entire file in a single request; that would've choked everything.
 
 The crux of the issue is that HTTP, by its nature, isn't designed for large, continuous data streams. We needed to slice these files into smaller, manageable pieces and transfer them sequentially, piecing them back together on the server. This is where the concept of "chunked uploads" or "multipart uploads" becomes essential.
 

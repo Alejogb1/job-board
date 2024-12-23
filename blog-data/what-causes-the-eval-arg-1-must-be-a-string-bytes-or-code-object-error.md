@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-causes-the-eval-arg-1-must-be-a-string-bytes-or-code-object-error"
 ---
 
-Okay, let's tackle this. This “eval() arg 1 must be a string, bytes or code object” error—I’ve definitely bumped into it more times than I care to remember, especially during those early days of building dynamic scripting engines back at Cybernetics Solutions. It’s a classic, and it typically stems from a misunderstanding of what the `eval()` function expects as its primary input. It's not about a general programming failure or something being 'broken' per se, rather, it's about providing `eval()` with the wrong data type.
+,  This “eval() arg 1 must be a string, bytes or code object” error—I’ve definitely bumped into it more times than I care to remember, especially during those early days of building dynamic scripting engines back at Cybernetics Solutions. It’s a classic, and it typically stems from a misunderstanding of what the `eval()` function expects as its primary input. It's not about a general programming failure or something being 'broken' per se, rather, it's about providing `eval()` with the wrong data type.
 
 The `eval()` function in Python (and many other languages) is essentially an interpreter embedded within the interpreter. Its primary role is to take a string, bytes object, or pre-compiled code object that represents a piece of valid code, execute it, and return the result. The error we're discussing arises when `eval()` receives an argument that doesn't fall within these acceptable types—something like an integer, a list, a dictionary, or perhaps a custom object.
 

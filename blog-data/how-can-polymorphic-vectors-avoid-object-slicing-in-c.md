@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-polymorphic-vectors-avoid-object-slicing-in-c"
 ---
 
-Alright, let's tackle this. It's a common pitfall, and I've certainly seen my share of object slicing incidents, especially when working with complex inheritance hierarchies. Back in my early days, developing a simulation engine for a robotics project, I made the mistake of naively storing base class objects in a `std::vector` intending to have them behave polymorphically. It, predictably, ended poorly with all of my extended robot arms turning into static base components, quite frustrating, to say the least.
+Alright,  It's a common pitfall, and I've certainly seen my share of object slicing incidents, especially when working with complex inheritance hierarchies. Back in my early days, developing a simulation engine for a robotics project, I made the mistake of naively storing base class objects in a `std::vector` intending to have them behave polymorphically. It, predictably, ended poorly with all of my extended robot arms turning into static base components, quite frustrating, to say the least.
 
 The issue fundamentally boils down to the nature of C++ and how it handles value semantics. When you declare a `std::vector<Base>`, C++ allocates memory for objects of type `Base`. Subsequently, when you attempt to push or emplace an instance of a derived class into that vector, what actually happens is that the derived part of the object is 'sliced off.' Only the base class portion is copied into the vector's memory allocation. Polymorphism hinges on the ability to invoke derived class methods through a base class pointer or reference; however, object slicing effectively eliminates the derived part needed for polymorphic behavior.
 

@@ -4,7 +4,7 @@ date: "2024-12-12"
 id: "what-challenges-exist-in-converting-transformer-models-to-rwkv-architectures"
 ---
 
-Alright so transformer models to RWKV right That's a juicy topic kinda like trying to swap out a V8 engine for a super high-revving rotary in a classic car sounds cool on paper but definitely not a plug-and-play operation
+so transformer models to RWKV right That's a juicy topic kinda like trying to swap out a V8 engine for a super high-revving rotary in a classic car sounds cool on paper but definitely not a plug-and-play operation
 
 The whole thing boils down to fundamentally different architectures transformers with their attention mechanisms are parallel processing powerhouses they look at every part of the input at once which is awesome for many tasks especially when you can throw a ton of GPUs at it RWKV on the other hand it's this cool idea inspired by RNNs but with some serious upgrades It processes input sequentially like a stream of data using time mixing which makes it more memory efficient and potentially easier to run on limited hardware and that difference that sequential vs parallel nature that's the biggest hurdle right there
 

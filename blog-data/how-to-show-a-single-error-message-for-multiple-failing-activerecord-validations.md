@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-show-a-single-error-message-for-multiple-failing-activerecord-validations"
 ---
 
-Alright, let's tackle this. It's a common enough scenario that I’ve bumped into countless times, particularly when dealing with complex forms and user input. You’ve got an ActiveRecord model, a slew of validations, and rather than displaying a flood of error messages, you want to condense it down to a single, user-friendly notification. It's definitely achievable and improves the overall user experience quite a bit. Let me share some strategies I’ve developed over the years, based on what’s worked for me.
+Alright,  It's a common enough scenario that I’ve bumped into countless times, particularly when dealing with complex forms and user input. You’ve got an ActiveRecord model, a slew of validations, and rather than displaying a flood of error messages, you want to condense it down to a single, user-friendly notification. It's definitely achievable and improves the overall user experience quite a bit. Let me share some strategies I’ve developed over the years, based on what’s worked for me.
 
 The core issue lies in how ActiveRecord handles validations. Each failed validation generates an error message, stored in the `errors` hash of the model. By default, when you try to display these errors, you might end up with a laundry list. We need to intercept this, consolidate the errors, and present a single, meaningful message. There isn’t a single magic bullet here, but rather a few techniques that work well, depending on the specifics of your application.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-build-a-web-portal-for-users-to-manage-their-own-airflow-schedules"
 ---
 
-Okay, let’s talk about managing Airflow schedules via a user-facing web portal. This isn’t a trivial task, but it’s absolutely doable, and I’ve tackled variations of it a few times in the past. From my experience, you’re essentially building an abstraction layer on top of the Airflow API – and that's the crucial point to keep in mind. Directly exposing the Airflow metadata database or attempting to directly manipulate Airflow's internal configurations from your portal is generally a bad idea. We'll focus on using the official API.
+, let’s talk about managing Airflow schedules via a user-facing web portal. This isn’t a trivial task, but it’s absolutely doable, and I’ve tackled variations of it a few times in the past. From my experience, you’re essentially building an abstraction layer on top of the Airflow API – and that's the crucial point to keep in mind. Directly exposing the Airflow metadata database or attempting to directly manipulate Airflow's internal configurations from your portal is generally a bad idea. We'll focus on using the official API.
 
 My team had a particularly thorny scenario at a previous company. We had multiple data science teams and analysts, each needing to run different pipelines. Giving everyone direct Airflow access became a governance nightmare. We needed a controlled environment where users could define their schedules without the risk of inadvertently disrupting core operations. So, I dove deep into designing a custom web portal to tackle exactly that.
 

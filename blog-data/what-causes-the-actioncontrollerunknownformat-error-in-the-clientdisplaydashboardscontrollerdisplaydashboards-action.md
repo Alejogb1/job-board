@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-causes-the-actioncontrollerunknownformat-error-in-the-clientdisplaydashboardscontrollerdisplaydashboards-action"
 ---
 
-Alright, let's tackle this. I've seen this `ActionController::UnknownFormat` error pop up more times than I care to count, especially when dealing with `ClientDisplayDashboardsController#display_dashboards` or similar situations involving diverse client needs. It's not usually a complex issue at its core, but the troubleshooting can become a frustrating goose chase if you don't know exactly where to look.
+Alright,  I've seen this `ActionController::UnknownFormat` error pop up more times than I care to count, especially when dealing with `ClientDisplayDashboardsController#display_dashboards` or similar situations involving diverse client needs. It's not usually a complex issue at its core, but the troubleshooting can become a frustrating goose chase if you don't know exactly where to look.
 
 The fundamental reason you encounter `ActionController::UnknownFormat` boils down to a mismatch between the format your client is requesting and the formats your Rails application is configured to handle for a specific controller action. Essentially, Rails’ action dispatch mechanism attempts to determine how to render a response based on the `Accept` header sent in the HTTP request. If Rails can’t map that header to a registered response format (like `json`, `html`, `xml`, etc.), this exception is thrown.
 

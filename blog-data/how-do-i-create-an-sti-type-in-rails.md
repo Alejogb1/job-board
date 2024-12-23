@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-create-an-sti-type-in-rails"
 ---
 
-Alright, let's tackle this. Single Table Inheritance, or STI, in Rails – it's a topic I've bumped into a fair few times over the years, and it’s usually a case of balancing design elegance with potential pitfalls. The core idea, of course, is to represent a hierarchy of related classes using a single database table. This can be wonderfully convenient for certain scenarios, but it also needs careful consideration. I've seen projects where STI was a perfect fit, and others where it caused more headaches than it solved.
+Alright,  Single Table Inheritance, or STI, in Rails – it's a topic I've bumped into a fair few times over the years, and it’s usually a case of balancing design elegance with potential pitfalls. The core idea, of course, is to represent a hierarchy of related classes using a single database table. This can be wonderfully convenient for certain scenarios, but it also needs careful consideration. I've seen projects where STI was a perfect fit, and others where it caused more headaches than it solved.
 
 Essentially, in Rails, you define a base class that corresponds to your table, and then create subclasses that inherit from it. Rails uses a special `type` column in your database table to keep track of which subclass an individual row represents.
 

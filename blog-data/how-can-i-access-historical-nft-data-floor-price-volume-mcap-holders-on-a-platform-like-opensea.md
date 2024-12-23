@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-access-historical-nft-data-floor-price-volume-mcap-holders-on-a-platform-like-opensea"
 ---
 
-Okay, let's tackle this. Accessing historical NFT data – floor price, volume, market cap (MCAP), holders – on a platform like OpenSea isn’t always straightforward, especially when you need granularity beyond what's readily available on the user interface. I've navigated these waters quite a few times in my past projects, and the key lies in understanding how these platforms expose (or sometimes *don't* expose) their data. We’re not talking about a single ‘magic’ API endpoint, but a collection of techniques and strategies.
+,  Accessing historical NFT data – floor price, volume, market cap (MCAP), holders – on a platform like OpenSea isn’t always straightforward, especially when you need granularity beyond what's readily available on the user interface. I've navigated these waters quite a few times in my past projects, and the key lies in understanding how these platforms expose (or sometimes *don't* expose) their data. We’re not talking about a single ‘magic’ API endpoint, but a collection of techniques and strategies.
 
 Let’s start with a caveat: OpenSea, like many similar marketplaces, doesn't offer a single comprehensive public API that directly provides the exact historical data we’re seeking in a nicely packaged format. They often prioritize current, real-time data for obvious business reasons. Consequently, historical retrieval usually involves a combination of their available APIs, potentially some data scraping, and, depending on the level of precision required, relying on third-party data aggregators.
 

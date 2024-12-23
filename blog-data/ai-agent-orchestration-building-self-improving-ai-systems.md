@@ -6,11 +6,11 @@ id: "ai-agent-orchestration-building-self-improving-ai-systems"
 
 yo dude so i just watched this crazy vid about ai agents and this whole emergence thing and man it blew my mind a little like seriously  it's all about how they're building these super-powered ai bots that can do all sorts of stuff not just your basic chatbot stuff but actual real-world tasks
 
-okay so the setup is basically this emergence is this rad ai r&d company staffed by ex-google brain ex-ibm research and like a whole bunch of other seriously smart people from the top ai labs  they've worked on massive projects – like seriously massive –  the kind that power amazon prime video twitter recommendations  and even ibm watson  think distributed systems meeting ai  the whole shebang  they're not just building ai they're building the infrastructure to make ai actually *do* things
+ so the setup is basically this emergence is this rad ai r&d company staffed by ex-google brain ex-ibm research and like a whole bunch of other seriously smart people from the top ai labs  they've worked on massive projects – like seriously massive –  the kind that power amazon prime video twitter recommendations  and even ibm watson  think distributed systems meeting ai  the whole shebang  they're not just building ai they're building the infrastructure to make ai actually *do* things
 
 the whole point of the video is to hype their two new platforms  one is called the orchestrator and the other is agent e  they're basically making a whole suite of ai tools designed to let regular folks make ai do complicated tasks
 
-okay so five key moments  right
+ so five key moments  right
 
 1.  **the big promise of ai** the dude spends a bunch of time talking about how ai was *supposed* to be all about making robots do stuff for us like in sci-fi movies since the 40s and 50s. but it’s only now that it's starting to actually happen which is pretty cool
 

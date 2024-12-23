@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "changing-crs-of-a-sf-object"
 ---
 
-Alright listen up I've seen this rodeo a few times you want to change the coordinate reference system CRS of a simple features sf object in R right That's like trying to change the language of a document after its written tricky but doable Been there done that got the t-shirt And by t-shirt I mean several late nights wrestling with geospatial data
+listen up I've seen this rodeo a few times you want to change the coordinate reference system CRS of a simple features sf object in R right That's like trying to change the language of a document after its written tricky but doable Been there done that got the t-shirt And by t-shirt I mean several late nights wrestling with geospatial data
 
 So the question is "changing CRS of a sf object" yeah that's pretty vague Lets dive into it its about spatial data and how its referenced on earth That's the core stuff of geospatial analysis I've personally spent probably months of my life on this you know that feeling of getting something to align properly finally after a day of errors that's the vibe I get when someone asks this
 

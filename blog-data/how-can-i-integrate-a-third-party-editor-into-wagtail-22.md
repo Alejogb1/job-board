@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-integrate-a-third-party-editor-into-wagtail-22"
 ---
 
-Okay, let’s tackle this. Having spent considerable time working with Wagtail, particularly back in the 2.x days, integrating third-party editors was something I frequently dealt with. It's a common enough requirement, given the rich ecosystem of content editors out there, and Wagtail’s flexibility lets us adapt it nicely. It’s not always straightforward, though; a deep understanding of Wagtail’s architecture, especially its StreamField and widget system, is vital.
+, let’s tackle this. Having spent considerable time working with Wagtail, particularly back in the 2.x days, integrating third-party editors was something I frequently dealt with. It's a common enough requirement, given the rich ecosystem of content editors out there, and Wagtail’s flexibility lets us adapt it nicely. It’s not always straightforward, though; a deep understanding of Wagtail’s architecture, especially its StreamField and widget system, is vital.
 
 The core challenge is bridging the gap between the external editor's logic and Wagtail's data model. Essentially, we need to tell Wagtail how to render the editor interface and then how to serialize the data it generates back into something Wagtail understands, typically json for StreamFields. Let's delve into the particulars.
 

@@ -4,13 +4,13 @@ date: "2024-12-13"
 id: "bytes-like-object-is-required-not-str-error"
 ---
 
-Alright so you're hitting the classic "bytes-like object is required not str" error right Been there done that got the t-shirt probably got a few of those actually This error pops up all the damn time especially when you're dealing with network stuff file handling or anything where you're interacting with the raw data at a lower level Basically it's telling you that your code is expecting to see data in its raw byte form but instead it's getting a regular string which is a sequence of characters not bytes They're not the same thing
+so you're hitting the classic "bytes-like object is required not str" error right Been there done that got the t-shirt probably got a few of those actually This error pops up all the damn time especially when you're dealing with network stuff file handling or anything where you're interacting with the raw data at a lower level Basically it's telling you that your code is expecting to see data in its raw byte form but instead it's getting a regular string which is a sequence of characters not bytes They're not the same thing
 
 I've debugged this error so many times I could probably write a sonnet about it Well maybe not a sonnet more like a really long and boring log file entry I remember one time I was working on this image processing tool I had written in Python I think it was like 2015 or 2016 I was trying to load an image file and then convert it into a series of data I was using PIL aka Pillow then for the image processing I was using the `open` function with the `rb` flag for binary read but somewhere down the line I think when passing the image data to another function for processing it accidentally turned into a normal string instead of bytes because of a encoding conversion I didn't notice and boom "bytes-like object is required not str" all over my console I was banging my head for like three hours before I finally realised I had accidentally called `str()` function on it
 
 The thing is strings and bytes are fundamentally different String is like human readable characters whereas bytes is like the raw data in computers its just a series of numbers between 0 to 255 think of like the binary code of a file or data it uses the `\x` notation if you print it or `b` if you are defining it Python handles them as distinct data types and this error basically indicates a type mismatch
 
-Okay so let's get to the nitty-gritty stuff how do you actually fix this thing First off make sure you're working with byte strings when you need to be If you're reading from a file open it in binary mode `rb` like this:
+ so let's get to the nitty-gritty stuff how do you actually fix this thing First off make sure you're working with byte strings when you need to be If you're reading from a file open it in binary mode `rb` like this:
 
 ```python
 with open("my_file.txt", "rb") as f:

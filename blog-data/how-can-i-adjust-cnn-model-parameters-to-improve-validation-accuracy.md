@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-adjust-cnn-model-parameters-to-improve-validation-accuracy"
 ---
 
-Okay, let's delve into optimizing convolutional neural networks for better validation accuracy. It's a common challenge, and frankly, one I’ve spent a considerable amount of time navigating. My experience, especially during a project involving medical image analysis a few years back, taught me a lot about the nuances involved. We were initially struggling with a model that performed admirably on training data but faltered on the validation set – a classic case of overfitting. So, instead of diving straight into code, let's unpack the underlying mechanics and the strategies we used to address this.
+, let's delve into optimizing convolutional neural networks for better validation accuracy. It's a common challenge, and frankly, one I’ve spent a considerable amount of time navigating. My experience, especially during a project involving medical image analysis a few years back, taught me a lot about the nuances involved. We were initially struggling with a model that performed admirably on training data but faltered on the validation set – a classic case of overfitting. So, instead of diving straight into code, let's unpack the underlying mechanics and the strategies we used to address this.
 
 The core issue stems from how a CNN learns. It's essentially adjusting its parameters—the weights and biases within its convolutional filters and fully connected layers—to minimize a loss function measured on the training data. The goal, of course, is to generalize well to unseen data, which the validation set tests. When your validation accuracy lags, it signals that the model's generalization capability needs attention.
 

@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "what-causes-a-nullpointerexception-in-imagelabeler"
 ---
 
-Okay, let's talk about nullpointerexceptions in an image labeling context. I've seen my share of these over the years, often cropping up when you least expect them. It's not always immediately obvious where they stem from, and that's what makes debugging them a bit of a journey. Generally, a `nullpointerexception` in an `imagelabeler` – or really, anywhere in java or similar languages – boils down to attempting to use a reference that doesn't point to a valid object. It's like trying to use a key on a lock that doesn’t exist; things are just going to break down.
+, let's talk about nullpointerexceptions in an image labeling context. I've seen my share of these over the years, often cropping up when you least expect them. It's not always immediately obvious where they stem from, and that's what makes debugging them a bit of a journey. Generally, a `nullpointerexception` in an `imagelabeler` – or really, anywhere in java or similar languages – boils down to attempting to use a reference that doesn't point to a valid object. It's like trying to use a key on a lock that doesn’t exist; things are just going to break down.
 
 With image labeling, the problem is frequently hidden within the pipeline – how images are loaded, processed, and then how labels are applied. Let's break down common culprits and, importantly, how to address them.
 

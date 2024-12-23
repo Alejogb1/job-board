@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-standard-deviation-should-i-use-for-gaussian-noise-in-my-data"
 ---
 
-Alright, let's tackle this. I've certainly seen my share of noisy data over the years, and the 'correct' standard deviation for Gaussian noise is less about a magical number and more about understanding your specific signal and the desired outcome. It’s not something you pluck out of thin air; it requires a bit of thoughtful analysis.
+Alright,  I've certainly seen my share of noisy data over the years, and the 'correct' standard deviation for Gaussian noise is less about a magical number and more about understanding your specific signal and the desired outcome. It’s not something you pluck out of thin air; it requires a bit of thoughtful analysis.
 
 Specifically, when you're asking about the standard deviation for adding Gaussian noise, you're really asking: “How much random variation do I want to introduce to my data relative to the scale of the signal I'm working with?”. This is a critical question, and the answer hinges on your goals: are you trying to simulate sensor inaccuracies, augment your training dataset, test the robustness of an algorithm, or something else entirely?
 

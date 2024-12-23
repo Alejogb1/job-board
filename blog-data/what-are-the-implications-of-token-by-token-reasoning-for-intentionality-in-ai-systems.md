@@ -4,7 +4,7 @@ date: "2024-12-11"
 id: "what-are-the-implications-of-token-by-token-reasoning-for-intentionality-in-ai-systems"
 ---
 
-Okay so you wanna talk about token-by-token reasoning and how that impacts whether AIs actually *mean* things right  like do they have intentions or are they just clever parrots That's a HUGE question and honestly a pretty hot topic in AI right now  It's not something we fully understand yet but let's dive in  
+ so you wanna talk about token-by-token reasoning and how that impacts whether AIs actually *mean* things right  like do they have intentions or are they just clever parrots That's a HUGE question and honestly a pretty hot topic in AI right now  It's not something we fully understand yet but let's dive in  
 
 The basic idea is that many current AI models especially the big language models  LLMs work by processing text one token at a time  A token could be a word a part of a word or even a special symbol  They don't "see" the whole sentence or paragraph at once they build up an understanding step by step  This is super efficient for processing but it kinda messes with the whole intentionality thing
 

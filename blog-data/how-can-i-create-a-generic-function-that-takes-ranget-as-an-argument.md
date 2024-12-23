@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-create-a-generic-function-that-takes-ranget-as-an-argument"
 ---
 
-Alright, let's tackle this. I've dealt with generic range handling more times than I care to count, and it always comes down to a few key principles. The core challenge with a generic function accepting `range<t>` is that `range<t>` itself isn't directly usable as a *type* in many languages. It's a parameterized type, and you need to ensure your function can handle whatever underlying concrete type `t` ends up being. I'm going to approach this by breaking it into two major steps: type constraints and leveraging interfaces. Let's go.
+Alright,  I've dealt with generic range handling more times than I care to count, and it always comes down to a few key principles. The core challenge with a generic function accepting `range<t>` is that `range<t>` itself isn't directly usable as a *type* in many languages. It's a parameterized type, and you need to ensure your function can handle whatever underlying concrete type `t` ends up being. I'm going to approach this by breaking it into two major steps: type constraints and leveraging interfaces. Let's go.
 
 First, type constraints. This is the bedrock of making a generic function actually useful. You need to place limitations on what type `t` can be. For example, let's say you're operating on numerical ranges. You'd likely need some way to compare `t` values and possibly perform arithmetic operations on them. In languages like c# or java, you'd rely on type constraints using interfaces or base classes. Here's a scenario from one project I did where we needed a way to determine if a number fell inside *any* given numerical range:
 

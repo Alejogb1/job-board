@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "when-are-pancakeswap-trade-fees-deducted-and-why-arent-they-reflected-in-liquidity-pools"
 ---
 
-Okay, let's tackle this one. I remember back in '21, working on a DeFi project, we had a similar head-scratcher around transaction fees and liquidity pool mechanics on a fork of Uniswap v2. PancakeSwap, fundamentally, operates on a similar Automated Market Maker (AMM) model, so the principles remain consistent, although specifics differ. The issue of when fees are deducted and why they’re not directly mirrored in the pool balance is a common source of confusion, and it's important to get it clear.
+, let's tackle this one. I remember back in '21, working on a DeFi project, we had a similar head-scratcher around transaction fees and liquidity pool mechanics on a fork of Uniswap v2. PancakeSwap, fundamentally, operates on a similar Automated Market Maker (AMM) model, so the principles remain consistent, although specifics differ. The issue of when fees are deducted and why they’re not directly mirrored in the pool balance is a common source of confusion, and it's important to get it clear.
 
 The core concept to understand is that trade fees on PancakeSwap (and similar AMMs) are not a direct subtraction from the tokens exchanged. Instead, they are essentially a *redistribution* mechanism. The fees are charged at the point of the trade execution, and this happens transparently *before* the swap is completed. Therefore, what you *receive* is already adjusted for the fee.
 

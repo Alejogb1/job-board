@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-reference-binaries-from-packages-in-bazels-custom-toolchain"
 ---
 
-Okay, let’s talk about referencing binaries from packages within Bazel’s custom toolchains. This is a subject I've had to iron out a few times over the years, and it can initially feel a bit… roundabout, shall we say. It’s not always obvious how to navigate Bazel’s hermeticity while still accessing necessary tooling packaged within your project.
+, let’s talk about referencing binaries from packages within Bazel’s custom toolchains. This is a subject I've had to iron out a few times over the years, and it can initially feel a bit… roundabout, shall we say. It’s not always obvious how to navigate Bazel’s hermeticity while still accessing necessary tooling packaged within your project.
 
 First, let's be clear on the core problem: Bazel aims for hermeticity. This means that build actions shouldn't depend on anything outside of the specified inputs. This is great for reproducibility and reliability, but it creates a challenge when your custom toolchain needs to execute binaries you’ve defined in your build. You can't simply rely on absolute paths or things floating around on your system. You need a reliable way to tell Bazel where those binaries are *within* its build graph, so they can be tracked, cached, and handled correctly.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-isnt-the-docker-add-command-extracting-the-targz-file"
 ---
 
-Okay, let's talk about `docker add` and those pesky tar.gz archives. It's a common stumble, and I've definitely spent my share of late nights debugging similar issues. Specifically, why the `add` instruction seems to just… ignore the fact that it's dealing with a compressed archive. Let's dissect this, as there's more to it than meets the eye.
+, let's talk about `docker add` and those pesky tar.gz archives. It's a common stumble, and I've definitely spent my share of late nights debugging similar issues. Specifically, why the `add` instruction seems to just… ignore the fact that it's dealing with a compressed archive. Let's dissect this, as there's more to it than meets the eye.
 
 The core issue revolves around the way `docker add` interprets the source and destination paths, and the implicit assumption that often clashes with user expectations regarding extraction. The `add` instruction is not automatically smart enough to detect compressed archives and expand them; that's the crux of the problem. When you simply specify a .tar.gz as the source, Docker treats it as a single file and moves it, as is, into the container at the destination path. It doesn't initiate an extraction process unless explicitly instructed. This is not necessarily a limitation, but a design choice focused on clarity and predictability. If you intended it to be simply added as a regular file, that's what it does.
 

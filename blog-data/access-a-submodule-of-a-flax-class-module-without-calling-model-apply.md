@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "access-a-submodule-of-a-flax-class-module-without-calling-model-apply"
 ---
 
-Alright so you're asking how to get into a submodule of a Flax model without going through the whole `model.apply` rigmarole yeah I've been there done that got the t-shirt trust me it’s a common snag when you're digging deep into model internals especially if you are into debugging or doing surgery on the model’s guts.
+so you're asking how to get into a submodule of a Flax model without going through the whole `model.apply` rigmarole yeah I've been there done that got the t-shirt trust me it’s a common snag when you're digging deep into model internals especially if you are into debugging or doing surgery on the model’s guts.
 
 Let’s be real `model.apply` is great for forward passes and it's all good when you're training or doing inference It handles all the plumbing nicely like updating batch norm stats managing rngs and so on. But sometimes you just need to peek at a specific submodule get at its parameters or inspect its inner workings without going through all of that.
 
@@ -12,7 +12,7 @@ So here's the deal you don't want to apply you just want to dive in directly. It
 
 I remember a particularly painful debugging session back in my early days trying to figure out why my attention mechanism was spitting out garbage. I was going insane rerunning the entire model with `model.apply` just to print the output of a single layer. That was a bad time it wasted a lot of compute and more importantly a lot of my time. Then I realised I could just grab the module directly by its path and it made my life much easier.
 
-Okay so let’s get to the meat of it. Let's say you have a model that looks something like this you have a class that holds other classes
+ so let’s get to the meat of it. Let's say you have a model that looks something like this you have a class that holds other classes
 
 ```python
 import flax.linen as nn
@@ -99,4 +99,4 @@ So resources I would recommend instead of links since we are doing the stackover
 
 *   **Flax documentation:** Not a book but the official flax documentation is your best friend it has all the details about how Flax works from the ground up and I guarantee if you spend enough time reading it you will become a Flax god.
 
-Alright so that’s how you do it you got it? Now go forth and debug your models without the `model.apply()` shackles. Oh and one last thing I nearly forgot why did the programmer quit his job? Because he didn’t get arrays hahaha.
+so that’s how you do it you got it? Now go forth and debug your models without the `model.apply()` shackles. Oh and one last thing I nearly forgot why did the programmer quit his job? Because he didn’t get arrays hahaha.

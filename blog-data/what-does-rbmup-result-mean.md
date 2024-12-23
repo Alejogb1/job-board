@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-does-rbmup-result-mean"
 ---
 
-Okay, let's delve into `rbm.up`. I've certainly spent my share of late nights staring at those outputs, so I can offer some practical perspective. When you see `rbm.up` in the context of Restricted Boltzmann Machines (RBMs), it's signaling the result of a particular computation step - specifically, the upward pass of information, or the calculation of the probabilities of visible units given the hidden units. It’s not an outcome in the traditional sense of an algorithm succeeding or failing, but rather a specific stage in the generative and learning process within an RBM.
+, let's delve into `rbm.up`. I've certainly spent my share of late nights staring at those outputs, so I can offer some practical perspective. When you see `rbm.up` in the context of Restricted Boltzmann Machines (RBMs), it's signaling the result of a particular computation step - specifically, the upward pass of information, or the calculation of the probabilities of visible units given the hidden units. It’s not an outcome in the traditional sense of an algorithm succeeding or failing, but rather a specific stage in the generative and learning process within an RBM.
 
 To really grasp it, remember that RBMs are generative stochastic neural networks. They consist of two layers: visible units (which represent the data) and hidden units (which learn complex underlying features). The model's aim is to learn a probability distribution over the visible layer given the hidden layer and vice versa. That ‘and vice versa’ is where `rbm.up` (and consequently `rbm.down`) comes into play.
 

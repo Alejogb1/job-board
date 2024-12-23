@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "runtime-graph-algorithm-performance-analysis"
 ---
 
-Okay so runtime graph algorithm performance analysis yeah I’ve been down that rabbit hole a few times let’s talk about it
+ so runtime graph algorithm performance analysis yeah I’ve been down that rabbit hole a few times let’s talk about it
 
 First off runtime analysis isn’t magic it’s all about understanding how the time it takes for an algorithm to run scales with the size of the input that size in graph algorithms usually means number of nodes and edges so we're talking *n* and *m* here
 
@@ -20,7 +20,7 @@ The solution of course was the classic priority queue implementation based on a 
 
 Now for some code examples because we all like seeing code and this is after all the point here
 
-Okay so here is a Python implementation of BFS on a graph represented with an adjacency list it’s a common thing for graph algorithms
+ so here is a Python implementation of BFS on a graph represented with an adjacency list it’s a common thing for graph algorithms
 
 ```python
 def bfs(graph, start_node):
@@ -206,6 +206,6 @@ Another good option is "Algorithm Design" by Kleinberg and Tardos it provides mo
 
 One more thing to keep in mind is input distribution its a simple one but worth knowing real world graphs aren’t always random sometimes they have power-law distributions or specific network topologies that can affect the performance of algorithms even if theoretically it's the same so you should always test with realistic graph examples not just random graphs you should try different examples to see how the algorithm behaves in various situations
 
-Okay so what was I talking about oh yeah runtime graph algorithm analysis so yes in conclusion always profile always measure and don’t assume that big-O will always be the most important factor in your real-world implementation And always remember to choose the right data structure for the job not everything can be treated like a hammer it depends on the task that you are doing
+ so what was I talking about oh yeah runtime graph algorithm analysis so yes in conclusion always profile always measure and don’t assume that big-O will always be the most important factor in your real-world implementation And always remember to choose the right data structure for the job not everything can be treated like a hammer it depends on the task that you are doing
 
 That’s it I guess yeah good luck and happy coding

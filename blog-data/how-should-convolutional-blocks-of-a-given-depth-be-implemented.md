@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-should-convolutional-blocks-of-a-given-depth-be-implemented"
 ---
 
-Okay, let's talk about convolutional block implementation depth. This is a topic that, I've found, seems straightforward at first but reveals a rather nuanced landscape once you start deploying models in production or attempting fine-grained optimization. I've personally encountered scenarios where seemingly minor adjustments to the block depth had profound impacts on both training speed and final model performance. It's not just about stacking layers; it's about understanding the effects of that stacking on the features being learned.
+, let's talk about convolutional block implementation depth. This is a topic that, I've found, seems straightforward at first but reveals a rather nuanced landscape once you start deploying models in production or attempting fine-grained optimization. I've personally encountered scenarios where seemingly minor adjustments to the block depth had profound impacts on both training speed and final model performance. It's not just about stacking layers; it's about understanding the effects of that stacking on the features being learned.
 
 The ‘depth’ of a convolutional block refers to the number of convolutional layers within that block, sometimes also including non-linearities and pooling layers. The choice of depth impacts receptive field size, feature complexity, and ultimately, the model’s ability to extract meaningful information from input data. A shallow block might struggle to capture intricate patterns, while an excessively deep block can lead to vanishing/exploding gradients or overfitting. The implementation strategy should therefore reflect the specific task, dataset, and computational resources at hand.
 

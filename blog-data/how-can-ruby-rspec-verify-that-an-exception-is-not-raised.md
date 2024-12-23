@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-ruby-rspec-verify-that-an-exception-is-not-raised"
 ---
 
-Okay, let's get into it. I’ve had my share of debugging sessions involving unexpected exceptions, or, more frequently, the *absence* of expected ones. It’s a situation that can be particularly frustrating when dealing with conditional logic, where you're trying to ensure certain code paths execute without error. Specifically, you're asking about how RSpec can help verify that an exception is *not* raised. This is a crucial aspect of writing robust tests, and surprisingly, it often requires more deliberate effort than testing for raised exceptions.
+, let's get into it. I’ve had my share of debugging sessions involving unexpected exceptions, or, more frequently, the *absence* of expected ones. It’s a situation that can be particularly frustrating when dealing with conditional logic, where you're trying to ensure certain code paths execute without error. Specifically, you're asking about how RSpec can help verify that an exception is *not* raised. This is a crucial aspect of writing robust tests, and surprisingly, it often requires more deliberate effort than testing for raised exceptions.
 
 The core concept here revolves around the `not_to` syntax in RSpec. Usually, we use `expect { ... }.to raise_error(...)` to verify that an exception *does* occur. When we want to assert that no exception happens, we flip that expectation. We'll use `expect { ... }.not_to raise_error`. That's the fundamental approach, but its application can become nuanced, and there are several ways to refine it.
 

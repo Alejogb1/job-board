@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "does-batch-size-impact-model-accuracy"
 ---
 
-Okay, let's talk about batch size and its implications on model accuracy. It's a topic I’ve grappled with countless times over the years, particularly during my time working on large-scale image recognition projects where optimizing for performance and accuracy was crucial. Believe me, it's not as straightforward as 'bigger is always better' or vice versa. The impact is nuanced and depends on various factors related to your specific dataset, model architecture, and the optimization algorithm you're using.
+, let's talk about batch size and its implications on model accuracy. It's a topic I’ve grappled with countless times over the years, particularly during my time working on large-scale image recognition projects where optimizing for performance and accuracy was crucial. Believe me, it's not as straightforward as 'bigger is always better' or vice versa. The impact is nuanced and depends on various factors related to your specific dataset, model architecture, and the optimization algorithm you're using.
 
 First, let's define what we mean by 'batch size.' In the context of training machine learning models, batch size refers to the number of training examples used in one iteration of the learning algorithm before the model's parameters are updated. So, if you have a dataset of 1000 images and you set your batch size to 10, it means your model's weights are adjusted after processing 10 images. This process is repeated until the model has seen the whole dataset – an epoch.
 

@@ -22,7 +22,7 @@ print(naive_match("son", "sarah johnson")) #output True
 
 it works for the simplest cases, like the first two examples, but look at that third case. "son" matching "sarah johnson", that's useless. this simple approach is way too broad and will give you many false positives. it doesn't consider word boundaries, which is critical when dealing with names. you end up with lots of noise. i remember the first time i did this in my first real project, it was a disaster. the system was matching everything with anything, people ended up with the wrong appointments on the calendar, it was not a happy ending.
 
-next logical step, i thought, was to use regular expressions. okay, now we’re getting somewhere. we can make the search more specific by using word boundary anchors, that is, `\b` in most regex dialects. this is an improvement over the simple `in` operator since we are not matching middle of words anymore. for example, we could check if the keyword matches the beginning of a word in the full name. we can do that like this:
+next logical step, i thought, was to use regular expressions. , now we’re getting somewhere. we can make the search more specific by using word boundary anchors, that is, `\b` in most regex dialects. this is an improvement over the simple `in` operator since we are not matching middle of words anymore. for example, we could check if the keyword matches the beginning of a word in the full name. we can do that like this:
 
 ```python
 import re

@@ -4,9 +4,9 @@ date: "2024-12-13"
 id: "no-transport-jquery-ajax-issue"
 ---
 
-Alright so you're seeing a "no transport" issue with jQuery AJAX right Been there done that got the t-shirt feels like a rite of passage for any web dev really Especially if you've been around the block like I have
+so you're seeing a "no transport" issue with jQuery AJAX right Been there done that got the t-shirt feels like a rite of passage for any web dev really Especially if you've been around the block like I have
 
-Okay first off let's get the basic assumptions out of the way you're trying to make an AJAX request using jQuery specifically the `$.ajax` `$.get` `$.post` methods or some variant of them and your browser console is throwing a "no transport" error It's not exactly a pretty sight I know believe me
+ first off let's get the basic assumptions out of the way you're trying to make an AJAX request using jQuery specifically the `$.ajax` `$.get` `$.post` methods or some variant of them and your browser console is throwing a "no transport" error It's not exactly a pretty sight I know believe me
 
 Now this "no transport" message is basically jQuery's way of telling you "dude I don't know how to send this request" It means none of jQuery's pre-defined transport methods like XMLHttpRequest or JSONP or whatever else it's got in its arsenal is applicable to the type of request you're trying to make It's like you're trying to put a square peg in a round hole jQuery’s a clever fella but it does need a compatible transport mechanism to actually send data over the network
 
@@ -119,4 +119,4 @@ $.getJSON("http://localhost:5001/data", function(data) {
 For more reading you can refer to "HTTP: The Definitive Guide" by David Gourley and Brian Totty it goes deep into the technical details behind HTTP including CORS You may also want to read up on the official jQuery API documentation specifically the $.ajax function is a great source of truth and you get to keep up with the changes as they update the library you might be surprised how often they do and you might need to update your code occasionally
 
 This is not a definitive solution for any situation but this checklist is how I usually tackle this particular problem it's a standard debugging procedure for a standard web app issue and it usually works if you follow the steps
-Alright hope that helps I've got to go now time for me to write some more code you know the drill
+hope that helps I've got to go now time for me to write some more code you know the drill

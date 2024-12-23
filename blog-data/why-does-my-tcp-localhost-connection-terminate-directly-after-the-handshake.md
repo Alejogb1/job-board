@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-does-my-tcp-localhost-connection-terminate-directly-after-the-handshake"
 ---
 
-Okay, let's tackle this. A TCP connection on localhost, abruptly ending post-handshake, is a scenario that brings back memories. I recall debugging a particularly stubborn service years ago, exhibiting precisely this behavior. It's frustrating, because the handshake completes successfully – the *syn*, *syn-ack*, and *ack* exchange goes through, indicating a basic level of network functionality, yet the connection closes immediately thereafter. Let’s break down the common culprits and explore how to diagnose this kind of situation effectively.
+,  A TCP connection on localhost, abruptly ending post-handshake, is a scenario that brings back memories. I recall debugging a particularly stubborn service years ago, exhibiting precisely this behavior. It's frustrating, because the handshake completes successfully – the *syn*, *syn-ack*, and *ack* exchange goes through, indicating a basic level of network functionality, yet the connection closes immediately thereafter. Let’s break down the common culprits and explore how to diagnose this kind of situation effectively.
 
 The handshake itself is a basic agreement for communication – it establishes the parameters of the connection but doesn’t guarantee ongoing data transfer. When a TCP connection fails so quickly after, the problem is typically not with the initial network setup, but rather what happens *after* the connection is established. We need to look at the application layer, or sometimes even OS-level resource constraints.
 

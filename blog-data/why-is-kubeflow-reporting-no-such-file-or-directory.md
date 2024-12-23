@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-kubeflow-reporting-no-such-file-or-directory"
 ---
 
-Okay, let’s unpack this "no such file or directory" error within Kubeflow. I’ve seen this particular gremlin pop up more times than I care to count across different environments, and it usually boils down to a few core issues, each with its own set of troubleshooting steps. It’s rarely a straightforward filesystem problem, despite the literal message. It's more nuanced, involving the interplay between containers, volumes, and the broader Kubeflow orchestration.
+, let’s unpack this "no such file or directory" error within Kubeflow. I’ve seen this particular gremlin pop up more times than I care to count across different environments, and it usually boils down to a few core issues, each with its own set of troubleshooting steps. It’s rarely a straightforward filesystem problem, despite the literal message. It's more nuanced, involving the interplay between containers, volumes, and the broader Kubeflow orchestration.
 
 Firstly, it’s essential to understand that when Kubeflow reports "no such file or directory," the error isn’t necessarily happening on the host machine where the Kubeflow components reside. It's almost certainly happening inside a containerized process managed by Kubeflow. This changes the investigative landscape considerably. We need to think about which container is triggering the error, and what path it’s trying to access.
 

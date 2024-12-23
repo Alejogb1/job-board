@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-portfolio-return-be-maximized-subject-to-a-variance-constraint-using-matlab"
 ---
 
-Okay, let's unpack this. Maximizing portfolio return while adhering to a specific variance constraint is a classic problem in quantitative finance, and it’s one I’ve encountered multiple times over the years—most recently while optimizing a risk-managed trading strategy back at my previous firm. It's a fairly elegant demonstration of constrained optimization, and MATLAB, with its robust optimization toolbox, is well-suited for handling it.
+, let's unpack this. Maximizing portfolio return while adhering to a specific variance constraint is a classic problem in quantitative finance, and it’s one I’ve encountered multiple times over the years—most recently while optimizing a risk-managed trading strategy back at my previous firm. It's a fairly elegant demonstration of constrained optimization, and MATLAB, with its robust optimization toolbox, is well-suited for handling it.
 
 The core idea revolves around finding the portfolio weights that yield the highest expected return without exceeding a predetermined level of risk, represented by portfolio variance. We aren't just throwing darts here; it’s a structured approach. This isn't about seeking the absolutely highest return irrespective of volatility, but rather finding the optimal balance given your risk tolerance.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-the-session-id-retrieved-but-the-session-object-undefined-in-nuxt"
 ---
 
-Okay, let’s tackle this. I've seen this particular scenario play out more times than I care to recall, particularly with nuanced frameworks like Nuxt. It's a head-scratcher for many, and it really boils down to understanding the order of operations and the lifecycle within a server-rendered or hybrid application.
+, let’s tackle this. I've seen this particular scenario play out more times than I care to recall, particularly with nuanced frameworks like Nuxt. It's a head-scratcher for many, and it really boils down to understanding the order of operations and the lifecycle within a server-rendered or hybrid application.
 
 The core issue—a session id being present while the associated session object is undefined—usually occurs because the session middleware, which is responsible for persisting data across requests, isn't completing its job before other critical parts of the application try to access that session data. This often manifests when you’re mixing server-side rendering (ssr) and client-side code in Nuxt. The session id might be available on the client, perhaps from a cookie, but the corresponding data hasn't yet been hydrated.
 

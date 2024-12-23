@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "hold-out-set-machine-learning-definition"
 ---
 
-Okay so you're asking about holdout sets in machine learning right Got it I’ve battled this beast a few times so let me break it down like I'm explaining it to a fellow coder at 3 AM after too much coffee
+ so you're asking about holdout sets in machine learning right Got it I’ve battled this beast a few times so let me break it down like I'm explaining it to a fellow coder at 3 AM after too much coffee
 
 First off a holdout set sometimes referred to as a validation set is a chunk of your data that you purposely keep away from your model during its training phase Think of it like this imagine you are teaching a kid multiplication tables you give them lots of examples to learn from then you give them a quiz using new problems they never saw during training the quiz is your holdout set. You don't use this holdout set to tweak model parameters instead you use it to get a feel for how the model will perform on unseen data. This lets you estimate the generalization ability of your model which is extremely important.
 
@@ -19,7 +19,7 @@ Here's a more formal look at why you absolutely need a holdout set :
 *   **Hyperparameter Tuning:** When using techniques like cross-validation using the validation set as the final touch point gives you the final estimation of the models performance
 *   **Avoiding Overfitting:** As I mentioned earlier holdout sets help to detect whether the model is simply memorizing the training data rather than learning actual patterns.
 
-**Okay let's get to some code. Here's how to split your data using Python and scikit-learn:**
+** let's get to some code. Here's how to split your data using Python and scikit-learn:**
 
 ```python
 from sklearn.model_selection import train_test_split

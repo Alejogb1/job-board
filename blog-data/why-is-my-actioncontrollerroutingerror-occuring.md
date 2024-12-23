@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-is-my-actioncontrollerroutingerror-occuring"
 ---
 
-Okay, let's tackle this `ActionController::RoutingError` – a classic head-scratcher that I've certainly seen enough times in my career to warrant a thorough discussion. It's less about a single error and more about a constellation of potential misconfigurations, often stemming from a disconnect between the routes you've defined and the requests your application is receiving. Think of it like this: the Rails router acts as a traffic controller, directing incoming web requests to the appropriate controller action. When that controller can't find a matching route, it raises this error.
+, let's tackle this `ActionController::RoutingError` – a classic head-scratcher that I've certainly seen enough times in my career to warrant a thorough discussion. It's less about a single error and more about a constellation of potential misconfigurations, often stemming from a disconnect between the routes you've defined and the requests your application is receiving. Think of it like this: the Rails router acts as a traffic controller, directing incoming web requests to the appropriate controller action. When that controller can't find a matching route, it raises this error.
 
 In my past experience, debugging this has ranged from trivially simple to surprisingly complex. I remember one specific project, a large e-commerce application, where a seemingly innocuous change in a front-end form resulted in a cascade of routing errors that took half a day to fully resolve. The lesson there, and one I’ve carried forward, is to always approach this systematically. So, let's break down the common culprits.
 

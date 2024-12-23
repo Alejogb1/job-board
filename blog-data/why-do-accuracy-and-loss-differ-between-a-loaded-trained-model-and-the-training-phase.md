@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-do-accuracy-and-loss-differ-between-a-loaded-trained-model-and-the-training-phase"
 ---
 
-Okay, let's tackle this. It's a common head-scratcher, and honestly, something I've personally spent quite a few late nights debugging. The discrepancy between training phase metrics (accuracy, loss) and the performance you see after loading a supposedly 'trained' model is a multifaceted problem. It’s rarely a single culprit, more like a confluence of factors acting together.
+,  It's a common head-scratcher, and honestly, something I've personally spent quite a few late nights debugging. The discrepancy between training phase metrics (accuracy, loss) and the performance you see after loading a supposedly 'trained' model is a multifaceted problem. It’s rarely a single culprit, more like a confluence of factors acting together.
 
 First off, let’s clarify what we mean by ‘loaded’ model. We're not just talking about copying weights; we're referring to the process where you take a model that’s gone through training – where it adjusted internal parameters to fit some training data – and then restore its weights and architecture for *inference*, often on new, unseen data. The disparity arises primarily because the contexts are inherently different.
 

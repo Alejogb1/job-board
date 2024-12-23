@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-rasa-handle-custom-actions-after-a-response-is-selected"
 ---
 
-Alright, let's tackle this. The issue of managing custom actions *after* a response has been selected in Rasa is something I’ve encountered quite a bit over the years, particularly when building conversational interfaces that go beyond simple question-answer flows. It's not just about generating a text response; it's about orchestrating the complete interaction lifecycle, which often involves executing business logic, updating databases, or interacting with external services. Let’s break down how Rasa facilitates this, avoiding the trap of over-complicating the process.
+Alright,  The issue of managing custom actions *after* a response has been selected in Rasa is something I’ve encountered quite a bit over the years, particularly when building conversational interfaces that go beyond simple question-answer flows. It's not just about generating a text response; it's about orchestrating the complete interaction lifecycle, which often involves executing business logic, updating databases, or interacting with external services. Let’s break down how Rasa facilitates this, avoiding the trap of over-complicating the process.
 
 The key is understanding that Rasa’s architecture provides us with 'hooks,' essentially strategic places within the dialogue management process where we can insert our custom logic. Specifically, the *after-response selection* phase is handled by what Rasa calls custom actions. These actions are not part of the natural language understanding (nlu) or dialogue management (dm) pipelines directly, but they are triggered by the policy engine as an extension of the intent fulfillment.
 

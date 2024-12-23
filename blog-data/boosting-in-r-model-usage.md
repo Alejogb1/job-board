@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "boosting-in-r-model-usage"
 ---
 
-Okay so you're asking about boosting in R model usage right I've been down this rabbit hole a few times myself Let me tell you it's not always smooth sailing but the results can be pretty sweet. I mean who doesn't want a model that performs better right?
+ so you're asking about boosting in R model usage right I've been down this rabbit hole a few times myself Let me tell you it's not always smooth sailing but the results can be pretty sweet. I mean who doesn't want a model that performs better right?
 
 So the question isn't about just using any boosting algorithm randomly that's a rookie mistake a model is only as good as the data you feed it. We're talking about optimizing the whole process. First let's get the basics straight the boosting concept is simple you take weak learners combine them sequentially and give more weight to those that misclassify. This sequential process helps reduce bias and variance leading to better overall model performance.
 

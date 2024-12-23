@@ -4,7 +4,7 @@ date: "2024-12-11"
 id: "why-is-practical-coding-experience-essential-for-progress-in-mechanistic-interpretability"
 ---
 
-Okay so you wanna know why actually *doing* code is super important if you're trying to understand how these crazy complex AI models work right Mechanistic Interpretability MI that's the fancy term  It's not enough to just read papers trust me I've tried the theoretical stuff is cool and all but it's like learning to bake by reading a cookbook you'll know the steps but you won't really *get* it until you've messed up a souffle a few times  Same with MI
+ so you wanna know why actually *doing* code is super important if you're trying to understand how these crazy complex AI models work right Mechanistic Interpretability MI that's the fancy term  It's not enough to just read papers trust me I've tried the theoretical stuff is cool and all but it's like learning to bake by reading a cookbook you'll know the steps but you won't really *get* it until you've messed up a souffle a few times  Same with MI
 
 The core problem is that these models are insanely intricate  We're talking billions of parameters interconnected in ways we barely grasp  You can read about attention mechanisms and transformers all day long but until you've implemented one yourself debugged its quirks and wrestled with its output you won't *feel* the internal logic
 

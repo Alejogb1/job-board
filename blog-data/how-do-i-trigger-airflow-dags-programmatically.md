@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-trigger-airflow-dags-programmatically"
 ---
 
-Okay, let's get into programmatic triggering of Airflow DAGs. It’s something I've dealt with quite a bit over the years, especially when moving away from strictly scheduled workflows to more event-driven pipelines. I remember one particular project involving real-time data ingestion where we had to migrate from a fixed cron schedule to a system that dynamically launched DAGs based on upstream data availability. That experience really hammered home the importance of understanding the different mechanisms for programmatic triggers.
+, let's get into programmatic triggering of Airflow DAGs. It’s something I've dealt with quite a bit over the years, especially when moving away from strictly scheduled workflows to more event-driven pipelines. I remember one particular project involving real-time data ingestion where we had to migrate from a fixed cron schedule to a system that dynamically launched DAGs based on upstream data availability. That experience really hammered home the importance of understanding the different mechanisms for programmatic triggers.
 
 At the core, you’re looking to initiate a dag run outside of Airflow's built-in scheduler. This is usually accomplished through one of Airflow’s apis or interfaces. I've consistently found the rest api to be the most flexible and widely applicable. It allows for integration with diverse systems and platforms using standard http requests. There are other options, like directly interacting with airflow’s python apis, but this tends to introduce dependencies which make it harder to decouple processes.
 
@@ -14,7 +14,7 @@ Let's delve into the core mechanics of using the rest api for this purpose. Airf
 
 Now, before I jump into the code snippets, a few notes on airflow’s configuration are pertinent. To use the api, you'll typically need to enable it and configure authentication methods. This usually involves setting parameters in your `airflow.cfg` file, and also likely creating a user with the appropriate permissions. The recommended way to do this in modern airflow is using roles and permissions rather than modifying the `airflow.cfg` file directly, and should be done using the cli or airflow ui. The official documentation covers this extensively so I'll avoid replicating that information here, however you can find details in the "apache airflow documentation: security" section.
 
-Okay, let's look at the code examples:
+, let's look at the code examples:
 
 **Snippet 1: Python using `requests` library**
 

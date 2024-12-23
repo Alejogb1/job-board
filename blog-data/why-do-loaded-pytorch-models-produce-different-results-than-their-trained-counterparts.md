@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-do-loaded-pytorch-models-produce-different-results-than-their-trained-counterparts"
 ---
 
-Alright, let's tackle this. It's a scenario I've personally encountered quite a few times, usually after some late nights debugging seemingly inexplicable behavior. The issue of loaded PyTorch models behaving differently from their trained counterparts is, at its core, a matter of nuanced state and the potential for unintended deviations introduced during the saving and loading process. It's rarely a fundamental flaw in PyTorch itself, but rather a consequence of how we interact with it.
+Alright,  It's a scenario I've personally encountered quite a few times, usually after some late nights debugging seemingly inexplicable behavior. The issue of loaded PyTorch models behaving differently from their trained counterparts is, at its core, a matter of nuanced state and the potential for unintended deviations introduced during the saving and loading process. It's rarely a fundamental flaw in PyTorch itself, but rather a consequence of how we interact with it.
 
 At the heart of it, when you train a PyTorch model, the `torch.nn.Module` object maintains a complex internal state. This state includes not only the learned weights (the parameters) but also things like the running statistics for batch normalization layers, or, if you’re using it, the state of optimizers. When you save the model using `torch.save`, depending on how you approach it, you might not be capturing the entire state precisely, leading to discrepancies upon reloading.
 

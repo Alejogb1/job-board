@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-run-xvfb-in-a-jupyter-notebook-on-an-m1-mac"
 ---
 
-Okay, let's tackle this one. It's a problem I've definitely bumped into more than once, particularly when trying to automate web scraping or generate visual output in headless environments. The challenge with running Xvfb (X virtual framebuffer) within a Jupyter Notebook on an M1 Mac isn’t entirely straightforward, mainly because of the architectural differences between Intel and Apple Silicon and the way X11 interacts with macOS.
+, let's tackle this one. It's a problem I've definitely bumped into more than once, particularly when trying to automate web scraping or generate visual output in headless environments. The challenge with running Xvfb (X virtual framebuffer) within a Jupyter Notebook on an M1 Mac isn’t entirely straightforward, mainly because of the architectural differences between Intel and Apple Silicon and the way X11 interacts with macOS.
 
 The core issue lies in the fact that Xvfb is fundamentally a linux-based X server and relies on the X11 windowing system. macOS, since 10.8 (Mountain Lion), has moved away from its native X11 implementation, requiring XQuartz as an external dependency. Now, XQuartz is available for macOS arm64 (M1) architectures, but its integration with the system is not as seamless as on older Intel-based systems. This leads to potential compatibility problems when attempting to leverage Xvfb, often manifesting as issues with display setup or library dependencies when using a jupyter notebook.
 

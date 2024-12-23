@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-create-a-generic-function-accepting-ranget-in-swift"
 ---
 
-Let's tackle this. I recall dealing with a similar challenge back when I was optimizing a data processing pipeline for a mapping application. The need arose to have a single function operate on various types of ranges, each containing different data types but needing similar processing logic. Getting this to work elegantly with Swift's generics and `Range<T>` requires a solid understanding of protocols and constraints.
+ I recall dealing with a similar challenge back when I was optimizing a data processing pipeline for a mapping application. The need arose to have a single function operate on various types of ranges, each containing different data types but needing similar processing logic. Getting this to work elegantly with Swift's generics and `Range<T>` requires a solid understanding of protocols and constraints.
 
 The core issue lies in the fact that `Range<T>` itself has a generic type `T`, and not all types will conform to the requirements your function might have. To create a truly generic function that operates on ranges, we need to constrain the type `T` to fulfill certain criteria. Primarily, we will often need `T` to be `Comparable` to ensure we can perform basic comparisons such as checking if a value falls within the range. Furthermore, for some functionalities, we might require the ability to step through the range.
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "alternating-bit-protocol-communication-network"
 ---
 
-Okay so you're asking about the alternating bit protocol yeah I've been down that road more times than I care to admit its like the first thing they throw at you when you get into network stuff and it seems simple but oh boy it can bite you real bad
+ so you're asking about the alternating bit protocol yeah I've been down that road more times than I care to admit its like the first thing they throw at you when you get into network stuff and it seems simple but oh boy it can bite you real bad
 
 So let's break it down you've got two entities Sender and Receiver and they're trying to have a reliable data transfer over an unreliable channel the channel is the key its like that old wifi router at your grandmas that randomly drops connection every five minutes or worse its like a network cable that your cat has chewed in 3 spots but lets go back to the protocol itself we need to make sure every packet gets there and we need to know if its the correct data packet right
 

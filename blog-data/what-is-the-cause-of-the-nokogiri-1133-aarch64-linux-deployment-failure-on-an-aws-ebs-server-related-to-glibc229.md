@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-is-the-cause-of-the-nokogiri-1133-aarch64-linux-deployment-failure-on-an-aws-ebs-server-related-to-glibc229"
 ---
 
-Okay, let’s break down this frustrating nokogiri deployment issue. I've certainly seen my fair share of these kinds of dependency clashes, and the nokogiri gem, specifically, has been the culprit more than once in my experience. This particular error, `nokogiri-1.13.3-aarch64-linux deployment failure on an AWS EBS server related to GLIBC_2.29`, is indicative of a classic mismatch between the compiled binary of the gem and the system libraries available on the target environment.
+, let’s break down this frustrating nokogiri deployment issue. I've certainly seen my fair share of these kinds of dependency clashes, and the nokogiri gem, specifically, has been the culprit more than once in my experience. This particular error, `nokogiri-1.13.3-aarch64-linux deployment failure on an AWS EBS server related to GLIBC_2.29`, is indicative of a classic mismatch between the compiled binary of the gem and the system libraries available on the target environment.
 
 In essence, `nokogiri-1.13.3-aarch64-linux` is a pre-compiled binary built for a specific architecture (`aarch64`, often ARM64) and, crucially, linked against a particular version of the GNU C Library, or glibc. The `GLIBC_2.29` part tells us that this specific version of nokogiri was compiled expecting glibc version 2.29 or later to be present on the system. If your AWS EBS server, particularly if it's running an older Amazon Linux version or a custom image, doesn't have glibc 2.29 available, then you're going to hit this failure. The dynamic linker can't find the required symbols in the system's glibc, leading to the deployment failure.
 

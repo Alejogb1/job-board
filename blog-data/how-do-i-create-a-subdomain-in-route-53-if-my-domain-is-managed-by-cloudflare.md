@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-create-a-subdomain-in-route-53-if-my-domain-is-managed-by-cloudflare"
 ---
 
-Okay, let's tackle this. I've been down this road more times than I can count, and dealing with DNS providers while juggling multiple hosting platforms can certainly feel a bit like a tightrope walk. You've got your domain managed in Cloudflare, and now you need a subdomain in route 53. It's a common scenario, and thankfully, entirely solvable without too much drama. It essentially comes down to delegation. I remember when we first migrated some infrastructure from an on-prem setup to AWS; the DNS dance took some getting used to.
+,  I've been down this road more times than I can count, and dealing with DNS providers while juggling multiple hosting platforms can certainly feel a bit like a tightrope walk. You've got your domain managed in Cloudflare, and now you need a subdomain in route 53. It's a common scenario, and thankfully, entirely solvable without too much drama. It essentially comes down to delegation. I remember when we first migrated some infrastructure from an on-prem setup to AWS; the DNS dance took some getting used to.
 
 The key thing to understand is that you don't want to completely transfer your domain from Cloudflare to Route 53. Instead, we're looking to delegate the subdomain to Route 53. This means that while Cloudflare remains the authoritative name server for your main domain, it'll forward queries for your specific subdomain to Route 53's name servers.
 

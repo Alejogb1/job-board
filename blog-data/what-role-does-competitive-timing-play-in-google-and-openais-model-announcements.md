@@ -4,7 +4,7 @@ date: "2024-12-12"
 id: "what-role-does-competitive-timing-play-in-google-and-openais-model-announcements"
 ---
 
-Okay lets dive into this whole Google OpenAI model announcement timing thing its kinda fascinating right? Its not just random chance that they drop these big AI bombshells when they do there's a definite competitive dance going on a very techy high stakes waltz if you will
+ lets dive into this whole Google OpenAI model announcement timing thing its kinda fascinating right? Its not just random chance that they drop these big AI bombshells when they do there's a definite competitive dance going on a very techy high stakes waltz if you will
 
 First lets talk about the basic premise its all about attention and mindshare in this fast-moving AI space being first means being talked about being mentioned in every tech blog post every podcast every youtube video that's gold for these companies. Its a weird battle for intellectual supremacy and brand recognition.
 

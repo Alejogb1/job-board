@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-add-a-layer-to-a-pre-trained-tensorflow-resnet50-model"
 ---
 
-Okay, let’s tackle this. I've actually found myself in this exact scenario more than once, needing to adapt a pre-trained ResNet50 to a very specific task that its original training didn't quite cover. It’s a fairly common requirement when you're working with real-world problems rather than perfectly curated benchmark datasets. Adding layers is the key to adapting it, but the how matters significantly for optimal performance.
+, let’s tackle this. I've actually found myself in this exact scenario more than once, needing to adapt a pre-trained ResNet50 to a very specific task that its original training didn't quite cover. It’s a fairly common requirement when you're working with real-world problems rather than perfectly curated benchmark datasets. Adding layers is the key to adapting it, but the how matters significantly for optimal performance.
 
 Let’s break it down. We’re starting with a pre-trained ResNet50, which gives us a tremendous advantage. The model already possesses learned feature extractors, a capability we shouldn't discard. Think of it as inheriting a very capable machine that only requires some slight modifications. We aim to modify this machine – to build upon its existing skills, rather than starting from scratch.
 

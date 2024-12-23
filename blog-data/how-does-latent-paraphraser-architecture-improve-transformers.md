@@ -4,7 +4,7 @@ date: "2024-12-03"
 id: "how-does-latent-paraphraser-architecture-improve-transformers"
 ---
 
-Okay so you want to know about latent paraphrasers using transformers right  cool stuff  I've been messing around with this lately  it's like seriously mind-blowing how far we've come  basically the idea is to generate different versions of a sentence that mean the same thing but sound different you know  like a fancy synonym replacer but way smarter
+ so you want to know about latent paraphrasers using transformers right  cool stuff  I've been messing around with this lately  it's like seriously mind-blowing how far we've come  basically the idea is to generate different versions of a sentence that mean the same thing but sound different you know  like a fancy synonym replacer but way smarter
 
 The key here is "latent"  that means we're not directly mapping words to other words  we're creating a kind of hidden representation a compressed version of the meaning  think of it like squeezing a sponge full of water the sponge is the sentence its meaning is the water and we're squeezing out the extra water to get just the essence then we can use that essence to make new sentences with different words  but the same squeezed water
 

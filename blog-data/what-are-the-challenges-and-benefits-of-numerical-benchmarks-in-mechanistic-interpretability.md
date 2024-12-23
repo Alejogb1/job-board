@@ -4,7 +4,7 @@ date: "2024-12-11"
 id: "what-are-the-challenges-and-benefits-of-numerical-benchmarks-in-mechanistic-interpretability"
 ---
 
-Okay so you wanna talk about numerical benchmarks in mechanistic interpretability right  cool beans  It's a pretty hot topic these days everyone's trying to figure out what these crazy deep learning models are actually *doing* not just what they're *outputting*  and benchmarks are a big part of that
+ so you wanna talk about numerical benchmarks in mechanistic interpretability right  cool beans  It's a pretty hot topic these days everyone's trying to figure out what these crazy deep learning models are actually *doing* not just what they're *outputting*  and benchmarks are a big part of that
 
 The thing is  benchmarks are kinda like a double-edged sword  They're super useful  but also potentially misleading  think of it like this you could have a really awesome super fast car but if you only test it on a perfectly smooth race track you don't really know how it handles in the real world right  Same with these benchmarks
 

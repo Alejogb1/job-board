@@ -4,9 +4,9 @@ date: "2024-12-13"
 id: "what-does-boost-wave-not-do"
 ---
 
-Okay so you're asking what Boost Wave *doesn't* do yeah got it Been wrestling with that beast for longer than I care to admit
+ so you're asking what Boost Wave *doesn't* do yeah got it Been wrestling with that beast for longer than I care to admit
 
-Alright let me unpack this from my experience First off let's establish I've spent probably weeks if not months debugging parsers mostly back in the day when my college professor was convinced we could build a full blown compiler in a single semester yeah good times Anyway what *Boost Wave doesn't do* is a list I've compiled from countless late nights and caffeine crashes
+let me unpack this from my experience First off let's establish I've spent probably weeks if not months debugging parsers mostly back in the day when my college professor was convinced we could build a full blown compiler in a single semester yeah good times Anyway what *Boost Wave doesn't do* is a list I've compiled from countless late nights and caffeine crashes
 
 So fundamentally Boost Wave is not a general purpose text manipulation library Think of it more like a highly specialized preprocessor with a focus on C and C++ syntax If you're expecting it to be your all in one string processing swiss army knife that's a no go It's specifically engineered for things like recognizing tokens comments preprocessor directives and basic language grammar components it's not really designed for raw text crunching that would be like using a sledgehammer to crack a nut and it won't be as effective either
 
@@ -132,4 +132,4 @@ So yeah that’s the gist of it Boost Wave is not some magical text processing e
 
 As for resources you're going to want to spend some quality time with the official Boost Wave documentation there is no magic pill for it Also "Modern Compiler Implementation in C" by Andrew Appel has a good overview of compiler design that can give you some context on how Wave fits into the bigger picture of compilation It will help you understand what kind of problems Wave tackles and what's not its job That's what I did at least
 
-Oh and one more thing avoid trying to use Boost Wave to parse JSON you wouldn’t use a fork to drink soup would you It's much more painful than it's worth. Okay I think I covered everything good luck with your journey through the sometimes weird world of text processing and remember to always use the right tool for the right job happy coding
+Oh and one more thing avoid trying to use Boost Wave to parse JSON you wouldn’t use a fork to drink soup would you It's much more painful than it's worth.  I think I covered everything good luck with your journey through the sometimes weird world of text processing and remember to always use the right tool for the right job happy coding

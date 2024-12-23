@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-expand-blob-dimensions-in-openvino"
 ---
 
-Okay, let's tackle this. Expanding blob dimensions in OpenVINO – I’ve been down that road more than a few times. It's a common issue when you're trying to adapt pre-trained models to handle input data that doesn't perfectly match their expected shape. The framework’s handling of blob resizing can be a bit nuanced, so let's get into the details and some practical examples.
+,  Expanding blob dimensions in OpenVINO – I’ve been down that road more than a few times. It's a common issue when you're trying to adapt pre-trained models to handle input data that doesn't perfectly match their expected shape. The framework’s handling of blob resizing can be a bit nuanced, so let's get into the details and some practical examples.
 
 The fundamental challenge is that OpenVINO’s inference engine expects data in a very specific format – a blob with dimensions matching the model's input layer. If your input doesn't fit, you need to adjust either your data or, as in this case, the blob dimensions. It's not always a straightforward linear resizing; the required operation might involve padding, upscaling, or even a combination of techniques. I recall a particularly challenging project where we were feeding variable-resolution images into a fixed-size model. We had to implement a dynamic padding mechanism that added zeros to smaller input images to fit the model’s input requirements. It taught me the crucial need for flexibility in data preprocessing pipelines.
 

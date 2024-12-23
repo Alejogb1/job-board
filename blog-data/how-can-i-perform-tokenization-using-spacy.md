@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-perform-tokenization-using-spacy"
 ---
 
-Alright, let's tackle this. I've seen my share of tokenization issues, especially back when we were first building out that massive NLP pipeline for analyzing customer feedback at 'Innovate Solutions' years ago—we had a real mess on our hands before we got our tokenizers working correctly. It’s a foundational step, and getting it wrong can cascade into problems down the line. Fortunately, spaCy makes the process quite manageable.
+Alright,  I've seen my share of tokenization issues, especially back when we were first building out that massive NLP pipeline for analyzing customer feedback at 'Innovate Solutions' years ago—we had a real mess on our hands before we got our tokenizers working correctly. It’s a foundational step, and getting it wrong can cascade into problems down the line. Fortunately, spaCy makes the process quite manageable.
 
 Tokenization, at its core, is the process of splitting a string of text into individual units, usually words, punctuation marks, or even sub-word units. These units are called tokens. spaCy, a powerful and widely used natural language processing library in Python, offers robust tools for this task. It's not just a simple splitting by spaces, mind you. It handles complexities like contractions, punctuation, and various language-specific nuances, which is why a well-engineered library like spaCy is invaluable.
 

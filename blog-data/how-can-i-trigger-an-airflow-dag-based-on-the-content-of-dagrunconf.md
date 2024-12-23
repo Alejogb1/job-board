@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-trigger-an-airflow-dag-based-on-the-content-of-dagrunconf"
 ---
 
-Okay, let's unpack this. Triggering an Apache Airflow dag based on the contents of the `dag_run.conf`— I've been down this road more times than I care to count, and there are some subtleties that often trip people up. It's a really powerful feature when used correctly, but like any tool, it needs a firm understanding of its nuances. Back in my days managing data pipelines for a large e-commerce platform, we relied heavily on dynamically generated configs to avoid creating a proliferation of dags for slightly different use cases. Let's dive into how to achieve this effectively.
+, let's unpack this. Triggering an Apache Airflow dag based on the contents of the `dag_run.conf`— I've been down this road more times than I care to count, and there are some subtleties that often trip people up. It's a really powerful feature when used correctly, but like any tool, it needs a firm understanding of its nuances. Back in my days managing data pipelines for a large e-commerce platform, we relied heavily on dynamically generated configs to avoid creating a proliferation of dags for slightly different use cases. Let's dive into how to achieve this effectively.
 
 The core concept here revolves around the `dag_run.conf` dictionary, which is passed as an argument to your dag’s execution context. This dictionary can contain any key-value pairs, and it's available within any task executed within that particular dag run. The trick is accessing this data and using it to dynamically drive the behavior of your tasks.
 

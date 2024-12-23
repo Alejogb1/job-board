@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-do-my-logits-and-labels-tensors-have-incompatible-shapes"
 ---
 
-Alright, let's tackle this. In my time working with deep learning models, I've seen this particular shape mismatch between `logits` and `labels` tensors more times than I care to count. It’s a common stumbling block, and the fix often comes down to understanding how your model's output is structured and how your loss function expects the ground truth data to be arranged. So, let's break down why this happens and what you can do about it.
+Alright,  In my time working with deep learning models, I've seen this particular shape mismatch between `logits` and `labels` tensors more times than I care to count. It’s a common stumbling block, and the fix often comes down to understanding how your model's output is structured and how your loss function expects the ground truth data to be arranged. So, let's break down why this happens and what you can do about it.
 
 The core issue, as you’ve likely surmised, boils down to dimensionality. `Logits` represent the raw, unnormalized scores predicted by your neural network. Think of them as the model's confidence in each possible class before applying something like a softmax function. `Labels`, on the other hand, represent the actual correct classes for your training data. The loss function, during the backpropagation process, compares these two to quantify how well the model is performing and adjusts weights accordingly. If these tensors don’t have compatible shapes, the loss calculation simply cannot proceed, leading to the dreaded shape mismatch error.
 

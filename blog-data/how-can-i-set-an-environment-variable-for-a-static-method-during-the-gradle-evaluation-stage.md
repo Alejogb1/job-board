@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-set-an-environment-variable-for-a-static-method-during-the-gradle-evaluation-stage"
 ---
 
-Okay, let's tackle this one. It's a question I've seen pop up in various forms over the years, and it’s one that often trips up developers new to gradle's intricacies. The challenge with setting an environment variable for a static method *during* the gradle evaluation phase stems from the lifecycle of a gradle build and the way static initializers and environment variables interact.
+, let's tackle this one. It's a question I've seen pop up in various forms over the years, and it’s one that often trips up developers new to gradle's intricacies. The challenge with setting an environment variable for a static method *during* the gradle evaluation phase stems from the lifecycle of a gradle build and the way static initializers and environment variables interact.
 
 In essence, when gradle evaluates your build script, it executes all the top-level groovy code. This includes defining tasks, configuring dependencies, and, crucially for our case, *executing static initializers of classes*. These static blocks are executed *before* most of gradle’s build configuration is finalized. Environment variables, on the other hand, are typically accessed during build execution, not during the evaluation phase unless you take a few specific steps. Accessing an environment variable directly within a class’s static initializer won't usually behave the way you expect because the system environment isn’t yet fully available or reliable in this pre-configuration stage.
 

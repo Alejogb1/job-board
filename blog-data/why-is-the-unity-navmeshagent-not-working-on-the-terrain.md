@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-the-unity-navmeshagent-not-working-on-the-terrain"
 ---
 
-Okay, let's tackle this. It's a question I’ve seen pop up more times than I care to count, and honestly, debugging navmesh issues with Unity terrain can sometimes feel like a puzzle box with no instruction manual. The surface level problem, 'why isn't my NavMeshAgent working on my terrain,' usually points to a few common culprits. I've personally spent hours chasing down these gremlins in projects ranging from simple prototypes to slightly-more-complex simulations, so I've got a decent feel for what often goes wrong.
+,  It's a question I’ve seen pop up more times than I care to count, and honestly, debugging navmesh issues with Unity terrain can sometimes feel like a puzzle box with no instruction manual. The surface level problem, 'why isn't my NavMeshAgent working on my terrain,' usually points to a few common culprits. I've personally spent hours chasing down these gremlins in projects ranging from simple prototypes to slightly-more-complex simulations, so I've got a decent feel for what often goes wrong.
 
 First, it's important to understand that the NavMeshAgent doesn't directly interact with the raw terrain data. It operates on a *navmesh*, a representation of the traversable space generated based on specified parameters. This means there's an intermediary step where the terrain geometry gets processed and baked into this navmesh. The issue often lies in that step or how the agent interprets the result.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-bert-be-fine-tuned-for-multi-label-classification-across-multiple-languages"
 ---
 
-Okay, let's tackle this one. Multi-label, multilingual classification using BERT… I've certainly spent some late nights with that beast. It's not exactly a straightforward walk in the park, especially when you start throwing multiple languages into the mix. I remember one particular project involving sentiment analysis across product reviews in English, Spanish, and French – quite the challenge. Let's break down how I’d approach this now, keeping in mind some lessons learned.
+, let's tackle this one. Multi-label, multilingual classification using BERT… I've certainly spent some late nights with that beast. It's not exactly a straightforward walk in the park, especially when you start throwing multiple languages into the mix. I remember one particular project involving sentiment analysis across product reviews in English, Spanish, and French – quite the challenge. Let's break down how I’d approach this now, keeping in mind some lessons learned.
 
 Essentially, fine-tuning BERT for multi-label classification in a multilingual setting involves a combination of architectural considerations, careful data preparation, and a robust training methodology. The key is not just to make BERT understand each language individually but to also have it map the semantics of multiple labels across all these language spaces.
 

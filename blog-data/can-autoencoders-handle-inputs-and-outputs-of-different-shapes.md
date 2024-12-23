@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-autoencoders-handle-inputs-and-outputs-of-different-shapes"
 ---
 
-Alright, let's tackle this. I've definitely been down this road a few times, particularly in some of my past projects dealing with multimodal data fusion where shape mismatches were practically a daily occurrence. The short answer is: it's complicated, but yes, with careful design, autoencoders can indeed handle inputs and outputs of different shapes. It’s not a straightforward plug-and-play scenario, and we need to discuss the 'how' quite thoroughly.
+Alright,  I've definitely been down this road a few times, particularly in some of my past projects dealing with multimodal data fusion where shape mismatches were practically a daily occurrence. The short answer is: it's complicated, but yes, with careful design, autoencoders can indeed handle inputs and outputs of different shapes. It’s not a straightforward plug-and-play scenario, and we need to discuss the 'how' quite thoroughly.
 
 The core challenge lies in the fundamental concept of an autoencoder: it aims to reconstruct its input. If the input and output have different shapes, then the traditional idea of pixel-by-pixel or feature-by-feature reconstruction doesn't directly apply. It's no longer a pure 'copy' task, but more of a transformation or translation task where the structure changes. Consequently, we need to reframe the autoencoder's role to manage this structural discrepancy.
 

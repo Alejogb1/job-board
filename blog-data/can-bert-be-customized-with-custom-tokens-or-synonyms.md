@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-bert-be-customized-with-custom-tokens-or-synonyms"
 ---
 
-Okay, let's tackle this. I've seen my fair share of natural language processing projects over the years, and the question of adapting models like BERT to specific domains, including the use of custom tokens and synonyms, is a recurrent theme. It's something I actually encountered head-on during a project involving highly specialized legal documents, where standard tokenization wasn't cutting it.
+,  I've seen my fair share of natural language processing projects over the years, and the question of adapting models like BERT to specific domains, including the use of custom tokens and synonyms, is a recurrent theme. It's something I actually encountered head-on during a project involving highly specialized legal documents, where standard tokenization wasn't cutting it.
 
 The short answer is: yes, BERT can be customized to handle custom tokens and, indirectly, synonyms, but it requires a nuanced understanding of how BERT operates and where modifications can be applied effectively. It’s not about simply plugging in a dictionary, but more about strategically altering the tokenization process and sometimes, the model's representation itself.
 

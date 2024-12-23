@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "should-a-new-solr-core-be-created-for-indexing-nested-json-files-and-separate-fields-not-linked-to-the-unique-key"
 ---
 
-Okay, let's delve into this. I've encountered similar architectural decisions multiple times, most memorably while working on a large-scale document management system for a financial institution. We were grappling with deeply nested JSON structures representing complex transaction data, which sounds akin to what you're dealing with. The crux of your question—whether to create a new Solr core for indexing nested json files and separate fields not linked to the unique key—isn't a simple yes or no; it depends heavily on specific needs and expected use cases.
+, let's delve into this. I've encountered similar architectural decisions multiple times, most memorably while working on a large-scale document management system for a financial institution. We were grappling with deeply nested JSON structures representing complex transaction data, which sounds akin to what you're dealing with. The crux of your question—whether to create a new Solr core for indexing nested json files and separate fields not linked to the unique key—isn't a simple yes or no; it depends heavily on specific needs and expected use cases.
 
 My immediate inclination isn't automatically towards a new core, simply because core proliferation often introduces management overhead. Think about backup procedures, schema evolution, and query optimization across multiple cores – all of this adds to complexity. However, a single core isn't always the optimal choice either. Let's examine both sides before we reach a considered answer.
 

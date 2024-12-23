@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "c-vector-popback-performance-meaning"
 ---
 
-Alright so you're asking about `std::vector::pop_back` performance specifically in C++ right I've wrestled with this beast enough times to have some thoughts to spill on it let me tell you
+so you're asking about `std::vector::pop_back` performance specifically in C++ right I've wrestled with this beast enough times to have some thoughts to spill on it let me tell you
 
 So first things first `pop_back` on a `std::vector` that's basically just saying hey vector remove the last element right? You'd think it's trivial just chop off the end and we're done but there's actually more happening under the hood and that's where the performance aspects come into play It's not always a simple "chop" operation lets get into the nitty gritty
 

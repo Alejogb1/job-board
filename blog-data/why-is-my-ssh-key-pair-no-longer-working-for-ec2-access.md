@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-my-ssh-key-pair-no-longer-working-for-ec2-access"
 ---
 
-Let's tackle this. I've certainly been down this road a few times, scratching my head at a seemingly perfectly configured system suddenly refusing to cooperate. The frustration of a non-functioning ssh key pair is, unfortunately, a fairly common experience, and it can stem from a number of distinct issues. From my experience managing several large AWS infrastructures, I've seen most of these manifest themselves firsthand. Let's break down the common culprits and what steps to take.
+ I've certainly been down this road a few times, scratching my head at a seemingly perfectly configured system suddenly refusing to cooperate. The frustration of a non-functioning ssh key pair is, unfortunately, a fairly common experience, and it can stem from a number of distinct issues. From my experience managing several large AWS infrastructures, I've seen most of these manifest themselves firsthand. Let's break down the common culprits and what steps to take.
 
 The first thing to understand is that key-based authentication relies on a delicate interplay between your local private key and the authorized public key on the remote EC2 instance. Any disruption in this link can cause failures. Typically, the problem isn't with the key generation itself, but with how these keys are managed and applied.
 

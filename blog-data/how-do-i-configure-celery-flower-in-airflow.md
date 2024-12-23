@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-configure-celery-flower-in-airflow"
 ---
 
-Okay, let's tackle this. I recall a project a few years back where we had a particularly convoluted DAG structure relying heavily on Celery, and getting Flower properly configured within Airflow became crucial for observability. It wasn't exactly straightforward, but with a bit of finesse, we got it humming. You're essentially looking at bridging two separate systems, and that's where things can get nuanced.
+,  I recall a project a few years back where we had a particularly convoluted DAG structure relying heavily on Celery, and getting Flower properly configured within Airflow became crucial for observability. It wasn't exactly straightforward, but with a bit of finesse, we got it humming. You're essentially looking at bridging two separate systems, and that's where things can get nuanced.
 
 At its core, Celery Flower is an independent real-time monitoring tool for Celery tasks. Airflow, on the other hand, manages the scheduling and execution of those tasks via Celery. The key to successful integration is ensuring that Flower can effectively access the Celery broker and results backend being used by your Airflow Celery executor. Now, the first thing to consider is **how** you are running Airflow and Celery. Are they both within the same machine or across multiple containers? This impacts the configuration. Let me walk you through a typical setup and the rationale behind it.
 

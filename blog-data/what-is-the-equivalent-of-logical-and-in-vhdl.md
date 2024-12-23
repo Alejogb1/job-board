@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "what-is-the-equivalent-of-logical-and-in-vhdl"
 ---
 
-Okay so you're asking about logical AND in VHDL right Been there done that So let me tell you VHDL is pretty straightforward with its logical operators thankfully unlike some languages I've had to wrestle with in the past I swear some of them are trying to make it complicated on purpose
+ so you're asking about logical AND in VHDL right Been there done that So let me tell you VHDL is pretty straightforward with its logical operators thankfully unlike some languages I've had to wrestle with in the past I swear some of them are trying to make it complicated on purpose
 
 The direct equivalent of a logical AND operation in VHDL is simply the keyword `and` It's not some crazy symbol or function you have to look up in some obscure manual It's just `and` plain and simple Just like you'd expect it to be Now I've seen people make it harder than it has to be and it's usually when they overcomplicate the process
 

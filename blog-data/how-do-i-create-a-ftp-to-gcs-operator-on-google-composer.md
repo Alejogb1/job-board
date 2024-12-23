@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-create-a-ftp-to-gcs-operator-on-google-composer"
 ---
 
-Let's tackle this. I’ve certainly spent my fair share of time moving data around, and transitioning from FTP to Google Cloud Storage (GCS) via Composer is a common enough need. It's not always straightforward, but understanding the underlying pieces will make your life much easier. Essentially, you're looking to build an Apache Airflow operator that automates the process of transferring files from an FTP server to a GCS bucket within your Google Composer environment. Forget manual uploads; that’s what we’re moving away from.
+ I’ve certainly spent my fair share of time moving data around, and transitioning from FTP to Google Cloud Storage (GCS) via Composer is a common enough need. It's not always straightforward, but understanding the underlying pieces will make your life much easier. Essentially, you're looking to build an Apache Airflow operator that automates the process of transferring files from an FTP server to a GCS bucket within your Google Composer environment. Forget manual uploads; that’s what we’re moving away from.
 
 When I first encountered this a few years back, we had a legacy system pushing out nightly data dumps via FTP. Integrating that with our cloud-based analytics pipelines was crucial, and that involved precisely what you're asking. We ended up crafting a custom operator because the existing ones didn't quite fit our specific requirements. It required a decent amount of thought and quite a bit of iterative testing, so trust me, I get the problem you're facing.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-yarn-start-be-used-to-run-a-rails-server"
 ---
 
-Okay, let's unpack this. The short answer is: not directly, and certainly not in the way you'd typically use `yarn start` with a frontend framework like React or Vue. But there's a bit more nuance to it than just a flat 'no'. I've personally encountered situations where teams tried (and failed spectacularly) to shoehorn `yarn start` into their Rails workflows, so I can speak from a place of, shall we say, hard-won experience.
+, let's unpack this. The short answer is: not directly, and certainly not in the way you'd typically use `yarn start` with a frontend framework like React or Vue. But there's a bit more nuance to it than just a flat 'no'. I've personally encountered situations where teams tried (and failed spectacularly) to shoehorn `yarn start` into their Rails workflows, so I can speak from a place of, shall we say, hard-won experience.
 
 The core issue stems from the fundamental differences in what `yarn` and `rails` are designed to do. `yarn` is primarily a package manager for javascript, focusing on installing, managing, and scripting tasks related to node.js applications. Its `start` command, by convention, usually invokes a development server for a single-page application (spa), often using something like webpack-dev-server or vite. Rails, on the other hand, is a full-stack web framework, built using Ruby, and it has its own robust ecosystem for managing development servers.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-ppo-performance-declining"
 ---
 
-Okay, let’s tackle this. I’ve seen this pattern with proximal policy optimization (ppo) quite a few times across different projects, and it's definitely not a straightforward "one-size-fits-all" reason. It's more like a confluence of factors, and figuring out the exact culprit involves a bit of investigative work.
+, let’s tackle this. I’ve seen this pattern with proximal policy optimization (ppo) quite a few times across different projects, and it's definitely not a straightforward "one-size-fits-all" reason. It's more like a confluence of factors, and figuring out the exact culprit involves a bit of investigative work.
 
 From my experience, I recall a particular project involving a robotic arm learning a complex manipulation task using ppo. We had everything humming along nicely initially, but then we saw that frustrating performance plateau and, ultimately, decline. It wasn't just a case of insufficient training data; it was far more nuanced. I'm going to break down the common reasons based on what I’ve observed and how I’ve tackled similar issues.
 

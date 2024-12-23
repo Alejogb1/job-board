@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-access-a-common-property-of-a-generic-type-in-a-c-method-using-constraints"
 ---
 
-Okay, let's tackle this. Thinking back to a project a few years ago, I remember grappling with precisely this issue when building a complex data transformation pipeline. We needed a way to generically access a specific property across multiple related, but not identical, data models. The challenge, of course, was doing it type-safely and efficiently in C#. This wasn't merely a theoretical exercise; it was crucial to maintaining a clean and maintainable codebase.
+,  Thinking back to a project a few years ago, I remember grappling with precisely this issue when building a complex data transformation pipeline. We needed a way to generically access a specific property across multiple related, but not identical, data models. The challenge, of course, was doing it type-safely and efficiently in C#. This wasn't merely a theoretical exercise; it was crucial to maintaining a clean and maintainable codebase.
 
 Accessing a common property of a generic type via constraints boils down to defining an interface that guarantees the presence of that property, and then constraining your generic type to implement that interface. It’s a classic approach that leverages C#’s static type system to our advantage. Let me explain in detail.
 

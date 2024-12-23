@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-upgrade-a-rails-5-heroku-app-to-rails-7-without-disrupting-the-current-deployment"
 ---
 
-Okay, let’s tackle this. Upgrading a Rails application, especially one deployed to Heroku, is a task I’ve navigated a few times now, and each time it’s a bit of a delicate dance. The jump from Rails 5 to Rails 7 is significant, so we'll need to approach this methodically to ensure zero downtime. It’s not something you want to just push and pray on a live system. In my past experience, neglecting proper preparation has always led to some fairly stressful debugging sessions, usually at the least convenient time.
+, let’s tackle this. Upgrading a Rails application, especially one deployed to Heroku, is a task I’ve navigated a few times now, and each time it’s a bit of a delicate dance. The jump from Rails 5 to Rails 7 is significant, so we'll need to approach this methodically to ensure zero downtime. It’s not something you want to just push and pray on a live system. In my past experience, neglecting proper preparation has always led to some fairly stressful debugging sessions, usually at the least convenient time.
 
 The core of this process isn't just about changing versions in a `Gemfile`; it’s about systematically addressing the breaking changes, deprecations, and underlying architectural shifts that occur between these major versions. Here's my strategy, refined through those experiences.
 

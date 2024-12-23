@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-does-uniswap-upgrade-smart-contracts-after-deployment"
 ---
 
-Okay, let's talk about Uniswap's upgrade mechanisms. It's a frequently asked question, and for good reason; smart contract upgrades are inherently tricky, especially when dealing with decentralized, immutable ledgers like Ethereum. From the trenches, I've personally navigated the complexities of upgrade strategies several times on various blockchain projects, and Uniswap's approach is certainly one worth analyzing.
+, let's talk about Uniswap's upgrade mechanisms. It's a frequently asked question, and for good reason; smart contract upgrades are inherently tricky, especially when dealing with decentralized, immutable ledgers like Ethereum. From the trenches, I've personally navigated the complexities of upgrade strategies several times on various blockchain projects, and Uniswap's approach is certainly one worth analyzing.
 
 One key thing to understand is that smart contracts, once deployed, are technically immutable. We can’t just directly change the code running at a specific address. So, how do you "upgrade" something that can’t be altered? The solution relies on a clever combination of proxy contracts and a delegate call mechanism.
 

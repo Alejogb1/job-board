@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-geth-interact-with-other-blockchain-mainnets-besides-ethereum"
 ---
 
-Okay, let's tackle this. It's a question I've seen come up in various forms over the years, and it's understandable why there might be confusion. While 'geth,' short for go-ethereum, is fundamentally built to interact with the ethereum blockchain (and its various testnets), the core architecture doesn't inherently prevent it from interacting with other blockchain networks entirely. The key word here, though, is *'inherently'*.
+,  It's a question I've seen come up in various forms over the years, and it's understandable why there might be confusion. While 'geth,' short for go-ethereum, is fundamentally built to interact with the ethereum blockchain (and its various testnets), the core architecture doesn't inherently prevent it from interacting with other blockchain networks entirely. The key word here, though, is *'inherently'*.
 
 My experience with working on custom blockchain solutions for a supply chain project a few years back provided a solid lesson on this. We needed to integrate a proof-of-stake sidechain with our main ethereum-based system, and that's where the limitations of using geth directly for non-ethereum mainnets became crystal clear.
 

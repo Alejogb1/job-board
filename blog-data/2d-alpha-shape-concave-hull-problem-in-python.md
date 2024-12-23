@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "2d-alpha-shape-concave-hull-problem-in-python"
 ---
 
-Alright so you're wrestling with 2D alpha shapes trying to get a concave hull in Python I've been there man trust me it's not a walk in the park been doing this for like a decade now and geometric stuff can be a real pain in the neck especially when you start playing with parameters like alpha
+so you're wrestling with 2D alpha shapes trying to get a concave hull in Python I've been there man trust me it's not a walk in the park been doing this for like a decade now and geometric stuff can be a real pain in the neck especially when you start playing with parameters like alpha
 
 So the alpha shape thing is essentially trying to generalize convex hulls but with a parameter right The alpha value controls how tightly the shape hugs the points A big alpha gives you something closer to the convex hull while a small alpha lets you generate more concave shapes that really follow the point distribution This is useful for a ton of stuff like outlining clusters finding boundaries of irregular shaped data or even for some basic image processing tasks
 
@@ -12,7 +12,7 @@ Now in my own experience I first bumped into this back when I was working on a p
 
 Let's talk code for a second I'm assuming you're somewhat familiar with Python and some common scientific libraries like NumPy and SciPy If not I'd highly recommend checking out the official SciPy documentation and Numerical Recipes 3rd Edition really good stuff there
 
-Okay so the core idea is this triangulation is the key player We use Delaunay triangulation to connect all the points and then we selectively remove edges based on the alpha value Any edge that's longer than the alpha value we remove that's roughly how it works And its why you need some good libraries to help you out
+ so the core idea is this triangulation is the key player We use Delaunay triangulation to connect all the points and then we selectively remove edges based on the alpha value Any edge that's longer than the alpha value we remove that's roughly how it works And its why you need some good libraries to help you out
 
 Here's a basic example using SciPy's Delaunay which honestly does a lot of the heavy lifting
 

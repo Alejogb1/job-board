@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-topic-vectors-be-normalized-in-top2vec"
 ---
 
-Okay, let's talk about normalizing topic vectors in Top2vec. This is something I’ve encountered a fair bit during my time working with document embeddings, and it's crucial for getting meaningful results from the model. From my experience, the raw topic vectors from Top2vec, while capturing semantic relatedness, often require normalization to facilitate better downstream tasks and ensure consistent comparisons.
+, let's talk about normalizing topic vectors in Top2vec. This is something I’ve encountered a fair bit during my time working with document embeddings, and it's crucial for getting meaningful results from the model. From my experience, the raw topic vectors from Top2vec, while capturing semantic relatedness, often require normalization to facilitate better downstream tasks and ensure consistent comparisons.
 
 Let's break down why this is important and how we can approach it. The primary reason for normalizing these vectors stems from the way Top2vec constructs its topic representations. It essentially averages the word embeddings of documents belonging to a specific topic. This operation doesn’t guarantee that the resulting topic vectors will all have the same magnitude. In practical terms, this implies that a topic vector representing a more 'densely populated' or more coherent topic might have a higher norm (length) than a vector representing a more diffuse one. This disparity in magnitudes can lead to problems when calculating distances or similarities between topics, as the magnitude itself can unduly influence the calculation, masking the underlying semantic relationships.
 

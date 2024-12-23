@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-do-convolutional-and-deconvolutional-layers-produce-mismatched-output-shapes-with-odd-weighted-input-images"
 ---
 
-Okay, let's tackle this one. It's a classic problem that I've seen pop up countless times, particularly when dealing with image processing tasks and neural networks. I distinctly remember facing this exact issue during a project involving segmentation of medical scans back in '17. We were getting these strangely offset feature maps after our deconvolutional layers, and it took a bit of careful debugging to trace it back to the odd-weighted input dimensions.
+, let's tackle this one. It's a classic problem that I've seen pop up countless times, particularly when dealing with image processing tasks and neural networks. I distinctly remember facing this exact issue during a project involving segmentation of medical scans back in '17. We were getting these strangely offset feature maps after our deconvolutional layers, and it took a bit of careful debugging to trace it back to the odd-weighted input dimensions.
 
 The root of the problem lies in how convolutional and deconvolutional operations, specifically when used with strides greater than one, handle the boundaries of input data – particularly when those input dimensions are odd. The core operation, whether it’s a convolution (downsampling) or deconvolution (upsampling), involves a kernel sliding over the input. This sliding operation interacts with the edges of the input based on the kernel size, stride, and padding. When your input dimensions are even, you often get a nice, predictable, mathematically consistent mapping during up- or downsampling, since operations can be cleanly divided. But the issue arises when you encounter odd dimensions.
 

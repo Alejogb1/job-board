@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-are-images-not-displaying-in-pdfs-generated-by-an-action-controller"
 ---
 
-Alright, let's tackle this. I've seen this particular issue surface more times than I care to recall, and it’s rarely as straightforward as it initially appears. The problem of images not showing up in PDFs generated via an Action Controller is, in my experience, a confluence of factors rather than a singular culprit. We’re not talking about a binary “it works” or “it doesn’t,” but a spectrum of possible configurations and misconfigurations that can lead to this frustrating outcome.
+Alright,  I've seen this particular issue surface more times than I care to recall, and it’s rarely as straightforward as it initially appears. The problem of images not showing up in PDFs generated via an Action Controller is, in my experience, a confluence of factors rather than a singular culprit. We’re not talking about a binary “it works” or “it doesn’t,” but a spectrum of possible configurations and misconfigurations that can lead to this frustrating outcome.
 
 The core of the issue usually lies in how the PDF generation library interacts with your Rails application's asset pipeline and how those assets are ultimately rendered within the PDF. Think of it like this: your Rails app is serving web pages perfectly, images and all, because it's using the asset pipeline to manage and serve those resources. Now, you’re asking a third-party library to take those html structures, and by extension those images, and reproduce them on a different medium - the pdf. It's not a simple copy and paste.
 

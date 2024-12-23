@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-ml-model-pre--and-post-processing-be-integrated-into-onnx"
 ---
 
-Alright, let's tackle this. The integration of machine learning model pre- and post-processing into ONNX is a topic I've spent a good chunk of time navigating, especially back when I was working on edge deployments for a computer vision project. We had a complex pipeline involving not just the core inference model, but also a suite of operations on the input and output data. Managing that efficiently across diverse hardware platforms required a deep dive into ONNX and its capabilities.
+Alright,  The integration of machine learning model pre- and post-processing into ONNX is a topic I've spent a good chunk of time navigating, especially back when I was working on edge deployments for a computer vision project. We had a complex pipeline involving not just the core inference model, but also a suite of operations on the input and output data. Managing that efficiently across diverse hardware platforms required a deep dive into ONNX and its capabilities.
 
 The core idea behind embedding pre and post-processing directly within the ONNX graph is primarily about improving deployment efficiency and portability. Traditionally, you might handle pre-processing (like normalization, resizing, or encoding) in your application code, and the same goes for post-processing (like non-maximum suppression for object detection or argmax operations). However, this creates a fragile ecosystem where different applications might interpret the same input and output formats slightly differently. Moving these operations into the ONNX graph standardizes the entire inference pipeline, ensuring consistency regardless of the deployment environment.
 

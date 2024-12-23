@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-my-login-failing-with-value-cannot-be-null-when-using-claims"
 ---
 
-Okay, let's tackle this login failure with a "value cannot be null" error when dealing with claims. It’s a frustrating situation, and I've certainly encountered it more than a few times in my career, often when dealing with authorization and authentication frameworks. The issue, at its core, stems from an attempt to access a claim that doesn't exist or that has a null value within the claims collection. While it seems straightforward, several nuances can lead to this, especially when dealing with complex identity workflows.
+, let's tackle this login failure with a "value cannot be null" error when dealing with claims. It’s a frustrating situation, and I've certainly encountered it more than a few times in my career, often when dealing with authorization and authentication frameworks. The issue, at its core, stems from an attempt to access a claim that doesn't exist or that has a null value within the claims collection. While it seems straightforward, several nuances can lead to this, especially when dealing with complex identity workflows.
 
 The fundamental concept of claims, in the context of authentication and authorization, is that they're pieces of information asserted about a user, like their role, name, or email address. These claims are transmitted as part of a token or principal, and are essential for controlling access and personalizing experiences. However, if our code assumes the presence of a particular claim that isn’t actually available, we run into this dreaded null value exception.
 

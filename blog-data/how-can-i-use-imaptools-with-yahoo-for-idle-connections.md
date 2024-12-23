@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-use-imaptools-with-yahoo-for-idle-connections"
 ---
 
-Okay, let's tackle this. It’s a problem I’ve definitely encountered firsthand, back when I was managing a notification service heavily reliant on real-time email updates. Dealing with idle connections using `imap_tools` and Yahoo’s IMAP server has a few particular nuances, and I've learned a fair bit from some frustrating debugging sessions. Essentially, the core challenge boils down to ensuring your connection remains actively listening for new messages without constantly polling, which is both inefficient and often leads to rate-limiting issues.
+,  It’s a problem I’ve definitely encountered firsthand, back when I was managing a notification service heavily reliant on real-time email updates. Dealing with idle connections using `imap_tools` and Yahoo’s IMAP server has a few particular nuances, and I've learned a fair bit from some frustrating debugging sessions. Essentially, the core challenge boils down to ensuring your connection remains actively listening for new messages without constantly polling, which is both inefficient and often leads to rate-limiting issues.
 
 The key is understanding the IMAP `IDLE` command, which allows the server to notify the client about new events instead of the client continuously asking. The `imap_tools` library, while wonderfully straightforward for simpler IMAP interactions, requires a bit of careful handling to implement `IDLE` correctly, especially when working with Yahoo's IMAP server which can sometimes exhibit quirks. From my past experience, Yahoo’s IMAP server seems a little less tolerant of improperly formatted or timed `IDLE` requests compared to, say, Google’s.
 

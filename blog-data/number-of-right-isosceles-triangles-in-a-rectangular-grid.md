@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "number-of-right-isosceles-triangles-in-a-rectangular-grid"
 ---
 
-Okay so you're asking about counting right isosceles triangles in a rectangular grid right Been there done that got the t-shirt It’s one of those problems that seems simple at first then you start banging your head against the wall trying to figure out all the edge cases Believe me i've spent way too many late nights on this kind of stuff
+ so you're asking about counting right isosceles triangles in a rectangular grid right Been there done that got the t-shirt It’s one of those problems that seems simple at first then you start banging your head against the wall trying to figure out all the edge cases Believe me i've spent way too many late nights on this kind of stuff
 
 First off let's be clear what we mean by "right isosceles triangles" we're talking about triangles where one angle is 90 degrees and the two sides adjacent to that right angle are the same length right No tricks no complicated definitions that’s important when we try to calculate our count
 
@@ -28,7 +28,7 @@ def count_isosceles_right(n, m):
     return count
 ```
 
-Okay this is pretty easy to read right We are iterating over all vertices in our grid and then trying all possible sizes `k` for our triangles and checking whether a triangle of this size fits in our grid. The `min(n-i, m-j)` part does the checks I just described Its kind of like a naive approach where we brute force through all possible situations without skipping any situation I hate those but sometimes you got to do the boring stuff before you get to the good stuff right So far so good. This approach is fine for small grids but you should see that if the grids become really big then we will be calculating a lot.
+ this is pretty easy to read right We are iterating over all vertices in our grid and then trying all possible sizes `k` for our triangles and checking whether a triangle of this size fits in our grid. The `min(n-i, m-j)` part does the checks I just described Its kind of like a naive approach where we brute force through all possible situations without skipping any situation I hate those but sometimes you got to do the boring stuff before you get to the good stuff right So far so good. This approach is fine for small grids but you should see that if the grids become really big then we will be calculating a lot.
 
 Now for the left leaning triangles the `\|/` shaped ones. They are the mirrored version of our previous shape. This time to determine how much the leg is we will be checking how many steps we can go up but how many steps can go to the left. The logic is the same really with a little adjustment in the calculations. Let's call this count `count_isosceles_left`
 

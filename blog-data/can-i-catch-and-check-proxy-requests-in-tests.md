@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-i-catch-and-check-proxy-requests-in-tests"
 ---
 
-Okay, let's tackle this. It's a situation I've encountered more than once, especially when dealing with complex system integrations where parts of your application rely on external services accessed via proxies. The short answer is a resounding *yes*, you can absolutely catch and check proxy requests in tests, and frankly, you *should*. It's critical for verifying the correct behavior of your software and ensuring its resilience. Let me explain how I've approached this in the past, and break down a few strategies with code examples.
+,  It's a situation I've encountered more than once, especially when dealing with complex system integrations where parts of your application rely on external services accessed via proxies. The short answer is a resounding *yes*, you can absolutely catch and check proxy requests in tests, and frankly, you *should*. It's critical for verifying the correct behavior of your software and ensuring its resilience. Let me explain how I've approached this in the past, and break down a few strategies with code examples.
 
 From experience, the challenge isn’t just *catching* the request, it’s also verifying that the request is formatted correctly, has the proper headers, and is being sent to the correct endpoint behind the proxy. If those details are not tested effectively, you're building a fragile system.
 

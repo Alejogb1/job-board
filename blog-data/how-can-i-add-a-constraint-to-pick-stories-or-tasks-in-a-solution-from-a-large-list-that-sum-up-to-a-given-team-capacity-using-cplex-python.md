@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-add-a-constraint-to-pick-stories-or-tasks-in-a-solution-from-a-large-list-that-sum-up-to-a-given-team-capacity-using-cplex-python"
 ---
 
-Okay, let's talk about optimizing task selection with Cplex when you're aiming for a specific team capacity. This is a problem I've faced numerous times, typically during sprint planning for large, complex software projects where resource allocation is critical. I remember one particularly gnarly scenario at a previous company where we had to juggle hundreds of stories, each with varying effort estimations, and our team capacity seemed to fluctuate weekly. It's a classic knapsack problem, but with a focus on integer programming, which is where CPLEX shines.
+, let's talk about optimizing task selection with Cplex when you're aiming for a specific team capacity. This is a problem I've faced numerous times, typically during sprint planning for large, complex software projects where resource allocation is critical. I remember one particularly gnarly scenario at a previous company where we had to juggle hundreds of stories, each with varying effort estimations, and our team capacity seemed to fluctuate weekly. It's a classic knapsack problem, but with a focus on integer programming, which is where CPLEX shines.
 
 The core challenge here is formulating the problem so CPLEX can efficiently find the optimal combination of stories that fit within your capacity constraint. We’re looking to maximize the 'value' of selected tasks – often this correlates with completing the most important stories – while strictly adhering to the total effort limit (your team capacity).
 

@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "how-do-alignment-techniques-affect-ai-performance-on-benchmarks-such-as-coding-reasoning-and-math-tasks"
 ---
 
-Okay so you wanna know how aligning AI affects its performance right  like on those coding reasoning math tests we all love to hate  It's a huge deal honestly  because  it's not just about making the AI smarter it's about making it *useful* and *reliable* which are way different things
+ so you wanna know how aligning AI affects its performance right  like on those coding reasoning math tests we all love to hate  It's a huge deal honestly  because  it's not just about making the AI smarter it's about making it *useful* and *reliable* which are way different things
 
 Think of it like training a dog  You can have a super smart dog that understands complex commands but if it's not trained to *obey* those commands or if it's super distracted then it's not a very good help  Alignment is that training for AI  It's about making sure the AI's goals and its actions actually line up with what we want
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-dropzone-rails-active-storage-and-autoprocessqueue-true-facilitate-direct-uploads"
 ---
 
-Okay, let's tackle this. Direct uploads are a powerful feature, and getting them to work smoothly requires understanding the interplay between the front-end, back-end, and storage service. I've implemented this pattern a few times, and I can share some insights based on those experiences. Let's look at how Dropzone, Rails Active Storage, and `autoProcessQueue: true` contribute to this process.
+,  Direct uploads are a powerful feature, and getting them to work smoothly requires understanding the interplay between the front-end, back-end, and storage service. I've implemented this pattern a few times, and I can share some insights based on those experiences. Let's look at how Dropzone, Rails Active Storage, and `autoProcessQueue: true` contribute to this process.
 
 The core challenge with direct uploads is that we want to bypass our application server as much as possible when transferring large files. This avoids bottlenecks and reduces server load. Traditionally, a browser would send a file to the application server, which would then relay it to the cloud storage. With direct uploads, the browser transmits the file directly to the cloud storage, and the application server is only involved in generating the necessary authorization for that transfer and handling any post-upload actions.
 

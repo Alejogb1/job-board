@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-can-graphql-query-looprings-nfts"
 ---
 
-Okay, let’s tackle this. It’s a question I remember grappling with quite a bit, specifically around 2022 when we were integrating with the Loopring L2 solution for a marketplace. Initially, querying on-chain NFT data through traditional means—like direct calls to the smart contract or even leveraging the Loopring API—proved less than ideal, especially for the nuanced, aggregated data we needed for user interfaces. GraphQL became a natural avenue to explore for its inherent flexibility in data fetching. Let’s break down how one might construct such a solution and the key considerations.
+, let’s tackle this. It’s a question I remember grappling with quite a bit, specifically around 2022 when we were integrating with the Loopring L2 solution for a marketplace. Initially, querying on-chain NFT data through traditional means—like direct calls to the smart contract or even leveraging the Loopring API—proved less than ideal, especially for the nuanced, aggregated data we needed for user interfaces. GraphQL became a natural avenue to explore for its inherent flexibility in data fetching. Let’s break down how one might construct such a solution and the key considerations.
 
 The fundamental challenge here isn’t merely *can* you query Loopring NFTs, but rather *how efficiently and effectively* can you do so? Loopring itself, being a layer-two scaling solution on Ethereum, doesn't expose a direct GraphQL interface for all its on-chain data. That means our strategy needs to bridge a gap—we need to get the data from its source (on-chain, indexers, or loopring api) and then format it for graphql consumption.
 

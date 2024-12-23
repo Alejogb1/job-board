@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-use-tensorboard-to-profile-a-predict-call-using-cloud-tpu-node"
 ---
 
-Alright, let's tackle this. Profiling a prediction call on a cloud tpu node using tensorboard isn't always straightforward, but it’s crucial for optimizing performance. I've personally spent countless hours debugging performance bottlenecks across distributed tpu setups, and I can tell you, a solid profiling workflow is your best friend. The key here lies in understanding how tpu profiling works in conjunction with tensorboard, especially within a cloud environment. It's a bit different from profiling on, say, a local gpu.
+Alright,  Profiling a prediction call on a cloud tpu node using tensorboard isn't always straightforward, but it’s crucial for optimizing performance. I've personally spent countless hours debugging performance bottlenecks across distributed tpu setups, and I can tell you, a solid profiling workflow is your best friend. The key here lies in understanding how tpu profiling works in conjunction with tensorboard, especially within a cloud environment. It's a bit different from profiling on, say, a local gpu.
 
 First off, let's set the stage. We're aiming to capture detailed performance data during a prediction run on a cloud tpu. This involves not only the tpu computations themselves, but also data loading, data transfers, and any host-side processing. Tensorboard acts as our central analysis tool, but the data collection mechanism is a bit more intricate.
 

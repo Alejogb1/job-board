@@ -4,7 +4,7 @@ date: "2024-12-11"
 id: "how-does-representation-engineering-affect-ai-interpretability-and-functionality"
 ---
 
-Okay so you wanna talk about representation engineering and how it messes with AI interpretability and functionality right  It's a big deal actually like a really big deal  Think of it this way AI models aren't magic they're just really complicated math equations crunching numbers based on the data you feed them  And how you represent that data the features you choose how you structure it that's representation engineering and it totally dictates what the model learns and how well it learns it
+ so you wanna talk about representation engineering and how it messes with AI interpretability and functionality right  It's a big deal actually like a really big deal  Think of it this way AI models aren't magic they're just really complicated math equations crunching numbers based on the data you feed them  And how you represent that data the features you choose how you structure it that's representation engineering and it totally dictates what the model learns and how well it learns it
 
 Imagine you're teaching a kid about animals  If you only show them pictures of cats  they'll think all animals are fluffy and meow  That's a bad representation right  Similarly if you feed an AI only images of cats with specific backgrounds it might struggle to recognize a cat in a different setting This is because the model learned a representation that's too specific too tied to the training data
 

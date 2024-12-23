@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "file-cls-purpose-code-example"
 ---
 
-Okay I see the question file cls purpose code example alright let's break this down I've been wrestling with stuff like this for years so here’s the deal from my perspective
+ I see the question file cls purpose code example let's break this down I've been wrestling with stuff like this for years so here’s the deal from my perspective
 
 First off when someone says file cls I'm immediately thinking class definition in a file Usually you're looking at object oriented programming OOP and specifically how to structure your code I'm guessing the user wants to understand why we put class definitions in separate files what the typical layout looks like and maybe some real-world examples
 
@@ -12,7 +12,7 @@ So the core purpose of a file containing a class let's cut through the fluff is 
 
 I'm looking back at the early 2000s when I was coding in a really large codebase one monolithic python file it was a disaster I swear there were functions with 2000 lines a single file that had 10000 lines it was practically unmaintainable the whole thing would fall apart if a single piece of code had a bug. We had teams working on the same file and merge conflicts were like a daily occurrence We eventually transitioned to breaking the project down into files each file for each logical thing and this significantly improved our code quality and our sanity
 
-Okay moving on a typical file containing a class usually looks something like this I'm talking about the basic structure here
+ moving on a typical file containing a class usually looks something like this I'm talking about the basic structure here
 
 *   **Imports**: At the top you have any import statements you need if the class depends on other classes modules or libraries you’ll import them here
 *   **Class Definition**: Then you have the class declaration itself with the class keyword class class_name : then you have the class name and potentially the inheritance declaration as well
@@ -144,7 +144,7 @@ int main() {
 ```
 In C++ you usually see class declarations in header files (like `Rectangle.h`) and the implementation in `.cpp` files (like `Rectangle.cpp`). This helps with separation of interface and implementation
 
-So that is basically the gist of file cls purpose code example. Its not always about the specific programming language its about the way how one is organizing code the overall structure and design decisions. When you have smaller modules they tend to be easier to test debug and understand. I should tell you a joke here oh yeah okay here it is
+So that is basically the gist of file cls purpose code example. Its not always about the specific programming language its about the way how one is organizing code the overall structure and design decisions. When you have smaller modules they tend to be easier to test debug and understand. I should tell you a joke here oh yeah  here it is
 
 Why was the computer late for work? Because it had a lot of *cache* to go through.
 

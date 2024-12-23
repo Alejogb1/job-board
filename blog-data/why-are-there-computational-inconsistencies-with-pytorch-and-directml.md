@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-are-there-computational-inconsistencies-with-pytorch-and-directml"
 ---
 
-Alright, let's tackle this. I've seen my share of head-scratching moments with PyTorch and DirectML, and it's definitely a multi-faceted issue, not something easily brushed aside. The core problem usually stems from the differing hardware abstraction layers and optimization strategies that each system employs, leading to what we perceive as computational inconsistencies.
+Alright,  I've seen my share of head-scratching moments with PyTorch and DirectML, and it's definitely a multi-faceted issue, not something easily brushed aside. The core problem usually stems from the differing hardware abstraction layers and optimization strategies that each system employs, leading to what we perceive as computational inconsistencies.
 
 When we talk about "inconsistencies," we're typically not witnessing outright errors, but more subtle deviations in results, especially when dealing with floating-point operations, precision, and parallel execution. PyTorch, by default, operates on a software-defined tensor model that, while accelerated by hardware, initially focuses on a general-purpose representation. DirectML, on the other hand, is a hardware-specific api designed to directly leverage the capabilities of DirectX-compatible gpus, predominantly those from amd and nvidia on windows. This fundamental difference in approach is where the potential for inconsistency starts.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-retrieve-translated-fields-using-rails-mobility-in-a-query"
 ---
 
-Okay, let's talk about fetching translated fields with Rails Mobility in queries. I've been down this road a few times, and it's not always straightforward, particularly when you're aiming for optimized performance and elegant code. It’s easy to fall into the trap of doing n+1 queries when working with translated content. Let's delve into some approaches to handle this efficiently.
+, let's talk about fetching translated fields with Rails Mobility in queries. I've been down this road a few times, and it's not always straightforward, particularly when you're aiming for optimized performance and elegant code. It’s easy to fall into the trap of doing n+1 queries when working with translated content. Let's delve into some approaches to handle this efficiently.
 
 The core issue, as I see it, is that `Mobility` stores translations in a separate table or alongside the main record, and retrieving them within a query requires careful planning. We can't simply access translated fields as we would regular attributes because they are, technically, separate entities. When I first encountered this problem years ago, I had a project where we were building a multilingual e-commerce platform, and inefficient queries were causing some serious performance headaches as the catalog grew. I remember the frustration; seeing queries take seconds instead of milliseconds was not a pleasant experience. So, it drove me to really understand how to leverage `Mobility` properly within queries.
 

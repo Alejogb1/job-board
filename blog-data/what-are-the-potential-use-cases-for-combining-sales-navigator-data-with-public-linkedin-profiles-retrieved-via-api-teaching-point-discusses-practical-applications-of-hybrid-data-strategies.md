@@ -4,7 +4,7 @@ date: "2024-12-12"
 id: "what-are-the-potential-use-cases-for-combining-sales-navigator-data-with-public-linkedin-profiles-retrieved-via-api-teaching-point-discusses-practical-applications-of-hybrid-data-strategies"
 ---
 
-Alright so you're asking about mixing Sales Nav data with public LinkedIn profile info from the API yeah okay I get that sounds useful lets break it down think real world not just theoretical stuff
+so you're asking about mixing Sales Nav data with public LinkedIn profile info from the API yeah  I get that sounds useful lets break it down think real world not just theoretical stuff
 
 First big thing is obviously enhanced lead qualification Sales Nav gives you all those juicy filters like job title industry seniority company size and all that good stuff but the public API can add details you sometimes miss like the actual skills listed the projects people mention or even the groups they’re actively participating in
 

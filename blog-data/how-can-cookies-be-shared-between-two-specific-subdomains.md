@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-cookies-be-shared-between-two-specific-subdomains"
 ---
 
-Okay, let's tackle this. Subdomain cookie sharing is a topic that, while seemingly straightforward, has nuances that can trip up even experienced developers. I’ve definitely been down that rabbit hole myself a few times, specifically when migrating a complex e-commerce platform a few years back. We had a main domain, `example.com`, and various subdomains like `shop.example.com`, `blog.example.com`, and `api.example.com`. Maintaining user sessions across these was a key requirement, and a naive approach would have led to a very frustrating user experience.
+,  Subdomain cookie sharing is a topic that, while seemingly straightforward, has nuances that can trip up even experienced developers. I’ve definitely been down that rabbit hole myself a few times, specifically when migrating a complex e-commerce platform a few years back. We had a main domain, `example.com`, and various subdomains like `shop.example.com`, `blog.example.com`, and `api.example.com`. Maintaining user sessions across these was a key requirement, and a naive approach would have led to a very frustrating user experience.
 
 The crux of the issue lies in how browsers handle cookie domains. By default, a cookie set by `shop.example.com` is only visible to requests made to `shop.example.com` and not, say, to `blog.example.com`. This is due to the inherent security model of the web, preventing potential cross-site scripting (xss) vulnerabilities. The same-origin policy limits how scripts from one origin (protocol, domain, and port) can interact with resources from a different origin. Cookies fall under this domain restriction, so we need to explicitly configure them to be shared.
 

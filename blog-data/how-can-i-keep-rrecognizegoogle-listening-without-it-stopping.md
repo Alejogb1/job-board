@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-keep-rrecognizegoogle-listening-without-it-stopping"
 ---
 
-Okay, let’s tackle this. I remember back in my early days working on a voice-activated system for an industrial robotics arm, we faced precisely this challenge with Google’s speech recognition. Keeping `r.recognize_google` continuously listening, as you’ve noticed, isn't its default behavior. It's designed to process a single utterance and then stop. We need to architect a workaround. It isn't a magic bullet; rather, it’s about managing the audio stream and the recognition process methodically, using what the library provides.
+, let’s tackle this. I remember back in my early days working on a voice-activated system for an industrial robotics arm, we faced precisely this challenge with Google’s speech recognition. Keeping `r.recognize_google` continuously listening, as you’ve noticed, isn't its default behavior. It's designed to process a single utterance and then stop. We need to architect a workaround. It isn't a magic bullet; rather, it’s about managing the audio stream and the recognition process methodically, using what the library provides.
 
 The core problem lies in how `speech_recognition` and its `recognize_google` function manage the audio input. It operates on a limited buffer of audio data. Once it has processed that, the process completes, and you need to start it again. We can’t just ‘tell it to keep going’; we have to actively feed it with a continuous stream of audio data and manage that process ourselves. We're essentially creating an audio loop.
 

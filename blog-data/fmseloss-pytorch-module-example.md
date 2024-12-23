@@ -4,13 +4,13 @@ date: "2024-12-13"
 id: "fmseloss-pytorch-module-example"
 ---
 
-Okay so you’re wrestling with `f.mse_loss` in PyTorch right I've been there plenty of times believe me it’s a common sticking point even for folks who’ve been slinging tensors for a while Let’s unpack this thing and get you squared away with some real-world examples because just seeing the documentation sometimes just doesn’t cut it
+ so you’re wrestling with `f.mse_loss` in PyTorch right I've been there plenty of times believe me it’s a common sticking point even for folks who’ve been slinging tensors for a while Let’s unpack this thing and get you squared away with some real-world examples because just seeing the documentation sometimes just doesn’t cut it
 
 First off `f.mse_loss` is the Mean Squared Error loss function It’s part of PyTorch's `torch.nn.functional` module so you’ll often see it imported as `import torch.nn.functional as f` It’s a straightforward calculation the average of the squared differences between your predictions and the actual targets That’s the core concept
 
 Now why `f.mse_loss` instead of say `nn.MSELoss` That's a good question and it pops up all the time in forums It comes down to style and flexibility The `f.mse_loss` is a functional version you give it the inputs directly like you would in a math function it's stateless so to speak while `nn.MSELoss` is a module it’s an object that can be added to a model's architecture this often means you have more state management with it. If you’re building from the ground up or want a lot of fine-grained control `f.mse_loss` is often the go-to If you prefer an encapsulated object `nn.MSELoss` works great for most standard architectures. I’ve flipped back and forth between them depending on the situation.
 
-Okay let's dive into some code cause that's what really matters right?
+ let's dive into some code cause that's what really matters right?
 
 **Example 1 Simple Two Tensor Comparison**
 
@@ -74,7 +74,7 @@ print(loss)
 
 In this example the loss between the third elements has the most weight and the fourth element the less. This allows for granular control on specific errors you care the most about.
 
-And this is where I tell that joke I said I would tell.  Why do programmers prefer dark mode? Because light attracts bugs. Okay I'll get back to it.
+And this is where I tell that joke I said I would tell.  Why do programmers prefer dark mode? Because light attracts bugs.  I'll get back to it.
 
 Here are some key takeaways:
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "is-triggering-async-functions-inside-a-vuejs-computed-property-suitable"
 ---
 
-Okay, let's unpack this. I've seen this particular scenario come up more than a few times, often with developers new to the reactive paradigm or those trying to squeeze every bit of performance out of their Vue applications. The short answer is: generally, no, it's not a good idea to directly trigger async functions inside a Vue computed property, and I’ll explain why with some specific examples. It's a pattern that tends to lead to complications that might not be immediately obvious.
+, let's unpack this. I've seen this particular scenario come up more than a few times, often with developers new to the reactive paradigm or those trying to squeeze every bit of performance out of their Vue applications. The short answer is: generally, no, it's not a good idea to directly trigger async functions inside a Vue computed property, and I’ll explain why with some specific examples. It's a pattern that tends to lead to complications that might not be immediately obvious.
 
 The core issue revolves around the intended purpose of computed properties. Computed properties in Vue are designed to be *synchronous* functions that return a derived value based on reactive data. They're intended to be pure functions – meaning that given the same inputs, they should always produce the same output, and they should have no side effects. Async operations, by their very nature, introduce side effects and temporal dependencies. They are not synchronous, and they don’t immediately return a value.
 

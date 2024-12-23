@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-searchkick-only-return-distinct-id-values"
 ---
 
-Okay, let’s unpack this. It’s a question I've actually dealt with quite a bit in the past, especially when working on systems that required complex data relationships alongside full-text search. It’s a common gotcha when you start pushing Searchkick’s default behavior. The core of the issue revolves around how Searchkick, at its heart, interacts with Elasticsearch, and why, for performance and conceptual clarity, it typically only returns distinct id values by default.
+, let’s unpack this. It’s a question I've actually dealt with quite a bit in the past, especially when working on systems that required complex data relationships alongside full-text search. It’s a common gotcha when you start pushing Searchkick’s default behavior. The core of the issue revolves around how Searchkick, at its heart, interacts with Elasticsearch, and why, for performance and conceptual clarity, it typically only returns distinct id values by default.
 
 Searchkick is essentially a gem that sits as a convenient abstraction layer on top of Elasticsearch, and it makes indexing and querying data relatively straightforward. However, Elasticsearch is, underneath, designed to handle massive amounts of data, and its architecture is deeply optimized for its inverted index structure. This structure isn't naturally set up to return multiple identical identifiers. When Searchkick performs a query, it's ultimately triggering a query against this index structure.
 

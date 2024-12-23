@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-implement-a-fallback-for-stdostream-and-the--operator-using-sfinae-and-templates-in-c17"
 ---
 
-Alright, let's tackle this. I recall a particularly tricky project back in my embedded systems days, where logging was crucial, but the target hardware sometimes lacked the full-fledged `std::ostream` capabilities. We had to come up with a robust fallback mechanism for when the standard stream wasn't readily available. That’s where SFINAE (Substitution Failure Is Not An Error) and templates became invaluable. The aim, as you've proposed, is to implement a fallback for the `<<` operator, using these features, particularly within the context of C++17's capabilities.
+Alright,  I recall a particularly tricky project back in my embedded systems days, where logging was crucial, but the target hardware sometimes lacked the full-fledged `std::ostream` capabilities. We had to come up with a robust fallback mechanism for when the standard stream wasn't readily available. That’s where SFINAE (Substitution Failure Is Not An Error) and templates became invaluable. The aim, as you've proposed, is to implement a fallback for the `<<` operator, using these features, particularly within the context of C++17's capabilities.
 
 Essentially, we're looking to conditionally enable or disable specific function overloads based on whether the type we're trying to log can be "streamed" using `std::ostream`. If not, we'll need to trigger an alternate, more rudimentary form of output.
 

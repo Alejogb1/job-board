@@ -22,7 +22,7 @@ a major point for me was their focus on access   their whole mission is empoweri
 then he dropped the bomb  they're putting ai into repet for *everyone*  millions of users  ai-powered coding is no longer some exclusive club  it's become mainstream  amjad even joked about burning through more gpu than cpu now that everyone's using it haha
 
 
-okay so key concept number one:  ai isn't just an add-on  it needs to be completely integrated into the coding process   no more clunky plugins or separate tools  think of it like this:  a new programming paradigm,  where AI assists you at every single step of the way.   it's a complete shift from what we've been doing
+ so key concept number one:  ai isn't just an add-on  it needs to be completely integrated into the coding process   no more clunky plugins or separate tools  think of it like this:  a new programming paradigm,  where AI assists you at every single step of the way.   it's a complete shift from what we've been doing
 
 
 key concept number two:  model farms!  they announced 'model farm' which lets you use pre-trained models directly in your ide with just a few lines of code   no more messing around with complex apis or external services  they started with google cloud llms but are adding llama and stable diffusion quickly   it's a massive simplification  and they're offering a free tier at least until the end of the year  genius move
@@ -115,7 +115,7 @@ print(result)
 the emphasis is on speed   he also said that their deployment pipeline went from 18 minutes to 2 minutes  which is just nuts
 
 
-then  the biggest reveal:  they’re releasing rapid code v1.5 as open source  this was a killer move  it’s commercially permissive   he even called out specific benchmarks where rapid code v1.5  beats other models including starcoder even getting close to llama 2's 7b model which is a monster—and they're totally okay with that
+then  the biggest reveal:  they’re releasing rapid code v1.5 as open source  this was a killer move  it’s commercially permissive   he even called out specific benchmarks where rapid code v1.5  beats other models including starcoder even getting close to llama 2's 7b model which is a monster—and they're totally  with that
 
 
 the presentation ended with some future plans  collaborations with glaive ai for synthetic data  work with more labs  and more integration with perplexity ai—all hinting at even more improvements and features down the line

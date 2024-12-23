@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-papertrails-attributeserializerfactory-be-customized"
 ---
 
-Let's tackle this. Customizing Papertrail's `AttributeSerializerFactory` is something I've delved into a few times, particularly when dealing with complex data types in our audit logs. The default serializers are, of course, handy, but inevitably, you encounter situations where you need more control over how specific attributes are represented when changes are tracked. The goal, naturally, is maintaining readable and useful audit trails without losing critical information. Let’s explore the avenues for customization.
+ Customizing Papertrail's `AttributeSerializerFactory` is something I've delved into a few times, particularly when dealing with complex data types in our audit logs. The default serializers are, of course, handy, but inevitably, you encounter situations where you need more control over how specific attributes are represented when changes are tracked. The goal, naturally, is maintaining readable and useful audit trails without losing critical information. Let’s explore the avenues for customization.
 
 The `AttributeSerializerFactory` in Papertrail, as you likely know, is responsible for selecting the appropriate serializer based on the type of attribute being tracked. By default, it handles common types like strings, numbers, booleans, and dates pretty well. But, when you venture beyond that – think custom enumerations, complex objects, or even serialized data – things get interesting. It’s at this point that extending or overriding its functionality becomes essential.
 

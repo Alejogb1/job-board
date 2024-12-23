@@ -30,7 +30,7 @@ this is the most common case and the best case scenario. it usually means you're
 
 if this doesn't fix it, you may need to reimport your keys to the near-cli or wallet, this can be done with your key file or seed phrase depending on your setup.
 
-here's a near-cli command that you should try, if you're already set up, to check that your account and key are okay (replace `your_account.near` with your actual account id). this command tries to verify your balance and connection with the network:
+here's a near-cli command that you should try, if you're already set up, to check that your account and key are  (replace `your_account.near` with your actual account id). this command tries to verify your balance and connection with the network:
 
 ```bash
 near view your_account.near get_account_balance

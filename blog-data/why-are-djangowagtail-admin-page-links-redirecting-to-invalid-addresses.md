@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-are-djangowagtail-admin-page-links-redirecting-to-invalid-addresses"
 ---
 
-Okay, let's get into this. I've seen this particular headache quite a few times over the years, and it's usually not a single smoking gun, but a constellation of potential culprits. The situation where your Django/Wagtail admin page links are directing to invalid addresses is frustrating, but very solvable with a systematic approach. Let's break down some of the most common reasons this happens and how to address them.
+, let's get into this. I've seen this particular headache quite a few times over the years, and it's usually not a single smoking gun, but a constellation of potential culprits. The situation where your Django/Wagtail admin page links are directing to invalid addresses is frustrating, but very solvable with a systematic approach. Let's break down some of the most common reasons this happens and how to address them.
 
 Firstly, one frequent cause involves misconfigured url patterns, either in your Django project's root `urls.py` file or within individual apps. In a project I worked on circa 2016, we had a particularly gnarly instance of this. The admin urls, which are designed to live under the `/admin/` path, were being inadvertently clobbered by a catch-all rule meant for a different part of the application. This resulted in the admin pages redirecting to, effectively, page not found addresses. Essentially, the routing wasn't letting the intended admin handlers receive the request, and we kept getting bounced to the wrong place.
 

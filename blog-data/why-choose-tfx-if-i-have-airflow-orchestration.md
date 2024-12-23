@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-choose-tfx-if-i-have-airflow-orchestration"
 ---
 
-Okay, let's talk about choosing tensorflow extended (tfx) when you're already comfortable with airflow. This isn't about tossing out one for the other wholesale, but understanding where each shines and how they can sometimes complement each other, or even why you might choose one over the other. From my experience architecting machine learning pipelines for a variety of projects, including a particularly challenging one involving real-time fraud detection, I've seen firsthand when tfx provides that extra edge you simply can’t readily achieve with just airflow.
+, let's talk about choosing tensorflow extended (tfx) when you're already comfortable with airflow. This isn't about tossing out one for the other wholesale, but understanding where each shines and how they can sometimes complement each other, or even why you might choose one over the other. From my experience architecting machine learning pipelines for a variety of projects, including a particularly challenging one involving real-time fraud detection, I've seen firsthand when tfx provides that extra edge you simply can’t readily achieve with just airflow.
 
 The crux of the matter isn't simply orchestration, though airflow excels at that. It's about the end-to-end lifecycle of a machine learning model – from raw data ingestion all the way through to deployment and continuous monitoring. Airflow is a fantastic general-purpose workflow engine; it’s excellent at scheduling tasks, managing dependencies, and providing a clear view of your data pipelines. But it lacks the opinionated, model-centric approach that tfx was designed around.
 

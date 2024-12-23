@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-layered-architecture-with-dependency-inversion-differ-from-hexagonal-architecture"
 ---
 
-Okay, let's talk about architectural patterns, specifically the nuanced differences between layered architecture with dependency inversion and hexagonal architecture. It's a question I've navigated multiple times in my career, and the distinction, while subtle, often dictates the maintainability and testability of a system. I recall a particularly complex project involving a large e-commerce platform, where the initial design was a rather rigid layered architecture. We hit a wall when the business logic, deeply intertwined with database access, became nearly impossible to evolve without cascading changes. That experience taught me the power of proper decoupling and the value of these patterns.
+, let's talk about architectural patterns, specifically the nuanced differences between layered architecture with dependency inversion and hexagonal architecture. It's a question I've navigated multiple times in my career, and the distinction, while subtle, often dictates the maintainability and testability of a system. I recall a particularly complex project involving a large e-commerce platform, where the initial design was a rather rigid layered architecture. We hit a wall when the business logic, deeply intertwined with database access, became nearly impossible to evolve without cascading changes. That experience taught me the power of proper decoupling and the value of these patterns.
 
 So, let's break it down.
 

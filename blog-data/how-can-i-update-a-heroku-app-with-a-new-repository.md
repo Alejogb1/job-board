@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-update-a-heroku-app-with-a-new-repository"
 ---
 
-Okay, let's tackle this one. It's a common scenario, and I've certainly navigated it a few times over the years, sometimes with more grace than others, I must confess. Specifically, updating a Heroku application with a completely new repository isn't a standard ‘git push heroku main’ affair. It’s a process that requires a little more care, but it’s manageable if you understand the underlying mechanism.
+, let's tackle this one. It's a common scenario, and I've certainly navigated it a few times over the years, sometimes with more grace than others, I must confess. Specifically, updating a Heroku application with a completely new repository isn't a standard ‘git push heroku main’ affair. It’s a process that requires a little more care, but it’s manageable if you understand the underlying mechanism.
 
 Essentially, Heroku associates a remote repository with your application. When you deploy, it pulls from that linked repository. If you change the entire source codebase or decide to migrate to a completely different repository, you're not *updating* the existing code—you're effectively *replacing* it. This demands a different approach than your usual deployment. We can't just change the 'origin' of our git repo and try to push; Heroku's deployment system needs a nudge to recognize this shift.
 

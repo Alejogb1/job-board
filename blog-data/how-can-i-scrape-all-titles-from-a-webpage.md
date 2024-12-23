@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-scrape-all-titles-from-a-webpage"
 ---
 
-Okay, let’s tackle this. I’ve seen this scenario play out many times, and it's often the first hurdle many face when starting with web scraping. It seems straightforward, but there are nuances that can trip you up. The goal here is to efficiently extract all title elements from a webpage, and I'll walk you through the process with some code examples and pointers.
+, let’s tackle this. I’ve seen this scenario play out many times, and it's often the first hurdle many face when starting with web scraping. It seems straightforward, but there are nuances that can trip you up. The goal here is to efficiently extract all title elements from a webpage, and I'll walk you through the process with some code examples and pointers.
 
 First, we need to understand what a title element is in the context of HTML. It's the `<title>` tag that usually resides within the `<head>` section of an html document. But, webpages sometimes have more complex structures, including dynamically generated content via javascript, which we'll also touch upon. Just grabbing the first `<title>` we find won't always work if you're dealing with a more dynamic site.
 

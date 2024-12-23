@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-invisible-buttons-be-made-visible-on-mouseover"
 ---
 
-Okay, let's tackle this one. I've certainly seen my share of invisible button conundrums over the years, often in legacy applications where design decisions… let's just say, weren't always the most intuitive. Getting those hidden interactables to reveal themselves gracefully is more than just a visual flourish; it's critical for usability. We're talking about making the implicit explicit, guiding the user, and preventing frustration.
+, let's tackle this one. I've certainly seen my share of invisible button conundrums over the years, often in legacy applications where design decisions… let's just say, weren't always the most intuitive. Getting those hidden interactables to reveal themselves gracefully is more than just a visual flourish; it's critical for usability. We're talking about making the implicit explicit, guiding the user, and preventing frustration.
 
 The core issue is, naturally, that the user needs some kind of visual cue that an element is interactive. An invisible button, by definition, offers none initially. We can't assume users will randomly mouse around hoping for a cursor change. Therefore, the solution revolves around dynamically altering the button's appearance on mouseover (or focus for keyboard navigation, but we'll primarily focus on mouseover here for simplicity). The key, as with most front-end work, is a delicate balance between functionality, performance, and accessibility.
 

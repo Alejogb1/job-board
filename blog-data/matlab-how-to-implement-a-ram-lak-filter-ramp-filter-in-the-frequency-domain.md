@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "matlab-how-to-implement-a-ram-lak-filter-ramp-filter-in-the-frequency-domain"
 ---
 
-Okay so you're asking how to do a Ram-Lak filter in MATLAB using the frequency domain right? Classic image processing stuff Been there done that got the t-shirt and probably spilled coffee on it a few times let me tell you about it
+ so you're asking how to do a Ram-Lak filter in MATLAB using the frequency domain right? Classic image processing stuff Been there done that got the t-shirt and probably spilled coffee on it a few times let me tell you about it
 
 Right off the bat if you're trying to sharpen an image or do some sort of image reconstruction a Ram-Lak filter is often the go to Its basically a high pass filter that boosts high frequencies relative to low frequencies Its useful in situations where you want to enhance edges or features while suppressing smooth regions Think of it like this you're trying to bring the details to the forefront while ignoring the boring parts of an image
 
@@ -72,7 +72,7 @@ A couple of notes about the code above
 
 First the division by `max(cols,rows)/2` in the 2D case normalizes the frequency axis to have values within a 0-1 range it's a good habit to get into so you're not dealing with very big values Second notice the `real` part after `ifft` and `ifft2` since numerical errors could lead to small imaginary components we do that to get the actual signal and the image back without visual artifacts This is very common when dealing with FFT and IFFT operations
 
-Okay time for a slight aside I once tried using this filter on a cat picture thinking it would make it look super cool it just looked weird not cool at all I guess cats are not meant to be sharp Anyway lets continue
+ time for a slight aside I once tried using this filter on a cat picture thinking it would make it look super cool it just looked weird not cool at all I guess cats are not meant to be sharp Anyway lets continue
 
 Now the basic Ram-Lak filter we just implemented can be sensitive to high frequency noise in the image because it’s a high pass filter that amplifies high frequencies Now if you want to reduce that sensitivity you can add a windowing function that tapers off the high frequency response This is pretty useful if you have a very noisy image data
 
@@ -128,4 +128,4 @@ For a more mathematical and signal processing oriented approach you could check 
 
 Also you might also want to check out articles in the IEEE Transactions on Image Processing journal it has a lot of cutting edge research and papers related to image processing algorithms
 
-Okay I think that covers it Feel free to ask if there’s anything else you need it’s all a learning process that never ends and we all are there in our own way good luck with your image processing adventure
+ I think that covers it Feel free to ask if there’s anything else you need it’s all a learning process that never ends and we all are there in our own way good luck with your image processing adventure

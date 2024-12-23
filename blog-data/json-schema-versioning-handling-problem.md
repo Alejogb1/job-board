@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "json-schema-versioning-handling-problem"
 ---
 
-Okay so json schema versioning yeah been there done that got the t-shirt multiple times trust me it’s a headache but a solvable one Let's unpack this from a purely practical point of view like one engineer talking to another no fluff no marketing jargon just real-world stuff
+ so json schema versioning yeah been there done that got the t-shirt multiple times trust me it’s a headache but a solvable one Let's unpack this from a purely practical point of view like one engineer talking to another no fluff no marketing jargon just real-world stuff
 
 Right off the bat you need to understand that json schema versioning is not something the schema spec directly provides you Its up to you the developer to figure out a system that works for your specific situation and believe me there is no one size fits all solution I've tried them all and all of them break eventually in some way or another That's just how software development rolls
 
@@ -81,7 +81,7 @@ You may also need to consider data migrations when you need to change an existin
 
 Finally it's essential to have a clear communication strategy within your team every time a schema changes or a new schema is added someone should be notified to ensure that everyone is on the same page this is one area where I've seen multiple projects fail because teams end up using different versions of schemas without realizing it and this brings a lot of inconsistency into the system
 
-Oh one more thing if you are building your own schema registry be prepared to debug a lot I remember one time when I was working on this I thought that the issue was on the schema that was being processed instead I spent days debugging it until I found out that the issue was with the way we configured the routing on our schema registry servers I swear sometimes dealing with network issues is like trying to find a needle in a haystack or as I usually say debugging is like an easter egg hunt the egg can be anywhere haha okay i'm done with the joke sorry
+Oh one more thing if you are building your own schema registry be prepared to debug a lot I remember one time when I was working on this I thought that the issue was on the schema that was being processed instead I spent days debugging it until I found out that the issue was with the way we configured the routing on our schema registry servers I swear sometimes dealing with network issues is like trying to find a needle in a haystack or as I usually say debugging is like an easter egg hunt the egg can be anywhere haha  i'm done with the joke sorry
 
 As for resources to understand more in detail about schema handling I found that the draft-07 json schema specification is a good place to start also the json schema website has good documentation on the subject and there is a very good book called designing data intensive applications that covers topics related to data modeling schema evolution and many other issues that can help you design a better system
 

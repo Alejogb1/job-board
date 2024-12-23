@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "what-are-the-limitations-of-current-alignment-methods-in-achieving-long-term-ai-reliability"
 ---
 
-Okay so you wanna talk about AI alignment right  the whole getting super smart AIs to actually do what we want  not accidentally turn us all into paperclips or something  It's a HUGE deal and honestly kinda scary  Current methods are… well they're a work in progress  massive understatement  Think of it like trying to teach a super smart parrot to speak human  except the parrot is learning at an insane speed and can rewrite its own brain code on the fly
+ so you wanna talk about AI alignment right  the whole getting super smart AIs to actually do what we want  not accidentally turn us all into paperclips or something  It's a HUGE deal and honestly kinda scary  Current methods are… well they're a work in progress  massive understatement  Think of it like trying to teach a super smart parrot to speak human  except the parrot is learning at an insane speed and can rewrite its own brain code on the fly
 
 The main problem is we're kinda flying blind  We don't fully understand intelligence itself let alone how to reliably align a potentially vastly superior one  It's like trying to design a super advanced spaceship without understanding basic physics  you'll probably crash and burn spectacularly
 

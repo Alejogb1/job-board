@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-laraveltest-not-a-valid-service"
 ---
 
-Okay, let's tackle this. The question of "why `laravel.test` isn't a valid service" often pops up, and while seemingly straightforward, the underlying reasons delve into several layers of how web services and domain name resolution function. I've certainly bumped into this myself during various projects, especially when setting up local development environments. It's a fantastic example of how things that *look* like they should work, sometimes don’t.
+,  The question of "why `laravel.test` isn't a valid service" often pops up, and while seemingly straightforward, the underlying reasons delve into several layers of how web services and domain name resolution function. I've certainly bumped into this myself during various projects, especially when setting up local development environments. It's a fantastic example of how things that *look* like they should work, sometimes don’t.
 
 Essentially, `laravel.test` isn’t a valid service, at least not by default, because it’s not a formally registered top-level domain (TLD) within the global Domain Name System (DNS). Think of it this way: DNS is like the internet’s phonebook, mapping human-readable names (like `example.com`) to IP addresses (like `192.168.1.10`). `laravel.test`, while convenient for local development, doesn't exist in this global phonebook. Therefore, unless you specifically configure your system to treat `laravel.test` as a special case, it’ll be met with the same 'domain not found' error as any random string you type in.
 

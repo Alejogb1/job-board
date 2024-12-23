@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-testcontainer-failing-to-start-due-to-a-timeout-waiting-for-log-output"
 ---
 
-Right then, let's tackle this. It's not uncommon to encounter a Testcontainers timeout while waiting for log output, and believe me, I’ve spent my fair share of late nights debugging this very issue. From my experience, it often boils down to a handful of key culprits, each with their own nuances. It's rarely a straightforward "Testcontainers is broken" scenario; instead, it usually signals an underlying issue with the container setup itself or how Testcontainers is configured.
+Right then,  It's not uncommon to encounter a Testcontainers timeout while waiting for log output, and believe me, I’ve spent my fair share of late nights debugging this very issue. From my experience, it often boils down to a handful of key culprits, each with their own nuances. It's rarely a straightforward "Testcontainers is broken" scenario; instead, it usually signals an underlying issue with the container setup itself or how Testcontainers is configured.
 
 The fundamental problem is that Testcontainers, by design, waits for a specific log pattern to appear from the container before it deems the container "ready" and usable for testing. This pattern is generally configurable, but it defaults to a successful startup message emitted by the target service. When the expected message doesn’t appear within the defined timeout, you get the dreaded timeout exception. This timeout mechanism exists to prevent tests from proceeding against a container that hasn’t properly initialized, leading to unreliable and confusing results.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-a-pre-trained-model-be-enhanced-without-using-a-sequential-architecture"
 ---
 
-Alright, let's tackle this. I've seen this challenge pop up quite a few times in projects, and it's a valid question when dealing with models where a purely sequential approach isn't the best fit. Thinking back to my work on a multi-modal sensor fusion project, we hit a wall with simple LSTM approaches – we needed more nuanced interactions than what a sequence could naturally capture.
+Alright,  I've seen this challenge pop up quite a few times in projects, and it's a valid question when dealing with models where a purely sequential approach isn't the best fit. Thinking back to my work on a multi-modal sensor fusion project, we hit a wall with simple LSTM approaches – we needed more nuanced interactions than what a sequence could naturally capture.
 
 The question is about enhancing pre-trained models *without* relying on a sequential architecture. This usually implies a scenario where your data isn't inherently time-series-oriented, or that the inherent structure doesn't benefit from being processed in sequence. We're looking at models that operate on a set of features or representations rather than a temporally ordered input. And honestly, many real-world problems fall into this category.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-create-a-clickable-phone-number-link-in-a-wicked-pdf-document"
 ---
 
-Let's tackle this. I remember a project back in '17, we were generating some rather complex legal documents via Wicked PDF and ran into the very same problem: making phone numbers clickable. Standard html-based links weren’t directly translating through Wicked PDF’s rendering process. It took some fiddling, but we found a reliable workaround, which I'll share here.
+ I remember a project back in '17, we were generating some rather complex legal documents via Wicked PDF and ran into the very same problem: making phone numbers clickable. Standard html-based links weren’t directly translating through Wicked PDF’s rendering process. It took some fiddling, but we found a reliable workaround, which I'll share here.
 
 The core issue stems from how Wicked PDF (which, under the hood, is typically using a webkit-based rendering engine) interprets and translates html into a PDF. Simple `<a>` tags with `href="tel:..."` often don't render the expected clickable behavior, or worse, result in the number being displayed as text and not a link at all. This happens because the PDF rendering process doesn’t always faithfully translate the interactive aspects of HTML, like the `tel:` URI scheme, directly. We have to be a little more explicit.
 

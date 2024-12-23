@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-does-the-comma-represent-in-python-slice-notation----1-"
 ---
 
-Okay, let's tackle this. It's one of those Python quirks that can trip up even seasoned developers, and I remember a particularly gnarly debugging session a few years back where this exact slice notation was the culprit. Specifically, I was working on a fairly complex data visualization project involving multi-dimensional arrays. The goal was to extract a very particular column of data from a matrix, and a subtle misstep with slice notation almost derailed the entire pipeline. It underscored the importance of truly grasping what's happening behind the scenes.
+,  It's one of those Python quirks that can trip up even seasoned developers, and I remember a particularly gnarly debugging session a few years back where this exact slice notation was the culprit. Specifically, I was working on a fairly complex data visualization project involving multi-dimensional arrays. The goal was to extract a very particular column of data from a matrix, and a subtle misstep with slice notation almost derailed the entire pipeline. It underscored the importance of truly grasping what's happening behind the scenes.
 
 The comma in Python slice notation, specifically when it appears within square brackets `[ : , 1 ]`, signifies we're dealing with a multi-dimensional data structure, such as a list of lists (a basic representation of a matrix) or a numpy array. The part *before* the comma, in this instance, a colon `(:)`, is slicing one dimension (typically rows when thinking of a matrix), while the value *after* the comma `(1)`, slices along another dimension (typically columns). Let's dissect that a bit further.
 

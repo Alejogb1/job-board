@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-access-resources-when-building-a-grails-514-jar-file"
 ---
 
-Okay, let's tackle this. I remember a particularly thorny case a few years back, working on a migration project where accessing external resources packaged within a Grails .jar felt like navigating a maze. It wasn't as straightforward as one might initially expect, and it highlighted the importance of understanding the underlying classloading mechanisms and how Grails handles resources at runtime.
+,  I remember a particularly thorny case a few years back, working on a migration project where accessing external resources packaged within a Grails .jar felt like navigating a maze. It wasn't as straightforward as one might initially expect, and it highlighted the importance of understanding the underlying classloading mechanisms and how Grails handles resources at runtime.
 
 The core issue revolves around the way a .jar file is structured and how the JVM's classloader interacts with it. When you build a Grails application into a .jar, all your compiled classes, static resources (like configuration files, property files, or images), and the dependencies of your project get bundled together. However, the resources aren't necessarily available using standard filesystem paths that you might use in a development environment. Instead, they're treated as entries within the jar’s archive and require accessing them as resource streams.
 

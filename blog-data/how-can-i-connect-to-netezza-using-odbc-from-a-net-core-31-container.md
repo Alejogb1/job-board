@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-connect-to-netezza-using-odbc-from-a-net-core-31-container"
 ---
 
-Okay, let's tackle this. Netezza connections from within a .NET Core 3.1 container, using ODBC, can indeed present some interesting configuration hurdles. I've dealt with this a few times, most memorably when we were migrating a large data processing pipeline to Kubernetes and needed to ensure our .NET Core services could reach the Netezza data warehouse. The core challenge isn't necessarily the .NET code itself, but rather setting up the correct environment within the container so that the ODBC driver can function correctly.
+,  Netezza connections from within a .NET Core 3.1 container, using ODBC, can indeed present some interesting configuration hurdles. I've dealt with this a few times, most memorably when we were migrating a large data processing pipeline to Kubernetes and needed to ensure our .NET Core services could reach the Netezza data warehouse. The core challenge isn't necessarily the .NET code itself, but rather setting up the correct environment within the container so that the ODBC driver can function correctly.
 
 The primary hurdle is that the ODBC driver, especially for something like Netezza, often relies on underlying system libraries and configurations that aren't included in the standard, minimal Docker images typically used for .NET Core. You’re essentially introducing a dependency outside the immediate purview of .NET's managed environment. This requires a few crucial steps: 1) Ensuring the Netezza ODBC driver is available within the container, 2) Configuring ODBC to recognize and load the driver, and 3) Properly formatting your connection string in your .NET code.
 

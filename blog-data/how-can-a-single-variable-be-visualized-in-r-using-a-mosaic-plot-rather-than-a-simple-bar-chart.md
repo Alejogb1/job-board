@@ -31,7 +31,7 @@ mosaicplot(mosaic_data, main = "Mosaic Plot of Single Variable",
 
 In this example, I create a vector of categorical values. I use `table()` to generate a frequency table. The magic trick is converting it into a one-row matrix. The row corresponds to our single, artificial dimension. We then feed this matrix into the `mosaicplot()` function. You'll see that the areas of the rectangles within the plot reflect the proportions of each category in relation to the others, with the height being an arbitrary scale dictated by the single fixed dimension of ‘counts’. It's not your traditional mosaic display, which normally involves columns and rows of variable interactions; instead, all of our categories are just laid out end to end.
 
-Okay, let's step it up a notch with slightly more advanced formatting:
+, let's step it up a notch with slightly more advanced formatting:
 
 ```R
 # Example 2: Adding Color and Labels

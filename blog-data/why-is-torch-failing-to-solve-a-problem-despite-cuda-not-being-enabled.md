@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-torch-failing-to-solve-a-problem-despite-cuda-not-being-enabled"
 ---
 
-Alright, let's tackle this. I've seen this issue pop up more often than I'd like, and it can be particularly frustrating when everything *seems* to be set up correctly. The core problem here, when torch fails to solve something *without* CUDA enabled, isn't necessarily about missing gpu support – that's a common misdiagnosis. It's usually rooted in how PyTorch (or any similar framework) manages computational resources and what assumptions it's making about your system's capabilities.
+Alright,  I've seen this issue pop up more often than I'd like, and it can be particularly frustrating when everything *seems* to be set up correctly. The core problem here, when torch fails to solve something *without* CUDA enabled, isn't necessarily about missing gpu support – that's a common misdiagnosis. It's usually rooted in how PyTorch (or any similar framework) manages computational resources and what assumptions it's making about your system's capabilities.
 
 First, let's unpack the specific scenario you’ve presented. You're running a PyTorch model, it’s not performing as expected, and you’ve confirmed that CUDA isn’t even in the picture. This indicates the problem lies *within* the CPU execution path, not an issue of gpu acceleration. The assumption that "no cuda, so problem must be cuda related" is a typical pitfall. Instead, we need to dive into three key areas where things commonly go awry in pure cpu-based training or inference.
 

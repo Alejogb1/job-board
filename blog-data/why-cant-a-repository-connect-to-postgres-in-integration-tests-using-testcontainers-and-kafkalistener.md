@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-cant-a-repository-connect-to-postgres-in-integration-tests-using-testcontainers-and-kafkalistener"
 ---
 
-Okay, let's tackle this. I’ve seen this exact scenario play out a few times, and it usually stems from a combination of timing, network configurations within docker, and how your application context is managed within the integration testing framework. Let’s dissect the problem step-by-step.
+,  I’ve seen this exact scenario play out a few times, and it usually stems from a combination of timing, network configurations within docker, and how your application context is managed within the integration testing framework. Let’s dissect the problem step-by-step.
 
 From my experience, the heart of the matter often lies in the network bridge created by Docker and how your tests interact with it. When you use testcontainers, it essentially spins up containers in their isolated docker networks. These networks aren’t inherently aware of each other. This means that your application's test container, which usually runs your spring boot app or similar, needs explicit instruction on how to connect to the postgres container launched by testcontainers.
 

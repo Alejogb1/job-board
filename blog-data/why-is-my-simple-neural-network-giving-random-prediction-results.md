@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-is-my-simple-neural-network-giving-random-prediction-results"
 ---
 
-Alright, let's tackle this. I've seen this exact scenario play out more times than I can count, usually in the early stages of a machine learning project. It’s incredibly frustrating when you've got what *looks* like a straightforward neural network, yet the output seems completely detached from the input, churning out seemingly random predictions. Let's break down the common culprits and, more importantly, how to fix them.
+Alright,  I've seen this exact scenario play out more times than I can count, usually in the early stages of a machine learning project. It’s incredibly frustrating when you've got what *looks* like a straightforward neural network, yet the output seems completely detached from the input, churning out seemingly random predictions. Let's break down the common culprits and, more importantly, how to fix them.
 
 The issue of random predictions from a neural network isn't usually caused by a flaw in the fundamental *concept* of neural networks itself, but rather from improper implementation or setup. Specifically, we need to look at data quality, initialization, learning rates, the network’s architecture, and overfitting. Let’s address these systematically from my perspective, built on real-world cases I've encountered.
 

@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "is-tfx-necessary-if-we-already-have-airflow-for-orchestration"
 ---
 
-Okay, let's unpack this. I've been down this road before, wrestling— *err*, navigating— the complexities of building and deploying machine learning systems. The question of whether TensorFlow Extended (tfx) is genuinely needed when you already have a robust orchestrator like Airflow is a valid one, and the answer, predictably, is nuanced.
+, let's unpack this. I've been down this road before, wrestling— *err*, navigating— the complexities of building and deploying machine learning systems. The question of whether TensorFlow Extended (tfx) is genuinely needed when you already have a robust orchestrator like Airflow is a valid one, and the answer, predictably, is nuanced.
 
 My experience, particularly with a prior project involving predicting anomalies in sensor data streams at scale, has given me some practical insights here. We initially relied solely on Airflow to manage our entire pipeline, from data ingestion to model deployment. It worked, up to a point, but we soon encountered limitations that pointed directly at the core strengths of something like tfx.
 

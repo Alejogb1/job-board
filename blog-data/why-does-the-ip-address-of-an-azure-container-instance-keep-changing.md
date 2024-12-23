@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-the-ip-address-of-an-azure-container-instance-keep-changing"
 ---
 
-Okay, let's tackle the curious case of the perpetually shifting IP address on Azure Container Instances (ACI). It's a scenario I've definitely navigated more than a few times over the years, especially during early deployments where the infrastructure patterns weren't quite as mature. And it's a question that often surfaces when developers, familiar with the more static nature of virtual machines, first encounter containerized deployments in Azure.
+, let's tackle the curious case of the perpetually shifting IP address on Azure Container Instances (ACI). It's a scenario I've definitely navigated more than a few times over the years, especially during early deployments where the infrastructure patterns weren't quite as mature. And it's a question that often surfaces when developers, familiar with the more static nature of virtual machines, first encounter containerized deployments in Azure.
 
 The short, technical answer is that by default, Azure Container Instances are ephemeral resources. They don't inherently have a dedicated, fixed IP address that persists across restarts or redeployments. Instead, they are usually assigned a dynamic IP from a pool within the Azure network. This is fundamentally different from how, say, a virtual machine operates where you explicitly configure the network interface with either a static address or a reservation.
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "what-does-fatload-mmc-and-bootm-means-in-the-uboot"
 ---
 
-Okay so you're asking about `fatload mmc` and `bootm` in U-Boot right? Yeah I've been down that rabbit hole more times than I care to remember lets break it down in a way that makes sense.
+ so you're asking about `fatload mmc` and `bootm` in U-Boot right? Yeah I've been down that rabbit hole more times than I care to remember lets break it down in a way that makes sense.
 
 First off U-Boot its a universal bootloader basically the first software that runs when your embedded system powers on or restarts It takes care of initial hardware initialization setting up memory and most importantly loading the operating system kernel.
 
@@ -26,7 +26,7 @@ Here `mmc 0:1` it means the first MMC/SD card and the first partition. `0x108000
 
 The important detail is that `fatload` needs a working mmc driver in uboot and that needs to be compiled in the uboot build phase that can cause you anoying debugging session if you didnt compile it in you just get "mmc not found" or something like that and you start chasing the wrong bug.
 
-Okay now onto `bootm`. This command its responsible for actually starting the kernel. Its the moment all your work will pay off. In its simple use `bootm` takes a memory address argument where a valid kernel image is and then starts executing the code from that address. The kernel is a compressed image so `bootm` also handles the decompressing of the kernel so there is no need to manually do that.
+ now onto `bootm`. This command its responsible for actually starting the kernel. Its the moment all your work will pay off. In its simple use `bootm` takes a memory address argument where a valid kernel image is and then starts executing the code from that address. The kernel is a compressed image so `bootm` also handles the decompressing of the kernel so there is no need to manually do that.
 
 And here's the thing `bootm` isn't just for raw kernels. It also works with what's called a "uImage" format which is a kernel wrapped with some metadata and checksums. It is the most used format in the uboot world. This metadata is important because it indicates to uboot information about what to load or how to load it if it's a kernel or if it is some other kind of archive.
 
@@ -56,7 +56,7 @@ And of course these addresses need to be valid memory locations accessible by ub
 
 One time I was pulling my hair out for days until I realized my load addresses were overlapping with some other memory areas used by some uboot peripherals I was using I mean it was so frustratring and dumb at the same time. It's amazing what happens when you don't read the documentation properly. And speaking of that remember to double check you addresses because U-Boot sometimes will print the address as decimal numbers instead of hexadecimals its a thing many uboot users overlook. It is a good thing to remember that uboot is a very versatile tool but it demands precision.
 
-And now the joke. Why did the embedded engineer bring a ladder to the debug session? Because he heard the code was running on a different level! Okay I'll get my coat.
+And now the joke. Why did the embedded engineer bring a ladder to the debug session? Because he heard the code was running on a different level!  I'll get my coat.
 
 To make a better understanding of the concepts the book "Embedded Linux Primer" by Christopher Hallinan is a great read for people trying to figure out low-level stuff like this. Also "Understanding the Linux Kernel" by Daniel P. Bovet and Marco Cesati will help you understanding the kernel booting process. There are a lot of things going on in the background at the startup of the kernel that many people overlook.
 

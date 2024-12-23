@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-nothing-displayed-in-the-mouse-drawing-application"
 ---
 
-Okay, let’s tackle this. It’s a problem I've seen crop up more often than I’d like, and usually, it boils down to a handful of core issues when you're dealing with mouse-driven graphics. I remember back in the early days, when I was trying to implement a rudimentary CAD program, similar symptoms kept popping up; a blank canvas despite all the intended interactions with the mouse. The initial frustration eventually led to understanding the typical culprits.
+, let’s tackle this. It’s a problem I've seen crop up more often than I’d like, and usually, it boils down to a handful of core issues when you're dealing with mouse-driven graphics. I remember back in the early days, when I was trying to implement a rudimentary CAD program, similar symptoms kept popping up; a blank canvas despite all the intended interactions with the mouse. The initial frustration eventually led to understanding the typical culprits.
 
 Let's examine the scenario of a mouse drawing application that's not showing anything on the canvas. There are several things that can go wrong here, but typically, the problem originates in the interaction between the event handling, the drawing pipeline, and the canvas setup itself. In essence, you have data moving from a mouse event (coordinates, clicks, etc.), that data needs to trigger some change in the display state, and finally the display must be updated. Let’s consider what breaks along that path.
 

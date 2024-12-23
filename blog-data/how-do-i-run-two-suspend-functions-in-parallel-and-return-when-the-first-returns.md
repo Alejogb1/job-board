@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-run-two-suspend-functions-in-parallel-and-return-when-the-first-returns"
 ---
 
-Okay, let's talk about running suspend functions in parallel and returning the result of the first one that completes – a common task in asynchronous programming, and one I've certainly tackled more times than I'd care to count. It's more nuanced than simply launching two coroutines and calling it a day, especially when you need that specific "first to finish" behavior. In my experience, this kind of pattern often crops up when dealing with multiple data sources, or fallback mechanisms.
+, let's talk about running suspend functions in parallel and returning the result of the first one that completes – a common task in asynchronous programming, and one I've certainly tackled more times than I'd care to count. It's more nuanced than simply launching two coroutines and calling it a day, especially when you need that specific "first to finish" behavior. In my experience, this kind of pattern often crops up when dealing with multiple data sources, or fallback mechanisms.
 
 The core concept revolves around launching the suspend functions within their own coroutines and then employing the power of kotlin’s `async` and `await` mechanisms (or, as a similar analogy from other asynchronous patterns, its equivalent of promises and `await`). The trick, however, isn't just to launch them concurrently; it’s to monitor their results and cancel the slower one once the first completes. This requires a structured approach to coroutine management. Let's get into it, step by step, with code to illustrate.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-there-a-size-mismatch-error-loading-the-googlenet-statedict"
 ---
 
-Okay, let's dive into this. It's not uncommon to encounter the frustrating size mismatch error when attempting to load a `state_dict` for GoogLeNet, or any pre-trained model for that matter. I remember facing this issue during a rather complex image classification project a few years back involving specialized medical imaging, which really hammered home the importance of understanding the underlying mechanics of model loading. It wasn't simply plug and play, as I initially hoped, and the debugging process was quite informative.
+, let's dive into this. It's not uncommon to encounter the frustrating size mismatch error when attempting to load a `state_dict` for GoogLeNet, or any pre-trained model for that matter. I remember facing this issue during a rather complex image classification project a few years back involving specialized medical imaging, which really hammered home the importance of understanding the underlying mechanics of model loading. It wasn't simply plug and play, as I initially hoped, and the debugging process was quite informative.
 
 The core problem stems from discrepancies between the architecture of the model you're trying to load and the model whose `state_dict` you’re loading from. A `state_dict`, in PyTorch for instance, is essentially a Python dictionary mapping parameter names (like `conv1.weight`, `fc.bias`, etc.) to their corresponding tensors (containing the model's weights and biases). When a size mismatch occurs, it means that at least one tensor in the dictionary has dimensions that don’t correspond to the expected dimensions within the architecture you're loading into.
 

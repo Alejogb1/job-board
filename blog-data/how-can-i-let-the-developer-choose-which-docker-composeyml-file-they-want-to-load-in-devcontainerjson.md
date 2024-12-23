@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-let-the-developer-choose-which-docker-composeyml-file-they-want-to-load-in-devcontainerjson"
 ---
 
-Okay, let’s tackle this. It’s a common challenge, and I’ve certainly been down that rabbit hole a few times, especially when dealing with complex microservices architectures. The core issue is providing developers with the flexibility to choose their docker-compose configuration within a devcontainer environment. You want to avoid a monolithic dev setup while keeping things manageable. Let's talk about how to achieve this practically, and I'll share some code examples to illustrate the approach.
+, let’s tackle this. It’s a common challenge, and I’ve certainly been down that rabbit hole a few times, especially when dealing with complex microservices architectures. The core issue is providing developers with the flexibility to choose their docker-compose configuration within a devcontainer environment. You want to avoid a monolithic dev setup while keeping things manageable. Let's talk about how to achieve this practically, and I'll share some code examples to illustrate the approach.
 
 Fundamentally, devcontainer.json gives us hooks that we can leverage. We’re going to exploit the `onCreateCommand` or `postCreateCommand` properties, coupled with a mechanism to allow the developer to specify their desired docker-compose file. We’ll sidestep the rigidity of hardcoding paths by introducing a variable or setting that developers can manipulate.
 

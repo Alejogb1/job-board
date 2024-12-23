@@ -4,7 +4,7 @@ date: "2024-12-03"
 id: "how-does-qwq-32b-handle-multilingual-chain-of-thought-processing"
 ---
 
-Okay so you wanna know about QwQ 32B multilingual chain-of-thought prompting  right  super cool stuff  I've been messing around with it lately and it's wild  basically it's like taking a massive language model – think GPT-3 but way bigger and more multilingual – and teaching it to think step-by-step before answering  kinda like how we humans do things  we don't just blurt out answers we break problems down  right?
+ so you wanna know about QwQ 32B multilingual chain-of-thought prompting  right  super cool stuff  I've been messing around with it lately and it's wild  basically it's like taking a massive language model – think GPT-3 but way bigger and more multilingual – and teaching it to think step-by-step before answering  kinda like how we humans do things  we don't just blurt out answers we break problems down  right?
 
 QwQ 32B is big  like really big  32 billion parameters  that's a lot of knobs to tweak  it's trained on a massive dataset of text and code in multiple languages  so it's not just good at English it can handle Spanish French German you name it  this multilingual aspect is a huge deal  it means you can ask it questions in your native tongue and get a response in the same language or even translate between languages on the fly  pretty neat right
 

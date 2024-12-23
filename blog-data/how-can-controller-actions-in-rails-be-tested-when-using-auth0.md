@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-controller-actions-in-rails-be-tested-when-using-auth0"
 ---
 
-Alright, let's tackle this. Testing controller actions that involve Auth0 authentication in a Rails application can, admittedly, feel a little like navigating a maze initially, but it’s entirely manageable with a clear strategy. My experience with several projects integrating similar authentication providers has given me some useful perspectives here, and I'm happy to share them.
+Alright,  Testing controller actions that involve Auth0 authentication in a Rails application can, admittedly, feel a little like navigating a maze initially, but it’s entirely manageable with a clear strategy. My experience with several projects integrating similar authentication providers has given me some useful perspectives here, and I'm happy to share them.
 
 The core challenge, as I’ve consistently seen, revolves around isolating the controller logic from the external authentication service. We don't want our tests to actually hit Auth0 each time they run. Doing so would be slow, brittle, and dependent on network conditions and Auth0's availability. The goal is to mock, or simulate, the authentication process and focus instead on verifying the controller’s behavior based on the expected authentication outcomes. We're testing our code's reaction to a valid or invalid authentication status, not the authentication service itself.
 

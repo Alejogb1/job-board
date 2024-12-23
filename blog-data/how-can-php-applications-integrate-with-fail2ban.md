@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-php-applications-integrate-with-fail2ban"
 ---
 
-Alright, let's tackle this. I've seen my fair share of brute-force attacks over the years, and integrating PHP applications with Fail2Ban has been a staple in my security toolkit. It’s not as straightforward as simply installing the software, but the benefits in preventing automated abuse are substantial. Here’s how we approach it, drawing on what I've learned from past projects.
+Alright,  I've seen my fair share of brute-force attacks over the years, and integrating PHP applications with Fail2Ban has been a staple in my security toolkit. It’s not as straightforward as simply installing the software, but the benefits in preventing automated abuse are substantial. Here’s how we approach it, drawing on what I've learned from past projects.
 
 The core idea is to get your PHP application to log specific security-related events in a way that Fail2Ban can understand and act upon. Fail2Ban, at its heart, monitors log files for patterns matching pre-defined regular expressions. When it detects these patterns repeatedly within a set timeframe from the same IP address, it blocks that IP using firewall rules. So, the challenge is two-pronged: first, generating the correct logs; and second, configuring Fail2Ban to recognize them.
 

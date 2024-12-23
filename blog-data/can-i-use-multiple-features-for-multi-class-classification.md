@@ -143,7 +143,7 @@ accuracy = accuracy_score(y_test, y_pred)
 print(f'Accuracy: {accuracy}')
 ```
 
-you know what they say? when life gives you lemons, use xgboost to classify them. okay, that joke was a little bit forced... sorry. anyway, this snippet uses xgboost for multi-class. just like before the model uses all the features and makes a classification.
+you know what they say? when life gives you lemons, use xgboost to classify them. , that joke was a little bit forced... sorry. anyway, this snippet uses xgboost for multi-class. just like before the model uses all the features and makes a classification.
 
 regarding resources, i wouldn’t just point you to random blog posts. if you want to really understand the theory behind these models, grab a copy of "the elements of statistical learning" by hastie, tibshirani and friedman. it's a classic and delves into the fundamental mathematics and concepts behind many machine learning algorithms. another one i'd suggest is "pattern recognition and machine learning" by bishop, it covers different classification models with a heavy focus on bayesian methods. both are a bit dense but they are worth the effort, these books helped me tremendously.
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "it-145-project-2-java-code"
 ---
 
-Okay so you're looking at IT-145 project 2 java code right Been there done that Let me tell you it usually involves a bunch of specific java concepts mashed together and everyone seems to get stuck on the same points I remember the first time I saw that project my initial thought was this can't be THAT hard boy was I wrong
+ so you're looking at IT-145 project 2 java code right Been there done that Let me tell you it usually involves a bunch of specific java concepts mashed together and everyone seems to get stuck on the same points I remember the first time I saw that project my initial thought was this can't be THAT hard boy was I wrong
 
 Its probably something about class structures inheritance maybe some basic data structures and perhaps input output streams Seems like a typical intro to OOP project So you're probably feeling a little lost and that's completely normal I have been there Believe me
 
@@ -71,7 +71,7 @@ Now you probably also have to implement some kind of data storage or data struct
 
 The whole process was frustrating especially when you find a weird bug that made no sense in theory but in the actual code the problem came from a misplaced pointer That was an interesting one and this happens way too often I hope that this project does not bring you such despair although I cannot promise that
 
-Okay here's an example of how to use an `ArrayList` to store `Item` objects and add some functionalities like add remove and display items The other important functionality might involve searching by item id or title but that depends on the project requirements and you should implement that by yourself
+ here's an example of how to use an `ArrayList` to store `Item` objects and add some functionalities like add remove and display items The other important functionality might involve searching by item id or title but that depends on the project requirements and you should implement that by yourself
 
 ```java
 import java.util.ArrayList;
@@ -166,7 +166,7 @@ Remember the devil is in the details Pay close attention to how the classes inte
 
 Some good resources to study from are books like "Head First Java" it's a good introduction if you need to improve your Java knowledge Also "Effective Java" by Joshua Bloch is like the bible for any java developer is a must-read once you know the basics and "Clean Code" by Robert C. Martin is also a resource to create maintainable code
 
-Okay let me throw in a little joke: why do java programmers wear glasses? Because they dont see sharp! HA! Okay terrible joke my bad I am not a comedian I am a programmer
+ let me throw in a little joke: why do java programmers wear glasses? Because they dont see sharp! HA!  terrible joke my bad I am not a comedian I am a programmer
 
 Back to the main topic. I know that the project might seem hard but take it one step at a time Break the problem into smaller pieces implement one functionality at a time and test it thoroughly It will be worth the time once you see it working correctly
 

@@ -4,11 +4,11 @@ date: "2024-12-13"
 id: "refactoring-java-code-refactoring-tool"
 ---
 
-Alright so you're asking about refactoring Java code and looking for a good tool right been there done that a million times Seems like you’re struggling with the classic spaghetti code situation and you're looking for a life raft I totally get it Let me give you the lowdown from someone who's wrestled with more legacy Java than they care to remember
+so you're asking about refactoring Java code and looking for a good tool right been there done that a million times Seems like you’re struggling with the classic spaghetti code situation and you're looking for a life raft I totally get it Let me give you the lowdown from someone who's wrestled with more legacy Java than they care to remember
 
 I’ve been a Java dev since the stone ages when J2EE was all the rage we had these giant monoliths that were like trying to untangle Christmas lights after a cat party Let me tell you refactoring those was like performing open-heart surgery with a butter knife It’s like trying to fix a broken car with only duct tape and a dream Back then we didn't have the nice tools we do now it was all manual labor using text editors and sheer force of will So when you talk about tools I'm all ears and very very sympathetic
 
-So you want a refactoring tool okay I’m assuming you aren’t happy with just manually editing the code That's fair it’s a massive time sink and prone to errors The old-school way was to painstakingly go through each class method by method changing names variables extracting code moving stuff around and praying to the compiler gods that it still compiled and didn't break anything along the way Let me tell you that's a recipe for disaster a weekend project turning into a multi-month nightmare
+So you want a refactoring tool  I’m assuming you aren’t happy with just manually editing the code That's fair it’s a massive time sink and prone to errors The old-school way was to painstakingly go through each class method by method changing names variables extracting code moving stuff around and praying to the compiler gods that it still compiled and didn't break anything along the way Let me tell you that's a recipe for disaster a weekend project turning into a multi-month nightmare
 
 Now we've got some seriously good tools out there and I'm guessing you're after one of those I’m thinking you are using an IDE already because most people don’t develop java code in notepad these days am I right I highly doubt you are using Vim or emacs even though I personally used it for years it is another story Now you are probably already familiar with some IDEs like IntelliJ IDEA Eclipse or VS Code for Java
 

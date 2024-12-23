@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-cant-i-generate-tf-records"
 ---
 
-Okay, let's talk about generating tfrecords – I've certainly been down that road a few times, and it's not always as straightforward as the tutorials make it seem. The challenge usually isn't with the concept itself, but the myriad of subtle issues that can creep in and derail your progress. You're not alone in experiencing these frustrations; it's a common hurdle in the TensorFlow pipeline.
+, let's talk about generating tfrecords – I've certainly been down that road a few times, and it's not always as straightforward as the tutorials make it seem. The challenge usually isn't with the concept itself, but the myriad of subtle issues that can creep in and derail your progress. You're not alone in experiencing these frustrations; it's a common hurdle in the TensorFlow pipeline.
 
 My first experience with tfrecords was during a project where we were dealing with a large collection of high-resolution satellite imagery – hundreds of gigabytes, if memory serves. We were aiming for efficient data loading during model training. We had initially used simple image loading from disk, but it quickly became a bottleneck. We needed to serialize our data effectively, hence the dive into tfrecords. After a fair amount of initial stumbling blocks, we eventually ironed out the issues, and the performance gains were substantial.
 

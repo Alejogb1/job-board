@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "datatime-python-formatting-date"
 ---
 
-Okay so datetime formatting in python eh classic pain point I've spent way more time than I care to admit wrestling with this beast so let me break it down for you based on hard learned experience and some late night debugging sessions.
+ so datetime formatting in python eh classic pain point I've spent way more time than I care to admit wrestling with this beast so let me break it down for you based on hard learned experience and some late night debugging sessions.
 
 First off you're probably looking to convert a datetime object into a string representation or maybe the other way around string to datetime I've been there done that got the t-shirt and the sleep deprivation trust me. Python's datetime module is pretty powerful but the formatting stuff can be a little quirky at first.
 

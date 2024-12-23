@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-can-i-keep-the-structure-of-text-after-feeding-it-to-a-ner-pipeline"
 ---
 
-Alright, let's tackle this. Preserving the original text structure while applying Named Entity Recognition (NER) can be a bit of a balancing act, but it's absolutely crucial for many downstream tasks. I recall a project a few years back, involving automated analysis of legal contracts. We needed to extract entities like names, dates, and locations but, crucially, the position and context of these entities within the document were just as important as the entities themselves. So, we faced this exact challenge of keeping the structure intact post-NER.
+Alright,  Preserving the original text structure while applying Named Entity Recognition (NER) can be a bit of a balancing act, but it's absolutely crucial for many downstream tasks. I recall a project a few years back, involving automated analysis of legal contracts. We needed to extract entities like names, dates, and locations but, crucially, the position and context of these entities within the document were just as important as the entities themselves. So, we faced this exact challenge of keeping the structure intact post-NER.
 
 The fundamental issue is that most NER pipelines, at their core, operate on sequences of tokens. They don't inherently maintain a direct link to the original text's structure, such as line breaks, paragraphs, or even specific formatting. The tokenization process often strips away these nuances, treating the input as a flat stream of words or sub-word units.
 

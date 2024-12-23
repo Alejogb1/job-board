@@ -4,7 +4,7 @@ date: "2024-12-10"
 id: "what-tools-and-techniques-are-available-for-monitoring-and-debugging-data-quality-in-real-time-systems"
 ---
 
-Okay so you wanna know about real-time data quality monitoring and debugging right super cool stuff  I've spent a good chunk of time wrestling with this so let's dive in  It's way more interesting than it sounds I promise
+ so you wanna know about real-time data quality monitoring and debugging right super cool stuff  I've spent a good chunk of time wrestling with this so let's dive in  It's way more interesting than it sounds I promise
 
 First off real-time means we're not talking about batch processing here  think streaming data tons of it constantly flowing  No leisurely sipping of coffee while your script chugs away  This is high-stakes stuff things need to be correct and fast
 

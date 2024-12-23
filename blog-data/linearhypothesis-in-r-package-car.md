@@ -4,9 +4,9 @@ date: "2024-12-13"
 id: "linearhypothesis-in-r-package-car"
 ---
 
-Okay so linearHypothesis in R's car package yeah I've been down that rabbit hole a few times lets break it down real talk no fluff
+ so linearHypothesis in R's car package yeah I've been down that rabbit hole a few times lets break it down real talk no fluff
 
-First off its about testing hypotheses not rocket science alright specifically its about testing linear hypotheses about regression models you know those things we fit with lm or similar functions Its a tool within the car package that helps us determine if a set of restrictions we impose on the model's parameters are actually supported by the data
+First off its about testing hypotheses not rocket science specifically its about testing linear hypotheses about regression models you know those things we fit with lm or similar functions Its a tool within the car package that helps us determine if a set of restrictions we impose on the model's parameters are actually supported by the data
 
 Basically if you've got a regression model where you think some coefficients might be related or even equal to zero or some other value thats where linearHypothesis steps in It lets you define these constraints in a matrix-like way or sometimes with a short hand formula type thingy and then it calculates a test statistic and a p-value telling you if those constraints are plausible or if your model basically says "nah that ain't right"
 
@@ -102,4 +102,4 @@ Why did the linear hypothesis cross the road
 
 To test for significance I bet you didn't see that one coming did you
 
-Alright that's a wrap on linearHypothesis if you have any more specific questions or complex use cases feel free to ask I’ve been playing with regressions for years so I have seen a fair bit more than these examples I am here to help
+that's a wrap on linearHypothesis if you have any more specific questions or complex use cases feel free to ask I’ve been playing with regressions for years so I have seen a fair bit more than these examples I am here to help

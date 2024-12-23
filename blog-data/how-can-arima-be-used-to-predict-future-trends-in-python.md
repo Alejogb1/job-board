@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-arima-be-used-to-predict-future-trends-in-python"
 ---
 
-Okay, let's talk about ARIMA and how to wield it for time series forecasting in Python. I've spent a fair amount of time knee-deep in time series data, back when I was optimizing network traffic patterns for a large telco – you know, the kind where seemingly small fluctuations can cascade into major headaches. That experience really hammered home the value of tools like ARIMA. It's not a magic bullet, but it's a solid foundation for many forecasting challenges.
+, let's talk about ARIMA and how to wield it for time series forecasting in Python. I've spent a fair amount of time knee-deep in time series data, back when I was optimizing network traffic patterns for a large telco – you know, the kind where seemingly small fluctuations can cascade into major headaches. That experience really hammered home the value of tools like ARIMA. It's not a magic bullet, but it's a solid foundation for many forecasting challenges.
 
 At its heart, ARIMA, which stands for AutoRegressive Integrated Moving Average, is a statistical model that predicts future values based on past values. The "auto" part refers to the model leveraging its own past, the "integrated" component handles non-stationarity, and "moving average" accounts for errors in previous forecasts. The three parameters defining an ARIMA model are denoted as (p, d, q):
 

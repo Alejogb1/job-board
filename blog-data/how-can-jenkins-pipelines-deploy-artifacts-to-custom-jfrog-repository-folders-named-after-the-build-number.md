@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-jenkins-pipelines-deploy-artifacts-to-custom-jfrog-repository-folders-named-after-the-build-number"
 ---
 
-Okay, let's tackle this. I've encountered similar requirements numerous times throughout my career, often when managing complex microservice deployments and needing meticulous artifact versioning. Setting up Jenkins to deploy artifacts to JFrog Artifactory, using a custom folder structure derived from the build number, requires a bit of pipeline scripting and a solid understanding of Artifactory's API. Let me walk you through the process.
+,  I've encountered similar requirements numerous times throughout my career, often when managing complex microservice deployments and needing meticulous artifact versioning. Setting up Jenkins to deploy artifacts to JFrog Artifactory, using a custom folder structure derived from the build number, requires a bit of pipeline scripting and a solid understanding of Artifactory's API. Let me walk you through the process.
 
 Firstly, the fundamental idea is to dynamically generate the target repository path within the pipeline itself. We'll extract the Jenkins build number, then construct the Artifactory target folder. For this, we'll primarily leverage Groovy's string manipulation capabilities within a Jenkins declarative pipeline. Crucially, ensure your Jenkins server has the JFrog Artifactory plugin installed, as that facilitates the necessary interactions with Artifactory.
 

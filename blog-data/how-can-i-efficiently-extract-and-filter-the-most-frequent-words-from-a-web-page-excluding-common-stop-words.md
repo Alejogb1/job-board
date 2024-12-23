@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-efficiently-extract-and-filter-the-most-frequent-words-from-a-web-page-excluding-common-stop-words"
 ---
 
-Okay, let’s tackle this. It's a task I’ve faced a fair bit in the past, particularly during a project involving large-scale text analysis for sentiment classification—a precursor to one of the earlier NLP pipelines I worked on. The challenge, as you’ve correctly identified, is effectively sifting through the text of a webpage to find the truly relevant terms, excluding those that contribute minimal semantic value (the stop words). Efficiency here is key, especially when dealing with numerous or large pages.
+, let’s tackle this. It's a task I’ve faced a fair bit in the past, particularly during a project involving large-scale text analysis for sentiment classification—a precursor to one of the earlier NLP pipelines I worked on. The challenge, as you’ve correctly identified, is effectively sifting through the text of a webpage to find the truly relevant terms, excluding those that contribute minimal semantic value (the stop words). Efficiency here is key, especially when dealing with numerous or large pages.
 
 First, we need to clearly define our process:
 

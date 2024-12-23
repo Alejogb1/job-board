@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-manage-array-records-in-a-rails-api-database"
 ---
 
-Alright, let's tackle this. I've spent more time than I'd care to admit wrestling with the complexities of array data within Rails APIs. It's a situation that crops up more often than one might think, and getting it *just so* can significantly impact performance and maintainability. So, let's break down how I typically approach managing array records in a Rails API database, drawing on some hard-won lessons from past projects.
+Alright,  I've spent more time than I'd care to admit wrestling with the complexities of array data within Rails APIs. It's a situation that crops up more often than one might think, and getting it *just so* can significantly impact performance and maintainability. So, let's break down how I typically approach managing array records in a Rails API database, drawing on some hard-won lessons from past projects.
 
 The core issue revolves around the fact that relational databases, the workhorses of most Rails applications, aren't inherently designed to handle complex array structures. While most databases, including PostgreSQL (which I'll assume is the database in your setup), offer array data types, their usage requires careful consideration, particularly within the context of an API where data is often being filtered, searched, and manipulated on a per-request basis.
 

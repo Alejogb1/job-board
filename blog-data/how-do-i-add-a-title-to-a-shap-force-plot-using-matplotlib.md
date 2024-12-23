@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-add-a-title-to-a-shap-force-plot-using-matplotlib"
 ---
 
-Alright, let's tackle this. I remember a project a few years back, a complex credit risk model, where we were using SHAP values to explain predictions. Visualizing those force plots was crucial, but we initially had the same issue – no title. Relying on just the context or having to explain it verbally each time was hardly ideal. It wasn’t intuitive, to say the least, so I had to go down the rabbit hole of matplotlib customization, as you're doing now. I've learned a few effective techniques since then, and i can explain what worked for me.
+Alright,  I remember a project a few years back, a complex credit risk model, where we were using SHAP values to explain predictions. Visualizing those force plots was crucial, but we initially had the same issue – no title. Relying on just the context or having to explain it verbally each time was hardly ideal. It wasn’t intuitive, to say the least, so I had to go down the rabbit hole of matplotlib customization, as you're doing now. I've learned a few effective techniques since then, and i can explain what worked for me.
 
 The challenge, as you've discovered, is that the `shap` library's force plot function, while generating aesthetically pleasing visualizations, doesn't directly provide a parameter for adding a title through its function interface. It primarily focuses on the visualization of SHAP values themselves. Instead, to add a title, we need to interact with the underlying matplotlib axes object that `shap` creates. This gives us full control over plot customization. I’ll show you three ways I’ve used before, each with slightly different considerations.
 

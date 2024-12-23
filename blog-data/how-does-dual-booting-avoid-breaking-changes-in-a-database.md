@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-does-dual-booting-avoid-breaking-changes-in-a-database"
 ---
 
-Okay, let's talk about dual booting and how it can act as a safety net when working with databases, especially concerning breaking changes. It's a topic that’s definitely come up a few times over my career, most notably when I was migrating a legacy application to a new stack – that particular project had me sweating more than a few times. The database, as you can imagine, was the heart of the issue.
+, let's talk about dual booting and how it can act as a safety net when working with databases, especially concerning breaking changes. It's a topic that’s definitely come up a few times over my career, most notably when I was migrating a legacy application to a new stack – that particular project had me sweating more than a few times. The database, as you can imagine, was the heart of the issue.
 
 The core idea behind using dual booting for this purpose isn't about directly altering the database’s structure within the boot process itself. Instead, it's about providing an *isolated* operating system environment where you can test database changes without the risk of impacting the production system. Think of it as a dedicated laboratory. When we talk about "breaking changes," we typically mean modifications to the database schema or data that could render existing applications incompatible or corrupt data. This can include things like altering column types, renaming tables, or removing fields that an application relies on. Testing these changes directly on a production database without a safety net is, frankly, a recipe for disaster.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-cant-the-script-access-the-document-in-the-bucket-for-transformation"
 ---
 
-Okay, let's delve into why your script might be struggling to access that document sitting comfortably in a bucket, ripe for transformation. It's a situation I've encountered more times than I'd care to count, and the culprits are usually found lurking in one of a few key areas.
+, let's delve into why your script might be struggling to access that document sitting comfortably in a bucket, ripe for transformation. It's a situation I've encountered more times than I'd care to count, and the culprits are usually found lurking in one of a few key areas.
 
 From my experience, particularly during my time working with large-scale data pipelines, the failure to access a resource in cloud storage like an s3 bucket, azure blob storage, or google cloud storage bucket typically boils down to authorization issues, incorrect addressing, or networking constraints. Let's break down these common pitfalls.
 

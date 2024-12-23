@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-initialize-the-hidden-state-of-a-grucell-as-a-learnable-parameter"
 ---
 
-Alright, let's tackle this. I’ve definitely been in situations where tweaking the initial hidden state of a recurrent neural network made all the difference, particularly with shorter sequences or complex, non-Markovian dependencies. Specifically, I recall working on a time-series forecasting project where the standard zero-initialization just wasn’t cutting it. We needed the model to develop a more nuanced understanding of the very *beginning* of the sequence. That's when we explored making the initial hidden state learnable, and it improved performance notably.
+Alright,  I’ve definitely been in situations where tweaking the initial hidden state of a recurrent neural network made all the difference, particularly with shorter sequences or complex, non-Markovian dependencies. Specifically, I recall working on a time-series forecasting project where the standard zero-initialization just wasn’t cutting it. We needed the model to develop a more nuanced understanding of the very *beginning* of the sequence. That's when we explored making the initial hidden state learnable, and it improved performance notably.
 
 So, you're asking how to initialize the hidden state of a `GRUCell` (Gated Recurrent Unit cell) as a learnable parameter. Essentially, you want the network to learn what the optimal starting hidden state should be, rather than defaulting to zeros. This is crucial because the initial state can significantly impact how the network processes the first few elements of your sequence, especially when starting from scratch or when dealing with sequences that have significant initial context.
 

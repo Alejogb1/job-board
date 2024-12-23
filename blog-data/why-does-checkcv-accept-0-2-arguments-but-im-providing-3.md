@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-checkcv-accept-0-2-arguments-but-im-providing-3"
 ---
 
-Let's tackle this. It's a common frustration when you're expecting a function to behave one way and it's clearly doing something different. I remember back during a project involving a complex data ingestion pipeline, I ran headfirst into this exact issue – a function that was surprisingly flexible, or seemingly broken, depending on how you looked at it. The `check_cv()` function you're encountering, accepting zero to two arguments when you're providing three, strongly suggests that the function's logic is designed to handle optional parameters using default values or variable argument lists. Let's break down why this happens and how it's implemented in code.
+ It's a common frustration when you're expecting a function to behave one way and it's clearly doing something different. I remember back during a project involving a complex data ingestion pipeline, I ran headfirst into this exact issue – a function that was surprisingly flexible, or seemingly broken, depending on how you looked at it. The `check_cv()` function you're encountering, accepting zero to two arguments when you're providing three, strongly suggests that the function's logic is designed to handle optional parameters using default values or variable argument lists. Let's break down why this happens and how it's implemented in code.
 
 The core issue here is parameter handling within the function's definition. Rather than a fixed signature requiring a specific number of arguments, `check_cv()` is designed to adapt. This flexibility is often achieved through a couple of mechanisms, and understanding them is key to solving your problem.
 

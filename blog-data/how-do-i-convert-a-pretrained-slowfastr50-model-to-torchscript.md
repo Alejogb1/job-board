@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-convert-a-pretrained-slowfastr50-model-to-torchscript"
 ---
 
-Okay, let's tackle this. The task of converting a pre-trained `slowfast_r50` model to Torchscript can sometimes feel like navigating a maze, especially with the subtleties of video models and their complex input requirements. From my past experiences, I recall a particular project where we needed to deploy a similar model to edge devices, and the journey was… enlightening. I learned quite a bit about the intricacies involved. So, let's break down the process step-by-step.
+,  The task of converting a pre-trained `slowfast_r50` model to Torchscript can sometimes feel like navigating a maze, especially with the subtleties of video models and their complex input requirements. From my past experiences, I recall a particular project where we needed to deploy a similar model to edge devices, and the journey was… enlightening. I learned quite a bit about the intricacies involved. So, let's break down the process step-by-step.
 
 The primary objective of converting a model to Torchscript is to create a serialized, platform-independent representation that can be executed outside of the Python environment, often leading to significant performance gains, particularly on platforms like mobile or embedded systems. This requires a careful approach, especially with models that have dynamic aspects, such as those involving variable sequence lengths in video data.
 

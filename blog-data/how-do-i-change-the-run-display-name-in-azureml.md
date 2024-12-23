@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-change-the-run-display-name-in-azureml"
 ---
 
-Alright, let's tackle this. Changing the display name of an azureml run – it's a common requirement, and I remember dealing with this myself quite a few times, particularly when trying to keep experiments well organized. Over the years, I’ve found the standard documentation can sometimes be a tad too generic, especially when you’re after something specific like this. So, here’s my approach, reflecting lessons learned through real-world scenarios.
+Alright,  Changing the display name of an azureml run – it's a common requirement, and I remember dealing with this myself quite a few times, particularly when trying to keep experiments well organized. Over the years, I’ve found the standard documentation can sometimes be a tad too generic, especially when you’re after something specific like this. So, here’s my approach, reflecting lessons learned through real-world scenarios.
 
 The challenge fundamentally arises from the way azureml initially names your runs; it often generates something rather generic and less than descriptive. You're usually staring at a run id that’s difficult to distinguish from another when browsing through your experiment history. The good news is that you *can* modify this, albeit with a few nuances to be mindful of.
 

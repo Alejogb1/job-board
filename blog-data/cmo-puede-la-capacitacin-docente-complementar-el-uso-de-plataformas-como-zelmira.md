@@ -4,7 +4,7 @@ date: "2024-12-12"
 id: "cmo-puede-la-capacitacin-docente-complementar-el-uso-de-plataformas-como-zelmira"
 ---
 
-Okay so like how can teacher training help when we're using platforms like Zelmira right think of it as optimizing the human-machine interface not just slapping tech on a classroom and hoping for the best the platform's a tool but teachers are the ones wielding it
+ so like how can teacher training help when we're using platforms like Zelmira right think of it as optimizing the human-machine interface not just slapping tech on a classroom and hoping for the best the platform's a tool but teachers are the ones wielding it
 
 First off understanding the tech itself isn't enough training should really drill down on the specific functionalities of Zelmira like beyond the basic user interface how are assessments actually scored what data is available for tracking student progress how do I personalize the learning paths for different types of students this isn't about just knowing what buttons to press it's about deeply understanding the system's capabilities and how they map to pedagogical goals think of it as knowing the compiler flags for a language not just writing code that technically runs
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-do-function-calls-work-in-remix-but-not-in-javascript"
 ---
 
-Okay, let's tackle this one. It's a question that brings up some crucial differences in how environments handle code execution, something I've definitely had to navigate a few times over the years, particularly when initially moving from purely front-end JavaScript to incorporating more specialized environments like those found in smart contract development.
+, let's tackle this one. It's a question that brings up some crucial differences in how environments handle code execution, something I've definitely had to navigate a few times over the years, particularly when initially moving from purely front-end JavaScript to incorporating more specialized environments like those found in smart contract development.
 
 Essentially, the core of the issue isn't about function calls *not* working in JavaScript. They certainly do. It's more about the context and execution environment specific to Remix, a web-based integrated development environment (IDE) primarily used for developing smart contracts written in Solidity (and sometimes Vyper). When you see a function 'call' working in Remix that doesn't seemingly translate directly to JavaScript, it's often because Remix is leveraging its internal tooling to interact with the compiled contract on an emulated or actual blockchain, not directly executing JavaScript within a browser context.
 

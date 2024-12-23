@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-are-default-volumes-created-when-running-mongodb-images"
 ---
 
-Okay, let's tackle this one. It's a question I’ve definitely been on the receiving end of during my time wrangling database deployments, particularly when folks new to containerization and mongodb start spinning up instances. So, how *are* these default volumes generated when you fire up a MongoDB container? It’s a good question, and understanding it saves a lot of headaches down the line.
+, let's tackle this one. It's a question I’ve definitely been on the receiving end of during my time wrangling database deployments, particularly when folks new to containerization and mongodb start spinning up instances. So, how *are* these default volumes generated when you fire up a MongoDB container? It’s a good question, and understanding it saves a lot of headaches down the line.
 
 The crucial point is that when you run a MongoDB docker image—or any container image for that matter—without explicitly defining volume mounts, Docker handles storage using a mechanism that defaults to what are called *anonymous volumes*. These volumes are not directly tied to a specific directory on your host machine and they are automatically created and managed by Docker itself. Let's break it down into a few core aspects.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-does-hotwire-handle-user-login"
 ---
 
-Okay, let's unpack how Hotwire tackles user authentication, or rather, *logins*. It's a topic I've certainly grappled with a few times, having implemented it in projects ranging from small internal tools to more public-facing web applications. There's no magical, single 'Hotwire way,' but rather, it's about leveraging Hotwire's core principles—particularly Turbo and Stimulus—within the larger context of server-side authentication. Forget single-page app (spa) patterns, that's not the ethos here. We're sticking with server-rendered views, enhanced with dynamic partials.
+, let's unpack how Hotwire tackles user authentication, or rather, *logins*. It's a topic I've certainly grappled with a few times, having implemented it in projects ranging from small internal tools to more public-facing web applications. There's no magical, single 'Hotwire way,' but rather, it's about leveraging Hotwire's core principles—particularly Turbo and Stimulus—within the larger context of server-side authentication. Forget single-page app (spa) patterns, that's not the ethos here. We're sticking with server-rendered views, enhanced with dynamic partials.
 
 The crux of it lies in how you manage the user session on the server, typically through cookies or tokens, while using Turbo to create a seamless user experience without full page reloads. The goal is to make the login process feel instantaneous, even when substantial server-side work is taking place.
 

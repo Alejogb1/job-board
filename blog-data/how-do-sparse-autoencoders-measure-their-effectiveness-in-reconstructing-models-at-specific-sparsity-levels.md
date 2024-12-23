@@ -4,7 +4,7 @@ date: "2024-12-11"
 id: "how-do-sparse-autoencoders-measure-their-effectiveness-in-reconstructing-models-at-specific-sparsity-levels"
 ---
 
-Okay so you wanna know how sparse autoencoders SAE you know those cool things that learn super compressed representations  measure how well they rebuild stuff at different sparsity levels right  It's a pretty neat problem actually  Sparsity is like the diet for your data  you want it lean mean and efficient  but you dont want to lose too much information in the process its a balance
+ so you wanna know how sparse autoencoders SAE you know those cool things that learn super compressed representations  measure how well they rebuild stuff at different sparsity levels right  It's a pretty neat problem actually  Sparsity is like the diet for your data  you want it lean mean and efficient  but you dont want to lose too much information in the process its a balance
 
 The core idea with SAEs is that you're forcing the network to use only a small subset of its neurons to represent the input  Think of it like this imagine you have a picture of a cat  a regular autoencoder would try to use all its neurons to represent every detail whiskers fur background the whole shebang  A sparse autoencoder on the other hand would try to find the essence of catness maybe activating only a few neurons that capture the key features like pointy ears and a fluffy tail  It achieves this through various clever techniques that penalize high neuron activation the more neurons light up the bigger the penalty
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-xdebug-not-functioning-in-laravel-sail-on-my-remote-synology-server"
 ---
 
-Right, let's tackle this. I've seen this particular issue crop up more often than I'd like, and it’s usually a confluence of configuration mismatches that leads to Xdebug refusing to connect from a remote setup, especially with something like a Synology NAS running Laravel Sail. It’s never a single magic bullet, more like a careful process of elimination. Here's how I've typically approached it in the past, piecing together the solution step by step.
+Right,  I've seen this particular issue crop up more often than I'd like, and it’s usually a confluence of configuration mismatches that leads to Xdebug refusing to connect from a remote setup, especially with something like a Synology NAS running Laravel Sail. It’s never a single magic bullet, more like a careful process of elimination. Here's how I've typically approached it in the past, piecing together the solution step by step.
 
 The core issue with remote debugging using Xdebug, particularly in a Dockerized environment like Laravel Sail, is network address resolution and port mapping. When you're running Sail on a Synology server, the Docker containers operate within their own isolated network, and your development machine is attempting to connect to Xdebug via a route that might be incorrectly defined or not explicitly exposed. Let's break this down, piece by piece, and address the common pitfalls.
 

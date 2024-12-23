@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-arent-gpt-3-api-calls-working-with-my-key"
 ---
 
-Okay, let's tackle this. It's frustrating when an api call fails, especially when it seems like the simplest element – the key – should be working. I've definitely been in similar situations, spending hours debugging what seemed like a straightforward setup. The fact that your gpt-3 api calls aren’t working with your key suggests a few potential culprits, and we can methodically work through them. It's usually not a problem with the key itself in the literal sense; instead, it's often about how the key is being used or the context surrounding the api request.
+,  It's frustrating when an api call fails, especially when it seems like the simplest element – the key – should be working. I've definitely been in similar situations, spending hours debugging what seemed like a straightforward setup. The fact that your gpt-3 api calls aren’t working with your key suggests a few potential culprits, and we can methodically work through them. It's usually not a problem with the key itself in the literal sense; instead, it's often about how the key is being used or the context surrounding the api request.
 
 First off, let’s check the basics. This might sound obvious, but ensure you've accurately copied the api key. I've personally lost far too much time tracking down issues because of a single incorrect character or a leading/trailing whitespace. Double-check that the key you are using matches what's displayed in your openai dashboard. Sometimes, copy-pasting can introduce invisible characters which can be problematic. If you copy from a password manager, for example, ensure that it isn’t including extra characters.
 

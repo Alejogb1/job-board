@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "what-are-the-challenges-in-applying-alignment-processes-to-instruction-tuned-versus-pretrained-models"
 ---
 
-Okay so you wanna know about aligning instruction-tuned versus pre-trained models right  It's a big deal  Like a REALLY big deal  Because we're talking about making AI actually do what we want it to do which is far from guaranteed  Pre-trained models are kinda like wild animals  They've seen a ton of data they're super powerful but they're also unpredictable  Instruction-tuning is like training that animal to do tricks  You're giving it specific instructions but it still might surprise you
+ so you wanna know about aligning instruction-tuned versus pre-trained models right  It's a big deal  Like a REALLY big deal  Because we're talking about making AI actually do what we want it to do which is far from guaranteed  Pre-trained models are kinda like wild animals  They've seen a ton of data they're super powerful but they're also unpredictable  Instruction-tuning is like training that animal to do tricks  You're giving it specific instructions but it still might surprise you
 
 The main challenge is this  Pre-trained models are generalists  They've learned patterns from massive datasets but those patterns might not align with what we want  Think of it like teaching a dog to fetch  A pre-trained model is like a dog who's learned to chase squirrels and birds  You can try to teach it to fetch a ball but its ingrained instincts might still lead it astray  Instruction-tuning tries to override those instincts but it's not always easy  It's like retraining a dog's natural behaviors  Sometimes it works great sometimes the dog still prefers chasing squirrels
 

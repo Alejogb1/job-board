@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "hdfs-localhost-9000-error-connection"
 ---
 
-Okay so you're banging your head against the wall with HDFS on localhost port 9000 and getting a connection error right I've been there believe me multiple times
+ so you're banging your head against the wall with HDFS on localhost port 9000 and getting a connection error right I've been there believe me multiple times
 
 This isn't some whimsical problem its a pretty standard gotcha in Hadoop land and typically its about misconfiguration or something not running that *should* be running Lets break it down like we're debugging some ancient C code or something because frankly sometimes working with Hadoop feels like that
 
@@ -16,7 +16,7 @@ First off the error itself "hdfs localhost 9000 error connection" its a generic 
 * **Wrong hostname or IP:** If you're not on localhost or if your localhost isn't resolving correctly it's chaos but hey if you are working with multiple networks you need to know what's going on even at home
 * **Java version conflicts:** Yeah sometimes this is the thing you will not be expecting sometimes you're running the wrong version of java and your versions are just not compatible and that can be a real problem trust me on this one I had a crazy issue where the java versions were just not playing nice
 
-Okay so lets dig in with the debugging
+ so lets dig in with the debugging
 
 **1 Check the status of the Hadoop processes**
 
@@ -85,7 +85,7 @@ Your localhost should be resolving to 127.0.0.1 if you are using it or to the re
 
 **5 Java Version Shenanigans**
 
-Okay so this is where it can get tricky sometimes you are using a version of java that is not compatible with your Hadoop version you need to double check that you are using the right version.
+ so this is where it can get tricky sometimes you are using a version of java that is not compatible with your Hadoop version you need to double check that you are using the right version.
 
 You can check your java version by doing
 

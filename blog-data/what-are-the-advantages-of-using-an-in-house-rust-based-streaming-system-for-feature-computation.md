@@ -4,7 +4,7 @@ date: "2024-12-10"
 id: "what-are-the-advantages-of-using-an-in-house-rust-based-streaming-system-for-feature-computation"
 ---
 
-Okay so you wanna know about building your own streaming system in Rust right cool  I get it  it sounds awesome and frankly it probably is  but let's talk through the pros and cons  because it's not all sunshine and roses  especially when you're talking about something as complex as a streaming system for feature computation
+ so you wanna know about building your own streaming system in Rust right cool  I get it  it sounds awesome and frankly it probably is  but let's talk through the pros and cons  because it's not all sunshine and roses  especially when you're talking about something as complex as a streaming system for feature computation
 
 First off the big appeal of Rust is its speed and safety  Forget garbage collection pauses  Rust's ownership system lets you write blazing fast code that’s also less prone to those nasty memory leaks and segfaults that plague other languages  Think of the performance benefits for your feature computations especially if you’re dealing with massive datasets  We're talking real-time or near real-time performance which is a huge win  Imagine the possibilities for applications like fraud detection or real-time recommendation systems  That’s where the power of Rust really shines
 
@@ -18,7 +18,7 @@ Now let's talk about maintainability  This is where things get a bit trickier  R
 Then there's the scalability aspect  Building a truly scalable streaming system is hard  regardless of the language  You'll have to deal with things like distributed consensus fault tolerance and data partitioning  It’s a whole other level of complexity compared to a simple single-threaded application  You'll need to carefully design your architecture from the beginning to handle high throughput low latency and graceful failure  Luckily Rust’s concurrency features are fantastic making it well suited for this task but you still need to be very careful about how you design and implement these things
 
 
-Okay let's look at some code examples to illustrate some points  Remember these are simplified  real-world systems are much more complex
+ let's look at some code examples to illustrate some points  Remember these are simplified  real-world systems are much more complex
 
 
 **Example 1: Simple Data Processing with Tokio**

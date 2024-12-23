@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-my-tensorflow-keras-model-returning-nan-outputs"
 ---
 
-Okay, let's tackle this NaN output issue. It's a problem I've bumped into more times than I care to remember, and it almost always boils down to a few core culprits. Seeing a model produce Not-a-Number (NaN) values during training or inference is, quite frankly, a red flag indicating numerical instability somewhere in your pipeline. It means that operations within the network are resulting in undefined or non-representable numerical results, which of course, wreaks havoc on any learning process.
+, let's tackle this NaN output issue. It's a problem I've bumped into more times than I care to remember, and it almost always boils down to a few core culprits. Seeing a model produce Not-a-Number (NaN) values during training or inference is, quite frankly, a red flag indicating numerical instability somewhere in your pipeline. It means that operations within the network are resulting in undefined or non-representable numerical results, which of course, wreaks havoc on any learning process.
 
 From my experience, the most common reasons fall into a few key categories, all related to how Tensorflow and Keras handle numerical computations internally. First, and possibly the most frequent, is exploding gradients. Then there’s the issue of division by zero, often hiding in seemingly innocuous transformations. Finally, you’ve sometimes got a problem with numerical underflow, leading to an eventual propagation of NaN outputs. Let’s break each of these down with some practical examples.
 

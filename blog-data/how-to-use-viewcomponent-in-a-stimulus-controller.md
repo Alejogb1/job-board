@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-use-viewcomponent-in-a-stimulus-controller"
 ---
 
-Okay, let's delve into that. The intersection of `view_component` and stimulus controllers can sometimes feel a bit like navigating a new, albeit familiar, terrain. I recall a project a few years back where we needed highly interactive components within our Rails application. We initially went down the path of traditional partials, but the logic became unwieldy quickly. That’s where `view_component` paired with stimulus really began to shine, offering a much more maintainable architecture.
+, let's delve into that. The intersection of `view_component` and stimulus controllers can sometimes feel a bit like navigating a new, albeit familiar, terrain. I recall a project a few years back where we needed highly interactive components within our Rails application. We initially went down the path of traditional partials, but the logic became unwieldy quickly. That’s where `view_component` paired with stimulus really began to shine, offering a much more maintainable architecture.
 
 The core idea is this: `view_component` handles the presentation logic and provides a nice encapsulation of component rendering, while stimulus handles the user interaction and associated client-side behaviors. When these two are properly integrated, you get components that are not only well-structured but also highly dynamic.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-improve-the-accuracy-of-my-predictions-which-are-currently-zero"
 ---
 
-Alright, let's tackle this. Having a prediction model flatline at zero accuracy is, shall we say, a situation ripe for investigation. I’ve been there myself, more times than I care to count. It’s rarely a single issue, more often a confluence of factors. We need to break this down systematically. The fact your predictions are showing zero accuracy strongly suggests a fundamental problem, not just tweaking parameters. Let’s dive in.
+Alright,  Having a prediction model flatline at zero accuracy is, shall we say, a situation ripe for investigation. I’ve been there myself, more times than I care to count. It’s rarely a single issue, more often a confluence of factors. We need to break this down systematically. The fact your predictions are showing zero accuracy strongly suggests a fundamental problem, not just tweaking parameters. Let’s dive in.
 
 Firstly, let’s address the obvious: zero accuracy often means that the model is predicting a single class or a single value regardless of the input. This is a significant clue, pointing to issues either in the data, the model itself, or how they interact.
 

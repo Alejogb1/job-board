@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "can-reinforcement-learning-be-done-with-supervised-data"
 ---
 
-Okay, let’s unpack this. Reinforcement learning (rl) with supervised data – it’s a question that circles back to the core differences in these two learning paradigms, and whether we can, essentially, bridge the gap. It’s not a straightforward “yes” or “no” scenario, but more about how you frame the problem. I’ve personally encountered variations of this challenge a few times during my work on robotics control systems and, more recently, in developing recommendation engines with limited user interaction data. I've seen it both succeed and fail spectacularly.
+, let’s unpack this. Reinforcement learning (rl) with supervised data – it’s a question that circles back to the core differences in these two learning paradigms, and whether we can, essentially, bridge the gap. It’s not a straightforward “yes” or “no” scenario, but more about how you frame the problem. I’ve personally encountered variations of this challenge a few times during my work on robotics control systems and, more recently, in developing recommendation engines with limited user interaction data. I've seen it both succeed and fail spectacularly.
 
 The essence of reinforcement learning lies in its trial-and-error methodology, learning from *interactions* with an environment. It's about maximizing cumulative reward, with the system figuring out the best actions on its own, guided by this delayed feedback. Supervised learning, conversely, thrives on labeled data. You have a clear input and a desired output, and the model learns to map one to the other. The question, therefore, pivots on the extent to which we can transform supervised data to resemble the *experience* required for rl.
 

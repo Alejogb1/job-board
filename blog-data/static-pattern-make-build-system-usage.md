@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "static-pattern-make-build-system-usage"
 ---
 
-Okay so you're asking about using static patterns in build systems right Specifically how they can be useful I get it I've been there trust me I've wrestled with build scripts more times than I care to remember Let me break it down from my experience it's not always sunshine and rainbows but it gets the job done
+ so you're asking about using static patterns in build systems right Specifically how they can be useful I get it I've been there trust me I've wrestled with build scripts more times than I care to remember Let me break it down from my experience it's not always sunshine and rainbows but it gets the job done
 
 First off "static pattern" lets be clear we're talking about predefined rules patterns basically templates to generate build instructions based on predictable file structures Think like if you have a bunch of source files all ending in `.cpp` you might have a static pattern to say "for every file that ends in `.cpp` compile it to an object file that ends in `.o`". That's a very basic static pattern right There's no magical AI or anything just simple string matching and replacement.
 
@@ -48,7 +48,7 @@ target_include_directories(my_executable PUBLIC "include")
 
 CMake takes a slightly different approach it's not exactly the same type of pattern matching as Make but the `file(GLOB_RECURSE)` command essentially does that it finds all the `.cpp` files in a tree structure recursively and then it uses them to create a target. No explicit rule making here but the effect is the same everything is automatic and declarative. So for new source files you won't need to add to the CMake lists file unless you start creating new projects or add new libraries and so on. Which is always a pain.
 
-Alright one more example let's see Meson it's a bit more modern and Pythonic you know:
+one more example let's see Meson it's a bit more modern and Pythonic you know:
 
 ```meson
 project('my_project', 'cpp')
@@ -73,7 +73,7 @@ I know a person who did not understand and one day his laptop started to compile
 
 And now to something a bit controversial but it's true a lot of people I have seen do this they over-rely on static patterns they just create everything through them it is a bad practice if you ask me. This one time I saw a build system where literally every file in the project was a result of a static pattern. I mean not just C++ files also data files config files literally everything. It was so confusing to work with and you had to do so much work to avoid generating a file in the wrong directory. It is usually better to use explicit rules for files that are not related to compilation of source files. Think about a configuration file that can be located in a different folder based on a condition or a file that needs custom build steps. Static patterns are cool but don't overdo it.
 
-Okay so where can you learn more? I’d say don’t look for “static patterns” specifically cause that term isn’t really standardized. Instead look at the documentation of the build tools directly:
+ so where can you learn more? I’d say don’t look for “static patterns” specifically cause that term isn’t really standardized. Instead look at the documentation of the build tools directly:
 
 *   **GNU Make:** Start with the official Make manual it's a classic I'd say its good to read it because it will give you some of the history and why Make was made in the first place but that may be very boring to some people
 *   **CMake:** Read the CMake documentation and the CMake tutorial it's very well written and covers all the basics

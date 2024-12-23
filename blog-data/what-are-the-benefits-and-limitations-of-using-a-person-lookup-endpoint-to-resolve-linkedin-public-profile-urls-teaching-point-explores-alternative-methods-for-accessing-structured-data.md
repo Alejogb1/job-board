@@ -4,7 +4,7 @@ date: "2024-12-12"
 id: "what-are-the-benefits-and-limitations-of-using-a-person-lookup-endpoint-to-resolve-linkedin-public-profile-urls-teaching-point-explores-alternative-methods-for-accessing-structured-data"
 ---
 
-okay so like we're talking about grabbing linkedin profile urls and i'm guessing we're not talking about just scraping the site cause that's a mess we're talking about the thing linkedin offers a 'person lookup' endpoint and yeah that sounds convenient right
+ so like we're talking about grabbing linkedin profile urls and i'm guessing we're not talking about just scraping the site cause that's a mess we're talking about the thing linkedin offers a 'person lookup' endpoint and yeah that sounds convenient right
 
 the big win with the person lookup is definitely speed and structure it's like getting handed a neatly formatted file instead of rummaging through a messy closet it's supposed to be optimized for what you want which is to find data based on some identifier like an email or a name plus the format is consistent so you don't have to write a bunch of error handling stuff to parse different page layouts or weird html things that change every other week you know what i mean
 

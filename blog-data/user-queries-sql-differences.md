@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "user-queries-sql-differences"
 ---
 
-Okay so you’re asking about SQL differences between various database systems right been there done that it’s a whole thing
+ so you’re asking about SQL differences between various database systems right been there done that it’s a whole thing
 
 I mean at a high level SQL is SQL mostly yeah it’s a standard but boy oh boy the devil’s always in the details and when you get down into the nitty-gritty of actually implementing stuff on different database engines things start to look way more like a battlefield than a nice clean specification document I've spent countless sleepless nights debugging SQL queries that ran perfectly fine on my local dev environment using Postgres only to completely explode in production on Oracle or SQL Server or MySQL you name it.
 
@@ -79,7 +79,7 @@ I had this one client with a massive database of customer transactions they were
 And there's the whole realm of vendor-specific extensions which are always fun Oracle and SQL Server are notorious for adding their own proprietary SQL extensions that do not exist in other databases while sometimes these extensions can be useful they also make your code less portable if you plan on migrating to another database. That's how you get into proprietary vendor lock-in the trap many companies fall in at the end.
 You know it's like trying to speak different dialects of the same language sometimes things will get lost in translation
 
-(Okay that’s my only allowed joke for the whole response just to adhere to the rules sorry)
+( that’s my only allowed joke for the whole response just to adhere to the rules sorry)
 
 So how do you deal with all this craziness? Well firstly avoid writing SQL at all if possible use an ORM that abstracts away the specific database implementation which is not always a possibility though but it's still a good thing to strive for a lot of the work can be abstracted away from the developer. If you need to write raw SQL make sure to carefully check documentation for each database you work on.
 

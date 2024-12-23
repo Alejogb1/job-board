@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "fast-fourier-transform-in-r-what-am-i-doing-wrong"
 ---
 
-Okay so you're wrestling with the Fast Fourier Transform in R right Been there done that I've spent more nights debugging FFT implementations than I care to admit It’s like a rite of passage for anyone messing with signal processing or frequency analysis it seems. Let's see if I can point out some usual suspects based on my own history of messing with this stuff.
+ so you're wrestling with the Fast Fourier Transform in R right Been there done that I've spent more nights debugging FFT implementations than I care to admit It’s like a rite of passage for anyone messing with signal processing or frequency analysis it seems. Let's see if I can point out some usual suspects based on my own history of messing with this stuff.
 
 First things first you didn't specify what 'wrong' means you're getting errors are your results off is the code crashing details man details I'm gonna assume you're getting *something* but it's not what you expect and that's usually the case.
 
@@ -30,7 +30,7 @@ plot(frequency_axis, magnitude[1:(length(signal)/2 + 1)], type = 'l',
 
 If you run this you should see a nice clean peak at 5 Hz. If you don't well first check your sampling rate and if your signal is consistent. It's basic but its the start I don't know how many times I've messed with a calculation because I missed a fundamental concept like these.
 
-Now you might be thinking okay but what about the magnitude? That’s where things can get a bit tricky. The raw output of the FFT is a vector of complex numbers. You'll typically need to take the absolute value `abs()` to get the magnitude which represents the amplitude of each frequency component. And you typically only plot half the results of the complex numbers ( the positive frequency components).
+Now you might be thinking  but what about the magnitude? That’s where things can get a bit tricky. The raw output of the FFT is a vector of complex numbers. You'll typically need to take the absolute value `abs()` to get the magnitude which represents the amplitude of each frequency component. And you typically only plot half the results of the complex numbers ( the positive frequency components).
 
 Next most people have this assumption that data is perfectly clean its not at all the real world data usually requires pre-processing. Real world data is noisy period so you will need to window your data to reduce spectral leakage. That means multiplying your time-domain data by a specific window function before applying the FFT. I’ve seen people analyze data and get these smeared peaks on the plots which make the interpretation difficult they had no window function. My professor in college he told me this "the best window for a job is the one that the window function does not make you feel bad about" I mean thats kind of funny but also makes a lot of sense. Here is an example of adding a hamming window function:
 

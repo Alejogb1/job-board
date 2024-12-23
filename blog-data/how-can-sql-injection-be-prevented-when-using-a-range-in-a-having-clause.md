@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-sql-injection-be-prevented-when-using-a-range-in-a-having-clause"
 ---
 
-Okay, let’s tackle this. It's a problem I've encountered firsthand, particularly back in the late aughts when web security wasn’t quite the front-and-center concern it is today. We were building a system for aggregating user reviews, and the filtering functionality, specifically involving ranges in the `having` clause, became a significant vulnerability point. It taught me some valuable lessons I’d like to share.
+, let’s tackle this. It's a problem I've encountered firsthand, particularly back in the late aughts when web security wasn’t quite the front-and-center concern it is today. We were building a system for aggregating user reviews, and the filtering functionality, specifically involving ranges in the `having` clause, became a significant vulnerability point. It taught me some valuable lessons I’d like to share.
 
 The crux of the issue when using a range in a `having` clause isn't necessarily that the clause itself is inherently weak; the vulnerability arises from how you, the developer, introduce user input into the query. Direct, unsanitized concatenation of user-provided strings into the SQL query is the prime vector for sql injection. Consider a scenario where you have a reviews table and you want to allow users to filter reviews based on the number of ratings they have received.
 

@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "what-technologies-enable-multi-mode-signal-processing-for-efficient-chip-to-chip-communication-in-large-ai-systems"
 ---
 
-Okay so you wanna know about getting signals zipping between chips in huge AI systems right  like really fast and efficiently  Multi-mode signal processing is the key word here  think of it like having different delivery services for your packages some are super fast but expensive some are cheap but slow and you need to choose the best one depending on the urgency and size of the package  In our case the packages are data bits
+ so you wanna know about getting signals zipping between chips in huge AI systems right  like really fast and efficiently  Multi-mode signal processing is the key word here  think of it like having different delivery services for your packages some are super fast but expensive some are cheap but slow and you need to choose the best one depending on the urgency and size of the package  In our case the packages are data bits
 
 The first thing you gotta consider is the *physical layer*  this is the actual wires or optical fibers carrying the data  You can't just use any old cable  for high speed communication especially over longer distances you need something really good  Think about different types of modulation schemes like PAM  Pulse Amplitude Modulation or even more advanced stuff like QAM Quadrature Amplitude Modulation  These basically let you squeeze more information into each signal pulse  For really long distances optical communication is probably your best bet  but getting the optical signals converted to electrical and back again adds complexity
 

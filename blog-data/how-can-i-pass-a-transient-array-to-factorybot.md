@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-pass-a-transient-array-to-factorybot"
 ---
 
-Okay, let's tackle this. I’ve bumped into this exact scenario more times than I care to remember, usually when dealing with some complex relationship in our data models and wanting to leverage FactoryBot's convenience without bending over backward. You’re asking about passing a transient array to FactoryBot, and while it's not a feature explicitly spelled out in the documentation, there are definitely well-established patterns to accomplish this elegantly. The core idea lies in using transient attributes combined with either `after(:build)` or `after(:create)` hooks within your factory definitions.
+,  I’ve bumped into this exact scenario more times than I care to remember, usually when dealing with some complex relationship in our data models and wanting to leverage FactoryBot's convenience without bending over backward. You’re asking about passing a transient array to FactoryBot, and while it's not a feature explicitly spelled out in the documentation, there are definitely well-established patterns to accomplish this elegantly. The core idea lies in using transient attributes combined with either `after(:build)` or `after(:create)` hooks within your factory definitions.
 
 The challenge arises because FactoryBot, by default, manages attribute assignments through an immutable hash. Direct array manipulation during factory creation just isn't designed into its core. However, transient attributes offer a workaround by allowing us to define variables that don’t directly correspond to database columns but are available within the factory's evaluation context.
 

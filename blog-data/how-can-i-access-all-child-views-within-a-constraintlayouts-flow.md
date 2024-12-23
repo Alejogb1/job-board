@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-access-all-child-views-within-a-constraintlayouts-flow"
 ---
 
-Okay, let’s tackle this. I've definitely bumped into this exact scenario before, specifically back when I was optimizing a complex layout for a tablet application which used dynamically generated grids. The challenge, as you've identified, is that ConstraintLayout's Flow doesn't directly expose its contained views as a readily iterable collection. You can't simply treat it like a ViewGroup and expect to get children with `getChildAt()` or `getChildCount()`. Flow manages its views internally based on constraints and its configuration. This means a different approach is needed.
+, let’s tackle this. I've definitely bumped into this exact scenario before, specifically back when I was optimizing a complex layout for a tablet application which used dynamically generated grids. The challenge, as you've identified, is that ConstraintLayout's Flow doesn't directly expose its contained views as a readily iterable collection. You can't simply treat it like a ViewGroup and expect to get children with `getChildAt()` or `getChildCount()`. Flow manages its views internally based on constraints and its configuration. This means a different approach is needed.
 
 The core concept revolves around the `getReferencedIds()` method that Flow provides. This gives you the integer ids of the views managed by that flow. Once you have these ids, you can use those to obtain the views from the parent ConstraintLayout.
 

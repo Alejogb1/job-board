@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-add-dependencies-to-a-rails-engines-dummy-application"
 ---
 
-Okay, let's tackle this. Been around the block a few times with Rails engines and their often-peculiar needs, particularly when it comes to dependencies in that dummy application. It’s a common stumbling block, and getting it smooth often requires understanding the quirks of Rails' architecture, rather than just blindly following tutorials. I've seen, and personally debugged, more than my fair share of dependency-related headaches in this context, so let’s get into the specifics.
+,  Been around the block a few times with Rails engines and their often-peculiar needs, particularly when it comes to dependencies in that dummy application. It’s a common stumbling block, and getting it smooth often requires understanding the quirks of Rails' architecture, rather than just blindly following tutorials. I've seen, and personally debugged, more than my fair share of dependency-related headaches in this context, so let’s get into the specifics.
 
 The core issue here stems from the fact that a Rails engine is, fundamentally, a mini-Rails application embedded within a larger host application. The `test/dummy` application is essentially an even *smaller* Rails application used exclusively for testing and development of your engine. It doesn't inherit dependencies automatically; they need to be declared explicitly. This ensures the engine's test suite is isolated and doesn’t inadvertently pull in dependencies from the host that it isn't designed to handle.
 

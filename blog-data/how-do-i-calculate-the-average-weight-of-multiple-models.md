@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-calculate-the-average-weight-of-multiple-models"
 ---
 
-Okay, let’s dive into averaging model weights. It's something I’ve encountered quite a few times, particularly when dealing with ensembles and iterative model improvement. The process isn't inherently complex, but there are nuances that can significantly affect the outcome, and thus require careful consideration. I'm going to frame this within the context of machine learning, specifically with regards to models trained for a similar task, but the principles apply more generally where you might have multiple representations of the same structure—think finite element analysis, for example.
+, let’s dive into averaging model weights. It's something I’ve encountered quite a few times, particularly when dealing with ensembles and iterative model improvement. The process isn't inherently complex, but there are nuances that can significantly affect the outcome, and thus require careful consideration. I'm going to frame this within the context of machine learning, specifically with regards to models trained for a similar task, but the principles apply more generally where you might have multiple representations of the same structure—think finite element analysis, for example.
 
 The most straightforward method, and the one I'd typically start with, is simple arithmetic averaging. Given a set of *n* models, each possessing weight tensors (or matrices, vectors, depending on the model’s architecture), you simply sum the corresponding weights from each model and divide by *n*. Let's illustrate this with a simplified example using Python and NumPy, a library that is practically ubiquitous in data science and related fields:
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-pyspark-efficiently-filter-data-and-train-multiple-models-concurrently"
 ---
 
-Alright, let's tackle this. I've spent a good chunk of my career dealing with large-scale data processing and model training, so I've definitely run into these challenges with PySpark. The core issue is often scaling out both data filtering and model training while maintaining efficiency and resource utilization. It’s not just about throwing more hardware at the problem, it's about structuring your workflow intelligently to leverage PySpark’s capabilities.
+Alright,  I've spent a good chunk of my career dealing with large-scale data processing and model training, so I've definitely run into these challenges with PySpark. The core issue is often scaling out both data filtering and model training while maintaining efficiency and resource utilization. It’s not just about throwing more hardware at the problem, it's about structuring your workflow intelligently to leverage PySpark’s capabilities.
 
 The primary hurdle with large datasets is the time required for filtering, followed by the even more compute-intensive task of training multiple machine learning models. We can't process everything sequentially, or we’d be waiting a very long time, especially as dataset sizes grow. PySpark, inherently, is built for parallel processing, and we need to ensure that we're capitalizing on that.
 

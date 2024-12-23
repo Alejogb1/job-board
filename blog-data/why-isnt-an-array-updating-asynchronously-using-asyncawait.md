@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-isnt-an-array-updating-asynchronously-using-asyncawait"
 ---
 
-Okay, let’s tackle this. It’s a common point of confusion, and I've certainly been caught out by it myself, particularly during a tricky data synchronization project back in '17 involving a real-time sensor network. We were pulling in a constant stream of measurements, and the goal was to update a client-side array that represented the current state. It felt like everything should just *work* with async/await, but reality had other plans.
+, let’s tackle this. It’s a common point of confusion, and I've certainly been caught out by it myself, particularly during a tricky data synchronization project back in '17 involving a real-time sensor network. We were pulling in a constant stream of measurements, and the goal was to update a client-side array that represented the current state. It felt like everything should just *work* with async/await, but reality had other plans.
 
 The core issue isn’t that async/await doesn’t work; it’s that it doesn’t inherently make *every* operation asynchronous or magically update data structures reactively. Async/await is, at its heart, syntax sugar built on top of promises. It simplifies writing and understanding asynchronous code that involves waiting for operations to complete. When you use ‘await’ inside an ‘async’ function, you're essentially pausing execution of that function until the promise you're awaiting is resolved. Critically, this doesn't automatically change *how* operations modify your data structures.
 

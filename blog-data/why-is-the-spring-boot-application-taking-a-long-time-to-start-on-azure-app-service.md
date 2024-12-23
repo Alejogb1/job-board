@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-the-spring-boot-application-taking-a-long-time-to-start-on-azure-app-service"
 ---
 
-Okay, let's tackle this. I've definitely seen my share of slow-starting Spring Boot applications on Azure App Service, and it's rarely just one culprit. Usually, it's a combination of factors, and pinpointing the exact cause often requires a methodical approach. I recall one particularly frustrating case where a client was launching a fairly straightforward microservice, and it was taking upwards of two minutes to become fully operational. That was unacceptable, and it spurred a thorough investigation that revealed a few common bottlenecks.
+,  I've definitely seen my share of slow-starting Spring Boot applications on Azure App Service, and it's rarely just one culprit. Usually, it's a combination of factors, and pinpointing the exact cause often requires a methodical approach. I recall one particularly frustrating case where a client was launching a fairly straightforward microservice, and it was taking upwards of two minutes to become fully operational. That was unacceptable, and it spurred a thorough investigation that revealed a few common bottlenecks.
 
 The startup time of a Spring Boot application is essentially the duration it takes from the moment the JVM starts to the point where the application is ready to serve requests. This involves several phases: JVM initialization, class loading, bean instantiation, context refresh, and the eventual starting of embedded servers (like Tomcat). Azure App Service introduces its own layer of complexity, primarily due to the environment's characteristics and any network interactions required.
 

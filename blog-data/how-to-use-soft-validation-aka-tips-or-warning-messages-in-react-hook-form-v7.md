@@ -4,9 +4,9 @@ date: "2024-12-13"
 id: "how-to-use-soft-validation-aka-tips-or-warning-messages-in-react-hook-form-v7"
 ---
 
-Alright so you're wrestling with soft validation in react hook form v7 right been there done that got the t-shirt probably have a few actual t-shirts with obscure coding jokes on them collecting dust in the closet.
+so you're wrestling with soft validation in react hook form v7 right been there done that got the t-shirt probably have a few actual t-shirts with obscure coding jokes on them collecting dust in the closet.
 
-Okay let's break it down soft validation isn't about stopping the user dead in their tracks it's more like gently nudging them in the right direction you want to provide helpful tips warnings things that suggest a better way without being a full-blown form-blocking error message. This is pretty much crucial for user experience nobody likes yelling red text and form submissions that act like they're allergic to information.
+ let's break it down soft validation isn't about stopping the user dead in their tracks it's more like gently nudging them in the right direction you want to provide helpful tips warnings things that suggest a better way without being a full-blown form-blocking error message. This is pretty much crucial for user experience nobody likes yelling red text and form submissions that act like they're allergic to information.
 
 React hook form v7 gives you a pretty flexible arsenal for this. We’re not talking basic validation here we’re talking about enhancing the user’s flow. What we’re aiming for are those subtle hints those informative notes appearing alongside form fields not outright rejections.
 
@@ -57,7 +57,7 @@ export default MyForm;
 
 In this snippet we've got a basic email field. The `validate` function uses regex to confirm the email’s validity and if it’s not valid we return our 'warning message'. In our JSX code below it we are checking the error value if it matches our warning string text then display it in orange instead of the traditional red of a real error.
 
-Alright so what happens when you want something a little more dynamic? Let's say you've got a password field and you want to give warnings about strength not just errors. Here's another example:
+so what happens when you want something a little more dynamic? Let's say you've got a password field and you want to give warnings about strength not just errors. Here's another example:
 
 ```jsx
 import React from 'react';
@@ -174,6 +174,6 @@ Now where to go for more? Well the official react hook form documentation is a g
 
 There are also some good books out there. If you want a super deep dive into form handling I'd recommend “Form Design Patterns” by Adam Silver not strictly on react but the underlying principles are the same. For a broader React perspective look for something like “Learning React” by Alex Banks and Eve Porcello or “Effective React” by Dan Abramov.
 
-And for a chuckle (just one okay): Why did the react component break up with the hook? Because they said it was getting too complicated and they just needed more space...
+And for a chuckle (just one ): Why did the react component break up with the hook? Because they said it was getting too complicated and they just needed more space...
 
 Anyway good luck out there this stuff is tough but you’ll nail it.

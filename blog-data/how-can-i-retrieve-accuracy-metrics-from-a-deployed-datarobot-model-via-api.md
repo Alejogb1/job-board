@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-retrieve-accuracy-metrics-from-a-deployed-datarobot-model-via-api"
 ---
 
-Okay, let's tackle this. I've actually spent a fair bit of time interfacing with deployed DataRobot models, and retrieving accuracy metrics programmatically is certainly a common need. It's not always as straightforward as you might initially expect, especially if you're used to working primarily within the DataRobot UI itself. The crucial thing to understand is that DataRobot provides a robust api for this sort of thing, but knowing which endpoints to hit and how to interpret the results is key.
+,  I've actually spent a fair bit of time interfacing with deployed DataRobot models, and retrieving accuracy metrics programmatically is certainly a common need. It's not always as straightforward as you might initially expect, especially if you're used to working primarily within the DataRobot UI itself. The crucial thing to understand is that DataRobot provides a robust api for this sort of thing, but knowing which endpoints to hit and how to interpret the results is key.
 
 Essentially, what you're asking is how to get that same performance data you see in the DataRobot Leaderboard, but programmatically. You’re not going to get the same level of detail as a full leaderboard view, but rather, specific metrics from a deployment. We’ll primarily focus on using the DataRobot Python client to achieve this, as it offers a user-friendly way to interact with the api. Let's break down the process and then I’ll provide some code examples.
 

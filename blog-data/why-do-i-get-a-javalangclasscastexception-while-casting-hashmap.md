@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-do-i-get-a-javalangclasscastexception-while-casting-hashmap"
 ---
 
-Okay, let's tackle this `java.lang.ClassCastException` with HashMaps. I’ve seen this specific error pop up more times than I care to count, and it almost always boils down to a misunderstanding of Java's type system and how generics interact with raw types. It's a classic, really. Let me walk you through the scenarios where this happens and how to avoid them, based on my own experiences wrestling with this over the years.
+, let's tackle this `java.lang.ClassCastException` with HashMaps. I’ve seen this specific error pop up more times than I care to count, and it almost always boils down to a misunderstanding of Java's type system and how generics interact with raw types. It's a classic, really. Let me walk you through the scenarios where this happens and how to avoid them, based on my own experiences wrestling with this over the years.
 
 The crux of the problem isn't usually the `HashMap` itself; it's more about the types that you’re *attempting* to cast it to. When you see a `ClassCastException` related to a `HashMap`, it generally means you have an instance of one type of `HashMap` (or sometimes, something else entirely) that you’re trying to force into a different type. The Java Virtual Machine (jvm) is very strict about this because it needs to ensure type safety at runtime. Imagine trying to put a square peg in a round hole; the jvm is essentially saying, "No, that's not going to work."
 

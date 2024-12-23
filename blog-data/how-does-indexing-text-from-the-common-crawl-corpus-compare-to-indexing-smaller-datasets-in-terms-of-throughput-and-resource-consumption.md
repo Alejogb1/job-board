@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "how-does-indexing-text-from-the-common-crawl-corpus-compare-to-indexing-smaller-datasets-in-terms-of-throughput-and-resource-consumption"
 ---
 
-Okay so you wanna know about indexing the Common Crawl versus smaller datasets right  like how much faster or slower it is and how many resources it gobbles up  It's a big difference dude  a seriously massive difference think elephant versus mouse kinda thing
+ so you wanna know about indexing the Common Crawl versus smaller datasets right  like how much faster or slower it is and how many resources it gobbles up  It's a big difference dude  a seriously massive difference think elephant versus mouse kinda thing
 
 First off Common Crawl is HUGE I mean absolutely monstrous  We're talking petabytes of data  Peta  That's a thousand terabytes  Your average laptop would probably melt trying to handle even a tiny fraction of it  Smaller datasets  well they're smaller  duh  You could probably index a decent sized one on a reasonably powerful desktop  maybe even a laptop depending on how big we're talking
 

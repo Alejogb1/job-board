@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "how-does-the-number-of-shards-impact-the-query-processing-efficiency-in-distributed-systems-querying-cloud-stored-inverted-indexes"
 ---
 
-Okay so you're asking about how many pieces you break your giant index into affects how fast you can search it right  It's like having a massive library you could either keep all the books in one room or spread them across many smaller rooms  More rooms more places to look but maybe faster if you know exactly which room your book's in
+ so you're asking about how many pieces you break your giant index into affects how fast you can search it right  It's like having a massive library you could either keep all the books in one room or spread them across many smaller rooms  More rooms more places to look but maybe faster if you know exactly which room your book's in
 
 The key thing is  parallelism  If you have one giant index searching it is a single-threaded operation it's like one librarian looking for a single book in a massive library it's slow  But if you split it into shards  you can have multiple librarians looking simultaneously  that's where things speed up  think multiple cores on a CPU its the same idea
 

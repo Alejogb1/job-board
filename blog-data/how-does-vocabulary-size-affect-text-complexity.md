@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-does-vocabulary-size-affect-text-complexity"
 ---
 
-Okay, let's unpack this. I recall a particularly tricky project about seven years back, involving automated document summarization. We were consistently getting wildly different performance metrics across varying document types. Turns out, a significant factor wasn't just sentence length or syntactic variety—it was the sheer volume and distribution of unique words in the source text, or in simpler terms, vocabulary size. It's a cornerstone issue in natural language processing and understanding.
+, let's unpack this. I recall a particularly tricky project about seven years back, involving automated document summarization. We were consistently getting wildly different performance metrics across varying document types. Turns out, a significant factor wasn't just sentence length or syntactic variety—it was the sheer volume and distribution of unique words in the source text, or in simpler terms, vocabulary size. It's a cornerstone issue in natural language processing and understanding.
 
 The core relationship between vocabulary size and text complexity stems from a fairly straightforward principle: a larger, more diverse vocabulary generally indicates that a text deals with a wider range of concepts and ideas. This, naturally, increases the cognitive load for the reader. Texts using a limited set of words, while possibly longer in terms of overall word count, tend to have a lower degree of complexity because the underlying ideas are often repetitive or interconnected within a narrow conceptual space.
 

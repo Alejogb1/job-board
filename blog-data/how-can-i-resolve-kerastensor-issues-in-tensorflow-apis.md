@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-resolve-kerastensor-issues-in-tensorflow-apis"
 ---
 
-Alright, let's tackle this. I've certainly stumbled into my share of `KerasTensor` quandaries over the years, particularly when mixing functional and imperative styles in TensorFlow. These errors, which often boil down to unexpected type mismatches, can be a real time sink, but once you understand the underlying mechanisms, they become quite manageable.
+Alright,  I've certainly stumbled into my share of `KerasTensor` quandaries over the years, particularly when mixing functional and imperative styles in TensorFlow. These errors, which often boil down to unexpected type mismatches, can be a real time sink, but once you understand the underlying mechanisms, they become quite manageable.
 
 Essentially, the `KerasTensor` type is TensorFlow's way of representing a symbolic tensor within the context of Keras. Unlike an `EagerTensor`, which holds concrete numerical values, a `KerasTensor` describes the *shape and data type* of a tensor that will be computed later. These are predominantly used in the functional API, especially when defining models using the `tf.keras.layers` or when constructing custom model architectures. The problems usually arise when we inadvertently try to use `KerasTensor` objects in places where TensorFlow expects an `EagerTensor` (i.e., numerical computation context), or vice versa. This mismatch creates errors such as "Unsupported operand type(s) for +: 'KerasTensor' and 'int'" or similar type incompatibility exceptions.
 

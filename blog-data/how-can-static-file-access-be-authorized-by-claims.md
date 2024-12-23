@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-static-file-access-be-authorized-by-claims"
 ---
 
-Okay, let's talk about authorizing static file access based on claims. It's a challenge I've tackled a few times over the years, and it's rarely as straightforward as it first appears. It's less about simply granting access and more about layering security in a way that's maintainable and scalable. You see, we're not talking about simple user-level authentication; we're delving into policy enforcement based on the user's attributes and the file's characteristics.
+, let's talk about authorizing static file access based on claims. It's a challenge I've tackled a few times over the years, and it's rarely as straightforward as it first appears. It's less about simply granting access and more about layering security in a way that's maintainable and scalable. You see, we're not talking about simple user-level authentication; we're delving into policy enforcement based on the user's attributes and the file's characteristics.
 
 In my past life at a large media company, we had a massive repository of images and documents. We needed to ensure that only users with the appropriate permissions – derived from their roles, department affiliations, and even project assignments – could access specific files. This wasn’t achievable with simple role-based access control (rbac). We needed a more granular, claims-based authorization system. The aim was to dynamically decide whether to serve a file, deny the request, or even present a slightly modified version, all driven by the requesting user's claims.
 

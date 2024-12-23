@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "whats-the-difference-between-fastrp-vs-scaleproperties"
 ---
 
-Okay, let's unpack this. I’ve spent a fair bit of time knee-deep in recommendation engines and similar systems where efficient processing of high-dimensional data is critical. So, I’ve definitely wrestled with the performance implications of different embedding techniques, and the nuances between `fastrp` and `scaleProperties` are something I've had to get to grips with first-hand.
+, let's unpack this. I’ve spent a fair bit of time knee-deep in recommendation engines and similar systems where efficient processing of high-dimensional data is critical. So, I’ve definitely wrestled with the performance implications of different embedding techniques, and the nuances between `fastrp` and `scaleProperties` are something I've had to get to grips with first-hand.
 
 Initially, it’s important to understand that both `fastrp` and `scaleProperties` typically come up in the context of handling high-dimensional feature spaces, particularly when working with algorithms like collaborative filtering or content-based recommendations, where user or item profiles might be represented by hundreds or thousands of features. They address fundamentally different needs in this context, however.
 

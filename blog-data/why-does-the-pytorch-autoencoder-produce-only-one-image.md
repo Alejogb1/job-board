@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-the-pytorch-autoencoder-produce-only-one-image"
 ---
 
-Okay, let’s unpack this. I've seen this particular hiccup crop up quite a few times, especially when people are first diving into autoencoders with PyTorch. The sensation of feeding in a batch of images and getting only one back – often the first one, as if the others vanished into the ether – can be frustrating. It isn't magic, though. It stems from a nuanced interplay of how the model is set up, particularly concerning the batch dimension, loss functions, and potentially how you're iterating during training.
+, let’s unpack this. I've seen this particular hiccup crop up quite a few times, especially when people are first diving into autoencoders with PyTorch. The sensation of feeding in a batch of images and getting only one back – often the first one, as if the others vanished into the ether – can be frustrating. It isn't magic, though. It stems from a nuanced interplay of how the model is set up, particularly concerning the batch dimension, loss functions, and potentially how you're iterating during training.
 
 Let's address this with the benefit of some experience, shall we? I remember once back at an image processing startup, we were working on a prototype for anomaly detection in satellite imagery. We had a similar issue, feeding in hundreds of images of forest segments to train an autoencoder. We expected hundreds of reconstructed images. Instead, we got one lone, somewhat blurry output. It took a little debugging, but ultimately, the cause, as is often the case, was multi-layered.
 

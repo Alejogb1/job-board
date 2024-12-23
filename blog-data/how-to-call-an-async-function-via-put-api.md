@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-call-an-async-function-via-put-api"
 ---
 
-Okay, let's talk about calling an asynchronous function via a put api. This isn't a straightforward, cookie-cutter scenario, and I've certainly seen my fair share of teams trip over this in the past. The core issue boils down to how http and async operations interact—or rather, *don't* interact inherently. A put request, like other http methods, expects a response within a reasonable timeframe. Async functions, by their nature, don't always complete immediately; they might be waiting for i/o, network operations, or other tasks that take time. We need to bridge this gap.
+, let's talk about calling an asynchronous function via a put api. This isn't a straightforward, cookie-cutter scenario, and I've certainly seen my fair share of teams trip over this in the past. The core issue boils down to how http and async operations interact—or rather, *don't* interact inherently. A put request, like other http methods, expects a response within a reasonable timeframe. Async functions, by their nature, don't always complete immediately; they might be waiting for i/o, network operations, or other tasks that take time. We need to bridge this gap.
 
 The fundamental challenge is that you can't directly "return" the result of an asynchronous operation in a synchronous http handler. When a put request comes in, our http server needs to generate a response. Blocking that request while waiting for the async operation to complete will lock up the server, leading to performance issues and potentially dropped connections. Instead, we need to decouple the request handling from the actual async operation.
 

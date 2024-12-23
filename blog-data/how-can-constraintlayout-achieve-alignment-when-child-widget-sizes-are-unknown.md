@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-constraintlayout-achieve-alignment-when-child-widget-sizes-are-unknown"
 ---
 
-Alright, let's tackle this. It's a problem I've encountered quite a few times, especially when dealing with dynamic content coming from APIs, or when you're working with custom views that have intrinsic, variable size requirements. The crux of the issue with `constraintlayout` and unknown child sizes is that you can't rely on fixed values or ratios for alignment. It’s often not as straightforward as you might assume initially.
+Alright,  It's a problem I've encountered quite a few times, especially when dealing with dynamic content coming from APIs, or when you're working with custom views that have intrinsic, variable size requirements. The crux of the issue with `constraintlayout` and unknown child sizes is that you can't rely on fixed values or ratios for alignment. It’s often not as straightforward as you might assume initially.
 
 The typical approach with a basic `linearlayout` might be to let its internal measuring system handle these cases relatively automatically, but `constraintlayout` provides more control, at the cost of a bit more initial complexity. It's this control that we leverage to address the unknown sizes. Instead of thinking about it as 'guessing' or relying on implicit behaviour, the core strategy here lies in employing the `constraintlayout`’s robust constraint-based system in a smart way, specifically through the strategic use of guidelines and chains, sometimes combined with dimension constraints like `wrap_content`.
 

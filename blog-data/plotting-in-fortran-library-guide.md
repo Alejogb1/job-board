@@ -4,9 +4,9 @@ date: "2024-12-13"
 id: "plotting-in-fortran-library-guide"
 ---
 
-Okay so plotting in Fortran right I've been down this road more times than I'd like to admit Back in the day when I was still wrestling with punch cards I had this physics simulation spitting out mountains of numerical data and visualizing it well that was a whole other ballgame Let me tell you it wasn't as straightforward as importing a magic library in Python
+ so plotting in Fortran right I've been down this road more times than I'd like to admit Back in the day when I was still wrestling with punch cards I had this physics simulation spitting out mountains of numerical data and visualizing it well that was a whole other ballgame Let me tell you it wasn't as straightforward as importing a magic library in Python
 
-Alright so first off Fortran isn’t exactly known for its out-of-the-box graphics prowess It's a number crunching beast not a pixel pushing prodigy But that doesn't mean we're stuck staring at raw data tables forever There are definitely viable options you just need to roll up your sleeves a bit and get your hands dirty
+so first off Fortran isn’t exactly known for its out-of-the-box graphics prowess It's a number crunching beast not a pixel pushing prodigy But that doesn't mean we're stuck staring at raw data tables forever There are definitely viable options you just need to roll up your sleeves a bit and get your hands dirty
 
 The "classic" approach and I use that term loosely is to use a plotting library that's designed to work well with Fortran often through what we call "binding" These libraries are usually C based or C++ but Fortran is not a lone wolf you can connect with them and leverage them for this purpose It's not the most elegant solution but it gets the job done especially if you’re working with older codebases or specific requirements
 
@@ -95,7 +95,7 @@ This gnuplot script will open a gnuplot interactive window and display the gener
 
 There are also other plotting libraries I’ve played with over the years These are more specialized and it depends a lot on the data you want to plot for instance if you are into scientific visualization you might want to check things like VTK This requires a lot more setup and it’s generally overkill if you just want some simple line graphs but for advanced 3D visualization or complicated data analysis you will probably be using it at some point in your career There's no one-size-fits-all solution here
 
-Okay so I know that we are having some fun here talking about plotting data and I know that I'm digressing here a little but you will see that what I'm about to say is relevant I remember when I was working on that nuclear physics simulation it would have made my life a lot easier if I had a decent plotting workflow. I swear debugging that spaghetti Fortran code and making the visualizations was like trying to debug a kernel driver written in assembly language by a squirrel high on caffeine. That code was so bad I’m still having nightmares about it to this day
+ so I know that we are having some fun here talking about plotting data and I know that I'm digressing here a little but you will see that what I'm about to say is relevant I remember when I was working on that nuclear physics simulation it would have made my life a lot easier if I had a decent plotting workflow. I swear debugging that spaghetti Fortran code and making the visualizations was like trying to debug a kernel driver written in assembly language by a squirrel high on caffeine. That code was so bad I’m still having nightmares about it to this day
 
 Let’s assume that for some reason you don't want to use an external library or output the data into a file to plot them with gnuplot. There are some ways of doing this too like using the standard output for very basic visualizations This method is limited to text-based plots but might be enough for simple use cases when you do not need anything complex or fancy
 

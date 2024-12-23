@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-tf20s-gradienttape-return-none-for-gradients-in-an-rnn-model"
 ---
 
-Okay, let's tackle this one. It’s a classic headache, and I've certainly spent my fair share of late nights chasing down 'None' gradients in TensorFlow's `GradientTape`, especially when working with recurrent neural networks. It’s frustrating, but often, the culprit isn’t as elusive as it initially seems. Having debugged this specific issue in a project involving sentiment analysis using LSTMs back in '21, I’ve developed a pretty good handle on the common causes, which we can explore methodically.
+, let's tackle this one. It’s a classic headache, and I've certainly spent my fair share of late nights chasing down 'None' gradients in TensorFlow's `GradientTape`, especially when working with recurrent neural networks. It’s frustrating, but often, the culprit isn’t as elusive as it initially seems. Having debugged this specific issue in a project involving sentiment analysis using LSTMs back in '21, I’ve developed a pretty good handle on the common causes, which we can explore methodically.
 
 The primary reason you might encounter `None` gradients with a `tf.GradientTape` and RNNs (or, more generally, any sequential model) is related to how TensorFlow handles operations involving non-differentiable tensors or variables within the computational graph. The `GradientTape` tracks differentiable operations, meaning it only records actions that can have their derivatives calculated. If the gradient for a particular variable becomes detached or if the operation that uses a given tensor isn’t differentiable, the gradient for it effectively vanishes and results in a `None` value when calculated by `tape.gradient()`.
 

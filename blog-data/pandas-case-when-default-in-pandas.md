@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "pandas-case-when-default-in-pandas"
 ---
 
-Okay so you're wrestling with pandas and that whole "case when default" situation it's a common headache I've been there countless times let me tell you
+ so you're wrestling with pandas and that whole "case when default" situation it's a common headache I've been there countless times let me tell you
 
 First off lets break down what we mean by "case when default" in pandas because it's not a single function thing like in SQL we're talking about conditional column creation and transformations with a default value if none of the conditions match yeah? Think of it like a giant if else if else chain but in pandas dataframes
 
@@ -48,7 +48,7 @@ df['category'] = np.select(conditions, choices, default=default)
 print(df)
 ```
 
-Okay so in this snippet we create a simple dataframe and define three conditions based on price and discount each condition has a corresponding value if the condition is met and the default value Standard is applied if no condition is true so this is our case when default equivalent using np.select its like a clean if elif else but way more pandas-friendly
+ so in this snippet we create a simple dataframe and define three conditions based on price and discount each condition has a corresponding value if the condition is met and the default value Standard is applied if no condition is true so this is our case when default equivalent using np.select its like a clean if elif else but way more pandas-friendly
 
 Now you might be thinking "what if my conditions are more complex or need multiple columns?" good question its not always simple but the concept remains the same you build your conditions using logical operators and you can even use functions or methods that work on series its very versatile but you need to keep it vectorized as much as possible or you lose most of the speed advantages of pandas here is a more complex example
 

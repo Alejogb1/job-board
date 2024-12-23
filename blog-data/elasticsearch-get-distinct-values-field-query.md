@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "elasticsearch-get-distinct-values-field-query"
 ---
 
-Okay so you're after distinct values from a field in Elasticsearch cool I've been there done that got the t-shirt a few times over lets break this down its simpler than you might think but like everything theres a right way and a bunch of wrong ways especially when you start scaling things up
+ so you're after distinct values from a field in Elasticsearch cool I've been there done that got the t-shirt a few times over lets break this down its simpler than you might think but like everything theres a right way and a bunch of wrong ways especially when you start scaling things up
 
 First off when you say "distinct values" we're talking about unique values right avoiding duplicates Its a common ask when you're trying to figure out what options you have in a field whether its for filtering or building aggregations or anything else really
 

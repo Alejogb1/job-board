@@ -4,11 +4,11 @@ date: "2024-12-13"
 id: "urandom-range-urandom-random-in-verilog"
 ---
 
-Okay so you're asking about generating random numbers in Verilog using something like a urandom range or urandom random right Been there done that more times than I care to admit Let's dive in
+ so you're asking about generating random numbers in Verilog using something like a urandom range or urandom random right Been there done that more times than I care to admit Let's dive in
 
 First off let me tell you my pain points with Verilog and random numbers I was working on this massive chip a few years back for a high performance data processing system and we needed really good pseudo random number generators or PRNGs for testing the memory controllers Like not just something that vaguely looks random but actually good for stress testing with a uniform distribution and minimal repetition What I initially tried was just relying on the plain `random` system function provided by Verilog simulators Oh boy was that a mistake
 
-The initial tests with that naive approach looked okay on a small scale but as I scaled up the test sizes the issues started to become glaringly obvious My memory controller testing was showing all sorts of non random patterns and strange clustering in terms of which addresses it accessed basically it was far from uniformly random My debug session stretched longer than an episode of star trek I was so tired I was probably close to a borg but with even worse assimilation skills
+The initial tests with that naive approach looked  on a small scale but as I scaled up the test sizes the issues started to become glaringly obvious My memory controller testing was showing all sorts of non random patterns and strange clustering in terms of which addresses it accessed basically it was far from uniformly random My debug session stretched longer than an episode of star trek I was so tired I was probably close to a borg but with even worse assimilation skills
 
 It turns out the built in `random` function in older simulators sometimes doesn't generate a really high quality random sequence And this is an understatement It's often tied to some fixed seed or relies on pretty simple algorithms so yeah I learned the hard way that the term random in Verilog is sometimes like a random dog at the park doing its own thing
 

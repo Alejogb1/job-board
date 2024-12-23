@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-a-cnn-for-binary-image-classification-be-implemented-on-an-esp32-using-tensorflow-lite-micro"
 ---
 
-Okay, let's break down how to get a convolutional neural network (CNN) for binary image classification running on an esp32 using tensorflow lite micro. I've tackled this particular challenge more than a few times, and it definitely requires a nuanced approach, given the resource constraints of the esp32. It's not simply a matter of porting your desktop-trained model directly – there’s a substantial optimization process involved.
+, let's break down how to get a convolutional neural network (CNN) for binary image classification running on an esp32 using tensorflow lite micro. I've tackled this particular challenge more than a few times, and it definitely requires a nuanced approach, given the resource constraints of the esp32. It's not simply a matter of porting your desktop-trained model directly – there’s a substantial optimization process involved.
 
 First off, it's critical to understand that we're not going to be training the model *on* the esp32. That would be impractical for several reasons, primarily its limited processing power and memory. Training happens on a more robust platform – often a desktop machine or a cloud instance. Once the training is complete, we then convert the model to a format suitable for the esp32's limited environment via tensorflow lite.
 

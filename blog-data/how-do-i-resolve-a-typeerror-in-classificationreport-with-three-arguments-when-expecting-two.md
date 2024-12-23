@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-resolve-a-typeerror-in-classificationreport-with-three-arguments-when-expecting-two"
 ---
 
-Okay, let's address this peculiar `TypeError` you're encountering with `classification_report`. It’s a scenario I’ve bumped into more than once during model evaluations, and trust me, it can be a head-scratcher if you're not aware of the underlying cause. Let's break it down, step by step, focusing on the practical realities rather than getting bogged down in abstract theory.
+, let's address this peculiar `TypeError` you're encountering with `classification_report`. It’s a scenario I’ve bumped into more than once during model evaluations, and trust me, it can be a head-scratcher if you're not aware of the underlying cause. Let's break it down, step by step, focusing on the practical realities rather than getting bogged down in abstract theory.
 
 Essentially, the `classification_report` function from scikit-learn (sklearn) is designed to accept two primary arguments: the true labels and the predicted labels. That's the foundation. When it throws a `TypeError` complaining about three arguments, it typically indicates that you've inadvertently passed something extra to the function. This ‘extra’ can manifest in several forms, but it generally comes down to a misunderstanding of how the data is being passed or a subtle bug in how you're constructing your input data structures. In my experience, most of the issues I've seen arise from not correctly handling the output shape of your prediction results or from a misinterpretation in the data type of the arguments.
 

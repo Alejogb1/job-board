@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "how-do-i-use-the-enumerate-function-for-codehs-8-4-13-owls-part-2"
 ---
 
-Alright so you're wrestling with `enumerate` in CodeHS 8 4 13 Owls Part 2 right Been there done that more times than I care to admit Let me break it down for you like I'm debugging a particularly nasty piece of legacy code
+so you're wrestling with `enumerate` in CodeHS 8 4 13 Owls Part 2 right Been there done that more times than I care to admit Let me break it down for you like I'm debugging a particularly nasty piece of legacy code
 
 First off `enumerate` is your friend Seriously it's one of those Python built-ins that once you grok it you wonder how you ever lived without it especially when you're dealing with lists and needing both the index and the value
 
@@ -46,7 +46,7 @@ for index, owl in enumerate(owls, start=1):
 ```
 This code will start from one It is useful if the prompt requires numbering starting at 1. I did this once because the professor hated zero-based indexing it gave me a headache but I got it done right?
 
-Okay so back to CodeHS 8 4 13 Owls Part 2 From what you described your task is probably about accessing the owl's location or something like that. Let's assume that your code should print the position of the owl which you probably have to calculate based on index to a x and y position in a grid world of the owl if this makes any sense
+ so back to CodeHS 8 4 13 Owls Part 2 From what you described your task is probably about accessing the owl's location or something like that. Let's assume that your code should print the position of the owl which you probably have to calculate based on index to a x and y position in a grid world of the owl if this makes any sense
 
 Lets also assume your grid is 10 units wide so the x is just the index modulo 10 and y is the index divided by 10
 

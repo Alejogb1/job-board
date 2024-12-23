@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-are-dags-not-appearing-in-the-airflow-ui"
 ---
 
-Okay, let's unpack this. It's a scenario I've bumped into more times than I care to remember, especially during the early phases of a new airflow deployment or after significant configuration changes. A missing DAG in the UI is often a symptom, not the problem itself, so diagnosing it requires a systematic approach. Instead of jumping straight to conclusions, we need to examine several potential culprits, all stemming from misconfigurations or subtle logical errors.
+, let's unpack this. It's a scenario I've bumped into more times than I care to remember, especially during the early phases of a new airflow deployment or after significant configuration changes. A missing DAG in the UI is often a symptom, not the problem itself, so diagnosing it requires a systematic approach. Instead of jumping straight to conclusions, we need to examine several potential culprits, all stemming from misconfigurations or subtle logical errors.
 
 Firstly, the obvious: let’s ensure the DAG files are actually being parsed. Airflow relies on the scheduler to discover, interpret, and subsequently make DAG definitions available within the user interface. This process involves the scheduler actively searching through the designated DAGs folder(s), specified either in `airflow.cfg` or via environment variables, for valid python files. If the scheduler isn't picking up anything, it's likely that either the path is incorrect or that airflow is having difficulty reading the contents of your directory.
 

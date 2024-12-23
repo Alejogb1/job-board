@@ -9,7 +9,7 @@ dude so i watched this totally rad video about building a simple web server usin
 
 setup/context:
 
-okay so the whole point of the video was to show us how to whip up a basic web server from scratch using python which is my jam and flask a python framework that makes building web apps a million times easier think of it as a supercharged toolbox for web developers the dude in the video was a total pro he walked us through the whole process from installing stuff to running our first ever hello world webpage like a total boss
+ so the whole point of the video was to show us how to whip up a basic web server from scratch using python which is my jam and flask a python framework that makes building web apps a million times easier think of it as a supercharged toolbox for web developers the dude in the video was a total pro he walked us through the whole process from installing stuff to running our first ever hello world webpage like a total boss
 
 
 key moments:

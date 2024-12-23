@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-prepare-my-input-data-for-doc2bow-if-its-a-single-string-instead-of-an-array-of-unicode-tokens"
 ---
 
-Alright, let's tackle this. Transforming a single string into the format required by `doc2bow` is a fairly common hurdle, especially when you're dealing with text that hasn't been pre-processed into tokens. I’ve seen this countless times, often when integrating data from legacy systems or scraping unstructured web content. The core issue is that `doc2bow`, part of the `gensim` library, expects a list of tokens—essentially, words or other meaningful units—not just one long string. Let's break down how to achieve that transformation, step by step, and avoid some common pitfalls.
+Alright,  Transforming a single string into the format required by `doc2bow` is a fairly common hurdle, especially when you're dealing with text that hasn't been pre-processed into tokens. I’ve seen this countless times, often when integrating data from legacy systems or scraping unstructured web content. The core issue is that `doc2bow`, part of the `gensim` library, expects a list of tokens—essentially, words or other meaningful units—not just one long string. Let's break down how to achieve that transformation, step by step, and avoid some common pitfalls.
 
 Before we jump into code, understand this fundamental principle: `doc2bow`’s role isn't in tokenizing text; it assumes tokenization has already occurred. It functions more like a frequency counter for words once they are properly identified and separated. So, our primary task is tokenization, and we need a reliable method to perform it before we feed the data into `doc2bow`.
 

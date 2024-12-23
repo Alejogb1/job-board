@@ -4,9 +4,9 @@ date: "2024-12-13"
 id: "software-watchdog-linux-implementation-guide"
 ---
 
-Okay so you're asking about software watchdogs on Linux right I've been around the block a few times with those things lets see if I can get you up to speed and help you navigate what is often a surprisingly tricky landscape
+ so you're asking about software watchdogs on Linux right I've been around the block a few times with those things lets see if I can get you up to speed and help you navigate what is often a surprisingly tricky landscape
 
-Alright lets dive in We are talking about software watchdogs here not those silly hardware things people use on embedded systems though the principle is similar The idea is pretty basic you have a process that's supposed to periodically nudge a kernel module and if it doesn't do that within a specific time period then the kernel module takes action usually a system reboot but you can also set it up to do other stuff like maybe trigger a debug dump
+lets dive in We are talking about software watchdogs here not those silly hardware things people use on embedded systems though the principle is similar The idea is pretty basic you have a process that's supposed to periodically nudge a kernel module and if it doesn't do that within a specific time period then the kernel module takes action usually a system reboot but you can also set it up to do other stuff like maybe trigger a debug dump
 
 I've dealt with watchdog implementations for years and I've seen pretty much every variation out there from simple single threaded applications to more complex distributed ones Let me give you some pointers based on the messes I've gotten myself into
 

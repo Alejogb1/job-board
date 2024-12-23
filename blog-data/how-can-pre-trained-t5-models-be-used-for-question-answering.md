@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-pre-trained-t5-models-be-used-for-question-answering"
 ---
 
-Okay, let's tackle this one. I remember a particularly gnarly project back in '21 where we needed to build a robust internal Q&A system, and T5 was definitely in the mix. We weren’t dealing with the publicly available datasets; instead, we were focused on extracting information from a vast collection of technical documentation specific to our in-house tooling. It’s a bit different than just plugging in a pre-trained model, believe me.
+, let's tackle this one. I remember a particularly gnarly project back in '21 where we needed to build a robust internal Q&A system, and T5 was definitely in the mix. We weren’t dealing with the publicly available datasets; instead, we were focused on extracting information from a vast collection of technical documentation specific to our in-house tooling. It’s a bit different than just plugging in a pre-trained model, believe me.
 
 So, using a pre-trained T5 model for question answering isn't as straightforward as simply feeding it a question and hoping for a perfect answer. T5, which stands for Text-to-Text Transfer Transformer, is designed to convert any textual input into textual output. This flexibility is its strength. To make it work effectively for question answering, we need to frame the problem as a text-to-text task. This generally means structuring our input and output correctly, which, in my experience, largely revolves around how you phrase your training examples and apply inference.
 

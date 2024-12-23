@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-create-a-lightweight-docker-image-using-redhat-as-the-base"
 ---
 
-Okay, let's talk about lightweight Docker images based on Red Hat. It's a topic I've spent considerable time on, especially back when we were optimizing container deployments for our microservices architecture. The bloat in some base images was becoming a significant drag, impacting both build times and resource utilization in our Kubernetes clusters. It’s a challenge I've seen pop up frequently.
+, let's talk about lightweight Docker images based on Red Hat. It's a topic I've spent considerable time on, especially back when we were optimizing container deployments for our microservices architecture. The bloat in some base images was becoming a significant drag, impacting both build times and resource utilization in our Kubernetes clusters. It’s a challenge I've seen pop up frequently.
 
 So, the core issue boils down to this: standard Red Hat base images, while robust and reliable, often include a lot of packages that are simply not needed for specific applications. They’re designed for general purpose use, not for minimal container footprints. We aim to reverse that and achieve what I consider ‘lean’ container images. We're not just talking about shaving off a few megabytes, but potentially orders of magnitude, impacting your infrastructure footprint significantly.
 

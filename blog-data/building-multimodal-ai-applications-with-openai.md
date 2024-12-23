@@ -6,7 +6,7 @@ id: "building-multimodal-ai-applications-with-openai"
 
 dude so this openai vid was totally rad  it's all about how they're building these super-powered multimodal models and the insane things you can do with them  think way beyond just chatbots—we're talking images videos audio all working together like some crazy awesome symphony of ai  the whole point was to show off what's possible and get devs stoked about building the next gen of apps
 
-okay so first off the setup they're like "hey we're openai and we make killer ai models  we're not just about research we're about actually *using* this stuff to solve real-world problems"  patrick and simone are the peeps leading the charge on the apply side—getting these things out into the wild  they even dropped that 2024 is gonna be the "year of multimodal models"—totally stole my idea  i'm trademarking "yearofmultimodal.com"  don't even think about it
+ so first off the setup they're like "hey we're openai and we make killer ai models  we're not just about research we're about actually *using* this stuff to solve real-world problems"  patrick and simone are the peeps leading the charge on the apply side—getting these things out into the wild  they even dropped that 2024 is gonna be the "year of multimodal models"—totally stole my idea  i'm trademarking "yearofmultimodal.com"  don't even think about it
 
 
 one key moment was how they described the current state of multimodal ai  it's like a bunch of islands—dalle for images whisper for audio gpt-4 with vision—all separate things  they're totally awesome on their own but not exactly chatting with each other yet  text though that's the connective tissue  like the internet's super-glue holding all these different model islands together for now.

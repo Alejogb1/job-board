@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-rails-6-i18n-be-used-for-custom-user-defined-naming-schemas"
 ---
 
-Alright, let's tackle this. I've spent a fair amount of time in the Rails trenches, and user-defined naming schemas with i18n always present a unique set of challenges. It’s not always as straightforward as the typical label or message translation. We’re talking about allowing users to effectively create their own ‘dictionaries’ within the application's i18n framework, which demands a more flexible approach than what's readily available out of the box.
+Alright,  I've spent a fair amount of time in the Rails trenches, and user-defined naming schemas with i18n always present a unique set of challenges. It’s not always as straightforward as the typical label or message translation. We’re talking about allowing users to effectively create their own ‘dictionaries’ within the application's i18n framework, which demands a more flexible approach than what's readily available out of the box.
 
 The standard i18n implementation in Rails 6 is fantastic for translating predefined text, based on locale keys. However, when you need user-defined schemas, it’s critical to understand how to bend the framework to your will without compromising its core functionality or creating a maintenance nightmare. Imagine, for instance, an application where users can create custom forms with their labels, and those labels need to be consistently displayed in different languages as chosen by the users themselves, not just the application admin. This is the scenario I faced during a project involving a multi-tenant, highly customizable platform. It was the challenge of adapting i18n for a world where the 'translations' are constantly changing, defined by the end-users.
 

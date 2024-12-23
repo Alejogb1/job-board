@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-trigger-an-aws-lambda-function-when-a-file-is-added-to-aws-fsx"
 ---
 
-Okay, let's unpack this. The challenge of triggering an AWS Lambda function based on file additions to an FSX filesystem isn't uncommon, and it's a scenario I've faced on a few occasions during large-scale data processing pipeline setups. Direct triggers for FSX events aren't natively supported the way they are for s3 buckets, so we have to be a bit clever and use a combination of services to achieve what you need. Let’s break down how to accomplish this with a bit of practical experience baked in.
+, let's unpack this. The challenge of triggering an AWS Lambda function based on file additions to an FSX filesystem isn't uncommon, and it's a scenario I've faced on a few occasions during large-scale data processing pipeline setups. Direct triggers for FSX events aren't natively supported the way they are for s3 buckets, so we have to be a bit clever and use a combination of services to achieve what you need. Let’s break down how to accomplish this with a bit of practical experience baked in.
 
 The core issue is that FSx doesn't inherently emit events when files are added, modified, or deleted. So, we need an intermediary service that can monitor changes and then activate our Lambda. The best approach usually involves leveraging AWS CloudWatch Events (formerly known as CloudWatch Events) paired with the FSx audit logs. While FSx itself doesn't directly trigger CloudWatch Events, its audit logs do provide the necessary information about file operations.
 

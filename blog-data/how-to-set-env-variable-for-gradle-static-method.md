@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-set-env-variable-for-gradle-static-method"
 ---
 
-Okay, let’s tackle this. It's a common need, and I remember a particularly tricky build pipeline years ago where getting environment variables into Gradle's static context was absolutely critical to manage different build configurations across various environments, from local dev to production. If we don't handle this correctly, we can get into some unpredictable build behaviors that are notoriously hard to debug.
+, let’s tackle this. It's a common need, and I remember a particularly tricky build pipeline years ago where getting environment variables into Gradle's static context was absolutely critical to manage different build configurations across various environments, from local dev to production. If we don't handle this correctly, we can get into some unpredictable build behaviors that are notoriously hard to debug.
 
 The challenge stems from the lifecycle of a Gradle build. When you declare a static method in your `build.gradle` or any other related script, the static context is evaluated quite early, *before* the project configuration phase and often before environment variables are readily available to the Gradle process itself, unless explicitly passed. This means that attempts to directly access system environment variables in these contexts frequently result in nulls or unexpected defaults. We need to bridge this gap.
 

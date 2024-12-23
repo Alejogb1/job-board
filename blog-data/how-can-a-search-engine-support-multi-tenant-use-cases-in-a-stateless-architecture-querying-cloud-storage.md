@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "how-can-a-search-engine-support-multi-tenant-use-cases-in-a-stateless-architecture-querying-cloud-storage"
 ---
 
-Okay so you want to build a multi-tenant search engine right super cool project  I've been thinking about this a lot lately stateless architecture is key for scalability and cloud storage is where it's at  The trick is keeping everything separate so one tenant's data doesn't bleed into another's that's where things get interesting
+ so you want to build a multi-tenant search engine right super cool project  I've been thinking about this a lot lately stateless architecture is key for scalability and cloud storage is where it's at  The trick is keeping everything separate so one tenant's data doesn't bleed into another's that's where things get interesting
 
 First  we need a solid way to identify each tenant think unique IDs maybe a UUID or something  This ID needs to travel with every request to the search engine  think of it like a secret password for each tenant's data
 

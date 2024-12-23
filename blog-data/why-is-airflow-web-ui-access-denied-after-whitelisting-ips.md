@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-airflow-web-ui-access-denied-after-whitelisting-ips"
 ---
 
-Okay, let's tackle this. I've seen this issue pop up more than a few times over the years, often leaving teams scratching their heads. The problem, at its core, isn't usually a flaw in the whitelisting mechanism itself, but rather a misunderstanding of how airflow, or more specifically, how its web server, handles these requests within its broader configuration context.
+,  I've seen this issue pop up more than a few times over the years, often leaving teams scratching their heads. The problem, at its core, isn't usually a flaw in the whitelisting mechanism itself, but rather a misunderstanding of how airflow, or more specifically, how its web server, handles these requests within its broader configuration context.
 
 The scenario, as you've presented it, is common: you configure an airflow installation, set up your `webserver_config.py` or equivalent to whitelist specific ip addresses, and yet… access is still denied. Despite the seemingly straightforward approach of explicitly listing authorized IPs, the web ui consistently refuses connections originating from these exact locations. This generally stems from one of a few underlying configuration conflicts or misunderstandings of the request lifecycle within the webserver.
 

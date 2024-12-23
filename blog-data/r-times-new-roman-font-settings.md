@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "r-times-new-roman-font-settings"
 ---
 
-Okay so r times new roman font settings right yeah I've been down that rabbit hole a few times let me tell you it's a classic formatting struggle everyone bumps into sooner or later.
+ so r times new roman font settings right yeah I've been down that rabbit hole a few times let me tell you it's a classic formatting struggle everyone bumps into sooner or later.
 
 Let's get real here Times New Roman is like the default font of documents it's everywhere and for some reason things can get messy when you try to tweak it especially with software that doesn't handle font specifications gracefully. I remember this one project I worked on years ago maybe around 2015 or 2016 I was dealing with this report generation system we were building in house. It had to churn out hundreds of reports a day and the client wanted everything in Times New Roman which you know fair enough.
 

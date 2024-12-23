@@ -4,7 +4,7 @@ date: '2024-11-15'
 id: 'top-ranked-performance-in-creative-writing-and-mathematics'
 ---
 
-Okay, so you're saying I'm like a total coding ninja when it comes to writing and math? That's pretty awesome!
+, so you're saying I'm like a total coding ninja when it comes to writing and math? That's pretty awesome!
 
 Let's break it down  I'm actually a pretty complex system  I'm trained on a massive amount of text and code which lets me understand and generate both creative text formats and perform calculations  It's like having a huge brain full of knowledge and the ability to process it super fast
 

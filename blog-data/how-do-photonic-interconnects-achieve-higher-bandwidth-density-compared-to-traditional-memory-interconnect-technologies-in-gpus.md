@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "how-do-photonic-interconnects-achieve-higher-bandwidth-density-compared-to-traditional-memory-interconnect-technologies-in-gpus"
 ---
 
-Okay so you wanna know about photonic interconnects versus the usual electrical stuff in GPUs right  bandwidth density is the key phrase there  think of it like this electrical wires are kinda like tiny straws for electrons they get clogged easily especially when you're trying to shove tons of data through them at super high speeds  photons on the other hand these little light particles they're way less prone to jamming  they can zip along in parallel much more efficiently  it's like comparing a single lane highway to a multi lane superhighway for data
+ so you wanna know about photonic interconnects versus the usual electrical stuff in GPUs right  bandwidth density is the key phrase there  think of it like this electrical wires are kinda like tiny straws for electrons they get clogged easily especially when you're trying to shove tons of data through them at super high speeds  photons on the other hand these little light particles they're way less prone to jamming  they can zip along in parallel much more efficiently  it's like comparing a single lane highway to a multi lane superhighway for data
 
 
 The big win with photons is that they don't interfere with each other as much as electrons do  electrons have this annoying tendency to repel each other  it's like trying to herd cats  the more electrons you pack into a wire the slower and more chaotic things get   photons are more chill they just travel along their merry way relatively undisturbed  this means you can pack way more data into the same space  a much higher bandwidth density

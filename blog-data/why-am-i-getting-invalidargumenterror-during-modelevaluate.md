@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-am-i-getting-invalidargumenterror-during-modelevaluate"
 ---
 
-Okay, let’s address this `InvalidArgumentError` you’re encountering during model evaluation. It’s a classic symptom of a few common misalignments between your model's expectations and the data being fed into it. I've personally spent a fair amount of time debugging this particular beast, especially back in my days working on a multi-modal sentiment analysis project where input data formats were…let's just say "varied". So, drawing from those experiences, let's dive into the technicalities.
+, let’s address this `InvalidArgumentError` you’re encountering during model evaluation. It’s a classic symptom of a few common misalignments between your model's expectations and the data being fed into it. I've personally spent a fair amount of time debugging this particular beast, especially back in my days working on a multi-modal sentiment analysis project where input data formats were…let's just say "varied". So, drawing from those experiences, let's dive into the technicalities.
 
 The core issue, as the error message hints, is that the data you're passing into `model.evaluate()` isn’t compatible with the model's expected input format. This incompatibility can manifest in various ways, and often requires a bit of systematic investigation to pinpoint. Let's break down the most frequent culprits and how to tackle them.
 

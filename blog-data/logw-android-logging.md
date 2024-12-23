@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "logw-android-logging"
 ---
 
-Okay so logw android logging right I've wrestled with this beast more times than I care to admit let me break down what I've learned the hard way and some code examples because honestly sometimes the official docs just don't cut it.
+ so logw android logging right I've wrestled with this beast more times than I care to admit let me break down what I've learned the hard way and some code examples because honestly sometimes the official docs just don't cut it.
 
 First off `Log.w` in Android it's basically a warning log it's not an error it's not info its that middle ground when something’s a bit off but not catastrophic yet think of it as that annoying notification on your phone you’re not sure if you should dismiss it yet. I used to think I didn't need warnings boy was I wrong.
 
@@ -116,7 +116,7 @@ public class PreferenceManager {
 
 Here we are checking if the sharedPreferences are null and if the value from the shared preferences is null or empty and giving a warning on all cases. We are also making sure to use the default value in case of a problem and logging the reason why. A note to myself, don’t ever trust data from user storage.
 
-Okay let's talk about something I learned the hard way the importance of the log message itself. I've seen log messages that were so generic they were useless. It's like saying "something happened" it doesn't help. When you write `Log.w` messages make sure they are specific and actionable. Include the variable names the values relevant conditions. The more information the better. And for the love of all things code don’t use "error" in a warning message. It confuses future you.
+ let's talk about something I learned the hard way the importance of the log message itself. I've seen log messages that were so generic they were useless. It's like saying "something happened" it doesn't help. When you write `Log.w` messages make sure they are specific and actionable. Include the variable names the values relevant conditions. The more information the better. And for the love of all things code don’t use "error" in a warning message. It confuses future you.
 
 Also when I say specific I mean it I once had a colleague who had something logged like this `Log.w(TAG, "Problem occurred")` I almost threw my keyboard at them. When debugging we should be as precise as possible. Imagine doing a Ctrl+F on logcat with "Problem occurred" you’ll get a myriad of useless logs.
 

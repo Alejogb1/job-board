@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-configure-the-tron-full-node-for-event-server"
 ---
 
-Okay, let's tackle this one. Setting up a Tron full node to reliably feed events to an event server can be a bit nuanced. I’ve had to navigate this a few times, most notably during a project where we were building a real-time dashboard for dApp analytics – that's where the rubber really met the road. It's not as straightforward as simply pointing an event stream, and getting it stable and production-ready often requires a deeper dive into the Tron node's configuration.
+, let's tackle this one. Setting up a Tron full node to reliably feed events to an event server can be a bit nuanced. I’ve had to navigate this a few times, most notably during a project where we were building a real-time dashboard for dApp analytics – that's where the rubber really met the road. It's not as straightforward as simply pointing an event stream, and getting it stable and production-ready often requires a deeper dive into the Tron node's configuration.
 
 First things first, understand that a Tron full node, by default, doesn't aggressively push out event data in the way a dedicated event server might expect. The node primarily focuses on consensus and block propagation. So, you’ll need to configure it to specifically cater to your needs, and the key lies in several core aspects of its configuration file – usually named `config.conf` or something similar depending on how you've installed it.
 

@@ -4,13 +4,13 @@ date: "2024-12-13"
 id: "what-is-the-logical-not-in-prolog"
 ---
 
-Okay so you want to know about the logical not in Prolog right I got you I've wrestled with this beast plenty of times let me break it down for you using my real life experiences no fluffy stuff
+ so you want to know about the logical not in Prolog right I got you I've wrestled with this beast plenty of times let me break it down for you using my real life experiences no fluffy stuff
 
 See Prolog is kinda different from your usual imperative languages think C Python Java the not is not a simple flip of a boolean it's more like a check for something not being provable if I recall I was debugging some fuzzy logic AI project back in the day and my code kept giving me weird results I traced it to how I was handling negations and it turned out I wasn't using prolog not correctly it was a real head scratcher at first
 
 So in Prolog the logical not is implemented using the `\+` operator its prefix like not so `\+ some_predicate` means "it is not provable that `some_predicate` is true" it doesn’t mean that the predicate is false per se just that prolog can't establish it as true with the current facts and rules you've provided remember Prolog is all about inference if something cannot be inferred or proven it’s considered as not true
 
-Okay let's get into it with the code examples first imagine you have a simple database of facts:
+ let's get into it with the code examples first imagine you have a simple database of facts:
 
 ```prolog
 likes(john, pizza).

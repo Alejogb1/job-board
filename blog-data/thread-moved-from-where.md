@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "thread-moved-from-where"
 ---
 
-Okay so thread moved from where right I've seen this a few times usually means a few things and I'm gonna go through all the usual suspects I guess
+ so thread moved from where right I've seen this a few times usually means a few things and I'm gonna go through all the usual suspects I guess
 
 First off let’s talk about the most common situation you stumble on this which is the dreaded forum migration This happens a lot more than you'd think especially with smaller or older platforms They start out small maybe a basic phpBB forum or something but as traffic grows or the platform becomes a maintenance headache they gotta move it
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-apache-airflow-manage-the-execution-of-windows-batch-files"
 ---
 
-Alright, let's tackle this. Getting Airflow to play nicely with Windows batch files is a fairly common scenario, and one I've dealt with extensively, particularly during an old project where our infrastructure straddled both Linux and Windows environments. It's not as straightforward as running simple python scripts, but it's very achievable with the right setup. Essentially, we need to bridge the gap between Airflow's primarily linux-centric design and the windows-specific execution environment of `.bat` files.
+Alright,  Getting Airflow to play nicely with Windows batch files is a fairly common scenario, and one I've dealt with extensively, particularly during an old project where our infrastructure straddled both Linux and Windows environments. It's not as straightforward as running simple python scripts, but it's very achievable with the right setup. Essentially, we need to bridge the gap between Airflow's primarily linux-centric design and the windows-specific execution environment of `.bat` files.
 
 The core challenge here is that Apache Airflow is fundamentally built to interact with shell commands on a *nix system. Direct execution of windows batch files isn't natively supported through the standard operators. Therefore, we need to employ a strategy that effectively "wraps" the execution within a construct that Airflow understands. This typically means leveraging an operator that can execute an arbitrary command line statement, and within that statement, we'll invoke the batch file.
 

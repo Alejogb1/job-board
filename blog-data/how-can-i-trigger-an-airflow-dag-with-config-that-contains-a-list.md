@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-trigger-an-airflow-dag-with-config-that-contains-a-list"
 ---
 
-Okay, let's tackle this one. I've seen this come up more than a few times over the years, especially with the increasing complexity of data pipelines. Configuring Airflow dags using dynamic lists is definitely something you’ll run into when dealing with environments that scale or have varying input requirements. It's not as straightforward as passing a single value, but with a few techniques, it’s quite manageable. The issue is really about how to efficiently pass and interpret that list as part of your dag's configuration parameters.
+, let's tackle this one. I've seen this come up more than a few times over the years, especially with the increasing complexity of data pipelines. Configuring Airflow dags using dynamic lists is definitely something you’ll run into when dealing with environments that scale or have varying input requirements. It's not as straightforward as passing a single value, but with a few techniques, it’s quite manageable. The issue is really about how to efficiently pass and interpret that list as part of your dag's configuration parameters.
 
 Initially, back when I was working on a large-scale ETL system for a financial institution, we faced a very similar challenge. Our processing pipelines needed to adjust their behavior based on a variable set of trading instruments, sometimes daily, other times intraday. That meant passing lists of instrument IDs to Airflow.
 

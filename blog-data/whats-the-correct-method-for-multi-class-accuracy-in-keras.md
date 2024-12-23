@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "whats-the-correct-method-for-multi-class-accuracy-in-keras"
 ---
 
-Alright, let's tackle this. You're dealing with multi-class accuracy in Keras, which, while seemingly straightforward, has nuances that can trip you up if you're not careful. I've personally debugged this scenario more times than I care to remember, often after some perfectly fine-looking code was reporting bizarre accuracy scores. It's not that the framework is faulty; it's more about understanding *what* Keras is calculating, and how that aligns with your specific problem.
+Alright,  You're dealing with multi-class accuracy in Keras, which, while seemingly straightforward, has nuances that can trip you up if you're not careful. I've personally debugged this scenario more times than I care to remember, often after some perfectly fine-looking code was reporting bizarre accuracy scores. It's not that the framework is faulty; it's more about understanding *what* Keras is calculating, and how that aligns with your specific problem.
 
 The core challenge arises from the fact that "accuracy" isn't a singular, universally applicable concept, especially when you move beyond binary classification. In multi-class problems, we need to be precise about what we mean by a "correct" prediction.
 

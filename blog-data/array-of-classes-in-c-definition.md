@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "array-of-classes-in-c-definition"
 ---
 
-Okay so you're asking about arrays of classes in C++ yeah got it been there done that a few times let me spill the tea based on my experiences It's a fairly straightforward concept but it's also a place where a lot of folks stumble initially especially with memory management and initialization so lets break it down
+ so you're asking about arrays of classes in C++ yeah got it been there done that a few times let me spill the tea based on my experiences It's a fairly straightforward concept but it's also a place where a lot of folks stumble initially especially with memory management and initialization so lets break it down
 
 First thing's first when you say "array of classes" you're basically talking about creating a contiguous block of memory where each element is an instance of your class That's it nothing fancy under the hood its just objects stacked one after the other Just like an array of `int` or `float` except now instead of storing those primitive types you’re storing objects
 

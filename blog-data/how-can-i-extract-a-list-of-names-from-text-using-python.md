@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-extract-a-list-of-names-from-text-using-python"
 ---
 
-Okay, let's tackle this. I've certainly had my share of text processing challenges, particularly when needing to reliably extract names from unstructured data. It's not as straightforward as one might initially imagine, but with the right techniques, you can achieve reasonably high accuracy. I remember a project a few years back involving customer feedback analysis, where we had to pull out individual names to categorize sentiment accurately. That experience highlighted the nuances of this problem.
+,  I've certainly had my share of text processing challenges, particularly when needing to reliably extract names from unstructured data. It's not as straightforward as one might initially imagine, but with the right techniques, you can achieve reasonably high accuracy. I remember a project a few years back involving customer feedback analysis, where we had to pull out individual names to categorize sentiment accurately. That experience highlighted the nuances of this problem.
 
 The core challenge lies in the variability of human language. Names can appear in numerous contexts, often alongside other words that look deceptively similar. Simple string matching won't cut it; we need a more intelligent approach. We’ll focus on using Python with natural language processing (NLP) libraries to accomplish this. Specifically, we'll leverage the power of Named Entity Recognition (NER).
 

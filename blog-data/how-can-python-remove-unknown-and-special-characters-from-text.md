@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-python-remove-unknown-and-special-characters-from-text"
 ---
 
-Alright, let's tackle this. I've encountered this specific challenge more times than I care to count, usually when dealing with data scraped from various sources or when integrating systems that weren't exactly designed to play nicely together. The problem of "unknown and special characters" is, at its core, about character encoding and how different systems interpret the same byte sequences. In Python, we have a few effective strategies for handling this, and I’ll walk through the ones that have served me best.
+Alright,  I've encountered this specific challenge more times than I care to count, usually when dealing with data scraped from various sources or when integrating systems that weren't exactly designed to play nicely together. The problem of "unknown and special characters" is, at its core, about character encoding and how different systems interpret the same byte sequences. In Python, we have a few effective strategies for handling this, and I’ll walk through the ones that have served me best.
 
 The first key concept is understanding that “unknown” or “special” is often in the eye of the beholder. Characters considered normal in one encoding (e.g., Latin-1) might be problematic in another (e.g., UTF-8), and vice-versa. Therefore, directly "removing" everything that appears non-standard can lead to data loss if we don't carefully consider the potential encodings. Instead, we usually aim to normalize the text into a commonly understood form, typically UTF-8, and then strip out anything that genuinely doesn't belong or is truly unrepresentable.
 

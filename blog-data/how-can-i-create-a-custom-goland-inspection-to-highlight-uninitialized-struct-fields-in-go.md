@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-create-a-custom-goland-inspection-to-highlight-uninitialized-struct-fields-in-go"
 ---
 
-Let's tackle this. I remember a particularly thorny project a few years back where uninitialized struct fields were silently wreaking havoc, leading to some unpredictable behavior that took far too long to track down. A custom GoLand inspection to highlight these issues early would have been invaluable. So, while it's not built-in, creating one isn’t too complex, but requires a grasp of Go’s abstract syntax tree (AST) and the GoLand plugin API.
+ I remember a particularly thorny project a few years back where uninitialized struct fields were silently wreaking havoc, leading to some unpredictable behavior that took far too long to track down. A custom GoLand inspection to highlight these issues early would have been invaluable. So, while it's not built-in, creating one isn’t too complex, but requires a grasp of Go’s abstract syntax tree (AST) and the GoLand plugin API.
 
 First, let’s clarify what we mean by “uninitialized struct fields.” In Go, if you declare a struct variable without explicitly assigning values to its fields, those fields are initialized with their zero values (e.g., `0` for integers, `""` for strings, `false` for booleans, and `nil` for pointers, slices, maps, functions, and channels). This isn't always a problem, of course. Sometimes, the zero value is perfectly acceptable and even intended. The issue we’re targeting is when a field *should* have a specific, non-zero value but is left to its default, leading to logical errors.
 

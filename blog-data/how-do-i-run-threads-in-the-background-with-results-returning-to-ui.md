@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-run-threads-in-the-background-with-results-returning-to-ui"
 ---
 
-Okay, let’s dive into this. I've tackled this particular challenge countless times over the years, and it’s one that tends to surface across many different types of applications. The core issue, as you've phrased it, is about offloading work onto background threads without creating a tangled mess when it comes to getting those results back to the user interface (ui) thread. This requires a careful approach, as ui frameworks, by their very nature, are typically single-threaded. Direct modifications from any thread that isn't the ui thread tend to cause issues, often resulting in exceptions or, even worse, subtle, hard-to-debug glitches.
+, let’s dive into this. I've tackled this particular challenge countless times over the years, and it’s one that tends to surface across many different types of applications. The core issue, as you've phrased it, is about offloading work onto background threads without creating a tangled mess when it comes to getting those results back to the user interface (ui) thread. This requires a careful approach, as ui frameworks, by their very nature, are typically single-threaded. Direct modifications from any thread that isn't the ui thread tend to cause issues, often resulting in exceptions or, even worse, subtle, hard-to-debug glitches.
 
 My experience stems from working on various projects, including a rather complex data visualization tool which involved heavy processing of large datasets. The need to perform these calculations in the background without freezing the ui was absolutely essential. We quickly discovered that naive approaches, like directly updating ui elements from background threads, were simply not viable.
 

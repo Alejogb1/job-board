@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-one-dag-trigger-another-with-configuration-parameters"
 ---
 
-Alright, let's tackle this. I’ve spent a good chunk of my career navigating the complexities of distributed systems, and triggering one directed acyclic graph (DAG) from another, particularly with parameterized configurations, is a recurring challenge. It’s something I’ve seen implemented in various ways, from clunky, bespoke solutions to more elegant, scalable architectures. So, let me walk you through how I’ve approached this, offering a few concrete examples.
+Alright,  I’ve spent a good chunk of my career navigating the complexities of distributed systems, and triggering one directed acyclic graph (DAG) from another, particularly with parameterized configurations, is a recurring challenge. It’s something I’ve seen implemented in various ways, from clunky, bespoke solutions to more elegant, scalable architectures. So, let me walk you through how I’ve approached this, offering a few concrete examples.
 
 Fundamentally, the challenge boils down to this: you have a primary DAG, perhaps representing a data ingestion pipeline, and its successful completion (or specific steps within it) should initiate a secondary DAG, like a downstream analytics process. Crucially, the secondary DAG often needs to operate with context from the primary DAG – configuration parameters, timestamps, IDs, etc. This isn't just about a simple "go" signal; it's about passing along the information required for the dependent DAG to function correctly.
 

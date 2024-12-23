@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-cant-dockerized-lambda-application-import-the-main-module"
 ---
 
-Okay, let’s tackle this. It’s a common stumbling block when transitioning from local development to a serverless environment like AWS Lambda using Docker, and I’ve definitely seen this trip up a number of teams. The core issue, as you've discovered, revolves around how Python modules are packaged and interpreted within the Docker container and subsequently executed by the Lambda runtime. Let's break it down.
+, let’s tackle this. It’s a common stumbling block when transitioning from local development to a serverless environment like AWS Lambda using Docker, and I’ve definitely seen this trip up a number of teams. The core issue, as you've discovered, revolves around how Python modules are packaged and interpreted within the Docker container and subsequently executed by the Lambda runtime. Let's break it down.
 
 First off, when you’re working locally with Python, running a script directly – often called your 'main' module - the interpreter sets things up so that `__name__` is evaluated as `__main__`. It’s a kind of signal that tells the interpreter this is the entry point of execution. Now, when that same code is packaged up in a docker image and then executed within lambda, that 'main' module is often not treated as the top-level module in the same way. Instead, Lambda uses a specific handler function that you define when configuring the Lambda function. This handler is the entry point, not necessarily the file you consider your main module locally.
 

@@ -4,7 +4,7 @@ date: "2024-12-10"
 id: "what-are-the-specific-issues-with-variable-sensitivity-in-bolt-when-using-claude-models-and-how-can-these-challenges-be-addressed"
 ---
 
-Hey there!  So you're diving into the world of `Bolt` and `Claude` models, right? That's awesome!  I've been poking around with them myself, and variable sensitivity is definitely a beast to wrestle.  Let's unpack this together in a casual, conversational way, okay?
+Hey there!  So you're diving into the world of `Bolt` and `Claude` models, right? That's awesome!  I've been poking around with them myself, and variable sensitivity is definitely a beast to wrestle.  Let's unpack this together in a casual, conversational way, ?
 
 The core problem boils down to this: Claude, like many large language models (LLMs), is incredibly sensitive to the *exact* wording of your variables.  A tiny tweak – a space here, a comma there – and suddenly your Bolt app goes haywire.  It's like trying to teach a very smart but slightly fussy parrot a new trick; one wrong word, and it's squawking gibberish.
 

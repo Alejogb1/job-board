@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "difference-between-parameter-and-localparam"
 ---
 
-Alright let's dive into this parameter vs localparam thing I've seen this trip up a ton of folks especially when they're just getting into hardware description languages like Verilog or SystemVerilog. I've been there trust me had my fair share of head-scratching moments back in the day.
+let's dive into this parameter vs localparam thing I've seen this trip up a ton of folks especially when they're just getting into hardware description languages like Verilog or SystemVerilog. I've been there trust me had my fair share of head-scratching moments back in the day.
 
 So straight up parameters and localparams they're both ways to define constants in your code but they've got some key differences in their scope and how you can modify them. Think of it like this parameter is like a configurable setting on a product it's meant to be tweaked before you actually build something. A localparam on the other hand is like an internal constant that is baked in it’s not really meant to be changed by anyone using your module.
 

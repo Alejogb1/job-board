@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-isnt-modelerrorsfullmessagesforattributename-working-in-rails-7"
 ---
 
-Okay, let's tackle this. It’s funny how certain seemingly straightforward Rails features can sometimes throw us curveballs. This `@model.errors.full_messages_for(:attribute_name)` issue in Rails 7 is one I’ve definitely bumped into before, back in the early days of transitioning one of our older applications to the latest version. The frustrating part is that it *feels* like it should work, especially if you're used to previous Rails iterations, and the documentation, while technically correct, doesn't always spell out the intricacies involved. So let's break it down.
+,  It’s funny how certain seemingly straightforward Rails features can sometimes throw us curveballs. This `@model.errors.full_messages_for(:attribute_name)` issue in Rails 7 is one I’ve definitely bumped into before, back in the early days of transitioning one of our older applications to the latest version. The frustrating part is that it *feels* like it should work, especially if you're used to previous Rails iterations, and the documentation, while technically correct, doesn't always spell out the intricacies involved. So let's break it down.
 
 The root of the problem, in my experience, usually stems from a misunderstanding of how Rails 7, specifically with Action Pack's advancements, handles error messages and their associated structure. The key change isn’t that `full_messages_for` suddenly stopped existing or working completely, but that the *way* it accesses and displays error messages related to specific attributes has become more nuanced. The method itself still exists and functions as defined, but its behavior relative to validations has been refined.
 
@@ -12,7 +12,7 @@ In prior Rails versions, error messages often existed directly on the errors obj
 
 Now, let me share a scenario from a project I was involved with. We had a `User` model, and for whatever reason (custom business rules), we had the validation logic for email uniqueness tied into a custom `validate` method rather than the built-in validations (something I now consider an anti-pattern, but at the time it was a conscious decision). Because of how the custom validation logic interacted with the model, using `@user.errors.full_messages_for(:email)` when the model was *initially* rendered would always return an empty array because the validations hadn’t fired yet. The user had to trigger an `update` action for the custom validation method to fire. This behavior highlighted the need to carefully synchronize when errors are accumulated with when they are accessed.
 
-Okay, let’s illustrate this with a few code snippets.
+, let’s illustrate this with a few code snippets.
 
 **Example 1: A typical scenario that might *not* work**
 

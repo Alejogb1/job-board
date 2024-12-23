@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-should-mmdd-be-interpreted-as-time-information-in-altair-graphs"
 ---
 
-Okay, let’s tackle this. It’s something I’ve seen crop up a fair bit, particularly when dealing with datasets that weren't meticulously formatted for time-series work initially. You've got your data, maybe exported from some legacy system, and the date component is just showing up as `MM_DD`. Altair, as with many visualization libraries, tends to assume you’re dealing with a more comprehensive date format, so interpreting that `MM_DD` directly can be... problematic.
+, let’s tackle this. It’s something I’ve seen crop up a fair bit, particularly when dealing with datasets that weren't meticulously formatted for time-series work initially. You've got your data, maybe exported from some legacy system, and the date component is just showing up as `MM_DD`. Altair, as with many visualization libraries, tends to assume you’re dealing with a more comprehensive date format, so interpreting that `MM_DD` directly can be... problematic.
 
 I recall a rather memorable project a few years back. We were aggregating sales data from various regional distributors, and a significant portion of the data only included month and day. No year. We needed to plot this against other datasets that *did* have year information to show trends over time, which introduced a unique challenge. It became a deep dive into how to handle ambiguous dates in a structured and reliable way. The key here is not to let Altair blindly assume what you intend; instead, you need to guide it, often through data manipulation.
 

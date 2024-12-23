@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-did-the-java-gateway-process-exit-prematurely-when-deploying-a-pyspark-model-to-azure-container-instance"
 ---
 
-Okay, let's tackle this one. I’ve certainly seen my share of peculiar behavior when bridging the worlds of PySpark and cloud deployments. Specifically, the scenario you've described—a prematurely exiting Java gateway process when deploying a PySpark model to Azure Container Instance (ACI)—is a fairly common headache, and usually stems from a handful of culprits. It's not always immediately obvious which is the cause, so a methodical approach is critical.
+, let's tackle this one. I’ve certainly seen my share of peculiar behavior when bridging the worlds of PySpark and cloud deployments. Specifically, the scenario you've described—a prematurely exiting Java gateway process when deploying a PySpark model to Azure Container Instance (ACI)—is a fairly common headache, and usually stems from a handful of culprits. It's not always immediately obvious which is the cause, so a methodical approach is critical.
 
 From my experience, the problem almost always boils down to resource constraints, misconfiguration in Spark setup, or library versioning conflicts. Let's break each of these down systematically, keeping in mind that ACI environments can sometimes be a bit... particular, shall we say.
 

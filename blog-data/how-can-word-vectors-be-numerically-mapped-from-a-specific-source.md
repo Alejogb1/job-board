@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-word-vectors-be-numerically-mapped-from-a-specific-source"
 ---
 
-Okay, let's tackle this. It's a question I've faced numerous times, often in contexts far more nuanced than the simple 'how.' I remember one project back in '16, trying to build a sophisticated customer support bot; we needed to represent customer queries numerically to feed into the model, and the choice of method was crucial. The performance hinge on the numerical mapping of these words. So, let's delve into the core of mapping words to numerical vectors, drawing from that, and other similar experiences.
+,  It's a question I've faced numerous times, often in contexts far more nuanced than the simple 'how.' I remember one project back in '16, trying to build a sophisticated customer support bot; we needed to represent customer queries numerically to feed into the model, and the choice of method was crucial. The performance hinge on the numerical mapping of these words. So, let's delve into the core of mapping words to numerical vectors, drawing from that, and other similar experiences.
 
 The fundamental idea behind word vectors (or word embeddings) is to transform words into high-dimensional numerical representations that capture semantic relationships. The premise is this: words that appear in similar contexts should have similar numerical representations. We're not just assigning arbitrary IDs; we are encoding meaning. A common way to begin is to look at co-occurrence; the 'company' words keep.
 

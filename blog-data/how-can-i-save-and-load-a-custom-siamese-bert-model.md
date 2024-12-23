@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-save-and-load-a-custom-siamese-bert-model"
 ---
 
-Okay, let's tackle this. Saving and loading custom Siamese BERT models – I've been down that road a few times, and it's usually less straightforward than one might hope, especially when you're aiming for something production-ready. It's more than just using a standard `model.save()` and `tf.keras.models.load_model()`. You need to be aware of the nuances of handling custom components, especially when those components rely on the underlying workings of BERT.
+,  Saving and loading custom Siamese BERT models – I've been down that road a few times, and it's usually less straightforward than one might hope, especially when you're aiming for something production-ready. It's more than just using a standard `model.save()` and `tf.keras.models.load_model()`. You need to be aware of the nuances of handling custom components, especially when those components rely on the underlying workings of BERT.
 
 First, understand what we're working with. A Siamese BERT model, in essence, consists of two (or more) identical BERT encoders, often with custom layers stacked on top, and a loss function designed for measuring similarity between embeddings. The challenge comes when we move past basic serialization: the weights of the BERT layers themselves are typically tied to a specific pretrained model configuration and vocab, and your custom layers need to be correctly registered and loaded along with these.
 

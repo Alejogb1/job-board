@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "mathematica-substitute-replacement-expression"
 ---
 
-Okay so you're asking about substitution in Mathematica right Like how to replace parts of an expression with something else using rules or patterns I've been wrestling with this kind of thing since I first laid eyes on the software back in the day and let me tell you it's both incredibly powerful and sometimes frustratingly opaque
+ so you're asking about substitution in Mathematica right Like how to replace parts of an expression with something else using rules or patterns I've been wrestling with this kind of thing since I first laid eyes on the software back in the day and let me tell you it's both incredibly powerful and sometimes frustratingly opaque
 
 I'll lay out the different substitution techniques I've bumped into over the years hopefully it makes things clearer for you and others who stumble on this thread
 

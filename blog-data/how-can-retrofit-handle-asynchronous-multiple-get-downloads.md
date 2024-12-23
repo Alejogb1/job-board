@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-retrofit-handle-asynchronous-multiple-get-downloads"
 ---
 
-Okay, let's tackle this. I remember wrestling with this issue quite intensely back when we were building the backend for ‘Project Chimera,’ our distributed data analysis platform. The initial design involved multiple API calls to fetch data, and we quickly realized relying on synchronous calls was going to be a performance nightmare. Retrofit, as good as it is, doesn't magically handle concurrent network requests—you need to orchestrate that yourself. The key is leveraging its asynchronous capabilities combined with proper thread management.
+,  I remember wrestling with this issue quite intensely back when we were building the backend for ‘Project Chimera,’ our distributed data analysis platform. The initial design involved multiple API calls to fetch data, and we quickly realized relying on synchronous calls was going to be a performance nightmare. Retrofit, as good as it is, doesn't magically handle concurrent network requests—you need to orchestrate that yourself. The key is leveraging its asynchronous capabilities combined with proper thread management.
 
 At its core, Retrofit uses OkHttp under the hood for network operations. When you define an API interface with `@GET` annotations and use `enqueue` on the Call object, you're telling Retrofit to perform the network call off the main thread. This is where the asynchronous part comes in. However, firing off multiple of these calls without careful coordination can lead to resource contention, inefficient thread utilization, and a generally messy outcome.
 

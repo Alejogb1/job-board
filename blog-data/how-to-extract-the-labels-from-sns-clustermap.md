@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "how-to-extract-the-labels-from-sns-clustermap"
 ---
 
-Okay so you're wrestling with `sns.clustermap` and trying to yank out those pesky labels aren't you Been there done that Probably messed it up a few times too before figuring it out Clustermaps look beautiful yeah but they're like black boxes sometimes when you need to get at the internal workings
+ so you're wrestling with `sns.clustermap` and trying to yank out those pesky labels aren't you Been there done that Probably messed it up a few times too before figuring it out Clustermaps look beautiful yeah but they're like black boxes sometimes when you need to get at the internal workings
 
 I've seen people spend hours staring at those things trying to figure this out so dont feel bad Been coding for like 15 years now mostly Python and data science stuff Ive built entire recommender systems from scratch so I have a good handle on this I promise
 

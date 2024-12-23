@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-xcode-storyboard-constraints-affect-image-size"
 ---
 
-Okay, let's unpack how Xcode Storyboard constraints influence image sizes. I’ve spent a good chunk of my career deep in the weeds of iOS development, and I've seen firsthand how seemingly simple things like image sizing can become a real headache if constraints aren’t properly configured. This isn't just a theoretical exercise; I've personally debugged layout issues on tight deadlines where a misplaced constraint caused an entire view hierarchy to collapse in on itself.
+, let's unpack how Xcode Storyboard constraints influence image sizes. I’ve spent a good chunk of my career deep in the weeds of iOS development, and I've seen firsthand how seemingly simple things like image sizing can become a real headache if constraints aren’t properly configured. This isn't just a theoretical exercise; I've personally debugged layout issues on tight deadlines where a misplaced constraint caused an entire view hierarchy to collapse in on itself.
 
 The core principle here is that constraints, at their heart, are the rules that the Auto Layout engine in iOS uses to determine the size and position of each view, including `UIImageView`s. When you add an image to a `UIImageView` within a Storyboard, the image size isn't simply dictated by the image file itself. Instead, its rendering dimensions are determined by the constraints you apply to the `UIImageView`. Let's break it down.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-constructor-dependency-injection-be-tested-using-unity"
 ---
 
-Okay, let's tackle this. I've spent quite a bit of time in the trenches working with Unity, and testing dependency injection, particularly constructor injection, always requires a bit of finesse. I remember one particularly frustrating project where untestable components were causing cascade failures throughout our CI pipeline – a real headache. So, let me walk you through how I typically approach testing constructor dependency injection within Unity, along with some practical code examples and recommendations.
+,  I've spent quite a bit of time in the trenches working with Unity, and testing dependency injection, particularly constructor injection, always requires a bit of finesse. I remember one particularly frustrating project where untestable components were causing cascade failures throughout our CI pipeline – a real headache. So, let me walk you through how I typically approach testing constructor dependency injection within Unity, along with some practical code examples and recommendations.
 
 The fundamental issue here is that constructor injection forces a dependency onto a class when it's created. This is great for decoupling, but less convenient for direct unit testing, since we can't just new-up an object without also satisfying all of its dependency requirements. The goal is to isolate the class under test, focusing solely on its logic and avoiding testing the behavior of its dependencies. This is where mocking and, to some degree, stubbing becomes essential.
 

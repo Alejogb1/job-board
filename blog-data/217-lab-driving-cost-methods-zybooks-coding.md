@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "217-lab-driving-cost-methods-zybooks-coding"
 ---
 
-Okay so you're asking about the Zybooks lab specifically 2.17 driving cost methods probably in a Java context if I had to guess And yeah I've definitely been down that road before This kind of problem comes up a lot in intro CS stuff and it's really about breaking down a task into smaller more manageable functions
+ so you're asking about the Zybooks lab specifically 2.17 driving cost methods probably in a Java context if I had to guess And yeah I've definitely been down that road before This kind of problem comes up a lot in intro CS stuff and it's really about breaking down a task into smaller more manageable functions
 
 Let's get this straight right away We're talking about calculating driving costs based on distance fuel efficiency and fuel price The core issue here isn't rocket science its about organizing your code and making it readable and reusable which is the goal in the long term I remember back in college a similar assignment actually caused a mini-meltdown I spent hours debugging one giant main method that was just a pile of variables and calculations it was a mess and I vowed never to repeat that mistake again the real learning started after that trainwreck
 
@@ -41,7 +41,7 @@ public class DrivingCost {
 }
 ```
 
-Alright that works but Zybooks probably wants you to handle the input stuff on your own in a different manner than what the main method shows above Here is another slightly modified version that uses some inputs with Scanner object from user (or from Zybooks input) just for showing how we can make the user input it for the program:
+that works but Zybooks probably wants you to handle the input stuff on your own in a different manner than what the main method shows above Here is another slightly modified version that uses some inputs with Scanner object from user (or from Zybooks input) just for showing how we can make the user input it for the program:
 
 ```java
 import java.util.Scanner;

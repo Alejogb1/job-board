@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-install-a-new-font-in-altair-and-specify-it-in-alttitleparams"
 ---
 
-Alright, let's tackle this. I recall a project back in 2018, involving a rather complex dashboard visualization system. We needed a very specific typeface for consistency across client reports, and that's when I first delved into the specifics of font handling in Altair. It’s a somewhat nuanced area, but definitely manageable once you understand the underlying mechanics.
+Alright,  I recall a project back in 2018, involving a rather complex dashboard visualization system. We needed a very specific typeface for consistency across client reports, and that's when I first delved into the specifics of font handling in Altair. It’s a somewhat nuanced area, but definitely manageable once you understand the underlying mechanics.
 
 The crux of the issue isn’t actually with Altair itself; it lies more in how browsers and rendering engines handle fonts. Altair leverages Vega-Lite, which, in turn, relies on these browser-level mechanisms. Essentially, Altair doesn’t directly handle font installation; instead, it specifies the desired typeface, expecting it to be accessible by the rendering context. So, to make a custom font available in your Altair visualizations, you need to make it available to the browser that's displaying the chart.
 

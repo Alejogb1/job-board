@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-cuda-libraries-be-installed-in-a-container-without-a-gpu"
 ---
 
-Okay, let's talk about CUDA and containers. It’s a fairly common question, and I've definitely seen my share of headaches trying to sort this out over the years, particularly back when we were first adopting containerization at that old robotics startup.
+, let's talk about CUDA and containers. It’s a fairly common question, and I've definitely seen my share of headaches trying to sort this out over the years, particularly back when we were first adopting containerization at that old robotics startup.
 
 The short answer is, yes, you absolutely *can* install CUDA libraries within a container even if the host machine—the one running your container—lacks a physical GPU. Now, the *why* and *how* of that is where things get interesting. It's less about magically making GPU computation happen where there's none and more about preparing the environment for when a GPU *is* available. Think of it like building a Lego set; you can lay out all the pieces and instructions even if you don't have the final baseplate to build on.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-my-input-tensor-2-dimensional-when-my-convolutional-layer-expects-4-dimensions"
 ---
 
-Okay, let's tackle this. It's a classic stumbling block, and I've seen it more times than I can count – usually late at night, fueled by copious amounts of coffee. The frustration when a convolutional layer throws a fit because of unexpected input dimensions is… palpable. The short version is, you’re likely dealing with a mismatch between how you’re structuring your data and what the convolutional layer expects. Let’s break down why it happens and, more importantly, how to fix it.
+,  It's a classic stumbling block, and I've seen it more times than I can count – usually late at night, fueled by copious amounts of coffee. The frustration when a convolutional layer throws a fit because of unexpected input dimensions is… palpable. The short version is, you’re likely dealing with a mismatch between how you’re structuring your data and what the convolutional layer expects. Let’s break down why it happens and, more importantly, how to fix it.
 
 Convolutional layers, especially in deep learning frameworks like TensorFlow or PyTorch, are designed to operate on data with a specific dimensional structure. Typically, a convolutional layer expects a 4-dimensional tensor. These four dimensions represent: batch size (how many samples you’re processing at once), height (the vertical spatial dimension of your input feature map), width (the horizontal spatial dimension of your input feature map), and channels (the number of features or color channels, like red, green, and blue in an image).
 

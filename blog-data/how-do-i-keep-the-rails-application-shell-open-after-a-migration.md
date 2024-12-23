@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-keep-the-rails-application-shell-open-after-a-migration"
 ---
 
-Okay, let's tackle this one. It’s a scenario I’ve definitely encountered in my time, usually late at night when a particularly gnarly migration needed some post-run inspection. The common frustration, as you likely know, is that after running `rails db:migrate`, the shell just… closes. And then you have to, yet again, fire up `rails console` to poke around. Not ideal, especially when you're trying to debug something complex or verify data transformations directly.
+, let's tackle this one. It’s a scenario I’ve definitely encountered in my time, usually late at night when a particularly gnarly migration needed some post-run inspection. The common frustration, as you likely know, is that after running `rails db:migrate`, the shell just… closes. And then you have to, yet again, fire up `rails console` to poke around. Not ideal, especially when you're trying to debug something complex or verify data transformations directly.
 
 The root of the issue lies in how the `rails db:migrate` task is structured. It’s essentially a rake task that, upon completion, gracefully exits the process. It isn't designed to keep a shell active afterward. There isn't a built-in flag or option directly attached to `rails db:migrate` itself to keep the shell alive. So, we need to get a bit creative. We’re essentially going to leverage the `after` hook provided by rake, and inject some code to start a `rails console` session after the migrations are complete. There are various approaches, each with its pros and cons. I'll detail a method I found reliable through my own projects and a few approaches I’ve seen floating around.
 

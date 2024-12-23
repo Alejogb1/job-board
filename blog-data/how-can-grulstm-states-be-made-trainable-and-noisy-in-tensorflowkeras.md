@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-grulstm-states-be-made-trainable-and-noisy-in-tensorflowkeras"
 ---
 
-Okay, let’s tackle this. I've definitely spent my fair share of time tweaking recurrent networks, and the nuances of making GRU/LSTM states trainable and noisy are something I’ve grappled with directly in several projects – particularly when dealing with time-series data that was... shall we say, less than perfectly clean.
+, let’s tackle this. I've definitely spent my fair share of time tweaking recurrent networks, and the nuances of making GRU/LSTM states trainable and noisy are something I’ve grappled with directly in several projects – particularly when dealing with time-series data that was... shall we say, less than perfectly clean.
 
 The core challenge here stems from the inherent nature of GRU and LSTM units. Their internal states, often called hidden states or cell states, act as a form of memory, capturing information across sequences. By default, in Keras and TensorFlow, these states are typically initialized to zero and are not explicitly treated as trainable parameters. They are updated during backpropagation, but their initial values and ongoing variations are implicitly determined by the recurrent operations, not by direct learning. When we say we want to make them "trainable," we mean we want to introduce parameters that the optimizer can directly adjust. Similarly, "noisy" states imply we want to inject some randomness or disturbance into the state evolution. Let's unpack this with practical examples.
 

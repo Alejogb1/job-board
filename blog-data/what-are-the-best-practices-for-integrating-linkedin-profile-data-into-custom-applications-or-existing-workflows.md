@@ -4,7 +4,7 @@ date: "2024-12-10"
 id: "what-are-the-best-practices-for-integrating-linkedin-profile-data-into-custom-applications-or-existing-workflows"
 ---
 
-Okay so you wanna tap into LinkedIn data for your app or workflow right  That's cool actually  a lot of people are doing this now  It's not super straightforward but definitely doable  The key is understanding LinkedIn's API and respecting their terms of service big time you don't want to get your app banned  first thing is figuring out exactly what data you need  LinkedIn's API is pretty extensive so you don't want to grab everything because that's a waste of resources and might slow things down  Think about it carefully what's essential  
+ so you wanna tap into LinkedIn data for your app or workflow right  That's cool actually  a lot of people are doing this now  It's not super straightforward but definitely doable  The key is understanding LinkedIn's API and respecting their terms of service big time you don't want to get your app banned  first thing is figuring out exactly what data you need  LinkedIn's API is pretty extensive so you don't want to grab everything because that's a waste of resources and might slow things down  Think about it carefully what's essential  
 
 Best practices  yeah  let's talk about those  First off  authentication is key  LinkedIn uses OAuth 20 which is a pretty standard way to handle user authorization so get familiar with that  it basically lets users grant your app access to their data without giving you their password which is way safer for everyone  There's lots of good info on OAuth 20 out there  check out any good book on REST APIs or maybe a paper on secure authentication protocols  I don't have specific titles but searching those terms will get you tons of stuff
 

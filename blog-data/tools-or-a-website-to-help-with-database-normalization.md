@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "tools-or-a-website-to-help-with-database-normalization"
 ---
 
-Okay so you're looking for tools or websites to help with database normalization right Been there done that man Let me tell you it's a pain in the neck if you don't get it right from the get-go I've spent countless nights debugging data inconsistencies because some junior dev thought denormalization was cool
+ so you're looking for tools or websites to help with database normalization right Been there done that man Let me tell you it's a pain in the neck if you don't get it right from the get-go I've spent countless nights debugging data inconsistencies because some junior dev thought denormalization was cool
 
 So here's the deal First off no magic bullet exists no single website or tool will just magically normalize your database for you It's a process a thinking process that you have to understand and apply tools just assist you So don't think you can just throw your schema at a tool and be done with it
 
@@ -79,6 +79,6 @@ This query will display order ids that have more than one item associated to it 
 
 One thing to remember is that normalization is not a binary thing it's a spectrum sometimes you might choose to denormalize for performance reasons or other constraints just know the trade offs and why you are doing it
 
-Also a joke I've heard once Why was the database so bad at poker Because it always had too many tables and no relation with the dealer... hehe get it table relations okay sorry it was terrible
+Also a joke I've heard once Why was the database so bad at poker Because it always had too many tables and no relation with the dealer... hehe get it table relations  sorry it was terrible
 
 Bottom line don't rely solely on tools or websites think about the problem you are trying to solve and apply the normalization principles to your database design Good luck

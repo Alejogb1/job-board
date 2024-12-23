@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "nextflow-i-o-and-index-issues"
 ---
 
-Okay I've seen this rodeo before nextflow io and indexing right Yeah that's a classic headache that hits hard Especially when you're wrestling with massive datasets and complex workflows
+ I've seen this rodeo before nextflow io and indexing right Yeah that's a classic headache that hits hard Especially when you're wrestling with massive datasets and complex workflows
 
 Let's break it down from a fellow sufferer I've been through this more times than I care to admit
 

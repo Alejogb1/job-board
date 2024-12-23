@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-use-partial-to-freeze-forward-arguments-for-onnx-export"
 ---
 
-Okay, let’s tackle this. I recall a particularly complex project a few years back involving real-time audio processing for a niche hardware accelerator; we heavily leaned on onnx for portability. We quickly ran into the challenge of needing to “freeze” specific forward arguments during onnx export. Basically, we needed to create a static graph where some inputs were essentially constants for the deployed model. This isn't something onnx readily provides, which often necessitates a workaround.
+, let’s tackle this. I recall a particularly complex project a few years back involving real-time audio processing for a niche hardware accelerator; we heavily leaned on onnx for portability. We quickly ran into the challenge of needing to “freeze” specific forward arguments during onnx export. Basically, we needed to create a static graph where some inputs were essentially constants for the deployed model. This isn't something onnx readily provides, which often necessitates a workaround.
 
 The core of the problem lies in the nature of onnx itself. Onnx models define a computational graph with inputs, outputs, and nodes representing operations. During inference, these inputs are usually provided dynamically. However, in some situations, you might want certain inputs to have fixed values—think of model configuration parameters that don’t change across inference executions. The `partial` function from python’s `functools` library can be a vital tool for achieving this when preparing a model for onnx export. It lets you fix some arguments of a function, returning a new callable.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-are-the-unique-values-in-this-dataset"
 ---
 
-Okay, let’s tackle this. I remember a particularly tricky project back in my data warehousing days at a fintech firm. We were dealing with massive transactional datasets, and identifying unique values efficiently became paramount for data quality checks and downstream analytics. The seemingly simple question, “what are the unique values?” hides some interesting computational challenges, especially when dealing with scale. I’ve learned a few things over the years, so let’s get into it.
+, let’s tackle this. I remember a particularly tricky project back in my data warehousing days at a fintech firm. We were dealing with massive transactional datasets, and identifying unique values efficiently became paramount for data quality checks and downstream analytics. The seemingly simple question, “what are the unique values?” hides some interesting computational challenges, especially when dealing with scale. I’ve learned a few things over the years, so let’s get into it.
 
 Fundamentally, identifying unique values in a dataset means determining all the distinct entries within a given column (or set of columns). This sounds trivial, but the implementation can vary significantly based on data volume, data types, and the specific constraints of your environment. Let's be clear, we're not just looking for duplicates; we are aiming to establish a set of all the individual, non-repeating values present. In smaller datasets, you can often get away with brute force comparisons, but that's unsustainable as your data grows. We need to consider efficiency and scalability as primary concerns.
 

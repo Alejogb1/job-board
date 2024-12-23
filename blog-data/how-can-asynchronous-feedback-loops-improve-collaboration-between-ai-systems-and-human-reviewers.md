@@ -4,7 +4,7 @@ date: "2024-12-07"
 id: "how-can-asynchronous-feedback-loops-improve-collaboration-between-ai-systems-and-human-reviewers"
 ---
 
-Okay so you wanna talk about AI and humans working together better right  using this whole asynchronous thing  It's cool because it lets them do their stuff separately at their own pace then combine later like a really well-oiled machine except the machines are humans and AIs  It's all about avoiding bottlenecks you know  Imagine a team building a house  If everyone has to wait for the plumber before they can start painting it's gonna take forever Asynchronous lets the plumber do plumbing while painters paint  
+ so you wanna talk about AI and humans working together better right  using this whole asynchronous thing  It's cool because it lets them do their stuff separately at their own pace then combine later like a really well-oiled machine except the machines are humans and AIs  It's all about avoiding bottlenecks you know  Imagine a team building a house  If everyone has to wait for the plumber before they can start painting it's gonna take forever Asynchronous lets the plumber do plumbing while painters paint  
 
 With AI and humans it's the same deal  The AI can crunch data do its analysis all that  while the human expert is doing whatever humans do best like checking for biases or adding that intangible human touch or just plain old common sense which AIs are still working on  You don't want the human stuck waiting for the AI to finish everything before they can even look at it and vice-versa
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-implement-a-custom-minmax-pooling"
 ---
 
-Okay, let’s tackle custom min-max pooling. It's a frequent requirement when you move beyond standard neural network architectures or need to finely control data flow in specialized applications. I remember facing this exact challenge a few years back while working on a project involving highly granular time-series analysis; standard max pooling was simply too aggressive, losing important low-frequency details. Min pooling, on its own, wasn't sufficient either, hence the need for a custom hybrid. The good news is that it's not nearly as daunting as it might initially appear.
+, let’s tackle custom min-max pooling. It's a frequent requirement when you move beyond standard neural network architectures or need to finely control data flow in specialized applications. I remember facing this exact challenge a few years back while working on a project involving highly granular time-series analysis; standard max pooling was simply too aggressive, losing important low-frequency details. Min pooling, on its own, wasn't sufficient either, hence the need for a custom hybrid. The good news is that it's not nearly as daunting as it might initially appear.
 
 Essentially, min-max pooling isn’t a built-in operation in most common deep learning libraries, which means we have to craft our own implementation. The crux of it lies in combining two fundamental operations: *minimum* extraction within a local region and *maximum* extraction, also within a similar local region. The specific behavior, though, is really in our hands - we get to define the neighborhood size, stride, and even the pooling mechanism itself, offering greater flexibility than you’d get with standard max or average pooling.
 

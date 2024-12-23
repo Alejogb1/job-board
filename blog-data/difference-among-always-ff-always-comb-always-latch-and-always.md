@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "difference-among-always-ff-always-comb-always-latch-and-always"
 ---
 
-Okay so you're asking about Verilog's always blocks right Yeah I've been there done that burned my fingers more than a few times let me tell you This is one of those things that looks simple on the surface but can bite you hard if you're not careful Especially when you're dealing with timing and synthesis results ugh
+ so you're asking about Verilog's always blocks right Yeah I've been there done that burned my fingers more than a few times let me tell you This is one of those things that looks simple on the surface but can bite you hard if you're not careful Especially when you're dealing with timing and synthesis results ugh
 
 First thing first forget any notion of always being just "always" in a regular software sense It's not a loop that just runs continuously Instead it’s about how the hardware simulator interprets your logic and how it translates to physical circuits
 
@@ -68,7 +68,7 @@ Here the output `out` changes immediately whenever either `a` `b` or `sel` chang
 
 **`always @(some_signal or some_other_signal)` with level sensitivity is always latch**
 
-Okay now we are getting into trickier territory The always latch or level sensitive always block This one is easy to misunderstand if you aren't careful You usually have a explicit sensitivity list as well and it can be triggered by level changes in the signal instead of edges like in flip flops
+ now we are getting into trickier territory The always latch or level sensitive always block This one is easy to misunderstand if you aren't careful You usually have a explicit sensitivity list as well and it can be triggered by level changes in the signal instead of edges like in flip flops
 
 These are used for things like generating a clock gate where a change in level is used as control signal or latches for memory controllers but mostly used to create latches (a type of memory storage element similar to flip-flop). The level sensitivity means the code executes as long as the input signal is active (like a enable signal) and in most cases this is what defines a latch. Remember these latches are often inferred by mistake and in most cases this is considered bad design style
 

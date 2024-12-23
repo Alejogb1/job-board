@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-my-keras-model-producing-inaccurate-predictions"
 ---
 
-Let's tackle this. It's a classic head-scratcher when a Keras model, built with seemingly sound architecture, starts spitting out predictions that seem… well, wrong. I’ve been down this road more times than I care to count, often tracing the issue back to a deceptively simple root cause. Instead of a complex algorithm flaw, it’s usually a problem that's masked by the abstraction layer of high-level APIs.
+ It's a classic head-scratcher when a Keras model, built with seemingly sound architecture, starts spitting out predictions that seem… well, wrong. I’ve been down this road more times than I care to count, often tracing the issue back to a deceptively simple root cause. Instead of a complex algorithm flaw, it’s usually a problem that's masked by the abstraction layer of high-level APIs.
 
 So, why are you seeing these inaccurate predictions? The culprits typically fall into a few distinct categories, and it's rarely just one thing.
 

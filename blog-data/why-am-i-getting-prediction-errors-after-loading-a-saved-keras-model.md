@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-am-i-getting-prediction-errors-after-loading-a-saved-keras-model"
 ---
 
-Okay, let’s dive into this. I’ve seen this particular headache crop up more times than I care to recall, and it’s rarely a straightforward issue. So, you've got a saved Keras model—presumably, a .h5 file or a SavedModel directory—and the predictions it’s generating after being reloaded are deviating from what you expected, maybe even outright incorrect. The first thing we need to understand is that there isn’t a single, universal cause. It's a combination of factors and often requires methodical investigation. Let me walk you through the usual suspects, drawing from past projects where I've faced the same challenges.
+, let’s dive into this. I’ve seen this particular headache crop up more times than I care to recall, and it’s rarely a straightforward issue. So, you've got a saved Keras model—presumably, a .h5 file or a SavedModel directory—and the predictions it’s generating after being reloaded are deviating from what you expected, maybe even outright incorrect. The first thing we need to understand is that there isn’t a single, universal cause. It's a combination of factors and often requires methodical investigation. Let me walk you through the usual suspects, drawing from past projects where I've faced the same challenges.
 
 The primary reason prediction discrepancies surface after model loading boils down to **inconsistencies between the state of your environment at the time of training and at the time of prediction**. This broad category encompasses several specific causes.
 

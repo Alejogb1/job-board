@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-lstms-be-used-to-forecast-non-stationary-time-series"
 ---
 
-Alright, let's tackle this. I've spent a fair bit of time wrestling with non-stationary time series, particularly when trying to squeeze out accurate predictions from systems that just refuse to behave nicely. It’s a common hurdle, and long short-term memory networks (LSTMs) can be incredibly powerful tools, but they're not a silver bullet. It's crucial to understand their strengths, weaknesses, and, most importantly, how to properly prepare your data to make them effective.
+Alright,  I've spent a fair bit of time wrestling with non-stationary time series, particularly when trying to squeeze out accurate predictions from systems that just refuse to behave nicely. It’s a common hurdle, and long short-term memory networks (LSTMs) can be incredibly powerful tools, but they're not a silver bullet. It's crucial to understand their strengths, weaknesses, and, most importantly, how to properly prepare your data to make them effective.
 
 Firstly, the core challenge with non-stationary time series is that their statistical properties change over time. Think of, say, stock market prices: their mean, variance, and autocorrelation patterns shift constantly. LSTMs, by nature, are designed to capture temporal dependencies. They have internal memory cells that can retain information over long sequences, making them a great candidate for handling complex temporal dynamics. However, if the underlying distribution of your data shifts dramatically, an LSTM trained on one portion of the series may perform poorly on a different period.
 

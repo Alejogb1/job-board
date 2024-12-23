@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-isnt-my-inception-v3-model-improving-validation-performance"
 ---
 
-Okay, let's unpack this. I’ve seen this scenario play out more times than I’d like to recall, and it’s usually a multi-faceted issue. The fact that your Inception-V3 model isn't showing improvement on the validation set suggests a breakdown somewhere in the training pipeline rather than an inherent flaw in the architecture itself. I'm going to avoid platitudes and focus on the specifics you'd likely be encountering. Let's break down common culprits.
+, let's unpack this. I’ve seen this scenario play out more times than I’d like to recall, and it’s usually a multi-faceted issue. The fact that your Inception-V3 model isn't showing improvement on the validation set suggests a breakdown somewhere in the training pipeline rather than an inherent flaw in the architecture itself. I'm going to avoid platitudes and focus on the specifics you'd likely be encountering. Let's break down common culprits.
 
 Firstly, and this is where most people trip up, is the issue of data leakage and inadequate data preprocessing. If your training and validation datasets aren't truly independent, your model is essentially memorizing the training set, and its perceived validation performance is a facade. I recall a project a few years back where we were classifying medical images. We mistakenly included a single patient's images in both the training and validation sets, leading to suspiciously high validation accuracy that completely collapsed when we tested it on genuinely unseen data. It's a classic example, but serves as a stern reminder.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-does-ruby-on-rails-turbo-handle-current-user-access"
 ---
 
-Okay, let's dive into how Ruby on Rails Turbo manages current user access. It’s a topic I’ve spent a fair amount of time with, having had to optimize a rather large application where session management and concurrent updates were causing some… let’s just say ‘interesting’ challenges. I’ve seen firsthand how a lack of understanding in this area can lead to frustrating user experiences and difficult-to-diagnose bugs.
+, let's dive into how Ruby on Rails Turbo manages current user access. It’s a topic I’ve spent a fair amount of time with, having had to optimize a rather large application where session management and concurrent updates were causing some… let’s just say ‘interesting’ challenges. I’ve seen firsthand how a lack of understanding in this area can lead to frustrating user experiences and difficult-to-diagnose bugs.
 
 The core of Turbo’s approach to current user access doesn’t involve directly managing authentication or authorization; instead, it relies heavily on the existing Rails session and its interaction with server-side rendered HTML fragments and WebSocket-based updates. Essentially, it leverages the familiar foundation of how a standard Rails app handles sessions but with some clever mechanisms for real-time behavior.
 

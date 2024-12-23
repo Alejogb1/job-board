@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-does-ml5s-model-loader-complain-about-a-missing-modeltopology"
 ---
 
-Alright, let's tackle this. I recall battling this particular issue a few years back when I was experimenting with a custom pose estimation model trained using TensorFlow, and later wanted to load it using ml5.js. The error, a rather persistent one, stating that `modelTopology` is missing, is actually a symptom of a mismatch in expected model formats. Let me break down why this happens and how to handle it.
+Alright,  I recall battling this particular issue a few years back when I was experimenting with a custom pose estimation model trained using TensorFlow, and later wanted to load it using ml5.js. The error, a rather persistent one, stating that `modelTopology` is missing, is actually a symptom of a mismatch in expected model formats. Let me break down why this happens and how to handle it.
 
 The root cause isn’t some mysterious internal ml5.js bug, but rather, it stems from the way TensorFlow (or similar frameworks) structure model artifacts and the expectation ml5.js has about those structures. Essentially, ml5.js, specifically when loading a TensorFlow.js model, anticipates a specific organization of files within the model directory. It expects, at a minimum, a `model.json` file (which contains the model topology) along with weight files (`.bin` or similar format). The critical piece here is the `model.json` – if it's absent or malformed, you’ll see this error.
 

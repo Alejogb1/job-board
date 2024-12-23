@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-create-a-light-weight-docker-image-using-a-redhat-based-base-image"
 ---
 
-Okay, let’s tackle this. I’ve spent a considerable amount of time optimizing container images, particularly those derived from red hat distributions, and let me tell you, it’s a topic where a bit of strategic thought really pays off. The goal, of course, is a small, secure, and performant image, and the journey to that ideal can be more involved than one might initially expect. I'm going to walk you through it based on experience, not theory, focusing on techniques that have consistently delivered results for me.
+, let’s tackle this. I’ve spent a considerable amount of time optimizing container images, particularly those derived from red hat distributions, and let me tell you, it’s a topic where a bit of strategic thought really pays off. The goal, of course, is a small, secure, and performant image, and the journey to that ideal can be more involved than one might initially expect. I'm going to walk you through it based on experience, not theory, focusing on techniques that have consistently delivered results for me.
 
 The common pitfalls we encounter when building from a red hat base are usually around unnecessary bloat – think bundled utilities, development tools, and accumulated package caches. These add significant overhead to the image size, and hence, increase distribution time and resource usage. My early projects had images easily clocking in at multi-gigabyte sizes, a painful learning curve, and it really emphasized the necessity for a disciplined approach to layer creation.
 

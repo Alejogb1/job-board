@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-can-i-access-dagrunconf-values-and-pass-to-sshoperator"
 ---
 
-Okay, let's tackle this. I’ve definitely been down this road before, more than once, and it’s a common hurdle when you start building more dynamic airflow workflows. Getting those `dag_run.conf` values into an `SSHOperator`—or really, any operator that needs dynamic configuration—requires a bit of thought about templating and Airflow’s execution context.
+,  I’ve definitely been down this road before, more than once, and it’s a common hurdle when you start building more dynamic airflow workflows. Getting those `dag_run.conf` values into an `SSHOperator`—or really, any operator that needs dynamic configuration—requires a bit of thought about templating and Airflow’s execution context.
 
 The challenge, at its core, is that `dag_run.conf` isn't automatically available as simple variables within your tasks. It’s a dictionary, and you need to specifically extract and then pass its contents. The key thing here is utilizing Jinja templating, which Airflow natively supports. The `context` object, automatically available in Airflow templates, holds all sorts of useful information, including the `dag_run`. Let me explain with some specifics and some code examples based on patterns I've seen and used successfully.
 

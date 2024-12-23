@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-use-similarity-functions-on-words-outside-of-the-vocabulary"
 ---
 
-Okay, let's tackle this one. It's a situation I’ve definitely encountered more than a few times, especially back when I was working on that large-scale text analysis project for the legal firm, where we had a particularly messy dataset riddled with typos and neologisms. Dealing with out-of-vocabulary (OOV) words when using similarity functions is, shall we say, a non-trivial task, but it’s absolutely manageable with a structured approach.
+, let's tackle this one. It's a situation I’ve definitely encountered more than a few times, especially back when I was working on that large-scale text analysis project for the legal firm, where we had a particularly messy dataset riddled with typos and neologisms. Dealing with out-of-vocabulary (OOV) words when using similarity functions is, shall we say, a non-trivial task, but it’s absolutely manageable with a structured approach.
 
 Essentially, the problem is this: similarity functions, be it cosine similarity on word vectors or edit distance, are designed to work with known vocabulary. When a word pops up that’s not in our model's dictionary, those standard calculations simply fall flat. We're essentially asking the model to understand something it hasn't been trained to understand directly. This leads to either completely missing the similarities or generating incorrect and misleading results. But fear not, there are ways around this, and some are more effective than others depending on the context.
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "warning-message-glmfit-fitted-probabilities-occurred-r"
 ---
 
-Alright so you got that glm fit fitted probabilities warning in R right Been there done that got the t-shirt And by t-shirt I mean I spent a solid week debugging a logistic regression model once so yeah familiar territory
+so you got that glm fit fitted probabilities warning in R right Been there done that got the t-shirt And by t-shirt I mean I spent a solid week debugging a logistic regression model once so yeah familiar territory
 
 This warning pops up when the `glm` function during fitting using the iterative weighted least squares algorithm hits some edge cases basically it means the predicted probabilities are either 0 or 1 or extremely close to them And yeah that causes some numerical instability and the fitting process can act a bit wonky
 
@@ -16,7 +16,7 @@ Second one **Small Sample Sizes** Especially when you've got a good number of pr
 
 And then we have **Multicollinearity** when you have predictors that are correlated with each other It inflates the variance of the estimated coefficients and the coefficients will flip-flop all over the place and eventually you have the predicted probabilities trying to reach those endpoints
 
-Okay so what do you do about it Well here are the tried and tested methods I have been through and are more effective that you think Trust me I have seen some things with this warning and this things work always if not you might have a bigger problem
+ so what do you do about it Well here are the tried and tested methods I have been through and are more effective that you think Trust me I have seen some things with this warning and this things work always if not you might have a bigger problem
 
 Here are some code snippets to give you ideas and for you to play with
 
@@ -55,7 +55,7 @@ probabilities_ridge <- predict(best_ridge, newx = x, type = "response")
 ```
 The first snippet shows how to implement ridge regression using the glmnet package in R Ridge regression adds a penalty to large coefficients preventing them from exploding and therefore reducing the chances of extreme probability predictions This is my go-to when I suspect complete separation or small sample sizes are the issue
 
-Okay lets go on
+ lets go on
 
 ```R
 # Example 2 Addressing Multicollinearity

@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-create-a-shap-summaryplot-for-selected-features"
 ---
 
-Alright, let's tackle this. I recall a particularly challenging project back in my days at the data science division of a fintech firm. We were building a complex credit risk model, and accurately communicating feature importance to stakeholders was paramount. Simply presenting aggregate importance scores wouldn't cut it; we needed to delve into how each feature influenced predictions across different value ranges. This is where the need for selective shap summary plots became crucial, beyond the all-encompassing view.
+Alright,  I recall a particularly challenging project back in my days at the data science division of a fintech firm. We were building a complex credit risk model, and accurately communicating feature importance to stakeholders was paramount. Simply presenting aggregate importance scores wouldn't cut it; we needed to delve into how each feature influenced predictions across different value ranges. This is where the need for selective shap summary plots became crucial, beyond the all-encompassing view.
 
 When working with shap (SHapley Additive exPlanations) values, the `summary_plot` function from the `shap` library provides an incredibly powerful visual tool for understanding model behavior. However, the standard output often displays the impact of all features, which can sometimes be overwhelming or, frankly, irrelevant when we are focusing on specific aspects of our model. Creating summary plots for *selected* features, therefore, allows for greater precision in analysis and communication. This isn't a capability directly provided as a named parameter, but we can achieve it via clever manipulation of the `shap_values` array before plotting.
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "posix-socket-api-usage"
 ---
 
-Alright so you're asking about the POSIX socket API usage right Been there done that got the t-shirt and probably a few lingering network errors to prove it I've spent way too many late nights wrestling with those damn things believe me
+so you're asking about the POSIX socket API usage right Been there done that got the t-shirt and probably a few lingering network errors to prove it I've spent way too many late nights wrestling with those damn things believe me
 
 Let me break it down from a real trenches perspective I mean we're talking about the bedrock of network communication here sockets man sockets
 
@@ -165,6 +165,6 @@ My biggest nightmare was debugging a complex network application where some pack
 
 In terms of resources for learning I'd recommend "UNIX Network Programming Volume 1 The Sockets Networking API" by W Richard Stevens that is a bible for socket programming also explore the man pages of functions that can be called directly from the shell like: `man socket` `man bind` `man connect` etc they provide all the details needed
 
-Oh and quick joke why did the network engineer break up with the computer because he said she was not compatible with his IP address alright back to work
+Oh and quick joke why did the network engineer break up with the computer because he said she was not compatible with his IP address back to work
 
 This is the gist of it It's a lot to digest initially but with time and practice it'll become second nature Network programming with sockets is a fascinating and powerful skill to have It's a very good skill in your tech toolbox And again check man pages and learn from them they are gold when you are dealing with systems programming and don't forget gdb it is your best friend when debugging

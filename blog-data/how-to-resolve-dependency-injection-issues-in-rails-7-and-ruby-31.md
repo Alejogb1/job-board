@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-resolve-dependency-injection-issues-in-rails-7-and-ruby-31"
 ---
 
-Okay, let's tackle this. I've been through the trenches with dependency injection in Rails, particularly as it evolved through different versions, so I can definitely shed some light on the nuances in Rails 7 and Ruby 3.1. It's not always straightforward, especially when you're moving away from the more implicit mechanisms often relied on in older Rails applications.
+,  I've been through the trenches with dependency injection in Rails, particularly as it evolved through different versions, so I can definitely shed some light on the nuances in Rails 7 and Ruby 3.1. It's not always straightforward, especially when you're moving away from the more implicit mechanisms often relied on in older Rails applications.
 
 Frankly, the shift toward explicit dependency injection is a healthy one, leading to more testable and maintainable code. However, it does require a deliberate change in how you structure your applications. One of the common pitfalls is clinging to global state or implicit dependencies. We've all been there, inheriting a codebase where seemingly magical things just "happen." The trouble is, it makes debugging and refactoring a nightmare. So, let's see how to fix it.
 

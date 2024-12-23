@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-prepare-my-data-for-optimal-rnn-input"
 ---
 
-Okay, let’s talk about feeding recurrent neural networks (RNNs). It’s not as straightforward as simply tossing raw data at them. I remember back in '17, dealing with a particularly nasty dataset of time series sensor data – the kind that’d make your average model weep. That experience really hammered home the importance of careful data preparation for RNNs. Getting that input *just right* can be the difference between a useful prediction and utter gibberish.
+, let’s talk about feeding recurrent neural networks (RNNs). It’s not as straightforward as simply tossing raw data at them. I remember back in '17, dealing with a particularly nasty dataset of time series sensor data – the kind that’d make your average model weep. That experience really hammered home the importance of careful data preparation for RNNs. Getting that input *just right* can be the difference between a useful prediction and utter gibberish.
 
 Essentially, optimizing data for RNN input involves a few key processes, each targeting a specific need of the model. We're aiming for a representation that's not only informative but also structured in a way that the RNN can efficiently process. Think of it as crafting the perfect fuel for a finely tuned engine. The main processes i usually focus on are sequence construction, normalization, and handling categorical features. Let's break each of these down with code examples to illustrate.
 

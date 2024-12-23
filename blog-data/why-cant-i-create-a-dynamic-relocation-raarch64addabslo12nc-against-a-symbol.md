@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-cant-i-create-a-dynamic-relocation-raarch64addabslo12nc-against-a-symbol"
 ---
 
-Okay, let's delve into this. It's a situation I've personally bumped into a few times, specifically when we were optimizing some bootloaders a while back. The issue with creating a dynamic relocation of type `r_aarch64_add_abs_lo12_nc` against a symbol isn't some arbitrary quirk; it's deeply rooted in how relocations and addressing modes work on aarch64, and specifically in the limitations of this particular relocation type.
+, let's delve into this. It's a situation I've personally bumped into a few times, specifically when we were optimizing some bootloaders a while back. The issue with creating a dynamic relocation of type `r_aarch64_add_abs_lo12_nc` against a symbol isn't some arbitrary quirk; it's deeply rooted in how relocations and addressing modes work on aarch64, and specifically in the limitations of this particular relocation type.
 
 The `r_aarch64_add_abs_lo12_nc` relocation, as its name somewhat implies, operates on the lower 12 bits of an absolute address. It's designed for situations where the instruction itself already contains some address information, and this relocation is meant to *add* a small offset—a 12-bit value—to it. Crucially, it's *not* designed to resolve a full address directly from a symbol. This is where the core problem lies. Symbols, in the context of linking and relocation, represent addresses that are often not known until the final linking stage. They could be located anywhere in memory.
 

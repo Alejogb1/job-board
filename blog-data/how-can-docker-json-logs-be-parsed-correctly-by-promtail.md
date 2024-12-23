@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-docker-json-logs-be-parsed-correctly-by-promtail"
 ---
 
-Okay, let's tackle this. I’ve spent a good chunk of my career working with containerized environments, and parsing docker logs for monitoring has definitely presented its share of interesting challenges. The key to correctly parsing docker json logs with promtail hinges on understanding both how docker outputs those logs and how promtail's configuration can be tailored to consume that structure. It's not just about slapping a configuration together; it’s about crafting it with an understanding of the underlying data model.
+,  I’ve spent a good chunk of my career working with containerized environments, and parsing docker logs for monitoring has definitely presented its share of interesting challenges. The key to correctly parsing docker json logs with promtail hinges on understanding both how docker outputs those logs and how promtail's configuration can be tailored to consume that structure. It's not just about slapping a configuration together; it’s about crafting it with an understanding of the underlying data model.
 
 From my experience, the common pitfall is assuming the json payload docker generates is uniform across all applications. It's not. Docker's json log output typically wraps the actual log message in a structured payload that includes metadata like the `time`, `log`, and sometimes a `stream` identifier (stdout or stderr). Promtail, by default, expects simpler line-based log formats. Therefore, we need to explicitly tell promtail how to unravel this json structure and extract the useful log message.
 

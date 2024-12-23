@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-use-the-tflite-library-with-mediapipe-in-ios-objective-c"
 ---
 
-Alright, let's tackle this. I've certainly been down the rabbit hole of integrating tflite with mediapipe in iOS using Objective-C; it’s not always the smoothest of rides, but it’s definitely achievable with the correct approach. From my past experience working on a real-time object recognition project that used camera feed input, I remember we had to carefully manage the data flow between the two libraries for optimal performance.
+Alright,  I've certainly been down the rabbit hole of integrating tflite with mediapipe in iOS using Objective-C; it’s not always the smoothest of rides, but it’s definitely achievable with the correct approach. From my past experience working on a real-time object recognition project that used camera feed input, I remember we had to carefully manage the data flow between the two libraries for optimal performance.
 
 The core challenge lies in the fact that mediapipe handles the image processing pipelines, typically providing image buffers, while tflite expects a specific tensor format as input. Therefore, our focus is primarily on bridging the gap between these different data representations. In essence, we'll leverage mediapipe to capture and preprocess our image data, and then we’ll convert that into a suitable tensor format for consumption by tflite. It's about meticulous data handling and format conversions.
 

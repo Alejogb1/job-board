@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-apply-scale-changes-to-the-radon-transform-in-python"
 ---
 
-Alright, let's tackle this. Scaling the radon transform—it’s a common need that pops up more often than you might think, especially when working with images of varying resolutions or when you need to analyze structures at different granularities. I've seen this come up frequently, particularly when I was involved in a project dealing with medical imaging a few years back. We were tasked with extracting features from CT scans, and manipulating the scale of the radon transform was crucial for identifying patterns at different structural levels.
+Alright,  Scaling the radon transform—it’s a common need that pops up more often than you might think, especially when working with images of varying resolutions or when you need to analyze structures at different granularities. I've seen this come up frequently, particularly when I was involved in a project dealing with medical imaging a few years back. We were tasked with extracting features from CT scans, and manipulating the scale of the radon transform was crucial for identifying patterns at different structural levels.
 
 Essentially, what you're looking to do is modify the input space to the radon transform before the projections are computed. The core idea is to preprocess your image to fit the scale you are targeting. There isn’t a single built-in parameter within most standard radon transform implementations (like in `scikit-image`) that directly handles scaling within the transform itself. The scaling needs to be done pre-transformation.
 

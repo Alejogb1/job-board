@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "does-the-order-of-timesteps-affect-rnn-input-in-keras"
 ---
 
-Alright, let's tackle this. I've seen this particular point trip up a fair few folks, particularly when they're first dipping their toes into the recurrent neural network waters. So, does the order of timesteps matter in how Keras handles input to recurrent layers? Absolutely. It's not just a minor detail; it's fundamental to how RNNs and, subsequently, Keras's implementation, function. Let me break it down, drawing from some experiences I've had in the past building various sequence-based models.
+Alright,  I've seen this particular point trip up a fair few folks, particularly when they're first dipping their toes into the recurrent neural network waters. So, does the order of timesteps matter in how Keras handles input to recurrent layers? Absolutely. It's not just a minor detail; it's fundamental to how RNNs and, subsequently, Keras's implementation, function. Let me break it down, drawing from some experiences I've had in the past building various sequence-based models.
 
 Essentially, RNNs are designed to process sequences of data, and this 'sequence' nature isn’t simply a list of numbers; the *order* carries significant information. Unlike feedforward networks that treat inputs as independent entities, RNNs maintain an internal state that's updated at each timestep. This state depends on both the current input and the state from the *previous* timestep. Therefore, the order in which the timesteps are presented profoundly influences the final hidden state, which is then typically used for prediction or further processing.
 

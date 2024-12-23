@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-generate-and-display-a-valid-confusion-matrix-for-evaluation"
 ---
 
-Let's tackle this. I've certainly spent my fair share of time wrestling with the nuances of model evaluation, and confusion matrices are a cornerstone in that process. It's more than just visualizing numbers; it’s about understanding the types of errors your model is making, which, in turn, guides improvements. So, let’s break down how to generate and display a valid confusion matrix, covering the core concepts and then diving into some practical examples.
+ I've certainly spent my fair share of time wrestling with the nuances of model evaluation, and confusion matrices are a cornerstone in that process. It's more than just visualizing numbers; it’s about understanding the types of errors your model is making, which, in turn, guides improvements. So, let’s break down how to generate and display a valid confusion matrix, covering the core concepts and then diving into some practical examples.
 
 First and foremost, a confusion matrix, at its heart, is a tabular representation that visualizes the performance of a classification model. It compares the actual class labels against those predicted by the model. The rows typically represent actual values, while columns represent predicted values (or vice versa, depending on convention, but I usually stick to actuals as rows). The cells then contain counts representing the occurrences of various prediction outcomes.
 

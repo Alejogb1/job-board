@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-address-rubocops-metricsabcsize-complaints"
 ---
 
-Okay, let's tackle the `Metrics/AbcSize` complaints. I've seen this one pop up countless times, especially in legacy codebases where methods tend to grow organically over time. It's not about being arbitrarily strict; rather, this cop highlights methods that are potentially doing too much, making them harder to understand, test, and maintain. My experience shows that addressing these alerts properly leads to more resilient and manageable code.
+, let's tackle the `Metrics/AbcSize` complaints. I've seen this one pop up countless times, especially in legacy codebases where methods tend to grow organically over time. It's not about being arbitrarily strict; rather, this cop highlights methods that are potentially doing too much, making them harder to understand, test, and maintain. My experience shows that addressing these alerts properly leads to more resilient and manageable code.
 
 The `Metrics/AbcSize` cop essentially calculates a score based on the method's *assignments*, *branches*, and *conditionals*—hence, *abc*. The formula is √(assignments² + branches² + conditionals²). High scores indicate high complexity. While a single large method might seem efficient at first glance, it often hides multiple logical operations that should ideally be separated. It's like a single, overstuffed suitcase where finding anything becomes a chore.
 

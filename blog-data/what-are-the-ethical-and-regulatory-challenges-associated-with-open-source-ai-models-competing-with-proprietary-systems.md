@@ -18,7 +18,7 @@ Now let's talk about regulations  The regulatory landscape is still developing f
 
 This creates a huge disparity  Proprietary companies have the resources to navigate complex regulations  they have legal teams  they can afford lobbyists  Open-source projects are usually at a disadvantage  they lack these resources  This is a fairness issue  it creates a playing field that's tilted heavily in favor of the big players
 
-Okay enough rambling  Let's look at some code examples to illustrate some of these issues
+ enough rambling  Let's look at some code examples to illustrate some of these issues
 
 
 **Example 1: A biased dataset in action (Python)**

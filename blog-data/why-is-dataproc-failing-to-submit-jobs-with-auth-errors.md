@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-dataproc-failing-to-submit-jobs-with-auth-errors"
 ---
 
-Alright, let's tackle this. I've seen this particular Dataproc auth error scenario pop up more than a few times in my years dealing with cloud infrastructure, and it's usually less about a catastrophic bug and more about a subtle configuration mismatch. You're firing off jobs to a Dataproc cluster and getting slapped with auth errors—that’s frustrating, but we can definitely pinpoint the common culprits. Typically, the issue boils down to improperly configured service accounts or incorrect permissions policies, and understanding how these pieces interact is key to resolving the problem.
+Alright,  I've seen this particular Dataproc auth error scenario pop up more than a few times in my years dealing with cloud infrastructure, and it's usually less about a catastrophic bug and more about a subtle configuration mismatch. You're firing off jobs to a Dataproc cluster and getting slapped with auth errors—that’s frustrating, but we can definitely pinpoint the common culprits. Typically, the issue boils down to improperly configured service accounts or incorrect permissions policies, and understanding how these pieces interact is key to resolving the problem.
 
 Firstly, let's consider the fundamental architecture. Dataproc jobs aren't executed directly by your user account; instead, they run using a service account associated with the cluster. This account acts as the ‘identity’ for all processes within the cluster, from Spark workers to Hadoop daemons. When your job fails due to authentication, it’s likely that this service account either doesn’t have the necessary permissions or is simply not correctly associated with your Dataproc cluster.
 

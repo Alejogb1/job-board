@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-set-up-actioncable-with-importmaps-in-rails-6-mri-and-jruby"
 ---
 
-Alright, let's tackle this. Integrating ActionCable with Importmaps in Rails 6—especially across both MRI and JRuby environments—presents a few unique considerations, but it's certainly achievable with a structured approach. I've personally navigated this terrain on a couple of larger, multi-faceted projects, and here’s what I’ve learned, broken down into manageable steps.
+Alright,  Integrating ActionCable with Importmaps in Rails 6—especially across both MRI and JRuby environments—presents a few unique considerations, but it's certainly achievable with a structured approach. I've personally navigated this terrain on a couple of larger, multi-faceted projects, and here’s what I’ve learned, broken down into manageable steps.
 
 The primary challenge arises from how Importmaps manages JavaScript modules; it’s declarative and focuses on direct import paths rather than the conventional asset pipeline's way of bundling. With ActionCable, we're not simply importing a static library; we're establishing a persistent websocket connection that demands careful configuration and awareness of how Rails handles its web socket assets.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-efficiently-represent-a-heterogeneous-sum-type-in-haskell"
 ---
 
-Okay, let's tackle heterogeneous sum types in Haskell. I've definitely been down this road a few times, especially back when we were building that large-scale data ingestion pipeline; dealing with varying data structures required some creative thinking beyond the usual `Either` or `Maybe`.
+, let's tackle heterogeneous sum types in Haskell. I've definitely been down this road a few times, especially back when we were building that large-scale data ingestion pipeline; dealing with varying data structures required some creative thinking beyond the usual `Either` or `Maybe`.
 
 The challenge with heterogeneous sum types is that Haskell's type system, while incredibly powerful, encourages uniformity within a data type definition. A typical algebraic data type, or ADT, enforces that all constructors return a value of the same type. That is, when you define something like `data MySum = A Int | B String | C Bool`, you have a type `MySum` that can encapsulate values of different *types*, but the return type of each constructor – `A`, `B`, and `C` – is always `MySum`. The heterogeneity exists at the *value* level, not the *type* level of the constructors themselves.
 

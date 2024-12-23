@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-determine-the-input-shape-for-an-rnn-when-processing-time-series-data-using-a-sliding-window"
 ---
 
-Alright, let's tackle this. The question of input shapes for recurrent neural networks (RNNs) when dealing with time series data using a sliding window is something I’ve grappled with firsthand in a variety of projects – from predicting server load patterns to analyzing sensor data streams. It might seem trivial at first glance, but getting this wrong can lead to bizarre training behavior or just plain failures. The devil’s often in the details, particularly when dealing with sequences.
+Alright,  The question of input shapes for recurrent neural networks (RNNs) when dealing with time series data using a sliding window is something I’ve grappled with firsthand in a variety of projects – from predicting server load patterns to analyzing sensor data streams. It might seem trivial at first glance, but getting this wrong can lead to bizarre training behavior or just plain failures. The devil’s often in the details, particularly when dealing with sequences.
 
 The core challenge boils down to aligning the structure of your data with what the RNN expects. Unlike feed-forward networks which typically handle static inputs, RNNs thrive on sequential data – that is, data points that have a temporal relationship. When we use a sliding window, we're essentially transforming a long continuous sequence into a series of shorter, overlapping (or non-overlapping) subsequences, each acting as a distinct training sample. This transforms our data into what we might refer to as time-series *examples*.
 

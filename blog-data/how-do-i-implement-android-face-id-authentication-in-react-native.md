@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-implement-android-face-id-authentication-in-react-native"
 ---
 
-Okay, let's tackle this. I've navigated the intricacies of biometrics in mobile apps quite a few times now, and implementing face id authentication in react-native presents its own set of interesting challenges. It's not a straightforward plug-and-play affair, unfortunately. We'll need to bridge the gap between javascript and the native android layer, using a combination of native modules and some clever react-native components.
+,  I've navigated the intricacies of biometrics in mobile apps quite a few times now, and implementing face id authentication in react-native presents its own set of interesting challenges. It's not a straightforward plug-and-play affair, unfortunately. We'll need to bridge the gap between javascript and the native android layer, using a combination of native modules and some clever react-native components.
 
 When I first dealt with this, back in my fintech days, we had a very specific requirement for high-security login. The client insisted on biometric authentication as the primary method, so understanding the underlying mechanisms became crucial. We discovered that relying solely on generic third-party packages wasn't sufficient; custom solutions were required for reliable error handling and seamless user experience. Let’s go through the steps involved and what I've found most useful based on experience.
 

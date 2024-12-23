@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "integers-in-vhdl-declaration-limits"
 ---
 
-Okay so integers in VHDL declaration limits right Been there done that got the t-shirt multiple times And yeah its a pain in the butt sometimes Lets break it down I've wrestled with this particular gremlin more than I care to admit Let's keep it straightforward
+ so integers in VHDL declaration limits right Been there done that got the t-shirt multiple times And yeah its a pain in the butt sometimes Lets break it down I've wrestled with this particular gremlin more than I care to admit Let's keep it straightforward
 
 First off VHDL integers theyre not like the integers in some other languages You dont have this infinite range thing going on Youre constrained by the number of bits you dedicate to representing that integer During synthesis this translates directly to hardware resource usage so its pretty important to get right And its not a matter of simply changing a data type without thinking
 
@@ -59,7 +59,7 @@ While they both have same range of possible values 0 1 2 3 4 5 6 7 the way they 
 
 One more mistake I did was using the VHDL standard library `integer` type for doing math calculations and I never specified a range for the variable used to store intermediate results which leads to very hard to track bugs especially when multiplication operations are involved and this is why you should specify the limits when possible
 
-Okay so a quick story so I can break up the text wall Back in the day I had a very weird bug where my whole design failed randomly at very specific frequencies and after days of debugging i realized it was because the integer variable I was using for my PLL calculations didn't have enough bits to properly perform the multiplication and it was wrapping around without any indication causing the whole system to fail at seemingly random times so yeah integers in vhdl are dangerous so be careful and specify the range whenever you can
+ so a quick story so I can break up the text wall Back in the day I had a very weird bug where my whole design failed randomly at very specific frequencies and after days of debugging i realized it was because the integer variable I was using for my PLL calculations didn't have enough bits to properly perform the multiplication and it was wrapping around without any indication causing the whole system to fail at seemingly random times so yeah integers in vhdl are dangerous so be careful and specify the range whenever you can
 
 Now if you really need some arbitrary integer representation that is bigger than 32 bits and you have no way to constrain it you might want to look into using `std_logic_vector` for large unconstrained bitvectors or create your own custom type and logic for it It makes the code more complex but you might need to do this depending on your particular situation I never had to do it but I can see the benefit depending on your application
 

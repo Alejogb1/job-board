@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-group-values-in-an-opta-dataframe"
 ---
 
-Alright, let's tackle this. Grouping values in an Opta dataframe – I've been down that road quite a few times, especially back when we were building that complex player tracking system for the semi-pro league. It’s not always as straightforward as the pandas equivalent, primarily because Opta data often arrives in a format that demands a bit more wrangling before you can effectively group it. We’re dealing with a hierarchical structure sometimes nested deep in json or xml, and simply applying a group by isn’t going to cut it.
+Alright,  Grouping values in an Opta dataframe – I've been down that road quite a few times, especially back when we were building that complex player tracking system for the semi-pro league. It’s not always as straightforward as the pandas equivalent, primarily because Opta data often arrives in a format that demands a bit more wrangling before you can effectively group it. We’re dealing with a hierarchical structure sometimes nested deep in json or xml, and simply applying a group by isn’t going to cut it.
 
 Fundamentally, you need to first ensure your dataframe is structured in a way that makes grouping logically possible. This usually means extracting the relevant columns or features that you want to use for grouping from nested structures. I recall a particularly challenging case involving Opta's F24 format. We had events nested under game objects, each with its own unique identifiers and associated data points. We couldn't directly group based on event type; we first had to flatten that structure into a tabular format.
 

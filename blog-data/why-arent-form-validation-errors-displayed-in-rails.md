@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-arent-form-validation-errors-displayed-in-rails"
 ---
 
-Okay, let's tackle this. It's a situation I've seen far too many times – that frustrating moment when your Rails form stubbornly refuses to show those validation errors, leaving the user (and you) completely in the dark. From my experience working on legacy systems to greenfield projects, this issue tends to stem from a handful of common culprits, each solvable with a little understanding of Rails' inner workings.
+,  It's a situation I've seen far too many times – that frustrating moment when your Rails form stubbornly refuses to show those validation errors, leaving the user (and you) completely in the dark. From my experience working on legacy systems to greenfield projects, this issue tends to stem from a handful of common culprits, each solvable with a little understanding of Rails' inner workings.
 
 The core of the problem usually isn't a bug in Rails itself, but rather a misunderstanding of how it handles errors and communicates them back to the view. Think of it this way: when you submit a form in Rails, the process involves several steps: parameters are collected, a model instance is created (or updated), validations are executed, and finally, the view is rendered. Errors accumulate primarily during the validation phase. If these errors aren't properly captured and passed back to the view, or if the view isn't configured to display them, you’re left with that frustrating silence.
 

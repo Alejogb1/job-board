@@ -4,7 +4,7 @@ date: "2024-12-12"
 id: "what-are-the-advantages-of-qrwkv6-32bs-architecture-in-reducing-training-time-complexity"
 ---
 
-okay so lets talk about qrkv6-32b and its magic in the realm of training time complexity it's not a black box its more like a well oiled clock and understanding its gears is key to really grasping why its such a game changer
+ so lets talk about qrkv6-32b and its magic in the realm of training time complexity it's not a black box its more like a well oiled clock and understanding its gears is key to really grasping why its such a game changer
 
 the big issue we always bump into with massive models is that darn training time its a brutal bottleneck that can choke progress faster than you can say "gradient descent" traditionally things like transformers and even some earlier recurrent networks can suffer from quadratic or even worse time complexity with respect to sequence length basically the longer the sequence you want the more time it takes and it scales up way too quickly which is a headache for anyone dealing with long form content think books audio streams lengthy code snippets you get the idea
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-is-the-dot-product-of-two-3x4-matrices"
 ---
 
-Let's tackle this. It’s a question that, on the surface, might seem straightforward, yet quickly reveals a common misunderstanding in matrix operations. I recall a project years ago, involving image transformations, where a similar conceptual error almost derailed the entire process. The core problem wasn’t the computation itself, but rather the application of an operation where it wasn’t defined.
+ It’s a question that, on the surface, might seem straightforward, yet quickly reveals a common misunderstanding in matrix operations. I recall a project years ago, involving image transformations, where a similar conceptual error almost derailed the entire process. The core problem wasn’t the computation itself, but rather the application of an operation where it wasn’t defined.
 
 The "dot product," as it’s commonly understood and implemented in linear algebra, specifically applies to vectors of the same dimension. When we start talking about matrices, the situation is different. The term often used is 'matrix multiplication,' which should not be confused with the element-wise multiplication that might be intuitively thought of.
 

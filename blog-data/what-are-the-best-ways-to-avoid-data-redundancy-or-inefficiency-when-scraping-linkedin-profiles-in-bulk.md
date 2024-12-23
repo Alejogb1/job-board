@@ -4,7 +4,7 @@ date: "2024-12-10"
 id: "what-are-the-best-ways-to-avoid-data-redundancy-or-inefficiency-when-scraping-linkedin-profiles-in-bulk"
 ---
 
-Okay so you wanna scrape LinkedIn profiles right and avoid all that messy redundancy stuff  yeah I get it  LinkedIn's a beast to scrape efficiently  it's like trying to herd cats but digital ones that fight back with captchas and rate limits  the key is to be smart not brute force  brute force is for people who like getting their IP banned  we're better than that
+ so you wanna scrape LinkedIn profiles right and avoid all that messy redundancy stuff  yeah I get it  LinkedIn's a beast to scrape efficiently  it's like trying to herd cats but digital ones that fight back with captchas and rate limits  the key is to be smart not brute force  brute force is for people who like getting their IP banned  we're better than that
 
 
 First off think about *what* you're actually after  don't just grab everything  that's the fastest route to redundancy and wasted bandwidth  define your target data  maybe it's just names titles and companies  or maybe you need experience details and skills  get specific  the more specific you are the less data you need to process later on and the fewer headaches you'll have

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-receive-alerts-when-a-google-cloud-dag-fails-to-run"
 ---
 
-Okay, let's address this. Back in my days managing large-scale data pipelines for a financial institution, reliable alerting on dag failures was absolutely critical. We couldn't afford to miss even a single failure, and the default options sometimes weren't enough. We ended up implementing a rather robust system which, in essence, is what I'll be outlining here.
+, let's address this. Back in my days managing large-scale data pipelines for a financial institution, reliable alerting on dag failures was absolutely critical. We couldn't afford to miss even a single failure, and the default options sometimes weren't enough. We ended up implementing a rather robust system which, in essence, is what I'll be outlining here.
 
 The core issue, in the context of google cloud composer (which underlies airflow dags), is that while airflow itself provides mechanisms for failure handling and retry policies, capturing those failures and transforming them into actionable alerts requires a little more effort. You're not just looking for a generic "dag failed," you often need specific context—which task failed, what error was thrown, when it happened, and the list goes on.
 

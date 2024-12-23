@@ -4,9 +4,9 @@ date: "2024-12-13"
 id: "how-to-use-a-partial-image-inference-whole-image"
 ---
 
-Alright so you're asking about how to do partial image inference but still get a result for the whole image yeah I get it It's a classic problem and I’ve been there myself let me tell you I've spent a significant chunk of my career battling this exact issue
+so you're asking about how to do partial image inference but still get a result for the whole image yeah I get it It's a classic problem and I’ve been there myself let me tell you I've spent a significant chunk of my career battling this exact issue
 
-Okay so first off when you say partial image inference usually it means that you've got a trained model perhaps a convolutional neural network or some variant and you want to run inference on only a small part of a larger image but still get information about the whole image that's not always trivial and a direct forward pass on a full image is not feasible due to memory constraints or the model's limitations
+ so first off when you say partial image inference usually it means that you've got a trained model perhaps a convolutional neural network or some variant and you want to run inference on only a small part of a larger image but still get information about the whole image that's not always trivial and a direct forward pass on a full image is not feasible due to memory constraints or the model's limitations
 
 The most straightforward way to think about this is through tiling basically think of it like making a mosaic you chop up your big image into smaller manageable tiles then run inference on each tile individually and then somehow put all those individual inferences back together to get an understanding of the whole scene that's generally the best approach and it's not some sort of rocket science but of course there are some nuances which might become complex
 
@@ -65,13 +65,13 @@ full_image_inference = infer_full_image_tiled(image, tile_size, stride, dummy_in
 print(full_image_inference.shape)
 ```
 
-Okay so in this code you can see that `tile_image` takes your original image and chops it into tiles with a certain size and stride The `infer_full_image_tiled` function just ties everything together runs inference on each tile using a dummy function I called `infer_tile` but you should replace that function with your actual deep learning model and then reconstructs the final result I also created a `reconstruct_image` function to re assemble the images it also takes care of overlap cases because you want to have smooth results
+ so in this code you can see that `tile_image` takes your original image and chops it into tiles with a certain size and stride The `infer_full_image_tiled` function just ties everything together runs inference on each tile using a dummy function I called `infer_tile` but you should replace that function with your actual deep learning model and then reconstructs the final result I also created a `reconstruct_image` function to re assemble the images it also takes care of overlap cases because you want to have smooth results
 
 Now a crucial part here is the stride parameter if you don't use any stride then each tile will be separate from the other but if you use a stride less than the `tile_size` you get some overlap and you should average the overlapped regions to give more smooth and consistent results and the code does that and that’s the whole point of adding overlap
 
 Another important aspect is the `infer_tile` function it's your job to make sure it fits your model you have to provide the logic of how your model should run and also provide the correct data format so that the deep learning model can work properly. This dummy function uses a fake model that outputs the same image size filled with random values.
 
-Alright so that's just simple tiling there are a couple more advanced techniques that I’ve used in the past.
+so that's just simple tiling there are a couple more advanced techniques that I’ve used in the past.
 For instance sometimes you might want to use a sliding window which is similar to tiling but instead of processing all tiles at once you might want to process only few tiles and you need to shift your window this approach can be helpful if you have memory issues or if your model requires a specific processing order. I'm not going to provide a code snippet for this one because it is very similar to tiling and I think you got the idea of the tile code.
 
 Now here's a second more advanced example using a slightly different technique suppose you are dealing with an object detection problem and your model outputs bounding boxes instead of a full image heatmap Now you need a slightly different way of re-assembling the results. Here is the code.
@@ -143,7 +143,7 @@ full_image_detections = infer_full_image_tiled_detections(image, tile_size, stri
 print(full_image_detections)
 ```
 
-Alright so as you can see the `tile_image_detection` is the same as before but we have changed `reconstruct_detections` which now takes the bounding boxes and adjusts their coordinates according to the original image and the same thing goes for `infer_full_image_tiled_detections` it uses the new tile and reconstruct functions and the `dummy_infer_tile_detection` now outputs a dummy object detection with a few detections. The other parameters are kept the same
+so as you can see the `tile_image_detection` is the same as before but we have changed `reconstruct_detections` which now takes the bounding boxes and adjusts their coordinates according to the original image and the same thing goes for `infer_full_image_tiled_detections` it uses the new tile and reconstruct functions and the `dummy_infer_tile_detection` now outputs a dummy object detection with a few detections. The other parameters are kept the same
 
 Now there are also a bunch of optimization and practical things you should think of first is how big the tiles should be and how much stride you should use You need to tune them based on your model and the resolution of the images you have sometimes the performance of the model can change if the tile size changes and sometimes the stride can change the model output so you need to tune these parameters
 
@@ -213,9 +213,9 @@ full_image_inference_padded = infer_full_image_tiled_padded(image, tile_size, st
 
 print(full_image_inference_padded.shape)
 ```
-Okay so what's going on here we added a `pad_tile` which pads the tile using `reflect` padding and an unpad to remove the padding after the inference is done and `tile_image_padded` is almost the same as before but it adds the padding and also `reconstruct_image_padded` handles the unpadding as well and the other methods are the same but uses the new tile padding methods.
+ so what's going on here we added a `pad_tile` which pads the tile using `reflect` padding and an unpad to remove the padding after the inference is done and `tile_image_padded` is almost the same as before but it adds the padding and also `reconstruct_image_padded` handles the unpadding as well and the other methods are the same but uses the new tile padding methods.
 Also it is a good habit to document your code you know as they say a good code is better than a bad documentation and a good documentation is better than no documentation (a little joke here hopefully it makes you laugh a little )
 
 As for resources you might want to look at some papers on image segmentation or object detection that deal with large images I don't really want to send you some obscure research paper maybe you know it already there are plenty of good resources on model training and inference in deep learning books. A classic like "Deep Learning" by Goodfellow et al. covers the basics of convolutional networks and the "Computer Vision: Algorithms and Applications" by Szeliski is also a great pick for the general picture and there are some other books that specifically focus on image segmentation or object detection.
 
-Alright well that’s it those are my experiences in dealing with partial inference over a large image if you have any other questions let me know hope it helps!
+well that’s it those are my experiences in dealing with partial inference over a large image if you have any other questions let me know hope it helps!

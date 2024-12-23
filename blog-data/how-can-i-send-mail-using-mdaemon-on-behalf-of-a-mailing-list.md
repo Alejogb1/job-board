@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-send-mail-using-mdaemon-on-behalf-of-a-mailing-list"
 ---
 
-Okay, let’s tackle this. Having spent a significant chunk of my career dealing with mail servers, specifically a few instances involving MDaemon and mailing lists, I’ve seen a fair share of the quirks and nuances involved. Sending mail on behalf of a mailing list isn't always straightforward, and there are several approaches one can take, each with its own considerations. The core challenge is ensuring that the emails are sent correctly, that they're properly attributed to the list, and that they comply with email authentication standards to avoid landing in spam folders.
+, let’s tackle this. Having spent a significant chunk of my career dealing with mail servers, specifically a few instances involving MDaemon and mailing lists, I’ve seen a fair share of the quirks and nuances involved. Sending mail on behalf of a mailing list isn't always straightforward, and there are several approaches one can take, each with its own considerations. The core challenge is ensuring that the emails are sent correctly, that they're properly attributed to the list, and that they comply with email authentication standards to avoid landing in spam folders.
 
 First, let's clarify what we mean by "on behalf of." Typically, when an email is sent directly from a user, the 'from' address is that user’s email. However, when sending an email through a mailing list, we want the 'from' address, or at least a display name, to reflect the list itself, not the individual poster. This involves configuring MDaemon to handle this routing and address manipulation.
 

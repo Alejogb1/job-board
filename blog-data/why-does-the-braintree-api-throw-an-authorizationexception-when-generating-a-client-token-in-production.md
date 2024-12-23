@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-the-braintree-api-throw-an-authorizationexception-when-generating-a-client-token-in-production"
 ---
 
-Okay, let's address this. I've seen this issue surface more times than I care to remember, and it’s almost always down to a configuration hiccup or a misunderstanding of Braintree's operational nuances between development and production environments. We’re talking about the *AuthorizationException* specifically related to generating client tokens, not general transaction errors, and this is important.
+, let's address this. I've seen this issue surface more times than I care to remember, and it’s almost always down to a configuration hiccup or a misunderstanding of Braintree's operational nuances between development and production environments. We’re talking about the *AuthorizationException* specifically related to generating client tokens, not general transaction errors, and this is important.
 
 First things first, let's be clear about what a client token is. It's essentially a temporary key that allows your client-side application (web or mobile) to securely interact with Braintree's payment processing infrastructure *without* exposing your actual API keys. This is a security best practice. In a development environment, you might be more forgiving in configurations and sandbox permissions, but production is a different beast altogether. Braintree is designed with strict access controls to protect sensitive data, which is precisely why these errors surface in production.
 

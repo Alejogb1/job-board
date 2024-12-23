@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-the-solidity-transferfrom-function-not-working-while-making-an-nft-marketplace"
 ---
 
-Okay, let's tackle this one. I remember spending a frustrating couple of days debugging a similar issue when I was first building out a marketplace for generative art NFTs back in '21. The `transferFrom()` function in Solidity, specifically when dealing with ERC-721 tokens in an NFT marketplace, can be a bit of a beast if you don't handle authorization and state updates precisely. The symptoms are always the same: transactions fail, sometimes silently, sometimes throwing revert errors that aren't immediately helpful. It's a classic case of permissions and expectations colliding.
+, let's tackle this one. I remember spending a frustrating couple of days debugging a similar issue when I was first building out a marketplace for generative art NFTs back in '21. The `transferFrom()` function in Solidity, specifically when dealing with ERC-721 tokens in an NFT marketplace, can be a bit of a beast if you don't handle authorization and state updates precisely. The symptoms are always the same: transactions fail, sometimes silently, sometimes throwing revert errors that aren't immediately helpful. It's a classic case of permissions and expectations colliding.
 
 The core problem with `transferFrom()` not working in this context almost always boils down to one of three things: inadequate approval, incorrect state management, or a misunderstanding of the function's mechanics. Let me break down each one with specific examples.
 

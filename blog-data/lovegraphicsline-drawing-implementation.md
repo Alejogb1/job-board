@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "lovegraphicsline-drawing-implementation"
 ---
 
-Okay so you're diving into `love.graphics.line` right I feel you This is like a rite of passage for anyone messing with LÖVE2D and 2D graphics in general Been there done that got the t-shirt I mean digital t-shirt of course
+ so you're diving into `love.graphics.line` right I feel you This is like a rite of passage for anyone messing with LÖVE2D and 2D graphics in general Been there done that got the t-shirt I mean digital t-shirt of course
 
 Let's talk specifics about getting this line drawing thing to behave I remember when I was starting out it was like I was fighting with a cat trying to make it draw a straight line Cats are not great line drawers trust me
 
@@ -39,7 +39,7 @@ end
 
 Notice how I repeated x1 and y1 at the end This closes the shape and that’s what we usually want when we work with shapes You will always see that pattern repeated.
 
-Alright next you might want to change how the line looks Its not just about coordinates you can control the line width and color too The `love.graphics.setLineWidth` function lets you control the thickness of line but again if you're working with pixel-perfect you wont get pixel-perfect lines because this is some sort of algorithm
+next you might want to change how the line looks Its not just about coordinates you can control the line width and color too The `love.graphics.setLineWidth` function lets you control the thickness of line but again if you're working with pixel-perfect you wont get pixel-perfect lines because this is some sort of algorithm
 
 Then you might think what about the line color of course we have to control the color and we control that with `love.graphics.setColor`.
 
@@ -59,7 +59,7 @@ end
 
 This snippet draws a thick red line (a polygon that is more than a single line) and below that it draws a thick green line. This way we have different line properties in a single `love.draw` function.
 
-Okay so lets talk gotchas now where things get a bit more difficult I've seen people try to draw super complex stuff with a ton of points and complain about performance you probably wont face that issue if you don't do that many lines in one frame but just in case
+ so lets talk gotchas now where things get a bit more difficult I've seen people try to draw super complex stuff with a ton of points and complain about performance you probably wont face that issue if you don't do that many lines in one frame but just in case
 
 If you're trying to draw very detailed lines that might require a lot of coordinates it can slow down things So if you are working with lots of lines and especially if you are drawing them every frame that can be costly for the processor and affect the game framerate if you go too far with it.
 
@@ -83,6 +83,6 @@ Oh and always remember that `love.graphics.line` is your friend but it’s not m
 
 And always remember the pixel grid your code is always working inside the constraints of your screen resolution I did not know that in my early days so I had to learn the hard way.
 
-Okay I think I've dumped most of my hard earned knowledge about `love.graphics.line` I have made a few games and projects with LÖVE2D so I have dealt with a great deal of line drawing issues and I've had my share of debug sessions.
+ I think I've dumped most of my hard earned knowledge about `love.graphics.line` I have made a few games and projects with LÖVE2D so I have dealt with a great deal of line drawing issues and I've had my share of debug sessions.
 
 Don’t let the lines get you down! Keep practicing and you’ll get a hang of it. And if you get stuck feel free to come back and ask more questions I’ve been there and the whole community will be here to help.

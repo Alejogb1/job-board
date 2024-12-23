@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "what-are-the-implications-of-metas-new-alignment-processes-on-the-broader-ai-research-community"
 ---
 
-Okay so Meta's new alignment stuff right  it's a big deal  like really big  not just another press release kinda big  It's shaking things up impacting everyone from grad students crunching numbers to the big dogs at Google and OpenAI  I mean the whole field is buzzing  It's less about a specific algorithm and more about a shift in how we even *think* about aligning AI  and that's kinda scary and exciting at the same time
+ so Meta's new alignment stuff right  it's a big deal  like really big  not just another press release kinda big  It's shaking things up impacting everyone from grad students crunching numbers to the big dogs at Google and OpenAI  I mean the whole field is buzzing  It's less about a specific algorithm and more about a shift in how we even *think* about aligning AI  and that's kinda scary and exciting at the same time
 
 Before this Meta thing  a lot of alignment research was kinda siloed  you had your reinforcement learning folks doing their thing  your game theory people in their corner  and everyone mostly talking past each other  It was like a bunch of different tribes  each with their own sacred texts  like  Sutton and Barto's "Reinforcement Learning" was the RL bible  and then you had different papers on reward shaping and inverse reinforcement learning scattered everywhere  Now Meta's approach is forcing a level of cross-pollination  they're drawing from all these different areas  and that's forcing the rest of the field to catch up or get left behind
 

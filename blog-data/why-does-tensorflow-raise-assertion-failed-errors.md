@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-does-tensorflow-raise-assertion-failed-errors"
 ---
 
-Okay, let’s unpack those “assertion failed” errors you're encountering in TensorFlow. It's not uncommon, and it often points towards a fundamental mismatch between what the framework expects and what’s actually happening in your computational graph. I've personally debugged my fair share of these over the years, sometimes spending hours tracing through seemingly innocuous code.
+, let’s unpack those “assertion failed” errors you're encountering in TensorFlow. It's not uncommon, and it often points towards a fundamental mismatch between what the framework expects and what’s actually happening in your computational graph. I've personally debugged my fair share of these over the years, sometimes spending hours tracing through seemingly innocuous code.
 
 The root cause usually lies within the internal checks TensorFlow performs to ensure data integrity and algorithmic correctness. These assertions, essentially sanity checks, are sprinkled throughout the framework's C++ codebase (and some Python wrappers), designed to catch errors early before they propagate into something truly catastrophic. When one fails, it’s TensorFlow's way of saying, "Hold on, something isn’t adding up." This isn't necessarily a bug in TensorFlow itself but rather a mismatch in your setup or the way data is flowing. Think of it as an advanced type checker actively monitoring your computation.
 

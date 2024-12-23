@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-use-bigqueryinsertjoboperator-with-export-configuration"
 ---
 
-Okay, let's talk about `BigQueryInsertJobOperator` with export configurations. I've seen my share of data pipelines over the years, and I recall a particularly messy project involving a daily data dump from our relational database into BigQuery, followed by an export to cloud storage for further processing by a downstream system. It was initially a fragile setup, mostly due to insufficient understanding of BigQuery's job operations and configuration options. The key, I found, wasn't just knowing the syntax, but understanding the underlying mechanisms and the available parameters.
+, let's talk about `BigQueryInsertJobOperator` with export configurations. I've seen my share of data pipelines over the years, and I recall a particularly messy project involving a daily data dump from our relational database into BigQuery, followed by an export to cloud storage for further processing by a downstream system. It was initially a fragile setup, mostly due to insufficient understanding of BigQuery's job operations and configuration options. The key, I found, wasn't just knowing the syntax, but understanding the underlying mechanisms and the available parameters.
 
 The `BigQueryInsertJobOperator`, in essence, is a powerful tool in Apache Airflow for triggering BigQuery jobs. While it’s often used for executing queries, its versatility extends to data manipulation tasks like exports. However, unlike the simpler `BigQueryOperator`, it hands over more explicit control over the job configuration using the `configuration` parameter, which allows for more nuanced operations, such as specific export setups.
 

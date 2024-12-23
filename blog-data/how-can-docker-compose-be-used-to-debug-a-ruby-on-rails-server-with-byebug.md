@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-docker-compose-be-used-to-debug-a-ruby-on-rails-server-with-byebug"
 ---
 
-Okay, let's tackle this. I’ve been through the 'rails-debugging-in-docker' rodeo more times than I care to count, and it’s definitely one of those areas where a little upfront configuration can save a world of headaches later on. Debugging a rails application running inside a Docker container with `byebug` using Docker Compose isn’t fundamentally complex, but there are a few key pieces we need to align to make the experience smooth. The core issue is getting the debugging session to actually interact with your terminal and the code inside the container. Let’s break it down.
+,  I’ve been through the 'rails-debugging-in-docker' rodeo more times than I care to count, and it’s definitely one of those areas where a little upfront configuration can save a world of headaches later on. Debugging a rails application running inside a Docker container with `byebug` using Docker Compose isn’t fundamentally complex, but there are a few key pieces we need to align to make the experience smooth. The core issue is getting the debugging session to actually interact with your terminal and the code inside the container. Let’s break it down.
 
 The primary challenge stems from the fact that your debugging session (where you type `next`, `step`, etc.) runs *inside* the container while your terminal (where you’re interacting with the debugger) is *outside* of it, on your host machine. Docker containers are designed to be isolated, which includes network and I/O. Therefore, we need a way to bridge this isolation specifically for debugging. It’s not a matter of running some magic command; it’s more about setting up a communication channel.
 

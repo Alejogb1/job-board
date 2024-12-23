@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "case-statement-in-verilog"
 ---
 
-Alright let's dive into this verilog case statement thing I've wrestled with this beast more times than I care to remember and honestly its still a point of minor frustration even after all these years So you wanna know about case statements in verilog right Cool beans let's break it down in a way that even my past self struggling with timing closure would understand
+let's dive into this verilog case statement thing I've wrestled with this beast more times than I care to remember and honestly its still a point of minor frustration even after all these years So you wanna know about case statements in verilog right Cool beans let's break it down in a way that even my past self struggling with timing closure would understand
 
 First things first a case statement in verilog is essentially a multi-way branch It's your go-to when you have a single expression and you want different things to happen based on the value of that expression Think of it like a giant if-else chain but way more elegant and readable at least once you get the hang of the syntax
 
@@ -21,7 +21,7 @@ endcase
 
 The `expression` is what you're evaluating It can be a single signal or a combination of signals and the `value` items are what you are comparing it against If the `expression` matches the `value` the corresponding `statement` gets executed If nothing matches the `default` statement gets executed and if there is no `default` statement and none match then nothing happens just like a silent fail which we all know is the worst
 
-Okay so that's the most basic form lets get a bit more concrete and give you a code snippet to actually make sense of it because we're engineers not poets or whatever right? This is what we used in our first project which got absolutely rekt by the test bench because of an issue with the reset logic we had to re-write the entire thing from scratch so yeah this thing gives me PTSD
+ so that's the most basic form lets get a bit more concrete and give you a code snippet to actually make sense of it because we're engineers not poets or whatever right? This is what we used in our first project which got absolutely rekt by the test bench because of an issue with the reset logic we had to re-write the entire thing from scratch so yeah this thing gives me PTSD
 
 ```verilog
 module simple_case (
@@ -74,7 +74,7 @@ module seven_segment_display (
 endmodule
 ```
 
-Okay that's a bit more involved In this one our `digit` input is now 4-bits and it controls which digit is displayed on our seven segment display The `casez` is actually acting as a normal case here because we don't have any z values It's simply to show that if we had used dont cares they would have been taken into account. The `segments` is a 7-bit output that drives the display segments if we want to display a `2` for example we'd set the `segments` to 0100100 by decoding it from the input `digit` using the casez statement.
+ that's a bit more involved In this one our `digit` input is now 4-bits and it controls which digit is displayed on our seven segment display The `casez` is actually acting as a normal case here because we don't have any z values It's simply to show that if we had used dont cares they would have been taken into account. The `segments` is a 7-bit output that drives the display segments if we want to display a `2` for example we'd set the `segments` to 0100100 by decoding it from the input `digit` using the casez statement.
 
 One thing that can cause issues sometimes and trust me I've been there is when you have multiple matches in your `case` statements Now Verilog will only execute the very first match so make sure to pay attention to the order of your `value` items
 

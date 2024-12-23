@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-calculate-accuracy-and-other-metrics-for-multi-label-edge-segmentation-in-pytorch"
 ---
 
-Okay, let’s tackle this. I’ve spent a fair chunk of time working with segmentation tasks, especially in domains where we’re not dealing with just single, clear-cut labels. Multi-label edge segmentation, as you’ve asked about, throws a few more interesting complexities into the mix, compared to your standard pixel-wise classification. So, let's explore how you'd go about calculating relevant metrics in PyTorch.
+, let’s tackle this. I’ve spent a fair chunk of time working with segmentation tasks, especially in domains where we’re not dealing with just single, clear-cut labels. Multi-label edge segmentation, as you’ve asked about, throws a few more interesting complexities into the mix, compared to your standard pixel-wise classification. So, let's explore how you'd go about calculating relevant metrics in PyTorch.
 
 The core of the issue, as i see it, boils down to how we interpret the prediction and ground truth data. In standard semantic segmentation, it’s a one-to-one correspondence: each pixel gets a single label. However, with multi-label edge segmentation, a pixel can, and often does, belong to *multiple* edge categories simultaneously. Think of it like identifying multiple overlapping object boundaries. This requires adjusting our evaluation strategy to reflect the complexity of this.
 

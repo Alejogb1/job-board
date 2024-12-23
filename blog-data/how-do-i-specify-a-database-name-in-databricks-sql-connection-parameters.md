@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-specify-a-database-name-in-databricks-sql-connection-parameters"
 ---
 
-Alright, let's tackle this. I’ve certainly been down the rabbit hole of database connection configurations in Databricks more times than I care to count. The specifics, as you’ve probably noticed, can vary quite a bit depending on the client you’re using and the method you’re adopting to connect. It's not always a straightforward “database=” parameter like with some other systems. Let's unpack how to specify that crucial database name when connecting to Databricks SQL.
+Alright,  I’ve certainly been down the rabbit hole of database connection configurations in Databricks more times than I care to count. The specifics, as you’ve probably noticed, can vary quite a bit depending on the client you’re using and the method you’re adopting to connect. It's not always a straightforward “database=” parameter like with some other systems. Let's unpack how to specify that crucial database name when connecting to Databricks SQL.
 
 My experience stems from a previous role, where we transitioned a large ETL pipeline from a traditional data warehouse to Databricks. This involved a lot of scripting, from Python to JDBC connections, and managing different service principles. I had to become intimately familiar with the nuanced variations in the connection string. It wasn't always the "just add the db name" scenario that some might expect. The specifics really depend on *how* you're connecting.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-introduce-a-delay-before-firing-a-projectile"
 ---
 
-Okay, let’s unpack this projectile delay issue. It’s something I’ve encountered countless times in various game engine and simulation projects, often in scenarios where timing is crucial, and a premature launch could wreak havoc. Thinking back, I recall a particularly challenging project involving a multi-stage rocket launch sequence where even milliseconds of variance in the ignition timing could throw the entire trajectory off course. That experience drove home the importance of precise, reliable delays.
+, let’s unpack this projectile delay issue. It’s something I’ve encountered countless times in various game engine and simulation projects, often in scenarios where timing is crucial, and a premature launch could wreak havoc. Thinking back, I recall a particularly challenging project involving a multi-stage rocket launch sequence where even milliseconds of variance in the ignition timing could throw the entire trajectory off course. That experience drove home the importance of precise, reliable delays.
 
 So, how do we actually accomplish this delay before a projectile goes live? The core principle lies in introducing a temporal offset between the event that *triggers* the launch and the event that *executes* the launch. This might sound simplistic, but the implementation can vary widely depending on the context, the programming language, and the specific requirements of the system. Broadly speaking, we can achieve this delay using either a polling method or an event-driven method. Let's consider both, along with their pros and cons, and then I’ll show you a few code examples in Python which are applicable in concept to many languages.
 

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "c-unsubscribe-event-lambda-event-handler"
 ---
 
-Okay so you're asking about unsubscribing from C# events specifically when the event handler is a lambda well I've been there man countless times it's a common pitfall so let's dive in I'm gonna talk from personal experience you know things I learned the hard way
+ so you're asking about unsubscribing from C# events specifically when the event handler is a lambda well I've been there man countless times it's a common pitfall so let's dive in I'm gonna talk from personal experience you know things I learned the hard way
 
 See the problem is lambda expressions when used as event handlers create anonymous delegates these delegates don't have a direct name you can use for unsubscribing like a normal method you'd hook up with += and unhook with -= That direct name is crucial for that -= operation It's a core part of how C# event system works
 

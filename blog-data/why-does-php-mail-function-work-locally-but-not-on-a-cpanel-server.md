@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-php-mail-function-work-locally-but-not-on-a-cpanel-server"
 ---
 
-Okay, let's tackle this. It’s a familiar scenario, and one I’ve personally debugged more times than I’d like to recall. The "works locally, fails on cpanel" conundrum with php's `mail()` function is often a multi-layered issue. It’s not usually a problem with your php code itself, but rather the environment where that code is executed. I'll break down the common culprits and provide code examples to showcase how you might approach diagnosing and fixing the problem.
+,  It’s a familiar scenario, and one I’ve personally debugged more times than I’d like to recall. The "works locally, fails on cpanel" conundrum with php's `mail()` function is often a multi-layered issue. It’s not usually a problem with your php code itself, but rather the environment where that code is executed. I'll break down the common culprits and provide code examples to showcase how you might approach diagnosing and fixing the problem.
 
 First, let's establish a baseline understanding. The `mail()` function in PHP is inherently a wrapper. It doesn’t actually send the email itself. Instead, it interfaces with the system's mail transfer agent (MTA), often sendmail, postfix, or exim. Locally, especially on a development machine, things might just work because a basic MTA is likely configured to accept and forward emails without stringent checks. However, a cpanel server is a different beast, and it often has a more robust, and consequently, more demanding configuration, typically with more security constraints.
 

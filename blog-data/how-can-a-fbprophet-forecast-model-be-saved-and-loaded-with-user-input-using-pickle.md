@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-a-fbprophet-forecast-model-be-saved-and-loaded-with-user-input-using-pickle"
 ---
 
-Okay, let's tackle this one. I remember a particularly thorny project back in '19, where we were deploying a demand forecasting system. We heavily relied on fbprophet, and the need for a robust save/load mechanism, especially with dynamic user input, became immediately clear. The naive approach, just pickling the fitted model, quickly revealed its limitations when we started incorporating user-driven changes to the forecast horizon or seasonality.
+, let's tackle this one. I remember a particularly thorny project back in '19, where we were deploying a demand forecasting system. We heavily relied on fbprophet, and the need for a robust save/load mechanism, especially with dynamic user input, became immediately clear. The naive approach, just pickling the fitted model, quickly revealed its limitations when we started incorporating user-driven changes to the forecast horizon or seasonality.
 
 The crux of the matter is this: while `pickle` can serialize and deserialize Python objects, including fbprophet models, the model itself is often not the *only* thing we need to persist. Context, especially regarding the user-defined forecast parameters, becomes just as important. Simply re-loading a pickled model and forecasting can lead to unexpected results if the user has made changes to the desired forecast period or included holidays since the model was saved.
 

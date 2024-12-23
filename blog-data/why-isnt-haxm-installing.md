@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-isnt-haxm-installing"
 ---
 
-Okay, let's tackle this. I’ve seen this HAXM installation hurdle plenty of times, and it usually boils down to a few common culprits. Rather than jumping straight to a list of potential fixes, I'd prefer to walk you through the diagnostic thought process I typically employ. We’re aiming for a systematic solution, not just a shot in the dark.
+,  I’ve seen this HAXM installation hurdle plenty of times, and it usually boils down to a few common culprits. Rather than jumping straight to a list of potential fixes, I'd prefer to walk you through the diagnostic thought process I typically employ. We’re aiming for a systematic solution, not just a shot in the dark.
 
 First, let’s clarify what HAXM *is*. Hardware Accelerated Execution Manager (HAXM) is Intel's virtualization engine—a crucial component if you're working with emulators, particularly in Android development. It leverages your processor's virtualization capabilities to dramatically speed up emulation. So, when it's not installing, the first thing that pops into my head is: are those virtualization features actually available and enabled on the machine?
 
@@ -18,7 +18,7 @@ Before diving into specific code or system checks, let's address a common miscon
 
 **3. Incompatible System State:** Occasionally, outdated Windows system files or incomplete driver installations can interfere. The installer requires the windows version of .net 4.7, so that is something that should always be verified if the first two steps fail. This is far rarer than the first two, but it's worth considering. Also make sure the Hyper-V driver is fully removed before attempting HAXM installation, even if the feature is disabled. A good way to do this is by removing the feature in the windows features, rebooting, and verifying the Hyper-V driver has been uninstalled.
 
-Okay, now for some code examples, focusing on the most common checks and solutions, not just for install. I’ve used a mix of Powershell and command-line commands, which should be adaptable for most environments:
+, now for some code examples, focusing on the most common checks and solutions, not just for install. I’ve used a mix of Powershell and command-line commands, which should be adaptable for most environments:
 
 **Snippet 1: Verifying VT-x/AMD-V is enabled from the Operating System (Windows):**
 

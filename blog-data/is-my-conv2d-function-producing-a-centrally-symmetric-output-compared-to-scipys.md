@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "is-my-conv2d-function-producing-a-centrally-symmetric-output-compared-to-scipys"
 ---
 
-Okay, let's tackle this. It's something I’ve definitely bumped into before, specifically back when I was optimizing some custom CNN layers for a research project. The issue of unexpected symmetry in convolution outputs can stem from several subtle differences in implementation details. It’s not always immediately apparent, so let’s break it down systematically.
+,  It's something I’ve definitely bumped into before, specifically back when I was optimizing some custom CNN layers for a research project. The issue of unexpected symmetry in convolution outputs can stem from several subtle differences in implementation details. It’s not always immediately apparent, so let’s break it down systematically.
 
 Your core question, as I understand it, is whether your custom 2D convolution implementation is generating a result that exhibits central symmetry when compared to the output from `scipy.signal.convolve2d`, and specifically, if this is unintended or not. This usually points to how padding, stride, and kernel application are handled, particularly with regards to boundary conditions. SciPy's convolution function is meticulously implemented and therefore serves as a dependable benchmark.
 

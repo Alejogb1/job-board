@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-cant-i-retrieve-user-attributes-using-the-profileopenid-scopes-in-aws-cognito"
 ---
 
-Okay, let's talk about why retrieving user attributes with just the `profile` or `openid` scopes in AWS Cognito often falls flat. I've seen this trip up a good number of folks, and it's usually not a matter of misconfigured settings, but rather a misunderstanding of how these scopes are intended to function within the context of OAuth 2.0 and OpenID Connect, which Cognito leverages.
+, let's talk about why retrieving user attributes with just the `profile` or `openid` scopes in AWS Cognito often falls flat. I've seen this trip up a good number of folks, and it's usually not a matter of misconfigured settings, but rather a misunderstanding of how these scopes are intended to function within the context of OAuth 2.0 and OpenID Connect, which Cognito leverages.
 
 First, let’s clarify something crucial: `profile` and `openid` scopes are not *directly* tied to the specific user attributes you define in your Cognito user pool, such as email, phone number, or custom fields. Instead, they primarily provide a standardized set of *claims* about the user’s identity within a token. The `openid` scope primarily signifies that you're requesting an OpenID Connect flow, which results in an `id_token`. This token includes basic identification claims such as the user's `sub` (subject identifier, which is a unique user id), `iss` (issuer), and `aud` (audience). The `profile` scope, while it might seem intuitively connected to user data, is specified in OpenID Connect to return a handful of *standard* user information claims that are widely accepted, like `name`, `given_name`, `family_name`, `picture`, etc.
 

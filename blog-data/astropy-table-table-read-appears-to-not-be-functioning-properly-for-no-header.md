@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "astropy-table-table-read-appears-to-not-be-functioning-properly-for-no-header"
 ---
 
-Okay so you're hitting the classic "no header" problem with `astropy.table.Table.read` I've been there man believe me it's like staring into the abyss of poorly formatted data files. I've spent more late nights wrestling with this than I care to admit especially back in the day when I was knee-deep in simulations and dealing with output files from a cluster that seemed to think headers were optional. Trust me on this you're not alone in this frustrating data parsing endeavor
+ so you're hitting the classic "no header" problem with `astropy.table.Table.read` I've been there man believe me it's like staring into the abyss of poorly formatted data files. I've spent more late nights wrestling with this than I care to admit especially back in the day when I was knee-deep in simulations and dealing with output files from a cluster that seemed to think headers were optional. Trust me on this you're not alone in this frustrating data parsing endeavor
 
 First off let's break it down `astropy.table.Table.read` by default expects a header row or at least some kind of clear indication of column names. When it doesn't find this which happens way more often than it should the usual behavior is an error something like 'ValueError cannot guess column format from data' or it will just try to parse your first line as data and give you something completely off you end up with garbage columns and all sorts of data type confusion So let’s say you have a file called 'data.txt' that looks like this a classic no header file
 

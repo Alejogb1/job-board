@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "are-rails-associations-automatically-generated"
 ---
 
-Okay, let's tackle this. The notion of "automatically generated" when we talk about Rails associations is, well, a bit nuanced. It's not magic; there's quite a bit going on under the hood, and understanding it deeply is key to avoiding future headaches. From my experience, particularly during the development of a large e-commerce platform a few years back (we were dealing with thousands of products, categories, and user interactions, so performance became paramount), knowing exactly how Rails handles associations was non-negotiable.
+,  The notion of "automatically generated" when we talk about Rails associations is, well, a bit nuanced. It's not magic; there's quite a bit going on under the hood, and understanding it deeply is key to avoiding future headaches. From my experience, particularly during the development of a large e-commerce platform a few years back (we were dealing with thousands of products, categories, and user interactions, so performance became paramount), knowing exactly how Rails handles associations was non-negotiable.
 
 The short answer is: Rails associations aren't automatically *generated* in the sense of, "poof, here are all your methods." Instead, they are declared, and based on that declaration, Rails dynamically constructs methods for you. We define the *relationship*, and Rails generates the necessary machinery (methods, queries, etc.) to enable that relationship. This is a powerful mechanism because it keeps our code concise and readable, but failing to grasp the details can lead to performance issues and unexpected behavior.
 

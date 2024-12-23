@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-causes-the-getrlimitrlimitnofile-10485761048576-error-when-deploying-nginx-in-containers"
 ---
 
-Okay, let's dissect this common hiccup that often surfaces when containerizing NGINX. I've seen this exact error, `getrlimit(RLIMIT_NOFILE): 1048576:1048576`, manifest itself in numerous deployments, usually just when you least expect it. It’s not really about NGINX *itself* failing, but more about its operational environment, specifically the limits imposed on the number of open file descriptors available to the process within the container. Understanding the interplay between these limits and the NGINX architecture is key to resolving it.
+, let's dissect this common hiccup that often surfaces when containerizing NGINX. I've seen this exact error, `getrlimit(RLIMIT_NOFILE): 1048576:1048576`, manifest itself in numerous deployments, usually just when you least expect it. It’s not really about NGINX *itself* failing, but more about its operational environment, specifically the limits imposed on the number of open file descriptors available to the process within the container. Understanding the interplay between these limits and the NGINX architecture is key to resolving it.
 
 Fundamentally, this message means that NGINX, or rather, the process it spawned within the container, is trying to configure its system resource limits—specifically `RLIMIT_NOFILE`, which governs the maximum number of files (including sockets and pipes) that a process can have open simultaneously. The two numbers presented, `1048576:1048576`, usually indicate that the soft limit (the limit the process can *request*) and the hard limit (the absolute limit enforced by the operating system) are both set to 1,048,576.
 

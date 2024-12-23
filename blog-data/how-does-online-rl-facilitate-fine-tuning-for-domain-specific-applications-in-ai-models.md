@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "how-does-online-rl-facilitate-fine-tuning-for-domain-specific-applications-in-ai-models"
 ---
 
-Okay so you wanna know about online RL and how it helps tweak AI models for specific jobs right  pretty cool stuff actually  It's like having a super adaptable AI that learns on the go not just from a big dataset you prepared beforehand but directly from its experiences in the real world or a simulated one  Think of it like teaching a dog new tricks you don't just show it videos of other dogs doing tricks you actively reward and correct its behavior as it tries to learn
+ so you wanna know about online RL and how it helps tweak AI models for specific jobs right  pretty cool stuff actually  It's like having a super adaptable AI that learns on the go not just from a big dataset you prepared beforehand but directly from its experiences in the real world or a simulated one  Think of it like teaching a dog new tricks you don't just show it videos of other dogs doing tricks you actively reward and correct its behavior as it tries to learn
 
 The neat thing about online RL is its flexibility  Traditional methods train AI models offline  You give it a massive dataset and it crunches numbers for days maybe weeks to learn  Then you deploy it and hope for the best  But with online RL the AI learns and adapts as it interacts with its environment  This means it's much better at dealing with situations it hasn't seen before which is super important for real-world applications
 

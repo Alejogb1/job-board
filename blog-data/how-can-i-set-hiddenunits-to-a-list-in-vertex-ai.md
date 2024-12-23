@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-can-i-set-hiddenunits-to-a-list-in-vertex-ai"
 ---
 
-Okay, let's tackle this. It's a question I’ve bumped into a few times, especially when architecting more complex neural network topologies within Vertex AI’s training pipelines. The challenge, as I understand it, isn’t about *if* you can define a list of `hidden_units`, but rather *how* to correctly feed it into the framework such that it’s interpreted as an architectural definition rather than some misconstrued parameter.
+,  It's a question I’ve bumped into a few times, especially when architecting more complex neural network topologies within Vertex AI’s training pipelines. The challenge, as I understand it, isn’t about *if* you can define a list of `hidden_units`, but rather *how* to correctly feed it into the framework such that it’s interpreted as an architectural definition rather than some misconstrued parameter.
 
 Often, we encounter this issue because, by default, many Vertex AI training interfaces (like the `CustomJob` or even specific pre-built estimator classes) expect a single integer for `hidden_units` when referring to the number of neurons in a single hidden layer. Specifying a *list* becomes pertinent when you’re building multi-layer perceptrons or similarly structured models where each layer might have a different number of units. You can’t simply pass `hidden_units = [128, 64, 32]` directly into, say, a standard `tf.keras.layers.Dense` setup *within* the training configuration. Instead, you've got to architect your model construction process to consume this list as the intended blueprint for layer structure.
 

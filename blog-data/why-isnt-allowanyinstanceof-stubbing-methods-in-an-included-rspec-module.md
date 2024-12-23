@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-isnt-allowanyinstanceof-stubbing-methods-in-an-included-rspec-module"
 ---
 
-Alright, let's tackle this. This particular quirk with `allow_any_instance_of` and included modules in rspec is something I recall banging my head against quite a bit back in the day, while working on a moderately large Rails project with a rather extensive use of mixins. It's definitely not immediately obvious why it behaves this way, and it stems from a fundamental difference in how rspec handles stubs in relation to the object's ancestry chain.
+Alright,  This particular quirk with `allow_any_instance_of` and included modules in rspec is something I recall banging my head against quite a bit back in the day, while working on a moderately large Rails project with a rather extensive use of mixins. It's definitely not immediately obvious why it behaves this way, and it stems from a fundamental difference in how rspec handles stubs in relation to the object's ancestry chain.
 
 The short explanation is this: `allow_any_instance_of` works by directly modifying the target class's method table. When we include a module, the methods aren't *directly* on the class where we’re using `allow_any_instance_of`; rather, they reside within the included module and are incorporated into the class via Ruby’s method lookup. `allow_any_instance_of` modifies the class, *not* the module that is providing those methods. Consequently, when the method is actually called at runtime, it bypasses the stub we created because the method lookup traverses the ancestry chain correctly to the original method in the included module. We are effectively stubbing a ghost method.
 

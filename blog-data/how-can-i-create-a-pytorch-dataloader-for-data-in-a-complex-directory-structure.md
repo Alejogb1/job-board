@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-create-a-pytorch-dataloader-for-data-in-a-complex-directory-structure"
 ---
 
-Okay, let's tackle this. I recall a project back in '18 where we had a rather…*ambitious* data pipeline for some geospatial analysis. The dataset wasn't neatly packaged; rather, it was spread across numerous directories, each with varying levels of nested subdirectories. Building a performant `DataLoader` in PyTorch for that was, to put it mildly, a learning experience. So, let's break down how you'd approach a complex directory structure like that, avoiding the common pitfalls I encountered.
+,  I recall a project back in '18 where we had a rather…*ambitious* data pipeline for some geospatial analysis. The dataset wasn't neatly packaged; rather, it was spread across numerous directories, each with varying levels of nested subdirectories. Building a performant `DataLoader` in PyTorch for that was, to put it mildly, a learning experience. So, let's break down how you'd approach a complex directory structure like that, avoiding the common pitfalls I encountered.
 
 The core issue is that `torch.utils.data.Dataset` and by extension, `DataLoader`, expects a somewhat flattened representation of your data. A simple list of file paths, essentially. When you've got a complex directory tree, it's on you to provide a mechanism for the `Dataset` to locate and load your samples. The simplest and least scalable thing to do is to just write a script to flatten it all, but that has its own problems. Instead, we want to keep the structure intact and write some code that is scalable and maintainable.
 

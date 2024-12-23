@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-use-bert-large-uncased-for-long-text-classification-with-huggingface"
 ---
 
-Alright, let's tackle this. I remember back in '19, working on a project involving legal document analysis – that’s when I first really grappled with the practicalities of applying `bert-large-uncased` to long text classification. It's a classic problem: the input sequence length limitation inherent in BERT clashes directly with real-world, lengthy documents. The straightforward approach of simply feeding in the entire text just doesn’t cut it; you’ll run into tokenization length limits and, consequently, errors. We need strategies, and fortunately, there are several viable ones.
+Alright,  I remember back in '19, working on a project involving legal document analysis – that’s when I first really grappled with the practicalities of applying `bert-large-uncased` to long text classification. It's a classic problem: the input sequence length limitation inherent in BERT clashes directly with real-world, lengthy documents. The straightforward approach of simply feeding in the entire text just doesn’t cut it; you’ll run into tokenization length limits and, consequently, errors. We need strategies, and fortunately, there are several viable ones.
 
 First and foremost, let’s acknowledge the core constraint: BERT’s input token sequence limit, usually around 512 tokens for `bert-large-uncased`. Going beyond that directly leads to truncated inputs. We can't have that. This forces us into preprocessing the text. The common approaches revolve around chunking, sliding windows, or hierarchical methods. My experience leans heavily on chunking, especially when efficiency is a concern.
 

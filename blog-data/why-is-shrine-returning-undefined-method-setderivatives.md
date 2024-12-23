@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-shrine-returning-undefined-method-setderivatives"
 ---
 
-Okay, let's tackle this. The "undefined method `set_derivatives'" error with Shrine, it’s a classic, and something I've definitely seen a few times – most recently back in 2019, if memory serves, when we were migrating a fairly large image processing pipeline. It usually points to a particular kind of configuration issue or an incompatibility in your Shrine setup, specifically around derivatives processing. It's not a bug *per se*, but a clear indicator that something isn't wired up correctly.
+,  The "undefined method `set_derivatives'" error with Shrine, it’s a classic, and something I've definitely seen a few times – most recently back in 2019, if memory serves, when we were migrating a fairly large image processing pipeline. It usually points to a particular kind of configuration issue or an incompatibility in your Shrine setup, specifically around derivatives processing. It's not a bug *per se*, but a clear indicator that something isn't wired up correctly.
 
 Essentially, the `set_derivatives` method is part of Shrine's derivatives functionality, which allows you to create different versions or 'derivatives' of an uploaded file. Think thumbnails, resized images, or even different video encodings. If Shrine can't find that method, it’s because it hasn't been properly extended with the necessary processing module. It’s most often related to the attachment and its processing definitions, which are crucial for the overall behavior.
 

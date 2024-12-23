@@ -4,7 +4,7 @@ date: "2024-12-10"
 id: "how-does-strong-typing-and-data-validation-improve-data-quality-in-feature-engineering-pipelines"
 ---
 
-Okay so you wanna talk about strong typing and data validation in feature engineering right  like how they totally boost data quality  It's a big deal especially when you're building those complex pipelines  think of it like this you're building a Lego castle  but instead of Legos you've got data  and you need everything to fit perfectly otherwise the whole thing crumbles
+ so you wanna talk about strong typing and data validation in feature engineering right  like how they totally boost data quality  It's a big deal especially when you're building those complex pipelines  think of it like this you're building a Lego castle  but instead of Legos you've got data  and you need everything to fit perfectly otherwise the whole thing crumbles
 
 Strong typing is basically telling the computer exactly what kind of data each variable is  integers floats strings booleans  you get the picture  it's like labeling every Lego brick  so you know exactly what you're working with  no more accidentally mixing up a string with a number  which would be a total disaster in our Lego castle analogy  the computer can catch those errors before they even become problems
 

@@ -4,9 +4,9 @@ date: "2024-12-13"
 id: "merging-streams-java-duplicates"
 ---
 
-Alright so you're wrestling with merging streams in Java and getting duplicate entries thats a classic I've been there trust me I've coded through enough of these to fill a small library
+so you're wrestling with merging streams in Java and getting duplicate entries thats a classic I've been there trust me I've coded through enough of these to fill a small library
 
-Okay lets dive in straight into the mess and the fixes I am going to assume you are already familiar with streams and basic lambda concepts if not then I would suggest you first check out "Java 8 in Action" by Raoul-Gabriel Urma Mario Fusco and Alan Mycroft that book covers the basics of Java Streams pretty well go grab it now seriously I will wait
+ lets dive in straight into the mess and the fixes I am going to assume you are already familiar with streams and basic lambda concepts if not then I would suggest you first check out "Java 8 in Action" by Raoul-Gabriel Urma Mario Fusco and Alan Mycroft that book covers the basics of Java Streams pretty well go grab it now seriously I will wait
 
 I've been doing this Java thing for a while now back in 2014 when Java 8 first dropped I actually spent a solid week trying to debug a particularly nasty stream merge issue at a startup I was at We were building this real time analytics dashboard and we were getting duplicate data on the frontend it was a nightmare It turned out we were merging multiple event streams that had overlapping data its always something right
 
@@ -51,7 +51,7 @@ public class StreamMergeDuplicates {
 }
 ```
 
-This is pretty simple but has a minor gotcha The stateful `HashSet seen` variable is captured in lambda that modifies it It works okay for single threaded streams but is not threadsafe in parallel streams This is important thing to keep in mind if you decide to use parallel streams In this case it should work great but be mindful of it
+This is pretty simple but has a minor gotcha The stateful `HashSet seen` variable is captured in lambda that modifies it It works  for single threaded streams but is not threadsafe in parallel streams This is important thing to keep in mind if you decide to use parallel streams In this case it should work great but be mindful of it
 
 **Case 2 Distinct elements using `distinct()` Method**
 
@@ -85,7 +85,7 @@ This approach is often simpler and cleaner but it has a performance consideratio
 
 **Case 3 Merging custom objects with deduplication using `equals` and `hashCode`**
 
-So you want to merge objects not just primitives okay got it In this case overriding `equals()` and `hashCode()` is key for deduplication Lets make an example with a simple `Product` class
+So you want to merge objects not just primitives  got it In this case overriding `equals()` and `hashCode()` is key for deduplication Lets make an example with a simple `Product` class
 
 ```java
 import java.util.Arrays;
@@ -158,7 +158,7 @@ I added the `toString` method for easy printing You see how important `equals` a
 
 You have several options you can use the `distinct` method for most cases as it's simple and works for basic deduplication and its also threadsafe If you are dealing with custom objects make sure to implement `equals()` and `hashCode()` correctly If you have performance issues in mind think about `parallelStream()` and `unordered()` for large streams while being mindful of the trade offs
 
-Okay I think that covers most of it you've got the tools go forth and deduplicate your streams I've wasted enough time on this in the past I hope it helps you out but if you get stuck again do not hesitate to ask here we all have been there
+ I think that covers most of it you've got the tools go forth and deduplicate your streams I've wasted enough time on this in the past I hope it helps you out but if you get stuck again do not hesitate to ask here we all have been there
 Oh and one more thing Why was the Java developer always unhappy? Because he never got arrayed!
 
 Anyways back to the streams and if you feel like you need more in-depth explanation I would suggest you read "Effective Java" by Joshua Bloch he is a well-known and respected expert in Java and he also covers collections and streams really well

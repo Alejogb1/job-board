@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "incorrect-number-of-dimensions-r-error"
 ---
 
-Okay so "incorrect number of dimensions r error" right I've seen this dance more times than I care to admit let's unpack this thing it's usually a dimensions mismatch between two arrays or tensors or whatever multi-dimensional data structure we're dealing with which is a typical issue
+ so "incorrect number of dimensions r error" right I've seen this dance more times than I care to admit let's unpack this thing it's usually a dimensions mismatch between two arrays or tensors or whatever multi-dimensional data structure we're dealing with which is a typical issue
 
 I've personally wrestled with this particular error back in my early days working on a deep learning project building a custom image recognition model man that was a mess at first I was trying to feed a batch of 3D image data into a fully connected layer which was expecting a 2D matrix of flattened pixel data the error was screaming at me as clear as day but back then I was still finding my bearings now I see this error I kind of chuckle a bit and think "ah the good old shape mismatch"
 

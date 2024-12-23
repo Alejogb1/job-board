@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-mobilenet-exhibit-low-accuracy-on-mnist-in-a-tensorflow-federated-environment-compared-to-a-standard-tensorflow-environment-and-how-can-this-discrepancy-be-resolved"
 ---
 
-Okay, let's dive into this. I remember vividly one project back in '18, working on a federated learning setup with a distributed sensor network, something akin to what you're experiencing with mnist and mobilenet. We saw similar initial performance drops, and it definitely prompted a deeper investigation. The issue isn’t inherent to mobilenet *itself*, but rather, stems from the nuances of the federated learning process and how it interacts with the specific characteristics of a model like mobilenet.
+, let's dive into this. I remember vividly one project back in '18, working on a federated learning setup with a distributed sensor network, something akin to what you're experiencing with mnist and mobilenet. We saw similar initial performance drops, and it definitely prompted a deeper investigation. The issue isn’t inherent to mobilenet *itself*, but rather, stems from the nuances of the federated learning process and how it interacts with the specific characteristics of a model like mobilenet.
 
 The core problem is threefold: data heterogeneity across clients, the relative complexity of mobilenet compared to the simplicity of mnist, and potential challenges with how federated averaging is implemented in TensorFlow Federated. Let's break each down.
 

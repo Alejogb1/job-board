@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-isnt-airflow-gitsync-syncing-dags-using-the-community-helm-chart"
 ---
 
-Okay, let's talk about Airflow's gitsync with the community Helm chart. It's a scenario I've debugged more times than I care to remember, and it often boils down to a few common gotchas rather than fundamental flaws. It's frustrating when you expect those DAGs to just magically appear, and they…don’t. Let's unpack this.
+, let's talk about Airflow's gitsync with the community Helm chart. It's a scenario I've debugged more times than I care to remember, and it often boils down to a few common gotchas rather than fundamental flaws. It's frustrating when you expect those DAGs to just magically appear, and they…don’t. Let's unpack this.
 
 Firstly, it’s important to understand that the gitsync mechanism, when deployed via the community Helm chart, relies heavily on proper configuration within the chart's `values.yaml` file and the related environment variables passed to the airflow scheduler and webserver pods. Misconfigurations are frequently the root cause. I’ve seen countless examples where the settings look correct at a glance, but closer inspection reveals discrepancies. This is typically where my troubleshooting starts.
 

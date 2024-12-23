@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-run-undefined-for-a-nil-object-in-main"
 ---
 
-Okay, let's tackle this. I’ve seen this exact head-scratcher pop up more times than I care to count, usually during those late-night debugging sessions. The core of the issue, why calling `run` on a `nil` object in `_main` results in an "undefined method" error, boils down to fundamental concepts of object-oriented programming and how interpreters, like Ruby's, handle message passing. Let's break it down.
+,  I’ve seen this exact head-scratcher pop up more times than I care to count, usually during those late-night debugging sessions. The core of the issue, why calling `run` on a `nil` object in `_main` results in an "undefined method" error, boils down to fundamental concepts of object-oriented programming and how interpreters, like Ruby's, handle message passing. Let's break it down.
 
 First off, the error message "undefined method `run` for nil:NilClass" is precisely what it says. It indicates that you're trying to invoke a method named `run` on an object that has the special value `nil`. Crucially, `nil` is an object in its own right (belonging to the `NilClass`), not simply the absence of an object. And `NilClass` generally doesn't have a `run` method. That's why the interpreter throws a fit.
 

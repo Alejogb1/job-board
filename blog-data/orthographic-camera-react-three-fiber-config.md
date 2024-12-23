@@ -4,13 +4,13 @@ date: "2024-12-13"
 id: "orthographic-camera-react-three-fiber-config"
 ---
 
-Alright so orthographic camera react three fiber config right I've been down that rabbit hole before like way more times than I care to admit it’s one of those things that sounds simple in theory but then you actually try to implement it and suddenly you're staring at a black screen or something wildly distorted
+so orthographic camera react three fiber config right I've been down that rabbit hole before like way more times than I care to admit it’s one of those things that sounds simple in theory but then you actually try to implement it and suddenly you're staring at a black screen or something wildly distorted
 
 Let me tell you about the first time I dealt with this it was back in my early days using threejs I was building this architectural visualization app nothing fancy just a simple model viewer but the client insisted everything had to be perfectly aligned no perspective distortion at all naturally my noob self thought "oh easy just switch to orthographic camera" famous last words right
 
 I spent a whole day banging my head against the wall trying to figure out why my model was either super zoomed in or completely out of view Turns out the configuration for an orthographic camera is a whole different ball game compared to its perspective sibling The projection parameters the frustum settings all that jazz its crucial to get them right
 
-Okay so lets dive into some specifics using react-three-fiber makes it a little nicer but the underlying concepts are the same We're essentially manipulating a threejs camera object through the react declarative approach
+ so lets dive into some specifics using react-three-fiber makes it a little nicer but the underlying concepts are the same We're essentially manipulating a threejs camera object through the react declarative approach
 
 First things first you need a camera component in your scene this is how a basic one looks
 

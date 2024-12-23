@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "ggplot2-dot-plot-customization"
 ---
 
-Okay so ggplot2 dot plot customization right I've been there done that got the t-shirt literally had a project a few years back where dot plots were my arch-nemesis so I feel your pain Let me break it down for ya
+ so ggplot2 dot plot customization right I've been there done that got the t-shirt literally had a project a few years back where dot plots were my arch-nemesis so I feel your pain Let me break it down for ya
 
 First things first ggplot2 dot plots are technically just a form of scatter plot They leverage `geom_point()` which is why tweaking them can sometimes feel a bit less intuitive than say a bar chart They aren't a dedicated function like `geom_dotplot()` exists I know confusing isn't it and that's why I spent like two days trying to debug a simple dot plot back in my early days
 

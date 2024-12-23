@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-arent-friendlyid-slugs-working-with-rails-linkto-helpers"
 ---
 
-Alright, let's tackle this. I recall a particularly frustrating sprint a few years back where we ran headfirst into this exact issue—friendly_id slugs playing hide-and-seek with Rails' `link_to` helpers. We had meticulously set up friendly_id, generated slugs that looked perfectly valid in the database, and yet, the links were stubbornly defaulting to numeric ids. It was enough to make any developer question their sanity. So, what's going on under the hood, and how do we fix it?
+Alright,  I recall a particularly frustrating sprint a few years back where we ran headfirst into this exact issue—friendly_id slugs playing hide-and-seek with Rails' `link_to` helpers. We had meticulously set up friendly_id, generated slugs that looked perfectly valid in the database, and yet, the links were stubbornly defaulting to numeric ids. It was enough to make any developer question their sanity. So, what's going on under the hood, and how do we fix it?
 
 The core of the problem stems from how Rails’ `link_to` helper determines the route and parameters for generating URLs. By default, it leverages Active Record’s `to_param` method. This method, without intervention, returns the primary key, usually the `id` of your model. Friendly_id, on the other hand, operates by creating a slug attribute (often `slug`) and associating it with a unique identifier for your records. The challenge arises because Rails' default routing logic isn't automatically aware of this 'slug' magic; it's still reaching for the `id`.
 

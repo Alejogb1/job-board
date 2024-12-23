@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "what-are-the-constraints-and-independence-of-ann"
 ---
 
-Alright lemme break this down for you I've been wrestling with neural nets since way back when I swear the libraries were still in diapers so I've seen some things with constraints and independence that make you wanna pull your hair out
+lemme break this down for you I've been wrestling with neural nets since way back when I swear the libraries were still in diapers so I've seen some things with constraints and independence that make you wanna pull your hair out
 
 So constraints in ANNs yeah that's a big one It's like trying to fit a square peg in a round hole if you get it wrong You got various types of constraints to think about think of them like rules of the game or limitations of the tools we use
 

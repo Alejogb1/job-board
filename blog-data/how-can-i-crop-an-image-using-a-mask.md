@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-crop-an-image-using-a-mask"
 ---
 
-Okay, let's tackle image cropping with masks – a problem I've certainly bumped into more than once over the years, especially back when I was neck-deep in a project involving dynamic user avatar generation. This seemingly straightforward task can quickly become complex depending on the shape of the mask and desired outcomes.
+, let's tackle image cropping with masks – a problem I've certainly bumped into more than once over the years, especially back when I was neck-deep in a project involving dynamic user avatar generation. This seemingly straightforward task can quickly become complex depending on the shape of the mask and desired outcomes.
 
 Essentially, what we're aiming for is to use a secondary image – the mask – to determine which pixels of the primary image we keep and which we discard. A mask is often a grayscale image, although sometimes it can be a binary (black and white) image. The convention usually follows that lighter pixels in the mask indicate regions to keep and darker pixels indicate regions to discard or make transparent, assuming you're after alpha transparency. The crucial thing here is understanding that we are performing a pixel-by-pixel operation that requires matching the mask pixel location to the corresponding source image pixel.
 

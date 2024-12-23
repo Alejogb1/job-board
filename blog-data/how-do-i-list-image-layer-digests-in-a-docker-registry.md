@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-list-image-layer-digests-in-a-docker-registry"
 ---
 
-Okay, let's tackle this. I recall back in the early days of our cloud infrastructure, we had a particularly knotty issue with rogue container images bloating our storage. It became critically important to understand exactly what was inside these images, and specifically, how to inspect their individual layers. Listing image layer digests is fundamental to that process, and it’s something I’ve found myself revisiting more often than I initially expected. The approach isn’t particularly complicated, but the specifics can sometimes trip people up.
+,  I recall back in the early days of our cloud infrastructure, we had a particularly knotty issue with rogue container images bloating our storage. It became critically important to understand exactly what was inside these images, and specifically, how to inspect their individual layers. Listing image layer digests is fundamental to that process, and it’s something I’ve found myself revisiting more often than I initially expected. The approach isn’t particularly complicated, but the specifics can sometimes trip people up.
 
 The core principle here is that a Docker image isn't a single monolithic file. It's constructed from a sequence of read-only layers, each identified by a unique content addressable hash, the *digest*. These digests aren't just random identifiers; they're cryptographic hashes calculated from the layer's content, ensuring integrity and enabling deduplication across images. This means that if two images share a layer, that layer is stored only once in the registry, saving space.
 

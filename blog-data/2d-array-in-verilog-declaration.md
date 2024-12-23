@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "2d-array-in-verilog-declaration"
 ---
 
-Alright so you're wrestling with declaring 2D arrays in Verilog right Been there done that multiple times It's not as straightforward as some other languages which is why I figure you're here I've been elbow deep in hardware design for what feels like forever and Verilog's quirky nature on multidimensional arrays has bitten me more than once Let me walk you through it with some examples and maybe save you the headache I went through
+so you're wrestling with declaring 2D arrays in Verilog right Been there done that multiple times It's not as straightforward as some other languages which is why I figure you're here I've been elbow deep in hardware design for what feels like forever and Verilog's quirky nature on multidimensional arrays has bitten me more than once Let me walk you through it with some examples and maybe save you the headache I went through
 
 First off Verilog isn’t exactly thrilled with the term “2D array” or “multidimensional array” It prefers to think of them as arrays of vectors or memory depending on what you’re actually doing This distinction is crucial for understanding how to declare and use them So when you're thinking 2D array Verilog thinks "array of bit vectors"
 
@@ -32,7 +32,7 @@ endmodule
 
 ```
 
-Okay let's break it down `reg [7:0]` this declares a bit vector of 8 bits from bit 7 down to bit 0 The next part `my_2d_array` is just your array's name `[0:3]` that specifies the array size or the number of elements in the outer dimension so you have 4 rows or the depth of your 2D structure I’ve also included a small testbench snippet to initialize and display the array to check for you This pattern `reg [bit_width-1:0] array_name [array_depth]` is the most basic way to declare the 2d-ish structures in verilog and it should cover most use cases
+ let's break it down `reg [7:0]` this declares a bit vector of 8 bits from bit 7 down to bit 0 The next part `my_2d_array` is just your array's name `[0:3]` that specifies the array size or the number of elements in the outer dimension so you have 4 rows or the depth of your 2D structure I’ve also included a small testbench snippet to initialize and display the array to check for you This pattern `reg [bit_width-1:0] array_name [array_depth]` is the most basic way to declare the 2d-ish structures in verilog and it should cover most use cases
 
 Now you can access a specific row using its index directly so `my_2d_array[0]` accesses the first 8 bit vector `my_2d_array[1]` accesses the second one and so on If you want to access a specific bit within a specific row you would do it like `my_2d_array[0][2]` which access the third bit from the first row
 

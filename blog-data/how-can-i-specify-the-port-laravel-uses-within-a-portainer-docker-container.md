@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-specify-the-port-laravel-uses-within-a-portainer-docker-container"
 ---
 
-Okay, let’s tackle this one. It’s a common scenario when deploying Laravel applications with Docker and Portainer, and there are a few ways to handle it, each with slightly different implications. I’ve seen this pattern crop up numerous times over the years – from early microservice deployments where port conflicts were a daily occurrence to recent containerized projects. There's no single 'best' method, but rather a choice of approaches based on your specific setup and needs.
+, let’s tackle this one. It’s a common scenario when deploying Laravel applications with Docker and Portainer, and there are a few ways to handle it, each with slightly different implications. I’ve seen this pattern crop up numerous times over the years – from early microservice deployments where port conflicts were a daily occurrence to recent containerized projects. There's no single 'best' method, but rather a choice of approaches based on your specific setup and needs.
 
 The core challenge, of course, is that your Laravel application, typically listening on port 8000 (or sometimes 80), needs to be accessible from the outside world through a port you define within your Docker container and expose through Portainer. This is a fundamental aspect of container networking and Docker itself. The initial port within your Docker container where the application is running is independent from what is ultimately mapped for external access. We are essentially performing port mapping in Docker’s networking layer.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-my-mask-rcnn-instance-segmentation-producing-overlapping-boxes"
 ---
 
-Okay, let's tackle this. Overlapping bounding boxes in Mask RCNN instance segmentation—it’s a scenario I've encountered more often than I’d like to recall, and it can indeed be quite frustrating. It's certainly not a sign that the model is inherently flawed, but rather points to several common areas that warrant careful inspection and, quite often, a bit of fine-tuning. The problem, at its core, stems from how Mask RCNN handles object detection and, subsequently, mask prediction.
+,  Overlapping bounding boxes in Mask RCNN instance segmentation—it’s a scenario I've encountered more often than I’d like to recall, and it can indeed be quite frustrating. It's certainly not a sign that the model is inherently flawed, but rather points to several common areas that warrant careful inspection and, quite often, a bit of fine-tuning. The problem, at its core, stems from how Mask RCNN handles object detection and, subsequently, mask prediction.
 
 When dealing with overlapping boxes, the issue generally arises from a combination of factors, usually centered around the Non-Maximum Suppression (NMS) stage, the quality of the proposals from the Region Proposal Network (RPN), and sometimes, the post-processing steps after the mask prediction. Let's break this down a little further.
 

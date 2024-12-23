@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-create-a-confusion-matrix-for-binary-classification-with-a-neural-network"
 ---
 
-Okay, let’s tackle this. From my experience working on a few projects involving image analysis and medical diagnosis, I've become pretty familiar with the ins and outs of confusion matrices, particularly when evaluating binary classification models. So, constructing one from neural network predictions is definitely something I can walk you through.
+, let’s tackle this. From my experience working on a few projects involving image analysis and medical diagnosis, I've become pretty familiar with the ins and outs of confusion matrices, particularly when evaluating binary classification models. So, constructing one from neural network predictions is definitely something I can walk you through.
 
 The core idea behind a confusion matrix is to provide a detailed breakdown of a model's prediction performance. In binary classification, we deal with two classes – say, ‘positive’ and ‘negative’ (or ‘1’ and ‘0,’ ‘true’ and ‘false,’ whatever fits your problem domain). The matrix then lays out how many instances were predicted correctly and incorrectly for each class. It’s a vital tool for moving beyond simple accuracy and understanding where your model is strong or weak.
 

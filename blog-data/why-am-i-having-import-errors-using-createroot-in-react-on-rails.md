@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-am-i-having-import-errors-using-createroot-in-react-on-rails"
 ---
 
-Okay, let's dissect this import error with `createRoot` in a React on Rails setup. I've bumped into this scenario a few times, often in projects where the integration between the two frameworks wasn't quite as seamless as hoped. It usually boils down to a mismatch between expectations regarding how React expects to be initialized and how Rails handles its asset pipeline and webpack integrations. Let's break it down step-by-step, focusing on potential causes and pragmatic solutions.
+, let's dissect this import error with `createRoot` in a React on Rails setup. I've bumped into this scenario a few times, often in projects where the integration between the two frameworks wasn't quite as seamless as hoped. It usually boils down to a mismatch between expectations regarding how React expects to be initialized and how Rails handles its asset pipeline and webpack integrations. Let's break it down step-by-step, focusing on potential causes and pragmatic solutions.
 
 The crux of the issue often resides in how the `createRoot` function, introduced in React 18, differs from the older `ReactDOM.render` approach. `createRoot` is located within the `react-dom/client` module, whereas `ReactDOM.render` resided directly in `react-dom`. This change can easily lead to import errors if your project's configuration isn't updated accordingly.
 

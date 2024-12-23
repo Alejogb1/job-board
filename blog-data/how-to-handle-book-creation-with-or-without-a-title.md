@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-handle-book-creation-with-or-without-a-title"
 ---
 
-Okay, let's tackle this one. It’s a problem I’ve encountered more than a few times, particularly when dealing with document management systems and content APIs back in my publishing tech days. The challenge of handling book creation, whether the title is provided at the outset or comes later, introduces some interesting design considerations. It's not simply a matter of “if” or “else”; rather, it requires thoughtful structuring to accommodate both scenarios gracefully and maintain data integrity.
+, let's tackle this one. It’s a problem I’ve encountered more than a few times, particularly when dealing with document management systems and content APIs back in my publishing tech days. The challenge of handling book creation, whether the title is provided at the outset or comes later, introduces some interesting design considerations. It's not simply a matter of “if” or “else”; rather, it requires thoughtful structuring to accommodate both scenarios gracefully and maintain data integrity.
 
 Essentially, the core issue revolves around managing the lifecycle of a ‘book’ entity when its defining identifier—the title—may or may not be available during the initial creation phase. To illustrate, let’s assume our ‘book’ object requires a title and an optional author array at the very least. The crux of the problem lies in how we allow that title to be added or modified at various stages of the process, without leaving the system in an inconsistent state.
 

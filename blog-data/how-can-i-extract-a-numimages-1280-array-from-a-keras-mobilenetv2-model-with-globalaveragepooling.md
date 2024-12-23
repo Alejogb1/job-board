@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-extract-a-numimages-1280-array-from-a-keras-mobilenetv2-model-with-globalaveragepooling"
 ---
 
-Alright, let's tackle this. I’ve certainly been down this road before, trying to get intermediate outputs from a network, and extracting features specifically after a `GlobalAveragePooling2D` layer can feel a little tricky at first. You're essentially looking to bypass the final classification layers and snag the feature representation just before the model's decision-making stage. It’s a very common scenario when you want to use pre-trained models for transfer learning or feature extraction. So, let’s unpack this systematically.
+Alright,  I’ve certainly been down this road before, trying to get intermediate outputs from a network, and extracting features specifically after a `GlobalAveragePooling2D` layer can feel a little tricky at first. You're essentially looking to bypass the final classification layers and snag the feature representation just before the model's decision-making stage. It’s a very common scenario when you want to use pre-trained models for transfer learning or feature extraction. So, let’s unpack this systematically.
 
 The key idea here is that we're not interested in the model's output probabilities; we want the activations from the layer *before* the classification head. In the case of MobileNetv2 with `GlobalAveragePooling2D`, this means we want the tensor coming out of the global average pooling operation. This tensor, typically a (batch_size, 1280) shape, encapsulates the learned features of the input images. The 1280 here is specific to MobileNetv2 and represents the number of channels (or filters) after the convolutional layers and the subsequent pooling operation.
 
@@ -73,7 +73,7 @@ This is functionally equivalent to the previous method but separates the extract
 
 **Method 3: Feature extraction during a model fit**
 
-Now, you might think, "Okay, these are good, but what if I need these features as part of the training process, not just inference?". Let’s tackle that scenario. Rather than predicting after the training, we can create an additional output in the training model that returns both the prediction and the features from the intermediate layer:
+Now, you might think, ", these are good, but what if I need these features as part of the training process, not just inference?". Let’s tackle that scenario. Rather than predicting after the training, we can create an additional output in the training model that returns both the prediction and the features from the intermediate layer:
 
 ```python
 import tensorflow as tf

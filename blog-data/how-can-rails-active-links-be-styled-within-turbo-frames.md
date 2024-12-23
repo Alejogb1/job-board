@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-rails-active-links-be-styled-within-turbo-frames"
 ---
 
-Okay, let's tackle this. It’s a topic I've spent quite a bit of time on, particularly after that rather perplexing incident with a client's navigation system. We were using Turbo frames extensively, and the active link styling just wasn't behaving as expected; it was a classic case of the dynamic nature of Turbo interfering with our carefully laid-out css. Let’s dive into how we can effectively manage active link styling within Turbo frames.
+,  It’s a topic I've spent quite a bit of time on, particularly after that rather perplexing incident with a client's navigation system. We were using Turbo frames extensively, and the active link styling just wasn't behaving as expected; it was a classic case of the dynamic nature of Turbo interfering with our carefully laid-out css. Let’s dive into how we can effectively manage active link styling within Turbo frames.
 
 The challenge primarily stems from the way Turbo handles page transitions. When a link within a Turbo frame is clicked, only the content inside that frame is updated, rather than a full page reload. This selective update means that conventional css selectors relying on page-level information—such as those targeting an ‘active’ class on a navigation element based on the current url—may not trigger or update correctly after the frame is replaced. Your typical `current_page?` helper in Rails might work fine for the initial load, but falls short once the frame content is updated through Turbo.
 

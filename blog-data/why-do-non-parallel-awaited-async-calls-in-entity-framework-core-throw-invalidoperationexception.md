@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-do-non-parallel-awaited-async-calls-in-entity-framework-core-throw-invalidoperationexception"
 ---
 
-Okay, let’s dive into this. It's a classic pitfall I’ve seen trip up many developers, including myself back in my early days with Entity Framework Core (EF Core). The issue with non-parallel, awaited async calls throwing `InvalidOperationException` when dealing with database operations is not a bug, per se, but a consequence of how EF Core manages its context and its expectations around execution flow. Let me explain.
+, let’s dive into this. It's a classic pitfall I’ve seen trip up many developers, including myself back in my early days with Entity Framework Core (EF Core). The issue with non-parallel, awaited async calls throwing `InvalidOperationException` when dealing with database operations is not a bug, per se, but a consequence of how EF Core manages its context and its expectations around execution flow. Let me explain.
 
 The core problem stems from the fact that `DbContext`, the heart of EF Core, is not inherently thread-safe. It’s designed to operate within a single, linear execution path. When you introduce asynchronous operations (`async`/`await`) without understanding their implications, you risk violating this expectation. The `await` keyword doesn't magically make your code execute in parallel; instead, it effectively pauses the current method's execution, allows other tasks to proceed, and resumes where it left off once the awaited operation completes. This is crucial to understand.
 

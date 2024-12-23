@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-rule-based-experts-be-leveraged-for-imitation-learning"
 ---
 
-Okay, let’s tackle this. I remember back at 'Aether Dynamics', we had a rather thorny issue implementing autonomous navigation for a prototype drone. We had tons of expert pilot flight data, meticulously logged, but the end-to-end neural network approach, while promising, just wasn't quite there, especially in edge cases. That’s when we started to seriously explore how rule-based experts could be combined with imitation learning.
+, let’s tackle this. I remember back at 'Aether Dynamics', we had a rather thorny issue implementing autonomous navigation for a prototype drone. We had tons of expert pilot flight data, meticulously logged, but the end-to-end neural network approach, while promising, just wasn't quite there, especially in edge cases. That’s when we started to seriously explore how rule-based experts could be combined with imitation learning.
 
 The core problem we faced, and it's common, is that while neural networks excel at finding patterns, they often lack the explicit reasoning capabilities that an expert system based on defined rules provides. These rule-based systems, built on domain expertise, are precise and explainable, but they are also brittle and hard to generalize outside their specified domains. Imitation learning, on the other hand, learns behavior from examples but does not have explicit understanding of the “why”. This is where the combined approach shows its strength.
 

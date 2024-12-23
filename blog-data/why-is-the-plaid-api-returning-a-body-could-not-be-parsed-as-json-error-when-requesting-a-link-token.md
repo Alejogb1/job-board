@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-the-plaid-api-returning-a-body-could-not-be-parsed-as-json-error-when-requesting-a-link-token"
 ---
 
-Alright, let's tackle this. I’ve definitely seen this “body could not be parsed as json” error with the Plaid API, more times than I’d care to recall, frankly. It usually pops up when you’re attempting to create a link token, and it can be incredibly frustrating, especially if you're new to the API or you're under a time constraint. This error, in its essence, points to a mismatch between the data you're sending to Plaid and what Plaid’s server expects. Let’s break down the typical culprits, based on my experiences debugging this over the years, and then I’ll offer some concrete examples.
+Alright,  I’ve definitely seen this “body could not be parsed as json” error with the Plaid API, more times than I’d care to recall, frankly. It usually pops up when you’re attempting to create a link token, and it can be incredibly frustrating, especially if you're new to the API or you're under a time constraint. This error, in its essence, points to a mismatch between the data you're sending to Plaid and what Plaid’s server expects. Let’s break down the typical culprits, based on my experiences debugging this over the years, and then I’ll offer some concrete examples.
 
 The core issue is that the Plaid API, like most modern APIs, expects a specific data format – specifically, a properly formatted JSON payload – in the body of your http request. This error message is essentially saying, “I got something that's not valid JSON when I tried to interpret your request." Now, there are a handful of common reasons for this to occur.
 

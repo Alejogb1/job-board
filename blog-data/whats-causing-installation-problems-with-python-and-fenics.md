@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "whats-causing-installation-problems-with-python-and-fenics"
 ---
 
-Okay, let's tackle this. I've seen my fair share of Python and FEniCS installation headaches over the years, and they usually boil down to a few key culprits. It’s rarely a straightforward "this one thing is broken" scenario. Often it's a confluence of version mismatches, dependency clashes, or environment issues that need careful unraveling. Let me walk you through some common pain points and how I've addressed them in the past.
+,  I've seen my fair share of Python and FEniCS installation headaches over the years, and they usually boil down to a few key culprits. It’s rarely a straightforward "this one thing is broken" scenario. Often it's a confluence of version mismatches, dependency clashes, or environment issues that need careful unraveling. Let me walk you through some common pain points and how I've addressed them in the past.
 
 First off, the nature of FEniCS, being a scientific computing package that relies heavily on compiled libraries like the *Linear Algebra PACKage* (LAPACK) and *Basic Linear Algebra Subprograms* (BLAS), means its installation is more complex than your average python library. The challenge often originates in the delicate balance required between python, its numerous dependent packages, and the FEniCS components themselves.
 

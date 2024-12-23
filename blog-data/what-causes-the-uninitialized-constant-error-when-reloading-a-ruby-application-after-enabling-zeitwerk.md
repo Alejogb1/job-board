@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-causes-the-uninitialized-constant-error-when-reloading-a-ruby-application-after-enabling-zeitwerk"
 ---
 
-Okay, let's dissect this. I've certainly spent my fair share of evenings staring at `uninitialized constant` errors after flipping the zeitwerk switch, and let me tell you, it’s rarely a straightforward ‘aha!’ moment. More often, it’s a trail of breadcrumbs you have to carefully follow. Let's break down what's going on and why this happens specifically when reloading after zeitwerk adoption.
+, let's dissect this. I've certainly spent my fair share of evenings staring at `uninitialized constant` errors after flipping the zeitwerk switch, and let me tell you, it’s rarely a straightforward ‘aha!’ moment. More often, it’s a trail of breadcrumbs you have to carefully follow. Let's break down what's going on and why this happens specifically when reloading after zeitwerk adoption.
 
 The core issue stems from how zeitwerk, the modern code loader for Ruby, differs from the traditional, often implicit, autoloading mechanisms. Think of autoloading as a kind of 'lazy loading' driven by ruby’s require mechanism. When a constant is encountered that ruby hasn’t seen yet, it kicks off the require process to locate it, using a predefined set of load paths. This often works well enough, but it has some drawbacks - race conditions during multi-threading scenarios, potential for inconsistencies and slower startup.
 

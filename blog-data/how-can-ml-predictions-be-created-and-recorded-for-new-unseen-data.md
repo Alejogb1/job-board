@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-ml-predictions-be-created-and-recorded-for-new-unseen-data"
 ---
 
-Alright, let's tackle this. I’ve certainly spent enough late nights facing the challenge of extending machine learning model predictions to completely new data. It’s one thing to train a model on a well-defined dataset; it's another to handle the real-world scenario where the model needs to make predictions on data it has never encountered during training. The process isn’t just a simple case of `model.predict()`; there are considerations of data handling, transformation consistency, and reliable recording practices.
+Alright,  I’ve certainly spent enough late nights facing the challenge of extending machine learning model predictions to completely new data. It’s one thing to train a model on a well-defined dataset; it's another to handle the real-world scenario where the model needs to make predictions on data it has never encountered during training. The process isn’t just a simple case of `model.predict()`; there are considerations of data handling, transformation consistency, and reliable recording practices.
 
 The core principle here is to ensure consistency between the data preparation pipeline used during model training and the data preparation applied to new, unseen data. If your model was trained on normalized features, any new data must be normalized using the *same* parameters. Likewise for categorical encodings, imputation, and feature engineering; every step of the process must be mirrored precisely. Neglecting this aspect will undoubtedly lead to degraded prediction quality, regardless of how well the model performed during training.
 

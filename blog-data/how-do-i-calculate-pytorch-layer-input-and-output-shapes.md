@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-calculate-pytorch-layer-input-and-output-shapes"
 ---
 
-Alright, let's tackle this. I've spent a fair bit of time in the trenches debugging neural network architectures, and I can tell you firsthand that getting layer dimensions correct is absolutely foundational. A shape mismatch can derail your entire training process, resulting in everything from subtle bugs to blatant error explosions. Let’s break down how to accurately calculate input and output shapes in PyTorch, and I'll share a few hard-earned lessons from the past.
+Alright,  I've spent a fair bit of time in the trenches debugging neural network architectures, and I can tell you firsthand that getting layer dimensions correct is absolutely foundational. A shape mismatch can derail your entire training process, resulting in everything from subtle bugs to blatant error explosions. Let’s break down how to accurately calculate input and output shapes in PyTorch, and I'll share a few hard-earned lessons from the past.
 
 The fundamental principle is that each PyTorch layer, whether it's a convolutional layer, a fully connected layer, a pooling layer, or anything else, operates on its input tensor to produce an output tensor. Understanding this transformation is key. The dimensions of the input tensor determine the size of the computation, and the parameters of the layer, such as filters, kernel size, stride, padding, and more, dictate the shape of the output.
 

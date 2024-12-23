@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-aws-cloudtrail-logging-bucket-deletion-be-restricted-via-iam-policies"
 ---
 
-Okay, let's tackle this. I've seen firsthand how accidentally deleting a critical CloudTrail log bucket can derail a serious audit and recovery effort. So, securing those buckets is absolutely vital. I recall one particular project where a junior engineer, bless their heart, nearly wiped out a whole month's worth of security logs before we caught it during a code review. That was a wake-up call. The solution isn't overly complicated, but it requires a very specific and well-thought-out approach using IAM policies. Let's break it down.
+,  I've seen firsthand how accidentally deleting a critical CloudTrail log bucket can derail a serious audit and recovery effort. So, securing those buckets is absolutely vital. I recall one particular project where a junior engineer, bless their heart, nearly wiped out a whole month's worth of security logs before we caught it during a code review. That was a wake-up call. The solution isn't overly complicated, but it requires a very specific and well-thought-out approach using IAM policies. Let's break it down.
 
 The fundamental problem arises because a principal—whether it's a user, role, or another aws service—with sufficient permissions can execute a `DeleteBucket` API call on an S3 bucket. This includes the bucket where your CloudTrail logs reside. The key to preventing unauthorized deletions lies in crafting effective IAM policies that deny this operation specifically for your log buckets. We'll go beyond simply denying `s3:DeleteBucket`; we'll also include additional conditions to make the policy robust against various scenarios.
 

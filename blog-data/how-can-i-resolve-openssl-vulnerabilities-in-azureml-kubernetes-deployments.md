@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-can-i-resolve-openssl-vulnerabilities-in-azureml-kubernetes-deployments"
 ---
 
-Okay, let's tackle this. It's a common scenario, and frankly, one I've spent quite a few late nights addressing over the years – specifically, those pesky OpenSSL vulnerabilities sneaking into Azure Machine Learning (AzureML) Kubernetes deployments. Dealing with these isn't a simple "flip a switch" type fix; it requires a multi-faceted approach, starting with understanding the various points of vulnerability and then implementing targeted solutions.
+,  It's a common scenario, and frankly, one I've spent quite a few late nights addressing over the years – specifically, those pesky OpenSSL vulnerabilities sneaking into Azure Machine Learning (AzureML) Kubernetes deployments. Dealing with these isn't a simple "flip a switch" type fix; it requires a multi-faceted approach, starting with understanding the various points of vulnerability and then implementing targeted solutions.
 
 First, let’s acknowledge that Kubernetes, while powerful, isn't inherently immune. AzureML builds on top of it, inheriting its strengths *and* potential weaknesses. OpenSSL vulnerabilities can manifest in various places within this ecosystem, primarily: the base container images used, application dependencies pulled in during build processes, and sometimes even within the services running inside the pods themselves. We need to address each one.
 

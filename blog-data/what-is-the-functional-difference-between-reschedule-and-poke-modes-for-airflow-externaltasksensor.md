@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-is-the-functional-difference-between-reschedule-and-poke-modes-for-airflow-externaltasksensor"
 ---
 
-Okay, let's break down the functional distinctions between “reschedule” and “poke” modes within Airflow's `ExternalTaskSensor`, something I’ve seen tripped up developers more than once, and I’ve had to troubleshoot myself in production scenarios. It’s not always immediately clear from the documentation, and the subtle differences in behavior can lead to unexpected outcomes if not properly understood.
+, let's break down the functional distinctions between “reschedule” and “poke” modes within Airflow's `ExternalTaskSensor`, something I’ve seen tripped up developers more than once, and I’ve had to troubleshoot myself in production scenarios. It’s not always immediately clear from the documentation, and the subtle differences in behavior can lead to unexpected outcomes if not properly understood.
 
 The core purpose of an `ExternalTaskSensor` is to monitor the execution status of a task in a *different* dag, and to conditionally proceed based on that state. Think of it as a dependency mechanism that stretches beyond the confines of a single DAG. It's a powerful feature for coordinating complex, multi-dag workflows. The question comes down to *how* the sensor checks for that dependent task's status. This is where 'reschedule' and 'poke' come into play.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-restore-a-domain-from-a-deleted-google-cloud-project"
 ---
 
-Okay, let’s tackle this one. I've seen this scenario a few times, usually in the wake of a late-night "oops" or someone cleaning house a bit too enthusiastically. The process of recovering a domain associated with a deleted Google Cloud project isn't exactly intuitive, but it's generally achievable with a bit of careful maneuvering. It's not a single button click, unfortunately, and it involves understanding a couple of key concepts about how google cloud handles domain registration and project deletion.
+, let’s tackle this one. I've seen this scenario a few times, usually in the wake of a late-night "oops" or someone cleaning house a bit too enthusiastically. The process of recovering a domain associated with a deleted Google Cloud project isn't exactly intuitive, but it's generally achievable with a bit of careful maneuvering. It's not a single button click, unfortunately, and it involves understanding a couple of key concepts about how google cloud handles domain registration and project deletion.
 
 First off, it's vital to clarify that deleting a google cloud *project* is different from deleting a *domain registration* within that project (if the domain was registered through google domains linked to that project, for example). If you deleted the domain registration directly, that's another beast altogether and often requires working with support, which will be briefly mentioned. However, I’m assuming we're talking about the more common situation: you deleted the entire project, including a domain that was linked to it.
 

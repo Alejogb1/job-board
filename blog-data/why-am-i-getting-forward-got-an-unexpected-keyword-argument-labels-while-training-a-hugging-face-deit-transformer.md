@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-forward-got-an-unexpected-keyword-argument-labels-while-training-a-hugging-face-deit-transformer"
 ---
 
-Okay, let's unpack this `forward() got an unexpected keyword argument 'labels'` error you're encountering with your DeiT transformer. I’ve seen this precise issue crop up more times than I care to remember, usually when moving quickly between different models and training paradigms within the Hugging Face ecosystem. It's a fairly common gotcha, and it boils down to a mismatch between what the model expects and what you're feeding it during the training loop.
+, let's unpack this `forward() got an unexpected keyword argument 'labels'` error you're encountering with your DeiT transformer. I’ve seen this precise issue crop up more times than I care to remember, usually when moving quickly between different models and training paradigms within the Hugging Face ecosystem. It's a fairly common gotcha, and it boils down to a mismatch between what the model expects and what you're feeding it during the training loop.
 
 The root of the problem lies in how transformers, specifically those in the Hugging Face library, handle input arguments during the forward pass. Transformers often support various training strategies, including those involving classification, regression, and language modeling. Each of these might expect slightly different arguments passed to the `forward()` method. Your error, `'labels'`, specifically, points towards the fact you’re likely passing in a `labels` argument intended for a classification task to a DeiT model configured for something other than classification during its forward pass, perhaps using it as a base encoder.
 

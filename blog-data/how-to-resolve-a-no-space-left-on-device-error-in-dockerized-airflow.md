@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-resolve-a-no-space-left-on-device-error-in-dockerized-airflow"
 ---
 
-Okay, let's tackle this. I've definitely seen my share of “no space left on device” errors, especially with Dockerized Airflow deployments. It’s a classic scenario that tends to manifest unexpectedly, usually at the least convenient moment. The good news is, it’s almost always resolvable with a methodical approach. It typically isn't one single cause, rather an accumulation of factors that we need to methodically break down. Let me walk you through my troubleshooting process based on past experiences – it's a combination of Docker fundamentals, Airflow's peculiarities, and some real-world gotchas.
+,  I've definitely seen my share of “no space left on device” errors, especially with Dockerized Airflow deployments. It’s a classic scenario that tends to manifest unexpectedly, usually at the least convenient moment. The good news is, it’s almost always resolvable with a methodical approach. It typically isn't one single cause, rather an accumulation of factors that we need to methodically break down. Let me walk you through my troubleshooting process based on past experiences – it's a combination of Docker fundamentals, Airflow's peculiarities, and some real-world gotchas.
 
 Firstly, understand the core issue isn't just about "no space." It's more precise to say, "a particular storage location managed by Docker has exhausted its allotted space," or that a disk in the container itself has run dry. Docker, as many are aware, utilizes a storage driver. This driver manages how image layers and container data are stored. When this storage fills up, operations begin to fail.
 

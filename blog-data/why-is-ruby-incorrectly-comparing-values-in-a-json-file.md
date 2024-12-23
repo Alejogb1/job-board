@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-ruby-incorrectly-comparing-values-in-a-json-file"
 ---
 
-Okay, let's tackle this. I've seen this kind of issue pop up more times than I care to count, especially when dealing with data serialized to JSON and back in Ruby. It often boils down to a fundamental mismatch in data types and how Ruby, and indeed, any system handles them post-serialization. It's rarely a bug in ruby's core; it’s usually a subtle misunderstanding of the data's journey.
+,  I've seen this kind of issue pop up more times than I care to count, especially when dealing with data serialized to JSON and back in Ruby. It often boils down to a fundamental mismatch in data types and how Ruby, and indeed, any system handles them post-serialization. It's rarely a bug in ruby's core; it’s usually a subtle misunderstanding of the data's journey.
 
 From my experience, most often when you see values in a json file appearing to be incorrectly compared in ruby, it's because of differences in their representations post-parsing. JSON, fundamentally, is a text-based data interchange format. When you load this JSON data into Ruby using a library like `json`, it attempts to interpret these text representations into ruby objects. But here's the critical point: JSON doesn't enforce strong typing. Everything is either a string, number, boolean, null, array, or object. When Ruby's `json` library parses, it makes the best guess at the Ruby equivalent of the JSON data types. This can lead to values that look identical when printed out, but actually differ in their underlying type. For instance, a number in JSON, like `"123"` can be parsed as a string, even if we expect it as an integer and we’re trying to compare it with an actual integer object `123`.
 

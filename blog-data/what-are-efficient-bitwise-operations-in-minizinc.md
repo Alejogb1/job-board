@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-are-efficient-bitwise-operations-in-minizinc"
 ---
 
-Okay, let's tackle this. I've spent my share of time optimizing constraint models, and efficient bitwise operations in MiniZinc are something that can really make or break the performance of certain types of problems. It's less about “magic” tricks and more about understanding how the underlying solver interacts with the model's structure. When I first encountered this, it was on a resource allocation problem involving complex hardware configurations, and inefficient bitwise manipulations nearly brought the whole thing to its knees.
+,  I've spent my share of time optimizing constraint models, and efficient bitwise operations in MiniZinc are something that can really make or break the performance of certain types of problems. It's less about “magic” tricks and more about understanding how the underlying solver interacts with the model's structure. When I first encountered this, it was on a resource allocation problem involving complex hardware configurations, and inefficient bitwise manipulations nearly brought the whole thing to its knees.
 
 So, let's unpack what we mean by "efficient." In the context of MiniZinc, efficiency isn't solely about writing the shortest, most concise code. It's primarily about how the solver interprets and processes those bitwise expressions, impacting both the search time and the memory usage. A solver generally operates at a higher level of abstraction; therefore, not all seemingly equivalent bitwise formulations are equal from a solver's perspective. The goal is to present constraints in a way that allows the solver to efficiently propagate information and prune the search space.
 

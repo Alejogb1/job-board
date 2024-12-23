@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-focal-loss-improve-model-performance-on-imbalanced-datasets-in-pytorch"
 ---
 
-Let's tackle this. I remember a project back in 2018 involving medical image analysis where we had a severe class imbalance – tumors were significantly less frequent than healthy tissue. Accuracy was sky-high, but the model consistently missed the few critical instances of pathology. That’s when focal loss became a crucial part of our toolkit.
+ I remember a project back in 2018 involving medical image analysis where we had a severe class imbalance – tumors were significantly less frequent than healthy tissue. Accuracy was sky-high, but the model consistently missed the few critical instances of pathology. That’s when focal loss became a crucial part of our toolkit.
 
 The problem with standard cross-entropy loss in imbalanced datasets is that the dominant class often overwhelms the learning process. The model becomes overly confident in predicting the majority class because it’s easy to achieve a low loss in that area. The minority class, despite its importance, doesn't get enough 'attention' during training. Focal loss addresses this by modulating the standard cross-entropy loss, reducing the loss contribution for well-classified examples and focusing on the hard, misclassified ones. This essentially shifts the training focus towards the minority classes, improving their overall classification performance.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-keras-cross-entropy-loss-be-adapted-for-multi-objective-training-with-missing-labels"
 ---
 
-Okay, let's unpack this one. It’s a problem I encountered a few years back while working on a multi-modal medical imaging analysis system. We had to juggle multiple diagnostic objectives – say, detecting both tumors *and* identifying specific tissue types – using a dataset that, let’s just say, was less than perfectly labelled. Some images had only the tumor location, others only the tissue type, and a good portion had both, or even none at all. It became a messy, real-world scenario, and standard Keras cross-entropy simply wouldn’t cut it.
+, let's unpack this one. It’s a problem I encountered a few years back while working on a multi-modal medical imaging analysis system. We had to juggle multiple diagnostic objectives – say, detecting both tumors *and* identifying specific tissue types – using a dataset that, let’s just say, was less than perfectly labelled. Some images had only the tumor location, others only the tissue type, and a good portion had both, or even none at all. It became a messy, real-world scenario, and standard Keras cross-entropy simply wouldn’t cut it.
 
 The challenge with using standard cross-entropy when you've got missing labels is that it penalizes the model for predictions it *shouldn’t* be making based on the limited available information. For instance, if an image only has a tumor label, trying to apply cross-entropy on the tissue classification branch would be meaningless—the model would be penalized for an output that wasn't actually supervised.
 

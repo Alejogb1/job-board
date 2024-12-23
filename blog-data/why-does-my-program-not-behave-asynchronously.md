@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-does-my-program-not-behave-asynchronously"
 ---
 
-Okay, let's tackle this. From my experience, the frustration of a program refusing to behave asynchronously is quite common, and often stems from subtle misunderstandings about the underlying mechanisms at play. It's not always a glaring error; sometimes, it's a series of small issues conspiring together. I’ve certainly spent more than a few late nights debugging this exact problem, and what I’ve learned is that asynchronous behavior is not simply about calling a function that looks like it *should* be asynchronous – it’s about understanding the entire execution model.
+,  From my experience, the frustration of a program refusing to behave asynchronously is quite common, and often stems from subtle misunderstandings about the underlying mechanisms at play. It's not always a glaring error; sometimes, it's a series of small issues conspiring together. I’ve certainly spent more than a few late nights debugging this exact problem, and what I’ve learned is that asynchronous behavior is not simply about calling a function that looks like it *should* be asynchronous – it’s about understanding the entire execution model.
 
 The core problem typically boils down to one of a few interconnected factors: improper handling of threads or tasks, blocking operations masquerading as non-blocking, or, less frequently, misconfigured event loops or schedulers. Let's break these down.
 

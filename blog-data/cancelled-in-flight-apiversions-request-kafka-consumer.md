@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "cancelled-in-flight-apiversions-request-kafka-consumer"
 ---
 
-Alright so you're hitting that lovely cancelled in-flight api_versions request with your Kafka consumer right Been there done that got the t-shirt probably several actually. Its always fun when things decide to go sideways mid-flight. Let me break down what this probably means and how you can actually troubleshoot it and get yourself un-stuck. 
+so you're hitting that lovely cancelled in-flight api_versions request with your Kafka consumer right Been there done that got the t-shirt probably several actually. Its always fun when things decide to go sideways mid-flight. Let me break down what this probably means and how you can actually troubleshoot it and get yourself un-stuck. 
 
 From my past experience this usually means that your Kafka consumer is trying to talk to a Kafka broker but somewhere along the way the connection got severed or the broker is just not responding. It's kind of like yelling into a void and then getting angry cause nobody is answering you. Its frustrating I know. Now the "api_versions" bit this is crucial that's the initial handshake your consumer does when it first connects. It asks the broker what Kafka versions it supports and what features it can use. If that handshake gets canceled then your consumer's never going to be happy. Its probably gonna start throwing errors and stop doing useful work.
 

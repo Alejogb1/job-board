@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-edit-collection-select-options-in-ruby-on-rails"
 ---
 
-Okay, let’s tackle this. I’ve been in the trenches with Rails for quite a while now, and working with `collection_select`—especially tweaking those options—is something that’s come up repeatedly. It’s a deceptively simple helper, but the nuances can definitely catch you out if you're not aware of them.
+, let’s tackle this. I’ve been in the trenches with Rails for quite a while now, and working with `collection_select`—especially tweaking those options—is something that’s come up repeatedly. It’s a deceptively simple helper, but the nuances can definitely catch you out if you're not aware of them.
 
 The core challenge, as I see it, often stems from needing more flexibility than what the basic `collection_select` provides out-of-the-box. You might need to modify display text, add data attributes, or conditionally disable options. Simply put, you're often not dealing with a straightforward key-value pair mapping; the real world is messier than that.
 

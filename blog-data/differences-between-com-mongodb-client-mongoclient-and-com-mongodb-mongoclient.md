@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "differences-between-com-mongodb-client-mongoclient-and-com-mongodb-mongoclient"
 ---
 
-Okay so you're asking about the difference between `com.mongodb.client.MongoClient` and `com.mongodb.MongoClient` right? Been there done that many many times let me tell you.
+ so you're asking about the difference between `com.mongodb.client.MongoClient` and `com.mongodb.MongoClient` right? Been there done that many many times let me tell you.
 
 First off let's get this straight these are two different classes from the Java MongoDB driver they're not interchangeable they represent different eras of the driver and have distinct uses and lifecycles.
 
@@ -106,7 +106,7 @@ The driver rewrite in version 3 was meant to be more maintainable testable and f
 
 Absolutely not. Unless you are maintaining a legacy application and you can't afford to migrate it. It is highly recommended to use `com.mongodb.client.MongoClient` and never look back. If you are starting a new project do not even look at the old client. Seriously don't do it you'll regret it. The modern client is superior in almost every single way. It also helps to keep you on top of MongoDB updates and features.
 
-Now you might be asking "Okay I get the theory but what about real world scenarios?"
+Now you might be asking " I get the theory but what about real world scenarios?"
 
 Well back in the day when I was setting up sharding in a cloud environment I used the old client initially. I was banging my head to the wall because it was terribly slow and could not configure connection pools effectively. Then it hit me I was using an old version of the driver. After migrating to the newer client it was like night and day performance improved and it was easy to configure the connection pool size. Sometimes you gotta scratch your head like you're looking for a bug but really it is your fault for not using the correct library. Get it? haha ok let's move on.
 

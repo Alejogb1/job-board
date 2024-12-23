@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-redirect-after-successful-sign-in-and-handle-a-subsequent-post-request"
 ---
 
-Okay, let’s dive into this. I've personally grappled with this specific flow many times, especially back in the days when single-page applications were becoming mainstream and we were trying to handle authentication with a more robust, client-side-heavy approach. It’s more nuanced than simply tossing a `window.location.href` and hoping for the best, particularly when POST requests come into play post-authentication. We need to handle state transitions gracefully.
+, let’s dive into this. I've personally grappled with this specific flow many times, especially back in the days when single-page applications were becoming mainstream and we were trying to handle authentication with a more robust, client-side-heavy approach. It’s more nuanced than simply tossing a `window.location.href` and hoping for the best, particularly when POST requests come into play post-authentication. We need to handle state transitions gracefully.
 
 The challenge fundamentally lies in the separation of concerns between authentication and post-authentication actions, frequently involving a post request. Redirects are inherently GET operations, and after a successful authentication process, we often need to transmit data via a POST. Directly attempting to chain a redirect with a POST is problematic, as redirects simply tell the browser to request a *new* URL; they do not inherently carry request bodies. We need a strategy that maintains data, allows for redirection, and triggers the necessary POST.
 

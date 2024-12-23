@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-can-a-custom-categorical-loss-be-defined-with-a-variable-number-of-labels"
 ---
 
-Alright, let's tackle this. Variable label counts in custom categorical loss functions – it's a situation I’ve run into more than a few times. It usually surfaces in projects where you’re dealing with incomplete or dynamic datasets; think scenarios where an item might legitimately fall into one category, or several, or even none depending on the data source or acquisition process. The standard cross-entropy, which assumes a fixed number of mutually exclusive classes, simply breaks down. So, how do we make this work?
+Alright,  Variable label counts in custom categorical loss functions – it's a situation I’ve run into more than a few times. It usually surfaces in projects where you’re dealing with incomplete or dynamic datasets; think scenarios where an item might legitimately fall into one category, or several, or even none depending on the data source or acquisition process. The standard cross-entropy, which assumes a fixed number of mutually exclusive classes, simply breaks down. So, how do we make this work?
 
 Fundamentally, the challenge lies in adapting the loss calculation to reflect the variable number of labels associated with each input sample. Rather than assuming a one-hot vector for the ground truth, we need a mechanism to handle potentially sparse or multi-label ground truth vectors, and then compute the error in a way that's meaningful.
 

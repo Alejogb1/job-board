@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-my-callback-query-handler-in-a-telegram-bot-not-being-called"
 ---
 
-Okay, let's unpack this. The frustrating scenario of a Telegram bot's callback query handler stubbornly refusing to fire is something I’ve bumped into more than once, and it usually boils down to a few common culprits. My experience, particularly with larger bot deployments that handle numerous concurrent user interactions, has taught me to look for these specific issues first. It's rarely the Telegram API itself, which is generally quite reliable; instead, the problem is usually somewhere within the implementation logic of the bot.
+, let's unpack this. The frustrating scenario of a Telegram bot's callback query handler stubbornly refusing to fire is something I’ve bumped into more than once, and it usually boils down to a few common culprits. My experience, particularly with larger bot deployments that handle numerous concurrent user interactions, has taught me to look for these specific issues first. It's rarely the Telegram API itself, which is generally quite reliable; instead, the problem is usually somewhere within the implementation logic of the bot.
 
 The core idea is that when a user interacts with an inline keyboard button (the typical trigger for a callback query), Telegram sends that interaction data—the `callback_data` you specify—back to your bot. Your bot, in turn, is expected to have a designated handler that recognizes and acts upon that `callback_data`. The lack of this handler being activated points to a breakdown somewhere within this process.
 

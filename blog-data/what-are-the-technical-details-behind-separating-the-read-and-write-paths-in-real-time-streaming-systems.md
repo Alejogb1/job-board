@@ -4,7 +4,7 @@ date: "2024-12-10"
 id: "what-are-the-technical-details-behind-separating-the-read-and-write-paths-in-real-time-streaming-systems"
 ---
 
-Okay so you wanna know about separating read and write paths in real-time streaming right  super cool topic  it's all about performance and scalability think of it like a highway system you don't want all the cars going in the same direction at the same time right chaos  same with data you gotta keep the incoming data separate from the data you're accessing for queries or analysis otherwise everything grinds to a halt
+ so you wanna know about separating read and write paths in real-time streaming right  super cool topic  it's all about performance and scalability think of it like a highway system you don't want all the cars going in the same direction at the same time right chaos  same with data you gotta keep the incoming data separate from the data you're accessing for queries or analysis otherwise everything grinds to a halt
 
 The core idea is creating independent pipelines one for ingesting and processing new data the write path and another for serving up that data for queries and analysis the read path  this separation is crucial because writing and reading have vastly different performance requirements writing needs speed and efficiency and often involves things like batching and compression reading however needs low latency fast response times for those real-time dashboards and analytics
 

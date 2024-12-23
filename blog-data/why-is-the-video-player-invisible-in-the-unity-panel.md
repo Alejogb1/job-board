@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-the-video-player-invisible-in-the-unity-panel"
 ---
 
-Okay, let’s tackle this. So, you've got a video player seemingly gone rogue in your Unity panel, huh? I've spent more than a few late nights troubleshooting similar issues, and trust me, the "invisible video player" is a classic. It’s almost never magic; it's almost always a straightforward (though sometimes tedious) case of tracking down the specific issue. Let's break down the common culprits and, more importantly, how to actually *fix* them, based on what I’ve seen over the years.
+, let’s tackle this. So, you've got a video player seemingly gone rogue in your Unity panel, huh? I've spent more than a few late nights troubleshooting similar issues, and trust me, the "invisible video player" is a classic. It’s almost never magic; it's almost always a straightforward (though sometimes tedious) case of tracking down the specific issue. Let's break down the common culprits and, more importantly, how to actually *fix* them, based on what I’ve seen over the years.
 
 The first thing I'd check – and this is *always* the first step in my process – is the basic rendering order. Remember that Unity uses a layered rendering system, often based on the “sorting layer” of the component and then its render order within that layer. If your video player, or more specifically the ui element on which the video texture is shown, isn't set to render on top of other ui elements, it can very easily be hidden by another UI element. So, first, let’s make sure that the video ui component is at the top of the hierarchy. After that, let’s go through the possible causes of the invisible video player.
 

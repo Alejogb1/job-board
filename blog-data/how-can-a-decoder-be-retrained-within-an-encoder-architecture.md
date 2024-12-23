@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-a-decoder-be-retrained-within-an-encoder-architecture"
 ---
 
-Okay, let's dive into the somewhat intricate process of retraining a decoder within an established encoder architecture. I’ve tackled variations of this problem numerous times, and it’s something that often comes up when adapting a model to new tasks or domains without completely starting from scratch. A full retraining of a large encoder-decoder architecture can be prohibitively expensive in terms of computation and time. The method of selectively retraining the decoder, while preserving the encoded space, becomes paramount in such instances. Let's explore how this is typically accomplished.
+, let's dive into the somewhat intricate process of retraining a decoder within an established encoder architecture. I’ve tackled variations of this problem numerous times, and it’s something that often comes up when adapting a model to new tasks or domains without completely starting from scratch. A full retraining of a large encoder-decoder architecture can be prohibitively expensive in terms of computation and time. The method of selectively retraining the decoder, while preserving the encoded space, becomes paramount in such instances. Let's explore how this is typically accomplished.
 
 The core idea rests on the premise that the encoder has, through previous training, learned a meaningful representation of the input data within a latent space. This encoded representation is subsequently used as input to the decoder. Therefore, if the task changes only in terms of mapping from this latent space to a different output space, we can potentially freeze (or keep stable through a low learning rate) the encoder, and primarily focus on refining the decoder.
 

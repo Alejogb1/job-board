@@ -74,7 +74,7 @@ scrape_configs:
 
 Here, we are extracting the `type` field and the nested fields `user.id` and `user.username`. The dot notation inside the `json` expressions handles nested structures elegantly. The first `labels` stage converts `event_type` and `user_id` into Loki labels directly. Then, we use a `template` stage. Here I’m demonstrating a practical real-world use case: we truncate the username field to its first 10 characters because lengthy usernames will result in high cardinality labels (which slow down Loki and aren’t practical). Then we extract this truncated version of username to the label `short_username`.
 
-This underscores a critical point: choosing which fields to convert into labels requires careful consideration. Labels are indexed by Loki and significantly affect performance. High-cardinality labels (those with many unique values) should be avoided whenever feasible. In this case, we decided that user id is okay for labels but username is not, so we truncate it. It's about making intelligent tradeoffs.
+This underscores a critical point: choosing which fields to convert into labels requires careful consideration. Labels are indexed by Loki and significantly affect performance. High-cardinality labels (those with many unique values) should be avoided whenever feasible. In this case, we decided that user id is  for labels but username is not, so we truncate it. It's about making intelligent tradeoffs.
 
 Finally, let’s look at how you can use the `json` stage combined with `match` stages to filter based on log properties. This example also demonstrates how to keep original JSON as is, in the log lines that goes to Loki, while extracting and processing some JSON properties for labels.
 

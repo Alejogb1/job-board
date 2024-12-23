@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-access-the-database-tool-in-webstorm"
 ---
 
-Okay, let's tackle this one. It’s a question I’ve seen pop up a few times, and I recall spending a good chunk of time myself figuring it out initially, back when I was setting up a complex microservices architecture. The integrated database tools within WebStorm are powerful, but they aren't always immediately obvious, particularly if you’re accustomed to standalone database clients. So, let's get into it.
+, let's tackle this one. It’s a question I’ve seen pop up a few times, and I recall spending a good chunk of time myself figuring it out initially, back when I was setting up a complex microservices architecture. The integrated database tools within WebStorm are powerful, but they aren't always immediately obvious, particularly if you’re accustomed to standalone database clients. So, let's get into it.
 
 First off, WebStorm's database functionality isn't a separate application, but rather a tightly integrated plugin. This means it's not something you "launch"; instead, you configure a data source within your project. Think of it as defining a connection profile that WebStorm uses to interact with your database server. Accessing this requires navigating through a few key areas within the IDE, primarily the "Database" tool window.
 

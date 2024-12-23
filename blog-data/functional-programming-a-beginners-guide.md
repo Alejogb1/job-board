@@ -4,7 +4,7 @@ date: "2024-11-16"
 id: "functional-programming-a-beginners-guide"
 ---
 
-okay dude so we're gonna geek out about this video right it's all about this wild thing called 'functional programming'  it's like this whole different way of thinking about code  the video basically tries to show you why it’s awesome and how it can make your life easier even if you're just starting out seriously it's like learning to ride a unicycle it looks weird at first but then you're zooming around town feeling like a total boss
+ dude so we're gonna geek out about this video right it's all about this wild thing called 'functional programming'  it's like this whole different way of thinking about code  the video basically tries to show you why it’s awesome and how it can make your life easier even if you're just starting out seriously it's like learning to ride a unicycle it looks weird at first but then you're zooming around town feeling like a total boss
 
 so the setup is they're trying to build this thing a simple calculator app right but they do it in two ways the normal imperative way which is how most people start and then the functional way which is like the ninja level stuff  it’s all about pure functions immutability and things that sound scary but are actually kinda rad once you get it
 
@@ -14,7 +14,7 @@ another visual cue was how they showed the code flow  it was like this super cle
 
 and then there was this moment when they explain recursion it was illustrated with those cool branching diagrams you know the kind where it breaks down a problem into smaller and smaller pieces  it was genius!  it totally clicked for me that recursion is just a function calling itself until it gets to the base case it's like those russian nesting dolls but with code
 
-okay so key idea number one pure functions this is the big one pure functions are like the zen masters of the code world they only depend on their inputs and they always produce the same output for the same input  no sneaky side effects no surprises  it's like a vending machine you put in your money and you get your snack no questions asked
+ so key idea number one pure functions this is the big one pure functions are like the zen masters of the code world they only depend on their inputs and they always produce the same output for the same input  no sneaky side effects no surprises  it's like a vending machine you put in your money and you get your snack no questions asked
 
 here’s a simple example in python
 

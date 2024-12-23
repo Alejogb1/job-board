@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-install-new-fonts-in-altair-and-specify-in-titleparams"
 ---
 
-Alright, let's tackle this. Setting up custom fonts in Altair and using them, especially within `TitleParams`, can seem a bit quirky at first, but it's quite manageable once you understand the mechanics. In my past projects, particularly when generating complex data visualizations for client presentations, I’ve often found the default fonts lacking, and a custom look was paramount to maintaining branding consistency. So, while Altair directly leverages the browser's font rendering, we do have ways to inject the fonts we need and control their application.
+Alright,  Setting up custom fonts in Altair and using them, especially within `TitleParams`, can seem a bit quirky at first, but it's quite manageable once you understand the mechanics. In my past projects, particularly when generating complex data visualizations for client presentations, I’ve often found the default fonts lacking, and a custom look was paramount to maintaining branding consistency. So, while Altair directly leverages the browser's font rendering, we do have ways to inject the fonts we need and control their application.
 
 The first crucial step is understanding that Altair, being a declarative visualization library, relies heavily on the browser's font stack. It doesn’t ship with its own font manager; instead, it utilizes the fonts available within the user's system, plus those that might be dynamically loaded by the page. This means that to reliably use a custom font across your charts, you need to make it accessible to the browser first. We essentially need to instruct the browser on where to find these fonts and how to use them.
 

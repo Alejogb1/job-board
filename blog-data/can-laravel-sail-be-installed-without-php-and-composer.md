@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-laravel-sail-be-installed-without-php-and-composer"
 ---
 
-Okay, let's tackle this. It's a question I've encountered a few times, often in less-than-ideal initial setups. The short answer is: technically, no, Laravel Sail cannot function *without* php and composer. Let's unpack what's happening under the hood and why that restriction exists, based on some experiences I've had in project onboarding.
+,  It's a question I've encountered a few times, often in less-than-ideal initial setups. The short answer is: technically, no, Laravel Sail cannot function *without* php and composer. Let's unpack what's happening under the hood and why that restriction exists, based on some experiences I've had in project onboarding.
 
 Sail isn't a standalone entity in that sense; it's essentially a pre-configured Docker environment specifically designed to simplify Laravel development. It relies on Docker to containerize your application and its dependencies, and that includes php and composer. Think of Sail as a facilitator, providing a standardized and repeatable environment. These elements are the core of a laravel application setup so it needs to be available as a baseline. It is important to first understand that Sail itself does not require php or composer to exist on *your host machine*. This is often confused, and this distinction is key.
 

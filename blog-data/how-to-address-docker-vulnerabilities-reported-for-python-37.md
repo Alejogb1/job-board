@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-address-docker-vulnerabilities-reported-for-python-37"
 ---
 
-Alright, let's tackle this. Dealing with Docker image vulnerabilities, especially around something as fundamental as Python 3.7, is a common headache, and I’ve certainly spent my share of late nights chasing down these issues. My experience with a microservices project a few years back, where we initially built everything on a basic python 3.7 image, really solidified the importance of proactive and consistent vulnerability management. We started seeing reports pop up left and right, and it quickly became a high priority to address them.
+Alright,  Dealing with Docker image vulnerabilities, especially around something as fundamental as Python 3.7, is a common headache, and I’ve certainly spent my share of late nights chasing down these issues. My experience with a microservices project a few years back, where we initially built everything on a basic python 3.7 image, really solidified the importance of proactive and consistent vulnerability management. We started seeing reports pop up left and right, and it quickly became a high priority to address them.
 
 The core problem with using an older version of a base image, like a direct python 3.7 image, is that it's inherently susceptible to accumulated security flaws. These flaws are discovered over time and patched in newer versions of the interpreter and associated libraries. Leaving those unaddressed means your application, packaged in that vulnerable container, is exposed. There isn't one magic bullet, but a combination of strategies.
 

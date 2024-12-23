@@ -56,7 +56,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 
 # Sample data: Product reviews
 data = {'product_id': [101, 102, 103],
-        'reviews': ["This product is amazing, I love it", "Not great, but okay", "Excellent performance, would recommend"]}
+        'reviews': ["This product is amazing, I love it", "Not great, but ", "Excellent performance, would recommend"]}
 df = pd.DataFrame(data)
 
 vectorizer = CountVectorizer()

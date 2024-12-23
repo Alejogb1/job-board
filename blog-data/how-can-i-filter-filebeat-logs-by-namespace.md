@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-filter-filebeat-logs-by-namespace"
 ---
 
-Alright, let's tackle this. Filtering Filebeat logs by namespace – it's a common requirement, particularly in containerized environments like Kubernetes, and I've definitely spent my share of time fine-tuning configurations for just this scenario. I remember one project in particular where we were dealing with a massive microservices architecture, and without proper namespace-based filtering, our logging pipelines would have been utterly overwhelmed. The key, as you might expect, lies within the Filebeat configuration, specifically its processing pipeline.
+Alright,  Filtering Filebeat logs by namespace – it's a common requirement, particularly in containerized environments like Kubernetes, and I've definitely spent my share of time fine-tuning configurations for just this scenario. I remember one project in particular where we were dealing with a massive microservices architecture, and without proper namespace-based filtering, our logging pipelines would have been utterly overwhelmed. The key, as you might expect, lies within the Filebeat configuration, specifically its processing pipeline.
 
 The crucial part is understanding that Filebeat processes events through a series of *processors*. These processors allow you to manipulate event data before it's sent to the output. We'll be leveraging a processor to identify and filter events based on the namespace information embedded within the log data.
 

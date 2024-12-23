@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-cant-airflow-call-a-dask-cluster"
 ---
 
-Okay, let’s tackle this directly. I've seen this headache firsthand in more than one large-scale data processing pipeline, and the core issue of why Apache Airflow can’t directly call a Dask cluster boils down to their fundamental architectures and the inherent constraints of distributed task scheduling. It’s not that they are fundamentally incompatible, but rather they are designed with different primary focuses and modes of operation, requiring careful integration rather than a direct call.
+, let’s tackle this directly. I've seen this headache firsthand in more than one large-scale data processing pipeline, and the core issue of why Apache Airflow can’t directly call a Dask cluster boils down to their fundamental architectures and the inherent constraints of distributed task scheduling. It’s not that they are fundamentally incompatible, but rather they are designed with different primary focuses and modes of operation, requiring careful integration rather than a direct call.
 
 Airflow, at its heart, is a *workflow management system*. It excels at orchestrating complex, multi-step processes that might involve different systems and tools. Think of it as the conductor of an orchestra, coordinating various sections to produce a harmonious piece. Its strength lies in dependency management, scheduling, monitoring, and retry mechanisms. It isn’t designed to execute the heavy lifting of parallel computation directly; instead, it orchestrates tasks that might run on completely separate systems. Airflow deals with directed acyclic graphs (dags), representing workflows, and delegates the actual computation to worker processes or external services.
 

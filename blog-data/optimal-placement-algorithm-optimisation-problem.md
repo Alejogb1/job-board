@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "optimal-placement-algorithm-optimisation-problem"
 ---
 
-Okay so optimal placement algorithm optimization eh I've been around this block a few times. It sounds like someone's trying to figure out the absolute best way to arrange stuff maybe data on servers maybe components on a circuit board the kind of problem that keeps us up at night.
+ so optimal placement algorithm optimization eh I've been around this block a few times. It sounds like someone's trying to figure out the absolute best way to arrange stuff maybe data on servers maybe components on a circuit board the kind of problem that keeps us up at night.
 
 First off when you say optimal it's important to nail down what *optimal* actually means. Are we talking about minimizing latency maximizing throughput reducing power consumption minimizing space usage? It makes all the difference. You can't just throw a random placement algorithm at the problem and hope for magic. I learned that the hard way back when I was working on my master's thesis I tried to brute force a solution for circuit layout yeah it didn't end well hours of simulation for a mediocre result I thought the computer would melt. Anyway back to the actual problem.
 

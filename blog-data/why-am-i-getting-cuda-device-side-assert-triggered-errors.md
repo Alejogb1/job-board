@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-cuda-device-side-assert-triggered-errors"
 ---
 
-Okay, let’s tackle this. I've definitely seen my fair share of device-side assert errors when working with CUDA, and it's rarely a pleasant experience. They tend to pop up at the least convenient times, often when you think your kernel is just about ready to go. Let's break down why these happen and how to debug them efficiently, based on my experience building high-performance numerical solvers and machine learning models on GPUs.
+, let’s tackle this. I've definitely seen my fair share of device-side assert errors when working with CUDA, and it's rarely a pleasant experience. They tend to pop up at the least convenient times, often when you think your kernel is just about ready to go. Let's break down why these happen and how to debug them efficiently, based on my experience building high-performance numerical solvers and machine learning models on GPUs.
 
 Essentially, a device-side assert error means that within your kernel code, an assertion statement you (or perhaps a library you're using) included has failed. This assertion, a conditional check that’s expected to always be true under normal operating conditions, indicates a violation of assumed program invariants. The root cause almost always lies within your kernel code, and not typically with the CUDA runtime or hardware itself, though it *can* occasionally relate to external library versions or hardware limitations if you're working at the bleeding edge. The error messages are usually fairly detailed, though they can initially seem cryptic. Let’s take the time to understand what they are trying to tell us.
 

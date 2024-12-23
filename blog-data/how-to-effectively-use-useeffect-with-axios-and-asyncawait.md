@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-effectively-use-useeffect-with-axios-and-asyncawait"
 ---
 
-Okay, let’s tackle this. I've seen my fair share of component lifecycles go sideways, especially when asynchronous operations like API calls enter the picture. `useEffect` with `axios` and `async/await` is a common pattern, but it's also a place where things can get messy if not handled carefully. Over the years, I've developed a few strategies to keep the code clean, predictable, and efficient. It’s more than just slapping `async` in front of a function; it’s about understanding the nuances of React’s rendering cycle and the implications of asynchronous updates.
+, let’s tackle this. I've seen my fair share of component lifecycles go sideways, especially when asynchronous operations like API calls enter the picture. `useEffect` with `axios` and `async/await` is a common pattern, but it's also a place where things can get messy if not handled carefully. Over the years, I've developed a few strategies to keep the code clean, predictable, and efficient. It’s more than just slapping `async` in front of a function; it’s about understanding the nuances of React’s rendering cycle and the implications of asynchronous updates.
 
 The primary issue stems from the way `useEffect` behaves. Without a proper cleanup function, you could end up with stale closures, memory leaks, or even infinite loops, especially when dealing with changes in component props or state. We need to ensure that our API requests are properly managed and that we avoid performing updates on unmounted components.
 

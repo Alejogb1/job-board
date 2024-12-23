@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "how-to-start-an-app-with-activity1-or-activity2"
 ---
 
-Okay so you need to figure out how to launch your app sometimes with Activity1 and sometimes with Activity2 right got it I've been there man so many times it feels like every project has this weird edge case I think I even got nightmares about intent flags for a month once anyways lets unpack this
+ so you need to figure out how to launch your app sometimes with Activity1 and sometimes with Activity2 right got it I've been there man so many times it feels like every project has this weird edge case I think I even got nightmares about intent flags for a month once anyways lets unpack this
 
 First thing is you can’t use the manifest default activity for this at least not in the straightforward sense because it specifies a single entry point you want flexibility a choice at runtime you gotta ditch the manifest's fixed idea and become the master of your app's entry point
 
@@ -42,7 +42,7 @@ public class LauncherActivity extends AppCompatActivity {
 }
 ```
 
-Alright so what's happening here is this we read from `SharedPreferences` a boolean flag called `useActivity2` if its true we start Activity2 if its false we start Activity1 and finish our LauncherActivity so it's not hanging around in the back stack you need to finish here always or you will end up with multiples LauncherActivity in the back stack and that is a recipe for disaster trust me.
+so what's happening here is this we read from `SharedPreferences` a boolean flag called `useActivity2` if its true we start Activity2 if its false we start Activity1 and finish our LauncherActivity so it's not hanging around in the back stack you need to finish here always or you will end up with multiples LauncherActivity in the back stack and that is a recipe for disaster trust me.
 
 Now you need to remember to set this LauncherActivity as your main activity in the manifest the one with the `LAUNCHER` intent filter so something like this:
 

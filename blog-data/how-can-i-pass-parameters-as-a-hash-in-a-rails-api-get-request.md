@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-pass-parameters-as-a-hash-in-a-rails-api-get-request"
 ---
 
-Okay, let's tackle this. I've definitely been down this road before, debugging API calls that weren't quite structured the way I expected. You're looking to pass parameters as a hash within a Rails API GET request, and while it might seem like a quirk, there's a standard way to do it, and it's crucial for a well-structured API.
+,  I've definitely been down this road before, debugging API calls that weren't quite structured the way I expected. You're looking to pass parameters as a hash within a Rails API GET request, and while it might seem like a quirk, there's a standard way to do it, and it's crucial for a well-structured API.
 
 The fundamental issue stems from how GET requests typically handle parameters: they’re appended to the URL as query parameters. A basic GET request might look like `/users?id=123&name=john`. This works fine for simple key-value pairs, but becomes unwieldy, and frankly, less expressive, when you need to pass nested data structures. Rails, of course, gives us tools to manage this elegantly.
 

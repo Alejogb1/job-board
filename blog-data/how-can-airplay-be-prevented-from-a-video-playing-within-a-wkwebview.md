@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-airplay-be-prevented-from-a-video-playing-within-a-wkwebview"
 ---
 
-Okay, let’s dive into this. I've actually encountered this specific scenario a few times, usually in very controlled kiosk-style applications, and it always boils down to carefully managing the interaction between the `WKWebView` and the underlying native media playback mechanisms. Blocking AirPlay isn't a simple toggle; it requires a nuanced understanding of how the web view handles video elements and how iOS exposes (or doesn't expose) controls over their external presentation.
+, let’s dive into this. I've actually encountered this specific scenario a few times, usually in very controlled kiosk-style applications, and it always boils down to carefully managing the interaction between the `WKWebView` and the underlying native media playback mechanisms. Blocking AirPlay isn't a simple toggle; it requires a nuanced understanding of how the web view handles video elements and how iOS exposes (or doesn't expose) controls over their external presentation.
 
 My initial experience, I recall, was working on a digital signage application where we absolutely could not allow users to mirror the content to personal screens – think very sensitive financial data on public display. The default behavior, of course, was that any video element embedded in the web view was readily available for AirPlay, and that was unacceptable. So, we embarked on a bit of an adventure to lock that down.
 

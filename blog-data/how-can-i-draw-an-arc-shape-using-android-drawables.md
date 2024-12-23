@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-draw-an-arc-shape-using-android-drawables"
 ---
 
-Okay, let's tackle this one. Drawing arcs with Android drawables, at first glance, might seem a bit more involved than just slapping down a rectangle or a circle. It's a task I’ve encountered several times, especially in early versions of some visualization tools I worked on. We needed to create dynamic gauges and segmented progress indicators, which required precisely drawn arcs. There are a few solid approaches, and I’ll walk you through them, focusing on what I've found works best in practice.
+, let's tackle this one. Drawing arcs with Android drawables, at first glance, might seem a bit more involved than just slapping down a rectangle or a circle. It's a task I’ve encountered several times, especially in early versions of some visualization tools I worked on. We needed to create dynamic gauges and segmented progress indicators, which required precisely drawn arcs. There are a few solid approaches, and I’ll walk you through them, focusing on what I've found works best in practice.
 
 First, it’s crucial to understand that Android's `Canvas` class is where the magic happens when drawing custom shapes. While you *could* use an image and create your arc externally, that’s not always ideal for dynamic or programmatic arc creation. We want something that can adapt to different sizes, colors, and angular spans on the fly. The key here lies in using `ShapeDrawable` or `Paint` directly with a canvas, combined with the `RectF` class to define our bounding box for the arc. `RectF` essentially defines a rectangle that our arc will fit within.
 

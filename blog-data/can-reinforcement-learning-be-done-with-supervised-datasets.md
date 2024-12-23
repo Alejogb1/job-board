@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-reinforcement-learning-be-done-with-supervised-datasets"
 ---
 
-Alright, let's tackle this. It's a question that often comes up, and while the direct answer isn't a simple yes or no, it's definitely nuanced and worth exploring. The short version is that you *can* leverage supervised data to bootstrap or influence a reinforcement learning (rl) process, but it’s not rl in the purest sense. It's more about using supervised learning as a pre-training method or as a guiding force within the rl framework. Let's break that down.
+Alright,  It's a question that often comes up, and while the direct answer isn't a simple yes or no, it's definitely nuanced and worth exploring. The short version is that you *can* leverage supervised data to bootstrap or influence a reinforcement learning (rl) process, but it’s not rl in the purest sense. It's more about using supervised learning as a pre-training method or as a guiding force within the rl framework. Let's break that down.
 
 From my experience, particularly during that project involving robotics path planning back in '18, we were faced with a similar dilemma. We had a wealth of human-demonstrated paths, which essentially represented supervised learning data (input: initial state; output: action or sequence of actions). However, we needed the robot to learn to navigate even *beyond* those demonstrations, handle unforeseen circumstances, and optimize its path based on some reward function (like time taken or energy used). So, a direct supervised approach wouldn't cut it, but completely ignoring the demonstrations would have been wasteful.
 

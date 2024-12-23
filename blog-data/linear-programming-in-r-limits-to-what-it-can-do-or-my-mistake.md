@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "linear-programming-in-r-limits-to-what-it-can-do-or-my-mistake"
 ---
 
-Alright let's tackle this linear programming in R thing I've been there done that a few times and I can tell you it's usually not R that's the problem it's usually us coding or our model being slightly off
+let's tackle this linear programming in R thing I've been there done that a few times and I can tell you it's usually not R that's the problem it's usually us coding or our model being slightly off
 
 So the question hints at linear programming limitations in R or user error well I'll tell you first hand back in my early days trying to optimize some supply chain stuff I swear I spent days debugging and scratching my head only to find out it was a constraint I forgot about a misplaced plus sign things that are easy to oversee and make the solver throw weird results or fail outright I remember the time I was trying to minimize transportation cost using the `lpSolve` package and the solver would just return nonsense it turned out my cost matrix was inverted I mean who does that well I did that newbie mistake
 
@@ -50,7 +50,7 @@ print(paste("Solution:", paste(lp_solution$solution, collapse = ", ")))
 
 This example covers a simple linear program with two decision variables and three constraints if you see that your result is not what you are expecting you have to start debugging and go back to the details of what you asked
 
-Now let's assume your model is okay and you are hitting a limitation R itself doesn't have a specific limit on linear programs. But what you might be running into is:
+Now let's assume your model is  and you are hitting a limitation R itself doesn't have a specific limit on linear programs. But what you might be running into is:
 
 *   **Solver limits:** The underlying solvers have limits especially for the free versions. Large-scale problems can push the limits of free solvers like `glpk`. If you have thousands of variables or constraints a commercial solver like `cplex` or `gurobi` via `ROI` might be necessary and they have very good performance on complex issues and they are also usually very well coded with their own limitations and stuff but generally you can push the number of variables really high using those
 
@@ -140,4 +140,4 @@ Notice the `int.vec` parameter that makes the solution integers
 
 For more in depth understanding you should check some books on linear programming or operations research specifically "Introduction to Operations Research" by Hillier and Lieberman it's a classic or if you want more code focused you can check "Linear Programming and Network Flows" by Bazaraa Jarvis and Sherali or you can delve into the specifics of the specific solver that you are using by looking into their documentation they might have some examples for what you are trying to do
 
-Linear programming is a powerful tool and R gives you access to it but as it is for everything details are key in order to get results. So it is not an R problem it is most likely the problem that you created and that is absolutely okay we all have been there
+Linear programming is a powerful tool and R gives you access to it but as it is for everything details are key in order to get results. So it is not an R problem it is most likely the problem that you created and that is absolutely  we all have been there

@@ -4,7 +4,7 @@ date: "2024-12-12"
 id: "qu-desafos-enfrentan-las-plataformas-inclusivas-para-escalar-a-nivel-global"
 ---
 
-okay so scaling inclusive platforms globally is a real beast you know it's not just about more servers it gets complicated real quick let's break down some of the big hurdles I've seen and thought about
+ so scaling inclusive platforms globally is a real beast you know it's not just about more servers it gets complicated real quick let's break down some of the big hurdles I've seen and thought about
 
 first up language localization is massive it's not just translating words literally you need to think about cultural context right to left languages different number formats pluralization rules this stuff is deep if your platform doesn't handle that smoothly users bounce fast and you lose any chance at real inclusivity a simple translation engine will not cut it for example consider something like a date picker if you hardcode it for mm/dd/yyyy it's useless in a lot of places you need something way more flexible
 

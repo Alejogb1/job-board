@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-plot-real-time-data-using-altair-in-python"
 ---
 
-Okay, let’s talk about real-time plotting with Altair. This is a topic I've definitely spent some time on, especially back when we were building that sensor monitoring system a few years ago. Altair, as powerful as it is for declarative visualizations, isn't inherently designed for real-time updates like, say, D3.js. However, that doesn’t mean it's impossible; it just requires a slightly different approach, often involving a bridge between Altair's static chart generation and a method for dynamic updates.
+, let’s talk about real-time plotting with Altair. This is a topic I've definitely spent some time on, especially back when we were building that sensor monitoring system a few years ago. Altair, as powerful as it is for declarative visualizations, isn't inherently designed for real-time updates like, say, D3.js. However, that doesn’t mean it's impossible; it just requires a slightly different approach, often involving a bridge between Altair's static chart generation and a method for dynamic updates.
 
 The key challenge is that Altair generates static json specifications for charts, which a rendering library like vega-lite interprets. We’re not modifying a canvas directly like we might with some other tools. So, to achieve the illusion of real-time, we need to periodically generate *new* chart specifications with the latest data and then update the rendered view. There are a few patterns you can use, and I’ll walk you through them, showcasing code along the way.
 

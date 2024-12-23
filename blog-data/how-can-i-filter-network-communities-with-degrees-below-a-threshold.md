@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-filter-network-communities-with-degrees-below-a-threshold"
 ---
 
-Let's tackle this. Filtering network communities based on node degree is actually a common requirement, and I've had to implement this several times in past projects, particularly when dealing with large social network graphs or analyzing complex systems. It’s not just about finding the 'core' of a network; sometimes you need to strip away peripheral elements for a clearer view, or perhaps to improve the efficiency of certain downstream analyses.
+ Filtering network communities based on node degree is actually a common requirement, and I've had to implement this several times in past projects, particularly when dealing with large social network graphs or analyzing complex systems. It’s not just about finding the 'core' of a network; sometimes you need to strip away peripheral elements for a clearer view, or perhaps to improve the efficiency of certain downstream analyses.
 
 When we discuss network communities, we're essentially talking about subsets of nodes that are densely connected to each other but sparsely connected to the rest of the network. Degree, in this context, simply refers to the number of connections a node has. Filtering based on this is, therefore, a way to identify and potentially discard less significant elements of your data.
 

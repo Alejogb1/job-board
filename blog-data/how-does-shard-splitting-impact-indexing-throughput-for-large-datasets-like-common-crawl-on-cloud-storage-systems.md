@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "how-does-shard-splitting-impact-indexing-throughput-for-large-datasets-like-common-crawl-on-cloud-storage-systems"
 ---
 
-Okay so you wanna know about shard splitting and how it affects indexing speed right especially for massive datasets like the Common Crawl  think petabytes of data living happily ever after in the cloud  Yeah its a big deal
+ so you wanna know about shard splitting and how it affects indexing speed right especially for massive datasets like the Common Crawl  think petabytes of data living happily ever after in the cloud  Yeah its a big deal
 
 First off lets talk about what shards are  Imagine you have this gigantic dataset too big for any single machine to handle  So you chop it up into smaller manageable chunks these are your shards  Each shard is like its own mini-dataset you can process independently This is called data sharding or horizontal partitioning makes things way faster
 

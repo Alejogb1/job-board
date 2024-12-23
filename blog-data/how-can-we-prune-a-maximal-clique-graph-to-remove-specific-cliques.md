@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-we-prune-a-maximal-clique-graph-to-remove-specific-cliques"
 ---
 
-Okay, let’s unpack this. Pruning maximal cliques from a graph is a task I’ve encountered more times than I care to remember, particularly back during my days working on social network analysis pipelines. It’s not always straightforward, as the 'maximal' nature of these structures adds a layer of complexity to removal. We're not simply deleting edges; we're surgically removing entire substructures, potentially affecting other parts of the graph.
+, let’s unpack this. Pruning maximal cliques from a graph is a task I’ve encountered more times than I care to remember, particularly back during my days working on social network analysis pipelines. It’s not always straightforward, as the 'maximal' nature of these structures adds a layer of complexity to removal. We're not simply deleting edges; we're surgically removing entire substructures, potentially affecting other parts of the graph.
 
 Fundamentally, the challenge lies in correctly identifying and isolating the specific maximal cliques we want to eliminate without inadvertently disrupting the connectivity or integrity of other, desired cliques. A naive approach, such as just identifying all nodes in a clique and deleting all related edges, will likely lead to orphaned nodes and broken connections. A more nuanced process is needed.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-use-loops-in-elasticsearch-painless-scripts"
 ---
 
-Alright, let's tackle this. I remember a project a few years back where we needed to perform some complex data transformations on ingested logs before indexing them into Elasticsearch. We weren’t going to get away with simple field mappings; we needed programmatic manipulation, and that’s when Painless scripting really proved its worth, especially when using loops.
+Alright,  I remember a project a few years back where we needed to perform some complex data transformations on ingested logs before indexing them into Elasticsearch. We weren’t going to get away with simple field mappings; we needed programmatic manipulation, and that’s when Painless scripting really proved its worth, especially when using loops.
 
 The crucial thing to understand about using loops in Painless is that, while it provides a powerful way to iterate over collections, it's not about performing resource-intensive calculations within the context of indexing. The primary intention is to modify and structure data at the ingest pipeline stage. If you find yourself trying to do heavy computational work in a Painless script, you’re likely better off offloading that to another part of your data processing pipeline, for example, in your data ingestion or ETL processes.
 

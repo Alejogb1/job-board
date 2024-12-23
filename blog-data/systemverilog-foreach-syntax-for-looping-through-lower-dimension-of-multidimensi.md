@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "systemverilog-foreach-syntax-for-looping-through-lower-dimension-of-multidimensi"
 ---
 
-Alright so you’re asking about `foreach` loops in SystemVerilog specifically how they work with multidimensional arrays and how to target the lower dimensions right I get it been there done that let’s dive in I've spent way too many late nights debugging these things
+so you’re asking about `foreach` loops in SystemVerilog specifically how they work with multidimensional arrays and how to target the lower dimensions right I get it been there done that let’s dive in I've spent way too many late nights debugging these things
 
 Look SystemVerilog `foreach` is pretty powerful for array traversal but it can trip you up if you’re not careful with multidimensional arrays The key thing to remember is how it handles the indices by default it iterates over the entire array structure that includes all dimensions
 
@@ -12,7 +12,7 @@ So if you declare a two dimensional array like say `int my_array [3][4]` it's a 
 
 But what if you want to loop through all the 1D slices I mean not all the individual elements but each one dimensional lower dimension slice right that’s when things can get a little tricky
 
-Okay here's the most direct answer and I'll illustrate with a few code snippets that I myself have actually used for similar cases in my previous projects So imagine that you wanted to sum all the values on your array row by row here is the most direct approach I usually take
+ here's the most direct answer and I'll illustrate with a few code snippets that I myself have actually used for similar cases in my previous projects So imagine that you wanted to sum all the values on your array row by row here is the most direct approach I usually take
 
 ```systemverilog
 module foreach_example;
@@ -95,7 +95,7 @@ I was scratching my head like a monkey trying to open a coconut that night I rem
 
 After that night I had a big break through and I started using the double foreach as mentioned earlier and everything started to make sense and the filter worked exactly as expected that was one of the moments I’m really proud of because I solved a big bug in a very small amount of time once I understood what I was doing wrong
 
-Okay one last example let’s suppose you have a 3D array and you want to go through each 2D slice which is quite a complex operation this code is more for the sake of showing how the syntax is extended to higher dimensions it is very similar to the first one I showed you earlier but it is using one extra level of nesting
+ one last example let’s suppose you have a 3D array and you want to go through each 2D slice which is quite a complex operation this code is more for the sake of showing how the syntax is extended to higher dimensions it is very similar to the first one I showed you earlier but it is using one extra level of nesting
 
 ```systemverilog
 module foreach_3d_example;

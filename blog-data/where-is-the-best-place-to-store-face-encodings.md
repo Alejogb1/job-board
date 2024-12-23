@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "where-is-the-best-place-to-store-face-encodings"
 ---
 
-Okay, let's tackle this. It's a question that sounds straightforward but opens up a rabbit hole of considerations, especially if you’re dealing with any kind of scale or real-world application. I've grappled with this exact problem more than a few times, specifically during my stint developing a facial recognition system for secure entry control, a few years back. We weren't just playing with a few samples; think thousands of enrollments across multiple access points, with latency and security as primary concerns. So, when you ask about the “best place,” the answer is rarely monolithic. It depends heavily on your specific requirements, but let's break down the critical aspects and then look at some practical implementation options.
+,  It's a question that sounds straightforward but opens up a rabbit hole of considerations, especially if you’re dealing with any kind of scale or real-world application. I've grappled with this exact problem more than a few times, specifically during my stint developing a facial recognition system for secure entry control, a few years back. We weren't just playing with a few samples; think thousands of enrollments across multiple access points, with latency and security as primary concerns. So, when you ask about the “best place,” the answer is rarely monolithic. It depends heavily on your specific requirements, but let's break down the critical aspects and then look at some practical implementation options.
 
 First, let's define what "best" typically entails in this context. We're looking for a storage solution that optimizes for:
 

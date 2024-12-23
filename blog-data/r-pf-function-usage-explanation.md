@@ -4,9 +4,9 @@ date: "2024-12-13"
 id: "r-pf-function-usage-explanation"
 ---
 
-Okay so you're asking about `r pf` function usage I've been there man trust me Been deep in the trenches with this exact thing Let me tell you my story it's gonna help you understand
+ so you're asking about `r pf` function usage I've been there man trust me Been deep in the trenches with this exact thing Let me tell you my story it's gonna help you understand
 
-Alright `r pf` think of it as a swiss army knife for working with data often you find it hanging around in situations when you're doing some hardcore statistical programming usually if you're using R which you probably are since you are asking about it It's about getting that raw data shaping it up for analysis making it presentable It’s not a magic wand okay no it's just a tool and you need to know its ins and outs or it will bite you
+`r pf` think of it as a swiss army knife for working with data often you find it hanging around in situations when you're doing some hardcore statistical programming usually if you're using R which you probably are since you are asking about it It's about getting that raw data shaping it up for analysis making it presentable It’s not a magic wand  no it's just a tool and you need to know its ins and outs or it will bite you
 
 I remember back in 2017 I was working on this huge project for a medical research thing It was about patient demographics and disease progression we had tons and tons of data and a very strict deadline so things had to go fast the R side was just one tiny part but it could have slowed the thing down the data came in like this tangled mess every data file had different structures missing values inconsistent formatting you name it The R part was critical for summarizing that data and feeding to other parts of the pipeline and guess what `r pf` was a lifesaver
 
@@ -99,9 +99,9 @@ Here the function `na_handler` is used to replace strings that represents nulls 
 
 One thing that's important is `colClasses` it's your friend I've seen so many beginners skip over it and then wonder why their data is a mess always set `colClasses` to prevent problems in the data type this is one of the most important things you have to learn in R because you will always have problems with data types especially when you start to deal with complex data files and pipelines You also have to always clean your string data with the function `trimws()` because you will always have spaces in the wrong places
 
-Now for the joke... Why did the programmer quit his job? Because he didn't get arrays... okay okay I will stop
+Now for the joke... Why did the programmer quit his job? Because he didn't get arrays...   I will stop
 
-Alright so that's the gist of `r pf` It's not a magical solution but it’s a fundamental function in R and knowing how to use it well will boost your data processing skills It's very flexible and very powerful if you learn how to use correctly
+so that's the gist of `r pf` It's not a magical solution but it’s a fundamental function in R and knowing how to use it well will boost your data processing skills It's very flexible and very powerful if you learn how to use correctly
 
 For resources there are tons of tutorials online and the official R documentation but if you want to get deeper I recommend the book "R for Data Science" by Hadley Wickham it covers all the things in R that you will need and "Advanced R" also by Wickham if you wanna go pro You should also read all the documentation of `readr` to learn how to deal with CSV files the right way
 

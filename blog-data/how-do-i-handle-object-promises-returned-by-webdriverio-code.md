@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-handle-object-promises-returned-by-webdriverio-code"
 ---
 
-Okay, let's tackle this one. It's a common point of confusion when you're diving into asynchronous test automation with WebDriverIO, particularly if you're coming from a more synchronous programming background. I remember vividly a project a few years back, building a fairly complex UI test suite for a fintech platform. We initially stumbled hard on this very issue, ending up with tests that were flaky and hard to debug because we weren't properly handling those promises.
+, let's tackle this one. It's a common point of confusion when you're diving into asynchronous test automation with WebDriverIO, particularly if you're coming from a more synchronous programming background. I remember vividly a project a few years back, building a fairly complex UI test suite for a fintech platform. We initially stumbled hard on this very issue, ending up with tests that were flaky and hard to debug because we weren't properly handling those promises.
 
 The core challenge stems from the fact that WebDriverIO, like many modern automation libraries, relies heavily on asynchronous operations to interact with a browser. Every action, whether it's clicking a button, entering text, or getting an element's text, returns a promise. This means the operation isn't immediately completed; instead, the promise represents the eventual result of that operation, which might resolve with the desired value or reject with an error. Ignoring this asynchronous nature leads to code that executes out of order, causing unpredictable behavior.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-use-pagy-with-multiple-tables-on-one-page-in-rails"
 ---
 
-Okay, so you’re looking at the challenge of paginating data across multiple tables displayed on a single page in your Rails application using Pagy. Been there, tackled that. It's more common than you might think, especially when you're dealing with dashboards or composite views where different types of data are aggregated for the user. My experience comes from building a resource management tool where we had to display projects, users, and their recent activity all on the same overview page, each with their own pagination. Let's break down how to approach this effectively, along with the code snippets that should clarify it all.
+, so you’re looking at the challenge of paginating data across multiple tables displayed on a single page in your Rails application using Pagy. Been there, tackled that. It's more common than you might think, especially when you're dealing with dashboards or composite views where different types of data are aggregated for the user. My experience comes from building a resource management tool where we had to display projects, users, and their recent activity all on the same overview page, each with their own pagination. Let's break down how to approach this effectively, along with the code snippets that should clarify it all.
 
 The core issue stems from Pagy, by default, being designed to work with a single set of records. To integrate it with multiple tables, we need to create distinct Pagy instances for each set of data and handle them separately within the view. It's not about bending Pagy to do something it's not designed for, but rather about leveraging its flexibility to accommodate multiple datasets.
 

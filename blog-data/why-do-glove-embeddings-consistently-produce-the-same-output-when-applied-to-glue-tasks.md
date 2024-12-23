@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-do-glove-embeddings-consistently-produce-the-same-output-when-applied-to-glue-tasks"
 ---
 
-Okay, let's tackle this. I've spent more than a few late nights staring at training logs, so this specific issue with GloVe embeddings and their apparent lack of variation across GLUE tasks resonates with me. It's a common head-scratcher, especially when you're expecting more nuanced performance shifts between different tasks.
+,  I've spent more than a few late nights staring at training logs, so this specific issue with GloVe embeddings and their apparent lack of variation across GLUE tasks resonates with me. It's a common head-scratcher, especially when you're expecting more nuanced performance shifts between different tasks.
 
 The core reason, in my experience, isn't a flaw *per se* in GloVe, but rather a consequence of its fundamental design and how it interacts with the downstream models used in GLUE benchmark tasks. You see, GloVe embeddings are trained in an unsupervised manner on a corpus-wide co-occurrence matrix. They learn relationships between words based on how frequently those words appear near each other. This creates a vector space where words with similar contexts are located closer together. That's all fantastic for capturing general semantic relationships, but the embeddings themselves are ultimately static—they’re not dynamically adjusted or refined during the training process of a GLUE task.
 

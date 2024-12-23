@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "two-way-repeated-measures-anova-in-r"
 ---
 
-Okay so you're asking about two-way repeated measures ANOVA in R right been there done that a few times let me tell you. It's not exactly a walk in the park when you first get into it. I remember my undergrad days wrestling with this stuff it felt like the stats gods were throwing spaghetti code at me. You need the right packages and to structure your data correctly or you'll be staring at error messages for hours. I swear it's happened to the best of us.
+ so you're asking about two-way repeated measures ANOVA in R right been there done that a few times let me tell you. It's not exactly a walk in the park when you first get into it. I remember my undergrad days wrestling with this stuff it felt like the stats gods were throwing spaghetti code at me. You need the right packages and to structure your data correctly or you'll be staring at error messages for hours. I swear it's happened to the best of us.
 
 Let's break this down into something digestible. First off why two-way repeated measures ANOVA not a regular one way? Well you've got two factors influencing your dependent variable and the measurements are taken on the same subjects or units multiple times think of a medical trial where the same patients receive different treatments at different time points. It's about figuring out how much of the variability comes from each factor their interaction and the within-subject changes. It's a pretty useful tool when you need to account for individual variation in your research data.
 

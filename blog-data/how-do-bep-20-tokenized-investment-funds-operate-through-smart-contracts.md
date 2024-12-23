@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-bep-20-tokenized-investment-funds-operate-through-smart-contracts"
 ---
 
-Okay, let’s unpack BEP-20 tokenized investment funds. It's a concept I’ve seen evolve firsthand, particularly during my time managing a portfolio system that incorporated several decentralized finance (defi) instruments. We actually had a very interesting case with a client who wanted to launch a small-scale fund using this approach back in 2021, which brought many of these concepts into sharp focus.
+, let’s unpack BEP-20 tokenized investment funds. It's a concept I’ve seen evolve firsthand, particularly during my time managing a portfolio system that incorporated several decentralized finance (defi) instruments. We actually had a very interesting case with a client who wanted to launch a small-scale fund using this approach back in 2021, which brought many of these concepts into sharp focus.
 
 The core idea hinges on representing shares of an investment fund as BEP-20 tokens on the Binance Smart Chain (bsc). Instead of traditional fund management where units or shares are recorded in a centralized database, here we’re using the immutability and transparency of a blockchain. These tokens act as digital receipts, verifiable on the chain, that represent a stakeholder’s fractional ownership of the underlying assets within the fund.
 

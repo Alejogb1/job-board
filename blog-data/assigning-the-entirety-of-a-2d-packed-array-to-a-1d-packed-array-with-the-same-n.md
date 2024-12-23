@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "assigning-the-entirety-of-a-2d-packed-array-to-a-1d-packed-array-with-the-same-n"
 ---
 
-Okay I've seen this one before a classic actually so you've got a 2D packed array and you want to flatten it into a 1D packed array same number of elements makes sense right I've been there I remember back in the day when I was first playing around with image processing we'd do this all the time before libraries handled it for us so yeah no worries I've got you
+ I've seen this one before a classic actually so you've got a 2D packed array and you want to flatten it into a 1D packed array same number of elements makes sense right I've been there I remember back in the day when I was first playing around with image processing we'd do this all the time before libraries handled it for us so yeah no worries I've got you
 
 So the core problem is how to map the indices from a 2D structure to a 1D structure in memory Packed arrays as you know are just contiguous blocks so the address calculations are relatively straightforward We just need to walk through the rows and columns of the 2D array and place the values sequentially in the 1D array
 

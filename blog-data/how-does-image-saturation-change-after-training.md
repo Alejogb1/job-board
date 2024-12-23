@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-does-image-saturation-change-after-training"
 ---
 
-Okay, let's tackle image saturation changes post-training. It's not just a matter of things magically 'adjusting'; there are specific mechanisms at play, and I've seen this trip up more than a few models in my time. In fact, back when I was working on a medical imaging classification system, we ran into a particularly stubborn issue with saturation shifts after we implemented a novel training augmentation pipeline. It was driving us nuts for a few days until we pinned it down – hence, I'm quite familiar with the nuances here.
+, let's tackle image saturation changes post-training. It's not just a matter of things magically 'adjusting'; there are specific mechanisms at play, and I've seen this trip up more than a few models in my time. In fact, back when I was working on a medical imaging classification system, we ran into a particularly stubborn issue with saturation shifts after we implemented a novel training augmentation pipeline. It was driving us nuts for a few days until we pinned it down – hence, I'm quite familiar with the nuances here.
 
 Fundamentally, image saturation, which essentially refers to the intensity of colors in an image, is altered during neural network training through a couple of key processes: the training data itself, and the modifications imposed by the network's internal weights. It’s seldom a direct, intentional change controlled by the model *to* saturation per se, but rather, it’s an emergent property of the learning process. Let me elaborate.
 

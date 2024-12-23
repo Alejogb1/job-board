@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "what-role-do-bi-directional-pluggable-high-density-fiber-arrays-play-in-reducing-crosstalk-between-photonic-links-in-ai-systems-with-high-node-density"
 ---
 
-Okay so you wanna know about these super fancy fiber arrays and how they help keep things quiet in crazy busy AI systems right  like imagine a city packed with skyscrapers all trying to shout at each other at once thats kind of what a high-node-density AI system is like  a massive tangle of light signals  crosstalk is basically when those light signals start eavesdropping on each other causing errors and slowing everything down its like a noisy party you cant hear yourself think  
+ so you wanna know about these super fancy fiber arrays and how they help keep things quiet in crazy busy AI systems right  like imagine a city packed with skyscrapers all trying to shout at each other at once thats kind of what a high-node-density AI system is like  a massive tangle of light signals  crosstalk is basically when those light signals start eavesdropping on each other causing errors and slowing everything down its like a noisy party you cant hear yourself think  
 
 These bidirectional pluggable high-density fiber arrays they are like super organized superhighways for light  instead of having a bunch of individual wires all jumbled up they use these tiny little fibers bundled together in a super neat array think of it like a really advanced multi-lane highway with dedicated lanes for each signal  this drastically reduces the chance of signals bumping into each other  
 

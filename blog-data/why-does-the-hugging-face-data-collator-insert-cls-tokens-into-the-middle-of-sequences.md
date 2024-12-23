@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-the-hugging-face-data-collator-insert-cls-tokens-into-the-middle-of-sequences"
 ---
 
-Okay, let's talk about *that* particular quirk of Hugging Face's data collators, the seemingly misplaced `[CLS]` token insertion. I've spent quite a bit of time debugging this behavior across various projects, particularly when fine-tuning transformer models for tasks beyond the standard classification setting, and it always warrants a closer look. It's not random; there's actually a very specific, and often overlooked, reasoning behind it.
+, let's talk about *that* particular quirk of Hugging Face's data collators, the seemingly misplaced `[CLS]` token insertion. I've spent quite a bit of time debugging this behavior across various projects, particularly when fine-tuning transformer models for tasks beyond the standard classification setting, and it always warrants a closer look. It's not random; there's actually a very specific, and often overlooked, reasoning behind it.
 
 It all boils down to how models like BERT, and its many derivatives, were originally designed and trained. Think about it: these models were primarily architected to handle tasks involving paired sequences, such as question-answering, next-sentence prediction, or natural language inference. They need a clear delimiter to understand the boundaries between these sequences, and that's where the `[CLS]` token plays a pivotal role.
 

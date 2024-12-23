@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-control-resource-access-using-aspnet-core-identity-attributes"
 ---
 
-Alright, let's tackle this. I've spent my fair share of time knee-deep in ASP.NET Core Identity, and attribute-based authorization is a feature I've leaned on quite heavily for controlling resource access. The beauty of this approach lies in its declarativeness; you specify *what* kind of access is required directly on your controllers and actions, making your intent clear and keeping things maintainable. It's a vast improvement over, say, relying solely on procedural checks buried within methods.
+Alright,  I've spent my fair share of time knee-deep in ASP.NET Core Identity, and attribute-based authorization is a feature I've leaned on quite heavily for controlling resource access. The beauty of this approach lies in its declarativeness; you specify *what* kind of access is required directly on your controllers and actions, making your intent clear and keeping things maintainable. It's a vast improvement over, say, relying solely on procedural checks buried within methods.
 
 To begin, understand that attribute-based authorization in ASP.NET Core is built upon the concept of *policies*. These policies act as named bundles of authorization requirements, which might include roles, claims, or custom requirements. Then, these policies are applied using the `[Authorize]` attribute.
 

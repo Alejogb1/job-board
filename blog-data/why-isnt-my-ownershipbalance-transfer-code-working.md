@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-isnt-my-ownershipbalance-transfer-code-working"
 ---
 
-Alright, let's tackle this. I've seen this scenario play out more times than I care to count, and it’s rarely ever a single, obvious thing that causes these ownership or balance transfer issues. It's typically a confluence of factors, usually boiling down to the fine-grained details of concurrency, state management, or validation, often compounded by subtle errors in the logic itself. Let's dissect the common pitfalls and then explore some illustrative code examples that highlight how to avoid them.
+Alright,  I've seen this scenario play out more times than I care to count, and it’s rarely ever a single, obvious thing that causes these ownership or balance transfer issues. It's typically a confluence of factors, usually boiling down to the fine-grained details of concurrency, state management, or validation, often compounded by subtle errors in the logic itself. Let's dissect the common pitfalls and then explore some illustrative code examples that highlight how to avoid them.
 
 My experience with this type of problem primarily originates from developing distributed ledger technologies (not specifically crypto, but similar mechanics), where atomic operations and data integrity are paramount. A few years back, during a particularly intense sprint, we were encountering random failures in our balance transfer system; transactions would sometimes succeed, sometimes fail, and occasionally, balances would simply vanish into the ether. It turned out, as it often does, to be a combination of optimistic locking conflicts and a rather naïve validation routine that, while seemingly adequate, missed a crucial edge case.
 

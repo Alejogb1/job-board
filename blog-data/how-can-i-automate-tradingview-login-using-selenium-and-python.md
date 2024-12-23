@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-automate-tradingview-login-using-selenium-and-python"
 ---
 
-Okay, let's tackle this. I've certainly been down that road before; back in my quant trading days, automating access to platforms like TradingView was crucial for data acquisition and strategy backtesting. The challenge with automating TradingView login via Selenium and Python isn't particularly complex, but there are a few nuances that can trip up the unwary. The core problem lies in carefully identifying the correct html elements and handling potential dynamic changes in the website's structure.
+,  I've certainly been down that road before; back in my quant trading days, automating access to platforms like TradingView was crucial for data acquisition and strategy backtesting. The challenge with automating TradingView login via Selenium and Python isn't particularly complex, but there are a few nuances that can trip up the unwary. The core problem lies in carefully identifying the correct html elements and handling potential dynamic changes in the website's structure.
 
 At its heart, the process involves these steps: first, you'll need to initialize your selenium webdriver, usually a Chrome or Firefox instance, set up your implicit or explicit waits, then locate the input fields for username/email and password. After that, you'll need to send the necessary keys to fill them, click the login button, and ensure the site redirects you to the desired logged-in state. This seems straightforward enough, but reality often introduces hurdles. Let’s dive into what can go awry and how to solve them, then follow up with code examples that showcase these steps.
 

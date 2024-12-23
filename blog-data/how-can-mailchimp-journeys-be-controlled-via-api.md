@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-mailchimp-journeys-be-controlled-via-api"
 ---
 
-Okay, let's talk about Mailchimp journeys and how to actually exert some control over them programmatically via their API. It's something I've dealt with extensively across several projects, and while the Mailchimp UI offers a fair amount of visual control, the API is where real automation and precision come into play. I recall one particularly thorny integration involving a complex user onboarding sequence that needed to respond dynamically to in-app actions – that's when I truly appreciated the depth available through their API endpoints, and, at times, also its limitations.
+, let's talk about Mailchimp journeys and how to actually exert some control over them programmatically via their API. It's something I've dealt with extensively across several projects, and while the Mailchimp UI offers a fair amount of visual control, the API is where real automation and precision come into play. I recall one particularly thorny integration involving a complex user onboarding sequence that needed to respond dynamically to in-app actions – that's when I truly appreciated the depth available through their API endpoints, and, at times, also its limitations.
 
 The core of interacting with Mailchimp journeys via API boils down to understanding a few key concepts and utilizing the correct endpoints. Mailchimp doesn’t explicitly call them 'journeys' in the API itself; instead, they're primarily managed through *automations* and *campaigns*. A journey, in Mailchimp’s vernacular, is a series of automated actions, generally emails, triggered by specific events or conditions.
 

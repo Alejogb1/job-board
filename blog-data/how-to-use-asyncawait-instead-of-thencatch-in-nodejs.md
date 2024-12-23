@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-use-asyncawait-instead-of-thencatch-in-nodejs"
 ---
 
-Okay, let's tackle this. It’s a shift that, looking back, drastically cleaned up my code. I vividly recall a project back in 2017 – a distributed service relying heavily on chained promises. The error handling was a nightmare, each `then` followed by another, and nested `catch` blocks creating a labyrinth of callbacks. That’s when I really started appreciating the syntactic sugar that `async/await` brought to the table.
+,  It’s a shift that, looking back, drastically cleaned up my code. I vividly recall a project back in 2017 – a distributed service relying heavily on chained promises. The error handling was a nightmare, each `then` followed by another, and nested `catch` blocks creating a labyrinth of callbacks. That’s when I really started appreciating the syntactic sugar that `async/await` brought to the table.
 
 The fundamental issue with `then/catch` (or, more specifically, promise chaining) is that it doesn't always read sequentially, even though the code executes sequentially. It can make control flow and error propagation hard to follow, especially when you're dealing with asynchronous operations that depend on each other. `async/await` allows us to write asynchronous code that looks and behaves more like synchronous code. This dramatically improves readability and makes debugging considerably simpler.
 

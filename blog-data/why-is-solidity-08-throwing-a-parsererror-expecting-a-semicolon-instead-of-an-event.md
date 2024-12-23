@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-solidity-08-throwing-a-parsererror-expecting-a-semicolon-instead-of-an-event"
 ---
 
-Okay, let's tackle this. It's not unusual to see that `ParserError: Expected semicolon instead of event` in Solidity 0.8. I’ve seen it crop up a few times, especially when new developers are getting their feet wet with event declarations. It usually comes down to a subtle misunderstanding of where events are valid and their basic syntax. Let me break down why this occurs, and I'll provide some illustrative examples.
+,  It's not unusual to see that `ParserError: Expected semicolon instead of event` in Solidity 0.8. I’ve seen it crop up a few times, especially when new developers are getting their feet wet with event declarations. It usually comes down to a subtle misunderstanding of where events are valid and their basic syntax. Let me break down why this occurs, and I'll provide some illustrative examples.
 
 The root of the issue lies within Solidity's grammar rules and the scope within which certain language constructs, like events, are permitted. Specifically, event declarations are *only* allowed directly within the contract scope, not inside function bodies or other blocks of code. The error "expecting a semicolon instead of event" essentially means that the compiler, while parsing your code, encountered an event declaration in a location where it was expecting to see a statement that ends with a semicolon, like a variable declaration or an expression.
 

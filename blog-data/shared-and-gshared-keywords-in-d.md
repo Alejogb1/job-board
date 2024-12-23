@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "shared-and-gshared-keywords-in-d"
 ---
 
-Okay so you’re asking about `shared` and `gshared` in D right Been there wrestled with that beast a few times let me tell you It's not exactly the most intuitive thing in D but once it clicks it's pretty powerful stuff alright buckle up
+ so you’re asking about `shared` and `gshared` in D right Been there wrestled with that beast a few times let me tell you It's not exactly the most intuitive thing in D but once it clicks it's pretty powerful stuff buckle up
 
 Basically we're talking about managing data access in multi-threaded environments right D is awesome at concurrency and these keywords are how you tell the compiler what's safe and what might explode your app into a pile of segfaults and frustration
 

@@ -4,7 +4,7 @@ date: "2024-12-11"
 id: "why-is-ai-safety-critical-for-addressing-risks-associated-with-intelligent-autonomous-agents"
 ---
 
-Okay so you wanna know why AI safety is a HUGE deal especially when we're talking about these super smart robots doing their own thing right  It's not just some sci-fi movie fear mongering stuff  it's real and it's getting realer fast
+ so you wanna know why AI safety is a HUGE deal especially when we're talking about these super smart robots doing their own thing right  It's not just some sci-fi movie fear mongering stuff  it's real and it's getting realer fast
 
 Think about it we're building these things  these agents  that can learn and adapt way faster than us  they're not just following pre-programmed rules they're actually figuring stuff out on their own  and that's awesome in a lot of ways but it also means we kinda lose control  a little bit or maybe a whole lot depending on how things go
 

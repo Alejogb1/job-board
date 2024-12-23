@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-containerd-image-import-slow-with-ctrexe"
 ---
 
-Let's tackle this. The sluggishness of `containerd` image imports using `ctr.exe` is a recurring frustration, and it’s something I've debugged more than a few times during my time working with container orchestration. It's rarely a case of `ctr.exe` itself being inherently slow; rather, it's typically a confluence of several factors that can significantly impact import performance. We need to examine the architecture and the process to pinpoint the bottlenecks.
+ The sluggishness of `containerd` image imports using `ctr.exe` is a recurring frustration, and it’s something I've debugged more than a few times during my time working with container orchestration. It's rarely a case of `ctr.exe` itself being inherently slow; rather, it's typically a confluence of several factors that can significantly impact import performance. We need to examine the architecture and the process to pinpoint the bottlenecks.
 
 Firstly, it's important to understand that `ctr.exe`, while convenient, is essentially a command-line client for the `containerd` daemon. It doesn't directly handle the heavy lifting of image import. Instead, it communicates with `containerd` via its gRPC API. The image import process involves several steps, including: reading the image layers (typically tar archives), unpacking those layers into the container storage backend, updating the image metadata, and finally, updating the snapshotter. Each of these steps can contribute to slowdowns.
 

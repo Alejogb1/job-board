@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "when-i-go-to-the-dashboard-route-how-do-i-show-my-hamburger-icon"
 ---
 
-Alright so you've got this hamburger icon problem on your dashboard route yeah I get it Been there done that more times than I care to admit It’s one of those deceptively simple things that can trip you up if you’re not thinking straight or you know having a bad day or something
+so you've got this hamburger icon problem on your dashboard route yeah I get it Been there done that more times than I care to admit It’s one of those deceptively simple things that can trip you up if you’re not thinking straight or you know having a bad day or something
 
 Let me tell you about this one time back in my early days I was working on this project a single page application a SPA thing right It was supposed to be super sleek and responsive You know the whole nine yards Anyway we had this navigation bar that used to just kinda sit there all static But then of course the design team the ones who have never coded a day in their life decided it needed to be a sliding drawer menu on mobile I’m sure you can see where this is going And I was all like sure no problem I’ll just slap a hamburger icon on that bad boy
 
@@ -136,4 +136,4 @@ Finally if you really want to solidify your knowledge of client-side routing in 
 
 And oh here’s a tech joke for ya why did the programmer quit his job because he didn't get arrays He always felt like a zero
 
-Okay bad joke I know but I had to get it out of the system Anyway make sure to use the concepts described in the code snippets above you will be fine you've got this If you have more questions feel free to ask and I'll be here and we all do our best to help each other
+ bad joke I know but I had to get it out of the system Anyway make sure to use the concepts described in the code snippets above you will be fine you've got this If you have more questions feel free to ask and I'll be here and we all do our best to help each other

@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "rsync-skipping-non-regular-file-messages"
 ---
 
-Okay so you're seeing rsync throwing "skipping non-regular file" messages right thats a classic I've been there done that got the t-shirt probably a few times
+ so you're seeing rsync throwing "skipping non-regular file" messages right thats a classic I've been there done that got the t-shirt probably a few times
 
 Let me tell you what this means what's likely causing it and how you can get around it its not rocket science but its definitely something that catches folks off guard especially if you're new to rsync or dealing with complex directory structures I've spent far too many nights debugging these scenarios trust me on that
 
@@ -31,7 +31,7 @@ This is problematic because the `.` means "current directory" and could be conta
 
 Sometimes its something else altogether that you overlooked maybe a developer used a named pipe for inter process communication or someone left a device node lying around that's totally possible when you work with linux long enough you will see some crazy stuff that's actually quite hard to reproduce on purpose
 
-Okay so how to fix this the good news is that rsync is not stupid and has a boatload of options that let you deal with this Here are some of the most useful ones
+ so how to fix this the good news is that rsync is not stupid and has a boatload of options that let you deal with this Here are some of the most useful ones
 
 1.  **Preserve symbolic links** the `-l` or `--links` option this makes rsync copy symbolic links as symbolic links instead of treating them like regular files It is very common that users will use this option to avoid creating a copy of the file and instead just linking it and they expect it to be copied as is
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-resolve-hotwiredstimulus-loading-issues-during-a-rails-7-heroku-deployment"
 ---
 
-Okay, let’s talk about `@hotwired/stimulus-loading` and the quirks it sometimes throws during a rails 7 heroku deployment. I’ve definitely been down that rabbit hole before – more times than i’d care to recall. From my experience, it usually boils down to a few common culprits, and getting to the bottom of it isn't always as straightforward as it seems.
+, let’s talk about `@hotwired/stimulus-loading` and the quirks it sometimes throws during a rails 7 heroku deployment. I’ve definitely been down that rabbit hole before – more times than i’d care to recall. From my experience, it usually boils down to a few common culprits, and getting to the bottom of it isn't always as straightforward as it seems.
 
 The first thing to understand is that `@hotwired/stimulus-loading` isn't some magical, detached entity. It’s a crucial piece of the hotwired ecosystem, managing how stimulus controllers are loaded and made available within your rails application. The issues typically surface during deployments, particularly on heroku, because local environments often gloss over some of the underlying asset pipeline subtleties that heroku’s production environment brings to the forefront.
 

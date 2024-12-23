@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-deploy-multiple-machine-learning-models-with-azure-ml-cli"
 ---
 
-Okay, let's tackle this. It's a scenario I’ve encountered countless times—managing and deploying multiple machine learning models effectively using the Azure ML CLI. I recall one particularly complex project where we were tasked with deploying a suite of models, each targeting different segments of user behavior. The initial attempt using the portal alone quickly became unsustainable, leading to significant operational overhead. That's where the Azure ML CLI truly shone, and I've become a firm believer in its power for this kind of task.
+,  It's a scenario I’ve encountered countless times—managing and deploying multiple machine learning models effectively using the Azure ML CLI. I recall one particularly complex project where we were tasked with deploying a suite of models, each targeting different segments of user behavior. The initial attempt using the portal alone quickly became unsustainable, leading to significant operational overhead. That's where the Azure ML CLI truly shone, and I've become a firm believer in its power for this kind of task.
 
 The core issue is this: when dealing with multiple models, whether they are variations of the same algorithm or entirely different approaches, the deployment process must be robust, repeatable, and ideally, automated. The Azure ML CLI, with its command-line interface, enables us to create deployment scripts that encapsulate all these needs. It sidesteps the cumbersome manual process often required via the Azure portal, making management far less prone to errors.
 

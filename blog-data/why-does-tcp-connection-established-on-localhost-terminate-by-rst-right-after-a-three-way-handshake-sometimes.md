@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-does-tcp-connection-established-on-localhost-terminate-by-rst-right-after-a-three-way-handshake-sometimes"
 ---
 
-Okay, let's tackle this. It’s a situation I've encountered several times during my career, usually in the midst of debugging some rather complex microservices architecture. The scenario, a localhost tcp connection getting immediately terminated by a reset (rst) packet right after the three-way handshake, can be perplexing at first glance, but there are several underlying causes which we can methodically explore. I've personally spent late nights in front of packet captures figuring out these exact problems, and I’ve learned to approach it systematically.
+,  It’s a situation I've encountered several times during my career, usually in the midst of debugging some rather complex microservices architecture. The scenario, a localhost tcp connection getting immediately terminated by a reset (rst) packet right after the three-way handshake, can be perplexing at first glance, but there are several underlying causes which we can methodically explore. I've personally spent late nights in front of packet captures figuring out these exact problems, and I’ve learned to approach it systematically.
 
 The quick explanation is that the rst flag in a tcp packet signifies an abrupt termination. It’s essentially a "no-nonsense" way for the operating system or network stack to indicate something went wrong, and there’s no recovery available or intended by the sending side. When you see this happening immediately after a successful three-way handshake (syn, syn-ack, ack), it strongly suggests a problem beyond the basic connection establishment, focusing on the actual application interaction that follows.
 

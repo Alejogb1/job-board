@@ -4,9 +4,9 @@ date: "2024-12-13"
 id: "column-layout-inside-submit-form-streamlit"
 ---
 
-Okay so you're wrestling with column layouts inside a Streamlit submit form right Been there done that got the t-shirt And the stress rash let me tell you its a fun one Not really
+ so you're wrestling with column layouts inside a Streamlit submit form right Been there done that got the t-shirt And the stress rash let me tell you its a fun one Not really
 
-Alright so you've got a Streamlit app probably something like this you've got your form you want some inputs and you want those inputs to be nicely arranged in columns not just stacked on top of each other classic user interface requirement But you're running into that classic Streamlit form behavior where things get all wonky and layouting starts acting like its a toddler throwing a tantrum Specifically the `st.columns` function I bet is not doing what you hoped when inside the `st.form` context right Well yeah thats a common pitfall many beginners face it can feel frustrating but its all fixable dont panic
+so you've got a Streamlit app probably something like this you've got your form you want some inputs and you want those inputs to be nicely arranged in columns not just stacked on top of each other classic user interface requirement But you're running into that classic Streamlit form behavior where things get all wonky and layouting starts acting like its a toddler throwing a tantrum Specifically the `st.columns` function I bet is not doing what you hoped when inside the `st.form` context right Well yeah thats a common pitfall many beginners face it can feel frustrating but its all fixable dont panic
 
 Ive been in this situation many times before my first experience with it was back in like 2019 trying to build a really simple internal tool for my team. We needed to fill in a bunch of data and initially I just slapped everything into a single form. It was a complete mess It looked like a ransom note made by a toddler using a crayon set of questionable origin. I thought oh easy peasy ill just wrap everything in `st.columns` inside the form no problem Well Streamlit had other ideas My beautiful columnar vision was just flat out ignored it all just rendered as a single column like some kind of layout singularity. I mean seriously it was the kind of thing that made me question all my career choices at that point. I spent a whole day ripping my hair out trying to figure out what was going on. Ah good old days
 
@@ -64,7 +64,7 @@ create_form()
 ```
 This one is pretty basic its just using the `st.columns` again but its inside a function.
 
-Alright so those are your general approaches. Now lets get into some more real world examples of this Ive worked on a couple of web apps in the past that needed complex form layouts One I worked on had multiple sections with fields arranged in different ways so it wasnt just 2 column layouts but like 2 3 4 layouts depending on the section of the form. I'm guessing you are having a similar situation. In such cases I found it helpful to break down the form into smaller functions Each function returned a container containing a specific section of the form and its sub layout. Then I assembled those sections inside the main form container. This gave me a much greater control over the layout. I also use it for styling the forms this is another advantage
+so those are your general approaches. Now lets get into some more real world examples of this Ive worked on a couple of web apps in the past that needed complex form layouts One I worked on had multiple sections with fields arranged in different ways so it wasnt just 2 column layouts but like 2 3 4 layouts depending on the section of the form. I'm guessing you are having a similar situation. In such cases I found it helpful to break down the form into smaller functions Each function returned a container containing a specific section of the form and its sub layout. Then I assembled those sections inside the main form container. This gave me a much greater control over the layout. I also use it for styling the forms this is another advantage
 
 One crucial thing to remember is that Streamlit is declarative not imperative which means you describe what you want and Streamlit figures out how to render it under the hood. You have to think in that direction instead of trying to manipulate things directly. Also understand that st.columns or any other layout component needs to be in the scope where streamlit can understand what you are trying to do. So its not a free for all. You cant just throw `st.columns` anywhere and expect things to just work. Trust me I have tried it it ends up failing spectacularly.
 
@@ -80,4 +80,4 @@ For more in-depth understanding of Streamlit internals I highly suggest diving i
 
 Oh and one more thing why did the programmer quit his job? Because he didnt get arrays
 
-Okay bad joke I know back to forms and columns and no more jokes. I hope that helps and yeah good luck with the app let me know if you have any more questions.
+ bad joke I know back to forms and columns and no more jokes. I hope that helps and yeah good luck with the app let me know if you have any more questions.

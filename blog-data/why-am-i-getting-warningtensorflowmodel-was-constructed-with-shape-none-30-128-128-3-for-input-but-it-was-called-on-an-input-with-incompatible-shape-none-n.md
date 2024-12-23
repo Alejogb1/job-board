@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-warningtensorflowmodel-was-constructed-with-shape-none-30-128-128-3-for-input-but-it-was-called-on-an-input-with-incompatible-shape-none-n"
 ---
 
-Okay, let's unpack this. I've seen this type of tensorflow shape mismatch pop up more times than I care to remember, and it's almost always traceable back to a fundamental disconnect in how the model expects its input versus what's actually being fed to it. It's a bit like trying to plug a three-prong plug into a two-prong socket – it's just not going to work, no matter how hard you try.
+, let's unpack this. I've seen this type of tensorflow shape mismatch pop up more times than I care to remember, and it's almost always traceable back to a fundamental disconnect in how the model expects its input versus what's actually being fed to it. It's a bit like trying to plug a three-prong plug into a two-prong socket – it's just not going to work, no matter how hard you try.
 
 The core of your issue lies in the discrepancy between the shape defined during the model construction `(None, 30, 128, 128, 3)` and the shape of the actual input at runtime `(None, N)`. Let’s break this down.
 

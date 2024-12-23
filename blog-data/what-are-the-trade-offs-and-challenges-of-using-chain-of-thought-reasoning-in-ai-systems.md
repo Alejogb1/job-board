@@ -4,7 +4,7 @@ date: "2024-12-11"
 id: "what-are-the-trade-offs-and-challenges-of-using-chain-of-thought-reasoning-in-ai-systems"
 ---
 
-Okay so you wanna talk about chain of thought prompting right  its kinda a big deal lately  everyone's using it  but its not all sunshine and rainbows you know  there are some serious trade-offs and challenges we gotta consider  
+ so you wanna talk about chain of thought prompting right  its kinda a big deal lately  everyone's using it  but its not all sunshine and rainbows you know  there are some serious trade-offs and challenges we gotta consider  
 
 First off  its computationally expensive  like seriously expensive  Think of it this way each step in the chain is another forward pass through your model  and if you have a long chain  well  your GPU is gonna be screaming for mercy  especially with those big language models  they're hungry beasts  We're talking about significantly increased latency and cost compared to a simple prompt  If you're building a system that needs to handle thousands of requests per second  chain of thought might just not be practical  you might need to think about optimizations or simpler methods.  Check out the paper on "Efficient Inference for Large Language Models"  it has some neat tricks for speed ups
 

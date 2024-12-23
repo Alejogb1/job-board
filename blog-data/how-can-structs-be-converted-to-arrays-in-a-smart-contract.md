@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-structs-be-converted-to-arrays-in-a-smart-contract"
 ---
 
-Okay, let's unpack this. I recall tackling this very challenge back in my early days with Solidity, specifically on a project that dealt with on-chain asset management where we needed to extract aggregated data from several structs to compute weighted averages. The issue, as many of you probably know, is that Solidity structs aren’t inherently iterable like arrays. They're fixed-size data structures designed to group related variables. So direct conversion isn't possible, but intelligent manipulation of data certainly is.
+, let's unpack this. I recall tackling this very challenge back in my early days with Solidity, specifically on a project that dealt with on-chain asset management where we needed to extract aggregated data from several structs to compute weighted averages. The issue, as many of you probably know, is that Solidity structs aren’t inherently iterable like arrays. They're fixed-size data structures designed to group related variables. So direct conversion isn't possible, but intelligent manipulation of data certainly is.
 
 The core problem boils down to representing structured data within the constraints of a contract's storage, while facilitating efficient processing. When I say efficient, I’m talking about minimizing gas consumption. There are a few established patterns to approach this, each with its trade-offs. The general idea is not to "convert" a struct to an array directly but to extract the relevant data points from struct instances and place them into an array.
 

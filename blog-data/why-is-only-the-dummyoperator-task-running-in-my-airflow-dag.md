@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-only-the-dummyoperator-task-running-in-my-airflow-dag"
 ---
 
-Alright, let's tackle this. It's frustrating when your beautifully constructed airflow dag decides to only execute a single, solitary dummy operator, leaving all the others in a perplexed, un-triggered state. I’ve seen this happen more times than I care to count, and it usually boils down to a handful of common misconfigurations or misunderstandings. I’m not talking about simple typos here; these are more nuanced issues that can trip up even experienced developers.
+Alright,  It's frustrating when your beautifully constructed airflow dag decides to only execute a single, solitary dummy operator, leaving all the others in a perplexed, un-triggered state. I’ve seen this happen more times than I care to count, and it usually boils down to a handful of common misconfigurations or misunderstandings. I’m not talking about simple typos here; these are more nuanced issues that can trip up even experienced developers.
 
 The core problem you’re experiencing suggests that airflow's scheduler isn't recognizing the dependencies that should trigger other tasks. This isn't usually a bug in airflow itself, but rather an indication that the dag's definition isn't structured the way you intend. The crucial part to understand is that Airflow relies heavily on understanding task dependencies, and if these aren’t defined or interpreted correctly, it will execute only the tasks that are explicitly not dependent on anything else, frequently the dummy operator you've likely included as a starting point.
 

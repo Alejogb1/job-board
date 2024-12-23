@@ -4,7 +4,7 @@ date: "2024-12-12"
 id: "qu-factores-deben-considerarse-al-disear-una-plataforma-educativa-inclusiva-para-preescolar-y-primaria"
 ---
 
-okay so we're talking about building an educational platform for young kids pre-k and elementary level right it's a big deal to make it truly inclusive so here's a breakdown of what i think we should keep in mind it's not just about slapping some games together
+ so we're talking about building an educational platform for young kids pre-k and elementary level right it's a big deal to make it truly inclusive so here's a breakdown of what i think we should keep in mind it's not just about slapping some games together
 
 first thing accessibility is key seriously it's not optional think about kids with different needs screen readers are crucial text alternatives for every image video whatever it's not just captions it's alternative text that actually describes the content keyboard navigation has to be flawless no mouse-only traps for little fingers that might not have fine motor skills color contrast it needs to be high enough for kids with low vision and colorblindness avoid relying solely on color to convey meaning it's a subtle thing but massively impactful and we need to test all this rigorously there are tools to simulate colorblindness that we should be using constantly
 

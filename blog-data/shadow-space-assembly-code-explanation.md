@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "shadow-space-assembly-code-explanation"
 ---
 
-Okay so shadow space assembly code right Been there done that Got the t-shirt and probably a few bug reports logged against my name because of it Let me lay it all out for you from a purely practical perspective like I've seen this play out a bunch of times
+ so shadow space assembly code right Been there done that Got the t-shirt and probably a few bug reports logged against my name because of it Let me lay it all out for you from a purely practical perspective like I've seen this play out a bunch of times
 
 First off understand what we mean by shadow space in assembly context Think of it as a designated area on the stack Specifically it’s space reserved by the calling function for the callee to use for passing arguments not through registers This is particularly vital in systems following calling conventions like the System V AMD64 ABI where the first six integer arguments are typically passed through registers rdi rsi rdx rcx r8 and r9 Any additional arguments or arguments that are too large to fit into a register get pushed onto the stack but not quite at the top they are pushed into this shadow space
 

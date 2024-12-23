@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "how-does-alignment-influence-the-ethical-considerations-of-deploying-generative-ai-systems"
 ---
 
-Okay so you wanna chat about AI alignment and ethics right  pretty big topic  I've been thinking about this a lot lately its kinda freaky honestly  like how do we even ensure these super smart AI things we're building actually do what we want them to do without turning into some kind of Skynet situation  thats the core of alignment  making sure the AI's goals are aligned with ours  sounds simple but its anything but
+ so you wanna chat about AI alignment and ethics right  pretty big topic  I've been thinking about this a lot lately its kinda freaky honestly  like how do we even ensure these super smart AI things we're building actually do what we want them to do without turning into some kind of Skynet situation  thats the core of alignment  making sure the AI's goals are aligned with ours  sounds simple but its anything but
 
 The ethical stuff is completely intertwined with this  if your AI isn't aligned its gonna make decisions that might be super unethical unintentionally or even intentionally depending on how things go  think about a self driving car  if its programmed to prioritize passenger safety above all else it might make a decision to swerve into a wall to avoid hitting a pedestrian  is that ethical  what if it prioritizes the overall good  maybe sacrificing one life to save many  these are really tough choices we're programming into these machines  and it gets way more complicated when we're talking about more general purpose AIs
 

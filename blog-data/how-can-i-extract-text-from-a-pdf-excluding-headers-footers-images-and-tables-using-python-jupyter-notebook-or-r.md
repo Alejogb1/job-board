@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-extract-text-from-a-pdf-excluding-headers-footers-images-and-tables-using-python-jupyter-notebook-or-r"
 ---
 
-Okay, let's tackle this. I've been down this particular rabbit hole more times than I care to remember, especially back during the early days of our automated report generation project. Dealing with the inconsistencies in PDF document structures was a regular headache. Extracting *just* the main body text, free from the clutter, is absolutely achievable, though it takes a bit more finesse than a simple "read the file" command.
+,  I've been down this particular rabbit hole more times than I care to remember, especially back during the early days of our automated report generation project. Dealing with the inconsistencies in PDF document structures was a regular headache. Extracting *just* the main body text, free from the clutter, is absolutely achievable, though it takes a bit more finesse than a simple "read the file" command.
 
 First, the challenge here isn't just about reading text; it's about selective extraction. We’re looking to ignore specific elements — headers, footers, images, and tables. These components often lack any standardized way of being flagged within the PDF's internal structure, and that's where things get complex. They are, after all, just graphical elements layered onto the document. Therefore, an intelligent strategy will have to be a blend of positional analysis and potentially, some heuristic approaches.
 

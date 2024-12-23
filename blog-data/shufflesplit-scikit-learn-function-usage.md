@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "shufflesplit-scikit-learn-function-usage"
 ---
 
-Okay so you're asking about `shufflesplit` from scikit-learn right I've wrestled with this particular beast a fair few times and it's always a bit of a head-scratcher especially when you're knee-deep in a dataset and need to get your train test split right
+ so you're asking about `shufflesplit` from scikit-learn right I've wrestled with this particular beast a fair few times and it's always a bit of a head-scratcher especially when you're knee-deep in a dataset and need to get your train test split right
 
 First off `ShuffleSplit` is for generating indices for train-test splits It's not like `train_test_split` which directly spits out the datasets It gives you the row indices that you then use to slice your data which is a crucial difference I’ve seen way too many newcomers just trying to feed it the data directly and scratching their heads wondering why it’s not working 
 
@@ -45,7 +45,7 @@ A common mistake is forgetting that you have the indices not the data as I said 
 
 And remember `ShuffleSplit` just shuffles and splits it doesn’t do any form of cross validation like for example `KFold` or `StratifiedKFold` it’s just random splits which might lead to overfitting if not handled with care If your data is imbalanced `StratifiedShuffleSplit` is the go to guy
 
-Okay now lets look at another case this time using different size allocation
+ now lets look at another case this time using different size allocation
 
 ```python
 from sklearn.model_selection import ShuffleSplit

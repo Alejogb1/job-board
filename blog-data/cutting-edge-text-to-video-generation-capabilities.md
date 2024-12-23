@@ -4,7 +4,7 @@ date: '2024-11-15'
 id: 'cutting-edge-text-to-video-generation-capabilities'
 ---
 
-Okay, so you're talking about turning words into videos, that's super cool  Right now it's super cutting-edge, but it's getting better all the time  Imagine you're writing a script for a short video and then you just feed it into a program and boom, video  That's the dream, right  I'm not sure if there's a program that can do that perfectly yet, but there are some tools that are getting pretty close  
+, so you're talking about turning words into videos, that's super cool  Right now it's super cutting-edge, but it's getting better all the time  Imagine you're writing a script for a short video and then you just feed it into a program and boom, video  That's the dream, right  I'm not sure if there's a program that can do that perfectly yet, but there are some tools that are getting pretty close  
 
 One thing I've been playing around with is this thing called **Stable Diffusion**  It's a big language model that can generate images from text descriptions  You can give it a prompt like "a cat sitting on a beach" and it'll actually generate an image of a cat on a beach, which is pretty wild  
 

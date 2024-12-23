@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-resolve-a-tensor-dimension-mismatch-error-with-a-single-unit-difference"
 ---
 
-Alright, let's tackle this. I've seen this particular flavor of error, the single-unit tensor dimension mismatch, pop up more times than I care to count across various projects – from deep learning models gone awry to more mundane data manipulation pipelines. It's a common snag, but thankfully, also one with generally straightforward solutions. It usually surfaces when two tensors, expected to conform in shape for operations like addition, subtraction, or matrix multiplication, have dimensions that differ by precisely one element in a specific axis.
+Alright,  I've seen this particular flavor of error, the single-unit tensor dimension mismatch, pop up more times than I care to count across various projects – from deep learning models gone awry to more mundane data manipulation pipelines. It's a common snag, but thankfully, also one with generally straightforward solutions. It usually surfaces when two tensors, expected to conform in shape for operations like addition, subtraction, or matrix multiplication, have dimensions that differ by precisely one element in a specific axis.
 
 The root cause almost always lies in either a misunderstanding of how specific tensor operations modify shapes, or a miscalculation of expected output shapes along the computational path. When you encounter this, don't immediately jump to complex fixes; rather, methodically audit your tensor operations leading to the point where the error occurs. Pinpointing the exact operation causing the mismatch is 90% of the battle.
 

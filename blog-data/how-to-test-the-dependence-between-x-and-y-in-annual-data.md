@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-test-the-dependence-between-x-and-y-in-annual-data"
 ---
 
-Alright, let's tackle this. I’ve actually been in the trenches with this sort of problem a few times, particularly when dealing with financial models and forecasting. Testing the dependence between variables in annual data might seem straightforward at first glance, but the specifics of annual aggregates introduce some unique challenges. We aren't working with the granularity of, say, daily data, which allows for finer correlation checks. The annual aggregation can sometimes mask underlying shorter-term dynamics and lead to spurious correlations if not handled correctly.
+Alright,  I’ve actually been in the trenches with this sort of problem a few times, particularly when dealing with financial models and forecasting. Testing the dependence between variables in annual data might seem straightforward at first glance, but the specifics of annual aggregates introduce some unique challenges. We aren't working with the granularity of, say, daily data, which allows for finer correlation checks. The annual aggregation can sometimes mask underlying shorter-term dynamics and lead to spurious correlations if not handled correctly.
 
 The core issue we're addressing here is whether changes in variable *X* are associated with changes in variable *Y* across annual observations. This isn't as simple as just running a basic correlation function. The kind of test we need largely depends on the assumptions we're willing to make about the data and the nature of the relationship we’re looking to uncover. Before diving into specific tests, remember that "dependence" isn't always causation. We're assessing statistical association, which may or may not imply a direct causal link.
 

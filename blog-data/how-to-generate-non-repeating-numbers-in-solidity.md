@@ -65,7 +65,7 @@ contract MappingUniqueNumbers {
 }
 ```
 
-this approach is okay if you just need to generate and check for unique numbers, and you do not need an ordered list of the previously generated numbers. but again, the way of generating new random numbers could be better, but this is an example, remember.
+this approach is  if you just need to generate and check for unique numbers, and you do not need an ordered list of the previously generated numbers. but again, the way of generating new random numbers could be better, but this is an example, remember.
 
 both approaches have the potential of getting stuck. and that's no good.
 

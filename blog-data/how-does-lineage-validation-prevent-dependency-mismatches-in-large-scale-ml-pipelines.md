@@ -4,7 +4,7 @@ date: "2024-12-10"
 id: "how-does-lineage-validation-prevent-dependency-mismatches-in-large-scale-ml-pipelines"
 ---
 
-Okay so you wanna know about lineage validation in big ol' ML pipelines right preventing those nasty dependency mismatches  yeah those are the worst  Imagine building this huge thing  layers upon layers of models data transformations feature engineering all interconnected  and BAM some tiny little change way back at the beginning throws everything off  It's like a Jenga tower made of code  one wrong move and the whole thing collapses
+ so you wanna know about lineage validation in big ol' ML pipelines right preventing those nasty dependency mismatches  yeah those are the worst  Imagine building this huge thing  layers upon layers of models data transformations feature engineering all interconnected  and BAM some tiny little change way back at the beginning throws everything off  It's like a Jenga tower made of code  one wrong move and the whole thing collapses
 
 Lineage validation is basically like having a super detailed blueprint of your entire pipeline  It meticulously tracks every single component every transformation every data source  everything  Think of it as a family tree for your data and models  showing exactly how everything is related
 

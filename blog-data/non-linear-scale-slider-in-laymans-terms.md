@@ -4,11 +4,11 @@ date: "2024-12-13"
 id: "non-linear-scale-slider-in-laymans-terms"
 ---
 
-Okay so non linear sliders yeah I’ve wrestled with those beasts a few times lemme tell ya
+ so non linear sliders yeah I’ve wrestled with those beasts a few times lemme tell ya
 
 First off in layman's terms you’re dealing with a slider where the visual distance of the slider doesn’t directly correspond to the numerical change in the value it represents Imagine a regular slider where moving it half the way goes from 0 to 50 well a non linear one might go from 0 to 10 in the first half and then from 10 to 100 in the second half the further you go the bigger the number jump get it Its not a uniform progression
 
-Okay now why you'd want that and not just normal boring linear sliders well think about audio volume or say a zoom level for a map or even exposure on a camera Often these things don’t feel natural when represented linearly Small nudges at the low end should give you smaller changes while bigger nudges at the high end can give you bigger changes think about a logarithm its a classic example Youre covering more ground in a smaller travel distance
+ now why you'd want that and not just normal boring linear sliders well think about audio volume or say a zoom level for a map or even exposure on a camera Often these things don’t feel natural when represented linearly Small nudges at the low end should give you smaller changes while bigger nudges at the high end can give you bigger changes think about a logarithm its a classic example Youre covering more ground in a smaller travel distance
 
 So the trick is in the math not necessarily the UI element its just a normal slider underneath You need to translate your visual slider position usually from 0 to 1 into a value on your desired non linear scale
 

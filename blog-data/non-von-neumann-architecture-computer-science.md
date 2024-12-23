@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "non-von-neumann-architecture-computer-science"
 ---
 
-Okay so non-von neumann architecture right Been there done that wrestled with that beast more times than I care to remember Let's unpack this thing because it’s not as straightforward as some textbooks make it out to be I'm not gonna give you a history lesson you can google that but I will share some scars from my own encounters with this stuff
+ so non-von neumann architecture right Been there done that wrestled with that beast more times than I care to remember Let's unpack this thing because it’s not as straightforward as some textbooks make it out to be I'm not gonna give you a history lesson you can google that but I will share some scars from my own encounters with this stuff
 
 First off when we talk about non-von neumann we're talking about stepping away from the classic sequential execution model you know the fetch-decode-execute cycle that's been the backbone of computing for decades Now that's not inherently bad it's been incredibly useful but it has limitations especially when we're dealing with the kind of massively parallel stuff we need today think AI or large scale simulations And the limitations are not just "speed" but also the whole power efficiency and memory access bottleneck issues we can encounter
 

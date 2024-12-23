@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "what-do-the-s-d-etc-mean-in-delphi-programming"
 ---
 
-Okay so you're asking about those `s` `d` and stuff in Delphi yeah I've been there done that many times believe me it's a classic beginner stumbling block and even seasoned Delphi devs trip over them occasionally It's all about data type suffixes and honestly once you get the hang of them it's like riding a bike you never really forget
+ so you're asking about those `s` `d` and stuff in Delphi yeah I've been there done that many times believe me it's a classic beginner stumbling block and even seasoned Delphi devs trip over them occasionally It's all about data type suffixes and honestly once you get the hang of them it's like riding a bike you never really forget
 
 Let's break it down I'll try not to make it too dry because no one likes a super dry explanation especially about something so fundamental
 

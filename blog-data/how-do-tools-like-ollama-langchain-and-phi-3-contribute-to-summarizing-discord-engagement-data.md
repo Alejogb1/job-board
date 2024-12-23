@@ -4,7 +4,7 @@ date: "2024-12-03"
 id: "how-do-tools-like-ollama-langchain-and-phi-3-contribute-to-summarizing-discord-engagement-data"
 ---
 
-Okay so you wanna know how Ollama Langchain and PHI-3 can help you make sense of all that Discord chaos right  like the sheer volume of messages reactions and everything else its insane  I get it
+ so you wanna know how Ollama Langchain and PHI-3 can help you make sense of all that Discord chaos right  like the sheer volume of messages reactions and everything else its insane  I get it
 
 Let's break it down  these tools aren't magic wands they dont automatically give you a perfect summary  you gotta do some work but they make the *process* way easier  think of them as supercharged helpers
 

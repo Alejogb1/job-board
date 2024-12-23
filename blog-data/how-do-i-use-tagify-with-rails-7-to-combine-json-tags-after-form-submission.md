@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-use-tagify-with-rails-7-to-combine-json-tags-after-form-submission"
 ---
 
-Okay, let's tackle this. I remember a particularly tricky project a few years back where we needed a robust tagging system for user-generated content within a Rails app. We settled on Tagify, and, like many, we initially stumbled over the proper handling of tag data post-form submission, specifically how to combine and persist those JSON tags effectively. It's not as straightforward as it may seem initially.
+,  I remember a particularly tricky project a few years back where we needed a robust tagging system for user-generated content within a Rails app. We settled on Tagify, and, like many, we initially stumbled over the proper handling of tag data post-form submission, specifically how to combine and persist those JSON tags effectively. It's not as straightforward as it may seem initially.
 
 The core challenge lies in the fact that Tagify, out of the box, primarily works on the front-end, generating a text input and presenting user-friendly tags. When submitted, however, the data arrives as a simple string of comma-separated values (or similar, depending on config) which represents the *last state* of the tags. The actual tag *objects* with any associated data are not directly present. We're dealing with a plain string that we must then parse and translate back into usable data for our Rails model.
 

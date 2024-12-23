@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-configure-pi-holes-docker-volumes-in-portainer"
 ---
 
-Alright, let's tackle this. I've spent a fair amount of time wrestling with docker configurations, including pi-hole, so let me share my approach to managing those volumes within portainer. It's actually less mystical than some make it out to be. The key is understanding how docker volumes work fundamentally and how portainer acts as a management layer on top of that.
+Alright,  I've spent a fair amount of time wrestling with docker configurations, including pi-hole, so let me share my approach to managing those volumes within portainer. It's actually less mystical than some make it out to be. The key is understanding how docker volumes work fundamentally and how portainer acts as a management layer on top of that.
 
 Essentially, we're talking about persistent storage for your pi-hole instance. If you don't use volumes, any changes within the container (like custom blacklists, whitelists, or DNS settings) would be lost if the container was removed or recreated. That's a major headache. Volumes allow your data to persist outside of the container's lifecycle.
 

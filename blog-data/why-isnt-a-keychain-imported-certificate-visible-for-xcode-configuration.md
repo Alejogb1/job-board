@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-isnt-a-keychain-imported-certificate-visible-for-xcode-configuration"
 ---
 
-Alright, let's tackle this. It’s a situation I've certainly encountered more than a few times, and it can be frustrating. The core issue, when a certificate imported into your keychain isn't showing up in Xcode's code signing configurations, typically boils down to a few interconnected factors concerning trust, identity, and proper handling of the certificate's purpose. I’ll break down what’s usually happening and what I’ve found to be reliable fixes.
+Alright,  It’s a situation I've certainly encountered more than a few times, and it can be frustrating. The core issue, when a certificate imported into your keychain isn't showing up in Xcode's code signing configurations, typically boils down to a few interconnected factors concerning trust, identity, and proper handling of the certificate's purpose. I’ll break down what’s usually happening and what I’ve found to be reliable fixes.
 
 Firstly, consider that the macOS keychain, despite acting like a unified repository, segregates items based on their 'kind' and accessibility. A certificate imported into your 'login' keychain, for instance, might not automatically be considered usable for code signing. Xcode is particularly fussy about the type of certificate it expects. It's primarily looking for certificates that have been explicitly marked with the code signing purpose and have the correct trust settings.
 

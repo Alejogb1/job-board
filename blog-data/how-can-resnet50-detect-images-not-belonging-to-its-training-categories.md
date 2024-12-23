@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-resnet50-detect-images-not-belonging-to-its-training-categories"
 ---
 
-Okay, let's tackle this. It's a fairly common question, and I've seen it crop up in various contexts – think back to a project where we were attempting anomaly detection in industrial machine vision; the challenge was precisely this. A ResNet50 trained on a curated dataset of specific components needed to flag anything *not* part of that known set. So, it isn’t about magically making ResNet50 ‘see’ what it hasn’t seen, but rather about leveraging what it *has* learned to identify discrepancies.
+,  It's a fairly common question, and I've seen it crop up in various contexts – think back to a project where we were attempting anomaly detection in industrial machine vision; the challenge was precisely this. A ResNet50 trained on a curated dataset of specific components needed to flag anything *not* part of that known set. So, it isn’t about magically making ResNet50 ‘see’ what it hasn’t seen, but rather about leveraging what it *has* learned to identify discrepancies.
 
 The core problem here stems from the fact that ResNet50, like most classifiers, is trained to minimize its loss *within* the categories it’s been exposed to. It learns to map images to specific output probabilities representing these categories. It doesn’t inherently possess a concept of "other," or "unknown." When you feed it something outside the training distribution, it's still going to try to shoehorn that input into one of the known categories. This often results in highly confident, yet incorrect, predictions.
 

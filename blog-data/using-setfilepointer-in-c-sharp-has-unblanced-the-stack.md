@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "using-setfilepointer-in-c-sharp-has-unblanced-the-stack"
 ---
 
-Alright so you're asking about `SetFilePointer` in C# and whether it's messed up your stack specifically the stack in memory no the physical stack of papers on your desk I get it been there done that a few times actually more than a few times. You think you're doing some simple file manipulation and suddenly BOOM unexplained crashes or weird behavior. Let me break down what might be happening based on my painful personal experiences.
+so you're asking about `SetFilePointer` in C# and whether it's messed up your stack specifically the stack in memory no the physical stack of papers on your desk I get it been there done that a few times actually more than a few times. You think you're doing some simple file manipulation and suddenly BOOM unexplained crashes or weird behavior. Let me break down what might be happening based on my painful personal experiences.
 
 First off `SetFilePointer` itself isn't directly going to stomp on the stack. Think of it like this the stack is a place where your program stores things it needs temporarily function call return addresses local variables you know the drill. `SetFilePointer` on the other hand is a Windows API call specifically a low-level function dealing directly with files and file handles. Its job is to move the position within a file from where you're reading and writing it's a file cursor mover basically. It's a fine tool. Just as a hammer is a good tool but not for cutting a steak so let us leave the metaphors out ok.
 

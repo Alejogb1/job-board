@@ -4,9 +4,9 @@ date: "2024-12-13"
 id: "433-while-loop-insect-growth-zybooks-coding"
 ---
 
-Okay so you're wrestling with a while loop and some insect growth scenario from zybooks right been there done that probably like a hundred times in my career I remember my early days it was always something like this endless loops logic errors weird off by one bugs good times good times anyway let's break it down since I've been down this road a few times
+ so you're wrestling with a while loop and some insect growth scenario from zybooks right been there done that probably like a hundred times in my career I remember my early days it was always something like this endless loops logic errors weird off by one bugs good times good times anyway let's break it down since I've been down this road a few times
 
-Okay first things first you're dealing with a while loop I'm guessing for iterative insect growth calculations typical zybooks fare So the core issue is likely with loop conditions the incrementing logic inside the loop or maybe even variable initialization We'll cover all the usual suspects
+ first things first you're dealing with a while loop I'm guessing for iterative insect growth calculations typical zybooks fare So the core issue is likely with loop conditions the incrementing logic inside the loop or maybe even variable initialization We'll cover all the usual suspects
 
 Here's how I would tackle this the methodical techy way we're going to dissect this thing like a broken computer no frills just code and logic
 
@@ -39,7 +39,7 @@ That `while current_time < time_steps` is the crucial condition that stops our l
 
 A common mistake I see is forgetting to advance `current_time` which leads to that infinite loop scenario that we've all experienced at some point it's a classic oh and you might have accidentally used = instead of == for your loop condition always fun to debug
 
-Okay so maybe your Zybooks question adds a little curveball let's say the growth rate itself changes with time that's when we get slightly more complex here is another snippet that shows this
+ so maybe your Zybooks question adds a little curveball let's say the growth rate itself changes with time that's when we get slightly more complex here is another snippet that shows this
 
 ```python
 def insect_growth_variable_rate(initial_population, growth_rates, time_steps):
@@ -99,8 +99,8 @@ Now about debugging that's where you'll really learn I remember spending an enti
 
 And to give you a little humor relief did you hear about the programmer who got stuck in the shower because the shampoo instructions said "lather rinse repeat" I mean I don't think I'm the only one that this happened to
 
-Okay back to work if you're still stuck start by simplifying your problem write down the logic of the loop in plain english then translate it to code break everything into steps and test your code after each small step that's my bread and butter method always
+ back to work if you're still stuck start by simplifying your problem write down the logic of the loop in plain english then translate it to code break everything into steps and test your code after each small step that's my bread and butter method always
 
 If you are dealing with more complicated simulations you probably want to take a look at "Numerical Recipes" it's a classic book that teaches all sorts of important math and algorithmic things for scientific work I would also check out "Introduction to Algorithms" it will give you a lot of important stuff that you need for algorithm development and also the classic "Structure and Interpretation of Computer Programs" this one will make your mind think about problems in a different light
 
-Okay so that is more or less it I hope it helps you get through this remember testing edge cases thinking logically using print statements and good books will probably get you through most of the difficult things in life if you manage to get those steps done so yeah good luck
+ so that is more or less it I hope it helps you get through this remember testing edge cases thinking logically using print statements and good books will probably get you through most of the difficult things in life if you manage to get those steps done so yeah good luck

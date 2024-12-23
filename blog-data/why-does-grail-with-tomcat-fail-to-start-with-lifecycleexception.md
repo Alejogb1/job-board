@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-does-grail-with-tomcat-fail-to-start-with-lifecycleexception"
 ---
 
-Okay, let's unpack this grails-on-tomcat startup failure due to a `lifecycleexception`. I’ve seen this particular issue rear its head more than a few times over my career, often when deploying complex grails applications into environments with pre-existing tomcat instances. It’s rarely a simple, singular problem, and diagnosing it often requires a bit of a methodical approach. Let’s break down the likely culprits and how I've typically tackled them.
+, let's unpack this grails-on-tomcat startup failure due to a `lifecycleexception`. I’ve seen this particular issue rear its head more than a few times over my career, often when deploying complex grails applications into environments with pre-existing tomcat instances. It’s rarely a simple, singular problem, and diagnosing it often requires a bit of a methodical approach. Let’s break down the likely culprits and how I've typically tackled them.
 
 The core of the issue, as you've probably surmised, is that something within the grails application’s deployment cycle is causing tomcat to fail when trying to start the web application. Tomcat's lifecycle is a series of phases – initialization, start, stop, and destroy – and the `lifecycleexception` indicates a problem within one of these phases. The exception itself doesn't tell the whole story, so we have to look deeper into the log files for specifics.
 

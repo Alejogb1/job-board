@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "case-expressions-may-only-be-nested-to-level-10"
 ---
 
-Okay so nested case statements limited to level 10 eh I’ve seen this rodeo before. Been there done that got the t-shirt and probably a few debugging scars to prove it. Let me tell you it’s a classic gotcha that always seems to bite even the most seasoned of us. It’s like the compiler says “yeah you think you’re clever with all these case statements ha try me I dare you” and then bam level 11 and it throws a tantrum.
+ so nested case statements limited to level 10 eh I’ve seen this rodeo before. Been there done that got the t-shirt and probably a few debugging scars to prove it. Let me tell you it’s a classic gotcha that always seems to bite even the most seasoned of us. It’s like the compiler says “yeah you think you’re clever with all these case statements ha try me I dare you” and then bam level 11 and it throws a tantrum.
 
 My first encounter with this was back in the early days right like '08 probably. I was working on this embedded system project some real-time sensor processing. We were getting a firehose of data and we needed to do some serious state machine acrobatics to handle it. I figured case statements were the way to go clean concise easy to follow right? Wrong so wrong.
 
@@ -48,7 +48,7 @@ int process_packet(char* packet, int length) {
 }
 ```
 
-I mean this looks kind of okay at the top level right? But see how quickly you can end up nesting if you have even a semi complex case? this approach of deeply nested switches is not going to scale and honestly its a nightmare to debug.
+I mean this looks kind of  at the top level right? But see how quickly you can end up nesting if you have even a semi complex case? this approach of deeply nested switches is not going to scale and honestly its a nightmare to debug.
 
 Instead of going down this rabbit hole consider using function pointers or lookup tables. These are powerful alternatives that help maintain clarity and keep things within reasonable levels.
 

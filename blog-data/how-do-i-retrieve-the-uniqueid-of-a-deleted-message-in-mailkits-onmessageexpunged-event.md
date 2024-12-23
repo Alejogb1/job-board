@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-retrieve-the-uniqueid-of-a-deleted-message-in-mailkits-onmessageexpunged-event"
 ---
 
-Okay, let's unpack this. The challenge of grabbing the `UniqueId` of a deleted message during MailKit's `OnMessageExpunged` event is indeed a tricky spot, and one I've bumped into a few times myself, typically when building more sophisticated email synchronization features. The key is understanding the behavior of the IMAP protocol, and how MailKit layers on top of it.
+, let's unpack this. The challenge of grabbing the `UniqueId` of a deleted message during MailKit's `OnMessageExpunged` event is indeed a tricky spot, and one I've bumped into a few times myself, typically when building more sophisticated email synchronization features. The key is understanding the behavior of the IMAP protocol, and how MailKit layers on top of it.
 
 The `OnMessageExpunged` event fires *after* the server has removed the message. That's the crucial detail. By the time that event triggers, the server no longer has a record of that message's `UniqueId` associated with its message sequence number or the mailbox's contents. The `UniqueId` is, by definition, unique and tied to the message's lifetime on the server, and once the server removes it, that identity is gone. That's why directly querying the message by its sequence number within the `OnMessageExpunged` event is futile: it simply doesn't exist anymore.
 

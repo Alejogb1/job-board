@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-are-the-errors-in-the-image-preprocessing-code-for-a-u-net-based-target-detection-neural-network"
 ---
 
-Okay, let's tackle this. Having spent a fair amount of time debugging similar systems, I can definitely speak to common pitfalls in image preprocessing for U-Net-based target detection. The devil, as they say, is often in the details, and preprocessing is precisely where many subtleties can derail even the best model architectures. The focus is particularly crucial for U-Nets, given their sensitivity to input consistency.
+,  Having spent a fair amount of time debugging similar systems, I can definitely speak to common pitfalls in image preprocessing for U-Net-based target detection. The devil, as they say, is often in the details, and preprocessing is precisely where many subtleties can derail even the best model architectures. The focus is particularly crucial for U-Nets, given their sensitivity to input consistency.
 
 First, let’s consider the broader context. U-Nets are designed for pixel-wise prediction. Therefore, how we prepare our input images drastically affects the output quality. We’re not just feeding images into a black box; we're sculpting the data the model learns from. Errors here translate to degraded performance downstream.
 

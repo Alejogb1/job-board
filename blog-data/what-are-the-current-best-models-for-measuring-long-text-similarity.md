@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-are-the-current-best-models-for-measuring-long-text-similarity"
 ---
 
-Okay, let's tackle this. I remember back in '09, working on a project for a large legal firm, we needed to compare hundreds of complex documents to identify potential duplicates and related cases. That was before a lot of the current models were readily available, and trust me, it was a headache. Back then, we cobbled together methods, relying heavily on TF-IDF and cosine similarity, which, while functional, definitely had its limitations with long texts. These days, we've come quite a way, and there's a much more refined toolkit to approach this challenge.
+,  I remember back in '09, working on a project for a large legal firm, we needed to compare hundreds of complex documents to identify potential duplicates and related cases. That was before a lot of the current models were readily available, and trust me, it was a headache. Back then, we cobbled together methods, relying heavily on TF-IDF and cosine similarity, which, while functional, definitely had its limitations with long texts. These days, we've come quite a way, and there's a much more refined toolkit to approach this challenge.
 
 The problem, at its core, is that long text similarity isn't simply about comparing word occurrences; it's about capturing the semantic meaning embedded within those words, across potentially numerous paragraphs and sections. The approaches used in traditional information retrieval, like the aforementioned TF-IDF, often falter when dealing with texts where the same concepts are expressed with different vocabulary, or where the context shifts subtly across a document.
 

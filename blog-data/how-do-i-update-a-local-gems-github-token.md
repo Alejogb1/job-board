@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-update-a-local-gems-github-token"
 ---
 
-Okay, let's tackle this. It's a situation I've certainly encountered more times than I care to remember, usually just when I thought my automated deployment pipeline was finally working flawlessly. The issue of updating a gem's GitHub token, or any API token for that matter, is a microcosm of the broader problem of secure secret management within a development lifecycle. It’s crucial to get this process nailed down correctly, as exposing such credentials can have significant consequences.
+,  It's a situation I've certainly encountered more times than I care to remember, usually just when I thought my automated deployment pipeline was finally working flawlessly. The issue of updating a gem's GitHub token, or any API token for that matter, is a microcosm of the broader problem of secure secret management within a development lifecycle. It’s crucial to get this process nailed down correctly, as exposing such credentials can have significant consequences.
 
 The need for updating a local gem's GitHub token generally arises when you're interacting with GitHub's APIs from within a gem – perhaps for CI/CD purposes, or to automatically update repository metadata, or even to fetch dependencies under a specific set of authenticated conditions. The tokens in question here are typically personal access tokens (pats) generated within GitHub’s settings. These tokens function as an alternative to usernames and passwords for authentication. Critically, these tokens shouldn't be hardcoded directly into your gem's code or checked into version control. That's a major security faux pas. I've seen it, and trust me, it never ends well.
 

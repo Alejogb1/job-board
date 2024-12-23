@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-airflow-submit-spark-jobs-to-a-dataproc-cluster-without-ssh-access"
 ---
 
-Okay, let's tackle this. I've been down this path a few times, so I can offer some practical insights. The challenge of submitting Spark jobs to a Dataproc cluster from Airflow, particularly without resorting to the usual SSH gymnastics, is a common one and requires a good understanding of Google Cloud Platform's (GCP) ecosystem. It's not just about getting the job to run; it's also about doing it securely and in a maintainable manner.
+,  I've been down this path a few times, so I can offer some practical insights. The challenge of submitting Spark jobs to a Dataproc cluster from Airflow, particularly without resorting to the usual SSH gymnastics, is a common one and requires a good understanding of Google Cloud Platform's (GCP) ecosystem. It's not just about getting the job to run; it's also about doing it securely and in a maintainable manner.
 
 The fundamental issue is that Airflow, typically running outside the Dataproc cluster's network, needs a secure and authorized way to interact with the cluster’s resources. Relying on SSH for this in production environments introduces a myriad of security and management complexities that are best avoided. Luckily, GCP provides alternative pathways that circumvent the need for direct SSH access. Specifically, we'll be focusing on utilizing the Dataproc API, which is the recommended approach.
 

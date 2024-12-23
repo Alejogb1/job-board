@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "is-there-any-way-to-use-two-different-weight-files-of-yolov5-for-a-video"
 ---
 
-Okay, let's talk about using two different yolov5 weight files for a video. It's not a straightforward "plug-and-play" situation, but it’s definitely achievable with a bit of considered coding. I remember facing a similar challenge a few years back during a project involving multi-stage object detection for a robotics application. We needed to first broadly identify areas of interest and then refine the detection within those areas using a model with a different specialization. It wasn't precisely two *different* yolo models, but the principle of switching models mid-stream is highly applicable.
+, let's talk about using two different yolov5 weight files for a video. It's not a straightforward "plug-and-play" situation, but it’s definitely achievable with a bit of considered coding. I remember facing a similar challenge a few years back during a project involving multi-stage object detection for a robotics application. We needed to first broadly identify areas of interest and then refine the detection within those areas using a model with a different specialization. It wasn't precisely two *different* yolo models, but the principle of switching models mid-stream is highly applicable.
 
 Essentially, yolov5 doesn't intrinsically support swapping weight files *mid-inference* on a frame-by-frame basis. The inference process assumes a single loaded model and its associated weights. What you need to do is design a workflow that allows you to load different models at the correct times, processing the video sequentially by frames or batches. This means controlling which model is active for each specific part of the video.
 

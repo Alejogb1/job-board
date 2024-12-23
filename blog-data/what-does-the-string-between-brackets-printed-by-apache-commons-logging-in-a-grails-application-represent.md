@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-does-the-string-between-brackets-printed-by-apache-commons-logging-in-a-grails-application-represent"
 ---
 
-Okay, let's talk about those bracketed strings you see in Apache Commons Logging outputs within a Grails application. I've spent my fair share of debugging sessions staring at those lines, so I understand the question. It's a common point of confusion, especially when you're new to the ecosystem or even just working in a particularly complex application. What we're seeing there, inside the square brackets, isn't some arbitrary string; it's the *logger name*.
+, let's talk about those bracketed strings you see in Apache Commons Logging outputs within a Grails application. I've spent my fair share of debugging sessions staring at those lines, so I understand the question. It's a common point of confusion, especially when you're new to the ecosystem or even just working in a particularly complex application. What we're seeing there, inside the square brackets, isn't some arbitrary string; it's the *logger name*.
 
 In essence, logging frameworks, including Apache Commons Logging (ACL), use logger names to categorize log messages. Think of it like a hierarchical address system for your logs. The deeper into a particular namespace or class a log message originates from, the more specific its logger name becomes, and therefore, the better control you have over its output level. By default, Apache Commons Logging will use the full class name where the logging method was called as the logger name.
 

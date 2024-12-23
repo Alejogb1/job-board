@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-are-the-implications-of-using-minmax-scaler"
 ---
 
-Okay, let's tackle this one. The MinMax scaler, a seemingly straightforward tool, actually packs quite a punch in terms of implications for machine learning models. It's not just about squeezing data between zero and one; the consequences ripple through the entire model training and interpretation process. I've seen this firsthand in numerous projects, sometimes with unexpectedly positive results and, other times, with scenarios that required extensive debugging and refactoring. Let me break down some of the core implications, drawing on my past experience.
+, let's tackle this one. The MinMax scaler, a seemingly straightforward tool, actually packs quite a punch in terms of implications for machine learning models. It's not just about squeezing data between zero and one; the consequences ripple through the entire model training and interpretation process. I've seen this firsthand in numerous projects, sometimes with unexpectedly positive results and, other times, with scenarios that required extensive debugging and refactoring. Let me break down some of the core implications, drawing on my past experience.
 
 Essentially, the MinMax scaler performs a linear transformation on each feature individually, shifting and scaling the data such that it falls within a specified range, commonly [0, 1]. The formula, if you need a quick refresher, is: `x_scaled = (x - x_min) / (x_max - x_min)`. Where x is your original value, x_min is the minimum value for that feature, and x_max is the maximum.
 

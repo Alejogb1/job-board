@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-do-i-get-0-passing-in-my-hardhat-tests"
 ---
 
-Okay, let's get into it. It seems you're encountering the dreaded `0 passing` result in your hardhat tests, and I've certainly been there myself. In my experience, debugging this kind of issue can be a bit like peeling an onion – multiple layers to get through. More often than not, it's not some deeply hidden compiler bug, but rather a misunderstanding in how Hardhat discovers and executes tests.
+, let's get into it. It seems you're encountering the dreaded `0 passing` result in your hardhat tests, and I've certainly been there myself. In my experience, debugging this kind of issue can be a bit like peeling an onion – multiple layers to get through. More often than not, it's not some deeply hidden compiler bug, but rather a misunderstanding in how Hardhat discovers and executes tests.
 
 From my time spent troubleshooting these scenarios, the first place I typically investigate is the test file discovery mechanism. Hardhat relies on pattern matching to identify your test files, and a simple misconfiguration can easily lead to it overlooking them entirely. By default, Hardhat looks for files with the `.test.js`, `.test.ts`, `.spec.js`, or `.spec.ts` suffixes within the `test/` directory. If your test files don't adhere to this convention, that's an immediate red flag.
 

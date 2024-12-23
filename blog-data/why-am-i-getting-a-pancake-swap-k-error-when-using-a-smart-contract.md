@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-am-i-getting-a-pancake-swap-k-error-when-using-a-smart-contract"
 ---
 
-Okay, let's tackle this PancakeSwap `K` error. I’ve definitely seen this one pop up in my fair share of deployments, and while it can be a bit cryptic at first, it generally boils down to issues with liquidity and price calculations within the automated market maker (amm) context. The 'k' constant, in this case, represents a fundamental principle behind amms like PancakeSwap, and its violation during a transaction is what's throwing that error. Let’s unpack what’s going on, specifically in relation to how your smart contract might be interacting with PancakeSwap.
+, let's tackle this PancakeSwap `K` error. I’ve definitely seen this one pop up in my fair share of deployments, and while it can be a bit cryptic at first, it generally boils down to issues with liquidity and price calculations within the automated market maker (amm) context. The 'k' constant, in this case, represents a fundamental principle behind amms like PancakeSwap, and its violation during a transaction is what's throwing that error. Let’s unpack what’s going on, specifically in relation to how your smart contract might be interacting with PancakeSwap.
 
 First, a quick refresher: decentralized exchanges like PancakeSwap utilize the constant product formula `x * y = k` to determine the price of tokens within a pair. Here, `x` represents the reserves of one token and `y` the reserves of the other. `k` is that constant, and it's crucial that this relationship is maintained throughout trades. When you execute a trade, the ratio between the reserves changes, and that's what effectively creates a change in price.
 

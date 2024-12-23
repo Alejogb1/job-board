@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "what-are-the-technical-trade-offs-between-using-ssd-based-local-storage-and-amazon-s3-for-storing-and-querying-large-search-indexes"
 ---
 
-Okay so you wanna know about SSDs versus S3 for storing and querying massive search indexes right  That's a seriously cool question lots of moving parts there  Let's dive in I'll try to keep it simpleish  
+ so you wanna know about SSDs versus S3 for storing and querying massive search indexes right  That's a seriously cool question lots of moving parts there  Let's dive in I'll try to keep it simpleish  
 
 First off think about what you're actually doing you got this huge search index  It's basically a giant database optimized for fast lookups  You need to find stuff quickly  like when you type something into Google or whatever  
 

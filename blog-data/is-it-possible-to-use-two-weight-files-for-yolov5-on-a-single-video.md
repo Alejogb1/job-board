@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "is-it-possible-to-use-two-weight-files-for-yolov5-on-a-single-video"
 ---
 
-Okay, let's dive into this. The question of using two weight files with YOLOv5 on a single video is interesting, and it’s something I've actually had to approach before, back when we were trying to perform multi-modal object detection, fusing outputs from two different models trained for different classes. It’s not a straightforward task as you might initially imagine, but it's entirely feasible with some code adjustments.
+, let's dive into this. The question of using two weight files with YOLOv5 on a single video is interesting, and it’s something I've actually had to approach before, back when we were trying to perform multi-modal object detection, fusing outputs from two different models trained for different classes. It’s not a straightforward task as you might initially imagine, but it's entirely feasible with some code adjustments.
 
 Essentially, the challenge lies in the fact that YOLOv5, in its standard inference pipeline, is designed to load and use a single set of weights at a time. Directly swapping between models mid-inference, frame-by-frame, or within the same detection process isn't something the standard tools natively support. The key lies in realizing that we aren’t really *using* two sets of weights simultaneously in the same pass, but rather running inference *twice* with different models and then combining the results. Here’s how I approached it in the past, along with a conceptual explanation and code examples.
 

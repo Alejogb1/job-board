@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-is-the-formula-for-an-absolute-position-encoder"
 ---
 
-Okay, let's unpack absolute position encoders. It’s a topic I’ve dealt with extensively in various embedded systems projects, ranging from robotic arms to automated manufacturing lines. The core concept isn’t as daunting as it might initially seem, but a nuanced understanding definitely helps when troubleshooting issues down the line.
+, let's unpack absolute position encoders. It’s a topic I’ve dealt with extensively in various embedded systems projects, ranging from robotic arms to automated manufacturing lines. The core concept isn’t as daunting as it might initially seem, but a nuanced understanding definitely helps when troubleshooting issues down the line.
 
 So, fundamentally, an absolute position encoder provides a unique digital code for each angular (or linear) position. This contrasts with incremental encoders which merely output pulses to signify movement; it’s up to the receiving system to track those pulses to derive position, introducing the possibility of positional drift if the system loses power or is subject to electrical noise. An absolute encoder, on the other hand, reports the *actual* position at any given time, independent of any prior state.
 

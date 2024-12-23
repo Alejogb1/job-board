@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "delete-row-vba-excel-usage-code"
 ---
 
-Alright so you're looking to delete rows in Excel using VBA right been there done that a million times Seriously. Let me tell you I've wrestled with Excel's object model more than I'd like to admit. Back in the day when I was still learning the ropes I messed up a crucial sheet of sales data by thinking a simple delete function was well simple. Let's just say I learned a lot about error handling and backup practices that week.
+so you're looking to delete rows in Excel using VBA right been there done that a million times Seriously. Let me tell you I've wrestled with Excel's object model more than I'd like to admit. Back in the day when I was still learning the ropes I messed up a crucial sheet of sales data by thinking a simple delete function was well simple. Let's just say I learned a lot about error handling and backup practices that week.
 
 The thing with deleting rows in VBA is it's not as straightforward as you might initially think. You can't just say "delete this row". Well you can but you've gotta know what you're doing and how Excel actually works under the hood. There are nuances and edge cases that'll bite you if you're not careful I've seen colleagues accidentally delete entire sheets because of a single line of code. It's not pretty. So yeah I've been in that fire let's call it experience.
 
@@ -75,7 +75,7 @@ See this one does not silence errors it handles them and notifies the user what 
 
 Now lets talk about efficiency for big sheets for the code it can be slow. When deleting rows individually in a loop excel has to recalculate and re-render after each row. So if you have large sheets you might want to try turning off screen updating and calculations. This will make things faster. But be careful to turn them back on before the subroutine ends or you are gonna have a bad time.
 
-Okay this might be off topic but I'm gonna say it. My most common problem when I start working on new workbooks is that the row number I wanted to delete was calculated wrongly or the value in the cell was not the correct one I was searching for. See sometimes we have "Target Value" not as text but as number and if you are searching for a string "10" but you have the number 10 in your sheet it wont be the same. I got my nose in trouble because of this mistake I still try to remember the types of variables I am working with. Its important to use debug to check the values you are working with.
+ this might be off topic but I'm gonna say it. My most common problem when I start working on new workbooks is that the row number I wanted to delete was calculated wrongly or the value in the cell was not the correct one I was searching for. See sometimes we have "Target Value" not as text but as number and if you are searching for a string "10" but you have the number 10 in your sheet it wont be the same. I got my nose in trouble because of this mistake I still try to remember the types of variables I am working with. Its important to use debug to check the values you are working with.
 
 Here's a little joke for you: Why did the VBA programmer quit his job? Because he didn't get arrays! ok ok. Back to business.
 

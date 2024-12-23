@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-specify-features-for-a-richtextblock-in-wagtail"
 ---
 
-Alright, let's tackle this. It's a question I've seen pop up a fair bit, and I remember a rather messy project back in ‘18 where we initially stumbled with complex RichTextBlock configurations in Wagtail. The nuances of custom features can be surprisingly tricky, but once you grasp the core concepts, it becomes quite manageable. So, how do you actually specify features for a RichTextBlock? Let’s break it down.
+Alright,  It's a question I've seen pop up a fair bit, and I remember a rather messy project back in ‘18 where we initially stumbled with complex RichTextBlock configurations in Wagtail. The nuances of custom features can be surprisingly tricky, but once you grasp the core concepts, it becomes quite manageable. So, how do you actually specify features for a RichTextBlock? Let’s break it down.
 
 At its heart, a Wagtail RichTextBlock leverages a library called Draftail, which itself is based on Facebook's Draft.js. Draft.js provides the underlying mechanism for creating and manipulating rich text, and Draftail acts as the integration layer with Wagtail. Think of it as a specialized wrapper that provides the specific UI and functionality we see within the Wagtail admin. This is critical to understanding because features aren't directly specified in some Wagtail-specific language, but rather through configuration parameters that Draftail understands.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-write-to-elasticsearch-using-an-alias-from-kubernetes"
 ---
 
-Alright, let's tackle this. I've definitely been in the trenches with this one before, and it's more nuanced than it might initially seem. Setting up writes to Elasticsearch via an alias from within a Kubernetes environment involves a few key layers of consideration, and ignoring even one can lead to headaches down the road. It’s less about a singular solution and more about a strategy that layers several best practices.
+Alright,  I've definitely been in the trenches with this one before, and it's more nuanced than it might initially seem. Setting up writes to Elasticsearch via an alias from within a Kubernetes environment involves a few key layers of consideration, and ignoring even one can lead to headaches down the road. It’s less about a singular solution and more about a strategy that layers several best practices.
 
 First, let's talk about the 'why' before the 'how'. An alias in Elasticsearch is essentially a pointer, a logical name that maps to one or more physical indices. This is incredibly powerful for several reasons. It provides a level of abstraction, allowing you to seamlessly switch between indices for maintenance (like index rotation) without causing downtime for your application, which always feels like a victory on a Friday afternoon. Additionally, it can simplify index management, allowing you to group different indices under a common name for query and write purposes.
 

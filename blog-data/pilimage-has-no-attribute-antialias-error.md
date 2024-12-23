@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "pilimage-has-no-attribute-antialias-error"
 ---
 
-Okay so you're hitting that classic `pil.image` no attribute `antialias` error right Been there done that got the t-shirt probably multiple t-shirts actually This is one of those things that bites you if you've been around the block with PIL and image processing for a while You're trying to use an antialiasing method likely while resizing an image I get it it's a common enough operation and you'd think it'd just work right
+ so you're hitting that classic `pil.image` no attribute `antialias` error right Been there done that got the t-shirt probably multiple t-shirts actually This is one of those things that bites you if you've been around the block with PIL and image processing for a while You're trying to use an antialiasing method likely while resizing an image I get it it's a common enough operation and you'd think it'd just work right
 
 Let's break this down It's not that Pillow or PIL is broken It's more of a historical thing The `antialias` attribute was used in older versions of PIL like really old ones Before Pillow basically became the standard library for imaging in python This older PIL had a way to pass an `ANTIALIAS` hint when doing resize operations it was just a flag basically
 

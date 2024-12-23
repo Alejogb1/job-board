@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-is-the-first-convolution-operation-in-a-cnn"
 ---
 
-Okay, let’s delve into that. It’s a foundational question, yet understanding the nuances of that initial convolution layer in a convolutional neural network (cnn) is key to grasping how these systems extract features. I've encountered variations in its implementation and the impact of its parameterization, making it a recurring, important topic.
+, let’s delve into that. It’s a foundational question, yet understanding the nuances of that initial convolution layer in a convolutional neural network (cnn) is key to grasping how these systems extract features. I've encountered variations in its implementation and the impact of its parameterization, making it a recurring, important topic.
 
 The 'first' convolution, as it were, is not conceptually different from any other convolution operation within a cnn, but its position in the network pipeline imparts a special significance. It's where the raw input data, typically an image represented as a tensor of pixel values, is first subjected to the learned filters of the convolutional layer. It’s this initial transformation that starts the process of abstracting information from the pixel domain to a feature space that the network can use for subsequent tasks like classification or object detection.
 

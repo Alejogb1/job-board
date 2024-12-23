@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-reset-a-cypress-test-subject-after-using-haveattr"
 ---
 
-Okay, let’s tackle this one. I’ve definitely been down this road before, wrestling with Cypress selectors and their state after assertions. It's a common snag, and the way cypress handles elements post-assertion, especially with `have.attr`, can sometimes feel a little opaque. Let's break it down.
+, let’s tackle this one. I’ve definitely been down this road before, wrestling with Cypress selectors and their state after assertions. It's a common snag, and the way cypress handles elements post-assertion, especially with `have.attr`, can sometimes feel a little opaque. Let's break it down.
 
 The issue stems from how cypress manages its internal representation of a subject. When you chain assertions like `.should('have.attr', 'someAttr')`, cypress isn't just checking the attribute value; it's modifying the subject of the next command. The subject now represents the *result* of that assertion – the attribute value itself, not the original element. Consequently, trying to use the same selector on that changed subject won’t work as you'd expect, causing tests to fail or behave erratically if you don’t reset or reacquire the DOM element properly.
 

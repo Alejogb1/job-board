@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-do-i-get-an-error-during-prediction-after-loading-a-saved-keras-model"
 ---
 
-Okay, let’s talk about why you’re likely seeing prediction errors after loading a saved Keras model. It's a situation I've certainly encountered more than a few times during my tenure, and the causes often boil down to a few key areas. Instead of diving straight into abstractions, let’s discuss the practical side, looking at common missteps and their resolutions, all rooted in experiences I’ve faced in real-world projects.
+, let’s talk about why you’re likely seeing prediction errors after loading a saved Keras model. It's a situation I've certainly encountered more than a few times during my tenure, and the causes often boil down to a few key areas. Instead of diving straight into abstractions, let’s discuss the practical side, looking at common missteps and their resolutions, all rooted in experiences I’ve faced in real-world projects.
 
 The core issue stems from the fact that saving and loading a model isn't a perfect, monolithic operation; it's about persisting the architecture *and* the learned weights, but certain things, if not handled correctly, can cause discrepancies when you're ready for prediction. The first area to scrutinize is discrepancies in how the model was built and trained versus how it's used during prediction, specifically related to *layer input shapes* and *data preprocessing*. Let's explore.
 

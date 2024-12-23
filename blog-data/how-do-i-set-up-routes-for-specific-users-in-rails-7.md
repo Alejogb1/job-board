@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-do-i-set-up-routes-for-specific-users-in-rails-7"
 ---
 
-Okay, let's talk about user-specific routing in rails 7. It’s a nuanced topic, and I've certainly spent more than my fair share of time configuring it on various projects – from multi-tenant applications to platforms with distinct user roles requiring unique navigation paths. I’ve seen the pitfalls, and I’ve debugged the spaghetti code, so hopefully, I can offer a relatively streamlined approach.
+, let's talk about user-specific routing in rails 7. It’s a nuanced topic, and I've certainly spent more than my fair share of time configuring it on various projects – from multi-tenant applications to platforms with distinct user roles requiring unique navigation paths. I’ve seen the pitfalls, and I’ve debugged the spaghetti code, so hopefully, I can offer a relatively streamlined approach.
 
 The core idea, naturally, is to dynamically define routes based on some attribute of the logged-in user, typically their role or a unique identifier, rather than solely relying on static route definitions. Rails provides a versatile toolkit to achieve this, primarily through constraints and conditional logic within your routes.rb file. You could even go as far as injecting logic directly into your application controller, but I generally advocate keeping that logic closer to the route definition for better maintainability and clarity.
 

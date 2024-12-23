@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-do-i-load-page-specific-custom-javascript-functions-in-a-rails-7-app-with-turbo-importmaps-and-stimulus"
 ---
 
-Okay, let's tackle this. It's a situation I've encountered numerous times, especially since the shift towards more modular javascript architectures in Rails applications. Back in the early days of adopting Turbo, Importmaps, and Stimulus together, I remember wrestling with this exact problem – how to gracefully load javascript functions specific to only certain pages. It's not enough to just dump all your javascript into one global file; that quickly becomes unmanageable. Here's how I've found works well, along with some crucial design decisions you’ll need to make.
+,  It's a situation I've encountered numerous times, especially since the shift towards more modular javascript architectures in Rails applications. Back in the early days of adopting Turbo, Importmaps, and Stimulus together, I remember wrestling with this exact problem – how to gracefully load javascript functions specific to only certain pages. It's not enough to just dump all your javascript into one global file; that quickly becomes unmanageable. Here's how I've found works well, along with some crucial design decisions you’ll need to make.
 
 The core challenge here is that Turbo doesn’t perform full page reloads. It replaces specific parts of the DOM, and because of this, traditionally loaded javascript files might not re-execute when those changes happen. So, instead of relying on something like `<script src="...">` tags embedded in your HTML which load at page render, you need a mechanism that's aware of Turbo’s navigation. Importmaps, coupled with Stimulus, offer a fantastic approach to this. Let’s break it down.
 

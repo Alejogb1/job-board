@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "can-a-single-class-image-classifier-be-built-for-watermelons"
 ---
 
-Okay, let's talk about single-class image classification, specifically applied to watermelons. It’s a scenario I've actually dealt with quite a bit, having worked on a project years ago involving automated sorting for an agricultural co-op. The challenge, at its core, is to build a system that says “yes, this is a watermelon” or “no, this is not a watermelon” and that needs to work with a reasonable degree of accuracy. It sounds straightforward, but as always, the devil's in the details.
+, let's talk about single-class image classification, specifically applied to watermelons. It’s a scenario I've actually dealt with quite a bit, having worked on a project years ago involving automated sorting for an agricultural co-op. The challenge, at its core, is to build a system that says “yes, this is a watermelon” or “no, this is not a watermelon” and that needs to work with a reasonable degree of accuracy. It sounds straightforward, but as always, the devil's in the details.
 
 The key difference between single-class and multi-class classification is pretty obvious, but it’s worth highlighting: In a multi-class scenario, you’re trying to determine which of several categories an image belongs to (e.g., "is this a cat, dog, or bird?"). Single-class classification, on the other hand, focuses solely on identifying instances of one specific class, against any other background. For watermelons, it means you are not trying to distinguish between different *types* of fruits; you’re simply saying, "watermelon" or "not-watermelon.” This affects the approach significantly.
 

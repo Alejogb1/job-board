@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-rails--devise-halt-login-if-validation-constraints-arent-met"
 ---
 
-Okay, let's tackle this. I remember a particular project, back in the rails 3.2 days, where we had a convoluted user onboarding process that involved not only email verification but also a profile completeness check before full access was granted. We ran into the exact issue you're describing: devise would happily log a user in, even if our custom validation logic indicated they weren't *quite* ready. This led to a confusing user experience, and we needed to fix it pronto. The core problem, as you've probably surmised, is that devise, by default, focuses on authentication, not authorization or detailed validation status.
+,  I remember a particular project, back in the rails 3.2 days, where we had a convoluted user onboarding process that involved not only email verification but also a profile completeness check before full access was granted. We ran into the exact issue you're describing: devise would happily log a user in, even if our custom validation logic indicated they weren't *quite* ready. This led to a confusing user experience, and we needed to fix it pronto. The core problem, as you've probably surmised, is that devise, by default, focuses on authentication, not authorization or detailed validation status.
 
 The solution lies in intercepting the authentication process and adding our own checks before a user session is fully created. Devise provides several hooks and callbacks that we can leverage. The most crucial one is `after_database_authentication`, which is called *after* the user has been authenticated by devise but *before* the user is signed in.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "is-a-secure-api-available-for-retrieving-account-balances-from-multiple-financial-institutions"
 ---
 
-Okay, let's talk about secure APIs for retrieving account balances across multiple financial institutions – it's a topic I’ve dealt with extensively in the past, particularly during my tenure building a personal finance aggregator. The short answer is: yes, secure APIs exist and are increasingly common, but the landscape is complex, and there's no single, universally standardized approach. Instead, what you’ll find is a blend of techniques and protocols working together.
+, let's talk about secure APIs for retrieving account balances across multiple financial institutions – it's a topic I’ve dealt with extensively in the past, particularly during my tenure building a personal finance aggregator. The short answer is: yes, secure APIs exist and are increasingly common, but the landscape is complex, and there's no single, universally standardized approach. Instead, what you’ll find is a blend of techniques and protocols working together.
 
 The core challenge revolves around securely handling user credentials and financial data. Imagine the risk if a single, compromised access point granted access to balances across various banks. It's a significant security surface. Therefore, multiple layers of security are crucial.
 

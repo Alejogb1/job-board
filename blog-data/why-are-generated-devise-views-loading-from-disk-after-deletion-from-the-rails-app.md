@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-are-generated-devise-views-loading-from-disk-after-deletion-from-the-rails-app"
 ---
 
-Okay, let's unpack this intriguing issue with Devise views. I recall a particularly frustrating incident back in my early days with Rails; I’d meticulously removed a specific view template, only to find it stubbornly reappearing. It’s a common head-scratcher, and the behavior, while counterintuitive at first glance, actually stems from Devise’s design and asset pipeline interactions, especially with regard to view caching and how Rails handles generated vs. application-defined resources.
+, let's unpack this intriguing issue with Devise views. I recall a particularly frustrating incident back in my early days with Rails; I’d meticulously removed a specific view template, only to find it stubbornly reappearing. It’s a common head-scratcher, and the behavior, while counterintuitive at first glance, actually stems from Devise’s design and asset pipeline interactions, especially with regard to view caching and how Rails handles generated vs. application-defined resources.
 
 The core of the problem lies in how Devise manages its views. When you use `rails generate devise:views`, Devise does indeed copy view templates into your `app/views/devise` directory. These copied views are meant to be a starting point for your customizations. However, these *aren't* the *only* views Devise is aware of. Crucially, Devise maintains an *internal* set of default view locations. Even after you remove the locally generated versions, Devise, by default, can fall back to these internal defaults.
 

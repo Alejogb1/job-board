@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-to-remove-double-square-brackets-in-ruby-on-rails"
 ---
 
-Okay, let's tackle this one. I've definitely seen my fair share of double bracket issues over the years, particularly when dealing with data that’s come from less-than-ideal sources or when transitioning between different data formats in rails. It’s a seemingly small nuisance, but it can really throw a wrench into your parsing logic if you're not careful. The problem often crops up when you're expecting a simple string or array, and instead get nested data structures.
+, let's tackle this one. I've definitely seen my fair share of double bracket issues over the years, particularly when dealing with data that’s come from less-than-ideal sources or when transitioning between different data formats in rails. It’s a seemingly small nuisance, but it can really throw a wrench into your parsing logic if you're not careful. The problem often crops up when you're expecting a simple string or array, and instead get nested data structures.
 
 Specifically, what we're talking about here, removing double square brackets, usually indicates that you've somehow ended up with a string representation of an array within another array. For instance, instead of `['item1', 'item2']` you might be dealing with something like `[['item1', 'item2']]` after a data retrieval process. Rails' handling of parameters or database interactions can sometimes lead to this kind of nested structure if it's not handled correctly. The trick is to flatten the structure appropriately and reliably.
 

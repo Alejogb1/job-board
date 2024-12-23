@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-follower-notifications-be-implemented-in-ruby-on-rails-using-the-noticed-gem"
 ---
 
-Alright, let's tackle this. I've definitely been down this road before, having built a fairly complex social feed system for a previous project that relied heavily on notifications. We opted for the `noticed` gem back then, and it proved to be a solid choice for managing those asynchronous updates. Let me walk you through the practicalities of implementing follower notifications, as we did.
+Alright,  I've definitely been down this road before, having built a fairly complex social feed system for a previous project that relied heavily on notifications. We opted for the `noticed` gem back then, and it proved to be a solid choice for managing those asynchronous updates. Let me walk you through the practicalities of implementing follower notifications, as we did.
 
 First off, `noticed` is not a magic bullet. It's a powerful tool, but you'll still need to structure your models and logic accordingly. The core concept is that some action (say, a user following another user) triggers a notification which gets delivered to the appropriate recipient. In the context of follower notifications, the "recipient" is the user being followed, and the trigger is the act of a different user initiating the follow action.
 

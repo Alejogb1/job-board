@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "su-must-be-suid-work-root"
 ---
 
-Okay so you're asking why `su` which is the switch user command needs the setuid bit set and also needs to be owned by root right Got it I've been down this rabbit hole more times than I care to admit lets unpack this thing
+ so you're asking why `su` which is the switch user command needs the setuid bit set and also needs to be owned by root right Got it I've been down this rabbit hole more times than I care to admit lets unpack this thing
 
 So first off lets talk about what `su` even does in simple terms it lets you change your current user context to another user Usually its used to become root so you can do system level administration stuff but you can also use it to switch to other regular users
 
@@ -25,7 +25,7 @@ Now imagine you are a regular user with UID 1000 lets call you user bob. You typ
 
 The `su` program now does its thing asking you for the root password checking it and then spawning a new shell process but this shell process now has the UID of root. This is how you become root.
 
-Okay so why does `su` absolutely positively need root ownership. Well the setuid bit only works if the executable is owned by the *user* whose privileges you are trying to inherit in our case its the all powerful root UID 0. It also needs to be owned by root to make sure that only an admin can modify the su program.
+ so why does `su` absolutely positively need root ownership. Well the setuid bit only works if the executable is owned by the *user* whose privileges you are trying to inherit in our case its the all powerful root UID 0. It also needs to be owned by root to make sure that only an admin can modify the su program.
 
 If you tried setting the setuid bit and the owner was not root then it would just mean that the process will temporarily have the user id of say bob or any other user and not root or what ever the owner of the `/bin/su` file is
 

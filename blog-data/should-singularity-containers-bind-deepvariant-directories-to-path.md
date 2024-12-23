@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "should-singularity-containers-bind-deepvariant-directories-to-path"
 ---
 
-Okay, let’s tackle this. The question of whether singularity containers, specifically those running tools like DeepVariant, should bind their internal directories to the host's `$PATH` is, in my experience, a nuanced one. It's a shortcut that can quickly turn into a debugging headache, and I've seen it play out both ways in genomics pipelines. I recall a particularly painful incident involving inconsistent Python library versions across a cluster that taught me a lot about the implicit pitfalls of this approach.
+, let’s tackle this. The question of whether singularity containers, specifically those running tools like DeepVariant, should bind their internal directories to the host's `$PATH` is, in my experience, a nuanced one. It's a shortcut that can quickly turn into a debugging headache, and I've seen it play out both ways in genomics pipelines. I recall a particularly painful incident involving inconsistent Python library versions across a cluster that taught me a lot about the implicit pitfalls of this approach.
 
 Let me elaborate. Fundamentally, the `$PATH` environment variable is a colon-separated list of directories that the operating system searches for executable files. When you type a command, the shell checks each directory in `$PATH` in order, and the first match is executed. Now, when dealing with containerization, the whole point is often isolation and reproducibility. We want the container to have its own, well-defined environment, free from the vagaries of the host system. Binding container directories to the host `$PATH` directly subverts that.
 

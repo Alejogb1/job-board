@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-ruby-rails-and-gem-versions-are-compatible-with-bundler-2213"
 ---
 
-Okay, let’s tackle this. Compatibility with a specific Bundler version like 2.2.13 isn’t as straightforward as a simple matrix, primarily because it involves interactions across three different ecosystems: Ruby itself, the Rails framework, and the myriad gems pulled in via your Gemfile. I've personally navigated many a dependency conflict over the years, often having to meticulously backtrack and pinpoint the exact problematic combination of versions. This is far from an isolated issue; it’s a common challenge in maintaining large Rails applications.
+, let’s tackle this. Compatibility with a specific Bundler version like 2.2.13 isn’t as straightforward as a simple matrix, primarily because it involves interactions across three different ecosystems: Ruby itself, the Rails framework, and the myriad gems pulled in via your Gemfile. I've personally navigated many a dependency conflict over the years, often having to meticulously backtrack and pinpoint the exact problematic combination of versions. This is far from an isolated issue; it’s a common challenge in maintaining large Rails applications.
 
 Instead of thinking about direct compatibility with just Bundler 2.2.13, we really need to focus on what constraints Bundler itself supports and how those relate to your Ruby, Rails, and gem choices. Bundler, at its core, manages dependencies. Version 2.2.13, while older at this point, was still quite capable, but its behavior regarding allowed ruby and rails versions depends heavily on the gemspecs of the gems you want to use.
 

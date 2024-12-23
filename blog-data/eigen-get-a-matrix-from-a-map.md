@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "eigen-get-a-matrix-from-a-map"
 ---
 
-Okay so you've got this map data structure and you need to transform it into a matrix typically using Eigen right Been there done that a couple of times It's not super straightforward if you haven't wrestled with it before Let's break it down
+ so you've got this map data structure and you need to transform it into a matrix typically using Eigen right Been there done that a couple of times It's not super straightforward if you haven't wrestled with it before Let's break it down
 
 First off let's assume your map is something like `std::map<std::pair<int int> double>` this is a pretty common scenario where the keys represent matrix coordinates (row column) and the values are the corresponding matrix elements
 

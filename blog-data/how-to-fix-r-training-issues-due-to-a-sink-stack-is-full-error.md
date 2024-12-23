@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "how-to-fix-r-training-issues-due-to-a-sink-stack-is-full-error"
 ---
 
-Okay, let's tackle this. A "sink stack is full" error in R. It's a nasty one that I've definitely encountered more than once in my years, particularly when dealing with complex simulations or heavy-duty data processing. It usually screams at you from the console when R is trying to handle more nested function calls or recursive processes than it's configured to manage, and it essentially boils down to the call stack overflowing.
+,  A "sink stack is full" error in R. It's a nasty one that I've definitely encountered more than once in my years, particularly when dealing with complex simulations or heavy-duty data processing. It usually screams at you from the console when R is trying to handle more nested function calls or recursive processes than it's configured to manage, and it essentially boils down to the call stack overflowing.
 
 Think of the call stack as a physical stack of plates. Each time a function is called, a new plate (representing the function and its local variables) is added to the top of the stack. When that function finishes, the plate is removed. The "sink stack is full" error happens when you keep stacking plates faster than they're being removed, eventually exceeding the stack's capacity and causing it to collapse. It's R's way of saying "I'm drowning in function calls, please send help!". My experience with this particular issue started when I was trying to simulate a complex epidemiological model. The recursive function calls, designed to handle agent interactions, were, to put it mildly, aggressive in their stack usage. So, how do we actually address this?
 

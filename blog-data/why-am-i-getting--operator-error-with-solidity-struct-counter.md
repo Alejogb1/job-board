@@ -4,7 +4,7 @@ date: "2024-12-16"
 id: "why-am-i-getting--operator-error-with-solidity-struct-counter"
 ---
 
-Okay, let's unpack this "<= operator error with Solidity struct Counter" situation. I’ve seen this particular problem pop up more times than I care to remember across different projects, and it usually boils down to a misunderstanding of how Solidity handles struct comparisons, combined with some inherent limitations of its type system. The core issue, and it's one we've all bumped into at some point, is that Solidity doesn't automatically define comparison operators like <= (less than or equal to) for custom structs.
+, let's unpack this "<= operator error with Solidity struct Counter" situation. I’ve seen this particular problem pop up more times than I care to remember across different projects, and it usually boils down to a misunderstanding of how Solidity handles struct comparisons, combined with some inherent limitations of its type system. The core issue, and it's one we've all bumped into at some point, is that Solidity doesn't automatically define comparison operators like <= (less than or equal to) for custom structs.
 
 Imagine I was working on a decentralized application for managing inventory. We had a `Product` struct with various fields like `id`, `name`, and importantly, `stockLevel`, an unsigned integer representing units in stock. We wanted to implement a simple function that checks if the stock level of one product was less than or equal to another. This sounds trivial, but the compiler throws that error. Let's look at the why.
 

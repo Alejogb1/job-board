@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "which-apache-airflow-docker-extras-are-included"
 ---
 
-Okay, let's break down the Apache Airflow Docker extras. It's not uncommon to see confusion around this, and honestly, in my early days building data pipelines, I stumbled over this myself, leading to some frustrating deployment issues. Essentially, these "extras" are curated collections of python packages installed alongside Airflow when you use specific docker images from the official apache/airflow repository (or its derivatives). They aren't arbitrary; they're designed to streamline workflows for common use cases and minimize the ‘dependency hell’ that can arise when you're integrating various systems.
+, let's break down the Apache Airflow Docker extras. It's not uncommon to see confusion around this, and honestly, in my early days building data pipelines, I stumbled over this myself, leading to some frustrating deployment issues. Essentially, these "extras" are curated collections of python packages installed alongside Airflow when you use specific docker images from the official apache/airflow repository (or its derivatives). They aren't arbitrary; they're designed to streamline workflows for common use cases and minimize the ‘dependency hell’ that can arise when you're integrating various systems.
 
 Instead of everything being a monolithic, bloated install, Airflow uses a neat extras mechanism, allowing you to tailor the docker image to what you specifically need. Think of it as a way to specify the "plumbing" your data workflows will use without being burdened by packages you won't touch.
 

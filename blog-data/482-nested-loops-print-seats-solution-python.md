@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "482-nested-loops-print-seats-solution-python"
 ---
 
-Okay so nested loops printing seats in Python yeah I've been there done that got the t-shirt probably stained with coffee and maybe a little bit of leftover motherboard solder paste because you know how it is
+ so nested loops printing seats in Python yeah I've been there done that got the t-shirt probably stained with coffee and maybe a little bit of leftover motherboard solder paste because you know how it is
 
 Let's break it down because honestly this stuff is super fundamental and if you don't nail it down early you're going to have a world of pain later trust me I've seen junior devs try to hack around this problem with bizarre list comprehensions and it's never pretty. So nested loops right? We’re talking about looping within a loop and in this particular case it seems we’re talking about creating something that’s analogous to a seating arrangement think of a grid or a theater a movie hall something like that where each position each seat has a row and a column associated with it.
 
@@ -23,7 +23,7 @@ for row in range(rows):
     print(f"Row: {row}, Seat: {col}")
 ```
 
-Okay so what's going on here? The outer loop `for row in range(rows)` iterates from 0 up to but not including the number of rows we defined, so it starts at 0 and goes to 2 given we set rows to 3 The inner loop `for col in range(cols)` does the same thing but for the columns within the current row, so it goes from 0 to 3 in our case as `cols` is set to 4
+ so what's going on here? The outer loop `for row in range(rows)` iterates from 0 up to but not including the number of rows we defined, so it starts at 0 and goes to 2 given we set rows to 3 The inner loop `for col in range(cols)` does the same thing but for the columns within the current row, so it goes from 0 to 3 in our case as `cols` is set to 4
 
 The `print` statement is just printing the current `row` and `col` variables using f strings they're like formatted strings much easier than the old style string formatting that nobody uses anymore these days at least I hope so
 

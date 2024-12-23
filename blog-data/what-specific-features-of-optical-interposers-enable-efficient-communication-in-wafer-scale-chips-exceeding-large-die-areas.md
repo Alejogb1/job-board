@@ -4,7 +4,7 @@ date: "2024-12-08"
 id: "what-specific-features-of-optical-interposers-enable-efficient-communication-in-wafer-scale-chips-exceeding-large-die-areas"
 ---
 
-Okay so you wanna know about optical interposers and how they make giant chips talk to each other right  Wafer-scale integration is insane think thousands of dies crammed onto one wafer its like a city of chips  The problem is getting data across this city fast enough electrical signals just can't keep up they're slow and they leak power like crazy That's where optical interposers come in they're the high-speed data highways of the chip world
+ so you wanna know about optical interposers and how they make giant chips talk to each other right  Wafer-scale integration is insane think thousands of dies crammed onto one wafer its like a city of chips  The problem is getting data across this city fast enough electrical signals just can't keep up they're slow and they leak power like crazy That's where optical interposers come in they're the high-speed data highways of the chip world
 
 The magic is in the light baby  Optical signals travel way faster than electrical ones and they don't suffer from the same signal degradation issues over long distances Think of it like this electricity is like a whisper that gets quieter the further it travels light is a laser beam that stays strong  So how do we get light onto a chip and then back off again well thats the clever part
 

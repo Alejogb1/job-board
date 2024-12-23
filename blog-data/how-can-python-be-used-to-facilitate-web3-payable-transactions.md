@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-python-be-used-to-facilitate-web3-payable-transactions"
 ---
 
-Okay, let's talk about bridging the gap between Python and web3 payable transactions. It's a topic I've tackled a fair few times in previous projects, and the landscape has definitely evolved. From my experience, the key isn't just about calling web3 functions; it's about orchestrating those calls with precision, managing gas effectively, and handling the inherent complexities of interacting with decentralized networks. I'll walk you through how I've generally approached this, focusing on practicality and clear code.
+, let's talk about bridging the gap between Python and web3 payable transactions. It's a topic I've tackled a fair few times in previous projects, and the landscape has definitely evolved. From my experience, the key isn't just about calling web3 functions; it's about orchestrating those calls with precision, managing gas effectively, and handling the inherent complexities of interacting with decentralized networks. I'll walk you through how I've generally approached this, focusing on practicality and clear code.
 
 The core of the process revolves around the `web3.py` library, which provides a robust interface for interacting with Ethereum-compatible blockchains. It's the workhorse, no doubt about it. Now, the first thing to recognize is that a "payable" transaction isn't just any transaction; it specifically involves transferring native cryptocurrency (like ether on Ethereum) along with the execution of a smart contract function. This means we have to encode the value we intend to send.
 

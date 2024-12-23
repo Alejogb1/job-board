@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-resolve-the-configjson-is-not-recognized-oserror-in-finbert-using-hugging-face"
 ---
 
-Alright, let's tackle this. It seems you're running into the classic `OSError: config.json not found` while working with finbert and hugging face transformers. I’ve seen this pattern pop up quite a bit over the years, especially when models are not correctly downloaded or when the working directory isn't playing nicely. Let’s break down the common culprits and how to get past this hurdle.
+Alright,  It seems you're running into the classic `OSError: config.json not found` while working with finbert and hugging face transformers. I’ve seen this pattern pop up quite a bit over the years, especially when models are not correctly downloaded or when the working directory isn't playing nicely. Let’s break down the common culprits and how to get past this hurdle.
 
 First off, that `config.json` file is essential; it holds the architectural specifications of the pretrained model, including layer configurations, vocabularies, and attention mechanisms. Without it, the `transformers` library, which finbert relies on, simply cannot instantiate the model. Think of it like the blueprint for a complex machine. If the blueprint is missing, you're left with nothing but components.
 

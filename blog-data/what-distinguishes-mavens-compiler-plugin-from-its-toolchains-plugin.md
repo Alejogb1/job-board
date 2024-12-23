@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-distinguishes-mavens-compiler-plugin-from-its-toolchains-plugin"
 ---
 
-Okay, let’s dive into this. I've spent a fair chunk of my career navigating the intricacies of build processes, and the differences between the Maven compiler plugin and the toolchains plugin often trip up newcomers. It's understandable; they seem to overlap initially, but their roles are quite distinct.
+, let’s dive into this. I've spent a fair chunk of my career navigating the intricacies of build processes, and the differences between the Maven compiler plugin and the toolchains plugin often trip up newcomers. It's understandable; they seem to overlap initially, but their roles are quite distinct.
 
 From my perspective, having managed projects ranging from small utilities to complex distributed systems, the core difference boils down to *what* each plugin is responsible for controlling. The compiler plugin, typically `maven-compiler-plugin`, handles the actual compilation of source code into bytecode. It’s where you specify things like target jvm versions, enable or disable compiler features, and control the source and target compatibility levels. This is about *how* your code gets translated. The toolchains plugin, on the other hand, specifically the `maven-toolchains-plugin`, is about *which* compiler and development environment to use. It’s about context; ensuring the appropriate jdk, compiler, and other tools are utilized for the build, irrespective of the system-level environment your Maven process happens to be running on.
 

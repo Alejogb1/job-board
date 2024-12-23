@@ -4,7 +4,7 @@ date: "2024-12-15"
 id: "how-can-i-configure-publish-action-to-include-the-generated-documentation-xml"
 ---
 
-alright, let's tackle this. you're after getting your generated documentation xml files included when you hit 'publish', specifically when using a visual studio project, i'm assuming. this isn't uncommon, i've banged my head against this more than once. it's one of those things that's frustratingly simple once you get the hang of it, but feels like a brick wall when you're starting out.
+alright,  you're after getting your generated documentation xml files included when you hit 'publish', specifically when using a visual studio project, i'm assuming. this isn't uncommon, i've banged my head against this more than once. it's one of those things that's frustratingly simple once you get the hang of it, but feels like a brick wall when you're starting out.
 
 i’ve been doing this sort of development for close to two decades now, and i remember my first real encounter with this. it was back in the days of .net framework 2.0, i think. i was working on a rather large internal library and documentation was, well, let's say not a priority for the rest of the team. i wanted to make it easier for people to actually use it, and auto-generated xml docs were my weapon of choice. but hitting publish and not seeing them included, that was a problem. i spent a whole afternoon going through msbuild files before finally getting it to work. it was a good learning experience. you tend to remember these things.
 

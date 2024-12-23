@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-is-requiresails-failing"
 ---
 
-Okay, let's tackle this. I’ve seen this exact `require('sails')` issue pop up more times than I care to remember over the years, each time presenting its own nuanced frustration. It's often not a straightforward "sails is missing" error; rather, it's usually a symptom of a deeper problem within the Node.js module resolution process, the Sails framework setup itself, or even the operating environment. Let's unpack this.
+,  I’ve seen this exact `require('sails')` issue pop up more times than I care to remember over the years, each time presenting its own nuanced frustration. It's often not a straightforward "sails is missing" error; rather, it's usually a symptom of a deeper problem within the Node.js module resolution process, the Sails framework setup itself, or even the operating environment. Let's unpack this.
 
 The most common culprit, and the one that's easiest to dismiss initially, is simply a missing or misconfigured `node_modules` directory. When `require('sails')` fails, the Node.js runtime starts its search algorithm. It looks first in the project's `node_modules` folder, then walks up the directory tree checking any parent `node_modules` directories until it either finds the `sails` package, or throws an error. In many cases, especially after switching branches, or pulling new code where dependencies have changed, you simply need to re-install your dependencies. I’ve seen this many a time; a developer makes a pull request, introduces a new dependency, or changes version numbers, and bam, require fails.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-are-declared-docker-compose-volumes-not-being-used-and-why-is-a-directory-copied-elsewhere-instead"
 ---
 
-Okay, let's unpack this. It's a situation I've encountered more times than I care to remember, often during those late nights chasing a ghost in a containerized setup. The issue where you declare a volume in your `docker-compose.yml` but your data seemingly gets copied to some other, unexpected location rather than using the volume is almost always down to one thing: the build process and its interplay with volume mounts. It's less of a docker problem itself, and more about the timing and how the docker build context is handled.
+, let's unpack this. It's a situation I've encountered more times than I care to remember, often during those late nights chasing a ghost in a containerized setup. The issue where you declare a volume in your `docker-compose.yml` but your data seemingly gets copied to some other, unexpected location rather than using the volume is almost always down to one thing: the build process and its interplay with volume mounts. It's less of a docker problem itself, and more about the timing and how the docker build context is handled.
 
 Specifically, what's happening is that during the `docker-compose up` process, particularly when you are also building images, the build context (the folder or files specified during `docker build .`) is being used first. If your dockerfile includes a `copy` instruction that is intended to populate the container with initial data, and this instruction precedes mounting the volume inside the container, then the build process essentially "wins" over your intended volume mapping, resulting in copied data rather than volume usage during the container run.
 

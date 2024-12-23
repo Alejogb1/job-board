@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "whats-the-difference-between-decomposing-by-business-capability-and-subdomain"
 ---
 
-Alright, let's tackle this. I've seen this distinction cause more than a few late nights on projects, particularly when teams are transitioning towards more modular architectures. It's a subtle but crucial difference, and honestly, it can make or break how effectively you can adapt to changing requirements. The crux of the issue lies in how you're defining the boundaries of your system's responsibilities and, ultimately, how that reflects the organizational structure and goals.
+Alright,  I've seen this distinction cause more than a few late nights on projects, particularly when teams are transitioning towards more modular architectures. It's a subtle but crucial difference, and honestly, it can make or break how effectively you can adapt to changing requirements. The crux of the issue lies in how you're defining the boundaries of your system's responsibilities and, ultimately, how that reflects the organizational structure and goals.
 
 To illustrate, think back to my stint at a mid-sized e-commerce platform. We initially had a monolith that did everything, including inventory management, order processing, and user authentication. We soon realized we were suffocating under our own weight—small changes in one area often had unpredictable ripple effects elsewhere. That’s when we started exploring decomposition, and that’s where this whole business capability versus subdomain debate came into sharp focus.
 

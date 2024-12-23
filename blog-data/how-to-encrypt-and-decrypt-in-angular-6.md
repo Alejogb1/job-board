@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "how-to-encrypt-and-decrypt-in-angular-6"
 ---
 
-Okay so you need to encrypt and decrypt stuff in Angular 6 right Been there done that so many times its not even funny I remember my first project back in the day we were building this e-commerce platform for like underground ferret breeders (don't ask) and we needed to secure user data like addresses and breeding schedules it was a wild time
+ so you need to encrypt and decrypt stuff in Angular 6 right Been there done that so many times its not even funny I remember my first project back in the day we were building this e-commerce platform for like underground ferret breeders (don't ask) and we needed to secure user data like addresses and breeding schedules it was a wild time
 
 Anyway forget the ferrets let's dive into the code side of things This isnt some mystical ritual its just data transformation using algorithms its all about making your data unreadable to someone without the right key think of it like a lock and key for your digital stuff
 

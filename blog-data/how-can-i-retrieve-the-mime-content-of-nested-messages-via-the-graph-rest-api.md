@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-i-retrieve-the-mime-content-of-nested-messages-via-the-graph-rest-api"
 ---
 
-Alright, let's tackle this. I remember a particularly frustrating project back in my days at *Acme Corp* where we had to pull apart email threads with intricate nesting. We were migrating a colossal email archive, and the Graph API was our primary access point. Dealing with those nested MIME structures proved, let’s say, challenging initially. The key isn't just hitting the right endpoints; it’s understanding how the Graph API represents complex MIME data and the specific properties you need to query. Let's break it down.
+Alright,  I remember a particularly frustrating project back in my days at *Acme Corp* where we had to pull apart email threads with intricate nesting. We were migrating a colossal email archive, and the Graph API was our primary access point. Dealing with those nested MIME structures proved, let’s say, challenging initially. The key isn't just hitting the right endpoints; it’s understanding how the Graph API represents complex MIME data and the specific properties you need to query. Let's break it down.
 
 The Graph API, when dealing with messages, doesn't automatically expose every single part of a MIME structure in an immediately usable format. For a simple message, you can readily fetch the `body` property. However, when it comes to nested messages, which often appear as attachments of type `message/rfc822`, you won’t find a straightforward "nestedMIME" property. Instead, these nested messages are represented as attachments, and their content needs to be retrieved separately. The trick is iterative fetching and a good understanding of what properties are available and what they represent.
 

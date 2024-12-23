@@ -4,9 +4,9 @@ date: "2024-12-13"
 id: "im-getting-this-error-for-my-verilog-code-illegal-operation-for-constant-expr"
 ---
 
-Okay so "illegal operation for constant expr" in Verilog right Been there man countless times Let me tell you its like a rite of passage for anyone serious about hardware description languages It's usually something stupid you overlooked and you are going to hate yourself for it after figuring it out
+ so "illegal operation for constant expr" in Verilog right Been there man countless times Let me tell you its like a rite of passage for anyone serious about hardware description languages It's usually something stupid you overlooked and you are going to hate yourself for it after figuring it out
 
-Okay so the "constant expression" bit its referring to something that should be resolvable at compile time The Verilog compiler wants to figure out this calculation during the compile phase not during the simulation or hardware execution phase This is because constant expressions are used in a lot of places like parameter definitions or array dimensions or even case statements and well if the value is not known at compile time then the compiler throws a tantrum And rightfully so
+ so the "constant expression" bit its referring to something that should be resolvable at compile time The Verilog compiler wants to figure out this calculation during the compile phase not during the simulation or hardware execution phase This is because constant expressions are used in a lot of places like parameter definitions or array dimensions or even case statements and well if the value is not known at compile time then the compiler throws a tantrum And rightfully so
 
 The "illegal operation" part is what really boils your blood It's not specific in its error message because the Verilog standard has a ton of operators and not all of them are fit for constant expressions You can't expect the compiler to execute every single piece of code before the hardware even runs It expects that a good number of things can be precalculated So we need to figure out what exactly is causing this
 
@@ -25,7 +25,7 @@ module encryption_engine #(
  endmodule
 ```
 
-Okay so this seems alright at first right Well its not because the power operator `**` in Verilog is not synthesizable unless the exponent is a constant integer. You can't calculate a modular inverse like this during compile time The compiler looked at this and just chuckled and gave me the error message you are facing
+ so this seems at first right Well its not because the power operator `**` in Verilog is not synthesizable unless the exponent is a constant integer. You can't calculate a modular inverse like this during compile time The compiler looked at this and just chuckled and gave me the error message you are facing
 
 The correct fix obviously was that I had to precalculate that value and use a const value instead Or if it was crucial to do it on the fly I had to create an actual module for it.
 
@@ -103,7 +103,7 @@ For a more in-depth look I'd recommend these resources they've helped me a lot o
 
 Debugging these things can be a bit of a pain. You might also want to try to use a better IDE. I remember when I started writing verilog I was using a plain text editor now a good IDE can catch these errors before you even compile the code so it might help. It is like getting a free linting tool. You need all the help you can get and these tools can reduce a lot of time in debugging things.
 
-Also try to break down your complex expressions into smaller pieces and see exactly where the error is originating and remember that the compiler is your friend it is not trying to annoy you it is trying to tell you something. Okay I know I am probably lying on that last bit but what else can I say.
+Also try to break down your complex expressions into smaller pieces and see exactly where the error is originating and remember that the compiler is your friend it is not trying to annoy you it is trying to tell you something.  I know I am probably lying on that last bit but what else can I say.
 
 Remember to always double-check your constant expressions and make sure everything is resolvable at compile time.
 

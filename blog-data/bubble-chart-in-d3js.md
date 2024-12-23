@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "bubble-chart-in-d3js"
 ---
 
-Okay so bubble chart in D3js you say yeah I've tangled with that beast a few times its a classic visualization but theres always some little detail that throws you off right? Alright lets break it down like we’re debuggin some gnarly code together
+ so bubble chart in D3js you say yeah I've tangled with that beast a few times its a classic visualization but theres always some little detail that throws you off right? lets break it down like we’re debuggin some gnarly code together
 
 First off lets be super clear D3js is powerful you can pretty much make anything you want but that also means you gotta build it up almost from scratch which is why I like to say its like a lego kit for data viz not a pre-built playmobil set.
 
@@ -48,7 +48,7 @@ Notice the radius calculation I am using `Math.sqrt(d.value) * 5`. Why square ro
 
 I remember this one time I was building a bubble chart for some marketing data I was just starting with D3 then I forgot this square root detail and the largest bubble covered most of the screen and looked terribly misbalanced I had to rewrite it from scratch that took me an evening of painful debugging.
 
-Okay but what if you want more interesting bubble placement? Right now I am just spacing them out evenly horizontally. This is where D3's force simulation becomes relevant but not in this case I want to be clear I wont go into full force layout details because it's a bit advanced for a starting point I will just touch on it briefly in the next steps.
+ but what if you want more interesting bubble placement? Right now I am just spacing them out evenly horizontally. This is where D3's force simulation becomes relevant but not in this case I want to be clear I wont go into full force layout details because it's a bit advanced for a starting point I will just touch on it briefly in the next steps.
 
 For now let’s try something basic. A little bit of random y variation so they are not aligned on a straight line. I mean that will make it feel a bit less static right.
 

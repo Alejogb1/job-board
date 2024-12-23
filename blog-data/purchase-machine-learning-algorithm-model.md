@@ -4,7 +4,7 @@ date: "2024-12-13"
 id: "purchase-machine-learning-algorithm-model"
 ---
 
-Okay so you're asking about purchasing a pre-trained machine learning model right Been there done that countless times Let me tell you it's not as straightforward as downloading an app from the store It's more like navigating a maze designed by someone who really enjoyed writing obfuscated code
+ so you're asking about purchasing a pre-trained machine learning model right Been there done that countless times Let me tell you it's not as straightforward as downloading an app from the store It's more like navigating a maze designed by someone who really enjoyed writing obfuscated code
 
 First off let's talk about why you'd even consider buying a model instead of training your own It usually boils down to three things either you're short on time don't have the computational power to train a complex model or you lack a massive dataset necessary for good performance or all of the above
 
@@ -43,7 +43,7 @@ print(f"Predicted class: {predicted_class}")
 
 This code uses a basic BERT model for sequence classification a common starting point when working with text If the output of the code makes sense the model will probably be helpful if not you might need to investigate more in detail what the problem is you are dealing with
 
-Okay let's talk about licensing next This is like reading the terms of service no one likes to do it but you really should. Some models are released under permissive licenses that let you do almost anything with them including commercial usage others are more restrictive and some licenses are completely incompatible with commercial products
+ let's talk about licensing next This is like reading the terms of service no one likes to do it but you really should. Some models are released under permissive licenses that let you do almost anything with them including commercial usage others are more restrictive and some licenses are completely incompatible with commercial products
 
 There's a lot of confusion surrounding these licenses and it's important to do your research beforehand for example some might restrict specific types of use cases so be careful and check the terms of the license You do not want your team to put in months of work and realize you cannot deploy a model legally
 

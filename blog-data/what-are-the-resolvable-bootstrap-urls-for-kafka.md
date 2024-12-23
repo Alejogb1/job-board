@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "what-are-the-resolvable-bootstrap-urls-for-kafka"
 ---
 
-Okay, let's talk about resolvable bootstrap urls for kafka – I’ve definitely spent my fair share of time troubleshooting connection issues tied to this. It’s not just a matter of listing them; it's about understanding what "resolvable" really means in the context of a distributed system like Kafka, especially when you're dealing with diverse network configurations, containers, and cloud deployments.
+, let's talk about resolvable bootstrap urls for kafka – I’ve definitely spent my fair share of time troubleshooting connection issues tied to this. It’s not just a matter of listing them; it's about understanding what "resolvable" really means in the context of a distributed system like Kafka, especially when you're dealing with diverse network configurations, containers, and cloud deployments.
 
 The bootstrap url, or bootstrap servers list, is essentially the entry point for Kafka clients to discover the entire cluster. It's a comma-separated list of host:port pairs. For example, `kafka1.example.com:9092,kafka2.example.com:9092,kafka3.example.com:9092`. Now, the crux of the matter is the 'resolvable' part. A url is resolvable when the client application, wherever it's running, can translate the hostname in the url into an ip address using a name resolution system, typically dns. A classic issue occurs when a client attempts to resolve a hostname that exists in a different network scope. For example, a containerized application might use hostnames that are only resolvable within the container's network namespace, and these hostnames would not be resolvable by a client outside that namespace.
 

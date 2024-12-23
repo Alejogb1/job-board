@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-are-custom-avatar-validations-failing"
 ---
 
-Alright, let's tackle this. Custom avatar validation failures, in my experience, typically stem from a few key areas – and it's rarely a single, isolated problem. I've spent a good chunk of my career dealing with image processing pipelines, and avatar validation has consistently been a source of unexpected complexity. Let's break down some common culprits and how we address them, focusing on practical code examples rather than abstract concepts.
+Alright,  Custom avatar validation failures, in my experience, typically stem from a few key areas – and it's rarely a single, isolated problem. I've spent a good chunk of my career dealing with image processing pipelines, and avatar validation has consistently been a source of unexpected complexity. Let's break down some common culprits and how we address them, focusing on practical code examples rather than abstract concepts.
 
 First off, *mismatch in expected and received file formats* is a classic. We often design validation systems around a specific set of image types, like jpegs, pngs, and gifs. However, the file extensions provided by the client or user might be misleading, or the underlying file content itself might be different. I remember a case where a client-side image library was erroneously saving images as ‘.png’ even when the content was technically a ‘.webp’ format. The validation system, built for strictly defined PNGs, would naturally fail. This wasn't an obvious error; it took inspecting the raw bytes of the files to figure it out.
 

@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "why-doesnt-the-nave-bayes-classifier-learn-effectively"
 ---
 
-Okay, let’s tackle this. I've spent a fair amount of time working with various classification algorithms, and Naïve Bayes, while seemingly straightforward, has definitely shown its limitations in certain contexts. There’s a reason it's often termed 'naïve,' and it stems from some pretty specific assumptions. The core issue isn't that it *never* learns effectively, but rather that its effectiveness is heavily constrained by how well real-world data adheres to its core assumptions, namely, conditional independence of features.
+, let’s tackle this. I've spent a fair amount of time working with various classification algorithms, and Naïve Bayes, while seemingly straightforward, has definitely shown its limitations in certain contexts. There’s a reason it's often termed 'naïve,' and it stems from some pretty specific assumptions. The core issue isn't that it *never* learns effectively, but rather that its effectiveness is heavily constrained by how well real-world data adheres to its core assumptions, namely, conditional independence of features.
 
 Let’s unpack this. The 'naïve' aspect arises from the algorithm treating each feature as independent of all other features, given the class label. In other words, it assumes that knowing the value of one feature doesn't provide any information about the value of another feature, once you know which class the data point belongs to. This simplifies the complex joint probability calculations required for Bayes' theorem, allowing for computationally efficient learning. This simplification, however, comes at a cost.
 

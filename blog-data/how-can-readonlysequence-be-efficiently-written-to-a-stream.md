@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-readonlysequence-be-efficiently-written-to-a-stream"
 ---
 
-Okay, let's tackle this. It's a question I've had to address more times than I care to remember, especially when dealing with network protocols and high-performance I/O. The core challenge with `ReadOnlySequence` arises from its segmented nature. Unlike a contiguous `byte[]` or `Memory<byte>`, it might be fragmented across multiple underlying buffers. This means directly writing it to a stream isn't as straightforward as a simple `stream.Write(myByteArray)` call. Efficiency hinges on avoiding unnecessary allocations and copy operations, which can become significant bottlenecks in performance-critical scenarios.
+,  It's a question I've had to address more times than I care to remember, especially when dealing with network protocols and high-performance I/O. The core challenge with `ReadOnlySequence` arises from its segmented nature. Unlike a contiguous `byte[]` or `Memory<byte>`, it might be fragmented across multiple underlying buffers. This means directly writing it to a stream isn't as straightforward as a simple `stream.Write(myByteArray)` call. Efficiency hinges on avoiding unnecessary allocations and copy operations, which can become significant bottlenecks in performance-critical scenarios.
 
 From my experience, particularly during my stint building a custom TCP proxy a few years back, understanding how to efficiently marshal a `ReadOnlySequence` to a stream directly impacted our throughput. We were handling a large volume of data, so any overhead quickly manifested as a significant performance hit. Here’s how I've found it best to approach this problem, along with some illustrative code.
 

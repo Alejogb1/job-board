@@ -4,7 +4,7 @@ date: "2024-12-23"
 id: "how-can-sas-integrate-retain-and-compute-new-variables-within-a-do-until-loop"
 ---
 
-Okay, let's tackle this one. Funny, I remember troubleshooting a similar issue back in '14 when I was working on a large-scale epidemiological dataset. It involved tracking patient pathways over multiple time points, and the data was, let’s just say, “complex.” We had to iterate through each patient’s records, compute some cumulative variables, and retain intermediate values for subsequent calculations. It was a beautiful mess at the time, but it taught me a lot about the power and, sometimes, the nuances of SAS's data step processing.
+, let's tackle this one. Funny, I remember troubleshooting a similar issue back in '14 when I was working on a large-scale epidemiological dataset. It involved tracking patient pathways over multiple time points, and the data was, let’s just say, “complex.” We had to iterate through each patient’s records, compute some cumulative variables, and retain intermediate values for subsequent calculations. It was a beautiful mess at the time, but it taught me a lot about the power and, sometimes, the nuances of SAS's data step processing.
 
 So, to be precise, your question is about integrating the `retain` statement and variable computations within a `do until` loop in SAS. This is a common requirement when dealing with longitudinal data, time series analysis, or any scenario where you need to carry forward a value from one iteration to the next within a data step. The short answer is: absolutely doable, and incredibly useful. The long answer… well, that’s what I’m here for.
 

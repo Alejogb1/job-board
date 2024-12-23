@@ -4,7 +4,7 @@ date: '2024-11-15'
 id: 'optimized-training-efficiency-and-energy-consumption'
 ---
 
-Okay, so we're talking about making our training models work better and use less power right  That's super important, especially since these models can be hungry for resources  
+, so we're talking about making our training models work better and use less power right  That's super important, especially since these models can be hungry for resources  
 
 One way to do this is through **quantization**  It basically means reducing the precision of the weights and activations in our model  Think of it like using fewer decimal places  Instead of 32 bits, we can use 8 or even 16 bits for each value  This shrinks the model size and speeds things up  You can check out "quantization for neural networks" on Google to learn more  
 
