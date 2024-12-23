@@ -1,0 +1,82 @@
+---
+title: "Can CNNs recognize human actions in real-time online?"
+date: "2024-12-23"
+id: "can-cnns-recognize-human-actions-in-real-time-online"
+---
+
+Okay, let's dive into this. It's a question I've spent a fair amount of time dealing with over the past decade, specifically when I was working on a project involving real-time analysis of factory floor activities—keeping track of worker movements and tool interactions. So, can convolutional neural networks (cnns) recognize human actions in real-time, online? The short answer is yes, but with several critical caveats. Let’s unpack that a bit.
+
+The core challenge lies in the inherent nature of "real-time" and "online," which, in this context, essentially means processing and classifying data as it arrives, with minimal latency. Traditional cnn architectures, particularly those trained on static images, are not inherently optimized for handling the temporal dynamics essential to action recognition. You’re not just looking at a single frame of someone standing; you need to see the sequence of movements—the lifting, pushing, walking, etc. This introduces a need to consider the temporal dimension, something a standard cnn is ill-equipped to handle alone.
+
+Initially, for the factory project, we started with a basic image-based cnn, pre-trained on ImageNet, and fine-tuned it on our own dataset of workers. It worked, sort of. We could detect individuals and certain objects, but understanding the context of actions eluded us. This is because we weren’t utilizing the temporal aspect. What we were seeing were essentially snapshots, and action recognition demands temporal context; it’s not about just *what* is present in a single frame, but *how* it changes over multiple frames. This is the hurdle one needs to overcome.
+
+To effectively process these temporal sequences, there are a few key architectures and methodologies that have proven useful. First, there are 3d cnns, which extend the spatial convolutional operations of regular 2d cnns into the temporal dimension. These effectively learn spatio-temporal features, allowing them to capture motion patterns. However, 3d cnns tend to be computationally intensive, which can be a limiting factor for real-time processing, particularly when deployed on resource-constrained devices. This is an area where hardware acceleration becomes crucial, and dedicated inference chips, or specialized libraries optimized for these architectures, can make all the difference.
+
+Another technique, which I found more practical in my past work, is to use a combination of a 2d cnn for spatial feature extraction followed by a recurrent neural network (rnn), such as a long short-term memory (lstm) or gated recurrent unit (gru), to model the temporal component. In this approach, the cnn acts as a feature encoder on each frame, then the rnn processes the sequence of these feature vectors, allowing it to understand the sequence of actions. This is computationally less expensive than a full 3d cnn while still giving pretty good performance.
+
+Thirdly, it’s important to consider optical flow analysis. While not a cnn architecture itself, it provides critical information about the motion of pixels between consecutive frames. By extracting optical flow fields and inputting these into a cnn, or using them in combination with other inputs, the network learns much better representations for motion understanding.
+
+Here are a few simplified code snippets to demonstrate these ideas. These are Python examples using PyTorch, which is a fairly standard deep learning framework:
+
+**Snippet 1: A Simple 2d CNN Feature Extractor (PyTorch)**
+
+```python
+import torch
+import torch.nn as nn
+import torchvision.models as models
+
+class FeatureExtractor(nn.Module):
+    def __init__(self):
+        super(FeatureExtractor, self).__init__()
+        self.cnn = models.resnet18(pretrained=True) #using a pre-trained resnet18
+        self.cnn = nn.Sequential(*list(self.cnn.children())[:-1]) #removing the last layer
+
+    def forward(self, x):
+        return self.cnn(x) #output will be spatial feature maps
+```
+
+This basic snippet shows how to create a feature extraction module using a pre-trained resnet. You can then input a batch of frames into it, and it will output feature maps. This is the spatial aspect.
+
+**Snippet 2: A Basic LSTM Module (PyTorch)**
+
+```python
+import torch
+import torch.nn as nn
+
+class TemporalModel(nn.Module):
+    def __init__(self, input_size, hidden_size, num_layers, num_classes):
+        super(TemporalModel, self).__init__()
+        self.lstm = nn.LSTM(input_size, hidden_size, num_layers, batch_first=True)
+        self.fc = nn.Linear(hidden_size, num_classes)
+
+    def forward(self, x):
+        out, _ = self.lstm(x) #x is a sequence of features
+        out = self.fc(out[:, -1, :]) #taking the output from the last time step
+        return out
+```
+
+Here, we have an lstm module. The input `x` will be a sequence of the feature maps generated by `FeatureExtractor`. The output will be a classification over the possible actions.
+
+**Snippet 3: A Conceptual example of input pipeline:**
+
+```python
+# assume 'frames' is a list of image tensors, and features has been initialized as a FeatureExtractor instance
+
+def process_video_frames(frames, features, temporal_model):
+  feature_sequence = []
+  for frame in frames:
+      frame = frame.unsqueeze(0)  # add batch dimension [1, C, H, W]
+      feature_map = features(frame)
+      feature_sequence.append(feature_map.squeeze().flatten()) #remove batch and flatten to a vector
+
+  feature_sequence = torch.stack(feature_sequence).unsqueeze(0) # stack into a sequence
+  output = temporal_model(feature_sequence)
+  return output
+```
+This final snippet shows how to process individual frames with your cnn feature extractor and subsequently process them with the lstm. This gives a very high level view of the process of passing video data through feature extraction into a temporal model.
+
+Now, back to the real-time aspect. The above mentioned approaches, when implemented naively, can still be slow. Several factors can influence real-time performance: the complexity of the model, the resolution of input video, the frames-per-second, and of course, the hardware doing the processing. For real-time scenarios, it's often necessary to make compromises. We might use a lighter, less complex cnn, reduce the input resolution, or reduce the number of frames processed in sequence, as long as it does not impede the overall accuracy. Sometimes it’s about accepting a reasonable trade-off between latency and accuracy. For instance, in the factory project, we didn't need 100% precision in the start of an action, we just needed to recognize the complete action being executed within a tolerance of few frames.
+
+Furthermore, efficient data loading and pre-processing are essential. This means using hardware-accelerated libraries for tasks like resizing and color space conversions. Consider libraries like `opencv` for video processing tasks. For more in-depth understanding of optimization for deep neural networks, I would advise reading "Efficient Processing of Deep Neural Networks" by Vivienne Sze, Yu-Hsin Chen, Tze-Yu Yang, and Joel S. Emer; this text provides a comprehensive view.
+
+In conclusion, recognizing human actions in real-time, online, with cnns, is definitely feasible, especially given the current state of hardware and available techniques. But, it requires a nuanced approach, combining cnn spatial feature extraction with appropriate temporal models, and the right optimization strategies. It's a continuous challenge requiring a careful balance of accuracy, latency, and resource usage, but it is something I found to be quite attainable with careful system design. The practical experience I gained from that factory project showed me it’s an iterative process involving lots of experimentation and testing with different architectures and optimizations before you settle on a solution for real-world applications.
